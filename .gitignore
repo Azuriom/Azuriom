@@ -1,3 +1,9 @@
+# PhpStorm
+.idea/
+*.iml
+*.iws
+
+# Laravel
 /node_modules
 /public/hot
 /public/storage
