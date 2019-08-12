@@ -14,5 +14,5 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::prefix('user')->group(function () {
-    Auth::routes();
+    Auth::routes(['verify' => true]);
 });
