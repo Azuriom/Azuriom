@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'AdminController@index')->name('dashboard');
+
+Route::resource('users', 'UserController');
+Route::resource('posts', 'PostController');
