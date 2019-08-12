@@ -49,6 +49,9 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.index') }}">News</a>
+                            </li>
                             @if(Auth::user()->isAdmin())
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin</a>
