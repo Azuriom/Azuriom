@@ -108,7 +108,7 @@
             </div>
 
             <div class="nav-item {{ add_active('admin.pages.*') }}">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.pages.index') }}">
                     <i class="fas fa-fw fa-file-alt"></i>
                     <span>Pages</span></a>
             </div>

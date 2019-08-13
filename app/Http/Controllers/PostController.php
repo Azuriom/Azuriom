@@ -10,11 +10,11 @@ class PostController extends Controller
     {
         $posts = Post::with('author')->get();
 
-        return view('posts.index')->with(['posts' => $posts]);
+        return view('posts.index')->with('posts', $posts);
     }
 
     public function show(Post $post)
     {
-        return view('posts.show')->with(['currentPost' => $post]);
+        return view('posts.show')->with('currentPost', $post);
     }
 }

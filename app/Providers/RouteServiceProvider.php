@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -32,6 +33,10 @@ class RouteServiceProvider extends ServiceProvider
             return Post::with('author')->where('slug', $slug)->firstOrFail();
         });
 
+        Route::bind('page_slug', function ($slug) {
+            return Page::where('slug', $slug)->firstOrFail();
+        });
+
         parent::boot();
     }
 
@@ -44,9 +49,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
-
         $this->mapAdminRoutes();
+
+        $this->mapWebRoutes();
     }
 
     /**

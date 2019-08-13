@@ -23,3 +23,5 @@ Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/{post_slug}', 'PostController@show')->name('show');
 });
+
+Route::get('/{page_slug}', 'PageController@show')->name('pages.show');

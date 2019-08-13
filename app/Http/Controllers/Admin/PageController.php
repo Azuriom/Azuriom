@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Page;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 
-class PostController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->paginate(25);
+        $pages = Page::paginate(25);
 
-        return view('admin.posts.index')->with('posts', $posts);
+        return view('admin.pages.index')->with('pages', $pages);
     }
 
     /**
@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        return view('admin.pages.create');
     }
 
     /**
@@ -41,60 +41,59 @@ class PostController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $post = new Post($request->all());
-        $post->author_id = auth()->user()->id;
-        $post->save();
+        $page = new Page($request->all());
+        $page->save();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post created');
+        return redirect()->route('admin.pages.index')->with('success', 'Page created');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Page $page)
     {
-        return view('admin.posts.edit')->with('currentPost', $post);
+        return view('admin.pages.edit')->with('page', $page);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Page $page)
     {
-        $this->validate($request, $this->rules($post));
+        $this->validate($request, $this->rules($page));
 
-        $post->fill($request->all());
-        $post->save();
+        $page->fill($request->all());
+        $page->save();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post updated');
+        return redirect()->route('admin.pages.index')->with('success', 'Page updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Page $page)
     {
-        $post->delete();
+        $page->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
+        return redirect()->route('admin.pages.index')->with('success', 'Page deleted');
     }
 
-    public function rules($post = null): array
+    public function rules($page = null): array
     {
         return [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
+            'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('pages')->ignore($page, 'slug')],
             'content' => ['required', 'string'],
         ];
     }
