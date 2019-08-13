@@ -14,4 +14,4 @@
 Route::get('/', 'AdminController@index')->name('dashboard');
 
 Route::resource('users', 'UserController');
-Route::resource('posts', 'PostController');
+Route::resource('posts', 'PostController')->except('show');

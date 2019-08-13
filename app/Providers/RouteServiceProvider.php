@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +24,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('id', '[0-9]+');
+        Route::pattern('slug', '[a-z0-9-]+');
+        Route::pattern('name', '[a-z0-9_-]{3,16}');
+
+        Route::bind('post_slug', function ($slug) {
+            return Post::with('author')->where('slug', $slug)->firstOrFail();
+        });
 
         parent::boot();
     }

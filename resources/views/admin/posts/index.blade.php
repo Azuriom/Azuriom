@@ -3,7 +3,7 @@
 @section('title', 'Posts')
 
 @section('content')
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -25,9 +25,8 @@
                             <td><a href="{{ route('posts.show', $post->slug) }}">{{ $post->slug }}</a></td>
                             <td>{{ $post->author->name }}</td>
                             <td>
-                                <a href="{{ route('admin.posts.show', $post) }}" class="mr-1 ml-1"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('admin.posts.edit', $post) }}" class="mr-1 ml-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mr-1 ml-1"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mr-1 ml-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

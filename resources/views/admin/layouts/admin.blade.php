@@ -14,7 +14,7 @@
     <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/vendor/jquery/jquery.min.js') }}" defer></script>@yield('scripts')
+    <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>@yield('scripts')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -55,7 +55,36 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Content
+                Settings
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-cogs"></i>
+                    <span>Global settings</span></a>
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Other settings</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Other settings</h6>
+                        <a class="collapse-item" href="#">Security</a>
+                        <a class="collapse-item" href="#">SEO</a>
+                        <a class="collapse-item" href="#">Maintenance</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Users
             </div>
 
             <div class="nav-item {{ add_active('admin.users.*') }}">
@@ -64,10 +93,36 @@
                     <span>Users</span></a>
             </div>
 
+            <div class="nav-item {{ add_active('admin.roles.*') }}">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-user-tag"></i>
+                    <span>Roles</span></a>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Content
+            </div>
+
+            <div class="nav-item {{ add_active('admin.pages.*') }}">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Pages</span></a>
+            </div>
+
             <div class="nav-item {{ add_active('admin.posts.*') }}">
                 <a class="nav-link" href="{{ route('admin.posts.index') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>News</span></a>
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-bars"></i>
+                    <span>Navbar</span></a>
             </div>
 
             <!-- Divider -->
@@ -148,7 +203,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -167,6 +222,26 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">@yield('title', 'Admin')</h1>
                     </div>
+
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle"></i>
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-warning"></i>
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
 
                     @yield('content')
 
@@ -197,5 +272,33 @@
         <i class="fas fa-angle-up"></i>
     </a>
 </div>
+
+<!-- Delete confirm modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="confirmDeleteLabel">Delete ?</h2>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure you want to delete this element ?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">Cancel</button>
+                <form id="confirmDeleteForm" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button class="btn btn-primary" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
+
 </body>
 </html>

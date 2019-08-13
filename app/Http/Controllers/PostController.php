@@ -8,15 +8,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        $post = Post::with('author')->get();
+        $posts = Post::with('author')->get();
 
-        return view('posts.index')->with(['posts' => $post]);
+        return view('posts.index')->with(['posts' => $posts]);
     }
 
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = Post::with('author')->where('slug', $slug)->firstOrFail();
-
         return view('posts.show')->with(['currentPost' => $post]);
     }
 }
