@@ -96,6 +96,7 @@ class PostController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
             'content' => ['required', 'string'],
+            'published_at' => ['required', 'date']
         ];
     }
 }

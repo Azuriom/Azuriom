@@ -49,6 +49,15 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="publishedInput">Published At</label>
+                    <input type="text" class="form-control @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', now()) }}" required>
+
+                    @error('published_at')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>

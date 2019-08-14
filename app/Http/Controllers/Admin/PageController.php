@@ -94,7 +94,7 @@ class PageController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('pages')->ignore($page, 'slug')],
-            'content' => ['required', 'string'],
+            'content' => ['required', 'string']
         ];
     }
 }

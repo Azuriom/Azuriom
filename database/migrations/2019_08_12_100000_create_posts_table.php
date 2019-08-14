@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('description');
             $table->string('slug')->unique();
             $table->text('content');
+            $table->timestamp('published_at');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');
