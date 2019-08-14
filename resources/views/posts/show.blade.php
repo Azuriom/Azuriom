@@ -18,6 +18,6 @@
         <p>Posted on {{ $currentPost->created_at }}</p>
         <hr>
 
-        {{ $currentPost->content }}
+        {!! $currentPost->content !!}
     </div>
 @endsection

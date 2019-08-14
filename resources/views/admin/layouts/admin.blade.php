@@ -14,7 +14,10 @@
     <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>@yield('scripts')
+    <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
+
+    <!-- Page level scripts -->
+    @section('scripts')@show
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -23,6 +26,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    @section('styles')@show
 </head>
 <body>
 <div id="app">
@@ -299,6 +303,9 @@
 <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
 </form>
+
+@section('footer-scripts')
+@show
 
 </body>
 </html>

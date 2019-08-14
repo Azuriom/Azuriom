@@ -2,6 +2,8 @@
 
 @section('title', 'Edit news')
 
+@include('admin.elements.editor')
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -43,7 +45,7 @@
 
                 <div class="form-group">
                     <label for="textArea">Content</label>
-                    <textarea class="form-control @error('content') is-invalid @enderror" id="textArea" name="content" rows="5" required>{{ old('content', $currentPost->content) }}</textarea>
+                    <textarea class="form-control html-editor @error('content') is-invalid @enderror" id="textArea" name="content" rows="5">{{ old('content', $currentPost->content) }}</textarea>
 
                     @error('content')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

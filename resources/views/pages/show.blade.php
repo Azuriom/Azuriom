@@ -9,7 +9,7 @@
                 <h1>{{ $page->title }}</h1>
                 <hr>
 
-                {{ $page->content }}
+                {!! $page->content !!}
             </div>
         </div>
     </div>
