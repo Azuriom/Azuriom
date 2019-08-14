@@ -29,6 +29,13 @@
 
         <hr>
 
+        <form @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST"  @endauth>
+            @csrf
+            <button class="btn btn-primary @guest disabled @elseif($currentPost->hasLiked(Auth::user())) active @endguest" @guest disabled @endguest type="submit">
+                Likes: {{ $currentPost->likes->count() }}
+            </button>
+        </form>
+
         <div class="card my-4">
             <div class="card-header">
                 <span class="h5">Leave a comment</span>

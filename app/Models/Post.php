@@ -37,15 +37,30 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function isAuthor(User $user) {
+    public function isAuthor(User $user)
+    {
         return $this->author_id === $user->id;
     }
 
     /**
      * Get this post comments
      */
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get this post likes
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function hasLiked(User $user)
+    {
+        return $this->likes->where('author_id', $user->id)->isNotEmpty();
     }
 
     public function isPublished()
