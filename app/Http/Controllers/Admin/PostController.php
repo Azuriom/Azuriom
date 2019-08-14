@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->paginate(25);
+        $posts = Post::paginate(25);
 
         return view('admin.posts.index')->with('posts', $posts);
     }
@@ -36,6 +36,7 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -65,6 +66,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Post $post)
     {
@@ -81,6 +83,7 @@ class PostController extends Controller
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Post $post)
     {

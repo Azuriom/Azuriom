@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('name', '[a-z0-9_-]{3,16}');
 
         Route::bind('post_slug', function ($slug) {
-            return Post::with('author')->where('slug', $slug)->firstOrFail();
+            return Post::where('slug', $slug)->firstOrFail();
         });
 
         Route::bind('page_slug', function ($slug) {

@@ -36,6 +36,7 @@ class PageController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -64,6 +65,7 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Page $page)
     {
@@ -80,6 +82,7 @@ class PageController extends Controller
      *
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Page $page)
     {

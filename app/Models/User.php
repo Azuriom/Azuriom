@@ -37,6 +37,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'author_id');
+    }
+
     public function isAdmin(): bool {
         return $this->id === 1; // TODO use group system
     }

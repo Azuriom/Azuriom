@@ -24,4 +24,6 @@ Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/{post_slug}', 'PostController@show')->name('show');
 });
 
+Route::resource('posts.comments', 'CommentController')->only('store', 'destroy');
+
 Route::get('/{page_slug}', 'PageController@show')->name('pages.show');

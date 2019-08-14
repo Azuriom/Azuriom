@@ -21,11 +21,31 @@ class Post extends Model
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'author'
+    ];
+
+    /**
      * Get the author of this post.
      */
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function isAuthor(User $user) {
+        return $this->author_id === $user->id;
+    }
+
+    /**
+     * Get this post comments
+     */
+    public function comments() {
+        return $this->hasMany(Comment::class);
     }
 
     public function isPublished()

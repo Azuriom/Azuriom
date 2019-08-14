@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::published()->with('author')->get();
+        $posts = Post::published()->withCount('comments')->get();
 
         return view('posts.index')->with('posts', $posts);
     }
