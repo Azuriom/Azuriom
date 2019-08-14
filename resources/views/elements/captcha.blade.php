@@ -1,10 +1,24 @@
 @section('scripts')
     @parent
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script defer>
+    <script>
+        let captchaForm;
+
         function submitCaptchaForm() {
-            document.getElementById('captcha-form').submit();
+            captchaForm.submit();
         }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            captchaForm = document.getElementById('captcha-form');
+
+            if (captchaForm) {
+                captchaForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    grecaptcha.execute();
+                });
+            }
+        });
     </script>
 @endsection
 
