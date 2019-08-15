@@ -37,6 +37,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'role'
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
@@ -47,7 +56,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class, 'author_id');
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function isAdmin(): bool {
-        return $this->id === 1; // TODO use group system
+        return $this->role_id === 2; // TODO finish this
     }
 }

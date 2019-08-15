@@ -35,6 +35,19 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="roleSelect">Role</label>
+                    <select class="form-control  @error('role') is-invalid @enderror" id="roleSelect" name="role">
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+
+                    @error('role')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>

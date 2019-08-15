@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        return view('admin.users.create')->with('roles', Role::all());
     }
 
     /**
@@ -42,8 +43,13 @@ class UserController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $user = new User($request->except('password'));
-        $user->password = Hash::make($request->get('password'));
+        $role = Role::findOrFail($request->get('role'));
+
+        $request->offsetSet('password', Hash::make($request->get('password')));
+
+        $user = new User($request->all());
+        $user->last_ip = "0.0.0.0";
+        $user->role()->associate($role);
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'User created');
@@ -57,7 +63,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit')->with('user', $user);
+        return view('admin.users.edit')->with('user', $user)->with('roles', Role::all());
     }
 
     /**
@@ -71,12 +77,15 @@ class UserController extends Controller
     {
         $this->validate($request, $this->rules($user));
 
-        $user->fill($request->except('password'));
+        $user->fill($request->except(['password']));
 
         if ($request->get('password')) {
             $user->password = Hash::make($request->get('password'));
         }
 
+        $role = Role::findOrFail($request->get('role'));
+
+        $user->role()->associate($role);
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'User updated');
@@ -107,6 +116,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:25'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user, 'email')],
             'password' => [$user != null ? 'nullable' : 'required', 'string', 'min:8'],
+            'role' => ['required', 'integer', 'exists:roles,id']
         ];
     }
 }

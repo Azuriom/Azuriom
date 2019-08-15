@@ -260,7 +260,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2019. Template by <a href="https://startbootstrap.com">Start Bootstrap</a>.</span>
+                        <span>Copyright &copy; Your Website 2019. Template by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
                     </div>
                 </div>
             </footer>
