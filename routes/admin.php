@@ -13,7 +13,7 @@
 
 Route::get('/', 'AdminController@index')->name('dashboard');
 
-Route::resource('users', 'UserController');
+Route::resource('users', 'UserController')->except('show');
 
 Route::resource('posts', 'PostController')->except('show');
 Route::resource('pages', 'PageController')->except('show');

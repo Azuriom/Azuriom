@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Posts')
+@section('title', 'Users')
 
 @section('content')
     <div class="card mb-3">
@@ -23,9 +23,8 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <a href="{{ route('admin.users.show', $user) }}" class="mr-1 ml-1"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mr-1 ml-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.users.destroy', $user) }}" class="mr-1 ml-1"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.destroy', $user) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

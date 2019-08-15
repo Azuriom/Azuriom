@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -27,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -38,18 +40,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, $this->rules());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
+        $user = new User($request->except('password'));
+        $user->password = Hash::make($request->get('password'));
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'User created');
     }
 
     /**
@@ -60,7 +57,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.users.edit')->with('user', $user);
     }
 
     /**
@@ -72,7 +69,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request, $this->rules($user));
+
+        $user->fill($request->except('password'));
+
+        if ($request->get('password')) {
+            $user->password = Hash::make($request->get('password'));
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated');
+
     }
 
     /**
@@ -83,6 +91,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        return redirect()->route('admin.users.index')->with('error', 'Not implemented yet !');
+    }
+
+    protected function rules($user = null)
+    {
+        return [
+            'name' => ['required', 'string', 'max:25'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user, 'email')],
+            'password' => [$user != null ? 'nullable' : 'required', 'string', 'min:8'],
+        ];
     }
 }
