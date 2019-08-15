@@ -1,20 +1,17 @@
-@section('styles')
-    @parent
+@push('styles')
     <style>
         .tox-tinymce {
             border: 1px solid #d1d3e2!important;
             border-radius: .35rem!important;
         }
     </style>
-@endsection
+@endpush
 
-@section('scripts')
-    @parent
-    <script src="{{ asset('assets/admin/vendor/tinymce/tinymce.min.js') }}"></script>
-@endsection
+@push('scripts')
+    <script src="{{ asset('assets/admin/vendor/tinymce/tinymce.min.js') }}" defer></script>
+@endpush
 
-@section('footer-scripts')
-    @parent
+@push('footer-scripts')
     <script>
         tinymce.init({
             selector: '.html-editor',
@@ -23,4 +20,4 @@
             toolbar: 'undo redo | formatselect | bold italic underline strikethrough forecolor | link image media | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat code'
         });
     </script>
-@endsection
+@endpush

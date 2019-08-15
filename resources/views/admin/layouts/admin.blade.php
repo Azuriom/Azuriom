@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @stack('meta')
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,7 +18,7 @@
     <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
 
     <!-- Page level scripts -->
-    @section('scripts')@show
+    @stack('scripts')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,7 +27,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    @section('styles')@show
+    @stack('styles')
 </head>
 <body>
 <div id="app">
@@ -304,8 +305,7 @@
     @csrf
 </form>
 
-@section('footer-scripts')
-@show
+@stack('footer-scripts')
 
 </body>
 </html>
