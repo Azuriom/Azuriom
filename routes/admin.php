@@ -19,5 +19,7 @@ Route::post('/users/{user}/verify', 'UserController@verifyEmail')->name('users.v
 
 Route::resource('users', 'UserController')->except('show');
 
+Route::resource('roles', 'RoleController')->except('show');
+
 Route::resource('posts', 'PostController')->except('show');
 Route::resource('pages', 'PageController')->except('show');

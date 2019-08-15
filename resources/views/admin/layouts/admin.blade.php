@@ -99,7 +99,7 @@
             </div>
 
             <div class="nav-item {{ add_active('admin.roles.*') }}">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.roles.index') }}">
                     <i class="fas fa-fw fa-user-tag"></i>
                     <span>Roles</span></a>
             </div>
