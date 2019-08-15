@@ -80,7 +80,14 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'User updated');
+    }
 
+    public function verifyEmail(User $user)
+    {
+        $user->markEmailAsVerified();
+        $user->save();
+
+        return redirect()->route('admin.users.edit', $user)->with('user', $user)->with('success', 'Email verified');
     }
 
     /**
