@@ -73,6 +73,12 @@
                             </div>
                         </form>
                     @endif
+
+                    <div class="form-group">
+                        <label for="registerInput">Address</label>
+                        <input type="text" class="form-control" id="registerInput" value="{{ $user->last_ip }}" disabled>
+                    </div>
+
                 </div>
             </div>
         </div>
