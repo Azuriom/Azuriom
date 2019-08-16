@@ -2,10 +2,9 @@
 
 @section('title', $currentPost->title)
 
-@section('scripts')
-    @parent
+@push('scripts')
     <script src="{{ asset('assets/js/script.js') }}" defer></script>
-@endsection
+@endpush
 
 @section('content')
     <div class="container">
