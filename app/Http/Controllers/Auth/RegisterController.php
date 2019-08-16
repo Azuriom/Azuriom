@@ -71,7 +71,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $user->role_id = 1;
         $user->last_ip = Request::ip();
         $user->save();
 

@@ -72,8 +72,7 @@ class PostController extends Controller
     {
         $this->validate($request, $this->rules($post));
 
-        $post->fill($request->all());
-        $post->save();
+        $post->update($request->all());
 
         return redirect()->route('admin.posts.index')->with('success', 'Post updated');
     }

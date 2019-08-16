@@ -94,7 +94,6 @@ class UserController extends Controller
     public function verifyEmail(User $user)
     {
         $user->markEmailAsVerified();
-        $user->save();
 
         return redirect()->route('admin.users.edit', $user)->with('user', $user)->with('success', 'Email verified');
     }

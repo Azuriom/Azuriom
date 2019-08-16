@@ -42,8 +42,7 @@ class PageController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $page = new Page($request->all());
-        $page->save();
+        Page::create($request->all());
 
         return redirect()->route('admin.pages.index')->with('success', 'Page created');
     }
@@ -71,8 +70,7 @@ class PageController extends Controller
     {
         $this->validate($request, $this->rules($page));
 
-        $page->fill($request->all());
-        $page->save();
+        $page->update($request->all());
 
         return redirect()->route('admin.pages.index')->with('success', 'Page updated');
     }
