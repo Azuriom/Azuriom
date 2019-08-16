@@ -19,6 +19,13 @@ Route::prefix('user')->group(function () {
     Auth::routes(['verify' => true]);
 });
 
+Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
+    Route::get('/', 'ProfileController@index')->name('index');
+
+    Route::post('/email', 'ProfileController@updateEmail')->name('email');
+    Route::post('/password', 'ProfileController@updatePassword')->name('password');
+});
+
 Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/{post_slug}', 'PostController@show')->name('show');
