@@ -3,6 +3,7 @@
 @section('title', 'Add news')
 
 @include('admin.elements.editor')
+@include('admin.elements.date-picker')
 
 @section('content')
     <div class="card">
@@ -53,7 +54,7 @@
 
                 <div class="form-group">
                     <label for="publishedInput">Published At</label>
-                    <input type="text" class="form-control @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', now()) }}" required>
+                    <input type="text" class="form-control date-picker @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', now()) }}" required>
 
                     @error('published_at')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
