@@ -1,5 +1,10 @@
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendor/flatpickr/css/flatpickr.min.css') }}">
+    <link href="{{ asset('assets/admin/vendor/flatpickr/css/flatpickr.min.css') }}" rel="stylesheet">
+    <style>
+        .date-picker {
+            background-color: #fff !important;
+        }
+    </style>
 @endpush
 
 @push('scripts')
@@ -9,11 +14,10 @@
 @push('footer-scripts')
     <script>
         flatpickr('.date-picker', {
-            enableTime: true,
-            altInput: true,
             time_24hr: true,
-            altFormat: "d/m/Y H:i",
-            dateFormat: "Y-m-d H:i:S",
+            enableTime: true,
+            enableSeconds: true,
+            minuteIncrement: 1
         });
     </script>
 @endpush

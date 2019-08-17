@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
-    public function isAdmin(): bool
+    public function isAdmin()
     {
         return $this->role_id === 2; // TODO finish this
     }

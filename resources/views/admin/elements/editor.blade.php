@@ -1,8 +1,8 @@
 @push('styles')
     <style>
         .tox-tinymce {
-            border: 1px solid #d1d3e2!important;
-            border-radius: .35rem!important;
+            border: 1px solid #d1d3e2 !important;
+            border-radius: .35rem !important;
         }
     </style>
 @endpush
