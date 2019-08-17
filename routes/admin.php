@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -10,8 +12,6 @@
 | contains the "web" and "admin" middleware groups. Now create a great admin panel !
 |
 */
-
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AdminController@index')->name('dashboard');
 

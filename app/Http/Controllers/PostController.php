@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if (!$post->isPublished() && (Auth::guest() || ! auth()->user()->isAdmin())) {
+        if (! $post->isPublished() && (Auth::guest() || ! auth()->user()->isAdmin())) {
             abort(404);
         }
 

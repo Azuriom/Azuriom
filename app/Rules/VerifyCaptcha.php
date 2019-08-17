@@ -19,7 +19,7 @@ class VerifyCaptcha implements Rule
     {
         $secretKey = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'; // demo key
 
-        if (!empty($secretKey)) {
+        if (! empty($secretKey)) {
             $this->reCaptcha = new ReCaptcha($secretKey);
         }
     }
