@@ -4,6 +4,16 @@
 
 @section('content')
     <div class="container">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">{{ $user->name }}</h4>
+                <ul class="mb-0">
+                   <li>Role: {{ $user->role->name }}</li>
+                   <li>Register: {{ $user->created_at }}</li>
+                </ul>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -14,8 +24,8 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="currentPasswordInput">Current password</label>
-                                <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="currentPasswordInput" name="password_confirm_pass" required>
+                                <label for="passwordConfirmPassInput">Current password</label>
+                                <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
 
                                 @error('password_confirm_pass')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -51,19 +61,19 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="currentPasswordInput">Current password</label>
-                                <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="currentPasswordInput" name="email_confirm_pass" required>
+                                <label for="emailInput">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required>
 
-                                @error('email_confirm_pass')
+                                @error('email')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="emailInput">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required>
+                                <label for="emailConfirmPassInput">Current password</label>
+                                <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
 
-                                @error('email')
+                                @error('email_confirm_pass')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
