@@ -8,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.posts.update', ['post' => $currentPost]) }}" method="POST">
+            <form action="{{ route('admin.posts.update', $currentPost) }}" method="POST">
                 @method('PUT')
                 @csrf
 

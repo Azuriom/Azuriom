@@ -1,0 +1,16 @@
+.tox-tinymce {
+    border: 1px solid #d1d3e2 !important;
+    border-radius: .35rem !important;
+}
+
+.date-picker {
+    background-color: #fff !important;
+}
+
+.img-small {
+    height: 2.5em;
+}
+
+.img-preview {
+    height: 300px;
+}

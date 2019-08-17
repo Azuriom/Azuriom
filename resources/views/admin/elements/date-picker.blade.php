@@ -1,10 +1,5 @@
 @push('styles')
     <link href="{{ asset('assets/admin/vendor/flatpickr/css/flatpickr.min.css') }}" rel="stylesheet">
-    <style>
-        .date-picker {
-            background-color: #fff !important;
-        }
-    </style>
 @endpush
 
 @push('scripts')

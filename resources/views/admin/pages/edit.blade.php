@@ -7,7 +7,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.pages.update', ['page' => $page]) }}" method="POST">
+            <form action="{{ route('admin.pages.update', $page) }}" method="POST">
                 @method('PUT')
                 @csrf
 
@@ -33,7 +33,7 @@
                     <label for="slugInput">Slug</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">{{ route('home') }}/</div>
+                            <div class="input-group-text">{{ url('/') }}/</div>
                         </div>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug', $page->slug) }}" required>
 

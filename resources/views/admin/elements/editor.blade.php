@@ -1,12 +1,3 @@
-@push('styles')
-    <style>
-        .tox-tinymce {
-            border: 1px solid #d1d3e2 !important;
-            border-radius: .35rem !important;
-        }
-    </style>
-@endpush
-
 @push('scripts')
     <script src="{{ asset('assets/admin/vendor/tinymce/tinymce.min.js') }}"></script>
 @endpush

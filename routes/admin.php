@@ -21,5 +21,7 @@ Route::resource('users', 'UserController')->except('show');
 
 Route::resource('roles', 'RoleController')->except('show');
 
+Route::resource('images', 'ImageController')->except('show');
+
 Route::resource('posts', 'PostController')->except('show');
 Route::resource('pages', 'PageController')->except('show');

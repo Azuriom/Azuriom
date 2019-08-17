@@ -10,3 +10,11 @@ $('[data-route="logout"]').on('click', function (e) {
 
     $('#logoutForm').submit();
 });
+
+$(".custom-file-input").on('change', function () {
+    var file = $(this).val().replace("C:\\fakepath\\", "");
+
+    if (file !== undefined || file !== "") {
+        $(this).next(".custom-file-label").text(file);
+    }
+});

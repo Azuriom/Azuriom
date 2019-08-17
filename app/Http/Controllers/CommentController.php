@@ -49,7 +49,7 @@ class CommentController extends Controller
         return redirect()->route('posts.show', $post->slug);
     }
 
-    public function rules(): array
+    public function rules()
     {
         return [
             'content' => ['required', 'string']

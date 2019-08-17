@@ -27,6 +27,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/admin.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 <body>
@@ -122,6 +123,12 @@
                 <a class="nav-link" href="{{ route('admin.posts.index') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
                     <span>News</span></a>
+            </div>
+
+            <div class="nav-item {{ add_active('admin.images.*') }}">
+                <a class="nav-link" href="{{ route('admin.images.index') }}">
+                    <i class="fas fa-fw fa-image"></i>
+                    <span>Images</span></a>
             </div>
 
             <div class="nav-item">
