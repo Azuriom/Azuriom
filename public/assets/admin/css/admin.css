@@ -12,5 +12,10 @@
 }
 
 .img-preview {
-    height: 300px;
+    max-height: 300px;
+}
+
+.custom-file-input,
+.custom-file-label {
+    cursor: pointer;
 }
