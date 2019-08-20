@@ -12,6 +12,15 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'slug', 'content',
+        'title', 'description', 'slug', 'content', 'is_enabled'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_enabled' => 'boolean',
     ];
 }

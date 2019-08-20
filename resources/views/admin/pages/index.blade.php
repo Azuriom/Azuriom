@@ -12,6 +12,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Slug</th>
+                        <th scope="col">Enabled</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -22,6 +23,7 @@
                             <th scope="row">{{ $page->id }}</th>
                             <td>{{ $page->title }}</td>
                             <td><a href="{{ route('pages.show', $page->slug) }}" target="_blank">{{ $page->slug }}</a></td>
+                            <td>{{ $page->is_enabled ? 'Yes' : 'No' }}</td>
                             <td>
                                 <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('admin.pages.destroy', $page) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>

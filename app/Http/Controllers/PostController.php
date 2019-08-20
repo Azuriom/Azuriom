@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,7 +15,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if (! $post->isPublished() && (Auth::guest() || ! auth()->user()->isAdmin())) {
+        if (! $post->isPublished() && (auth()->guest() || ! auth()->user()->isAdmin())) {
             abort(404);
         }
 

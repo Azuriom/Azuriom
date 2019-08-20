@@ -42,6 +42,8 @@ class PageController extends Controller
     {
         $this->validate($request, $this->rules());
 
+        request_checkbox($request, 'is_enabled');
+
         Page::create($request->all());
 
         return redirect()->route('admin.pages.index')->with('success', 'Page created');
@@ -69,6 +71,8 @@ class PageController extends Controller
     public function update(Request $request, Page $page)
     {
         $this->validate($request, $this->rules($page));
+
+        request_checkbox($request, 'is_enabled');
 
         $page->update($request->all());
 

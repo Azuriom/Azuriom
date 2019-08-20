@@ -51,6 +51,11 @@
                     @enderror
                 </div>
 
+                <div class="form-group custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" checked>
+                    <label class="custom-control-label" for="enableSwitch">Enable the page</label>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>
