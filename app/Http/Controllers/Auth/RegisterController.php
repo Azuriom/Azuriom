@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Azuriom\Http\Controllers\Auth;
 
-use App\Models\User;
-use App\Http\Controllers\Controller;
-use App\Rules\VerifyCaptcha;
+use Azuriom\Models\User;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Rules\VerifyCaptcha;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +62,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \Azuriom\Models\User
      */
     protected function create(array $data)
     {

@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Azuriom\Providers\AppServiceProvider::class,
+        Azuriom\Providers\AuthServiceProvider::class,
+        // Azuriom\Providers\BroadcastServiceProvider::class,
+        Azuriom\Providers\EventServiceProvider::class,
+        Azuriom\Providers\RouteServiceProvider::class,
 
     ],
 

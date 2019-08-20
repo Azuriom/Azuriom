@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Azuriom\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Role;
-use App\Models\User;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Role;
+use Azuriom\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -58,7 +58,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -70,7 +70,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -101,7 +101,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

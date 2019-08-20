@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Azuriom\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;

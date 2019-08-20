@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Azuriom\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Page;
-use App\Models\Post;
-use App\Models\User;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Page;
+use Azuriom\Models\Post;
+use Azuriom\Models\User;
 use Carbon\Carbon;
 
 class AdminController extends Controller

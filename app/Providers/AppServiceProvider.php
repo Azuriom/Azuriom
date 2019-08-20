@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Azuriom\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

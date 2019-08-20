@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
-use App\Models\Page;
+use Azuriom\Models\Page;
 
 class PageController extends Controller
 {

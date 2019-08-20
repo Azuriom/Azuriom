@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace Azuriom\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;

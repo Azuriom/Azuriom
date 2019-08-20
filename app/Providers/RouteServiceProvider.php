@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace Azuriom\Providers;
 
-use App\Models\Page;
-use App\Models\Post;
+use Azuriom\Models\Page;
+use Azuriom\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -16,7 +16,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = 'Azuriom\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

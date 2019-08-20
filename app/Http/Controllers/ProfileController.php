@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
-use App\Rules\ConfirmCurrentPassword;
+use Azuriom\Rules\ConfirmCurrentPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 

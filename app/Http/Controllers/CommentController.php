@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
-use App\Models\Comment;
-use App\Models\Post;
+use Azuriom\Models\Comment;
+use Azuriom\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,7 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -33,8 +33,8 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Comment  $comment
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

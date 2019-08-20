@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
-use App\Models\Like;
-use App\Models\Post;
+use Azuriom\Models\Like;
+use Azuriom\Models\Post;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -32,7 +32,7 @@ class LikeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function removeLike(Post $post)

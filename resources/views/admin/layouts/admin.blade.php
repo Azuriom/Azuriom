@@ -40,10 +40,10 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-                <div class="sidebar-brand-icon rotate-n-15">
+                <div class="sidebar-brand-icon">
                     <i class="fas fa-code"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">{{ config('app.name') }} <sup>1.0.0</sup></div>
+                <div class="sidebar-brand-text mx-3">Azuriom <sup>{{ \Azuriom\Azuriom::VERSION }}</sup></div>
             </a>
 
             <!-- Divider -->

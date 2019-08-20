@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Azuriom\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Image;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -68,7 +68,7 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Image  $image
+     * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
     public function edit(Image $image)
@@ -80,7 +80,7 @@ class ImageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Image  $image
+     * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -109,7 +109,7 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Image  $image
+     * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

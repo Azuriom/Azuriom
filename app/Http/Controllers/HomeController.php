@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
 class HomeController extends Controller
 {

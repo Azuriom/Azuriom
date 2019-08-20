@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Azuriom\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Post;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -52,7 +52,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -64,7 +64,7 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -80,7 +80,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

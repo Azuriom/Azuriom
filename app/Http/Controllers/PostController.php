@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Azuriom\Http\Controllers;
 
-use App\Models\Post;
+use Azuriom\Models\Post;
 
 class PostController extends Controller
 {

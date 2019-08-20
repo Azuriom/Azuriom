@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
