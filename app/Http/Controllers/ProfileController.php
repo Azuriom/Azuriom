@@ -17,7 +17,7 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'email_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users']
         ]);
         $user = $request->user();
         $user->update($request->only('email'));

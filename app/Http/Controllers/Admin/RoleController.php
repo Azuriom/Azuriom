@@ -4,6 +4,8 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Role;
+use Azuriom\Models\User;
+use Azuriom\Rules\Color;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -27,7 +29,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.roles.create');
     }
 
     /**
@@ -35,21 +37,17 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, $this->rules());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Azuriom\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Role $role)
-    {
-        //
+        $request->offsetSet('color', substr($request->get('color'), 1));
+
+        Role::create($request->all());
+
+        return redirect()->route('admin.roles.index')->with('success', 'Role created');
     }
 
     /**
@@ -60,7 +58,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('admin.roles.edit')->with('role', $role);
     }
 
     /**
@@ -69,10 +67,17 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \Azuriom\Models\Role  $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $this->validate($request, $this->rules());
+
+        $request->offsetSet('color', substr($request->get('color'), 1));
+
+        $role->update($request->all());
+
+        return redirect()->route('admin.roles.index')->with('success', 'Role updated');
     }
 
     /**
@@ -80,9 +85,30 @@ class RoleController extends Controller
      *
      * @param  \Azuriom\Models\Role  $role
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Role $role)
     {
-        //
+        if ($role->isPermanent()) {
+            return redirect()->route('admin.roles.index')->with('error', 'This role cannot be deleted');
+        }
+
+        if (auth()->user()->role == $role) {
+            return redirect()->route('admin.roles.index')->with('error', 'You cannot delete your role');
+        }
+
+        $role->users()->update(['role_id' => 1]);
+
+        $role->delete();
+
+        return redirect()->route('admin.roles.index')->with('success', 'Role deleted');
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:25'],
+            'color' => ['required', new Color],
+        ];
     }
 }

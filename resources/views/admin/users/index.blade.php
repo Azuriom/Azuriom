@@ -12,6 +12,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -22,9 +23,10 @@
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->role->name }}</td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.users.destroy', $user) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.destroy', $user) }}" class="mx-1" data-confirm="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

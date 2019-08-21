@@ -4,4 +4,3 @@ $('[data-confirm="delete"]').on('click', function (e) {
     $('#confirmDeleteForm').attr('action', $(this).attr('href'));
     $('#confirmDeleteModal').modal('show');
 });
-

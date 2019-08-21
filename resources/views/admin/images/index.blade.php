@@ -38,8 +38,8 @@
                             <td>{{ $image->name }}</td>
                             <td><a href="{{ image_url($image->file) }}" target="_blank">{{ $image->file }}</a></td>
                             <td>
-                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

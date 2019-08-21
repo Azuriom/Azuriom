@@ -113,7 +113,7 @@ class UserController extends Controller
     {
         return [
             'name' => ['required', 'string', 'max:25'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user, 'email')],
+            'email' => ['required', 'string', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email')],
             'password' => [$user != null ? 'nullable' : 'required', 'string', 'min:8'],
             'role' => ['required', 'integer', 'exists:roles,id']
         ];

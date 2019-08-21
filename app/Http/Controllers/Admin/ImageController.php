@@ -135,8 +135,8 @@ class ImageController extends Controller
     public function rules($image = null)
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash'],
+            'name' => ['required', 'string', 'max:150'],
+            'slug' => ['required', 'string', 'max:100', 'alpha_dash'],
             'file' => $image ? ['nullable'] : ['required', 'image', 'max:2000'],
         ];
     }

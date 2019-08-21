@@ -1,3 +1,12 @@
+a[disabled] {
+    cursor: not-allowed;
+}
+
+/* Fix for https://github.com/FezVrasta/popper.js/issues/457 */
+.tooltip {
+    top: 0;
+}
+
 .tox-tinymce {
     border: 1px solid #d1d3e2 !important;
     border-radius: .35rem !important;

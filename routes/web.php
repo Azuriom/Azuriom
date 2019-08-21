@@ -30,11 +30,11 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/{post_slug}', 'PostController@show')->name('show');
-});
 
-Route::prefix('posts/likes')->name('posts.likes.')->middleware('auth')->group(function () {
-    Route::post('/{post}/like', 'LikeController@addLike')->name('add');
-    Route::post('/{post}/dislike', 'LikeController@removeLike')->name('remove');
+    Route::prefix('likes')->name('likes.')->middleware('auth')->group(function () {
+        Route::post('/{post}/like', 'LikeController@addLike')->name('add');
+        Route::post('/{post}/dislike', 'LikeController@removeLike')->name('remove');
+    });
 });
 
 Route::resource('posts.comments', 'CommentController')->middleware(['auth', 'verified'])->only('store', 'destroy');

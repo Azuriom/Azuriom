@@ -25,8 +25,8 @@
                             <td><a href="{{ route('pages.show', $page->slug) }}" target="_blank">{{ $page->slug }}</a></td>
                             <td>{{ $page->is_enabled ? 'Yes' : 'No' }}</td>
                             <td>
-                                <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.pages.destroy', $page) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.pages.destroy', $page) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

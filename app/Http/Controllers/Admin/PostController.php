@@ -94,9 +94,9 @@ class PostController extends Controller
     public function rules($post = null)
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
+            'slug' => ['required', 'string', 'max:100', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
             'content' => ['required', 'string'],
             'published_at' => ['required', 'date']
         ];

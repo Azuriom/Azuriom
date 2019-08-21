@@ -19,7 +19,7 @@
 
         <h1>{{ $currentPost->title }}</h1>
         <p class="lead">by {{ $currentPost->author->name }}</p>
-        <p>Posted on {{ $currentPost->created_at }}</p>
+        <p>Posted on {{ $currentPost->published_at }}</p>
         <hr>
 
         <div class="content-body">

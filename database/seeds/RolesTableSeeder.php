@@ -12,7 +12,14 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::firstOrCreate(['name' => 'Member']);
-        Role::firstOrCreate(['name' => 'Admin']);
+        Role::firstOrCreate([
+            'name' => 'Member',
+            'color' => '212529'
+        ]);
+
+        Role::firstOrCreate([
+            'name' => 'Admin',
+            'color' => 'e10d11'
+        ]);
     }
 }

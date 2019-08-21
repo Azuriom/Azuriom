@@ -25,8 +25,8 @@
                             <td><a href="{{ route('posts.show', $post->slug) }}">{{ $post->slug }}</a></td>
                             <td><a href="{{ route('admin.users.edit', $post->author ) }}">{{ $post->author->name }}</a></td>
                             <td>
-                                <a href="{{ route('admin.posts.edit', $post) }}" class="mx-1"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mx-1" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.posts.edit', $post) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
