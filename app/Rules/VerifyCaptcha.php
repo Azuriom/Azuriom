@@ -17,9 +17,9 @@ class VerifyCaptcha implements Rule
      */
     public function __construct()
     {
-        $secretKey = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'; // demo key
+        $secretKey = setting('recaptcha-secret-key');
 
-        if (! empty($secretKey)) {
+        if ($secretKey) {
             $this->reCaptcha = new ReCaptcha($secretKey);
         }
     }

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => 'Azuriom',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +171,7 @@ return [
          */
         Azuriom\Providers\AppServiceProvider::class,
         Azuriom\Providers\AuthServiceProvider::class,
+        Azuriom\Providers\SettingServiceProvider::class,
         // Azuriom\Providers\BroadcastServiceProvider::class,
         Azuriom\Providers\EventServiceProvider::class,
         Azuriom\Providers\RouteServiceProvider::class,

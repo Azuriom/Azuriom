@@ -1,25 +1,27 @@
-@push('scripts')
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-@endpush
+@if($reCaptchaKey = setting('recaptcha-site-key'))
+    @push('scripts')
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endpush
 
-@push('footer-scripts')
-    <script>
-        let captchaForm;
+    @push('footer-scripts')
+        <script>
+            let captchaForm;
 
-        function submitCaptchaForm() {
-            captchaForm.submit();
-        }
+            function submitCaptchaForm() {
+                captchaForm.submit();
+            }
 
-        captchaForm = document.getElementById('captcha-form');
+            captchaForm = document.getElementById('captcha-form');
 
-        if (captchaForm) {
-            captchaForm.addEventListener('submit', function (e) {
-                e.preventDefault();
+            if (captchaForm) {
+                captchaForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
 
-                grecaptcha.execute();
-            });
-        }
-    </script>
-@endpush
+                    grecaptcha.execute();
+                });
+            }
+        </script>
+    @endpush
 
-<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="submitCaptchaForm" data-size="invisible"></div>
+    <div class="g-recaptcha" data-sitekey="{{ $reCaptchaKey }}" data-callback="submitCaptchaForm" data-size="invisible"></div>
+@endif

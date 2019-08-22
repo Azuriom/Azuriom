@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AdminController@index')->name('dashboard');
 
+Route::get('/settings', 'SettingsController@index')->name('settings.index');
+Route::post('/settings/update', 'SettingsController@update')->name('settings.update');
+
 Route::post('/users/{user}/verify', 'UserController@verifyEmail')->name('users.verify');
 
 Route::resource('users', 'UserController')->except('show');
