@@ -15,7 +15,7 @@ class Role extends Model
         'name', 'color'
     ];
 
-    public function colorHex()
+    public function getHexColor()
     {
         return '#' . $this->color;
     }

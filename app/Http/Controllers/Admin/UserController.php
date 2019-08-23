@@ -48,7 +48,6 @@ class UserController extends Controller
         $request->offsetSet('password', Hash::make($request->get('password')));
 
         $user = new User($request->all());
-        $user->last_ip = "0.0.0.0";
         $user->role()->associate($role);
         $user->save();
 

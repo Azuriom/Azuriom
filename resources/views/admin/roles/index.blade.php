@@ -28,7 +28,7 @@
                                 @endif
                             </th>
                             <td>
-                                <span class="rounded-sm px-1" style="color: {{ color_contrast($role->colorHex()) }}; background: {{ $role->colorHex() }}">{{ $role->name }}</span>
+                                <span class="rounded-sm px-1" style="color: {{ color_contrast($role->getHexColor()) }}; background: {{ $role->getHexColor() }}">{{ $role->name }}</span>
                             </td>
                             <td>
                                 <a href="{{ route('admin.roles.edit', $role) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>

@@ -89,7 +89,7 @@
 
                     <div class="form-group">
                         <label for="registerInput">Address</label>
-                        <input type="text" class="form-control" id="registerInput" value="{{ $user->last_ip }}" disabled>
+                        <input type="text" class="form-control" id="registerInput" value="{{ empty($user->last_ip) ? 'Unknown' : $user->last_ip }}" disabled>
                     </div>
 
                 </div>
