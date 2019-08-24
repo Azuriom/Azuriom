@@ -21,15 +21,6 @@ class Post extends Model
     ];
 
     /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    protected $with = [
-        'author'
-    ];
-
-    /**
      * Get the author of this post.
      */
     public function author()

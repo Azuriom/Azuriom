@@ -111,7 +111,7 @@ class UserController extends Controller
     protected function rules($user = null)
     {
         return [
-            'name' => ['required', 'string', 'max:25'],
+            'name' => ['required', 'string', 'max:25', 'alpha_dash'],
             'email' => ['required', 'string', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email')],
             'password' => [$user != null ? 'nullable' : 'required', 'string', 'min:8'],
             'role' => ['required', 'integer', 'exists:roles,id']

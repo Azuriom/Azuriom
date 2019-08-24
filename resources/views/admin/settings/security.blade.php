@@ -13,7 +13,7 @@
                     <label class="custom-control-label" for="enableSwitch">Enable reCaptcha bots protection</label>
                 </div>
 
-                <div id="captchaGroup" class="@if(!$showReCaptcha) collapse @else show @endif">
+                <div id="captchaGroup" class="{{ $showReCaptcha ? 'show' : 'collapse' }}">
                     <div class="form-group">
                         <label for="descriptionInput">reCaptcha site key</label>
                         <input type="text" class="form-control @error('recaptcha-site-key') is-invalid @enderror" id="descriptionInput" name="recaptcha-site-key" value="{{ old('recaptcha-site-key', setting('recaptcha-site-key', '')) }}">
@@ -33,6 +33,7 @@
 
                         <small>You can get reCaptcha keys on the
                             <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small>
+                        <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>
                     </div>
                 </div>
 
@@ -43,7 +44,7 @@
                             <option value="{{ $hash }}" @if($currentHash == $hash) selected @endif>{{ $hashName }}</option>
                         @endforeach
                     </select>
-                    <small>The Argon2id is the most secure algorithm but it requires PHP 7.3.0 or greater. If you are running PHP 7.2 you should use Argon since Bcrypt is less secure.</small>
+                    <small>Argon2id is the most secure algorithm but it requires PHP 7.3.0 or greater. If you are running PHP 7.2 you should use Argon2i.</small>
                     <br>
                     <small class="text-danger">When changing the hash algorithm all the users need to reset their passwords !</small>
                 </div>

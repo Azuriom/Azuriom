@@ -8,7 +8,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::published()->withCount('comments')->get();
+        $posts = Post::published()->with('author')->withCount('comments')->get();
 
         return view('posts.index')->with('posts', $posts);
     }
@@ -19,6 +19,8 @@ class PostController extends Controller
             abort(404);
         }
 
-        return view('posts.show')->with('currentPost', $post);
+        $currentPost = $post->load(['author', 'comments', 'likes']);
+
+        return view('posts.show')->with('currentPost', $currentPost);
     }
 }
