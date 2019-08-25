@@ -10,30 +10,32 @@
 
                 <div class="form-group custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="enableSwitch" name="enable-recaptcha" data-toggle='collapse' data-target='#captchaGroup' @if($showReCaptcha) checked @endif>
-                    <label class="custom-control-label" for="enableSwitch">Enable reCaptcha bots protection</label>
+                    <label class="custom-control-label" for="enableSwitch">Enable Google reCaptcha bots protection</label>
                 </div>
 
                 <div id="captchaGroup" class="{{ $showReCaptcha ? 'show' : 'collapse' }}">
-                    <div class="form-group">
-                        <label for="descriptionInput">reCaptcha site key</label>
-                        <input type="text" class="form-control @error('recaptcha-site-key') is-invalid @enderror" id="descriptionInput" name="recaptcha-site-key" value="{{ old('recaptcha-site-key', setting('recaptcha-site-key', '')) }}">
+                    <div class="card card-body mb-2">
+                        <div class="form-group">
+                            <label for="siteKeyInput">Google reCaptcha site key</label>
+                            <input type="text" class="form-control @error('recaptcha-site-key') is-invalid @enderror" id="siteKeyInput" name="recaptcha-site-key" value="{{ old('recaptcha-site-key', setting('recaptcha-site-key', '')) }}">
 
-                        @error('recaptcha-site-key')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-                    </div>
+                            @error('recaptcha-site-key')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group">
-                        <label for="descriptionInput">reCaptcha secret key</label>
-                        <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="descriptionInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}">
+                        <div class="form-group mb-0">
+                            <label for="secretKeyInput">Google reCaptcha secret key</label>
+                            <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="secretKeyInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}">
 
-                        @error('recaptcha-secret-key')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
+                            @error('recaptcha-secret-key')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
 
-                        <small>You can get reCaptcha keys on the
-                            <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small>
-                        <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>
+                            <small>You can get reCaptcha keys on the
+                                <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small>
+                            <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>
+                        </div>
                     </div>
                 </div>
 

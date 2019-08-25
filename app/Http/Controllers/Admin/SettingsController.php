@@ -7,6 +7,8 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\LangHelper;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -77,6 +79,72 @@ class SettingsController extends Controller
         $this->updateSettings($request->all(['hash']));
 
         return redirect()->route('admin.settings.security')->with('success', 'Settings updated');
+    }
+
+    public function performance()
+    {
+        $cacheStatus = App::configurationIsCached() || App::routesAreCached();
+
+        return view('admin.settings.performance')->with('cacheStatus', $cacheStatus);
+    }
+
+    public function clearCache()
+    {
+        $exitCode = Artisan::call('view:clear') + Artisan::call('cache:clear');
+
+        if ($exitCode !== 0) {
+            return redirect()->route('admin.settings.performance')->with('error', 'Error while clearing cache');
+        }
+
+        return redirect()->route('admin.settings.performance')->with('success', 'Cache cleared with success');
+    }
+
+    public function enableAdvancedCache()
+    {
+        $exitCode = Artisan::call('config:cache') + Artisan::call('route:cache');
+
+        if ($exitCode !== 0) {
+            return redirect()->route('admin.settings.performance')->with('error', 'Error while enabling RocketBooster');
+        }
+
+        return redirect()->route('admin.settings.performance')->with('success', 'RocketBooster enabled');
+    }
+
+    public function disableAdvancedCache()
+    {
+        $exitCode = Artisan::call('route:clear') + Artisan::call('config:clear');
+
+        if ($exitCode !== 0) {
+            return redirect()->route('admin.settings.performance')->with('error',
+                'Error while disabling RocketBooster');
+        }
+
+        return redirect()->route('admin.settings.performance')->with('success', 'RocketBooster disabled');
+    }
+
+    public function seo()
+    {
+        $show = setting('g-analytics-key') || old('enable-g-analytics');
+
+        return view('admin.settings.seo')->with('enableAnalytics', $show);
+    }
+
+    public function updateSeo(Request $request)
+    {
+        $enable = $request->has('enable-g-analytics');
+
+        $this->validate($request, [
+            'g-analytics-key' => $enable ? ['required', 'string', 'max:50'] : ['nullable'],
+        ]);
+
+        if ($enable) {
+            $this->updateSettings($request->only('g-analytics-key'));
+
+        } else {
+            Setting::where('name', 'g-analytics-key')->delete();
+        }
+
+        return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }
 
     private function updateSettings(array $settings)
