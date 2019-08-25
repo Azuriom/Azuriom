@@ -6,6 +6,11 @@ use Azuriom\Models\Post;
 
 class PostController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $posts = Post::published()->with('author')->withCount('comments')->get();
@@ -13,6 +18,12 @@ class PostController extends Controller
         return view('posts.index')->with('posts', $posts);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Azuriom\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
     public function show(Post $post)
     {
         if (! $post->isPublished() && (auth()->guest() || ! auth()->user()->isAdmin())) {

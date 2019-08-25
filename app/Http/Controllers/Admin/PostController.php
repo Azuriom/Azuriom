@@ -91,7 +91,7 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
     }
 
-    public function rules($post = null)
+    private function rules($post = null)
     {
         return [
             'title' => ['required', 'string', 'max:150'],

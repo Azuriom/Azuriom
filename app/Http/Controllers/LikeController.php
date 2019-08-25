@@ -12,7 +12,7 @@ class LikeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Post  $post
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function addLike(Request $request, Post $post)

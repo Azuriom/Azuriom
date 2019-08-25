@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,7 +48,7 @@ class CommentController extends Controller
         return redirect()->route('posts.show', $post->slug);
     }
 
-    public function rules()
+    private function rules()
     {
         return [
             'content' => ['required', 'string']

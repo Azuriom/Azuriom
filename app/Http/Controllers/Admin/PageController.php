@@ -93,7 +93,7 @@ class PageController extends Controller
         return redirect()->route('admin.pages.index')->with('success', 'Page deleted');
     }
 
-    public function rules($page = null)
+    private function rules($page = null)
     {
         return [
             'title' => ['required', 'string', 'max:150'],

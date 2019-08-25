@@ -12,6 +12,11 @@ use Illuminate\Validation\Rule;
 
 class ImageController extends Controller
 {
+    /**
+     * The storage path for uploaded images
+     *
+     * @var string
+     */
     protected $storagePath = 'public/img/';
 
     /**
@@ -132,7 +137,7 @@ class ImageController extends Controller
         return str_replace('jpeg', 'jpg', Str::lower($name));
     }
 
-    public function rules($image = null)
+    private function rules($image = null)
     {
         return [
             'name' => ['required', 'string', 'max:150'],

@@ -38,6 +38,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -71,6 +72,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, User $user)
     {
@@ -108,7 +110,7 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('error', 'Not implemented yet !');
     }
 
-    protected function rules($user = null)
+    private function rules($user = null)
     {
         return [
             'name' => ['required', 'string', 'max:25', 'alpha_dash'],

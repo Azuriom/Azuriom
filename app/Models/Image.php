@@ -15,6 +15,9 @@ class Image extends Model
         'name', 'file', 'type'
     ];
 
+    /**
+     * Get the slug of this image.
+     */
     public function getSlug()
     {
         return pathinfo($this->file, PATHINFO_FILENAME);
