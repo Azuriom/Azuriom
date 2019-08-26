@@ -83,43 +83,47 @@ class SettingsController extends Controller
 
     public function performance()
     {
-        $cacheStatus = App::configurationIsCached() || App::routesAreCached();
-
-        return view('admin.settings.performance')->with('cacheStatus', $cacheStatus);
+        return view('admin.settings.performance')->with('cacheStatus', $this->hasAdvancedCache());
     }
 
     public function clearCache()
     {
         $exitCode = Artisan::call('view:clear') + Artisan::call('cache:clear');
 
+        $redirect = redirect()->route('admin.settings.performance');
+
         if ($exitCode !== 0) {
-            return redirect()->route('admin.settings.performance')->with('error', 'Error while clearing cache');
+            return $redirect->with('error', 'Error while clearing cache');
         }
 
-        return redirect()->route('admin.settings.performance')->with('success', 'Cache cleared with success');
+        return $redirect->with('success', 'Cache cleared with success');
     }
 
     public function enableAdvancedCache()
     {
+        $redirect = redirect()->route('admin.settings.performance');
+        $cacheStatus = $this->hasAdvancedCache();
+
         $exitCode = Artisan::call('config:cache') + Artisan::call('route:cache');
 
         if ($exitCode !== 0) {
-            return redirect()->route('admin.settings.performance')->with('error', 'Error while enabling RocketBooster');
+            return $redirect->with('error', 'Error while enabling RocketBooster');
         }
 
-        return redirect()->route('admin.settings.performance')->with('success', 'RocketBooster enabled');
+        return $redirect->with('success', $cacheStatus ? 'RocketBooster reloaded' : 'RocketBooster enabled');
     }
 
     public function disableAdvancedCache()
     {
         $exitCode = Artisan::call('route:clear') + Artisan::call('config:clear');
 
+        $redirect = redirect()->route('admin.settings.performance');
+
         if ($exitCode !== 0) {
-            return redirect()->route('admin.settings.performance')->with('error',
-                'Error while disabling RocketBooster');
+            return $redirect->with('error', 'Error while disabling RocketBooster');
         }
 
-        return redirect()->route('admin.settings.performance')->with('success', 'RocketBooster disabled');
+        return $redirect->with('success', 'RocketBooster disabled');
     }
 
     public function seo()
@@ -134,6 +138,7 @@ class SettingsController extends Controller
         $enable = $request->has('enable-g-analytics');
 
         $this->validate($request, [
+            'keywords' => ['nullable', 'string', 'max:150'],
             'g-analytics-key' => $enable ? ['required', 'string', 'max:50'] : ['nullable'],
         ]);
 
@@ -144,6 +149,15 @@ class SettingsController extends Controller
             Setting::where('name', 'g-analytics-key')->delete();
         }
 
+        $keywords = $request->get('keywords');
+
+        if ($keywords) {
+            $this->updateSettings($request->only('keywords'));
+
+        } else {
+            Setting::where('name', 'keywords')->delete();
+        }
+
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }
 
@@ -152,5 +166,10 @@ class SettingsController extends Controller
         foreach ($settings as $name => $value) {
             Setting::updateOrCreate(['name' => $name], ['value' => $value]);
         }
+    }
+
+    private function hasAdvancedCache()
+    {
+        return App::configurationIsCached() || App::routesAreCached();
     }
 }

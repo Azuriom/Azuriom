@@ -23,7 +23,9 @@
                             <th scope="row">{{ $user->id }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->role->name }}</td>
+                            <td>
+                                <span class="badge badge-label" style="{{ $user->role->getBadgeStyle() }}">{{ $user->role->name }}</span>
+                            </td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('admin.users.destroy', $user) }}" class="mx-1" data-confirm="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>

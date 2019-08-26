@@ -14,7 +14,7 @@
                 </div>
 
                 <div id="gAnalyticsGroup" class="{{ $enableAnalytics ? 'show' : 'collapse' }}">
-                    <div class="card card-body">
+                    <div class="card card-body mb-2">
                         <div class="form-group mb-0">
                             <label for="keyInput">Google Analytics site key</label>
                             <input type="text" class="form-control @error('g-analytics-key') is-invalid @enderror" id="keyInput" name="g-analytics-key" value="{{ old('g-analytics-key', setting('g-analytics-key', '')) }}">
@@ -28,6 +28,12 @@
                             </small>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywordsInput">Meta keywords</label>
+                    <input type="text" class="form-control" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}">
+                    <small>The keywords must be separated with a comma.</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

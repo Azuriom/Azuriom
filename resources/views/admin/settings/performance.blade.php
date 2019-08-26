@@ -22,7 +22,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">RocketBooster</h4>
+                    <h4 class="card-title">RocketBooster <i class="text-primary fas fa-rocket"></i></h4>
                     <p class="card-subtitle">RocketBooster improves your website performances by adding one more exclusive cache layer.</p>
                     <small>If you have some issues after enabling an extension you should reload the cache.</small>
 

@@ -17,7 +17,14 @@ class Role extends Model
 
     public function getHexColor()
     {
-        return '#' . $this->color;
+        return '#'.$this->color;
+    }
+
+    public function getBadgeStyle()
+    {
+        $color = color_contrast($this->getHexColor());
+
+        return "color: {$color}; background: {$this->getHexColor()}";
     }
 
     public function isPermanent()

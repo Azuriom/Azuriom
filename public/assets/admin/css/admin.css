@@ -28,3 +28,8 @@ a[disabled] {
 .custom-file-label {
     cursor: pointer;
 }
+
+.badge-label {
+    font-size: 90%;
+    font-weight: inherit;
+}

@@ -245,7 +245,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom CMS</a> 2019. Template by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
+                        <span>Copyright &copy; <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a> 2019. Template by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
                     </div>
                 </div>
             </footer>

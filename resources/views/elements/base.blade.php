@@ -1,4 +1,4 @@
-@if($analyticsId = setting('g-analytics-key'))
+@if($analyticsId = setting('g-analytics-key')) @push('scripts')
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $analyticsId }}"></script>
     <script>
@@ -11,4 +11,8 @@
         gtag('js', new Date());
         gtag('config', '{{ $analyticsId }}');
     </script>
-@endif
+@endpush @endif
+
+@if($keywords = setting('keywords')) @push('meta')
+    <meta name="keywords" content="{{ $keywords }}">
+@endpush @endif
