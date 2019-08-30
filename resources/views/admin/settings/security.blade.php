@@ -16,7 +16,7 @@
                 <div id="captchaGroup" class="{{ $showReCaptcha ? 'show' : 'collapse' }}">
                     <div class="card card-body mb-2">
                         <div class="form-group">
-                            <label for="siteKeyInput">Google reCaptcha site key</label>
+                            <label for="siteKeyInput">Site key</label>
                             <input type="text" class="form-control @error('recaptcha-site-key') is-invalid @enderror" id="siteKeyInput" name="recaptcha-site-key" value="{{ old('recaptcha-site-key', setting('recaptcha-site-key', '')) }}">
 
                             @error('recaptcha-site-key')
@@ -24,8 +24,8 @@
                             @enderror
                         </div>
 
-                        <div class="form-group mb-0">
-                            <label for="secretKeyInput">Google reCaptcha secret key</label>
+                        <div class="form-group">
+                            <label for="secretKeyInput">Secret key</label>
                             <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="secretKeyInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}">
 
                             @error('recaptcha-secret-key')

@@ -13,4 +13,13 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function maintenance()
+    {
+        if (! setting('maintenance')) {
+            return redirect()->to('home');
+        }
+
+        return view('maintenance');
+    }
 }

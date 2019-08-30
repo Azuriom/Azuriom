@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/maintenance', 'HomeController@maintenance')->name('maintenance');
 
 Route::prefix('user')->group(function () {
     Auth::routes(['verify' => true]);

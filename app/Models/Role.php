@@ -17,7 +17,7 @@ class Role extends Model
 
     public function getHexColor()
     {
-        return '#'.$this->color;
+        return "#{$this->color}";
     }
 
     public function getBadgeStyle()

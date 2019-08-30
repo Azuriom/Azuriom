@@ -72,11 +72,11 @@
                 <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Settings</h6>
-                        <a class="collapse-item" href="{{ route('admin.settings.index') }}">Global</a>
-                        <a class="collapse-item" href="{{ route('admin.settings.security') }}">Security</a>
-                        <a class="collapse-item" href="{{ route('admin.settings.performance') }}">Performances</a>
-                        <a class="collapse-item" href="{{ route('admin.settings.seo') }}">SEO</a>
-                        <a class="collapse-item" href="#">Maintenance</a>
+                        <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">Global</a>
+                        <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">Security</a>
+                        <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">Performances</a>
+                        <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">SEO</a>
+                        <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">Maintenance</a>
                     </div>
                 </div>
             </div>

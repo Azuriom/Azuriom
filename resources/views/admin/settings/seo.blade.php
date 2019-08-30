@@ -8,32 +8,27 @@
             <form action="{{ route('admin.settings.update-seo') }}" method="POST">
                 @csrf
 
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="enable-g-analytics" data-toggle='collapse' data-target='#gAnalyticsGroup' @if($enableAnalytics) checked @endif>
-                    <label class="custom-control-label" for="enableSwitch">Enable Google Analytics</label>
-                </div>
+                <div class="form-group mb-0">
+                    <label for="keyInput">Google Analytics site id</label>
+                    <input type="text" class="form-control @error('g-analytics-id') is-invalid @enderror" id="keyInput" name="g-analytics-id" placeholder="UA-XXXXXXXX-1" value="{{ old('g-analytics-id', setting('g-analytics-id', '')) }}">
 
-                <div id="gAnalyticsGroup" class="{{ $enableAnalytics ? 'show' : 'collapse' }}">
-                    <div class="card card-body mb-2">
-                        <div class="form-group mb-0">
-                            <label for="keyInput">Google Analytics site key</label>
-                            <input type="text" class="form-control @error('g-analytics-key') is-invalid @enderror" id="keyInput" name="g-analytics-key" value="{{ old('g-analytics-key', setting('g-analytics-key', '')) }}">
+                    @error('g-analytics-id')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
 
-                            @error('g-analytics-key')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-
-                            <small>You can get the site key on the
-                                <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics website</a>.
-                            </small>
-                        </div>
-                    </div>
+                    <small>You can get the site id on the
+                        <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics website</a>.
+                    </small>
                 </div>
 
                 <div class="form-group">
                     <label for="keywordsInput">Meta keywords</label>
-                    <input type="text" class="form-control" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}">
+                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}">
                     <small>The keywords must be separated with a comma.</small>
+
+                    @error('keywords')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

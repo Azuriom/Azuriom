@@ -31,6 +31,9 @@ Route::prefix('settings')->name('settings.')->group(function () {
 
     Route::get('/seo', 'SettingsController@seo')->name('seo');
     Route::post('/seo/update', 'SettingsController@updateSeo')->name('update-seo');
+
+    Route::get('/maintenance', 'SettingsController@maintenance')->name('maintenance');
+    Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('update-maintenance');
 });
 
 Route::post('/users/{user}/verify', 'UserController@verifyEmail')->name('users.verify');

@@ -128,25 +128,23 @@ class SettingsController extends Controller
 
     public function seo()
     {
-        $show = setting('g-analytics-key') || old('enable-g-analytics');
+        $show = setting('g-analytics-id') || old('enable-g-analytics');
 
         return view('admin.settings.seo')->with('enableAnalytics', $show);
     }
 
     public function updateSeo(Request $request)
     {
-        $enable = $request->has('enable-g-analytics');
-
         $this->validate($request, [
             'keywords' => ['nullable', 'string', 'max:150'],
-            'g-analytics-key' => $enable ? ['required', 'string', 'max:50'] : ['nullable'],
+            'g-analytics-id' => ['nullable', 'string', 'max:50'],
         ]);
 
-        if ($enable) {
-            $this->updateSettings($request->only('g-analytics-key'));
+        if ($request->get('g-analytics-id')) {
+            $this->updateSettings($request->only('g-analytics-id'));
 
         } else {
-            Setting::where('name', 'g-analytics-key')->delete();
+            Setting::where('name', 'g-analytics-id')->delete();
         }
 
         $keywords = $request->get('keywords');
@@ -159,6 +157,22 @@ class SettingsController extends Controller
         }
 
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
+    }
+
+    public function maintenance()
+    {
+        return view('admin.settings.maintenance');
+    }
+
+    public function updateMaintenance(Request $request)
+    {
+        $this->validate($request, [
+
+        ]);
+
+        // TODO
+
+        return redirect()->route('admin.settings.maintenance')->with('success', 'Soon');
     }
 
     private function updateSettings(array $settings)

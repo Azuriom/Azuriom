@@ -1,4 +1,4 @@
-@if($analyticsId = setting('g-analytics-key')) @push('scripts')
+@if($analyticsId = setting('g-analytics-id')) @push('scripts')
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $analyticsId }}"></script>
     <script>

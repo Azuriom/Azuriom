@@ -16,9 +16,10 @@ class VerifyAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (! Auth::user()->isAdmin()) {
+        if (Auth::guest() || ! Auth::user()->isAdmin()) {
             abort(403);
         }
+
         return $next($request);
     }
 }
