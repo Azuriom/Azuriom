@@ -12,8 +12,47 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'color'
+        'name', 'color', 'is_admin'
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+
+    /**
+     * Get the users in this group.
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
+     * The permission that this role have.
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->is_admin || $this->hasRawPermission($permission);
+    }
+
+    public function hasRawPermission($permission)
+    {
+        if (is_string($permission)) {
+            $permission = Permission::where('name', $permission)->first();
+        }
+
+        return $permission && $this->permissions->contains($permission);
+    }
 
     public function getHexColor()
     {
@@ -35,11 +74,6 @@ class Role extends Model
     public function isDefault()
     {
         return $this->id == 1;
-    }
-
-    public function users()
-    {
-        return $this->hasMany(User::class);
     }
 
     /**

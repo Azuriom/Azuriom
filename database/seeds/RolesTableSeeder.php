@@ -19,7 +19,8 @@ class RolesTableSeeder extends Seeder
 
         Role::firstOrCreate([
             'name' => 'Admin',
-            'color' => 'e10d11'
+            'color' => 'e10d11',
+            'is_admin' => true
         ]);
     }
 }

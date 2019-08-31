@@ -19,7 +19,7 @@ class CreatePagesTable extends Migration
             $table->string('description');
             $table->string('slug')->unique();
             $table->text('content');
-            $table->tinyInteger('is_enabled');
+            $table->boolean('is_enabled');
             $table->timestamps();
         });
     }

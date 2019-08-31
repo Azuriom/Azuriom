@@ -28,13 +28,8 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function isAuthor(User $user)
-    {
-        return $this->author_id === $user->id;
-    }
-
     /**
-     * Get this post comments
+     * Get this post comments.
      */
     public function comments()
     {
@@ -42,7 +37,7 @@ class Post extends Model
     }
 
     /**
-     * Get this post likes
+     * Get this post likes.
      */
     public function likes()
     {
@@ -52,6 +47,11 @@ class Post extends Model
     public function hasLiked(User $user)
     {
         return $this->likes->where('author_id', $user->id)->isNotEmpty();
+    }
+
+    public function isAuthor(User $user)
+    {
+        return $this->author_id === $user->id;
     }
 
     public function isPublished()

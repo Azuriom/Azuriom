@@ -3,10 +3,11 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
-use Azuriom\Models\User;
 use Azuriom\Rules\Color;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class RoleController extends Controller
 {
@@ -29,7 +30,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+        return view('admin.roles.create')->with('permissions', Permission::all());
     }
 
     /**
@@ -45,6 +46,8 @@ class RoleController extends Controller
 
         $request->offsetSet('color', substr($request->get('color'), 1));
 
+        request_checkbox($request, 'is_admin');
+
         Role::create($request->all());
 
         return redirect()->route('admin.roles.index')->with('success', 'Role created');
@@ -58,7 +61,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('admin.roles.edit')->with('role', $role);
+        $role->loadMissing('permissions');
+
+        return view('admin.roles.edit')->with('role', $role)->with('permissions', Permission::all());
     }
 
     /**
@@ -74,6 +79,12 @@ class RoleController extends Controller
         $this->validate($request, $this->rules());
 
         $request->offsetSet('color', substr($request->get('color'), 1));
+
+        request_checkbox($request, 'is_admin');
+
+        $permissions = array_keys($request->get('permissions', []));
+
+        $role->permissions()->sync($permissions);
 
         $role->update($request->all());
 

@@ -30,8 +30,8 @@ class PostController extends Controller
             abort(404);
         }
 
-        $currentPost = $post->load(['author', 'comments', 'likes']);
+        $post->loadMissing(['author', 'comments', 'likes']);
 
-        return view('posts.show')->with('currentPost', $currentPost);
+        return view('posts.show')->with('currentPost', $post);
     }
 }

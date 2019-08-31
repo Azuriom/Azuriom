@@ -25,6 +25,14 @@ class Comment extends Model
     ];
 
     /**
+     * Get the post of this comment.
+     */
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    /**
      * Get the author of this comment.
      */
     public function author()
@@ -35,10 +43,5 @@ class Comment extends Model
     public function isAuthor(User $user)
     {
         return $this->author_id === $user->id;
-    }
-
-    public function post()
-    {
-        return $this->belongsTo(Post::class);
     }
 }

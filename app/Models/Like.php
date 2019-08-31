@@ -18,15 +18,18 @@ class Like extends Model
     ];
 
     /**
-     * Get the author of this comment.
+     * Get the post of this like.
+     */
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Get the author of this like.
      */
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
-    }
-
-    public function post()
-    {
-        return $this->belongsTo(Post::class);
     }
 }
