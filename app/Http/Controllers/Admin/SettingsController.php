@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Setting;
 use Azuriom\Support\LangHelper;
-use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -26,10 +25,11 @@ class SettingsController extends Controller
 
     public function index()
     {
-        return view('admin.settings.index')
-            ->with('languages', LangHelper::getAvailableLanguages())
-            ->with('timezones', array_values(DateTimeZone::listIdentifiers(DateTimeZone::ALL)))
-            ->with('currentTimezone', config('app.timezone'));
+        return view('admin.settings.index', [
+            'languages' => LangHelper::getAvailableLanguages(),
+            'timezones' => array_values(timezone_identifiers_list()),
+            'currentTimezone' => config('app.timezone')
+        ]);
     }
 
     public function update(Request $request)
@@ -53,10 +53,11 @@ class SettingsController extends Controller
     {
         $show = (setting('recaptcha-site-key') && setting('recaptcha-site-key')) || old('enable-recaptcha');
 
-        return view('admin.settings.security')
-            ->with('hashAlgorithms', $this->hashAlgorithms)
-            ->with('currentHash', config('hashing.driver'))
-            ->with('showReCaptcha', $show);
+        return view('admin.settings.security', [
+            'hashAlgorithms', $this->hashAlgorithms,
+            'currentHash' => config('hashing.driver'),
+            'showReCaptcha' => $show
+        ]);
     }
 
     public function updateSecurity(Request $request)

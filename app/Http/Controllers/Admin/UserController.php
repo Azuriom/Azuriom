@@ -63,7 +63,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit')->with('user', $user)->with('roles', Role::all());
+        return view('admin.users.edit', [
+            'user' => $user,
+            'roles', Role::all()
+        ]);
     }
 
     /**
@@ -96,7 +99,7 @@ class UserController extends Controller
     {
         $user->markEmailAsVerified();
 
-        return redirect()->route('admin.users.edit', $user)->with('user', $user)->with('success', 'Email verified');
+        return redirect()->route('admin.users.edit', $user)->with('success', 'Email verified');
     }
 
     /**

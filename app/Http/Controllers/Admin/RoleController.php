@@ -7,7 +7,6 @@ use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Azuriom\Rules\Color;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class RoleController extends Controller
 {
@@ -63,7 +62,10 @@ class RoleController extends Controller
     {
         $role->loadMissing('permissions');
 
-        return view('admin.roles.edit')->with('role', $role)->with('permissions', Permission::all());
+        return view('admin.roles.edit', [
+            'role' => $role,
+            'permissions', Permission::all()
+        ]);
     }
 
     /**

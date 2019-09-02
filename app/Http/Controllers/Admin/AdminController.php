@@ -13,7 +13,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard')->with([
+        return view('admin.dashboard', [
             'userCount' => User::count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
