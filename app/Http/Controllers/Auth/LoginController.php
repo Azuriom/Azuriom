@@ -3,8 +3,10 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends Controller
 {
@@ -38,7 +40,70 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    function authenticated(Request $request, $user)
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->guard()->once($this->credentials($request))) {
+            $user = $this->guard()->user();
+
+            if (! $user->hasTwoFactorAuth()) {
+                $this->guard()->login($user, $request->filled('remember'));
+
+                return $this->sendLoginResponse($request);
+            }
+
+            $request->session()->flash('2fa_id', $user->id);
+            $request->session()->flash('2fa_remember', $request->filled('remember'));
+
+            return redirect()->route('login.2fa');
+        }
+
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    public function show2fa(Request $request)
+    {
+        if (! $request->session()->has('2fa_id')) {
+            return redirect()->route('login');
+        }
+
+        $request->session()->keep(['2fa_id', '2fa_remember']);
+
+        return view('auth.2fa');
+    }
+
+    public function login2fa(Request $request)
+    {
+        $userId = $request->session()->get('2fa_id');
+
+        $user = $userId ? User::query()->find($userId) : null;
+
+        if ($user === null) {
+            return redirect()->route('login');
+        }
+
+        $request->session()->keep(['2fa_id', '2fa_remember']);
+
+        $this->validate($request, ['code' => 'required|string']);
+
+        if ((new Google2FA())->verifyKey($user->google_2fa_secret, $request->get('code'))) {
+            $this->guard()->login($user, $request->session()->get('2fa_remember'));
+
+            return $this->sendLoginResponse($request);
+        }
+
+        return redirect()->route('login.2fa')->withErrors(['code' => 'Invalid code']);
+    }
+
+    protected function authenticated(Request $request, $user)
     {
         $user->last_ip = $request->ip();
         $user->save();

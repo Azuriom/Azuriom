@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'google_2fa_secret'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'google_2fa_secret'
     ];
 
     /**
@@ -64,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasPermission($permission)
     {
         return $this->role->hasPermission($permission);
+    }
+
+    public function hasTwoFactorAuth()
+    {
+        return $this->google_2fa_secret !== null;
     }
 
     public function isAdmin()

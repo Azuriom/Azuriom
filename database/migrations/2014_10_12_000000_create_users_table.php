@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedInteger('role_id')->default(1);
             $table->string('last_ip', 45)->nullable();
+            $table->string('google_2fa_secret')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

@@ -19,6 +19,9 @@ Route::get('/maintenance', 'HomeController@maintenance')->name('maintenance');
 
 Route::prefix('user')->group(function () {
     Auth::routes(['verify' => true]);
+
+    Route::get('/2fa', 'Auth\LoginController@show2fa')->name('login.2fa');
+    Route::post('/2fa', 'Auth\LoginController@login2fa');
 });
 
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
