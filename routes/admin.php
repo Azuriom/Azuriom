@@ -36,7 +36,10 @@ Route::prefix('settings')->name('settings.')->group(function () {
     Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('update-maintenance');
 });
 
-Route::post('/users/{user}/verify', 'UserController@verifyEmail')->name('users.verify');
+Route::prefix('users')->name('users.')->group(function () {
+    Route::post('/{user}/verify', 'UserController@verifyEmail')->name('verify');
+    Route::post('/{user}/2fa', 'UserController@disable2fa')->name('2fa');
+});
 
 Route::resource('users', 'UserController')->except('show');
 Route::resource('roles', 'RoleController')->except('show');

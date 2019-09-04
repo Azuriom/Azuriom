@@ -49,7 +49,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger" data-confirm="delete" @if($role->isPermanent()) disabled @endif>Delete</a>
+                <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger @if($role->isPermanent()) disabled @endif" data-confirm="delete" @if($role->isPermanent()) disabled @endif>Delete</a>
             </form>
         </div>
     </div>

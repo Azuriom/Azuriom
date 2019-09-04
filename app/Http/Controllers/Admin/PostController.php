@@ -43,7 +43,7 @@ class PostController extends Controller
         $this->validate($request, $this->rules());
 
         $post = new Post($request->all());
-        $post->author_id = auth()->user()->id;
+        $post->author_id = $request->user()->id;
         $post->save();
 
         return redirect()->route('admin.posts.index')->with('success', 'Post created');

@@ -17,7 +17,7 @@ class ImageController extends Controller
      *
      * @var string
      */
-    protected $storagePath = 'public/img/';
+    protected $imagePath = 'public/img/';
 
     /**
      * Display a listing of the resource.
@@ -129,7 +129,7 @@ class ImageController extends Controller
 
     protected function getImagePath(string $fileName)
     {
-        return $this->storagePath.$fileName;
+        return $this->imagePath.$fileName;
     }
 
     protected function normalizeExtensions(string $name)

@@ -59,6 +59,13 @@ class Role extends Model
         return "#{$this->color}";
     }
 
+    /**
+     * Get the CSS inline style rules of this role.
+     * The background color is the role color and the text
+     * color is white or black depending on the role color
+     *
+     * @return string
+     */
     public function getBadgeStyle()
     {
         $color = color_contrast($this->getHexColor());
@@ -66,18 +73,33 @@ class Role extends Model
         return "color: {$color}; background: {$this->getHexColor()}";
     }
 
+    /**
+     * Return true if this role is a permanent role.
+     * The roles created by the application with the id 1 or 2
+     * are permanents roles and can't be deleted.
+     *
+     * @return bool
+     */
     public function isPermanent()
     {
         return $this->id == 1 || $this->id == 2;
     }
 
+    /**
+     * Return true if this role is the default role.
+     * The role created by the application with the id 1
+     * is always the default role that new users will get
+     * when they will register
+     *
+     * @return bool
+     */
     public function isDefault()
     {
         return $this->id == 1;
     }
 
     /**
-     * Get the default role
+     * Get the default role.
      *
      * @return Role
      */

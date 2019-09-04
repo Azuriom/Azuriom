@@ -7,10 +7,20 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
-                <ul class="mb-0">
-                   <li>Role: {{ $user->role->name }}</li>
-                   <li>Register: {{ $user->created_at }}</li>
+                <ul>
+                    <li>Role: {{ $user->role->name }}</li>
+                    <li>Register: {{ $user->created_at }}</li>
                 </ul>
+
+                @if($user->hasTwoFactorAuth())
+                    <form action="{{ route('profile.2fa.disable') }}" method="POST">
+                        @csrf
+
+                        <button type="submit" class="btn btn-danger">Disable 2fa</button>
+                    </form>
+                @else
+                    <a class="btn btn-success" href="{{ route('profile.2fa.index') }}">Enable 2fa</a>
+                @endif
             </div>
         </div>
 

@@ -65,7 +65,7 @@ class UserController extends Controller
     {
         return view('admin.users.edit', [
             'user' => $user,
-            'roles', Role::all()
+            'roles' => Role::all()
         ]);
     }
 
@@ -100,6 +100,13 @@ class UserController extends Controller
         $user->markEmailAsVerified();
 
         return redirect()->route('admin.users.edit', $user)->with('success', 'Email verified');
+    }
+
+    public function disable2fa(User $user)
+    {
+        $user->update(['google_2fa_secret' => null]);
+
+        return redirect()->route('admin.users.edit', $user)->with('success', '2fa disabled');
     }
 
     /**

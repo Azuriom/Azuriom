@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\Comment;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -39,7 +38,7 @@ class CommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        if ($comment->author_id !== Auth::id() && (Auth::guest() || ! auth()->user()->isAdmin())) {
+        if ($comment->author_id !== auth()->id() && (auth()->guest() || ! auth()->user()->isAdmin())) {
             abort(403);
         }
 

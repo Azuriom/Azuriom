@@ -17,7 +17,7 @@ class LikeController extends Controller
      */
     public function addLike(Request $request, Post $post)
     {
-        $userId = auth()->user()->id;
+        $userId = auth()->id;
 
         if (Like::where('post_id', $post->id)->where('author_id', $userId)->doesntExist()) {
             $like = new Like;
@@ -37,7 +37,7 @@ class LikeController extends Controller
      */
     public function removeLike(Post $post)
     {
-        Like::where('post_id', $post->id)->where('author_id', auth()->user()->id)->delete();
+        Like::where('post_id', $post->id)->where('author_id', auth()->id)->delete();
 
         return redirect()->route('posts.show', $post->slug);
     }

@@ -65,17 +65,15 @@
                         <input type="text" class="form-control" id="registerInput" value="{{ $user->created_at }}" disabled>
                     </div>
 
-                    @if($user->hasVerifiedEmail())
+                    <form action="{{ route('admin.users.verify', $user) }}" method="POST">
+                        @csrf
+
                         <div class="form-group">
                             <label for="emailVerifiedInput">Email verified</label>
-                            <input type="text" class="form-control text-success" id="emailVerifiedInput" value="Yes" disabled>
-                        </div>
-                    @else
-                        <form action="{{ route('admin.users.verify', $user) }}" method="POST">
-                            @csrf
 
-                            <div class="form-group">
-                                <label for="emailVerifiedInput">Email verified</label>
+                            @if($user->hasVerifiedEmail())
+                                <input type="text" class="form-control text-success" id="emailVerifiedInput" value="Yes" disabled>
+                            @else
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="No" disabled>
 
@@ -83,9 +81,29 @@
                                         <button class="btn btn-outline-success" type="submit">Verify email</button>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    @endif
+                            @endif
+                        </div>
+                    </form>
+
+                    <form action="{{ route('admin.users.2fa', $user) }}" method="POST">
+                        @csrf
+
+                        <div class="form-group">
+                            <label for="2faInput">Two Factor Auth verification</label>
+
+                            @if(! $user->hasTwoFactorAuth())
+                                <input type="text" class="form-control text-danger" id="2faInput" value="No" disabled>
+                            @else
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control text-success" id="2faInput" value="Yes" disabled>
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-danger" type="submit">Disable 2fa</button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </form>
 
                     <div class="form-group">
                         <label for="registerInput">Address</label>
