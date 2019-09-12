@@ -208,10 +208,10 @@ class LangHelper
 
     public static function getAvailableLanguages()
     {
-       return collect(File::directories(App::langPath()))->mapWithKeys(function ($path) {
-           $name = basename($path);
+        return collect(File::directories(App::langPath()))->mapWithKeys(function ($path) {
+            $name = basename($path);
 
-           return [$name => self::getIsoLanguage($name)];
-       })->toArray();
+            return [$name => self::getIsoLanguage($name)];
+        })->toArray();
     }
 }

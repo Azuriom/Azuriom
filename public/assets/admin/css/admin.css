@@ -33,3 +33,7 @@ a[disabled] {
     font-size: 90%;
     font-weight: inherit;
 }
+
+.rotate-45 {
+    transform: rotate(45deg);
+}

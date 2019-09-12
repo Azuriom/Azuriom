@@ -20,7 +20,12 @@
 
                     @foreach($posts as $post)
                         <tr>
-                            <th scope="row">{{ $post->id }}</th>
+                            <th scope="row">
+                                {{ $post->id }}
+                                @if($post->is_pinned)
+                                    <i class="fas fa-thumbtack text-primary rotate-45" title="Pinned" data-toggle="tooltip"></i>
+                                @endif
+                            </th>
                             <td>{{ $post->title }}</td>
                             <td><a href="{{ route('posts.show', $post->slug) }}">{{ $post->slug }}</a></td>
                             <td><a href="{{ route('admin.users.edit', $post->author ) }}">{{ $post->author->name }}</a></td>

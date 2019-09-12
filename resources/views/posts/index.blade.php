@@ -13,7 +13,7 @@
                     <p class="card-text">{!! $post->content !!}</p>
                     <a href="{{ route('posts.show', $post->slug) }}" class="btn btn-primary">Lire la suite</a>
                 </div>
-                <div class="card-footer text-muted">Posted on {{ $post->created_at }} by {{ $post->author->name }}</div>
+                <div class="card-footer text-muted">Posted on {{ $post->published_at }} by {{ $post->author->name }} @if($post->is_pinned) - Pinned @endif</div>
             </div>
         @endforeach
     </div>

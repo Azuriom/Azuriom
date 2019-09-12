@@ -42,6 +42,8 @@ class PostController extends Controller
     {
         $this->validate($request, $this->rules());
 
+        request_checkbox($request, 'is_pinned');
+
         $post = new Post($request->all());
         $post->author_id = $request->user()->id;
         $post->save();
@@ -71,6 +73,8 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->validate($request, $this->rules($post));
+
+        request_checkbox($request, 'is_pinned');
 
         $post->update($request->all());
 

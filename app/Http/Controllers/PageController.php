@@ -9,11 +9,13 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Azuriom\Models\Page  $page
+     * @param  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show($slug)
     {
+        $page = Page::where('slug', $slug)->firstOrFaill();
+
         if (! $page->is_published && (auth()->guest() || ! auth()->user()->isAdmin())) {
             abort(404);
         }

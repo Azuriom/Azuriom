@@ -13,7 +13,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::published()->with('author')->withCount('comments')->get();
+        $posts = Post::with('author')
+            ->withCount('comments')
+            ->scopes('published')
+            ->orderBy('is_pinned', 'desc')
+            ->orderBy('published_at', 'desc')
+            ->get();
 
         return view('posts.index')->with('posts', $posts);
     }
@@ -21,16 +26,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Azuriom\Models\Post  $post
+     * @param  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
+        $post = Post::with(['author', 'comments', 'likes'])->where('slug', $slug)->firstOrFail();
+
         if (! $post->isPublished() && (auth()->guest() || ! auth()->user()->isAdmin())) {
             abort(404);
         }
-
-        $post->loadMissing(['author', 'comments', 'likes']);
 
         return view('posts.show')->with('currentPost', $post);
     }

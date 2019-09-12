@@ -29,14 +29,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('slug', '[a-z0-9-]+');
         Route::pattern('name', '[a-z0-9_-]{3,16}');
 
-        Route::bind('post_slug', function ($slug) {
-            return Post::where('slug', $slug)->firstOrFail();
-        });
-
-        Route::bind('page_slug', function ($slug) {
-            return Page::where('slug', $slug)->firstOrFail();
-        });
-
         parent::boot();
     }
 

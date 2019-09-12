@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('title', $currentPost->title)
+@section('description', $currentPost->description)
+@section('type', 'article')
+
+@push('meta')
+    <meta property="og:article:author:username" content="{{ $currentPost->author->name }}">
+    <meta property="og:article:published_time" content="{{ $currentPost->published_at->toIso8601String() }}">
+    <meta property="og:article:modified_time" content="{{ $currentPost->updated_at->toIso8601String() }}">
+@endpush
 
 @push('scripts')
     <script src="{{ asset('assets/js/script.js') }}" defer></script>
@@ -28,7 +36,7 @@
 
         <hr>
 
-        <form @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST"  @endauth>
+        <form @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST" @endauth>
             @csrf
             <button class="btn btn-primary @guest disabled @elseif($currentPost->hasLiked(Auth::user())) active @endguest" @guest disabled @endguest type="submit">
                 Likes: {{ $currentPost->likes->count() }}

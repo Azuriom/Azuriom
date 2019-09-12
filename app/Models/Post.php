@@ -13,11 +13,20 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'slug', 'content', 'published_at'
+        'title', 'description', 'slug', 'content', 'is_pinned', 'published_at'
     ];
 
     protected $dates = [
         'published_at'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_pinned' => 'boolean',
     ];
 
     /**

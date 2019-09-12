@@ -5,6 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="@yield('description', setting('description', ''))">
+    <meta name="theme-color" content="#3490DC">
+    <meta name="author" content="Azuriom">
+
+    <meta property="og:title" content="@yield('title')">
+    <meta property="og:type" content="@yield('type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    {{--<meta property="og:image" content="{{  }}">--}}
+    <meta property="og:description" content="@yield('description', setting('description', ''))">
+    <meta property="og:site_name" content="{{ site_name() }}">
     @stack('meta')
 
     <!-- CSRF Token -->

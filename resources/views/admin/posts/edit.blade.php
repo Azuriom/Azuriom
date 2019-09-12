@@ -62,6 +62,11 @@
                     @enderror
                 </div>
 
+                <div class="form-group custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="pinnedSwitch" name="is_pinned" @if($currentPost->is_pinned) checked @endif>
+                    <label class="custom-control-label" for="pinnedSwitch">Pin the news</label>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('admin.posts.destroy', $currentPost) }}" class="btn btn-danger" data-confirm="delete">Delete</a>
             </form>

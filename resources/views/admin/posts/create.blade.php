@@ -61,6 +61,11 @@
                     @enderror
                 </div>
 
+                <div class="form-group custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="pinnedSwitch" name="is_pinned">
+                    <label class="custom-control-label" for="pinnedSwitch">Pin the news</label>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>
