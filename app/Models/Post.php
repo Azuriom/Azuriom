@@ -70,6 +70,6 @@ class Post extends Model
 
     public function scopePublished(Builder $query)
     {
-        return $query->where('published_at', '<=', now())->orderBy('published_at');
+        return $query->where('published_at', '<=', now());
     }
 }
