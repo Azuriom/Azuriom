@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
@@ -23,4 +24,9 @@ class Page extends Model
     protected $casts = [
         'is_enabled' => 'boolean',
     ];
+
+    public function scopeEnabled(Builder $query)
+    {
+        return $query->where('is_enabled', true);
+    }
 }

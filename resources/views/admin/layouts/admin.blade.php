@@ -81,6 +81,12 @@
                 </div>
             </div>
 
+            <div class="nav-item {{ add_active('admin.navbar-elements.*') }}">
+                <a class="nav-link" href="{{ route('admin.navbar-elements.index') }}">
+                    <i class="fas fa-fw fa-bars"></i>
+                    <span>Navbar</span></a>
+            </div>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -125,12 +131,6 @@
                 <a class="nav-link" href="{{ route('admin.images.index') }}">
                     <i class="fas fa-fw fa-image"></i>
                     <span>Images</span></a>
-            </div>
-
-            <div class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Navbar</span></a>
             </div>
 
             <!-- Divider -->

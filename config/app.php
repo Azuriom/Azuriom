@@ -172,6 +172,7 @@ return [
         Azuriom\Providers\AppServiceProvider::class,
         Azuriom\Providers\AuthServiceProvider::class,
         Azuriom\Providers\SettingServiceProvider::class,
+        Azuriom\Providers\ViewServiceProvider::class,
         // Azuriom\Providers\BroadcastServiceProvider::class,
         Azuriom\Providers\EventServiceProvider::class,
         Azuriom\Providers\RouteServiceProvider::class,

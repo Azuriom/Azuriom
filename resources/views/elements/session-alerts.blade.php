@@ -18,3 +18,4 @@
     </div>
 @endif
 
+<div id="status-message"></div>
