@@ -37,9 +37,9 @@
 
                 <div class="form-group">
                     <label for="timezoneSelect">Timezone</label>
-                    <select class="form-control @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
+                    <select class="custom-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
                         @foreach($timezones as $timezone)
-                            <option value="{{ $timezone }}" @if($timezone == $currentTimezone) selected @endif>{{ $timezone }}</option>
+                            <option value="{{ $timezone }}" @if($timezone === $currentTimezone) selected @endif>{{ $timezone }}</option>
                         @endforeach
                     </select>
 
@@ -50,9 +50,9 @@
 
                 <div class="form-group">
                     <label for="localeSelect">Site language</label>
-                    <select class="form-control @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
+                    <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
                         @foreach($languages as $langCode => $langName)
-                            <option value="{{ $langCode }}" @if($langCode == app()->getLocale()) selected @endif>{{ $langName }}</option>
+                            <option value="{{ $langCode }}" @if($langCode === app()->getLocale()) selected @endif>{{ $langName }}</option>
                         @endforeach
                     </select>
 

@@ -43,7 +43,7 @@ class RoleController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $request->offsetSet('color', substr($request->get('color'), 1));
+        $request->offsetSet('color', substr($request->input('color'), 1));
 
         request_checkbox($request, 'is_admin');
 
@@ -80,11 +80,11 @@ class RoleController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $request->offsetSet('color', substr($request->get('color'), 1));
+        $request->offsetSet('color', substr($request->input('color'), 1));
 
         request_checkbox($request, 'is_admin');
 
-        $permissions = array_keys($request->get('permissions', []));
+        $permissions = array_keys($request->input('permissions', []));
 
         $role->permissions()->sync($permissions);
 

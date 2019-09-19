@@ -141,18 +141,14 @@ class SettingsController extends Controller
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
         ]);
 
-        if ($request->get('g-analytics-id')) {
+        if ($request->filled('g-analytics-id')) {
             $this->updateSettings($request->only('g-analytics-id'));
-
         } else {
             Setting::where('name', 'g-analytics-id')->delete();
         }
 
-        $keywords = $request->get('keywords');
-
-        if ($keywords) {
+        if ($request->filled('keywords')) {
             $this->updateSettings($request->only('keywords'));
-
         } else {
             Setting::where('name', 'keywords')->delete();
         }

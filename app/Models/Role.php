@@ -82,7 +82,7 @@ class Role extends Model
      */
     public function isPermanent()
     {
-        return $this->id == 1 || $this->id == 2;
+        return $this->id === 1 || $this->id === 2;
     }
 
     /**
@@ -95,7 +95,7 @@ class Role extends Model
      */
     public function isDefault()
     {
-        return $this->id == 1;
+        return $this->id === 1;
     }
 
     /**

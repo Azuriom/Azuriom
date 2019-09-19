@@ -34,7 +34,7 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
-        $request->user()->update(['password' => Hash::make($request->get('password'))]);
+        $request->user()->update(['password' => Hash::make($request->input('password'))]);
 
         return redirect()->route('profile.index')->with('success', 'Password updated');
     }
@@ -64,11 +64,11 @@ class ProfileController extends Controller
             'code' => ['required', 'string']
         ]);
 
-        if (! (new Google2FA())->verifyKey($request->get('2fa_key'), str_replace(' ', '', $request->get('code')))) {
+        if (! (new Google2FA())->verifyKey($request->input('2fa_key'), str_replace(' ', '', $request->input('code')))) {
             return redirect()->route('profile.2fa.index')->with('error', 'Invalid code');
         }
 
-        $request->user()->update(['google_2fa_secret' => $request->get('2fa_key')]);
+        $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
 
         return redirect()->route('profile.index')
             ->with('success', 'Two factor auth enabled')

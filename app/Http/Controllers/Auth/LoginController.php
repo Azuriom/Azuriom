@@ -94,7 +94,7 @@ class LoginController extends Controller
 
         $this->validate($request, ['code' => 'required|string']);
 
-        if ((new Google2FA())->verifyKey($user->google_2fa_secret, str_replace(' ', '', $request->get('code')))) {
+        if ((new Google2FA())->verifyKey($user->google_2fa_secret, str_replace(' ', '', $request->input('code')))) {
             $this->guard()->login($user, $request->session()->get('2fa_remember'));
 
             return $this->sendLoginResponse($request);

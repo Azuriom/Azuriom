@@ -44,9 +44,9 @@ class UserController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        $role = Role::findOrFail($request->get('role'));
+        $role = Role::findOrFail($request->input('role'));
 
-        $request->offsetSet('password', Hash::make($request->get('password')));
+        $request->offsetSet('password', Hash::make($request->input('password')));
 
         $user = new User($request->all());
         $user->role()->associate($role);
@@ -83,11 +83,11 @@ class UserController extends Controller
 
         $user->fill($request->except(['password']));
 
-        if ($request->get('password')) {
-            $user->password = Hash::make($request->get('password'));
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
         }
 
-        $role = Role::findOrFail($request->get('role'));
+        $role = Role::findOrFail($request->input('role'));
 
         $user->role()->associate($role);
         $user->save();
@@ -125,7 +125,7 @@ class UserController extends Controller
         return [
             'name' => ['required', 'string', 'max:25', 'alpha_dash'],
             'email' => ['required', 'string', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email')],
-            'password' => [$user != null ? 'nullable' : 'required', 'string', 'min:8'],
+            'password' => [($user !== null ? 'nullable' : 'required'), 'string', 'min:8'],
             'role' => ['required', 'integer', 'exists:roles,id']
         ];
     }

@@ -41,9 +41,9 @@
 
                 <div class="form-group">
                     <label for="hashSelect">Hash algorithm</label>
-                    <select class="form-control" id="hashSelect" name="hash" required>
+                    <select class="custom-select" id="hashSelect" name="hash" required>
                         @foreach($hashAlgorithms as $hash => $hashName)
-                            <option value="{{ $hash }}" @if($currentHash == $hash) selected @endif>{{ $hashName }}</option>
+                            <option value="{{ $hash }}" @if($currentHash === $hash) selected @endif>{{ $hashName }}</option>
                         @endforeach
                     </select>
                     <small>Argon2id is the most secure algorithm but it requires PHP 7.3.0 or greater. If you are running PHP 7.2 you should use Argon2i.</small>

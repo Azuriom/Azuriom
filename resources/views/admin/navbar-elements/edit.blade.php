@@ -39,7 +39,7 @@
 
                 <div class="form-group">
                     <label for="typeSelect">Type</label>
-                    <select class="form-control @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
+                    <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
                         @foreach($types as $type)
                             <option value="{{ $type }}" @if($type === old('type', $navbarElement->type)) selected @endif>{{ $type }}</option>
                         @endforeach
@@ -52,7 +52,7 @@
 
                 <div data-nav-element="page" class="form-group d-none">
                     <label for="pageSelect">Page</label>
-                    <select class="form-control @error('page') is-invalid @enderror" id="pageSelect" name="page">
+                    <select class="custom-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
                         @foreach($pages as $page)
                             <option value="{{ $page->id }}" @if($page->slug === $navbarElement->getTypeValue('page')) selected @endif>{{ $page->title }}</option>
                         @endforeach
@@ -60,7 +60,7 @@
                 </div>
                 <div data-nav-element="post" class="form-group d-none">
                     <label for="postSelect">Post</label>
-                    <select class="form-control @error('post') is-invalid @enderror" id="postSelect" name="post">
+                    <select class="custom-select @error('post') is-invalid @enderror" id="postSelect" name="post">
                         @foreach($posts as $post)
                             <option value="{{ $post->id }}" @if($post->slug === $navbarElement->getTypeValue('post')) selected @endif>{{ $post->title }}</option>
                         @endforeach
@@ -68,7 +68,7 @@
                 </div>
                 <div data-nav-element="link" class="form-group d-none">
                     <label for="linkInput">Link</label>
-                    <input type="url" class="form-control @error('link') is-invalid @enderror" id="linkInput" name="link" value="{{ old('link', $navbarElement->getTypeValue('link')) }}">
+                    <input type="text" class="form-control @error('link') is-invalid @enderror" id="linkInput" name="link" value="{{ old('link', $navbarElement->getTypeValue('link')) }}">
 
                     @error('link')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

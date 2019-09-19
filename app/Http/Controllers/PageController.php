@@ -14,7 +14,7 @@ class PageController extends Controller
      */
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->firstOrFaill();
+        $page = Page::where('slug', $slug)->firstOrFail();
 
         if (! $page->is_published && (auth()->guest() || ! auth()->user()->isAdmin())) {
             abort(404);

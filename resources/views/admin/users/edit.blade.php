@@ -40,7 +40,7 @@
 
                         <div class="form-group">
                             <label for="roleSelect">Role</label>
-                            <select class="form-control  @error('role') is-invalid @enderror" id="roleSelect" name="role">
+                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role">
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role_id === $role->id) selected @endif>{{ $role->name }}</option>
                                 @endforeach

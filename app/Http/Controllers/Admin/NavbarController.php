@@ -129,7 +129,7 @@ class NavbarController extends Controller
 
         $request->offsetSet('value', $this->getLinkValue($request));
 
-        if ($navbarElement->isDropDown() && $request->get('type') !== 'dropdown') {
+        if ($navbarElement->isDropDown() && $request->input('type') !== 'dropdown') {
             foreach ($navbarElement->elements as $element) {
                 $element->parent()->dissociate();
                 $element->save();
@@ -177,16 +177,16 @@ class NavbarController extends Controller
      */
     private function getLinkValue(Request $request)
     {
-        switch ($request->get('type')) {
+        switch ($request->input('type')) {
             case 'page':
-                $page = Page::find($request->get('page'));
+                $page = Page::find($request->input('page'));
                 return $page ? $page->slug : '';
             case 'post':
-                $post = Post::find($request->get('post'));
+                $post = Post::find($request->input('post'));
                 return $post ? $post->slug : '';
             case 'link':
                 $this->validate($request, ['link' => 'required|string|max:100']);
-                return $request->get('link');
+                return $request->input('link');
             default:
                 return '#';
         }

@@ -53,7 +53,7 @@ class ImageController extends Controller
         $file = $request->file('file');
         $mimeType = $file->getMimeType();
         $extension = $this->normalizeExtensions($file->extension());
-        $fileName = $request->get('slug').'.'.$extension;
+        $fileName = $request->input('slug').'.'.$extension;
 
         Validator::make(['slug' => $fileName], [
             'slug' => [Rule::unique('images', 'file')]
@@ -62,7 +62,7 @@ class ImageController extends Controller
         $file->storeAs($this->storagePath, $fileName);
 
         Image::create([
-            'name' => $request->get('name'),
+            'name' => $request->input('name'),
             'file' => $fileName,
             'type' => $mimeType
         ]);
@@ -93,7 +93,7 @@ class ImageController extends Controller
     {
         $this->validate($request, $this->rules($image));
 
-        $fileName = $request->get('slug').'.'.$image->getExtension();
+        $fileName = $request->input('slug').'.'.$image->getExtension();
 
         Validator::make(['slug' => $fileName], [
             'slug' => [Rule::unique('images', 'file')->ignore($image->file, 'file')]
@@ -104,7 +104,7 @@ class ImageController extends Controller
         }
 
         $image->update([
-            'name' => $request->get('name'),
+            'name' => $request->input('name'),
             'file' => $fileName
         ]);
 
