@@ -51,10 +51,10 @@ class SettingsController extends Controller
 
     public function security()
     {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-site-key')) || old('enable-recaptcha');
+        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('enable-recaptcha');
 
         return view('admin.settings.security', [
-            'hashAlgorithms', $this->hashAlgorithms,
+            'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
             'showReCaptcha' => $show
         ]);
@@ -72,7 +72,6 @@ class SettingsController extends Controller
 
         if ($enableReCaptcha) {
             $this->updateSettings($request->only(['recaptcha-site-key', 'recaptcha-secret-key']));
-
         } else {
             Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
         }

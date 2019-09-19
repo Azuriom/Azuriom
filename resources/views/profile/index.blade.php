@@ -10,16 +10,17 @@
                 <ul>
                     <li>Role: {{ $user->role->name }}</li>
                     <li>Register: {{ $user->created_at }}</li>
+                    <li>Two-Factor authentication: {{ $user->hasTwoFactorAuth() ? 'Yes' : 'No' }}</li>
                 </ul>
 
                 @if($user->hasTwoFactorAuth())
                     <form action="{{ route('profile.2fa.disable') }}" method="POST">
                         @csrf
 
-                        <button type="submit" class="btn btn-danger">Disable 2fa</button>
+                        <button type="submit" class="btn btn-danger">Disable 2FA</button>
                     </form>
                 @else
-                    <a class="btn btn-success" href="{{ route('profile.2fa.index') }}">Enable 2fa</a>
+                    <a class="btn btn-success" href="{{ route('profile.2fa.index') }}">Enable 2FA</a>
                 @endif
             </div>
         </div>
