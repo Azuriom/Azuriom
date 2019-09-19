@@ -76,6 +76,10 @@ class SettingsController extends Controller
             Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
         }
 
+        if ($request->input('hash') === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
+            return redirect()->back()->withErrors(['hash' => 'Argon2id is not supported'])->withInput();
+        }
+
         $this->updateSettings($request->all(['hash']));
 
         return redirect()->route('admin.settings.security')->with('success', 'Settings updated');

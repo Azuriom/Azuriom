@@ -18,7 +18,7 @@ class SettingServiceProvider extends ServiceProvider
         try {
             $settings = Setting::all();
 
-            foreach ($settings->toArray() as $setting) {
+            foreach ($settings as $setting) {
                 switch ($setting->name) {
                     case 'locale':
                         $this->app->setLocale($setting->value);
@@ -28,6 +28,15 @@ class SettingServiceProvider extends ServiceProvider
                         // no break
                     case 'url':
                         config(['app.'.$setting->name => $setting->value]);
+                        break;
+                    case 'hash':
+                        if ($setting->value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
+                            $setting->value = 'argon';
+                        }
+
+                        if (config('hashing.driver') !== $setting->value) {
+                            config(['hashing.driver' => $setting->value]);
+                        }
                         break;
                 }
             }

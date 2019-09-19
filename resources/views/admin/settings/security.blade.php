@@ -41,11 +41,14 @@
 
                 <div class="form-group">
                     <label for="hashSelect">Hash algorithm</label>
-                    <select class="custom-select" id="hashSelect" name="hash" required>
+                    <select class="custom-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required>
                         @foreach($hashAlgorithms as $hash => $hashName)
                             <option value="{{ $hash }}" @if($currentHash === $hash) selected @endif>{{ $hashName }}</option>
                         @endforeach
                     </select>
+                    @error('hash')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
                     <small>Argon2id is the most secure algorithm but it requires PHP 7.3.0 or greater. If you are running PHP 7.2 you should use Argon2i.</small>
                     <br>
                     <small class="text-danger">When changing the hash algorithm all the users need to reset their passwords !</small>
