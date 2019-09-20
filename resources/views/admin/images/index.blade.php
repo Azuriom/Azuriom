@@ -3,12 +3,14 @@
 @section('title', 'Images')
 
 @push('styles')
-    <style>
-        .img-small {
-            height: 2.5em;
-            border-radius: 5px;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.css" rel="stylesheet">
+@endpush
+
+@push('footer-scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.js"></script>
+    <script>
+        baguetteBox.run('.gallery');
+    </script>
 @endpush
 
 @section('content')
@@ -30,7 +32,7 @@
                     @foreach($images as $image)
                         <tr>
                             <th scope="row">{{ $image->id }}</th>
-                            <td>
+                            <td class="gallery">
                                 <a href="{{ image_url($image->file) }}" target="_blank">
                                     <img src="{{ image_url($image->file) }}" class="img-small rounded" alt="{{ $image->name }}">
                                 </a>
