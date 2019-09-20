@@ -42,9 +42,7 @@ class SettingsController extends Controller
             'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))]
         ]);
 
-        $settings = $request->only(['name', 'description', 'url', 'timezone', 'locale']);
-
-        $this->updateSettings($settings);
+        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale']));
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
     }

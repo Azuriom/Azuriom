@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -33,7 +34,7 @@ class PostController extends Controller
     {
         $post = Post::with(['author', 'comments', 'likes'])->where('slug', $slug)->firstOrFail();
 
-        if (! $post->isPublished() && (auth()->guest() || ! auth()->user()->isAdmin())) {
+        if (! $post->isPublished() && (Auth::guest() || ! Auth::user()->isAdmin())) {
             abort(404);
         }
 

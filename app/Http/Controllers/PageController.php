@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Page;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -16,7 +17,7 @@ class PageController extends Controller
     {
         $page = Page::where('slug', $slug)->firstOrFail();
 
-        if (! $page->is_published && (auth()->guest() || ! auth()->user()->isAdmin())) {
+        if (! $page->is_published && (Auth::guest() || ! Auth::user()->isAdmin())) {
             abort(404);
         }
 

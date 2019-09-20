@@ -4,9 +4,9 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Like;
 use Azuriom\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LikeController extends Controller
+class PostLikeController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -15,14 +15,12 @@ class LikeController extends Controller
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function addLike(Request $request, Post $post)
+    public function addLike(Post $post)
     {
-        $userId = auth()->id;
-
-        if (Like::where('post_id', $post->id)->where('author_id', $userId)->doesntExist()) {
+        if (Like::where('post_id', $post->id)->where('author_id', Auth::id())->doesntExist()) {
             $like = new Like;
             $like->post_id = $post->id;
-            $like->author_id = $userId;
+            $like->author_id = Auth::id();
             $like->save();
         }
 
@@ -37,7 +35,7 @@ class LikeController extends Controller
      */
     public function removeLike(Post $post)
     {
-        Like::where('post_id', $post->id)->where('author_id', auth()->id)->delete();
+        Like::where('post_id', $post->id)->where('author_id', Auth::id())->delete();
 
         return redirect()->route('posts.show', $post->slug);
     }

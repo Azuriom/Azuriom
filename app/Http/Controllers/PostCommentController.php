@@ -5,8 +5,9 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\Comment;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CommentController extends Controller
+class PostCommentController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -21,7 +22,7 @@ class CommentController extends Controller
         $this->validate($request, $this->rules());
 
         $comment = new Comment($request->all());
-        $comment->author_id = auth()->user()->id;
+        $comment->author_id = $request->user()->id;
         $comment->post_id = $post->id;
         $comment->save();
 
@@ -38,7 +39,7 @@ class CommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        if ($comment->author_id !== auth()->id() && (auth()->guest() || ! auth()->user()->isAdmin())) {
+        if ($comment->author_id !== Auth::id() && (Auth::guest() || ! Auth::user()->isAdmin())) {
             abort(403);
         }
 

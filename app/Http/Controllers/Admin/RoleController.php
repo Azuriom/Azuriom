@@ -7,6 +7,7 @@ use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Azuriom\Rules\Color;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -106,7 +107,7 @@ class RoleController extends Controller
             return redirect()->route('admin.roles.index')->with('error', 'This role cannot be deleted');
         }
 
-        if (auth()->user()->role == $role) {
+        if (Auth::user()->role == $role) {
             return redirect()->route('admin.roles.index')->with('error', 'You cannot delete your role');
         }
 

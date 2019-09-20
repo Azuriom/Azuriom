@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Rules\ConfirmCurrentPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 use PragmaRX\Google2FA\Support\Url;
@@ -12,7 +13,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile.index')->with('user', auth()->user());
+        return view('profile.index')->with('user', Auth::user());
     }
 
     public function updateEmail(Request $request)

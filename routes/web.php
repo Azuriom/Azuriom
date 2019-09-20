@@ -43,11 +43,11 @@ Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/{slug}', 'PostController@show')->name('show');
 
     Route::name('likes.')->middleware('auth')->group(function () {
-        Route::post('/{post}/like', 'LikeController@addLike')->name('add');
-        Route::post('/{post}/dislike', 'LikeController@removeLike')->name('remove');
+        Route::post('/{post}/like', 'PostLikeController@addLike')->name('add');
+        Route::post('/{post}/dislike', 'PostLikeController@removeLike')->name('remove');
     });
 });
 
-Route::resource('posts.comments', 'CommentController')->middleware(['auth', 'verified'])->only('store', 'destroy');
+Route::resource('posts.comments', 'PostCommentController')->middleware(['auth', 'verified'])->only('store', 'destroy');
 
 Route::get('/{slug}', 'PageController@show')->name('pages.show');
