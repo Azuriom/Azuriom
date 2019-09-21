@@ -59,7 +59,7 @@
                         <select class="custom-select @error('image_id') is-invalid @enderror" id="imageSelect" name="image_id">
                             <option value="" @if($currentPost->image === null) selected @endif>None</option>
                             @foreach($images as $image)
-                                <option value="{{ $image->id }}" data-url="{{ $image->url() }}" @if($currentPost->image == $image) selected @endif>{{ $image->name }}</option>
+                                <option value="{{ $image->id }}" @if($currentPost->image == $image) selected @endif>{{ $image->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
 use Azuriom\Support\LangHelper;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ class SettingsController extends Controller
     public function index()
     {
         return view('admin.settings.index', [
+            'images' => Image::all(),
+            'icon' => setting('icon'),
             'languages' => LangHelper::getAvailableLanguages(),
             'timezones' => array_values(timezone_identifiers_list()),
             'currentTimezone' => config('app.timezone')
@@ -39,10 +42,11 @@ class SettingsController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
-            'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))]
+            'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
+            'icon' => ['nullable', 'exists:images,file']
         ]);
 
-        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale']));
+        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon']));
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
     }
@@ -78,7 +82,7 @@ class SettingsController extends Controller
             return redirect()->back()->withErrors(['hash' => 'Argon2id is not supported'])->withInput();
         }
 
-        $this->updateSettings($request->all(['hash']));
+        $this->updateSettings($request->only(['hash']));
 
         return redirect()->route('admin.settings.security')->with('success', 'Settings updated');
     }
@@ -142,17 +146,7 @@ class SettingsController extends Controller
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
         ]);
 
-        if ($request->filled('g-analytics-id')) {
-            $this->updateSettings($request->only('g-analytics-id'));
-        } else {
-            Setting::where('name', 'g-analytics-id')->delete();
-        }
-
-        if ($request->filled('keywords')) {
-            $this->updateSettings($request->only('keywords'));
-        } else {
-            Setting::where('name', 'keywords')->delete();
-        }
+        $this->updateSettings($request->only(['g-analytics-id', 'keywords']));
 
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }
@@ -176,7 +170,11 @@ class SettingsController extends Controller
     private function updateSettings(array $settings)
     {
         foreach ($settings as $name => $value) {
-            Setting::updateOrCreate(['name' => $name], ['value' => $value]);
+            if ($value !== null) {
+                Setting::updateOrCreate(['name' => $name], ['value' => $value]);
+            } else {
+                Setting::where('name', $name)->delete();
+            }
         }
     }
 

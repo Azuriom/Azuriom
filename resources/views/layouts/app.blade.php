@@ -11,7 +11,7 @@
     <meta property="og:title" content="@yield('title')">
     <meta property="og:type" content="@yield('type', 'website')">
     <meta property="og:url" content="{{ url()->current() }}">
-    {{--<meta property="og:image" content="{{  }}">--}}
+    <meta property="og:image" content="{{ favicon() }}">
     <meta property="og:description" content="@yield('description', setting('description', ''))">
     <meta property="og:site_name" content="{{ site_name() }}">
     @stack('meta')
@@ -20,6 +20,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') | {{ site_name() }}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ favicon() }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

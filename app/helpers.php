@@ -43,6 +43,14 @@ if (! function_exists('setting')) {
     }
 }
 
+if (! function_exists('favicon')) {
+    function favicon()
+    {
+        $icon = setting('icon');
+        return $icon !== null ? image_url($icon) : asset('favicon.ico');
+    }
+}
+
 if (! function_exists('site_name')) {
     function site_name()
     {

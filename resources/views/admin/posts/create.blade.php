@@ -58,7 +58,7 @@
                         <select class="custom-select @error('image_id') is-invalid @enderror" id="imageSelect" name="image_id">
                             <option value="" selected>None</option>
                             @foreach($images as $image)
-                                <option value="{{ $image->id }}" data-url="{{ $image->url() }}">{{ $image->name }}</option>
+                                <option value="{{ $image->id }}">{{ $image->name }}</option>
                             @endforeach
                         </select>
                     </div>

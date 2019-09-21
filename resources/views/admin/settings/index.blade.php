@@ -2,6 +2,24 @@
 
 @section('title', 'Global settings')
 
+@push('footer-scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageSelect = $('#imageSelect');
+            const imagePreview = $('#imagePreview');
+
+            imageSelect.on('change', function (e) {
+                if (imageSelect.val().length === 0) {
+                    imagePreview.parent().addClass('d-none');
+                } else {
+                    imagePreview.parent().removeClass('d-none');
+                    imagePreview.attr('src', '{{ image_url() }}/' + imageSelect.val());
+                }
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -31,6 +49,29 @@
                     <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', setting('description')) }}" required>
 
                     @error('description')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="imageSelect">Image</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                        </div>
+                        <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" name="icon">
+                            <option value="" @if(!$icon) selected @endif>None</option>
+                            @foreach($images as $image)
+                                <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mt-3 @if(!$icon) d-none @endif">
+                        <img src="{{ $icon ? favicon() : '#' }}" class="img-fluid rounded img-preview-sm" alt="Favicon" id="imagePreview">
+                    </div>
+
+                    @error('icon')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>

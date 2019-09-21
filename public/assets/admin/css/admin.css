@@ -24,6 +24,10 @@ a[disabled] {
     max-height: 300px;
 }
 
+.img-preview-sm {
+    max-height: 150px;
+}
+
 .custom-file-input,
 .custom-file-label {
     cursor: pointer;
