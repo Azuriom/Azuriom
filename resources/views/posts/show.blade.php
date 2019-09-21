@@ -30,6 +30,12 @@
         <p>Posted on {{ $currentPost->published_at }}</p>
         <hr>
 
+        @if($currentPost->image_id !== null)
+            <div class="text-center">
+                <img class="rounded" src="{{ $currentPost->image->url() }}" alt="{{ $currentPost->image->name }}" height="300">
+            </div>
+        @endif
+
         <div class="content-body">
             {!! $currentPost->content !!}
         </div>

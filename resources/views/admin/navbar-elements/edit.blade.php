@@ -9,7 +9,7 @@
             $('[data-nav-element="' + el.val() + '"]').removeClass('d-none');
         }
 
-        document.addEventListener('DOMContentLoaded', function (ev) {
+        document.addEventListener('DOMContentLoaded', function () {
             const typeSelect = $('#typeSelect');
 
             updateType(typeSelect);
@@ -17,7 +17,7 @@
             typeSelect.on('change', function (e) {
                 updateType($(this));
             });
-        })
+        });
     </script>
 @endpush
 

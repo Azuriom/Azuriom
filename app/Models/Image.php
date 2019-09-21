@@ -12,7 +12,7 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'file', 'type'
+        'name', 'file', 'type',
     ];
 
     /**
@@ -26,5 +26,10 @@ class Image extends Model
     public function getExtension()
     {
         return pathinfo($this->file, PATHINFO_EXTENSION);
+    }
+
+    public function url()
+    {
+        return image_url($this->file);
     }
 }

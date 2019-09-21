@@ -13,11 +13,11 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'slug', 'content', 'is_pinned', 'published_at'
+        'image_id', 'title', 'description', 'slug', 'content', 'is_pinned', 'published_at',
     ];
 
     protected $dates = [
-        'published_at'
+        'published_at',
     ];
 
     /**
@@ -35,6 +35,14 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * Get the image of this post.
+     */
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
     }
 
     /**

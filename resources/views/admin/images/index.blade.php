@@ -33,12 +33,12 @@
                         <tr>
                             <th scope="row">{{ $image->id }}</th>
                             <td class="gallery">
-                                <a href="{{ image_url($image->file) }}" target="_blank">
-                                    <img src="{{ image_url($image->file) }}" class="img-small rounded" alt="{{ $image->name }}">
+                                <a href="{{ $image->url() }}" target="_blank">
+                                    <img src="{{ $image->url() }}" class="img-small rounded" alt="{{ $image->name }}">
                                 </a>
                             </td>
                             <td>{{ $image->name }}</td>
-                            <td><a href="{{ image_url($image->file) }}" target="_blank">{{ $image->file }}</a></td>
+                            <td><a href="{{ $image->url() }}" target="_blank">{{ $image->file }}</a></td>
                             <td>
                                 <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
@@ -52,7 +52,7 @@
 
             {{ $images->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-plus"></i> Create</a>
+            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-plus"></i> Upload</a>
         </div>
     </div>
 @endsection

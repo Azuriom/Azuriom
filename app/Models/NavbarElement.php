@@ -13,7 +13,7 @@ class NavbarElement extends Model
      * @var array
      */
     public const types = [
-        'home', 'link', 'page', 'post', 'posts', 'dropdown'
+        'home', 'link', 'page', 'post', 'posts', 'dropdown',
     ];
 
     /**

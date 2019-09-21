@@ -14,7 +14,7 @@ class Like extends Model
      * @var array
      */
     protected $with = [
-        'author'
+        'author',
     ];
 
     /**

@@ -12,7 +12,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'color', 'is_admin'
+        'name', 'color', 'is_admin',
     ];
 
     /**

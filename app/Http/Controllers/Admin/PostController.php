@@ -3,8 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Image;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 
 class PostController extends Controller
@@ -28,7 +30,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $images = Image::all();
+
+        return view('admin.posts.create', [
+            'images' => $images,
+            'imagesUrl' => $this->getImagesUrl($images)
+        ]);
     }
 
     /**
@@ -59,7 +66,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit')->with('currentPost', $post);
+        $post->loadMissing('image');
+        $images = Image::all();
+
+        return view('admin.posts.edit', [
+            'currentPost' => $post,
+            'images' => $images,
+            'imagesUrl' => $this->getImagesUrl($images)
+        ]);
     }
 
     /**
@@ -101,8 +115,16 @@ class PostController extends Controller
             'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:100', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
+            'image_id' => ['nullable', 'exists:images,id'],
             'content' => ['required', 'string'],
             'published_at' => ['required', 'date']
         ];
+    }
+
+    private function getImagesUrl(Collection $images)
+    {
+        return $images->mapWithKeys(function ($image) {
+            return [$image->id => $image->url()];
+        })->toArray();
     }
 }

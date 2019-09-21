@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a36ef1e87e7240b1e6f85363200ad4c",
+    "content-hash": "253f71e5463e6b851bf5cb13f5d6b41f",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3346,16 +3346,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "1.8.0",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "c4aae328c58b5a6e6ff731050db56901c02451c0"
+                "reference": "4ff9397a24da58b35382802e2d22325b640123ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/c4aae328c58b5a6e6ff731050db56901c02451c0",
-                "reference": "c4aae328c58b5a6e6ff731050db56901c02451c0",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/4ff9397a24da58b35382802e2d22325b640123ea",
+                "reference": "4ff9397a24da58b35382802e2d22325b640123ea",
                 "shasum": ""
             },
             "require": {
@@ -3410,7 +3410,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2019-09-18T19:06:14+00:00"
+            "time": "2019-09-20T09:37:06+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -5282,7 +5282,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

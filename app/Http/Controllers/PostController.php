@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')
+        $posts = Post::with(['author', 'image'])
             ->withCount('comments')
             ->scopes('published')
             ->orderBy('is_pinned', 'desc')
@@ -32,7 +32,11 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::with(['author', 'comments', 'likes'])->where('slug', $slug)->firstOrFail();
+        $post = Post::with(['author', 'comments.author', 'likes.author'])->where('slug', $slug)->firstOrFail();
+
+        if ($post->image_id !== null) {
+            $post->loadMissing('image');
+        }
 
         if (! $post->isPublished() && (Auth::guest() || ! Auth::user()->isAdmin())) {
             abort(404);

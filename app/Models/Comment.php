@@ -12,7 +12,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'content'
+        'content',
     ];
 
     /**
@@ -21,7 +21,7 @@ class Comment extends Model
      * @var array
      */
     protected $with = [
-        'author'
+        'author',
     ];
 
     /**

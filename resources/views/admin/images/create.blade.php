@@ -29,7 +29,7 @@
                     <label for="slugInput">Slug</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">{{ image_url('/') }}/</div>
+                            <div class="input-group-text">{{ image_url() }}/</div>
                         </div>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug') }}" required>
                         <div class="input-group-append">

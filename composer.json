@@ -10,6 +10,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2",
+        "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
         "laravel/framework": "^6.0",

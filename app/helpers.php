@@ -11,7 +11,7 @@ if (! function_exists('add_active')) {
 }
 
 if (! function_exists('image_url')) {
-    function image_url(string $name)
+    function image_url(string $name = '/')
     {
         return url(Storage::url('img/'.$name));
     }
