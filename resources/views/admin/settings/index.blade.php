@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="imageSelect">Image</label>
+                    <label for="imageSelect">Favicon</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>

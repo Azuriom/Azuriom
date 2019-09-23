@@ -153,14 +153,19 @@ class SettingsController extends Controller
 
     public function maintenance()
     {
-        return view('admin.settings.maintenance');
+        return view('admin.settings.maintenance', [
+            'enable' => false,
+            'maintenance' => 'The site is under maintenance !'
+        ]);
     }
 
     public function updateMaintenance(Request $request)
     {
         $this->validate($request, [
-
+            'maintenance' => ['required', 'string']
         ]);
+
+        request_checkbox($request, 'enable-maintenance');
 
         // TODO
 

@@ -23,8 +23,8 @@ class PostCommentController extends Controller
 
         $comment = new Comment($request->all());
         $comment->author_id = $request->user()->id;
-        $comment->post_id = $post->id;
-        $comment->save();
+
+        $post->comments()->save($comment);
 
         return redirect()->route('posts.show', $post->slug);
     }

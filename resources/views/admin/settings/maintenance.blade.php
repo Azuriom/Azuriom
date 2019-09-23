@@ -11,13 +11,13 @@
                 @csrf
 
                 <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="enable-maintenance" @if(false) checked @endif>
+                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="enable-maintenance" @if($enable) checked @endif>
                     <label class="custom-control-label" for="enableSwitch">Enable maintenance</label>
                 </div>
 
                 <div class="form-group">
                     <label for="maintenanceArea">Maintenance message</label>
-                    <textarea class="form-control html-editor @error('maintenance') is-invalid @enderror" id="maintenanceArea" name="maintenance">{{ old('maintenance', setting('maintenance', '')) }}</textarea>
+                    <textarea class="form-control html-editor @error('maintenance') is-invalid @enderror" id="maintenanceArea" name="maintenance">{{ old('maintenance', $maintenance) }}</textarea>
 
                     @error('maintenance')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
