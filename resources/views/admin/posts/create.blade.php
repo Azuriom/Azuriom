@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Add news')
+@section('title', 'Add post')
 
 @include('admin.elements.editor')
 @include('admin.elements.date-picker')
@@ -106,7 +106,7 @@
 
                 <div class="form-group custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="pinnedSwitch" name="is_pinned">
-                    <label class="custom-control-label" for="pinnedSwitch">Pin the news</label>
+                    <label class="custom-control-label" for="pinnedSwitch">Pin this post</label>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit news')
+@section('title', 'Edit post')
 
 @include('admin.elements.editor')
 @include('admin.elements.date-picker')
@@ -107,7 +107,7 @@
 
                 <div class="form-group custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="pinnedSwitch" name="is_pinned" @if($currentPost->is_pinned) checked @endif>
-                    <label class="custom-control-label" for="pinnedSwitch">Pin the news</label>
+                    <label class="custom-control-label" for="pinnedSwitch">Pin this post</label>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

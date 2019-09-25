@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Illuminate\Http\Request;
@@ -52,6 +53,8 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
+        ActionLog::logCreate($user);
+
         return redirect()->route('admin.users.index')->with('success', 'User created');
     }
 
@@ -92,6 +95,8 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
+        ActionLog::logEdit($user);
+
         return redirect()->route('admin.users.index')->with('success', 'User updated');
     }
 
@@ -99,12 +104,16 @@ class UserController extends Controller
     {
         $user->markEmailAsVerified();
 
+        ActionLog::logEdit($user);
+
         return redirect()->route('admin.users.edit', $user)->with('success', 'Email verified');
     }
 
     public function disable2fa(User $user)
     {
         $user->update(['google_2fa_secret' => null]);
+
+        ActionLog::logEdit($user);
 
         return redirect()->route('admin.users.edit', $user)->with('success', '2fa disabled');
     }

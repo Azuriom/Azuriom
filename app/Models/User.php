@@ -43,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $with = [
-        'role'
+        'role',
     ];
 
     public function posts()

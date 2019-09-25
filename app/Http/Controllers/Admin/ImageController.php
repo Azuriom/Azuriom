@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -61,11 +62,13 @@ class ImageController extends Controller
 
         $file->storeAs($this->storagePath, $fileName);
 
-        Image::create([
+        $image = Image::create([
             'name' => $request->input('name'),
             'file' => $fileName,
             'type' => $mimeType
         ]);
+
+        ActionLog::logCreate($image);
 
         return redirect()->route('admin.images.index')->with('success', 'Image uploaded');
     }
@@ -108,6 +111,8 @@ class ImageController extends Controller
             'file' => $fileName
         ]);
 
+        ActionLog::logEdit($image);
+
         return redirect()->route('admin.images.index')->with('success', 'Image updated');
     }
 
@@ -123,6 +128,8 @@ class ImageController extends Controller
         Storage::delete($this->getImagePath($image->file));
 
         $image->delete();
+
+        ActionLog::logDelete($image);
 
         return redirect()->route('admin.images.index')->with('success', 'Image deleted');
     }

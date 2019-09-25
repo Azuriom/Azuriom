@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">News</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Posts</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $postCount }}</div>
                         </div>
                         <div class="col-auto">

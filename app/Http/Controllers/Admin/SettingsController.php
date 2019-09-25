@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
 use Azuriom\Support\LangHelper;
@@ -48,6 +49,8 @@ class SettingsController extends Controller
 
         $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon']));
 
+        ActionLog::logEdit('Settings');
+
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
     }
 
@@ -83,6 +86,8 @@ class SettingsController extends Controller
         }
 
         $this->updateSettings($request->only(['hash']));
+
+        ActionLog::logEdit('Settings');
 
         return redirect()->route('admin.settings.security')->with('success', 'Settings updated');
     }
@@ -147,6 +152,8 @@ class SettingsController extends Controller
         ]);
 
         $this->updateSettings($request->only(['g-analytics-id', 'keywords']));
+
+        ActionLog::logEdit('Settings');
 
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }

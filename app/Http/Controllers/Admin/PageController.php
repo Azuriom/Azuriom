@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -44,7 +45,9 @@ class PageController extends Controller
 
         request_checkbox($request, 'is_enabled');
 
-        Page::create($request->all());
+        $page = Page::create($request->all());
+
+        ActionLog::logCreate($page);
 
         return redirect()->route('admin.pages.index')->with('success', 'Page created');
     }
@@ -76,6 +79,8 @@ class PageController extends Controller
 
         $page->update($request->all());
 
+        ActionLog::logEdit($page);
+
         return redirect()->route('admin.pages.index')->with('success', 'Page updated');
     }
 
@@ -89,6 +94,8 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         $page->delete();
+
+        ActionLog::logDelete($page);
 
         return redirect()->route('admin.pages.index')->with('success', 'Page deleted');
     }

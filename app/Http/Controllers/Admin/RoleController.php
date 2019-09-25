@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Azuriom\Rules\Color;
@@ -48,7 +49,9 @@ class RoleController extends Controller
 
         request_checkbox($request, 'is_admin');
 
-        Role::create($request->all());
+        $role = Role::create($request->all());
+
+        ActionLog::logCreate($role);
 
         return redirect()->route('admin.roles.index')->with('success', 'Role created');
     }
@@ -91,6 +94,8 @@ class RoleController extends Controller
 
         $role->update($request->all());
 
+        ActionLog::logEdit($role);
+
         return redirect()->route('admin.roles.index')->with('success', 'Role updated');
     }
 
@@ -114,6 +119,8 @@ class RoleController extends Controller
         $role->users()->update(['role_id' => 1]);
 
         $role->delete();
+
+        ActionLog::logDelete($role);
 
         return redirect()->route('admin.roles.index')->with('success', 'Role deleted');
     }

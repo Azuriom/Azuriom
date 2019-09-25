@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
@@ -56,6 +57,8 @@ class NavbarController extends Controller
                 NavbarElement::where('id', $child['id'])->update(['position' => $childPosition++, 'parent_id' => $id]);
             }
         }
+
+        ActionLog::logEdit('Navbar');
 
         return $request->ajax() ? response()->json([
             'status' => 'ok',

@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Navbar')
+
 {{-- TODO cleanup this--}}
 
 @push('styles')

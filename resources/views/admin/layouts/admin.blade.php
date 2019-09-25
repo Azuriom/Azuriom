@@ -40,9 +40,6 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-                <div class="sidebar-brand-icon">
-                    <i class="fas fa-code"></i>
-                </div>
                 <div class="sidebar-brand-text mx-3">Azuriom <sup>{{ \Azuriom\Azuriom::version() }}</sup></div>
             </a>
 
@@ -124,13 +121,27 @@
             <div class="nav-item {{ add_active('admin.posts.*') }}">
                 <a class="nav-link" href="{{ route('admin.posts.index') }}">
                     <i class="fas fa-fw fa-newspaper"></i>
-                    <span>News</span></a>
+                    <span>Posts</span></a>
             </div>
 
             <div class="nav-item {{ add_active('admin.images.*') }}">
                 <a class="nav-link" href="{{ route('admin.images.index') }}">
                     <i class="fas fa-fw fa-image"></i>
                     <span>Images</span></a>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Other
+            </div>
+
+            <div class="nav-item {{ add_active('admin.logs.*') }}">
+                <a class="nav-link" href="{{ route('admin.logs.index') }}">
+                    <i class="fas fa-fw fa-history"></i>
+                    <span>Logs</span></a>
             </div>
 
             <!-- Divider -->
