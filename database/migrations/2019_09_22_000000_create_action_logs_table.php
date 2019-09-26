@@ -18,7 +18,7 @@ class CreateActionLogsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('type');
             $table->unsignedInteger('target_id')->nullable();
-            $table->string('action', 100);
+            $table->string('action');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

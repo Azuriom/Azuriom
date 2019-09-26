@@ -28,8 +28,7 @@ class AdminController extends Controller
         $month = $carbon->month;
         $recentUsers = [];
 
-        $queryUsers = User::query()
-            ->whereDate('created_at', '>=', $carbon->subMonths(6))
+        $queryUsers = User::whereDate('created_at', '>=', $carbon->subMonths(6))
             ->get(['id', 'created_at'])
             ->groupBy(function (User $user) {
                 return $user->created_at->format('Y-m');

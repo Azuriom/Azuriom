@@ -13,7 +13,7 @@
     <!-- Scripts -->
     <script src="{{ asset('assets/admin/vendor/jquery/jquery.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
+    <script src="{{ asset('assets/admin/vendor/axios/axios.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
 

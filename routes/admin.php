@@ -41,8 +41,8 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::post('/{user}/2fa', 'UserController@disable2fa')->name('2fa');
 });
 
-Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order');
 Route::resource('navbar-elements', 'NavbarController')->except('show');
+Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order');
 
 Route::resource('users', 'UserController')->except('show');
 Route::resource('roles', 'RoleController')->except('show');

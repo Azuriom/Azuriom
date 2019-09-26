@@ -2,87 +2,8 @@
 
 @section('title', 'Navbar')
 
-{{-- TODO cleanup this--}}
-
 @push('styles')
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-
-        .dd-list .dd-list {
-            padding-left: 3em;
-        }
-
-        .dd-item,
-        .dd-empty,
-        .dd-placeholder {
-            display: block;
-            position: relative;
-            margin: 0;
-            padding: 0;
-            min-height: 20px;
-        }
-
-        .dd-handle {
-            display: block;
-            margin: 0.5em 0;
-            padding: 1em;
-            box-sizing: border-box;
-        }
-
-        .dd-handle,
-        .cursor-move {
-            cursor: move;
-        }
-
-        .dd-handle:hover {
-            color: #2ea8e5;
-        }
-
-        .dd-expand,
-        .dd-nochildren .dd-placeholder,
-        .dd-collapsed .dd-list,
-        .dd-collapsed .dd-collapse {
-            display: none;
-        }
-
-        .dd-collapsed .dd-expand {
-            display: block;
-        }
-
-        .dd-empty,
-        .dd-placeholder {
-            margin: 5px 0;
-            padding: 0;
-            min-height: 30px;
-            background: #f2fbff;
-            border: 1px dashed #b6bcbf;
-            box-sizing: border-box;
-        }
-
-        .dd-empty {
-            border: 1px dashed #bbb;
-            min-height: 100px;
-            background-color: #e5e5e5;
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-        }
-
-        .dd-dragel {
-            position: absolute;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .dd-dragel > .dd-item .dd-handle {
-            margin-top: 0;
-        }
-
-        .dd-dragel .dd-handle {
-            box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link href="{{ asset('assets/admin/vendor/nestable2/nestable2.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
@@ -109,38 +30,26 @@
                 $('#status-message').html('<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + message + button + '</div>');
             }
 
-            function getCsrfToken() {
-                return $('meta[name="csrf-token"]').attr('content');
-            }
-
             const saveBtn = $('#saveBtn');
 
             saveBtn.on('click', function () {
                 saveBtn.attr('disabled', true);
 
-                fetch('{{ route('admin.navbar-elements.update-order') }}', {
-                    method: 'post',
+                axios.post('{{ route('admin.navbar-elements.update-order') }}', {
+                    'order': $('.dd').nestable('serialize')
+                }, {
                     headers: {
-                        'X-CSRF-TOKEN': getCsrfToken(),
-                        'X-Requested-With': 'XMLHttpRequest',
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'order': $('.dd').nestable('serialize')
-                    })
-                }).then(function (response) {
-                    return response.json();
+                    }
                 }).then(function (json) {
                     saveBtn.attr('disabled', false);
-                    createAlert('success', json.message, true)
+                    createAlert('success', json.data.message, true);
                 }).catch(function (error) {
                     saveBtn.attr('disabled', false);
                     console.error(error);
                     createAlert('danger', 'Error: ' + error, true)
                 });
             });
-
-
         });
     </script>
 @endpush

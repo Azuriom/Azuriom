@@ -84,7 +84,7 @@ class LoginController extends Controller
     {
         $userId = $request->session()->get('2fa_id');
 
-        $user = $userId ? User::query()->find($userId) : null;
+        $user = $userId ? User::find($userId) : null;
 
         if ($user === null) {
             return redirect()->route('login');
