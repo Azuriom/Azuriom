@@ -57,3 +57,10 @@ if (! function_exists('site_name')) {
         return setting('name', config('app.name'));
     }
 }
+
+if (! function_exists('theme_path')) {
+    function theme_path($path = '')
+    {
+        return resource_path('themes/'.$path);
+    }
+}

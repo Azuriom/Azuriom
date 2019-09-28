@@ -44,6 +44,13 @@ class SettingServiceProvider extends ServiceProvider
             config($settings->mapWithKeys(function ($setting) {
                 return ['setting.'.$setting->name => $setting->value];
             })->toArray());
+
+            $theme = setting('theme');
+
+            if ($theme !== null) {
+                $finder = $this->app['view']->getFinder();
+                $finder->prependLocation(theme_path($theme));
+            }
         } catch (Exception $e) {
             //
         }

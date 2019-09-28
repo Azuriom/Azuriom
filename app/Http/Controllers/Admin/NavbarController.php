@@ -61,7 +61,7 @@ class NavbarController extends Controller
         ActionLog::logEdit('Navbar');
 
         return $request->ajax() ? response()->json([
-            'status' => 'ok',
+            'status' => 'success',
             'message' => 'Navbar updated'
         ]) : $this->index();
     }

@@ -41,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
+        $this->mapInternalRoutes();
+
         $this->mapAdminRoutes();
 
         $this->mapWebRoutes();
@@ -58,6 +60,20 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "internal" routes for the application.
+     *
+     * These routes don't have any middleware.
+     *
+     * @return void
+     */
+    protected function mapInternalRoutes()
+    {
+        Route::name('internal.')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/internal.php'));
     }
 
     /**

@@ -57,9 +57,7 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Settings
-            </div>
+            <div class="sidebar-heading">Settings</div>
 
             <div class="nav-item {{ add_active('admin.settings.*') }}">
                 <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
@@ -88,9 +86,7 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Users
-            </div>
+            <div class="sidebar-heading">Users</div>
 
             <div class="nav-item {{ add_active('admin.users.*') }}">
                 <a class="nav-link" href="{{ route('admin.users.index') }}">
@@ -108,9 +104,7 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Content
-            </div>
+            <div class="sidebar-heading">Content</div>
 
             <div class="nav-item {{ add_active('admin.pages.*') }}">
                 <a class="nav-link" href="{{ route('admin.pages.index') }}">
@@ -134,9 +128,25 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Other
+            <div class="sidebar-heading">Extensions</div>
+
+            <div class="nav-item {{ add_active('admin.plugins.*') }}">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-puzzle-piece"></i>
+                    <span>Plugins</span></a>
             </div>
+
+            <div class="nav-item {{ add_active('admin.themes.*') }}">
+                <a class="nav-link" href="{{ route('admin.themes.index') }}">
+                    <i class="fas fa-fw fa-paint-brush"></i>
+                    <span>Themes</span></a>
+            </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">Other</div>
 
             <div class="nav-item {{ add_active('admin.logs.*') }}">
                 <a class="nav-link" href="{{ route('admin.logs.index') }}">
@@ -256,7 +266,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a> 2019. Template by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
+                        <span>Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a> &copy; 2019. Panel designed by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
                     </div>
                 </div>
             </footer>
