@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Setting;
 use Illuminate\Support\Facades\File;
 
@@ -34,6 +35,8 @@ class ThemeController extends Controller
         }
 
         Setting::updateOrCreate(['name' => 'theme'], ['value' => $theme]);
+
+        ActionLog::logEdit('Theme');
 
         return redirect()->route('admin.themes.index')->with('success', 'Theme updated.');
     }

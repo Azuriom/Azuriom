@@ -49,12 +49,12 @@ class NavbarController extends Controller
             $id = $element['id'];
             $children = $element['children'] ?? [];
 
-            NavbarElement::where('id', $id)->update(['position' => $position++, 'parent_id' => null]);
+            NavbarElement::whereKey($id)->update(['position' => $position++, 'parent_id' => null]);
 
             $childPosition = 1;
 
             foreach ($children as $child) {
-                NavbarElement::where('id', $child['id'])->update(['position' => $childPosition++, 'parent_id' => $id]);
+                NavbarElement::whereKey($child['id'])->update(['position' => $childPosition++, 'parent_id' => $id]);
             }
         }
 

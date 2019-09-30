@@ -49,9 +49,7 @@
                     @error('hash')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
-                    <small>Argon2id is the most secure algorithm but it requires PHP 7.3.0 or greater. If you are running PHP 7.2 you should use Argon2i.</small>
-                    <br>
-                    <small class="text-danger">When changing the hash algorithm all the users need to reset their passwords !</small>
+                    <small>Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

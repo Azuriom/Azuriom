@@ -19,7 +19,7 @@ class ProfileController extends Controller
     public function updateEmail(Request $request)
     {
         $this->validate($request, [
-            'email_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword],
+            'email_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users']
         ]);
 
@@ -31,7 +31,7 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword],
+            'password_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword()],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 

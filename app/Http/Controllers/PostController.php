@@ -17,8 +17,8 @@ class PostController extends Controller
         $posts = Post::with(['author', 'image'])
             ->withCount('comments')
             ->scopes('published')
-            ->orderBy('is_pinned', 'desc')
-            ->orderBy('published_at', 'desc')
+            ->orderByDesc('is_pinned')
+            ->latest('published_at')
             ->get();
 
         return view('posts.index')->with('posts', $posts);

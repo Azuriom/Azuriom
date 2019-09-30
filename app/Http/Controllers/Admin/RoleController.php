@@ -129,7 +129,7 @@ class RoleController extends Controller
     {
         return [
             'name' => ['required', 'string', 'max:25'],
-            'color' => ['required', new Color],
+            'color' => ['required', new Color()],
         ];
     }
 }
