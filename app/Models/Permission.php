@@ -4,6 +4,10 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ */
 class Permission extends Model
 {
     /**

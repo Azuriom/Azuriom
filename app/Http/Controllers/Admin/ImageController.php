@@ -60,7 +60,7 @@ class ImageController extends Controller
             'slug' => [Rule::unique('images', 'file')]
         ])->validate();
 
-        $file->storeAs($this->storagePath, $fileName);
+        $file->storeAs($this->imagePath, $fileName);
 
         $image = Image::create([
             'name' => $request->input('name'),

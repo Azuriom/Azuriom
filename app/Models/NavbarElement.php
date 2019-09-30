@@ -5,6 +5,17 @@ namespace Azuriom\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $value
+ * @property int $position
+ * @property string $type
+ * @property int $parent_id
+ * @property bool $new_tab
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
 class NavbarElement extends Model
 {
     /**
@@ -12,7 +23,7 @@ class NavbarElement extends Model
      *
      * @var array
      */
-    public const types = [
+    private const TYPES = [
         'home', 'link', 'page', 'post', 'posts', 'dropdown',
     ];
 
@@ -87,5 +98,10 @@ class NavbarElement extends Model
     public function scopeParent(Builder $query)
     {
         return $query->where('parent_id', null);
+    }
+
+    public static function types()
+    {
+        return self::TYPES;
     }
 }

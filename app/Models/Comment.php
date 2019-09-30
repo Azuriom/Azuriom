@@ -4,6 +4,14 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $author_id
+ * @property int $post_id
+ * @property string $content
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
 class Comment extends Model
 {
     /**

@@ -5,6 +5,16 @@ namespace Azuriom\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property string $slug
+ * @property string $content
+ * @property bool $is_enabled
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
 class Page extends Model
 {
     /**

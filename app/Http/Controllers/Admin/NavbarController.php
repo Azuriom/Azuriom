@@ -74,7 +74,7 @@ class NavbarController extends Controller
     public function create()
     {
         return view('admin.navbar-elements.create', [
-            'types' => NavbarElement::types,
+            'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get()
         ]);
@@ -110,7 +110,7 @@ class NavbarController extends Controller
     {
         return view('admin.navbar-elements.edit', [
             'navbarElement' => $navbarElement,
-            'types' => NavbarElement::types,
+            'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get()
         ]);
@@ -167,7 +167,7 @@ class NavbarController extends Controller
     {
         return [
             'name' => ['required', 'string', 'max:150'],
-            'type' => ['string', Rule::in(NavbarElement::types)]
+            'type' => ['string', Rule::in(NavbarElement::types())]
         ];
     }
 

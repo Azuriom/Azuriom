@@ -4,6 +4,12 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $author_id
+ * @property int $post_id
+ * @property \Carbon\Carbon $created_at
+ */
 class Like extends Model
 {
     const UPDATED_AT = null;

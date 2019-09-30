@@ -5,6 +5,18 @@ namespace Azuriom\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int $author_id
+ * @property int $image_id
+ * @property string $title
+ * @property string $description
+ * @property string $slug
+ * @property string $content
+ * @property bool $is_pinned
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
 class Post extends Model
 {
     /**
