@@ -13,7 +13,7 @@
                     <form class="mt-3" action="{{ route('admin.settings.cache.clear') }}" method="POST">
                         @csrf
 
-                        <button type="submit" class="btn btn-danger">Clear cache</button>
+                        <button type="submit" class="btn btn-warning">Clear cache</button>
                     </form>
                 </div>
             </div>

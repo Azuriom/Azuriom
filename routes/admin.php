@@ -41,8 +41,12 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::post('/{user}/2fa', 'UserController@disable2fa')->name('2fa');
 });
 
-Route::get('/themes/', 'ThemeController@index')->name('themes.index');
-Route::post('/themes/change/{theme?}', 'ThemeController@changeTheme')->name('themes.change');
+Route::prefix('themes')->name('themes.')->group(function () {
+    Route::get('/', 'ThemeController@index')->name('.index');
+    Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('.change');
+    Route::get('/edit', 'ThemeController@edit')->name('.edit');
+    Route::post('/update', 'ThemeController@update')->name('.update');
+});
 
 Route::resource('navbar-elements', 'NavbarController')->except('show');
 Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order');

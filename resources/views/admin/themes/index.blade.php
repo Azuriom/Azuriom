@@ -15,7 +15,34 @@
 @endpush
 
 @section('content')
+    <div class="card mb-3">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Current theme</h6>
+        </div>
+        <div class="card-body">
+            @if($current)
+                <h3 class="h5">{{ $current->name }}</h3>
+                <ul>
+                    <li>Author: {{ join(', ', $current->authors) }}</li>
+                    <li>Version: {{ $current->version }}</li>
+                </ul>
+
+                <form action="{{ route('admin.themes.change') }}" method="POST">
+                    @csrf
+
+                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> Edit config</a>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> Disable</button>
+                </form>
+            @else
+                You don't have any theme enable.
+            @endif
+        </div>
+    </div>
+
     <div class="card">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Installed themes</h6>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered">
@@ -43,12 +70,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <form action="{{ route('admin.themes.change') }}" method="POST">
-                @csrf
-
-                <button type="submit" class="btn btn-warning">Use default theme</button>
-            </form>
         </div>
     </div>
 

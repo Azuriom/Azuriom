@@ -30,6 +30,7 @@ class SettingsController extends Controller
         return view('admin.settings.index', [
             'images' => Image::all(),
             'icon' => setting('icon'),
+            'logo' => setting('logo'),
             'languages' => LangHelper::getAvailableLanguages(),
             'timezones' => array_values(timezone_identifiers_list()),
             'currentTimezone' => config('app.timezone')
@@ -47,7 +48,7 @@ class SettingsController extends Controller
             'icon' => ['nullable', 'exists:images,file']
         ]);
 
-        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon']));
+        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'footer']));
 
         ActionLog::logEdit('Settings');
 

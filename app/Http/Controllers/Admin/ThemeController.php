@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Setting;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ThemeController extends Controller
 {
@@ -20,7 +21,21 @@ class ThemeController extends Controller
             return $info !== null;
         });
 
-        return view('admin.themes.index')->with('themes', $themes);
+        $current = $themes->pull(setting('theme', 'default'));
+
+        return view('admin.themes.index', [
+            'themes' => $themes,
+            'current' => $current
+        ]);
+    }
+
+    public function edit()
+    {
+        if (! View::exists('config')) {
+            return redirect()->route('admin.themes.index')->with('error', 'This theme don\'t have config');
+        }
+
+        return view('config');
     }
 
     public function changeTheme($theme = null)

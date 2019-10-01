@@ -5,15 +5,13 @@
 @push('footer-scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const imageSelect = $('#imageSelect');
-            const imagePreview = $('#imagePreview');
-
-            imageSelect.on('change', function (e) {
-                if (imageSelect.val().length === 0) {
-                    imagePreview.parent().addClass('d-none');
+            $('[data-image-select]').on('change', function (e) {
+                const preview = $('#' + $(this).data('image-select'));
+                if ($(this).val().length === 0) {
+                    preview.parent().addClass('d-none');
                 } else {
-                    imagePreview.parent().removeClass('d-none');
-                    imagePreview.attr('src', '{{ image_url() }}/' + imageSelect.val());
+                    preview.parent().removeClass('d-none');
+                    preview.attr('src', '{{ image_url() }}/' + $(this).val());
                 }
             });
         });
@@ -59,7 +57,7 @@
                         <div class="input-group-prepend">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
                         </div>
-                        <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" name="icon">
+                        <select class="custom-select @error('icon') is-invalid @enderror" data-image-select="faviconPreview" name="icon">
                             <option value="" @if(!$icon) selected @endif>None</option>
                             @foreach($images as $image)
                                 <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
@@ -68,10 +66,33 @@
                     </div>
 
                     <div class="mt-3 @if(!$icon) d-none @endif">
-                        <img src="{{ $icon ? favicon() : '#' }}" class="img-fluid rounded img-preview-sm" alt="Favicon" id="imagePreview">
+                        <img src="{{ $icon ? favicon() : '#' }}" class="img-fluid rounded img-preview-sm" alt="Favicon" id="faviconPreview">
                     </div>
 
                     @error('icon')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="logoSelect">Logo</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                        </div>
+                        <select class="custom-select @error('logo') is-invalid @enderror" data-image-select="logoPreview" name="logo">
+                            <option value="" @if(!$logo) selected @endif>None</option>
+                            @foreach($images as $image)
+                                <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>{{ $image->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mt-3 @if(!$logo) d-none @endif">
+                        <img src="{{ $logo ? image_url($logo) : '#' }}" class="img-fluid rounded img-preview-sm" alt="Logo" id="logoPreview">
+                    </div>
+
+                    @error('logo')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
@@ -98,6 +119,15 @@
                     </select>
 
                     @error('locale')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="footerInput">Footer</label>
+                    <input type="text" class="form-control @error('footer') is-invalid @enderror" id="footerInput" name="footer" value="{{ old('footer', setting('footer')) }}" required>
+
+                    @error('footer')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
