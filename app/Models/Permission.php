@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
+ *
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  */
 class Permission extends Model
 {

@@ -11,10 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $value
  * @property int $position
  * @property string $type
- * @property int $parent_id
+ * @property int|null $parent_id
  * @property bool $new_tab
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @property \Azuriom\Models\NavbarElement|null $parent
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
  */
 class NavbarElement extends Model
 {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $author_id
- * @property int $image_id
+ * @property int|null $image_id
  * @property string $title
  * @property string $description
  * @property string $slug
@@ -16,6 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_pinned
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @property \Azuriom\Models\User $author
+ * @property \Azuriom\Models\Image|null $image
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
  */
 class Post extends Model
 {

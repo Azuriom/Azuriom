@@ -10,14 +10,18 @@ use Illuminate\Notifications\Notifiable;
  * @property int $id
  * @property string $name
  * @property string $email
- * @property \Carbon\Carbon $email_verified_at
+ * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
- * @property string $last_ip
- * @property string $google_2fa_secret
+ * @property string|null $last_ip
+ * @property string|null $google_2fa_secret
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

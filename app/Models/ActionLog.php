@@ -13,10 +13,13 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property int $user_id
  * @property string $type
- * @property int $target_id
+ * @property int|null $target_id
  * @property string $action
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * @property \Azuriom\Models\User $user
+ * @property \Illuminate\Database\Eloquent\Model|null $target
  */
 class ActionLog extends Model
 {
