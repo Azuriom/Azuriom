@@ -51,7 +51,7 @@ class ThemeController extends Controller
 
         Setting::updateOrCreate(['name' => 'theme'], ['value' => $theme]);
 
-        ActionLog::logEdit('Theme');
+        ActionLog::logUpdate('Theme');
 
         return redirect()->route('admin.themes.index')->with('success', 'Theme updated.');
     }

@@ -50,9 +50,4 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
-
-    public function isAuthor(User $user)
-    {
-        return $this->author_id === $user->id;
-    }
 }

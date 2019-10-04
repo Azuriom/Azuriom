@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Traits\Loggable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Image extends Model
 {
+    use Loggable;
+
     /**
      * The attributes that are mass assignable.
      *

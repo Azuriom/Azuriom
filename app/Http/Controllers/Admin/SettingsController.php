@@ -22,7 +22,7 @@ class SettingsController extends Controller
     private $hashAlgorithms = [
         'bcrypt' => 'Bcrypt',
         'argon' => 'Argon2i',
-        'argon2id' => 'Argon2id (PHP 7.3.0+)'
+        'argon2id' => 'Argon2id'
     ];
 
     public function index()
@@ -50,7 +50,7 @@ class SettingsController extends Controller
 
         $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'footer']));
 
-        ActionLog::logEdit('Settings');
+        ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
     }
@@ -88,7 +88,7 @@ class SettingsController extends Controller
 
         $this->updateSettings($request->only(['hash']));
 
-        ActionLog::logEdit('Settings');
+        ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.security')->with('success', 'Settings updated');
     }
@@ -154,7 +154,7 @@ class SettingsController extends Controller
 
         $this->updateSettings($request->only(['g-analytics-id', 'keywords']));
 
-        ActionLog::logEdit('Settings');
+        ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }

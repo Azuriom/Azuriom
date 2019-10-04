@@ -15,7 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Like extends Model
 {
-    const UPDATED_AT = null;
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The relationships that should always be loaded.

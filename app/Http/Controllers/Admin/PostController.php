@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
@@ -56,8 +55,6 @@ class PostController extends Controller
         $post->author_id = $request->user()->id;
         $post->save();
 
-        ActionLog::logCreate($post);
-
         return redirect()->route('admin.posts.index')->with('success', 'Post created');
     }
 
@@ -95,8 +92,6 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        ActionLog::logEdit($post);
-
         return redirect()->route('admin.posts.index')->with('success', 'Post updated');
     }
 
@@ -110,8 +105,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-
-        ActionLog::logDelete($post);
 
         return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
     }

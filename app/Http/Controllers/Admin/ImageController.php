@@ -3,12 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ImageController extends Controller
@@ -62,13 +60,11 @@ class ImageController extends Controller
 
         $file->storeAs($this->imagePath, $fileName);
 
-        $image = Image::create([
+        Image::create([
             'name' => $request->input('name'),
             'file' => $fileName,
             'type' => $mimeType
         ]);
-
-        ActionLog::logCreate($image);
 
         return redirect()->route('admin.images.index')->with('success', 'Image uploaded');
     }
@@ -111,8 +107,6 @@ class ImageController extends Controller
             'file' => $fileName
         ]);
 
-        ActionLog::logEdit($image);
-
         return redirect()->route('admin.images.index')->with('success', 'Image updated');
     }
 
@@ -129,8 +123,6 @@ class ImageController extends Controller
 
         $image->delete();
 
-        ActionLog::logDelete($image);
-
         return redirect()->route('admin.images.index')->with('success', 'Image deleted');
     }
 
@@ -141,7 +133,7 @@ class ImageController extends Controller
 
     protected function normalizeExtensions(string $name)
     {
-        return str_replace('jpeg', 'jpg', Str::lower($name));
+        return str_replace('jpeg', 'jpg', strtolower($name));
     }
 
     private function rules($image = null)

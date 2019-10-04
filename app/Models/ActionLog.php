@@ -2,12 +2,8 @@
 
 namespace Azuriom\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -64,48 +60,28 @@ class ActionLog extends Model
 
     public function setTargetTypeAttribute($value)
     {
-        $this->type = Arr::last(explode('\\', $value));
-    }
-
-    protected function newMorphTo(Builder $query, Model $parent, $foreignKey, $ownerKey, $type, $relation)
-    {
-        return new MorphTo($query, $parent, $foreignKey, $ownerKey, $type, $relation);
-    }
-
-    public static function logCreate($target)
-    {
-        self::log('CREATE', $target);
-    }
-
-    public static function logEdit($target)
-    {
-        self::log('EDIT', $target);
-    }
-
-    public static function logDelete($target)
-    {
-        self::log('DELETE', $target);
+        $this->type = substr($value, strrpos($value, '\\') + 1);
     }
 
     public function formatAction()
     {
-        return Str::studly(Str::lower($this->action));
+        return ucfirst(strtolower($this->action));
     }
 
     public function getActionFormat()
     {
         switch ($this->action) {
-            case 'CREATE':
+            case 'created':
                 return [
                     'color' => 'success',
                     'icon' => 'plus'
                 ];
-            case 'EDIT':
+            case 'updated':
                 return [
                     'color' => 'warning',
                     'icon' => 'redo'
                 ];
-            case 'DELETE':
+            case 'deleted':
                 return [
                     'color' => 'danger',
                     'icon' => 'minus'
@@ -138,5 +114,20 @@ class ActionLog extends Model
         }
 
         $log->save();
+    }
+
+    public static function logCreate($target)
+    {
+        self::log('created', $target);
+    }
+
+    public static function logUpdate($target)
+    {
+        self::log('updated', $target);
+    }
+
+    public static function logDelete($target)
+    {
+        self::log('deleted', $target);
     }
 }

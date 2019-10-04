@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $slug
  * @property string $content
  * @property bool $is_pinned
+ * @property \Carbon\Carbon $published_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -24,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Post extends Model
 {
+    use Loggable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -83,11 +87,6 @@ class Post extends Model
         return $this->likes->where('author_id', $user->id)->isNotEmpty();
     }
 
-    public function isAuthor(User $user)
-    {
-        return $this->author_id === $user->id;
-    }
-
     public function isPublished()
     {
         return $this->published_at->isPast();
@@ -95,6 +94,6 @@ class Post extends Model
 
     public function scopePublished(Builder $query)
     {
-        return $query->where('published_at', '<=', now());
+        return $query->whereDate('published_at', '<=', now());
     }
 }

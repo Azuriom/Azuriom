@@ -22,6 +22,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
+ * @property \Azuriom\Models\Role $role
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -63,21 +64,33 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
     ];
 
+    /**
+     * Get the posts of this user.
+     */
     public function posts()
     {
         return $this->hasMany(Post::class, 'author_id');
     }
 
+    /**
+     * Get the comments of this user.
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
 
+    /**
+     * Get the likes of this user.
+     */
     public function likes()
     {
         return $this->hasMany(Like::class, 'author_id');
     }
 
+    /**
+     * Get the role of this user.
+     */
     public function role()
     {
         return $this->belongsTo(Role::class);

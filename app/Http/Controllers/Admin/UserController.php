@@ -53,8 +53,6 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        ActionLog::logCreate($user);
-
         return redirect()->route('admin.users.index')->with('success', 'User created');
     }
 
@@ -95,7 +93,7 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        ActionLog::logEdit($user);
+        ActionLog::logUpdate($user);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated');
     }
@@ -104,7 +102,7 @@ class UserController extends Controller
     {
         $user->markEmailAsVerified();
 
-        ActionLog::logEdit($user);
+        ActionLog::logUpdate($user);
 
         return redirect()->route('admin.users.edit', $user)->with('success', 'Email verified');
     }
@@ -113,7 +111,7 @@ class UserController extends Controller
     {
         $user->update(['google_2fa_secret' => null]);
 
-        ActionLog::logEdit($user);
+        ActionLog::logUpdate($user);
 
         return redirect()->route('admin.users.edit', $user)->with('success', '2fa disabled');
     }

@@ -71,9 +71,7 @@ class ProfileController extends Controller
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
 
-        return redirect()->route('profile.index')
-            ->with('success', 'Two factor auth enabled')
-            ->withInput($request->all());
+        return redirect()->route('profile.index')->with('success', 'Two factor auth enabled')->withInput();
     }
 
     public function disable2fa(Request $request)

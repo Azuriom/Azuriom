@@ -76,7 +76,7 @@
                         {{ $comment->content }}
                     </div>
                     @auth
-                        @if($comment->isAuthor(Auth::user()))
+                        @if($comment->author_id == Auth::id()))
                             <a class="btn btn-sm btn-danger mt-1" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
                         @endif
                     @endauth
