@@ -22,7 +22,7 @@
 
                 <div class="form-group mb-4">
                     <label for="colorInput">Color</label>
-                    <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->getHexColor()) }}" required>
+                    <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color) }}" required>
 
                     @error('color')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

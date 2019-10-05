@@ -38,8 +38,6 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $request->offsetSet('color', substr($request->input('color'), 1));
-
         request_checkbox($request, 'is_admin');
 
         Role::create($request->all());
@@ -72,8 +70,6 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        $request->offsetSet('color', substr($request->input('color'), 1));
-
         request_checkbox($request, 'is_admin');
 
         $permissions = array_keys($request->input('permissions', []));

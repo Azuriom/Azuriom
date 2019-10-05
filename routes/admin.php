@@ -42,10 +42,10 @@ Route::prefix('users')->name('users.')->group(function () {
 });
 
 Route::prefix('themes')->name('themes.')->group(function () {
-    Route::get('/', 'ThemeController@index')->name('.index');
-    Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('.change');
-    Route::get('/edit', 'ThemeController@edit')->name('.edit');
-    Route::post('/update', 'ThemeController@update')->name('.update');
+    Route::get('/', 'ThemeController@index')->name('index');
+    Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('change');
+    Route::get('/edit', 'ThemeController@edit')->name('edit');
+    Route::post('/update', 'ThemeController@update')->name('update');
 });
 
 Route::resource('navbar-elements', 'NavbarController')->except('show');
@@ -58,4 +58,5 @@ Route::resource('pages', 'PageController')->except('show');
 Route::resource('posts', 'PostController')->except('show');
 Route::resource('images', 'ImageController')->except('show');
 
+Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear');
 Route::resource('logs', 'ActionLogController')->only(['index']);

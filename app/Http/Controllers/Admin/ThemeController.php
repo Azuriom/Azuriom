@@ -40,7 +40,7 @@ class ThemeController extends Controller
 
     public function changeTheme($theme = null)
     {
-        if ($theme == null) {
+        if ($theme === null) {
             Setting::where('name', 'theme')->delete();
             return redirect()->route('admin.themes.index')->with('success', 'Theme updated.');
         }

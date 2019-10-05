@@ -38,6 +38,12 @@
             </div>
 
             {{ $logs->links() }}
+
+            <form action="{{ route('admin.logs.clear') }}" method="POST">
+                @csrf
+
+                <button type="submit" class="btn btn-danger">Clear old logs (15d+)</button>
+            </form>
         </div>
     </div>
 @endsection

@@ -38,6 +38,16 @@ class Role extends Model
         'is_admin' => 'boolean',
     ];
 
+    protected function getColorAttribute($value)
+    {
+        return '#'.$value;
+    }
+
+    protected function setColorAttribute($value)
+    {
+        $this->attributes['color'] = (strlen($value) === 7) ? substr($value, 1) : $value;
+    }
+
     /**
      * Get the users in this group.
      */
@@ -68,11 +78,6 @@ class Role extends Model
         return $permission && $this->permissions->contains($permission);
     }
 
-    public function getHexColor()
-    {
-        return '#'.$this->color;
-    }
-
     /**
      * Get the CSS inline style rules of this role.
      * The background color is the role color and the text
@@ -82,9 +87,9 @@ class Role extends Model
      */
     public function getBadgeStyle()
     {
-        $color = color_contrast($this->getHexColor());
+        $color = color_contrast($this->color);
 
-        return "color: {$color}; background: {$this->getHexColor()}";
+        return "color: {$color}; background: {$this->color}";
     }
 
     /**

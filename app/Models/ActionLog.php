@@ -53,12 +53,12 @@ class ActionLog extends Model
         return $this->morphTo('target');
     }
 
-    public function getTargetTypeAttribute()
+    protected function getTargetTypeAttribute()
     {
         return $this->target_id !== null ? ('\Azuriom\\Models\\'.$this->type) : null;
     }
 
-    public function setTargetTypeAttribute($value)
+    protected function setTargetTypeAttribute($value)
     {
         $this->type = substr($value, strrpos($value, '\\') + 1);
     }
