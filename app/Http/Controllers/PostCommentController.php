@@ -2,9 +2,9 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Comment;
 use Azuriom\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostCommentController extends Controller
@@ -12,15 +12,12 @@ class PostCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\PostRequest  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, Post $post)
+    public function store(PostRequest $request, Post $post)
     {
-        $this->validate($request, $this->rules());
-
         $comment = new Comment($request->all());
         $comment->author_id = $request->user()->id;
 
@@ -46,12 +43,5 @@ class PostCommentController extends Controller
         $comment->delete();
 
         return redirect()->route('posts.show', $post->slug);
-    }
-
-    private function rules()
-    {
-        return [
-            'content' => ['required', 'string']
-        ];
     }
 }

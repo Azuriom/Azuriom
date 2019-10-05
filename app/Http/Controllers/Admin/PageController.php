@@ -3,9 +3,8 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class PageController extends Controller
 {
@@ -16,9 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::paginate(25);
-
-        return view('admin.pages.index')->with('pages', $pages);
+        return view('admin.pages.index')->with('pages', Page::paginate(25));
     }
 
     /**
@@ -34,14 +31,11 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\PageRequest  $request
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(PageRequest $request)
     {
-        $this->validate($request, $this->rules());
-
         request_checkbox($request, 'is_enabled');
 
         Page::create($request->all());
@@ -63,15 +57,12 @@ class PageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\PageRequest  $request
      * @param  \Azuriom\Models\Page  $page
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Page $page)
+    public function update(PageRequest $request, Page $page)
     {
-        $this->validate($request, $this->rules($page));
-
         request_checkbox($request, 'is_enabled');
 
         $page->update($request->all());
@@ -91,15 +82,5 @@ class PageController extends Controller
         $page->delete();
 
         return redirect()->route('admin.pages.index')->with('success', 'Page deleted');
-    }
-
-    private function rules($page = null)
-    {
-        return [
-            'title' => ['required', 'string', 'max:150'],
-            'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', 'alpha_dash', Rule::unique('pages')->ignore($page, 'slug')],
-            'content' => ['required', 'string']
-        ];
     }
 }

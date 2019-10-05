@@ -3,11 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Image;
 use Azuriom\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -41,14 +40,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $this->validate($request, $this->rules());
-
         request_checkbox($request, 'is_pinned');
 
         $post = new Post($request->all());
@@ -79,15 +75,12 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\PostRequest  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        $this->validate($request, $this->rules($post));
-
         request_checkbox($request, 'is_pinned');
 
         $post->update($request->all());
@@ -107,18 +100,6 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
-    }
-
-    private function rules($post = null)
-    {
-        return [
-            'title' => ['required', 'string', 'max:150'],
-            'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', 'alpha_dash', Rule::unique('posts')->ignore($post, 'slug')],
-            'image_id' => ['nullable', 'exists:images,id'],
-            'content' => ['required', 'string'],
-            'published_at' => ['required', 'date']
-        ];
     }
 
     private function getImagesUrl(Collection $images)

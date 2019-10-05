@@ -3,12 +3,12 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\NavbarElementRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class NavbarController extends Controller
 {
@@ -83,14 +83,12 @@ class NavbarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(NavbarElementRequest $request)
     {
-        $this->validate($request, $this->rules());
-
         request_checkbox($request, 'new_tab');
 
         $request->offsetSet('value', $this->getLinkValue($request));
@@ -119,15 +117,13 @@ class NavbarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
      * @param  \Azuriom\Models\NavbarElement  $navbarElement
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, NavbarElement $navbarElement)
+    public function update(NavbarElementRequest $request, NavbarElement $navbarElement)
     {
-        $this->validate($request, $this->rules());
-
         request_checkbox($request, 'new_tab');
 
         $request->offsetSet('value', $this->getLinkValue($request));
@@ -161,14 +157,6 @@ class NavbarController extends Controller
         $navbarElement->delete();
 
         return redirect()->route('admin.navbar-elements.index')->with('success', 'Element deleted');
-    }
-
-    private function rules()
-    {
-        return [
-            'name' => ['required', 'string', 'max:150'],
-            'type' => ['string', Rule::in(NavbarElement::types())]
-        ];
     }
 
     /**

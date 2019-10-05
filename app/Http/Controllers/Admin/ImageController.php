@@ -3,8 +3,8 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\ImageRequest;
 use Azuriom\Models\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -41,14 +41,11 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
-        $this->validate($request, $this->rules());
-
         $file = $request->file('file');
         $mimeType = $file->getMimeType();
         $extension = $this->normalizeExtensions($file->extension());
@@ -83,15 +80,12 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Image $image)
+    public function update(ImageRequest $request, Image $image)
     {
-        $this->validate($request, $this->rules($image));
-
         $fileName = $request->input('slug').'.'.$image->getExtension();
 
         Validator::make(['slug' => $fileName], [
@@ -134,14 +128,5 @@ class ImageController extends Controller
     protected function normalizeExtensions(string $name)
     {
         return str_replace('jpeg', 'jpg', strtolower($name));
-    }
-
-    private function rules($image = null)
-    {
-        return [
-            'name' => ['required', 'string', 'max:150'],
-            'slug' => ['required', 'string', 'max:100', 'alpha_dash'],
-            'file' => $image ? ['nullable'] : ['required', 'image', 'max:2000'],
-        ];
     }
 }

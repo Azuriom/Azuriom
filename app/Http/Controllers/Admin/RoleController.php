@@ -3,10 +3,9 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\RoleRequest;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
-use Azuriom\Rules\Color;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
@@ -18,9 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(25);
-
-        return view('admin.roles.index')->with('roles', $roles);
+        return view('admin.roles.index')->with('roles', Role::paginate(25));
     }
 
     /**
@@ -36,14 +33,11 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\RoleRequest  $request
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $this->validate($request, $this->rules());
-
         $request->offsetSet('color', substr($request->input('color'), 1));
 
         request_checkbox($request, 'is_admin');
@@ -72,15 +66,12 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\RoleRequest  $request
      * @param  \Azuriom\Models\Role  $role
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
-        $this->validate($request, $this->rules());
-
         $request->offsetSet('color', substr($request->input('color'), 1));
 
         request_checkbox($request, 'is_admin');
@@ -116,13 +107,5 @@ class RoleController extends Controller
         $role->delete();
 
         return redirect()->route('admin.roles.index')->with('success', 'Role deleted');
-    }
-
-    private function rules()
-    {
-        return [
-            'name' => ['required', 'string', 'max:25'],
-            'color' => ['required', new Color()],
-        ];
     }
 }
