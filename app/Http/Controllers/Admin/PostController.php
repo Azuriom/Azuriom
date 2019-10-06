@@ -45,7 +45,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        request_checkbox($request, 'is_pinned');
+        $request->checkbox('is_pinned');
 
         $post = new Post($request->all());
         $post->author_id = $request->user()->id;
@@ -81,7 +81,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        request_checkbox($request, 'is_pinned');
+        $request->checkbox('is_pinned');
 
         $post->update($request->all());
 

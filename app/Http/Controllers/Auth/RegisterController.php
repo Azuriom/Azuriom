@@ -4,7 +4,6 @@ namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Models\User;
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Rules\VerifyCaptcha;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +39,8 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        $this->middleware('captcha')->only('register');
     }
 
     /**
@@ -51,10 +52,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:25', 'unique:users'],
+            'name' => ['required', 'string', 'max:50', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'g-recaptcha-response' => ['required', 'string', new VerifyCaptcha()]
         ]);
     }
 

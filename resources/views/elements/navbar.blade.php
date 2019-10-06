@@ -55,7 +55,7 @@
                                 {{ __('Profile') }}
                             </a>
 
-                            @if(Auth::user()->isAdmin())
+                            @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     Admin
                                 </a>

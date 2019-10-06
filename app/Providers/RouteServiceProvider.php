@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::pattern('id', '[0-9]+');
         Route::pattern('slug', '[a-z0-9-]+');
-        Route::pattern('name', '[a-z0-9_-]{3,16}');
+        Route::pattern('name', '[a-z0-9_-]+');
 
         parent::boot();
     }
@@ -84,7 +84,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes()
     {
         Route::prefix('admin')
-            ->middleware(['web', 'auth', 'admin', 'verified'])
+            ->middleware(['web', 'auth', 'can:admin.access', 'verified'])
             ->namespace($this->namespace . '\Admin')
             ->name('admin.')
             ->group(base_path('routes/admin.php'));

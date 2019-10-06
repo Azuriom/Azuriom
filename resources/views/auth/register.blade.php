@@ -63,16 +63,6 @@
                             </div>
                         </div>
 
-                        @error('g-recaptcha-response')
-                            <div class="form-group row">
-                                <div class="col-md-10 offset-md-1 text-center">
-                                    <div class="alert alert-danger mb-0" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        @enderror
-
                         @include('elements.captcha')
 
                         <div class="form-group row mb-0">

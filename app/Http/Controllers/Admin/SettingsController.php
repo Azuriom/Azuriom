@@ -173,7 +173,7 @@ class SettingsController extends Controller
             'maintenance' => ['required', 'string']
         ]);
 
-        request_checkbox($request, 'enable-maintenance');
+        $request->checkbox('enable-maintenance');
 
         // TODO
 

@@ -36,7 +36,7 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        request_checkbox($request, 'is_enabled');
+        $request->checkbox('is_enabled');
 
         Page::create($request->all());
 
@@ -63,7 +63,7 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        request_checkbox($request, 'is_enabled');
+        $request->checkbox('is_enabled');
 
         $page->update($request->all());
 

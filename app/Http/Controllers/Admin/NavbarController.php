@@ -89,7 +89,7 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        request_checkbox($request, 'new_tab');
+        $request->checkbox('new_tab');
 
         $request->offsetSet('value', $this->getLinkValue($request));
 
@@ -124,7 +124,7 @@ class NavbarController extends Controller
      */
     public function update(NavbarElementRequest $request, NavbarElement $navbarElement)
     {
-        request_checkbox($request, 'new_tab');
+        $request->checkbox('new_tab');
 
         $request->offsetSet('value', $this->getLinkValue($request));
 

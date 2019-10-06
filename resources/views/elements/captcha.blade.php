@@ -11,15 +11,18 @@
                 captchaForm.submit();
             }
 
-            captchaForm = document.getElementById('captcha-form');
 
-            if (captchaForm) {
-                captchaForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
+            document.addEventListener('DOMContentLoaded', function () {
+                captchaForm = document.getElementById('captcha-form');
 
-                    grecaptcha.execute();
-                });
-            }
+                if (captchaForm) {
+                    captchaForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+
+                        grecaptcha.execute();
+                    });
+                }
+            });
         </script>
     @endpush
 

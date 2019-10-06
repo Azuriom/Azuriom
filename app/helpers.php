@@ -17,13 +17,6 @@ if (! function_exists('image_url')) {
     }
 }
 
-if (! function_exists('request_checkbox')) {
-    function request_checkbox(Request $request, string $name)
-    {
-        $request->offsetSet($name, $request->has($name));
-    }
-}
-
 if (! function_exists('color_contrast')) {
     function color_contrast(string $hex)
     {

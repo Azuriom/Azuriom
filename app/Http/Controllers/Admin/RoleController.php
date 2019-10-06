@@ -38,7 +38,7 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        request_checkbox($request, 'is_admin');
+        $request->checkbox('is_admin');
 
         Role::create($request->all());
 
@@ -70,7 +70,7 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        request_checkbox($request, 'is_admin');
+        $request->checkbox('is_admin');
 
         $permissions = array_keys($request->input('permissions', []));
 

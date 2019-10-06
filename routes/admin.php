@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AdminController@index')->name('dashboard');
 
-Route::prefix('settings')->name('settings.')->group(function () {
+Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->group(function () {
     Route::get('/', 'SettingsController@index')->name('index');
     Route::post('/update', 'SettingsController@update')->name('update');
 
@@ -36,27 +36,27 @@ Route::prefix('settings')->name('settings.')->group(function () {
     Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('update-maintenance');
 });
 
-Route::prefix('users')->name('users.')->group(function () {
+Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(function () {
     Route::post('/{user}/verify', 'UserController@verifyEmail')->name('verify');
     Route::post('/{user}/2fa', 'UserController@disable2fa')->name('2fa');
 });
 
-Route::prefix('themes')->name('themes.')->group(function () {
+Route::prefix('themes')->name('themes.')->middleware('admin')->group(function () {
     Route::get('/', 'ThemeController@index')->name('index');
     Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('change');
     Route::get('/edit', 'ThemeController@edit')->name('edit');
     Route::post('/update', 'ThemeController@update')->name('update');
 });
 
-Route::resource('navbar-elements', 'NavbarController')->except('show');
-Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order');
+Route::resource('navbar-elements', 'NavbarController')->except('show')->middleware('can:admin.navbar');
+Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order')->middleware('can:admin.navbar');
 
-Route::resource('users', 'UserController')->except('show');
-Route::resource('roles', 'RoleController')->except('show');
+Route::resource('users', 'UserController')->except('show')->middleware('can:admin.users');
+Route::resource('roles', 'RoleController')->except('show')->middleware('can:admin.roles');
 
-Route::resource('pages', 'PageController')->except('show');
-Route::resource('posts', 'PostController')->except('show');
-Route::resource('images', 'ImageController')->except('show');
+Route::resource('pages', 'PageController')->except('show')->middleware('can:admin.pages');
+Route::resource('posts', 'PostController')->except('show')->middleware('can:admin.posts');
+Route::resource('images', 'ImageController')->except('show')->middleware('can:admin.images');
 
-Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear');
-Route::resource('logs', 'ActionLogController')->only(['index']);
+Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear')->middleware('can:admin.logs');
+Route::resource('logs', 'ActionLogController')->only(['index'])->middleware('can:admin.logs');

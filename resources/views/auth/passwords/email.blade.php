@@ -16,7 +16,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ route('password.email') }}" id="captcha-form">
                         @csrf
 
                         <div class="form-group row">
@@ -32,6 +32,8 @@
                                 @enderror
                             </div>
                         </div>
+
+                        @include('elements.captcha')
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

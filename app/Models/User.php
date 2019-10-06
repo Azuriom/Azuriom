@@ -106,6 +106,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->google_2fa_secret !== null;
     }
 
+    public function hasAdminAccess()
+    {
+        return $this->can('admin.access');
+    }
+
     public function isAdmin()
     {
         return $this->role->is_admin;

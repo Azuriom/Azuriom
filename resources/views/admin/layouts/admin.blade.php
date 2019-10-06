@@ -53,108 +53,135 @@
                     <span>Dashboard</span></a>
             </div>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @canany(['admin.settings', 'admin.navbar'])
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Settings</div>
+                <div class="sidebar-heading">Settings</div>
+            @endcanany
 
-            <div class="nav-item {{ add_active('admin.settings.*') }}">
-                <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Settings</span>
-                </a>
-                <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Settings</h6>
-                        <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">Global</a>
-                        <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">Security</a>
-                        <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">Performances</a>
-                        <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">SEO</a>
-                        <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">Maintenance</a>
+            @can('admin.settings')
+                <div class="nav-item {{ add_active('admin.settings.*') }}">
+                    <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Settings</span>
+                    </a>
+                    <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Settings</h6>
+                            <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">Global</a>
+                            <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">Security</a>
+                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">Performances</a>
+                            <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">SEO</a>
+                            <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">Maintenance</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.navbar-elements.*') }}">
-                <a class="nav-link" href="{{ route('admin.navbar-elements.index') }}">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Navbar</span></a>
-            </div>
+            @can('admin.navbar')
+                <div class="nav-item {{ add_active('admin.navbar-elements.*') }}">
+                    <a class="nav-link" href="{{ route('admin.navbar-elements.index') }}">
+                        <i class="fas fa-fw fa-bars"></i>
+                        <span>Navbar</span>
+                    </a>
+                </div>
+            @endcan
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @canany(['admin.users', 'admin.roles'])
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Users</div>
+                <!-- Heading -->
+                <div class="sidebar-heading">Users</div>
+            @endcanany
 
-            <div class="nav-item {{ add_active('admin.users.*') }}">
-                <a class="nav-link" href="{{ route('admin.users.index') }}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Users</span></a>
-            </div>
+            @can('admin.users')
+                <div class="nav-item {{ add_active('admin.users.*') }}">
+                    <a class="nav-link" href="{{ route('admin.users.index') }}">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.roles.*') }}">
-                <a class="nav-link" href="{{ route('admin.roles.index') }}">
-                    <i class="fas fa-fw fa-user-tag"></i>
-                    <span>Roles</span></a>
-            </div>
+            @can('admin.roles')
+                <div class="nav-item {{ add_active('admin.roles.*') }}">
+                    <a class="nav-link" href="{{ route('admin.roles.index') }}">
+                        <i class="fas fa-fw fa-user-tag"></i>
+                        <span>Roles</span>
+                    </a>
+                </div>
+            @endcan
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @canany(['admin.pages', 'admin.posts', 'admin.images'])
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Content</div>
+                <div class="sidebar-heading">Content</div>
+            @endcanany
 
-            <div class="nav-item {{ add_active('admin.pages.*') }}">
-                <a class="nav-link" href="{{ route('admin.pages.index') }}">
-                    <i class="fas fa-fw fa-file-alt"></i>
-                    <span>Pages</span></a>
-            </div>
+            @can('admin.pages')
+                <div class="nav-item {{ add_active('admin.pages.*') }}">
+                    <a class="nav-link" href="{{ route('admin.pages.index') }}">
+                        <i class="fas fa-fw fa-file-alt"></i>
+                        <span>Pages</span>
+                    </a>
+                </div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.posts.*') }}">
-                <a class="nav-link" href="{{ route('admin.posts.index') }}">
-                    <i class="fas fa-fw fa-newspaper"></i>
-                    <span>Posts</span></a>
-            </div>
+            @can('admin.posts')
+                <div class="nav-item {{ add_active('admin.posts.*') }}">
+                    <a class="nav-link" href="{{ route('admin.posts.index') }}">
+                        <i class="fas fa-fw fa-newspaper"></i>
+                        <span>Posts</span>
+                    </a>
+                </div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.images.*') }}">
-                <a class="nav-link" href="{{ route('admin.images.index') }}">
-                    <i class="fas fa-fw fa-image"></i>
-                    <span>Images</span></a>
-            </div>
+            @can('admin.images')
+                <div class="nav-item {{ add_active('admin.images.*') }}">
+                    <a class="nav-link" href="{{ route('admin.images.index') }}">
+                        <i class="fas fa-fw fa-image"></i>
+                        <span>Images</span>
+                    </a>
+                </div>
+            @endcan
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @canany(['admin.plugins', 'admin.themes'])
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Extensions</div>
+                <div class="sidebar-heading">Extensions</div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.plugins.*') }}">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-puzzle-piece"></i>
-                    <span>Plugins</span></a>
-            </div>
+            @can('admin.plugins')
+                <div class="nav-item {{ add_active('admin.plugins.*') }}">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-puzzle-piece"></i>
+                        <span>Plugins</span>
+                    </a>
+                </div>
+            @endcan
 
-            <div class="nav-item {{ add_active('admin.themes.*') }}">
-                <a class="nav-link" href="{{ route('admin.themes.index') }}">
-                    <i class="fas fa-fw fa-paint-brush"></i>
-                    <span>Themes</span></a>
-            </div>
+            @can('admin.themes')
+                <div class="nav-item {{ add_active('admin.themes.*') }}">
+                    <a class="nav-link" href="{{ route('admin.themes.index') }}">
+                        <i class="fas fa-fw fa-paint-brush"></i>
+                        <span>Themes</span>
+                    </a>
+                </div>
+            @endcan
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @can('admin.logs')
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Other</div>
+                <div class="sidebar-heading">Other</div>
 
-            <div class="nav-item {{ add_active('admin.logs.*') }}">
-                <a class="nav-link" href="{{ route('admin.logs.index') }}">
-                    <i class="fas fa-fw fa-history"></i>
-                    <span>Logs</span></a>
-            </div>
+                <div class="nav-item {{ add_active('admin.logs.*') }}">
+                    <a class="nav-link" href="{{ route('admin.logs.index') }}">
+                        <i class="fas fa-fw fa-history"></i>
+                        <span>Logs</span>
+                    </a>
+                </div>
+            @endcan
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Sidebar Toggler (Sidebar) -->

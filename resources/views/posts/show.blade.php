@@ -42,30 +42,12 @@
 
         <hr>
 
-        <form @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST" @endauth>
+        <form class="mb-4" @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST" @endauth>
             @csrf
             <button class="btn btn-primary @guest disabled @elseif($currentPost->hasLiked(Auth::user())) active @endguest" @guest disabled @endguest type="submit">
                 Likes: {{ $currentPost->likes->count() }}
             </button>
         </form>
-
-        <div class="card my-4">
-            <div class="card-header">
-                <span class="h5">Leave a comment</span>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('posts.comments.store', $currentPost) }}" method="POST">
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="content">Your comment</label>
-                        <textarea class="form-control" id="content" name="content" rows="4"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
 
         @foreach($currentPost->comments as $comment)
             <div class="media mb-4">
@@ -76,13 +58,33 @@
                         {{ $comment->content }}
                     </div>
                     @auth
-                        @if($comment->author_id === Auth::id()))
+                        @can('delete', $comment)
                             <a class="btn btn-sm btn-danger mt-1" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
                         @endif
                     @endauth
                 </div>
             </div>
         @endforeach
+
+        @can('create', \Azuriom\Models\Comment::class)
+            <div class="card mt-4">
+                <div class="card-header">
+                    <span class="h5">Leave a comment</span>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('posts.comments.store', $currentPost) }}" method="POST">
+                        @csrf
+
+                        <div class="form-group">
+                            <label for="content">Your comment</label>
+                            <textarea class="form-control" id="content" name="content" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        @endcan
     </div>
 
     <!-- Delete confirm modal -->

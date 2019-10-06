@@ -2,6 +2,10 @@
 
 namespace Azuriom\Providers;
 
+use Azuriom\Models\Comment;
+use Azuriom\Models\User;
+use Azuriom\Policies\CommentPolicy;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'Azuriom\Model' => 'Azuriom\Policies\ModelPolicy',
+        Comment::class => CommentPolicy::class,
     ];
 
     /**
@@ -25,6 +29,27 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function (User $user, string $ability, array $arguments) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+
+            if (empty($arguments)) {
+                $user->role->loadMissing('permissions');
+
+                $permission = $user->role->permissions->where('name', $ability)->first();
+
+                if ($permission !== null) {
+                    return $user->hasPermission($permission);
+                }
+            }
+        });
+
+        Route::macro('authorize', function ($ability) {
+
+            $this->middleware('can:'.$ability);
+
+            return $this;
+        });
     }
 }

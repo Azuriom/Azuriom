@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
-use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -34,12 +33,12 @@ class PostController extends Controller
     {
         $post = Post::with(['author', 'comments.author', 'likes.author'])->where('slug', $slug)->firstOrFail();
 
-        if ($post->image_id !== null) {
-            $post->loadMissing('image');
-        }
-
         if (! $post->isPublished() && (Auth::guest() || ! Auth::user()->isAdmin())) {
             abort(404);
+        }
+
+        if ($post->image_id !== null) {
+            $post->loadMissing('image');
         }
 
         return view('posts.show')->with('currentPost', $post);

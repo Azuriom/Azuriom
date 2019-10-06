@@ -2,22 +2,24 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Http\Requests\PostRequest;
+use Azuriom\Http\Requests\CommentRequest;
 use Azuriom\Models\Comment;
 use Azuriom\Models\Post;
-use Illuminate\Support\Facades\Auth;
 
 class PostCommentController extends Controller
 {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\PostRequest  $request
+     * @param  \Azuriom\Http\Requests\CommentRequest  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(PostRequest $request, Post $post)
+    public function store(CommentRequest $request, Post $post)
     {
+        $this->authorize('create', Comment::class);
+
         $comment = new Comment($request->all());
         $comment->author_id = $request->user()->id;
 
@@ -36,9 +38,7 @@ class PostCommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        if ($comment->author_id !== Auth::id() && (Auth::guest() || ! Auth::user()->isAdmin())) {
-            abort(403);
-        }
+        $this->authorize('delete', $comment);
 
         $comment->delete();
 
