@@ -8,6 +8,7 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -18,7 +19,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index')->with('users', User::paginate(25));
+        $users = User::with('ban')->paginate(25);
+
+        foreach ($users as $user) {
+            $user->refreshActiveBan();
+        }
+
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
@@ -59,7 +66,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('admin.users.edit', [
-            'user' => $user,
+            'user' => $user->refreshActiveBan(),
             'roles' => Role::all()
         ]);
     }
@@ -73,6 +80,10 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        if ($user->is_deleted) {
+            return redirect()->back();
+        }
+
         $user->fill($request->except(['password']));
 
         if ($request->filled('password')) {
@@ -91,6 +102,10 @@ class UserController extends Controller
 
     public function verifyEmail(User $user)
     {
+        if ($user->is_deleted) {
+            return redirect()->back();
+        }
+
         $user->markEmailAsVerified();
 
         ActionLog::logUpdate($user);
@@ -115,6 +130,28 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return redirect()->route('admin.users.index')->with('error', 'Not implemented yet !');
+        if ($user->isAdmin() || $user->is_deleted) {
+            return redirect()->back();
+        }
+
+        $user->comments()->delete();
+        $user->likes()->delete();
+
+        $user->fill([
+            'name' => 'Deleted #'.$user->id,
+            'email' => 'deleted'.$user->id.'@deleted.ltd',
+            'password' => Hash::make(Str::random()),
+            'role_id' => 1,
+            'google_2fa_secret' => null,
+        ]);
+
+        $user->email_verified_at = null;
+        $user->last_ip = null;
+        $user->is_deleted = true;
+
+        $user->setRememberToken(null);
+        $user->save();
+
+        return redirect()->route('admin.users.index', $user)->with('success', 'User deleted');
     }
 }

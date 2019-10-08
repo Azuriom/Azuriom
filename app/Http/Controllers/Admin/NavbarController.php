@@ -60,7 +60,7 @@ class NavbarController extends Controller
 
         ActionLog::logUpdate('Navbar');
 
-        return $request->ajax() ? response()->json([
+        return $request->expectsJson() ? response()->json([
             'status' => 'success',
             'message' => 'Navbar updated'
         ]) : $this->index();

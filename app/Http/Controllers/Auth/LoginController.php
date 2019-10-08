@@ -52,6 +52,14 @@ class LoginController extends Controller
         if ($this->guard()->once($this->credentials($request))) {
             $user = $this->guard()->user();
 
+            if ($user->is_deleted) {
+                return $this->sendFailedLoginResponse($request);
+            }
+
+            if ($user->refreshActiveBan()->is_banned) {
+                return redirect()->back()->with('error', 'This account is suspended');
+            }
+
             if (! $user->hasTwoFactorAuth()) {
                 $this->guard()->login($user, $request->filled('remember'));
 

@@ -112,6 +112,15 @@
                 </div>
             @endcan
 
+            @can('admin.users')
+                <div class="nav-item {{ add_active('admin.bans.*') }}">
+                    <a class="nav-link" href="{{ route('admin.bans.index') }}">
+                        <i class="fas fa-fw fa-user-times"></i>
+                        <span>Bans</span>
+                    </a>
+                </div>
+            @endcan
+
             @canany(['admin.pages', 'admin.posts', 'admin.images'])
                 <hr class="sidebar-divider">
 
@@ -321,13 +330,14 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Are you sure you want to delete this element ?</div>
+            <div class="modal-body">Are you sure you want to delete this ? It can't be undo</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">Cancel</button>
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-primary" type="submit">Delete</button>
+
+                    <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
             </div>
         </div>

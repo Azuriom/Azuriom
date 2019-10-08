@@ -54,6 +54,9 @@ Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('nav
 Route::resource('users', 'UserController')->except('show')->middleware('can:admin.users');
 Route::resource('roles', 'RoleController')->except('show')->middleware('can:admin.roles');
 
+Route::resource('bans', 'BanController')->only('index')->middleware('can:admin.users');
+Route::resource('users.bans', 'BanController')->only(['store', 'destroy'])->middleware('can:admin.users');
+
 Route::resource('pages', 'PageController')->except('show')->middleware('can:admin.pages');
 Route::resource('posts', 'PostController')->except('show')->middleware('can:admin.posts');
 Route::resource('images', 'ImageController')->except('show')->middleware('can:admin.images');

@@ -1,5 +1,8 @@
-a[disabled] {
+a.disabled,
+.btn.disabled,
+.btn:disabled {
     cursor: not-allowed;
+    opacity: .55;
 }
 
 /* Fix for https://github.com/FezVrasta/popper.js/issues/457 */
@@ -40,4 +43,8 @@ a[disabled] {
 
 .rotate-45 {
     transform: rotate(45deg);
+}
+
+.text-strikethrough  {
+    text-decoration: line-through;
 }

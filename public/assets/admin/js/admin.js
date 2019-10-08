@@ -1,6 +1,6 @@
 $('[data-toggle="tooltip"]').tooltip();
 
-$('a[disabled]').on('click', function (e) {
+$('a.disabled').on('click', function (e) {
     e.stopImmediatePropagation();
     e.preventDefault();
 });

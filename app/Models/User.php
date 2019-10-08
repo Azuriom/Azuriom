@@ -16,13 +16,17 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $last_ip
  * @property string|null $google_2fa_secret
  * @property string $remember_token
+ * @property bool $is_banned
+ * @property bool $is_deleted
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Ban[] $bans
  * @property \Azuriom\Models\Role $role
+ * @property \Azuriom\Models\Ban $ban
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -34,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google_2fa_secret',
+        'name', 'email', 'password', 'google_2fa_secret', 'is_banned',
     ];
 
     /**
@@ -53,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_banned' => 'boolean',
+        'is_deleted' => 'boolean',
     ];
 
     /**
@@ -94,6 +100,33 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the the ban of this user if he is currently banned.
+     */
+    public function ban()
+    {
+        return $this->hasOne(Ban::class);
+    }
+
+    /**
+     * Get the bans that the user receives
+     */
+    public function bans()
+    {
+        return $this->hasMany(Ban::class)->withTrashed();
+    }
+
+    public function refreshActiveBan()
+    {
+        $isBanned = $this->ban !== null;
+
+        if ($this->is_banned !== $isBanned) {
+            $this->update(['is_banned' => $isBanned]);
+        }
+
+        return $this;
     }
 
     public function hasPermission($permission)

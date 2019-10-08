@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -27,7 +27,7 @@
                                     <i class="fas fa-star text-warning" title="Default" data-toggle="tooltip"></i>
                                 @endif
                                 @if($role->is_admin)
-                                    <i class="fas fa-crown text-danger" title="Admin" data-toggle="tooltip"></i>
+                                    <i class="fas fa-crown text-warning" title="Admin" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>
@@ -35,7 +35,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.roles.edit', $role) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.roles.destroy', $role) }}" class="mx-1 @if($role->isPermanent()) text-muted @endif" @if(!$role->isPermanent()) title="Delete" @else disabled @endif data-confirm="delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.roles.destroy', $role) }}" class="mx-1 @if($role->isPermanent()) disabled @endif" @if(!$role->isPermanent()) title="Delete" data-confirm="delete" data-toggle="tooltip" @endif><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

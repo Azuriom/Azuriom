@@ -89,7 +89,7 @@ class Role extends Model
     {
         $color = color_contrast($this->color);
 
-        return "color: {$color}; background: {$this->color}";
+        return "color: {$color}; background: {$this->color};";
     }
 
     /**

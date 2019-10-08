@@ -3,6 +3,28 @@
 @section('title', $user->name)
 
 @section('content')
+    @if($user->is_deleted)
+        <div class="alert alert-danger">
+            This user is deleted, it can't be edited.
+        </div>
+    @elseif($user->is_banned)
+        <div class="alert alert-warning">
+            <h5>This user is currently banned:</h5>
+            <ul>
+                <li>Banned by: {{ $user->ban->author->name }}</li>
+                <li>Reason: {{ $user->ban->reason }}</li>
+                <li>Date: {{ $user->ban->created_at }}</li>
+            </ul>
+
+            <form method="POST" action="{{ route('admin.users.bans.destroy', [$user, $user->ban]) }}">
+                @method('DELETE')
+                @csrf
+
+                <button type="submit" class="btn btn-warning"><i class="fas fa-ban"></i> Unban</button>
+            </form>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-6">
             <div class="card">
@@ -13,7 +35,7 @@
 
                         <div class="form-group">
                             <label for="nameInput">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
 
                             @error('name')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -22,7 +44,7 @@
 
                         <div class="form-group">
                             <label for="emailInput">E-Mail Address</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
 
                             @error('email')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -31,7 +53,7 @@
 
                         <div class="form-group">
                             <label for="passwordInput">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
 
                             @error('password')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -40,7 +62,7 @@
 
                         <div class="form-group">
                             <label for="roleSelect">Role</label>
-                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role">
+                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->is_deleted) disabled @endif>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role_id === $role->id) selected @endif>{{ $role->name }}</option>
                                 @endforeach
@@ -51,7 +73,13 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif>Update</button>
+                        @unless($user->is_banned || $user->is_deleted)
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal">Ban</button>
+                        @endunless
+                        @unless($user->is_deleted)
+                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" data-confirm="delete" @if($role->isPermanent()) disabled @endif>Delete</a>
+                        @endunless
                     </form>
                 </div>
             </div>
@@ -77,9 +105,11 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="No" disabled>
 
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-success" type="submit">Verify email</button>
-                                    </div>
+                                    @unless($user->is_deleted)
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success" type="submit">Verify email</button>
+                                        </div>
+                                    @endunless
                                 </div>
                             @endif
                         </div>
@@ -106,12 +136,42 @@
                     </form>
 
                     <div class="form-group">
-                        <label for="registerInput">Address</label>
-                        <input type="text" class="form-control" id="registerInput" value="{{ empty($user->last_ip) ? 'Unknown' : $user->last_ip }}" disabled>
+                        <label for="addressInput">Address</label>
+                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_ip ?? 'Unknown' }}" disabled>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+
+    @unless($user->is_banned)
+        <div class="modal fade show" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-modal="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="banLabel">Ban {{ $user->name }}</h2>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to ban this user ?</p>
+
+                        <form method="POST" action="{{ route('admin.users.bans.store', $user) }}">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="reasonInput">Reason</label>
+                                <input type="text" class="form-control" id="reasonInput" name="reason" required>
+                            </div>
+
+                            <button class="btn btn-danger" type="submit">Ban</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endunless
 @endsection
