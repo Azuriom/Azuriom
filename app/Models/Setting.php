@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -26,4 +27,26 @@ class Setting extends Model
     protected $fillable = [
         'name', 'value',
     ];
+
+    /**
+     * Set a given settings values.
+     *
+     * @param  array|string  $key
+     * @param  mixed  $value
+     * @return void
+     */
+    public static function updateSettings($key, $value = null)
+    {
+        $keys = is_array($key) ? $key : [$key => $value];
+
+        foreach ($keys as $key => $value) {
+            if ($value !== null) {
+                Setting::updateOrCreate(['name' => $key], ['value' => $value]);
+            } else {
+                Setting::where('name', $key)->delete();
+            }
+        }
+
+        Cache::forget('settings');
+    }
 }

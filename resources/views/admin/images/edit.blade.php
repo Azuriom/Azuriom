@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit image')
+@section('title', 'Edit image '.$image->id)
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.images.update', $image) }}" method="POST">
                 @method('PUT')

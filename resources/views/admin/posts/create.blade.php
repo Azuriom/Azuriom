@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Add post')
+@section('title', 'Create post')
 
 @include('admin.elements.editor')
 @include('admin.elements.date-picker')
@@ -26,7 +26,7 @@
 @endpush
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.posts.store') }}" method="POST">
                 @csrf

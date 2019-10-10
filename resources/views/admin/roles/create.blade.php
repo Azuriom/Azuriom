@@ -5,7 +5,7 @@
 @include('admin.elements.color-picker')
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.roles.store') }}" method="POST">
                 @csrf

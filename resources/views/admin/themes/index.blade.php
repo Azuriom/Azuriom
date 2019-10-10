@@ -15,7 +15,7 @@
 @endpush
 
 @section('content')
-    <div class="card mb-3">
+    <div class="card shadow mb-4">
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">Current theme</h6>
         </div>
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-header">
             <h6 class="m-0 font-weight-bold text-primary">Installed themes</h6>
         </div>

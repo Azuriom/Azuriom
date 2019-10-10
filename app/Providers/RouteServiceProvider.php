@@ -2,8 +2,6 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Models\Page;
-use Azuriom\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 

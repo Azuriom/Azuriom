@@ -4,7 +4,6 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
-use Carbon\Carbon;
 
 class ActionLogController extends Controller
 {
@@ -30,7 +29,7 @@ class ActionLogController extends Controller
      */
     public function clear()
     {
-        ActionLog::whereDate('created_at', '<', Carbon::now()->subDays(15))->delete();
+        ActionLog::whereDate('created_at', '<', now()->subDays(15))->delete();
 
         return redirect()->route('admin.logs.index')->with('success', 'Old logs deleted');
     }

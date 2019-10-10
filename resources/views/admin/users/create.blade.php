@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Add user')
+@section('title', 'Create user')
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf

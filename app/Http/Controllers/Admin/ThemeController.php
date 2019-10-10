@@ -49,7 +49,7 @@ class ThemeController extends Controller
             return redirect()->route('admin.themes.index')->with('error', 'Invalid theme.');
         }
 
-        Setting::updateOrCreate(['name' => 'theme'], ['value' => $theme]);
+        Setting::updateSettings('theme', $theme);
 
         ActionLog::logUpdate('Theme');
 

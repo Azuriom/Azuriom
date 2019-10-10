@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit page')
+@section('title', 'Edit page #'.$page->id)
 
 @include('admin.elements.editor')
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.pages.update', $page) }}" method="POST">
                 @method('PUT')

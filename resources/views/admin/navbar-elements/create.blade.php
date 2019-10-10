@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Create element')
+@section('title', 'Create navbar element')
 
 @push('footer-scripts')
     <script>
@@ -22,7 +22,7 @@
 @endpush
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.navbar-elements.store') }}" method="POST">
                 @csrf
@@ -82,7 +82,7 @@
                     <label class="custom-control-label" for="newTabSwitch">Open in new tab</label>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>
     </div>

@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit role')
+@section('title', 'Edit role #'.$role->id)
 
 @include('admin.elements.color-picker')
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.roles.update', $role) }}" method="POST">
                 @method('PUT')

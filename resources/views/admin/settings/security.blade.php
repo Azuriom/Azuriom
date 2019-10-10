@@ -3,7 +3,7 @@
 @section('title', 'Security settings')
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.settings.update-security') }}" method="POST">
                 @csrf

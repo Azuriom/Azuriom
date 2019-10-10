@@ -7,8 +7,9 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
 use Azuriom\Support\LangHelper;
+use Illuminate\Cache\Repository as Cache;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Validation\Rule;
 
@@ -25,6 +26,36 @@ class SettingsController extends Controller
         'argon2id' => 'Argon2id'
     ];
 
+    /**
+     * The application instance.
+     *
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    private $app;
+
+    /**
+     * The application cache.
+     *
+     * @var \Illuminate\Cache\Repository
+     */
+    private $cache;
+
+    /**
+     * SettingsController constructor.
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Cache\Repository  $cache
+     */
+    public function __construct(Application $app, Cache $cache)
+    {
+        $this->app = $app;
+        $this->cache = $cache;
+    }
+
+    /**
+     * Show the application settings.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function index()
     {
         return view('admin.settings.index', [
@@ -37,6 +68,13 @@ class SettingsController extends Controller
         ]);
     }
 
+    /**
+     * Update the application settings.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -48,13 +86,20 @@ class SettingsController extends Controller
             'icon' => ['nullable', 'exists:images,file']
         ]);
 
-        $this->updateSettings($request->only(['name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'footer']));
+        Setting::updateSettings($request->only([
+            'name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'footer'
+        ]));
 
         ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
     }
 
+    /**
+     * Show the application security settings.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function security()
     {
         $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('enable-recaptcha');
@@ -66,6 +111,13 @@ class SettingsController extends Controller
         ]);
     }
 
+    /**
+     * Update the application security settings.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateSecurity(Request $request)
     {
         $enableReCaptcha = $request->has('enable-recaptcha');
@@ -77,7 +129,7 @@ class SettingsController extends Controller
         ]);
 
         if ($enableReCaptcha) {
-            $this->updateSettings($request->only(['recaptcha-site-key', 'recaptcha-secret-key']));
+            Setting::updateSettings($request->only(['recaptcha-site-key', 'recaptcha-secret-key']));
         } else {
             Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
         }
@@ -86,7 +138,7 @@ class SettingsController extends Controller
             return redirect()->back()->withErrors(['hash' => 'Argon2id is not supported'])->withInput();
         }
 
-        $this->updateSettings($request->only(['hash']));
+        Setting::updateSettings($request->only(['hash']));
 
         ActionLog::logUpdate('Settings');
 
@@ -98,13 +150,18 @@ class SettingsController extends Controller
         return view('admin.settings.performance')->with('cacheStatus', $this->hasAdvancedCache());
     }
 
+    /**
+     * Clear the application cache.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function clearCache()
     {
-        $exitCode = Artisan::call('view:clear') + Artisan::call('cache:clear');
+        $success = (Artisan::call('view:clear') === 0) && $this->cache->flush();
 
         $redirect = redirect()->route('admin.settings.performance');
 
-        if ($exitCode !== 0) {
+        if (! $success) {
             return $redirect->with('error', 'Error while clearing cache');
         }
 
@@ -145,6 +202,13 @@ class SettingsController extends Controller
         return view('admin.settings.seo')->with('enableAnalytics', $show);
     }
 
+    /**
+     * Update the application SEO settings.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateSeo(Request $request)
     {
         $this->validate($request, [
@@ -152,47 +216,45 @@ class SettingsController extends Controller
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
         ]);
 
-        $this->updateSettings($request->only(['g-analytics-id', 'keywords']));
+        Setting::updateSettings($request->only(['g-analytics-id', 'keywords']));
 
         ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
     }
 
+    /**
+     * Show the application maintenance settings.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function maintenance()
     {
-        return view('admin.settings.maintenance', [
-            'enable' => false,
-            'maintenance' => 'The site is under maintenance !'
-        ]);
+        return view('admin.settings.maintenance');
     }
 
+    /**
+     * Update the application maintenance settings.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateMaintenance(Request $request)
     {
         $this->validate($request, [
-            'maintenance' => ['required', 'string']
+            'maintenance-message' => ['required', 'string', 'max:250']
         ]);
 
-        $request->checkbox('enable-maintenance');
+        $request->checkbox('maintenance-status');
 
-        // TODO
+        Setting::updateSettings($request->only(['maintenance-message', 'maintenance-status']));
 
-        return redirect()->route('admin.settings.maintenance')->with('success', 'Soon');
-    }
-
-    private function updateSettings(array $settings)
-    {
-        foreach ($settings as $name => $value) {
-            if ($value !== null) {
-                Setting::updateOrCreate(['name' => $name], ['value' => $value]);
-            } else {
-                Setting::where('name', $name)->delete();
-            }
-        }
+        return redirect()->route('admin.settings.maintenance')->with('success', 'Maintenance status updated');
     }
 
     private function hasAdvancedCache()
     {
-        return App::configurationIsCached() || App::routesAreCached();
+        return $this->app->configurationIsCached() || $this->app->routesAreCached();
     }
 }

@@ -19,7 +19,7 @@
 @endpush
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.settings.update') }}" method="POST">
                 @csrf
@@ -125,7 +125,7 @@
 
                 <div class="form-group">
                     <label for="footerInput">Footer</label>
-                    <input type="text" class="form-control @error('footer') is-invalid @enderror" id="footerInput" name="footer" value="{{ old('footer', setting('footer')) }}" required>
+                    <input type="text" class="form-control @error('footer') is-invalid @enderror" id="footerInput" name="footer" value="{{ old('footer', setting('footer')) }}">
 
                     @error('footer')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

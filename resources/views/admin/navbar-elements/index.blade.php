@@ -55,7 +55,7 @@
 @endpush
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <div class="dd" id="nestable">
                 <ol class="dd-list list-unstyled">

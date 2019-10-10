@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow mb-4">
                 <div class="card-body">
                     <h4 class="card-title">Clear cache</h4>
                     <p class="card-subtitle">Clear the website cache.</p>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow mb-4">
                 <div class="card-body">
                     <h4 class="card-title">RocketBooster <i class="text-primary fas fa-rocket"></i></h4>
                     <p class="card-subtitle">RocketBooster improves your website performances by adding one more exclusive cache layer.</p>

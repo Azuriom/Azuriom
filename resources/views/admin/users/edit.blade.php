@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', $user->name)
+@section('title', 'Edit user #'.$user->id)
 
 @section('content')
     @if($user->is_deleted)
@@ -8,7 +8,7 @@
             This user is deleted, it can't be edited.
         </div>
     @elseif($user->is_banned)
-        <div class="alert alert-warning">
+        <div class="alert alert-warning shadow">
             <h5>This user is currently banned:</h5>
             <ul>
                 <li>Banned by: {{ $user->ban->author->name }}</li>
@@ -27,7 +27,10 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Edit profile</h6>
+                </div>
                 <div class="card-body">
                     <form action="{{ route('admin.users.update', $user) }}" method="POST">
                         @method('PATCH')
@@ -86,7 +89,10 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">User information</h6>
+                </div>
                 <div class="card-body">
                     <div class="form-group">
                         <label for="registerInput">Register at</label>

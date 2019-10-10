@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class HomeController extends Controller
@@ -16,10 +17,14 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function maintenance()
+    public function maintenance(Request $request)
     {
-        if (! setting('maintenance')) {
-            return redirect()->to('home');
+        if (! setting('maintenance-status', false)) {
+            return redirect()->route('home');
+        }
+
+        if ($request->user() !== null && $request->user()->can('maintenance.access')) {
+            return redirect()->route('home');
         }
 
         return view('maintenance');

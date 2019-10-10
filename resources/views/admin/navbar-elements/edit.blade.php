@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit element')
+@section('title', 'Edit navbar element #'.$navbarElement->id)
 
 @push('footer-scripts')
     <script>
@@ -22,7 +22,7 @@
 @endpush
 
 @section('content')
-    <div class="card">
+    <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.navbar-elements.update', $navbarElement) }}" method="POST">
                 @method('PUT')
