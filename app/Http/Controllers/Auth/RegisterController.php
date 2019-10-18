@@ -2,12 +2,12 @@
 
 namespace Azuriom\Http\Controllers\Auth;
 
-use Azuriom\Models\User;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {

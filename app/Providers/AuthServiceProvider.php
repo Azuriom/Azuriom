@@ -5,7 +5,6 @@ namespace Azuriom\Providers;
 use Azuriom\Models\Comment;
 use Azuriom\Models\User;
 use Azuriom\Policies\CommentPolicy;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -43,13 +42,6 @@ class AuthServiceProvider extends ServiceProvider
                     return $user->hasPermission($permission);
                 }
             }
-        });
-
-        Route::macro('authorize', function ($ability) {
-
-            $this->middleware('can:'.$ability);
-
-            return $this;
         });
     }
 }

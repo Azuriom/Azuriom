@@ -13,9 +13,9 @@
         "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^6.2",
         "laravel/tinker": "^1.0",
-        "pragmarx/google2fa": "^5.0"
+        "pragmarx/google2fa": "^6.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
