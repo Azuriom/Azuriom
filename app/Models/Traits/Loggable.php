@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Traits;
+namespace Azuriom\Models\Traits;
 
 use Azuriom\Models\ActionLog;
 use Illuminate\Database\Eloquent\Model;

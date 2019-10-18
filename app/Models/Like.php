@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Like extends Model
 {
+    use HasUser;
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -30,6 +33,13 @@ class Like extends Model
     protected $with = [
         'author',
     ];
+
+    /**
+     * The user key associated with this model.
+     *
+     * @var string
+     */
+    protected $userKey = 'author_id';
 
     /**
      * Get the post of this like.

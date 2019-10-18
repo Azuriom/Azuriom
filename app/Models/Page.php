@@ -2,7 +2,7 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Traits\Loggable;
+use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

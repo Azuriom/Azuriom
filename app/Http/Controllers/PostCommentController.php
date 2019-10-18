@@ -20,10 +20,7 @@ class PostCommentController extends Controller
     {
         $this->authorize('create', Comment::class);
 
-        $comment = new Comment($request->all());
-        $comment->author_id = $request->user()->id;
-
-        $post->comments()->save($comment);
+        $post->comments()->create($request->all());
 
         return redirect()->route('posts.show', $post->slug);
     }

@@ -2,7 +2,8 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Traits\Loggable;
+use Azuriom\Models\Traits\HasUser;
+use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Post extends Model
 {
-    use Loggable;
+    use Loggable, HasUser;
 
     /**
      * The attributes that are mass assignable.
@@ -37,10 +38,6 @@ class Post extends Model
         'image_id', 'title', 'description', 'slug', 'content', 'is_pinned', 'published_at',
     ];
 
-    protected $dates = [
-        'published_at',
-    ];
-
     /**
      * The attributes that should be cast to native types.
      *
@@ -48,7 +45,15 @@ class Post extends Model
      */
     protected $casts = [
         'is_pinned' => 'boolean',
+        'published_at' => 'datetime',
     ];
+
+    /**
+     * The user key associated with this model.
+     *
+     * @var string
+     */
+    protected $userKey = 'author_id';
 
     /**
      * Get the author of this post.

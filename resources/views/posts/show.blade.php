@@ -57,11 +57,9 @@
                     <div class="content-body">
                         {{ $comment->content }}
                     </div>
-                    @auth
-                        @can('delete', $comment)
-                            <a class="btn btn-sm btn-danger mt-1" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
-                        @endif
-                    @endauth
+                    @can('delete', $comment)
+                        <a class="btn btn-sm btn-danger mt-1" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
+                    @endif
                 </div>
             </div>
         @endforeach

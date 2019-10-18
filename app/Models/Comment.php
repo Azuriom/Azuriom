@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
+    use HasUser;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,6 +37,13 @@ class Comment extends Model
     protected $with = [
         'author',
     ];
+
+    /**
+     * The user key associated with this model.
+     *
+     * @var string
+     */
+    protected $userKey = 'author_id';
 
     /**
      * Get the post of this comment.

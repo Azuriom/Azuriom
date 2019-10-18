@@ -33,7 +33,7 @@
                         </div>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug') }}" required>
                         <div class="input-group-append">
-                            <div class="input-group-text">.(png|jpg|gif|svg|webp)</div>
+                            <div class="input-group-text">.(jpg|png|gif|svg|webp)</div>
                         </div>
 
                         @error('slug')
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="fileInput">Image</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input  @error('file') is-invalid @enderror" id="fileInput" name="file" required>
+                        <input type="file" class="custom-file-input  @error('file') is-invalid @enderror" id="fileInput" name="file" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" required>
                         <label class="custom-file-label" for="customFile" data-browse="Browse">Choose file</label>
 
                         @error('file')

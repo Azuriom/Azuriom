@@ -28,14 +28,13 @@ class PostController extends Controller
      *
      * @param  $slug
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($slug)
     {
         $post = Post::with(['author', 'comments.author', 'likes.author'])->where('slug', $slug)->firstOrFail();
 
-        if (! $post->isPublished() && (Auth::guest() || ! Auth::user()->isAdmin())) {
-            abort(404);
-        }
+        $this->authorize('view', $post);
 
         if ($post->image_id !== null) {
             $post->loadMissing('image');

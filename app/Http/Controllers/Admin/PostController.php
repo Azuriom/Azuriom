@@ -47,9 +47,7 @@ class PostController extends Controller
     {
         $request->checkbox('is_pinned');
 
-        $post = new Post($request->all());
-        $post->author_id = $request->user()->id;
-        $post->save();
+        Post::create($request->all());
 
         return redirect()->route('admin.posts.index')->with('success', 'Post created');
     }
