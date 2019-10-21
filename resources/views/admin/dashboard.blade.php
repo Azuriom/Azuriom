@@ -7,6 +7,12 @@
 @endpush
 
 @section('content')
+    @if(! $secure)
+        <div class="alert alert-warning shadow-sm">
+            Your website is not using https, you should enable and force it for your security and the one of the users
+        </div>
+    @endif
+
     <!-- Content Row -->
     <div class="row">
 

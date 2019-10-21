@@ -3,9 +3,11 @@
 namespace Azuriom\Providers;
 
 use Azuriom\Models\Comment;
+use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
 use Azuriom\Policies\CommentPolicy;
+use Azuriom\Policies\PagePolicy;
 use Azuriom\Policies\PostPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        Page::class => PagePolicy::class,
         Post::class => PostPolicy::class,
         Comment::class => CommentPolicy::class,
     ];

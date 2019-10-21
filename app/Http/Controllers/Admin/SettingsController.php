@@ -82,12 +82,13 @@ class SettingsController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
+            'copyright' => ['nullable', 'string', 'max:150'],
             'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
             'icon' => ['nullable', 'exists:images,file']
         ]);
 
         Setting::updateSettings($request->only([
-            'name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'footer'
+            'name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'copyright'
         ]));
 
         ActionLog::logUpdate('Settings');

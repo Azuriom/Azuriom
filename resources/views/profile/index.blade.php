@@ -4,7 +4,10 @@
 
 @section('content')
     <div class="container">
-        <div class="card mb-4">
+        <div class="card shadow-sm">
+            <h5 class="card-header">
+                Profile
+            </h5>
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
                 <ul>
@@ -25,12 +28,31 @@
             </div>
         </div>
 
+        @if(! $user->hasVerifiedEmail())
+            @if (session('resent'))
+                <div class="alert alert-success mt-2" role="alert">
+                    A fresh verification link has been sent to your email address.
+                </div>
+            @endif
+
+            <div class="card shadow-sm border-danger mt-3">
+                <h5 class="card-header">
+                    Email not verified
+                </h5>
+                <div class="card-body">
+                    <p>Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it</p>
+                    <a href="{{ route('verification.resend') }}" class="btn btn-warning">Resend email</a>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card shadow-sm mt-3">
+                    <h5 class="card-header">
+                        Update password
+                    </h5>
                     <div class="card-body">
-                        <h4 class="card-title">Update password</h4>
-
                         <form action="{{ route('profile.password') }}" method="POST">
                             @csrf
 
@@ -64,10 +86,11 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card">
+                <div class="card shadow-sm mt-3">
+                    <h5 class="card-header">
+                        Update email
+                    </h5>
                     <div class="card-body">
-                        <h4 class="card-title">Update email</h4>
-
                         <form action="{{ route('profile.email') }}" method="POST">
                             @csrf
 

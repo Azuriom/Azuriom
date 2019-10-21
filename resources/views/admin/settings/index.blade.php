@@ -5,7 +5,7 @@
 @push('footer-scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            $('[data-image-select]').on('change', function (e) {
+            $('[data-image-select]').on('change', function () {
                 const preview = $('#' + $(this).data('image-select'));
                 if ($(this).val().length === 0) {
                     preview.parent().addClass('d-none');
@@ -57,7 +57,7 @@
                         <div class="input-group-prepend">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
                         </div>
-                        <select class="custom-select @error('icon') is-invalid @enderror" data-image-select="faviconPreview" name="icon">
+                        <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" data-image-select="faviconPreview" name="icon">
                             <option value="" @if(!$icon) selected @endif>None</option>
                             @foreach($images as $image)
                                 <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
@@ -80,7 +80,7 @@
                         <div class="input-group-prepend">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
                         </div>
-                        <select class="custom-select @error('logo') is-invalid @enderror" data-image-select="logoPreview" name="logo">
+                        <select class="custom-select @error('logo') is-invalid @enderror" id="logoSelect" data-image-select="logoPreview" name="logo">
                             <option value="" @if(!$logo) selected @endif>None</option>
                             @foreach($images as $image)
                                 <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>{{ $image->name }}</option>
@@ -124,10 +124,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="footerInput">Footer</label>
-                    <input type="text" class="form-control @error('footer') is-invalid @enderror" id="footerInput" name="footer" value="{{ old('footer', setting('footer')) }}">
+                    <label for="copyrightInput">Copyright</label>
+                    <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', setting('copyright')) }}">
 
-                    @error('footer')
+                    @error('copyright')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>

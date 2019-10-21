@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Models\Post;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -14,7 +15,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = Post::with(['author', 'image'])
+            ->scopes('published')
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        return view('home')->with('posts', $posts);
     }
 
     public function maintenance(Request $request)

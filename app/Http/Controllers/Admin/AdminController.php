@@ -8,12 +8,14 @@ use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.dashboard', [
+            'secure' => $request->secure(),
             'userCount' => User::count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),

@@ -5,8 +5,10 @@
 @section('content')
     <div class="container">
         <div class="card mb-4">
+            <h4 class="card-header">
+                Enable two factor auth
+            </h4>
             <div class="card-body">
-                <h4 class="card-title">Enable two factor auth</h4>
                 <p>Scan the QR code above with an two-factor authentication app on your phone like Google Authenticator.</p>
                 <p>If you can't scan the code you can directly enter the secret key below the code.</p>
 

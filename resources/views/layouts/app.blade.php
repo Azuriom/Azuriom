@@ -52,7 +52,32 @@
     </main>
 </div>
 
+<footer class="bg-dark text-white py-4 text-center">
+    <div class="copyright">
+        <div class="container">
+            {{ setting('copyright') }} |
+            Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.
+        </div>
+    </div>
+</footer>
+
 @stack('footer-scripts')
+
+<style>
+    html, body {
+        height: 100%;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    #app {
+        flex-shrink: 0;
+    }
+    footer {
+        margin-top: auto;
+    }
+</style>
 
 </body>
 </html>

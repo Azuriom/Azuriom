@@ -12,14 +12,13 @@ class PageController extends Controller
      *
      * @param  $slug
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
 
-        if (! $page->is_published && (Auth::guest() || ! Auth::user()->isAdmin())) {
-            abort(404);
-        }
+        $this->authorize('view', $page);
 
         return view('pages.show')->with('page', $page);
     }

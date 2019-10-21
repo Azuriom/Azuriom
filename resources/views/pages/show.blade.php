@@ -5,10 +5,9 @@
 
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body">
                 <h1>{{ $page->title }}</h1>
-                <hr>
 
                 {!! $page->content !!}
             </div>

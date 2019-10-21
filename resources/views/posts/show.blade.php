@@ -15,57 +15,74 @@
 @endpush
 
 @section('content')
-    <div class="container">
+    <div class="container content post">
         @if(!$currentPost->isPublished())
             <div class="alert alert-info alert-dismissible fade show" role="alert">
-                This news is not published yet !
+                This post is not published yet !
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         @endif
 
-        <h1>{{ $currentPost->title }}</h1>
-        <p class="lead">by {{ $currentPost->author->name }}</p>
-        <p>Posted on {{ $currentPost->published_at }}</p>
-        <hr>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h1 class="card-title">{{ $currentPost->title }}</h1>
 
-        @if($currentPost->image_id !== null)
-            <div class="text-center">
-                <img class="rounded" src="{{ $currentPost->image->url() }}" alt="{{ $currentPost->image->name }}" height="300">
+                @if($currentPost->image_id !== null)
+                    <div class="text-center">
+                        <img class="rounded" src="{{ $currentPost->image->url() }}" alt="{{ $currentPost->image->name }}" height="300">
+                    </div>
+                @endif
+
+                <div class="card-text">
+                    {!! $currentPost->content !!}
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    @auth
+                        <form action="{{ route('posts.likes.' . (!$currentPost->hasLiked() ? 'add' : 'remove'), $currentPost) }}" method="POST">
+                            @csrf
+                            <button class="btn btn-primary @if($currentPost->hasLiked()) active @endif" type="submit">
+                                Likes: {{ $currentPost->likes->count() }}
+                            </button>
+                        </form>
+                    @else
+                        <button class="btn btn-primary" disabled>
+                            Likes: {{ $currentPost->likes->count() }}
+                        </button>
+                    @endauth
+
+                    <span>Posted by {{ $currentPost->author->name }} on {{ $currentPost->published_at }}</span>
+                </div>
             </div>
-        @endif
-
-        <div class="content-body">
-            {!! $currentPost->content !!}
         </div>
 
-        <hr>
-
-        <form class="mb-4" @auth action="{{ route('posts.likes.' . (!$currentPost->hasLiked(Auth::user()) ? 'add' : 'remove'), $currentPost) }}" method="POST" @endauth>
-            @csrf
-            <button class="btn btn-primary @guest disabled @elseif($currentPost->hasLiked(Auth::user())) active @endguest" @guest disabled @endguest type="submit">
-                Likes: {{ $currentPost->likes->count() }}
-            </button>
-        </form>
-
         @foreach($currentPost->comments as $comment)
-            <div class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">{{ $comment->author->name }}</h5>
-                    <div class="content-body">
-                        {{ $comment->content }}
+            <div class="card shadow-sm mb-3">
+                <div class="card-header">
+                    {{ $comment->author->name }}<span class="text-muted"> on {{ $comment->created_at }}</span>
+                </div>
+                <div class="card-body media">
+                    <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="content-body">
+                                {{ $comment->content }}
+                            </div>
+                            @can('delete', $comment)
+                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
+                            @endif
+                        </div>
                     </div>
-                    @can('delete', $comment)
-                        <a class="btn btn-sm btn-danger mt-1" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
-                    @endif
                 </div>
             </div>
         @endforeach
 
         @can('create', \Azuriom\Models\Comment::class)
-            <div class="card mt-4">
+            <div class="card mt-4 shadow-sm">
                 <div class="card-header">
                     <span class="h5">Leave a comment</span>
                 </div>

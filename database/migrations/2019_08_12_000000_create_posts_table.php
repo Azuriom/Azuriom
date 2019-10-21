@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->boolean('is_pinned');
-            $table->timestamp('published_at');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');

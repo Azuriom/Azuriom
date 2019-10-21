@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ site_name() }}
@@ -55,7 +55,7 @@
                                 {{ __('Profile') }}
                             </a>
 
-                            @if(Auth::user()->hasAdminAccess())
+                            @if(auth()->user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     Admin
                                 </a>
