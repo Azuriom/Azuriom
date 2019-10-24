@@ -48,6 +48,12 @@ Route::prefix('themes')->name('themes.')->middleware('admin')->group(function ()
     Route::post('/update', 'ThemeController@update')->name('update');
 });
 
+Route::prefix('plugins')->name('plugins.')->middleware('admin')->group(function () {
+    Route::get('/', 'PluginController@index')->name('index');
+    Route::post('/{slug}/enable', 'PluginController@enable')->name('enable');
+    Route::post('/{slug}/disable', 'PluginController@disable')->name('disable');
+});
+
 Route::resource('navbar-elements', 'NavbarController')->except('show')->middleware('can:admin.navbar');
 Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order')->middleware('can:admin.navbar');
 

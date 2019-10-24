@@ -162,7 +162,7 @@
 
             @can('admin.plugins')
                 <div class="nav-item {{ add_active('admin.plugins.*') }}">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('admin.plugins.index') }}">
                         <i class="fas fa-fw fa-puzzle-piece"></i>
                         <span>Plugins</span>
                     </a>

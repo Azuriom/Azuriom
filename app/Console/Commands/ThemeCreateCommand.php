@@ -32,12 +32,12 @@ class ThemeCreateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a new theme folder';
+    protected $description = 'Create a new Azuriom theme';
 
     /**
      * Create a new command instance.
      *
-     * @param  Filesystem  $files
+     * @param  \Illuminate\Filesystem\Filesystem  $files
      * @return void
      */
     public function __construct(Filesystem $files)

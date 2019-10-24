@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-md-4">
-                <iframe src="https://discordapp.com/widget?id=430338873000984576&theme=dark" height="500" class="discord-widget mb-3" allowtransparency="true"></iframe>
+                <iframe src="https://discordapp.com/widget?id=613443499031003177&theme=dark" height="500" class="discord-widget mb-3" allowtransparency="true"></iframe>
 
                 <a class="twitter-timeline" data-theme="dark" data-height="500" href="https://twitter.com/LaravelPHP">Tweets by Laravel</a>
                 <script async src="https://platform.twitter.com/widgets.js"></script>
@@ -39,7 +39,6 @@
 @push('styles')
     <style>
         .home-background {
-            margin-top: -2rem;
             background-size: cover;
             height: 500px;
         }

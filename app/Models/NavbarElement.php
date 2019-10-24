@@ -83,6 +83,22 @@ class NavbarElement extends Model
         }
     }
 
+    public function isCurrent()
+    {
+        switch ($this->type) {
+            case 'home':
+                return request()->routeIs('home');
+            case 'page':
+                return request()->routeIs('pages.show') && request()->route('slug') === $this->value;
+            case 'post':
+                return request()->routeIs('posts.show') && request()->route('slug') === $this->value;
+            case 'posts':
+                return request()->routeIs('posts.*');
+            default:
+                return false;
+        }
+    }
+
     public function getTypeValue(string $type)
     {
         return $this->type === $type ? $this->value : '';

@@ -3,6 +3,8 @@
 namespace Azuriom\Providers;
 
 use Azuriom\Http\View\Composers\NavbarComposer;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,14 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::if('module', function ($expression) {
+            return app('extensions')->isPluginLoaded($expression);
+        });
+
+        Blade::if('route', function ($expression) {
+            return Route::currentRouteNamed($expression);
+        });
+
         View::composer('elements.navbar', NavbarComposer::class);
     }
 }

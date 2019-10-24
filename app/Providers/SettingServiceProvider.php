@@ -48,13 +48,6 @@ class SettingServiceProvider extends ServiceProvider
 
                 $config->set('setting.'.$name, $value);
             }
-
-            $theme = setting('theme');
-
-            if ($theme !== null) {
-                $finder = $this->app['view']->getFinder();
-                $finder->prependLocation(theme_path($theme));
-            }
         } catch (Exception $e) {
             //
         }

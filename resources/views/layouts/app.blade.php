@@ -43,7 +43,7 @@
 <div id="app">
     @include('elements.navbar')
 
-    <main class="py-4">
+    <main>
         <div class="container">
             @include('elements.session-alerts')
         </div>
@@ -52,7 +52,7 @@
     </main>
 </div>
 
-<footer class="bg-dark text-white py-4 text-center">
+<footer class="text-white py-4 text-center">
     <div class="copyright">
         <div class="container">
             {{ setting('copyright') }} |
@@ -76,6 +76,7 @@
     }
     footer {
         margin-top: auto;
+        background: #232323;
     }
 </style>
 

@@ -56,3 +56,10 @@ if (! function_exists('theme_path')) {
         return resource_path('themes/'.$path);
     }
 }
+
+if (! function_exists('plugin_path')) {
+    function plugin_path($path = '')
+    {
+        return base_path('plugins/'.$path);
+    }
+}
