@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Ban extends Model
 {
-    use SoftDeletes;
+    use HasUser, SoftDeletes;
 
     protected const DELETED_AT = 'removed_at';
 
@@ -29,8 +30,15 @@ class Ban extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'author_id', 'reason',
+        'author_id', 'reason',
     ];
+
+    /**
+     * The user key associated with this model.
+     *
+     * @var string
+     */
+    protected $userKey = 'author_id';
 
     /**
      * Get the banned user

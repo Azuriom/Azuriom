@@ -37,6 +37,13 @@
 
                     </tbody>
                 </table>
+
+                <form method="POST" action="{{ route('admin.plugins.reload') }}">
+                    @csrf
+
+                    <button type="submit" class="btn btn-warning">Reload plugins</button>
+                </form>
+
             </div>
         </div>
     </div>

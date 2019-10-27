@@ -45,6 +45,13 @@ class PluginController extends Controller
         return view('admin.plugins.index', ['plugins' => $plugins]);
     }
 
+    public function reload()
+    {
+        $this->extensions->dumpAutoload();
+
+        return redirect()->route('admin.plugins.index')->with('success', 'Plugins reloaded.');
+    }
+
     public function enable(string $plugin)
     {
         $this->extensions->setPluginEnabled($plugin, true);

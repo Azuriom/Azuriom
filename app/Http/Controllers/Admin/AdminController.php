@@ -33,14 +33,14 @@ class AdminController extends Controller
         $queryUsers = User::whereDate('created_at', '>=', $carbon->subMonths(6))
             ->get(['id', 'created_at'])
             ->groupBy(function (User $user) {
-                return $user->created_at->format('Y-m');
+                return $user->created_at->format('M Y');
             })->transform(function ($data) {
                 return count($data);
             });
 
         while ($carbon->month < $month) {
             $carbon->addMonth();
-            $time = $carbon->format('Y-m');
+            $time = $carbon->format('M Y');
 
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }

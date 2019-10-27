@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\User;
+use Azuriom\Rules\Username;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
@@ -52,7 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:50', 'unique:users'],
+            'name' => ['required', 'string', 'max:50', 'unique:users', new Username()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);

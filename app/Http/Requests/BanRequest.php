@@ -4,7 +4,7 @@ namespace Azuriom\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class BanRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => ['required', 'string']
+            'reason' => ['required', 'string', 'max:250']
         ];
     }
 }

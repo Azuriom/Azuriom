@@ -50,6 +50,7 @@ Route::prefix('themes')->name('themes.')->middleware('admin')->group(function ()
 
 Route::prefix('plugins')->name('plugins.')->middleware('admin')->group(function () {
     Route::get('/', 'PluginController@index')->name('index');
+    Route::post('/reload', 'PluginController@reload')->name('reload');
     Route::post('/{slug}/enable', 'PluginController@enable')->name('enable');
     Route::post('/{slug}/disable', 'PluginController@disable')->name('disable');
 });

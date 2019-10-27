@@ -3,9 +3,9 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Requests\BanRequest;
 use Azuriom\Models\Ban;
 use Azuriom\Models\User;
-use Illuminate\Http\Request;
 
 class BanController extends Controller
 {
@@ -24,24 +24,20 @@ class BanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Azuriom\Http\Requests\BanRequest  $request
      * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, User $user)
+    public function store(BanRequest $request, User $user)
     {
-        $this->validate($request, ['reason' => 'required|string|max:250']);
-
         Ban::create([
-            'author_id' => $request->user()->id,
             'user_id' => $user->id,
             'reason' => $request->input('reason')
         ]);
 
         $user->update(['is_banned' => true]);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', 'User unbanned');
+        return redirect()->route('admin.users.edit', $user)->with('success', 'User banned');
     }
 
     /**
