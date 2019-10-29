@@ -24,7 +24,7 @@ class ThemeCreateCommand extends Command
                         {path? : The path of the theme}
                         {--no-config : Disable config creation}
                         {--author=Azuriom : The author of the theme}
-                        {--description=Theme for Azuriom : The version of the theme}
+                        {--description=Theme for Azuriom : The description of the theme}
                         {--url=https://azuriom.com : The url of the theme}';
 
     /**

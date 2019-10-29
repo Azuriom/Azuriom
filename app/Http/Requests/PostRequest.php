@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Requests;
 
+use Azuriom\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ class PostRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', 'alpha_dash', Rule::unique('posts')->ignore($this->post, 'slug')],
+            'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($this->post, 'slug')],
             'image_id' => ['nullable', 'exists:images,id'],
             'content' => ['required', 'string'],
             'published_at' => ['required', 'date']

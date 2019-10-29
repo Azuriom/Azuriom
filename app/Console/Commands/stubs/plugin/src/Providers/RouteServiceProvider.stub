@@ -1,0 +1,37 @@
+<?php
+
+namespace Azuriom\Plugin\Test\Providers;
+
+use Azuriom\Extensions\Plugin\BaseRouteServiceProvider;
+use Illuminate\Support\Facades\Route;
+
+class RouteServiceProvider extends BaseRouteServiceProvider
+{
+    /**
+     * This namespace is applied to your controller routes.
+     *
+     * @var string
+     */
+    protected $namespace = 'Azuriom\Plugin\Test\Controllers';
+
+    /**
+     * Define the routes for the application.
+     *
+     * @return void
+     */
+    public function loadRoutes()
+    {
+        $this->mapPluginsRoutes();
+
+        //
+    }
+
+    protected function mapPluginsRoutes()
+    {
+        Route::prefix($this->pluginName)
+            ->middleware('web')
+            ->namespace($this->namespace)
+            ->name($this->pluginName)
+            ->group(plugin_path($this->pluginName.'/routes/web.php'));
+    }
+}

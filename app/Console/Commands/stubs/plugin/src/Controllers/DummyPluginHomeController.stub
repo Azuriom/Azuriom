@@ -1,0 +1,18 @@
+<?php
+
+namespace Azuriom\Plugin\Test\Controllers;
+
+use Azuriom\Http\Controllers\Controller;
+
+class DummyPluginHomeController extends Controller
+{
+    /**
+     * Show the the home plugin page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('DummySlug::index');
+    }
+}

@@ -31,7 +31,6 @@
             ],
             default: colorPickrForm.value,
             useAsButton: true,
-
             components: {
                 preview: true,
                 opacity: false,

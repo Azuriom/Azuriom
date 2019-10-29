@@ -203,7 +203,7 @@ class LangHelper
 
     public static function getIsoLanguage(string $code)
     {
-        return self::getIsoLanguages()[$code] ?? $code;
+        return self::$codes[$code] ?? $code;
     }
 
     public static function getAvailableLanguages()

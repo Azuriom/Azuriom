@@ -104,15 +104,15 @@
 
 @push('footer-scripts')
     <script>
-        var recentUsersKeys = (@json(array_keys($recentUsers)));
-        var recentUsersValues = (@json(array_values($recentUsers)));
+        const recentUsersKeys = @json(array_keys($recentUsers));
+        const recentUsersValues = @json(array_values($recentUsers));
 
-        new Chart(document.getElementById("usersChart"), {
+        new Chart(document.getElementById('usersChart'), {
             type: 'line',
             data: {
                 labels: recentUsersKeys,
                 datasets: [{
-                    label: "New users",
+                    label: 'New users',
                     lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.05)",
                     borderColor: "rgba(78, 115, 223, 1)",
