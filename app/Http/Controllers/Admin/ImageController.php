@@ -25,7 +25,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return view('admin.images.index')->with('images', Image::paginate(25));
+        return view('admin.images.index', ['images' => Image::paginate(25)]);
     }
 
     /**
@@ -75,7 +75,7 @@ class ImageController extends Controller
      */
     public function edit(Image $image)
     {
-        return view('admin.images.edit')->with('image', $image);
+        return view('admin.images.edit', ['image' => $image]);
     }
 
     /**

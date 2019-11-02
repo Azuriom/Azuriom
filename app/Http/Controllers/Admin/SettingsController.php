@@ -148,7 +148,7 @@ class SettingsController extends Controller
 
     public function performance()
     {
-        return view('admin.settings.performance')->with('cacheStatus', $this->hasAdvancedCache());
+        return view('admin.settings.performance', ['cacheStatus' => $this->hasAdvancedCache()]);
     }
 
     /**
@@ -200,7 +200,7 @@ class SettingsController extends Controller
     {
         $show = setting('g-analytics-id') || old('enable-g-analytics');
 
-        return view('admin.settings.seo')->with('enableAnalytics', $show);
+        return view('admin.settings.seo', ['enableAnalytics' => $show]);
     }
 
     /**

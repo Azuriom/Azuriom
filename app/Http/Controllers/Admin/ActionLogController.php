@@ -14,11 +14,9 @@ class ActionLogController extends Controller
      */
     public function index()
     {
-        $logs = ActionLog::with('target')
-            ->latest()
-            ->paginate(25);
-
-        return view('admin.logs.index')->with('logs', $logs);
+        return view('admin.logs.index', [
+            'logs' => ActionLog::with('target')->latest()->paginate(25)
+        ]);
     }
 
     /**

@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index')->with('pages', Page::paginate(25));
+        return view('admin.pages.index', ['pages' => Page::paginate(25)]);
     }
 
     /**
@@ -51,7 +51,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.pages.edit')->with('page', $page);
+        return view('admin.pages.edit', ['page' => $page]);
     }
 
     /**

@@ -20,7 +20,7 @@ class PostController extends Controller
             ->latest('published_at')
             ->get();
 
-        return view('posts.index')->with('posts', $posts);
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -40,6 +40,6 @@ class PostController extends Controller
             $post->loadMissing('image');
         }
 
-        return view('posts.show')->with('currentPost', $post);
+        return view('posts.show', ['currentPost' => $post]);
     }
 }

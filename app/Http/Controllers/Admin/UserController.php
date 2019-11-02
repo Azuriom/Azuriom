@@ -25,7 +25,7 @@ class UserController extends Controller
             $user->refreshActiveBan();
         }
 
-        return view('admin.users.index')->with('users', $users);
+        return view('admin.users.index', ['users' => $users]);
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create')->with('roles', Role::all());
+        return view('admin.users.create', ['roles' => Role::all()]);
     }
 
     /**

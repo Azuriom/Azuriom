@@ -24,7 +24,7 @@ class NavbarController extends Controller
             ->orderBy('position')
             ->get();
 
-        return view('admin.navbar-elements.index')->with('navbarElements', $elements);
+        return view('admin.navbar-elements.index', ['navbarElements' => $elements]);
     }
 
     /**

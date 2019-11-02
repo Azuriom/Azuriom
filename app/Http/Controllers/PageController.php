@@ -20,6 +20,6 @@ class PageController extends Controller
 
         $this->authorize('view', $page);
 
-        return view('pages.show')->with('page', $page);
+        return view('pages.show', ['page' => $page]);
     }
 }

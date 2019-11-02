@@ -21,7 +21,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('home')->with('posts', $posts);
+        return view('home', ['posts' => $posts]);
     }
 
     public function maintenance(Request $request)

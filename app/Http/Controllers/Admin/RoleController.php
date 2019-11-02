@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.roles.index')->with('roles', Role::paginate(25));
+        return view('admin.roles.index', ['roles' => Role::paginate(25)]);
     }
 
     /**
@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create')->with('permissions', Permission::all());
+        return view('admin.roles.create', ['permissions' => Permission::all()]);
     }
 
     /**
