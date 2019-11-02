@@ -5,6 +5,20 @@ a.disabled,
     opacity: .55;
 }
 
+.sidebar-brand-icon img {
+    height: 2rem;
+}
+
+.sidebar-brand-text img {
+    height: 1.75rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar:not(.toggled) .sidebar-brand-icon {
+        display: none;
+    }
+}
+
 /* Fix for https://github.com/FezVrasta/popper.js/issues/457 */
 .tooltip {
     top: 0;

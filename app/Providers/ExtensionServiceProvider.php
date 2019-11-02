@@ -20,9 +20,9 @@ class ExtensionServiceProvider extends ServiceProvider
         $this->app->instance('extensions', $extensions);
 
         foreach ($extensions->loadPlugins() as $path => $plugin) {
-            foreach ($plugin->providers ?? [] as $pluginsProvider) {
-                if (class_exists($pluginsProvider)) {
-                    $provider = new $pluginsProvider($this->app);
+            foreach ($plugin->providers ?? [] as $pluginProvider) {
+                if (class_exists($pluginProvider)) {
+                    $provider = new $pluginProvider($this->app);
 
                     if (method_exists($provider, 'bindName')){
                         $provider->bindName($path);

@@ -38,6 +38,12 @@ class Page extends Model
         'is_enabled' => 'boolean',
     ];
 
+    /**
+     * Scope a query to only include enabled pages.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeEnabled(Builder $query)
     {
         return $query->where('is_enabled', true);

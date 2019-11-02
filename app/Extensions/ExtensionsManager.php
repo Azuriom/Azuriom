@@ -139,7 +139,7 @@ class ExtensionsManager
         $json = $this->getJson(plugin_path($plugin.'/plugin.json'));
 
         if ($json !== null && ! isset($json->enabled)) {
-            $json->enabled = true;
+            $json->enabled = false;
         }
 
         return $json;

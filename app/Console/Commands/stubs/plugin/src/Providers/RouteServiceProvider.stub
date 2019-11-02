@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\Test\Providers;
+namespace DummyNamespace\Providers;
 
 use Azuriom\Extensions\Plugin\BaseRouteServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Azuriom\Plugin\Test\Controllers';
+    protected $namespace = 'DummyNamespace\Controllers';
 
     /**
      * Define the routes for the application.

@@ -9,7 +9,7 @@
                 @csrf
 
                 <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="enable-recaptcha" data-toggle="collapse" data-target="#captchaGroup" @if($showReCaptcha) checked @endif>
+                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="recaptcha" data-toggle="collapse" data-target="#captchaGroup" @if($showReCaptcha) checked @endif>
                     <label class="custom-control-label" for="enableSwitch">Enable Google reCaptcha bots protection</label>
                 </div>
 

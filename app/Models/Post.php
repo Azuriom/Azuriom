@@ -97,6 +97,12 @@ class Post extends Model
         return $this->published_at->isPast();
     }
 
+    /**
+     * Scope a query to only include posted posts.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopePublished(Builder $query)
     {
         return $query->whereDate('published_at', '<=', now());

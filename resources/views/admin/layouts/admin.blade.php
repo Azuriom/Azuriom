@@ -40,7 +40,10 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-                <div class="sidebar-brand-text mx-3">Azuriom <sup>{{ \Azuriom\Azuriom::version() }}</sup></div>
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('img/azuriom-white.svg') }}" alt="Azuriom">
+                </div>
+                <div class="sidebar-brand-text mx-3"><img src="{{ asset('img/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup></div>
             </a>
 
             <!-- Divider -->

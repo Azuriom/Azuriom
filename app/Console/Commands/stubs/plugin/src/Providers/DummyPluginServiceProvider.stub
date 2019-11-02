@@ -1,6 +1,6 @@
 <?php
 
-namespace DummyNamespace;
+namespace DummyNamespace\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 

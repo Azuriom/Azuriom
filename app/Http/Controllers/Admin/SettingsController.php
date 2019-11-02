@@ -103,7 +103,7 @@ class SettingsController extends Controller
      */
     public function security()
     {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('enable-recaptcha');
+        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
 
         return view('admin.settings.security', [
             'hashAlgorithms' => $this->hashAlgorithms,
@@ -121,12 +121,12 @@ class SettingsController extends Controller
      */
     public function updateSecurity(Request $request)
     {
-        $enableReCaptcha = $request->has('enable-recaptcha');
+        $enableReCaptcha = $request->has('recaptcha');
 
         $this->validate($request, [
             'hash' => ['required', 'string', Rule::in(array_keys($this->hashAlgorithms))],
-            'recaptcha-site-key' => $enableReCaptcha ? ['required', 'string', 'max:50'] : ['nullable'],
-            'recaptcha-secret-key' => $enableReCaptcha ? ['required', 'string', 'max:50'] : ['nullable']
+            'recaptcha-site-key' => ['required_with:recaptcha', 'max:50'],
+            'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50']
         ]);
 
         if ($enableReCaptcha) {

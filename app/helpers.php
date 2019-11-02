@@ -39,7 +39,7 @@ if (! function_exists('favicon')) {
     function favicon()
     {
         $icon = setting('icon');
-        return $icon !== null ? image_url($icon) : asset('favicon.ico');
+        return $icon !== null ? image_url($icon) : asset('img/azuriom.png');
     }
 }
 
