@@ -77,7 +77,7 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
-        $this->validate($request, [
+        Setting::updateSettings($this->validate($request, [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['required', 'string', 'max:255'],
             'url' => ['required', 'url'],
@@ -85,10 +85,6 @@ class SettingsController extends Controller
             'copyright' => ['nullable', 'string', 'max:150'],
             'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
             'icon' => ['nullable', 'exists:images,file']
-        ]);
-
-        Setting::updateSettings($request->only([
-            'name', 'description', 'url', 'timezone', 'locale', 'icon', 'logo', 'copyright'
         ]));
 
         ActionLog::logUpdate('Settings');
@@ -118,28 +114,32 @@ class SettingsController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
+     * @throws \Exception
      */
     public function updateSecurity(Request $request)
     {
         $enableReCaptcha = $request->has('recaptcha');
+        $hash = array_keys($this->hashAlgorithms);
 
-        $this->validate($request, [
-            'hash' => ['required', 'string', Rule::in(array_keys($this->hashAlgorithms))],
+        $settings = $this->validate($request, [
             'recaptcha-site-key' => ['required_with:recaptcha', 'max:50'],
-            'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50']
+            'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50'],
+            'hash' => [
+                'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
+                    if ($value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
+                        $fail('Argon2id is not supported');
+                    }
+                }
+            ]
         ]);
 
         if ($enableReCaptcha) {
-            Setting::updateSettings($request->only(['recaptcha-site-key', 'recaptcha-secret-key']));
+            Setting::updateSettings($settings);
         } else {
+            Setting::updateSettings($request->only(['hash']));
+
             Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
         }
-
-        if ($request->input('hash') === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
-            return redirect()->back()->withErrors(['hash' => 'Argon2id is not supported'])->withInput();
-        }
-
-        Setting::updateSettings($request->only(['hash']));
 
         ActionLog::logUpdate('Settings');
 
@@ -212,12 +212,10 @@ class SettingsController extends Controller
      */
     public function updateSeo(Request $request)
     {
-        $this->validate($request, [
+        Setting::updateSettings($this->validate($request, [
             'keywords' => ['nullable', 'string', 'max:150'],
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
-        ]);
-
-        Setting::updateSettings($request->only(['g-analytics-id', 'keywords']));
+        ]));
 
         ActionLog::logUpdate('Settings');
 
@@ -243,13 +241,11 @@ class SettingsController extends Controller
      */
     public function updateMaintenance(Request $request)
     {
-        $this->validate($request, [
+        Setting::updateSettings($this->validate($request, [
             'maintenance-message' => ['required', 'string', 'max:250']
-        ]);
+        ]));
 
-        $request->checkbox('maintenance-status');
-
-        Setting::updateSettings($request->only(['maintenance-message', 'maintenance-status']));
+        Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));
 
         return redirect()->route('admin.settings.maintenance')->with('success', 'Maintenance status updated');
     }

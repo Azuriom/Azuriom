@@ -2,12 +2,24 @@
 
 namespace Azuriom\Http\Requests;
 
+use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class PageRequest extends FormRequest
 {
+    use ConvertCheckbox;
+
+    /**
+     * The checkboxes attributes.
+     *
+     * @var array
+     */
+    protected $checkboxes = [
+        'is_enabled',
+    ];
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -19,7 +31,8 @@ class PageRequest extends FormRequest
             'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('pages')->ignore($this->page, 'slug')],
-            'content' => ['required', 'string']
+            'content' => ['required', 'string'],
+            'is_enabled' =>  ['filled', 'boolean']
         ];
     }
 }

@@ -2,12 +2,24 @@
 
 namespace Azuriom\Http\Requests;
 
+use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class PostRequest extends FormRequest
 {
+    use ConvertCheckbox;
+
+    /**
+     * The checkboxes attributes.
+     *
+     * @var array
+     */
+    protected $checkboxes = [
+        'is_pinned',
+    ];
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,7 +33,8 @@ class PostRequest extends FormRequest
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($this->post, 'slug')],
             'image_id' => ['nullable', 'exists:images,id'],
             'content' => ['required', 'string'],
-            'published_at' => ['required', 'date']
+            'published_at' => ['required', 'date'],
+            'is_pinned' => ['filled', 'boolean']
         ];
     }
 }

@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -46,11 +47,10 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $role = Role::findOrFail($request->input('role'));
+        $role = Role::find($request->input('role'));
+        $passwordHash = Hash::make($request->input('password'));
 
-        $request->offsetSet('password', Hash::make($request->input('password')));
-
-        $user = new User($request->all());
+        $user = new User(['password' => $passwordHash] + $request->validated());
         $user->role()->associate($role);
         $user->save();
 
@@ -84,13 +84,13 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $user->fill($request->except(['password']));
+        $user->fill(Arr::except($request->validated(), 'password'));
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
         }
 
-        $role = Role::findOrFail($request->input('role'));
+        $role = Role::find($request->input('role'));
 
         $user->role()->associate($role);
         $user->save();

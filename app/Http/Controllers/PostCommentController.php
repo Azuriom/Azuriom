@@ -20,7 +20,7 @@ class PostCommentController extends Controller
     {
         $this->authorize('create', Comment::class);
 
-        $post->comments()->create($request->all());
+        $post->comments()->create($request->validated());
 
         return redirect()->route('posts.show', $post->slug);
     }

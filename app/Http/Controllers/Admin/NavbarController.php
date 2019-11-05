@@ -49,12 +49,18 @@ class NavbarController extends Controller
             $id = $element['id'];
             $children = $element['children'] ?? [];
 
-            NavbarElement::whereKey($id)->update(['position' => $position++, 'parent_id' => null]);
+            NavbarElement::whereKey($id)->update([
+                'position' => $position++,
+                'parent_id' => null
+            ]);
 
             $childPosition = 1;
 
             foreach ($children as $child) {
-                NavbarElement::whereKey($child['id'])->update(['position' => $childPosition++, 'parent_id' => $id]);
+                NavbarElement::whereKey($child['id'])->update([
+                    'position' => $childPosition++,
+                    'parent_id' => $id
+                ]);
             }
         }
 
@@ -85,15 +91,10 @@ class NavbarController extends Controller
      *
      * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(NavbarElementRequest $request)
     {
-        $request->checkbox('new_tab');
-
-        $request->offsetSet('value', $this->getLinkValue($request));
-
-        NavbarElement::create($request->all());
+        NavbarElement::create($request->validated());
 
         return redirect()->route('admin.navbar-elements.index')->with('success', 'Element created');
     }
@@ -120,14 +121,9 @@ class NavbarController extends Controller
      * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
      * @param  \Azuriom\Models\NavbarElement  $navbarElement
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(NavbarElementRequest $request, NavbarElement $navbarElement)
     {
-        $request->checkbox('new_tab');
-
-        $request->offsetSet('value', $this->getLinkValue($request));
-
         if ($navbarElement->isDropDown() && $request->input('type') !== 'dropdown') {
             foreach ($navbarElement->elements as $element) {
                 $element->parent()->dissociate();
@@ -135,7 +131,7 @@ class NavbarController extends Controller
             }
         }
 
-        $navbarElement->update($request->all());
+        $navbarElement->update($request->validated());
 
         return redirect()->route('admin.navbar-elements.index')->with('success', 'Element updated');
     }
@@ -157,29 +153,5 @@ class NavbarController extends Controller
         $navbarElement->delete();
 
         return redirect()->route('admin.navbar-elements.index')->with('success', 'Element deleted');
-    }
-
-    /**
-     * Get the link value to store.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    private function getLinkValue(Request $request)
-    {
-        switch ($request->input('type')) {
-            case 'page':
-                $page = Page::find($request->input('page'));
-                return $page ? $page->slug : '';
-            case 'post':
-                $post = Post::find($request->input('post'));
-                return $post ? $post->slug : '';
-            case 'link':
-                $this->validate($request, ['link' => 'required|string|max:100']);
-                return $request->input('link');
-            default:
-                return '#';
-        }
     }
 }

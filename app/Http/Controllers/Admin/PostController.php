@@ -45,9 +45,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $request->checkbox('is_pinned');
-
-        Post::create($request->all());
+        Post::create($request->validated());
 
         return redirect()->route('admin.posts.index')->with('success', 'Post created');
     }
@@ -79,9 +77,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $request->checkbox('is_pinned');
-
-        $post->update($request->all());
+        $post->update($request->validated());
 
         return redirect()->route('admin.posts.index')->with('success', 'Post updated');
     }

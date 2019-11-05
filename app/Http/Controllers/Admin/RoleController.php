@@ -38,9 +38,7 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        $request->checkbox('is_admin');
-
-        Role::create($request->all());
+        Role::create($request->validated());
 
         return redirect()->route('admin.roles.index')->with('success', 'Role created');
     }
@@ -70,13 +68,11 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
-        $request->checkbox('is_admin');
-
         $permissions = array_keys($request->input('permissions', []));
 
         $role->permissions()->sync($permissions);
 
-        $role->update($request->all());
+        $role->update($request->validated());
 
         return redirect()->route('admin.roles.index')->with('success', 'Role updated');
     }

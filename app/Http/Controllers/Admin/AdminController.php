@@ -8,14 +8,32 @@ use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    /**
+     * The application instance.
+     *
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    private $app;
+
+    /**
+     * AdminController constructor.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     */
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public function index(Request $request)
     {
         return view('admin.dashboard', [
-            'secure' => $request->secure(),
+            'secure' => $request->secure() || $this->app->isLocal(),
             'userCount' => User::count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),

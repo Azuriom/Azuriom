@@ -36,9 +36,7 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $request->checkbox('is_enabled');
-
-        Page::create($request->all());
+        Page::create($request->validated());
 
         return redirect()->route('admin.pages.index')->with('success', 'Page created');
     }
@@ -63,9 +61,7 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        $request->checkbox('is_enabled');
-
-        $page->update($request->all());
+        $page->update($request->validated());
 
         return redirect()->route('admin.pages.index')->with('success', 'Page updated');
     }
