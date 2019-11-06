@@ -38,7 +38,11 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
-        Role::create($request->validated());
+        $role = Role::create($request->validated());
+
+        $permissions = array_keys($request->input('permissions', []));
+
+        $role->permissions()->sync($permissions);
 
         return redirect()->route('admin.roles.index')->with('success', 'Role created');
     }
