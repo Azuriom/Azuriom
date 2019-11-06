@@ -24,12 +24,6 @@
                 }
             });
 
-            function createAlert(color, message, dismiss) {
-                const button = dismiss ? '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' : '';
-
-                $('#status-message').html('<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + message + button + '</div>');
-            }
-
             const saveBtn = $('#saveBtn');
 
             saveBtn.on('click', function () {

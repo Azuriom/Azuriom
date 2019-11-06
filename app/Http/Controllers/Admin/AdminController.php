@@ -7,7 +7,6 @@ use Azuriom\Models\Image;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 
@@ -44,11 +43,11 @@ class AdminController extends Controller
 
     protected function getRecentUsers()
     {
-        $carbon = Carbon::now();
-        $month = $carbon->month;
+        $date = now();
+        $month = $date->month;
         $recentUsers = [];
 
-        $queryUsers = User::whereDate('created_at', '>=', $carbon->subMonths(6))
+        $queryUsers = User::whereDate('created_at', '>=', $date->subMonths(6))
             ->get(['id', 'created_at'])
             ->groupBy(function (User $user) {
                 return $user->created_at->format('M Y');
@@ -56,9 +55,9 @@ class AdminController extends Controller
                 return count($data);
             });
 
-        while ($carbon->month < $month) {
-            $carbon->addMonth();
-            $time = $carbon->format('M Y');
+        while ($date->month < $month) {
+            $date->addMonth();
+            $time = $date->format('M Y');
 
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }

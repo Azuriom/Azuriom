@@ -5,24 +5,19 @@
 
     @push('footer-scripts')
         <script>
-            let captchaForm;
+            const captchaForm = document.getElementById('captcha-form');
 
             function submitCaptchaForm() {
                 captchaForm.submit();
             }
 
+            if (captchaForm) {
+                captchaForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
 
-            document.addEventListener('DOMContentLoaded', function () {
-                captchaForm = document.getElementById('captcha-form');
-
-                if (captchaForm) {
-                    captchaForm.addEventListener('submit', function (e) {
-                        e.preventDefault();
-
-                        grecaptcha.execute();
-                    });
-                }
-            });
+                    grecaptcha.execute();
+                });
+            }
         </script>
     @endpush
 
