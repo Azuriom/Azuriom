@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         return view('admin.dashboard', [
-            'secure' => $request->secure() || $this->app->isLocal(),
+            'secure' => $request->secure() || ! $this->app->isProduction(),
             'userCount' => User::count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
