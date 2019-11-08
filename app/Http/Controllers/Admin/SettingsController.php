@@ -64,7 +64,9 @@ class SettingsController extends Controller
             'logo' => setting('logo'),
             'languages' => LangHelper::getAvailableLanguages(),
             'timezones' => array_values(timezone_identifiers_list()),
-            'currentTimezone' => config('app.timezone')
+            'currentTimezone' => config('app.timezone'),
+            'copyright' => setting('copyright'),
+            'conditions' => setting('conditions'),
         ]);
     }
 
@@ -83,6 +85,7 @@ class SettingsController extends Controller
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
             'copyright' => ['nullable', 'string', 'max:150'],
+            'conditions' => ['nullable', 'url', 'max:150'],
             'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
             'icon' => ['nullable', 'exists:images,file']
         ]));

@@ -125,9 +125,18 @@
 
                 <div class="form-group">
                     <label for="copyrightInput">Copyright</label>
-                    <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', setting('copyright')) }}">
+                    <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
 
                     @error('copyright')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="conditionsInput">Conditions URL</label>
+                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+
+                    @error('conditions')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>

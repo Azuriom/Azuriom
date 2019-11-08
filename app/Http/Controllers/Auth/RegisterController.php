@@ -45,6 +45,18 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register', [
+            'conditions' => setting('conditions')
+        ]);
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -56,6 +68,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:50', 'unique:users', new Username()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'conditions' => [setting('conditions', false) ? 'accepted' : 'nullable']
         ]);
     }
 
