@@ -37,30 +37,55 @@ class AdminController extends Controller
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),
-            'recentUsers' => $this->getRecentUsers()
+            'recentUsers' => $this->getRecentUsers(),
+            'activeUsers' => $this->getActiveUsers()
         ]);
     }
 
     protected function getRecentUsers()
     {
-        $date = now();
-        $month = $date->month;
+        $date = now()->subMonths(6);
         $recentUsers = [];
 
-        $queryUsers = User::whereDate('created_at', '>=', $date->subMonths(6))
+        $queryUsers = User::whereDate('created_at', '>=', $date)
             ->get(['id', 'created_at'])
-            ->groupBy(function (User $user) {
+            ->countBy(function ($user) {
                 return $user->created_at->format('M Y');
-            })->transform(function ($data) {
-                return count($data);
             });
 
-        while ($date->month < $month) {
+        for ($i = 0; $i < 6; $i++) {
             $date->addMonth();
             $time = $date->format('M Y');
 
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }
+
+        return $recentUsers;
+    }
+
+    protected function getActiveUsers()
+    {
+        $recentUsers = [
+            1 => 0,
+            7 => 0,
+            30 => 0,
+            '+' => 0,
+        ];
+
+        User::whereDate('updated_at', '>=', now()->subMonth())
+            ->get(['id', 'updated_at'])
+            ->each(function ($user) use (&$recentUsers) {
+                $diff = $user->updated_at->diffInDays();
+
+                foreach ($recentUsers as $time => $count) {
+                    if ($time !== '+' && $diff <= $time) {
+                        $recentUsers[$time]++;
+                        break;
+                    }
+                }
+            });
+
+        $recentUsers['+'] = User::whereDate('updated_at', '<', now()->subMonth())->count();
 
         return $recentUsers;
     }
