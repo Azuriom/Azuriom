@@ -31,10 +31,10 @@ class PostRequest extends FormRequest
             'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($this->post, 'slug')],
-            'image_id' => ['nullable', 'exists:images,id'],
             'content' => ['required', 'string'],
             'published_at' => ['required', 'date'],
-            'is_pinned' => ['filled', 'boolean']
+            'is_pinned' => ['filled', 'boolean'],
+            'image' => ['sometimes', 'nullable', 'image'],
         ];
     }
 }

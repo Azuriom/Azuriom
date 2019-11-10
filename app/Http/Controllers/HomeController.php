@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'image'])
+        $posts = Post::with('author')
             ->scopes('published')
             ->latest('published_at')
             ->take(3)

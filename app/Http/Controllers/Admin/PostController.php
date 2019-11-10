@@ -4,9 +4,8 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
-use Azuriom\Models\Image;
 use Azuriom\Models\Post;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
@@ -29,12 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $images = Image::all();
-
-        return view('admin.posts.create', [
-            'images' => $images,
-            'imagesUrl' => $this->getImagesUrl($images)
-        ]);
+        return view('admin.posts.create');
     }
 
     /**
@@ -45,7 +39,13 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        Post::create($request->validated());
+        $post = new Post(Arr::except($request->validated(), 'image'));
+
+        if ($request->hasFile('image')) {
+            $post->storeImage($request->file('image'));
+        }
+
+        $post->save();
 
         return redirect()->route('admin.posts.index')->with('success', 'Post created');
     }
@@ -58,14 +58,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $post->loadMissing('image');
-        $images = Image::all();
-
-        return view('admin.posts.edit', [
-            'currentPost' => $post,
-            'images' => $images,
-            'imagesUrl' => $this->getImagesUrl($images)
-        ]);
+        return view('admin.posts.edit', ['currentPost' => $post]);
     }
 
     /**
@@ -77,7 +70,11 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->update($request->validated());
+        if ($request->hasFile('image')) {
+            $post->storeImage($request->file('image'));
+        }
+
+        $post->update(Arr::except($request->validated(), 'image'));
 
         return redirect()->route('admin.posts.index')->with('success', 'Post updated');
     }
@@ -94,12 +91,5 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
-    }
-
-    private function getImagesUrl(Collection $images)
-    {
-        return $images->mapWithKeys(function ($image) {
-            return [$image->id => $image->url()];
-        })->toArray();
     }
 }

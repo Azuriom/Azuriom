@@ -25,7 +25,8 @@ class Post extends JsonResource
             'content' => $this->content,
             'author' => new UserResource($this->author),
             'published_at' => $this->published_at->toIso8601String(),
-            'comments' => CommentResource::collection($this->whenLoaded('comments'))
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            'image' => $this->imageUrl()
         ];
     }
 }

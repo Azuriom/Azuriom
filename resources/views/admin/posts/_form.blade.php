@@ -1,25 +1,6 @@
 @include('admin.elements.editor')
 @include('admin.elements.date-picker')
-
-@push('footer-scripts')
-    <script>
-        const images = (@json($imagesUrl));
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const imageSelect = $('#imageSelect');
-            const imagePreview = $('#imagePreview');
-
-            imageSelect.on('change', function (e) {
-                if (imageSelect.val().length === 0) {
-                    imagePreview.parent().addClass('d-none');
-                } else {
-                    imagePreview.parent().removeClass('d-none');
-                    imagePreview.attr('src', images[imageSelect.val()]);
-                }
-            });
-        });
-    </script>
-@endpush
+@include('admin.elements.image-upload')
 
 @csrf
 
@@ -42,26 +23,17 @@
 </div>
 
 <div class="form-group">
-    <label for="imageSelect">Image</label>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
-        </div>
-        <select class="custom-select @error('image_id') is-invalid @enderror" id="imageSelect" name="image_id">
-            <option value="" @if(($currentPost->image ?? null) === null) selected @endif>None</option>
-            @foreach($images as $image)
-                <option value="{{ $image->id }}" @if(($currentPost->image ?? null) == $image) selected @endif>{{ $image->name }}</option>
-            @endforeach
-        </select>
+    <label for="imageInput">Image</label>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="imagePreview">
+        <label class="custom-file-label" data-browse="Browse">Choose file</label>
+
+        @error('image')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
     </div>
 
-    <div class="mt-3 @if(($currentPost->image ?? null) === null) d-none @endif">
-        <img src="{{ (($currentPost ?? false) && $currentPost->image) ? $currentPost->image->url() : '#' }}" class="img-fluid rounded img-preview" alt="{{ $image->name }}" id="imagePreview">
-    </div>
-
-    @error('image_id')
-    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-    @enderror
+    <img src="{{ ($currentPost->image ?? false) ? $currentPost->imageUrl() : '#' }}" class="mt-2 img-fluid rounded img-preview {{ ($currentPost->image ?? false) ? '' : 'd-none' }}" alt="Image" id="imagePreview">
 </div>
 
 <div class="form-group">

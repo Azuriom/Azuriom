@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'image'])
+        $posts = Post::with('author')
             ->withCount('comments')
             ->scopes('published')
             ->orderByDesc('is_pinned')
@@ -35,10 +35,6 @@ class PostController extends Controller
         $post = Post::with(['author', 'comments.author', 'likes.author'])->where('slug', $slug)->firstOrFail();
 
         $this->authorize('view', $post);
-
-        if ($post->image_id !== null) {
-            $post->loadMissing('image');
-        }
 
         return view('posts.show', ['currentPost' => $post]);
     }

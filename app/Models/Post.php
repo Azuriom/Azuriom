@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $author_id
- * @property int|null $image_id
+ * @property string|null $image
  * @property string $title
  * @property string $description
  * @property string $slug
@@ -21,13 +22,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $updated_at
  *
  * @property \Azuriom\Models\User $author
- * @property \Azuriom\Models\Image|null $image
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
  */
 class Post extends Model
 {
-    use Loggable, HasUser;
+    use Loggable, HasUser, HasImage;
 
     /**
      * The attributes that are mass assignable.
@@ -35,7 +35,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'image_id', 'title', 'description', 'slug', 'content', 'is_pinned', 'published_at',
+        'title', 'description', 'slug', 'content', 'is_pinned', 'published_at',
     ];
 
     /**
@@ -61,14 +61,6 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
-    }
-
-    /**
-     * Get the image of this post.
-     */
-    public function image()
-    {
-        return $this->belongsTo(Image::class);
     }
 
     /**

@@ -10,12 +10,9 @@
             @foreach($posts as $post)
                 <div class="col-md-6">
                     <div class="post-preview card my-2 shadow-sm">
-                        {{--                      @if($post->image !== null)
-                                <div class="text-center">
-                                    <img class="rounded" src="{{ $post->image->url() }}" alt="{{ $post->image->name }}" height="300">
-                                </div>
-                            @endif --}}
-                        <img src="https://via.placeholder.com/750x300" class="bd-placeholder-img card-img-top">
+                        @if($post->image !== null)
+                            <img src="{{ $post->imageUrl() }}" class="bd-placeholder-img card-img-top" alt="{{ $post->title }}" height="300">
+                        @endif
                         <div class="card-body">
                             <h3 class="card-title">
                                 <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a></h3>

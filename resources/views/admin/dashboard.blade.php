@@ -111,16 +111,16 @@
                         <canvas id="activeUsersChart"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
-                        <span class="mr-2">
+                        <span class="mr-1">
                             <i class="fas fa-circle text-primary"></i> 1 day
                         </span>
-                        <span class="mr-2">
+                        <span class="mr-1">
                             <i class="fas fa-circle text-success"></i> 7 days
                         </span>
-                        <span class="mr-2">
+                        <span class="mr-1">
                             <i class="fas fa-circle text-info"></i> 30 days
                         </span>
-                        <span class="mr-2">
+                        <span class="mr-1">
                             <i class="fas fa-circle text-warning"></i> + 30 days
                         </span>
                     </div>

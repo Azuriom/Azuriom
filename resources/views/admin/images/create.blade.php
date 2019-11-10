@@ -2,13 +2,7 @@
 
 @section('title', 'Image upload')
 
-@push('styles')
-    <style>
-        .custom-file {
-            cursor: pointer;
-        }
-    </style>
-@endpush
+@include('admin.elements.image-upload')
 
 @section('content')
     <div class="card shadow mb-4">
@@ -45,13 +39,15 @@
                 <div class="form-group">
                     <label for="fileInput">Image</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input  @error('file') is-invalid @enderror" id="fileInput" name="file" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" required>
+                        <input type="file" class="custom-file-input  @error('file') is-invalid @enderror" id="fileInput" name="file" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
                         <label class="custom-file-label" for="customFile" data-browse="Browse">Choose file</label>
 
                         @error('file')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
+
+                    <img src="#" class="mt-2 img-fluid rounded img-preview d-none" alt="Image" id="filePreview">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Upload</button>

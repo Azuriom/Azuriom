@@ -29,9 +29,9 @@
             <div class="card-body">
                 <h1 class="card-title">{{ $currentPost->title }}</h1>
 
-                @if($currentPost->image_id !== null)
+                @if($currentPost->image !== null)
                     <div class="text-center">
-                        <img class="rounded" src="{{ $currentPost->image->url() }}" alt="{{ $currentPost->image->name }}" height="300">
+                        <img class="rounded" src="{{ $currentPost->imageUrl() }}" alt="{{ $currentPost->title }}" height="300">
                     </div>
                 @endif
 

@@ -2,11 +2,8 @@
     <link href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" rel="stylesheet">
 @endpush
 
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
-@endpush
-
 @push('footer-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script>
         const colorPickrForm = document.querySelector('.color-picker');
 

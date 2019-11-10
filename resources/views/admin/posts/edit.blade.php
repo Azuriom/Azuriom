@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.posts.update', $currentPost) }}" method="POST">
+            <form action="{{ route('admin.posts.update', $currentPost) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
 
                 @include('admin.posts._form')
