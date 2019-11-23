@@ -69,7 +69,7 @@ class NavbarController extends Controller
         return $request->expectsJson() ? response()->json([
             'status' => 'success',
             'message' => 'Navbar updated'
-        ]) : $this->index();
+        ]) : redirect()->route('admin.navbar-elements.index');
     }
 
     /**

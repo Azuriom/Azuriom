@@ -51,76 +51,80 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="imageSelect">Favicon</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="imageSelect">Favicon</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                            </div>
+                            <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" data-image-select="faviconPreview" name="icon">
+                                <option value="" @if(!$icon) selected @endif>None</option>
+                                @foreach($images as $image)
+                                    <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" data-image-select="faviconPreview" name="icon">
-                            <option value="" @if(!$icon) selected @endif>None</option>
-                            @foreach($images as $image)
-                                <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
+
+                        <div class="mt-3 @if(!$icon) d-none @endif">
+                            <img src="{{ $icon ? favicon() : '#' }}" class="img-fluid rounded img-preview-sm" alt="Favicon" id="faviconPreview">
+                        </div>
+
+                        @error('icon')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="logoSelect">Logo</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                            </div>
+                            <select class="custom-select @error('logo') is-invalid @enderror" id="logoSelect" data-image-select="logoPreview" name="logo">
+                                <option value="" @if(!$logo) selected @endif>None</option>
+                                @foreach($images as $image)
+                                    <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>{{ $image->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mt-3 @if(!$logo) d-none @endif">
+                            <img src="{{ $logo ? image_url($logo) : '#' }}" class="img-fluid rounded img-preview-sm" alt="Logo" id="logoPreview">
+                        </div>
+
+                        @error('logo')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="timezoneSelect">Timezone</label>
+                        <select class="custom-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
+                            @foreach($timezones as $timezone)
+                                <option value="{{ $timezone }}" @if($timezone === $currentTimezone) selected @endif>{{ $timezone }}</option>
                             @endforeach
                         </select>
+
+                        @error('timezone')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
                     </div>
 
-                    <div class="mt-3 @if(!$icon) d-none @endif">
-                        <img src="{{ $icon ? favicon() : '#' }}" class="img-fluid rounded img-preview-sm" alt="Favicon" id="faviconPreview">
-                    </div>
-
-                    @error('icon')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="logoSelect">Logo</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
-                        </div>
-                        <select class="custom-select @error('logo') is-invalid @enderror" id="logoSelect" data-image-select="logoPreview" name="logo">
-                            <option value="" @if(!$logo) selected @endif>None</option>
-                            @foreach($images as $image)
-                                <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>{{ $image->name }}</option>
+                    <div class="form-group col-md-6">
+                        <label for="localeSelect">Site language</label>
+                        <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
+                            @foreach($languages as $langCode => $langName)
+                                <option value="{{ $langCode }}" @if($langCode === app()->getLocale()) selected @endif>{{ $langName }}</option>
                             @endforeach
                         </select>
+
+                        @error('locale')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
                     </div>
-
-                    <div class="mt-3 @if(!$logo) d-none @endif">
-                        <img src="{{ $logo ? image_url($logo) : '#' }}" class="img-fluid rounded img-preview-sm" alt="Logo" id="logoPreview">
-                    </div>
-
-                    @error('logo')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="timezoneSelect">Timezone</label>
-                    <select class="custom-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
-                        @foreach($timezones as $timezone)
-                            <option value="{{ $timezone }}" @if($timezone === $currentTimezone) selected @endif>{{ $timezone }}</option>
-                        @endforeach
-                    </select>
-
-                    @error('timezone')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="localeSelect">Site language</label>
-                    <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
-                        @foreach($languages as $langCode => $langName)
-                            <option value="{{ $langCode }}" @if($langCode === app()->getLocale()) selected @endif>{{ $langName }}</option>
-                        @endforeach
-                    </select>
-
-                    @error('locale')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -139,6 +143,14 @@
                     @error('conditions')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif>
+                        <label class="custom-control-label" for="registerInput">Enable user registration</label>
+                    </div>
+                    <small>It can still be possible to register through plugins.</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

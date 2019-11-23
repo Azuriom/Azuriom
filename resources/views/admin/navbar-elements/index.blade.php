@@ -31,7 +31,6 @@
 
         .sortable-handle {
             display: block;
-            padding: 1em;
             box-sizing: border-box;
         }
 
@@ -44,7 +43,7 @@
             color: #2ea8e5;
         }
 
-        .sortable-ghost .sortable-handle {
+        .sortable-ghost .card {
             background: #f2fbff;
             border: 1px dashed #b6bcbf;
         }
@@ -55,20 +54,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js"></script>
     <script>
         const sortable = Sortable.create(document.getElementById('sortable'), {
+            animation: 150,
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
             group: {
                 name: 'navbar',
-                animation: 150,
-                fallbackOnBody: true,
-                swapThreshold: 0.65,
             }
         });
 
         document.querySelectorAll('.sortable-list').forEach(function (el) {
             Sortable.create(el, {
+                animation: 150,
                 group: {
                     name: 'navbar',
-                    animation: 150,
-                    ghostClass: 'sortable-background',
                     put: function (to, sortable, drag) {
                         return !drag.classList.contains('sortable-dropdown');
                     },
@@ -92,9 +90,11 @@
         }
 
         const saveButton = document.getElementById('save');
+        const saveButtonIcon = saveButton.querySelector('.btn-animation');
 
         saveButton.addEventListener('click', function () {
             saveButton.setAttribute('disabled', '');
+            saveButtonIcon.classList.remove('d-none');
 
             axios.post('{{ route('admin.navbar-elements.update-order') }}', {
                 'order': serialize(sortable.el)
@@ -103,11 +103,12 @@
                     'Content-Type': 'application/json'
                 }
             }).then(function (json) {
-                saveButton.removeAttribute('disabled');
                 createAlert('success', json.data.message, true);
             }).catch(function (error) {
-                saveButton.removeAttribute('disabled');
                 createAlert('danger', error, true)
+            }).finally(function () {
+                saveButton.removeAttribute('disabled');
+                saveButtonIcon.classList.add('d-none');
             });
         });
     </script>
@@ -119,15 +120,19 @@
             <ol class="list-unstyled sortable" id="sortable">
                 @foreach($navbarElements as $navbarElement)
                     <li class="sortable-item @if($navbarElement->isDropdown()) sortable-dropdown @endif" data-id="{{ $navbarElement->id }}">
-                        <div class="sortable-handle card card-body">
-                            @if($navbarElement->isDropdown())
-                                <i class="fas fa-bars"></i>
-                            @endif
-                            {{ $navbarElement->name }}
-                            <span class="float-right">
-                                <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1 nodrag" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1 nodrag" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
-                            </span>
+                        <div class="card sortable-handle">
+                            <div class="card-body d-flex justify-content-between">
+                                <span>
+                                    @if($navbarElement->isDropdown())
+                                        <i class="fas fa-bars"></i>
+                                    @endif
+                                    {{ $navbarElement->name }}
+                                </span>
+                                <span>
+                                    <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1 nodrag" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1 nodrag" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                </span>
+                            </div>
                         </div>
                         @if($navbarElement->isDropdown())
                             <ol class="list-unstyled sortable sortable-list">
@@ -149,7 +154,7 @@
             </ol>
 
             <button type="button" class="btn btn-success" id="save">
-                <i class="fas fa-save"></i> Save
+                <i class="fas fa-save"></i> Save <i class="fas fa-sync fa-spin d-none btn-animation"></i>
             </button>
             <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}"><i class="fas fa-plus"></i> Create</a>
         </div>

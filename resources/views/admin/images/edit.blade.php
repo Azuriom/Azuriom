@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.images.update', $image) }}" method="POST">
-                @method('PUT')
+                @method('PATCH')
                 @csrf
 
                 <div class="form-group">

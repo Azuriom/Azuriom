@@ -2,22 +2,24 @@
 
 @csrf
 
-<div class="form-group">
-    <label for="nameInput">Name</label>
-    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $role->name ?? '') }}" required>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="nameInput">Name</label>
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $role->name ?? '') }}" required>
 
-    @error('name')
-    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-    @enderror
-</div>
+        @error('name')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
 
-<div class="form-group mb-4">
-    <label for="colorInput">Color</label>
-    <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
+    <div class="form-group col-md-6 mb-4">
+        <label for="colorInput">Color</label>
+        <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
 
-    @error('color')
-    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-    @enderror
+        @error('color')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
 </div>
 
 <h3>Permissions</h3>

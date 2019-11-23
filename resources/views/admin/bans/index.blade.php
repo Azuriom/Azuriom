@@ -30,7 +30,7 @@
                                 @if(! $ban->trashed())
                                     <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                 @else
-                                    <i>Removed the {{ $ban->removed_at }}</i>
+                                    <i>Removed the {{ $ban->removed_at }} by {{ $ban->remover->name ?? 'unknown' }}</i>
                                 @endif
                             </td>
                         </tr>

@@ -20,7 +20,7 @@
     <!-- Page level scripts -->
     @stack('scripts')
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
     <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -43,7 +43,8 @@
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('img/azuriom-white.svg') }}" alt="Azuriom">
                 </div>
-                <div class="sidebar-brand-text mx-3"><img src="{{ asset('img/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup></div>
+                <div class="sidebar-brand-text mx-3"><img src="{{ asset('img/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup>
+                </div>
             </a>
 
             <!-- Divider -->
@@ -220,31 +221,17 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Notifications -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- Counter - Notifications -->
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">1</span>
+                                <!-- <span class="badge badge-danger badge-counter">1</span> -->
                             </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">Alerts</h6>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show all Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">1</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">Message</h6>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read all Messages</a>
+                            <!-- Dropdown - Notifications -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationsDropdown">
+                                <h6 class="dropdown-header">Notifications</h6>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Mark as read</a>
                             </div>
                         </li>
 
@@ -254,21 +241,13 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="https://www.gravatar.com/avatar/4998278afe6b74f3a24e89331ceea87c?size=512" alt="Avatar">
+                                <img class="img-profile rounded-circle" src="{{ game()->getAvatarUrl(Auth::user(), 64) }}" alt="Avatar">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.users.edit', Auth::user()) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">

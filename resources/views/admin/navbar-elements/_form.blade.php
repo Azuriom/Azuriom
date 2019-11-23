@@ -1,44 +1,50 @@
 @push('footer-scripts')
     <script>
         function updateType(el) {
-            $('[data-nav-element]').addClass('d-none');
-            $('[data-nav-element="' + el.val() + '"]').removeClass('d-none');
+            document.querySelectorAll('[data-nav-element]').forEach(function (e) {
+                e.classList.add('d-none');
+            });
+
+            const current = document.querySelector('[data-nav-element="' + el.value + '"]');
+            if (current) {
+                current.classList.remove('d-none');
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const typeSelect = $('#typeSelect');
+        const typeSelect = document.getElementById('typeSelect');
 
-            updateType(typeSelect);
+        updateType(typeSelect);
 
-            typeSelect.on('change', function (e) {
-                updateType($(this));
-            });
+        typeSelect.addEventListener('change', function (ev) {
+            updateType(ev.target);
         });
     </script>
 @endpush
 
 @csrf
 
-<div class="form-group">
-    <label for="nameInput">Name</label>
-    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->name ?? '') }}" required>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="nameInput">Name</label>
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->name ?? '') }}" required>
 
-    @error('name')
-    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-    @enderror
-</div>
+        @error('name')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
 
-<div class="form-group">
-    <label for="typeSelect">Type</label>
-    <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
-        @foreach($types as $type)
-            <option value="{{ $type }}" @if($type === old('type', $navbarElement->type ?? '')) selected @endif>{{ $type }}</option>
-        @endforeach
-    </select>
+    <div class="form-group col-md-6">
+        <label for="typeSelect">Type</label>
+        <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
+            @foreach($types as $type)
+                <option value="{{ $type }}" @if($type === old('type', $navbarElement->type ?? '')) selected @endif>{{ $type }}</option>
+            @endforeach
+        </select>
 
-    @error('type')
-    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-    @enderror
+        @error('type')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
 </div>
 
 <div data-nav-element="page" class="form-group d-none">

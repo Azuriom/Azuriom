@@ -34,7 +34,7 @@ class PostRequest extends FormRequest
             'content' => ['required', 'string'],
             'published_at' => ['required', 'date'],
             'is_pinned' => ['filled', 'boolean'],
-            'image' => ['sometimes', 'nullable', 'image'],
+            'image' => ['nullable', 'image'],
         ];
     }
 }

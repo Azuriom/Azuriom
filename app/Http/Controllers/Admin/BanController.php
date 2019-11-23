@@ -50,9 +50,7 @@ class BanController extends Controller
      */
     public function destroy(User $user, Ban $ban)
     {
-        $ban->delete();
-
-        $user->update(['is_banned' => false]);
+        $ban->removeBan();
 
         return redirect()->route('admin.users.edit', $user)->with('success', 'User unbanned');
     }

@@ -67,7 +67,7 @@
                             <label for="roleSelect">Role</label>
                             <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->is_deleted) disabled @endif>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->id }}" @if($user->role_id === $role->id) selected @endif>{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}" @if($user->role->is($role)) selected @endif>{{ $role->name }}</option>
                                 @endforeach
                             </select>
 

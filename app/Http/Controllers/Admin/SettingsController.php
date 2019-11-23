@@ -67,6 +67,7 @@ class SettingsController extends Controller
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
             'conditions' => setting('conditions'),
+            'register' => setting('register', true),
         ]);
     }
 
@@ -87,8 +88,9 @@ class SettingsController extends Controller
             'copyright' => ['nullable', 'string', 'max:150'],
             'conditions' => ['nullable', 'url', 'max:150'],
             'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
-            'icon' => ['nullable', 'exists:images,file']
-        ]));
+            'icon' => ['nullable', 'exists:images,file'],
+            'logo' => ['nullable', 'exists:images,file'],
+        ]) + ['register' => $request->has('register')]);
 
         ActionLog::logUpdate('Settings');
 

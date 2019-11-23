@@ -19,10 +19,12 @@ class CreateBansTable extends Migration
             $table->unsignedInteger('author_id');
             $table->string('reason')->nullable();
             $table->softDeletes('removed_at');
+            $table->unsignedInteger('remover_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('remover_id')->references('id')->on('users');
         });
     }
 
