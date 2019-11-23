@@ -4,7 +4,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-6">
-        <label for="nameInput">Name</label>
+        <label for="nameInput">{{ trans('admin.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $role->name ?? '') }}" required>
 
         @error('name')
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group col-md-6 mb-4">
-        <label for="colorInput">Color</label>
+        <label for="colorInput">{{ trans('admin.fields.color') }}</label>
         <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
 
         @error('color')
@@ -22,12 +22,12 @@
     </div>
 </div>
 
-<h3>Permissions</h3>
+<h3>{{ trans('admin.roles.permissions') }}</h3>
 
-<small class="text-info">When the group is admin it has all the permissions.</small>
+<small class="text-info">{{ trans('admin.roles.perm-admin.info') }}</small>
 <div class="form-group custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="administratorSwitch" name="is_admin" data-toggle="collapse" data-target="#permissionsGroup" @if($role->is_admin ?? false) checked @endif>
-    <label class="custom-control-label" for="administratorSwitch">Administrator</label>
+    <label class="custom-control-label" for="administratorSwitch">{{ trans('admin.permissions.perm-admin.label') }}</label>
 </div>
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">

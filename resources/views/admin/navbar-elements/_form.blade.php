@@ -25,7 +25,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-6">
-        <label for="nameInput">Name</label>
+        <label for="nameInput">{{ trans('admin.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->name ?? '') }}" required>
 
         @error('name')
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-group col-md-6">
-        <label for="typeSelect">Type</label>
+        <label for="typeSelect">{{ trans('admin.fields.type') }}</label>
         <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
             @foreach($types as $type)
                 <option value="{{ $type }}" @if($type === old('type', $navbarElement->type ?? '')) selected @endif>{{ $type }}</option>

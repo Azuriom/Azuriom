@@ -25,7 +25,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="nameInput">Site Name</label>
+                    <label for="nameInput">{{ trans('admin.settings.index.site-name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', site_name()) }}" required>
 
                     @error('name')
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="urlInput">Site url</label>
+                    <label for="urlInput">{{ trans('admin.settings.index.site-url') }}</label>
                     <input type="url" class="form-control @error('url') is-invalid @enderror" id="urlInput" name="url" value="{{ old('url', config('app.url')) }}" required>
 
                     @error('url')
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="descriptionInput">Site Description</label>
+                    <label for="descriptionInput">{{ trans('admin.settings.index.site-description') }}</label>
                     <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', setting('description')) }}" required>
 
                     @error('description')
@@ -53,7 +53,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="imageSelect">Favicon</label>
+                        <label for="imageSelect">{{ trans('admin.settings.index.favicon') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="logoSelect">Logo</label>
+                        <label for="logoSelect">{{ trans('admin.settings.index.logo') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
@@ -101,7 +101,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="timezoneSelect">Timezone</label>
+                        <label for="timezoneSelect">{{ trans('admin.settings.index.timezone') }}</label>
                         <select class="custom-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
                             @foreach($timezones as $timezone)
                                 <option value="{{ $timezone }}" @if($timezone === $currentTimezone) selected @endif>{{ $timezone }}</option>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="localeSelect">Site language</label>
+                        <label for="localeSelect">{{ trans('admin.settings.index.locale') }}</label>
                         <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
                             @foreach($languages as $langCode => $langName)
                                 <option value="{{ $langCode }}" @if($langCode === app()->getLocale()) selected @endif>{{ $langName }}</option>
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="copyrightInput">Copyright</label>
+                    <label for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
                     <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
 
                     @error('copyright')
@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="conditionsInput">Conditions URL</label>
+                    <label for="conditionsInput">{{ trans('admin.settings.index.conditions-url') }}</label>
                     <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
 
                     @error('conditions')
@@ -148,12 +148,12 @@
                 <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif>
-                        <label class="custom-control-label" for="registerInput">Enable user registration</label>
+                        <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.index.enable-user-registration') }}</label>
                     </div>
-                    <small>It can still be possible to register through plugins.</small>
+                    <small>{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
             </form>
         </div>
     </div>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Roles')
+@section('title', trans('admin.roles.title'))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -10,11 +10,11 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ trans('admin.fields.name') }}</th>
+                        <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sortable">
 
                     @foreach($roles as $role)
                         <tr>
@@ -34,8 +34,8 @@
                                 <span class="badge badge-label" style="{{ $role->getBadgeStyle() }}">{{ $role->name }}</span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.roles.edit', $role) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.roles.destroy', $role) }}" class="mx-1 @if($role->isPermanent()) disabled @endif" @if(!$role->isPermanent()) title="Delete" data-confirm="delete" data-toggle="tooltip" @endif><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.roles.edit', $role) }}" class="mx-1" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.roles.destroy', $role) }}" class="mx-1 @if($role->isPermanent()) disabled @endif" @if(!$role->isPermanent()) title="{{ trans('admin.actions.delete') }}" data-confirm="delete" data-toggle="tooltip" @endif><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -46,7 +46,9 @@
 
             {{ $roles->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.roles.create') }}"><i class="fas fa-plus"></i> Create</a>
+            <a class="btn btn-primary" href="{{ route('admin.roles.create') }}">
+                <i class="fas fa-plus"></i> {{ trans('admin.actions.create') }}
+            </a>
         </div>
     </div>
 @endsection

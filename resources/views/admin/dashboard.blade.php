@@ -8,9 +8,7 @@
 
 @section('content')
     @if(! $secure)
-        <div class="alert alert-warning shadow-sm">
-            Your website is not using https, you should enable and force it for your security and the one of the users.
-        </div>
+        <div class="alert alert-warning shadow-sm">{{ trans('admin.dashboard.https-warning') }}</div>
     @endif
 
     <!-- Content Row -->
@@ -22,7 +20,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Users</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ trans('admin.dashboard.users') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $userCount }}</div>
                         </div>
                         <div class="col-auto">
@@ -39,7 +37,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Posts</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ trans('admin.dashboard.posts') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $postCount }}</div>
                         </div>
                         <div class="col-auto">
@@ -56,7 +54,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pages</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ trans('admin.dashboard.pages') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pageCount }}</div>
                         </div>
                         <div class="col-auto">
@@ -73,7 +71,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Images</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ trans('admin.dashboard.images') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $imageCount }}</div>
                         </div>
                         <div class="col-auto">
@@ -90,7 +88,7 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Recent users</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -104,7 +102,7 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Active users</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.active-users') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-pie pt-4 pb-2">

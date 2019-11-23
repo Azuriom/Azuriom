@@ -10,11 +10,11 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Target</th>
-                        <th scope="col">Action</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">{{ trans('admin.fields.type') }}</th>
+                        <th scope="col">{{ trans('admin.fields.user') }}</th>
+                        <th scope="col">{{ trans('admin.logs.fields.target') }}</th>
+                        <th scope="col">{{ trans('admin.fields.action') }}</th>
+                        <th scope="col">{{ trans('admin.fields.date') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,7 +42,7 @@
             <form action="{{ route('admin.logs.clear') }}" method="POST">
                 @csrf
 
-                <button type="submit" class="btn btn-danger">Clear old logs (15d+)</button>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> {{ trans('admin.logs.actions.clear') }}</button>
             </form>
         </div>
     </div>

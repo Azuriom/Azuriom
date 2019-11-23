@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Images')
+@section('title', trans('admin.images.title'))
 
 @push('styles')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.css" rel="stylesheet">
@@ -21,10 +21,10 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Path</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ trans('admin.fields.image') }}</th>
+                        <th scope="col">{{ trans('admin.fields.name') }}</th>
+                        <th scope="col">{{ trans('admin.fields.file') }}</th>
+                        <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,8 +40,8 @@
                             <td>{{ $image->name }}</td>
                             <td><a href="{{ $image->url() }}" target="_blank">{{ $image->file }}</a></td>
                             <td>
-                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('admin.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -52,7 +52,7 @@
 
             {{ $images->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-plus"></i> Upload</a>
+            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-upload"></i> {{ trans('admin.actions.upload') }}</a>
         </div>
     </div>
 @endsection

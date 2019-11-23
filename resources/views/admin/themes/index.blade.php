@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Themes')
+@section('title', trans('admin.extensions.themes'))
 
 @push('scripts')
     <script>
@@ -17,41 +17,41 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">Current theme</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.extensions.current-theme.title') }}</h6>
         </div>
         <div class="card-body">
             @if($current)
                 <h3 class="h5">{{ $current->name }}</h3>
                 <ul>
-                    <li>Author: {{ join(', ', $current->authors) }}</li>
-                    <li>Version: {{ $current->version }}</li>
+                    <li>{{ trans('admin.extensions.current-theme.author', ['author' => join(', ', $current->authors)]) }}</li>
+                    <li>{{ trans('admin.extensions.current-theme.version', ['version' => $current->version]) }}</li>
                 </ul>
 
                 <form action="{{ route('admin.themes.change') }}" method="POST">
                     @csrf
 
-                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> Edit config</a>
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> Disable</button>
+                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> {{ trans('admin.extensions.actions.edit-theme-config') }}</a>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> {{ trans('admin.extensions.actions.disable-theme') }}</button>
                 </form>
             @else
-                You don't have any theme enable.
+                {{ trans('admin.extensions.no-theme') }}
             @endif
         </div>
     </div>
 
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">Installed themes</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.extensions.installed-themes') }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Version</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ trans('admin.fields.name') }}</th>
+                        <th scope="col">{{ trans('admin.fields.author') }}</th>
+                        <th scope="col">{{ trans('admin.extensions.fields.version') }}</th>
+                        <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@
                             <td>{{ join(', ', $theme->authors) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
-                                <a class="btn btn-primary" data-action="theme" href="{{ route('admin.themes.change', $path) }}">Enable</a>
+                                <a class="btn btn-primary" data-action="theme" href="{{ route('admin.themes.change', $path) }}"><i class="fas fa-check"></i> {{ trans('admin.actions.enable') }}</a>
                             </td>
                         </tr>
                     @endforeach

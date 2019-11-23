@@ -54,29 +54,29 @@
             <div class="nav-item {{ add_active('admin.dashboard') }}">
                 <a class="nav-link" href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>{{ trans('admin.nav.dashboard') }}</span></a>
             </div>
 
             @canany(['admin.settings', 'admin.navbar'])
                 <hr class="sidebar-divider">
 
-                <div class="sidebar-heading">Settings</div>
+                <div class="sidebar-heading">{{ trans('admin.nav.settings.heading') }}</div>
             @endcanany
 
             @can('admin.settings')
                 <div class="nav-item {{ add_active('admin.settings.*') }}">
                     <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
                         <i class="fas fa-fw fa-wrench"></i>
-                        <span>Settings</span>
+                        <span>{{ trans('admin.nav.settings.heading') }}</span>
                     </a>
                     <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Settings</h6>
-                            <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">Global</a>
-                            <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">Security</a>
-                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">Performances</a>
-                            <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">SEO</a>
-                            <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">Maintenance</a>
+                            <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
+                            <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">{{ trans('admin.nav.settings.settings.global') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">{{ trans('admin.nav.settings.settings.security') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">{{ trans('admin.nav.settings.settings.seo') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="nav-item {{ add_active('admin.navbar-elements.*') }}">
                     <a class="nav-link" href="{{ route('admin.navbar-elements.index') }}">
                         <i class="fas fa-fw fa-bars"></i>
-                        <span>Navbar</span>
+                        <span>{{ trans('admin.nav.settings.navbar') }}</span>
                     </a>
                 </div>
             @endcan
@@ -95,14 +95,14 @@
                 <hr class="sidebar-divider">
 
                 <!-- Heading -->
-                <div class="sidebar-heading">Users</div>
+                <div class="sidebar-heading">{{ trans('admin.nav.users.heading') }}</div>
             @endcanany
 
             @can('admin.users')
                 <div class="nav-item {{ add_active('admin.users.*') }}">
                     <a class="nav-link" href="{{ route('admin.users.index') }}">
                         <i class="fas fa-fw fa-users"></i>
-                        <span>Users</span>
+                        <span>{{ trans('admin.nav.users.users') }}</span>
                     </a>
                 </div>
             @endcan
@@ -111,7 +111,7 @@
                 <div class="nav-item {{ add_active('admin.roles.*') }}">
                     <a class="nav-link" href="{{ route('admin.roles.index') }}">
                         <i class="fas fa-fw fa-user-tag"></i>
-                        <span>Roles</span>
+                        <span>{{ trans('admin.nav.users.roles') }}</span>
                     </a>
                 </div>
             @endcan
@@ -120,7 +120,7 @@
                 <div class="nav-item {{ add_active('admin.bans.*') }}">
                     <a class="nav-link" href="{{ route('admin.bans.index') }}">
                         <i class="fas fa-fw fa-user-times"></i>
-                        <span>Bans</span>
+                        <span>{{ trans('admin.nav.users.bans') }}</span>
                     </a>
                 </div>
             @endcan
@@ -128,14 +128,14 @@
             @canany(['admin.pages', 'admin.posts', 'admin.images'])
                 <hr class="sidebar-divider">
 
-                <div class="sidebar-heading">Content</div>
+                <div class="sidebar-heading">{{ trans('admin.nav.content.heading') }}</div>
             @endcanany
 
             @can('admin.pages')
                 <div class="nav-item {{ add_active('admin.pages.*') }}">
                     <a class="nav-link" href="{{ route('admin.pages.index') }}">
                         <i class="fas fa-fw fa-file-alt"></i>
-                        <span>Pages</span>
+                        <span>{{ trans('admin.nav.content.pages') }}</span>
                     </a>
                 </div>
             @endcan
@@ -144,7 +144,7 @@
                 <div class="nav-item {{ add_active('admin.posts.*') }}">
                     <a class="nav-link" href="{{ route('admin.posts.index') }}">
                         <i class="fas fa-fw fa-newspaper"></i>
-                        <span>Posts</span>
+                        <span>{{ trans('admin.nav.content.posts') }}</span>
                     </a>
                 </div>
             @endcan
@@ -153,7 +153,7 @@
                 <div class="nav-item {{ add_active('admin.images.*') }}">
                     <a class="nav-link" href="{{ route('admin.images.index') }}">
                         <i class="fas fa-fw fa-image"></i>
-                        <span>Images</span>
+                        <span>{{ trans('admin.nav.content.images') }}</span>
                     </a>
                 </div>
             @endcan
@@ -161,14 +161,14 @@
             @canany(['admin.plugins', 'admin.themes'])
                 <hr class="sidebar-divider">
 
-                <div class="sidebar-heading">Extensions</div>
+                <div class="sidebar-heading">{{ trans('admin.nav.extensions.heading') }}</div>
             @endcan
 
             @can('admin.plugins')
                 <div class="nav-item {{ add_active('admin.plugins.*') }}">
                     <a class="nav-link" href="{{ route('admin.plugins.index') }}">
                         <i class="fas fa-fw fa-puzzle-piece"></i>
-                        <span>Plugins</span>
+                        <span>{{ trans('admin.nav.extensions.plugins') }}</span>
                     </a>
                 </div>
             @endcan
@@ -177,7 +177,7 @@
                 <div class="nav-item {{ add_active('admin.themes.*') }}">
                     <a class="nav-link" href="{{ route('admin.themes.index') }}">
                         <i class="fas fa-fw fa-paint-brush"></i>
-                        <span>Themes</span>
+                        <span>{{ trans('admin.nav.extensions.themes') }}</span>
                     </a>
                 </div>
             @endcan
@@ -185,12 +185,12 @@
             @can('admin.logs')
                 <hr class="sidebar-divider">
 
-                <div class="sidebar-heading">Other</div>
+                <div class="sidebar-heading">{{ trans('admin.nav.other.heading') }}</div>
 
                 <div class="nav-item {{ add_active('admin.logs.*') }}">
                     <a class="nav-link" href="{{ route('admin.logs.index') }}">
                         <i class="fas fa-fw fa-history"></i>
-                        <span>Logs</span>
+                        <span>{{ trans('admin.nav.other.logs') }}</span>
                     </a>
                 </div>
             @endcan
@@ -230,8 +230,8 @@
                             </a>
                             <!-- Dropdown - Notifications -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationsDropdown">
-                                <h6 class="dropdown-header">Notifications</h6>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Mark as read</a>
+                                <h6 class="dropdown-header">{{ trans('admin.notifications.notifications') }}</h6>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">{{ trans('admin.notifications.mark-as-read') }}</a>
                             </div>
                         </li>
 
@@ -247,12 +247,12 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.users.edit', Auth::user()) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    {{ trans('admin.nav.profile.profile') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    {{ trans('admin.nav.profile.logout') }}
                                 </a>
                             </div>
                         </li>
@@ -284,7 +284,13 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a> &copy; 2019. Panel designed by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>.</span>
+                        <span>
+                            @lang('admin.footer', [
+                                'year' => '2019',
+                                'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>',
+                                'startbootstrap' => '<a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>'
+                            ])
+                        </span>
                     </div>
                 </div>
             </footer>
@@ -314,12 +320,12 @@
             </div>
             <div class="modal-body">Are you sure you want to delete this ? It can't be undo</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">{{ trans('admin.actions.cancel') }}</button>
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')
                     @csrf
 
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-danger" type="submit">{{ trans('admin.actions.delete') }}</button>
                 </form>
             </div>
         </div>

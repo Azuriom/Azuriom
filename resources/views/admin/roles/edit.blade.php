@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit role #'.$role->id)
+@section('title', trans('admin.roles.title-edit', ['id' => $role->id]))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -10,8 +10,10 @@
 
                 @include('admin.roles._form')
 
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger @if($role->isPermanent()) disabled @endif" data-confirm="delete" @if($role->isPermanent()) disabled @endif>Delete</a>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
+                @if(! $role->isPermanent())
+                    <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('admin.actions.delete') }}</a>
+                @endif
             </form>
         </div>
     </div>

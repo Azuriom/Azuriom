@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Navbar')
+@section('title', trans('admin.navbar-elements.title'))
 
 @push('styles')
     <style>
@@ -57,9 +57,7 @@
             animation: 150,
             fallbackOnBody: true,
             swapThreshold: 0.65,
-            group: {
-                name: 'navbar',
-            }
+            group: 'navbar',
         });
 
         document.querySelectorAll('.sortable-list').forEach(function (el) {
@@ -129,11 +127,12 @@
                                     {{ $navbarElement->name }}
                                 </span>
                                 <span>
-                                    <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1 nodrag" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1 nodrag" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1" title="{{ trans('admin.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                 </span>
                             </div>
                         </div>
+
                         @if($navbarElement->isDropdown())
                             <ol class="list-unstyled sortable sortable-list">
                                 @foreach($navbarElement->elements as $childElement)
@@ -141,8 +140,8 @@
                                         <div class="sortable-handle card card-body">
                                             {{ $childElement->name }}
                                             <span class="float-right">
-                                                <a href="{{ route('admin.navbar-elements.edit', $childElement) }}" class="m-1 nodrag" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                                <a href="{{ route('admin.navbar-elements.destroy', $childElement) }}" class="m-1 nodrag" title="Delete" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                                <a href="{{ route('admin.navbar-elements.edit', $childElement) }}" class="m-1 nodrag" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('admin.navbar-elements.destroy', $childElement) }}" class="m-1 nodrag" title="{{ trans('admin.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                             </span>
                                         </div>
                                     </li>
@@ -154,9 +153,11 @@
             </ol>
 
             <button type="button" class="btn btn-success" id="save">
-                <i class="fas fa-save"></i> Save <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                <i class="fas fa-save"></i> {{ trans('admin.actions.save') }}
+                <i class="fas fa-sync fa-spin d-none btn-animation"></i>
             </button>
-            <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}"><i class="fas fa-plus"></i> Create</a>
+            <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}"><i class="fas fa-plus"></i> {{ trans('admin.actions.create') }}
+            </a>
         </div>
     </div>
 @endsection

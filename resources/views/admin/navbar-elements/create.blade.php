@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Create navbar element')
+@section('title', trans('admin.navbar-elements.title-create'))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -9,7 +9,7 @@
 
                 @include('admin.navbar-elements._form')
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
             </form>
         </div>
     </div>

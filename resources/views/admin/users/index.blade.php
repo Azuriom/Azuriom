@@ -10,10 +10,10 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ trans('admin.users.fields.name') }}</th>
+                        <th scope="col">{{ trans('admin.users.fields.email') }}</th>
+                        <th scope="col">{{ trans('admin.users.fields.role') }}</th>
+                        <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
                                 <span class="badge badge-label" style="{{ $user->role->getBadgeStyle() }}">{{ $user->role->name }}</span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -49,7 +49,7 @@
 
             {{ $users->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.users.create') }}"><i class="fas fa-plus"></i> Create</a>
+            <a class="btn btn-primary" href="{{ route('admin.users.create') }}"><i class="fas fa-plus"></i> {{ trans('admin.actions.create') }}</a>
         </div>
     </div>
 @endsection

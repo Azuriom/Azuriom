@@ -3,7 +3,7 @@
 @csrf
 
 <div class="form-group">
-    <label for="titleInput">Title</label>
+    <label for="titleInput">{{ trans('admin.fields.title') }}</label>
     <input type="text" class="form-control @error('title') is-invalid @enderror" id="titleInput" name="title" value="{{ old('title', $page->title ?? '') }}" required>
 
     @error('title')
@@ -12,7 +12,7 @@
 </div>
 
 <div class="form-group">
-    <label for="descriptionInput">Description</label>
+    <label for="descriptionInput">{{ trans('admin.fields.description') }}</label>
     <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', $page->description ?? '') }}" required>
 
     @error('description')
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group">
-    <label for="slugInput">Slug</label>
+    <label for="slugInput">{{ trans('admin.fields.slug') }}</label>
     <div class="input-group">
         <div class="input-group-prepend">
             <div class="input-group-text">{{ url('/') }}/</div>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="form-group">
-    <label for="textArea">Content</label>
+    <label for="textArea">{{ trans('admin.fields.content') }}</label>
     <textarea class="form-control html-editor @error('content') is-invalid @enderror" id="textArea" name="content" rows="5">{{ old('content', $page->content ?? '') }}</textarea>
 
     @error('content')
@@ -45,5 +45,5 @@
 
 <div class="form-group custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" @if($page->is_enabled ?? false) checked @endif>
-    <label class="custom-control-label" for="enableSwitch">Enable the page</label>
+    <label class="custom-control-label" for="enableSwitch">{{ trans('admin.pages.enable') }}</label>
 </div>

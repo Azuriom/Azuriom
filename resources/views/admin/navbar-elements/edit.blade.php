@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit navbar element #'.$navbarElement->id)
+@section('title', trans('admin.navbar-elements.title-edit', ['id' => $navbarElement->id]))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -10,8 +10,8 @@
 
                 @include('admin.navbar-elements._form')
 
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="btn btn-danger" data-confirm="delete">Delete</a>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
+                <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('admin.actions.delete') }}</a>
             </form>
         </div>
     </div>
