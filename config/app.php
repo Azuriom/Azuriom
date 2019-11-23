@@ -177,6 +177,7 @@ return [
         Azuriom\Providers\EventServiceProvider::class,
         Azuriom\Providers\RouteServiceProvider::class,
         Azuriom\Providers\ExtensionServiceProvider::class,
+        Azuriom\Providers\GameServiceProvider::class,
 
     ],
 

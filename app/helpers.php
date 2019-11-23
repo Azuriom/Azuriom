@@ -63,3 +63,10 @@ if (! function_exists('plugin_path')) {
         return base_path('plugins/'.$path);
     }
 }
+
+if (! function_exists('game')) {
+    function game()
+    {
+        return app('game');
+    }
+}
