@@ -49,20 +49,20 @@ class PluginController extends Controller
     {
         $this->extensions->dumpAutoload();
 
-        return redirect()->route('admin.plugins.index')->with('success', 'Plugins reloaded.');
+        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.reloaded'));
     }
 
     public function enable(string $plugin)
     {
         $this->extensions->setPluginEnabled($plugin, true);
 
-        return redirect()->route('admin.plugins.index')->with('success', 'Plugin enabled.');
+        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
     }
 
     public function disable(string $plugin)
     {
         $this->extensions->setPluginEnabled($plugin, false);
 
-        return redirect()->route('admin.plugins.index')->with('success', 'Plugin disabled.');
+        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.disabled'));
     }
 }

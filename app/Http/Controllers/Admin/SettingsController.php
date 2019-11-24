@@ -81,20 +81,20 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-            'name' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string', 'max:255'],
-            'url' => ['required', 'url'],
-            'timezone' => ['required', 'timezone'],
-            'copyright' => ['nullable', 'string', 'max:150'],
-            'conditions' => ['nullable', 'url', 'max:150'],
-            'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
-            'icon' => ['nullable', 'exists:images,file'],
-            'logo' => ['nullable', 'exists:images,file'],
-        ]) + ['register' => $request->has('register')]);
+                'name' => ['required', 'string', 'max:50'],
+                'description' => ['required', 'string', 'max:255'],
+                'url' => ['required', 'url'],
+                'timezone' => ['required', 'timezone'],
+                'copyright' => ['nullable', 'string', 'max:150'],
+                'conditions' => ['nullable', 'url', 'max:150'],
+                'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
+                'icon' => ['nullable', 'exists:images,file'],
+                'logo' => ['nullable', 'exists:images,file'],
+            ]) + ['register' => $request->has('register')]);
 
         ActionLog::logUpdate('Settings');
 
-        return redirect()->route('admin.settings.index')->with('success', 'Settings updated');
+        return redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
     }
 
     /**
@@ -148,7 +148,7 @@ class SettingsController extends Controller
 
         ActionLog::logUpdate('Settings');
 
-        return redirect()->route('admin.settings.security')->with('success', 'Settings updated');
+        return redirect()->route('admin.settings.security')->with('success', trans('admin.settings.status.updated'));
     }
 
     public function performance()
@@ -224,7 +224,7 @@ class SettingsController extends Controller
 
         ActionLog::logUpdate('Settings');
 
-        return redirect()->route('admin.settings.seo')->with('success', 'Settings updated');
+        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
     }
 
     /**
@@ -252,7 +252,7 @@ class SettingsController extends Controller
 
         Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));
 
-        return redirect()->route('admin.settings.maintenance')->with('success', 'Maintenance status updated');
+        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
     }
 
     private function hasAdvancedCache()

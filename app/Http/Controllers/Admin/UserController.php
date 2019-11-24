@@ -54,7 +54,7 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        return redirect()->route('admin.users.index')->with('success', 'User created');
+        return redirect()->route('admin.users.index')->with('success', trans('admin.users.status.created'));
     }
 
     /**
@@ -97,7 +97,7 @@ class UserController extends Controller
 
         ActionLog::logUpdate($user);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated');
+        return redirect()->route('admin.users.index')->with('success', trans('admin.users.status.updated'));
     }
 
     public function verifyEmail(User $user)
@@ -110,7 +110,7 @@ class UserController extends Controller
 
         ActionLog::logUpdate($user);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', 'Email verified');
+        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.email-verified'));
     }
 
     public function disable2fa(User $user)
@@ -119,7 +119,7 @@ class UserController extends Controller
 
         ActionLog::logUpdate($user);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', '2fa disabled');
+        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.2fa-disabled'));
     }
 
     /**
@@ -152,6 +152,6 @@ class UserController extends Controller
         $user->setRememberToken(null);
         $user->save();
 
-        return redirect()->route('admin.users.index', $user)->with('success', 'User deleted');
+        return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
     }
 }

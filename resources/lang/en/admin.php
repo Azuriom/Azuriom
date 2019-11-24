@@ -62,6 +62,11 @@ return [
         'mark-as-read' => 'Mark as read',
     ],
 
+    'confirm-delete' => [
+        'title' => 'Delete ?',
+        'description' => 'Are you sure you want to delete this ? It can\'t be undo !',
+    ],
+
     'footer' => 'Powered by :azuriom &copy; :year. Panel designed by :startbootstrap.',
 
     'actions' => [
@@ -93,6 +98,7 @@ return [
         'description' => 'Description',
         'content' => 'Content',
         'color' => 'Color',
+        'version' => 'Version',
     ],
 
     /*
@@ -143,29 +149,47 @@ return [
             'meta' => 'Meta keywords',
             'meta-info' => 'The keywords must be separated with a comma.',
         ],
+
+        'status' => [
+            'updated' => 'Settings updated',
+        ]
     ],
 
     'navbar-elements' => [
         'title' => 'Navbar',
         'title-edit' => 'Edit navbar element #:id',
         'title-create' => 'Create navbar element',
+
+        'status' => [
+            'nav-updated' => 'Navbar updated',
+
+            'created' => 'Navbar element created',
+            'updated' => 'Navbar element updated',
+            'deleted' => 'Navbar element deleted',
+        ]
     ],
 
     'users' => [
         'fields' => [
-            'name' => 'Name',
-            'email' => 'Email',
+            'name' => 'Username',
+            'email' => 'E-Mail Address',
             'role' => 'Role',
             'password' => 'Password',
             'register-date' => 'Register at',
-            'email-verified' => 'Email verified',
-            '2fa' => 'Two Factor Auth verification',
+            'email-verified' => 'E-Mail Address verified',
+            '2fa' => 'Two Factor Authentication',
             'ip' => 'IP Address',
+        ],
+
+        'info' => [
+            'admin' => 'Admin',
+            'banned' => 'Banned',
+            'deleted' => 'Deleted',
         ],
 
         'actions' => [
             'ban' => 'Ban',
-            'delete' => 'Delete account',
+            'delete' => 'Delete',
             'verify-email' => 'Verify email',
             'disable-2fa' => 'Disable 2fa',
         ],
@@ -181,6 +205,18 @@ return [
         'edit-profile' => 'Edit profile',
 
         'user-info' => 'User information',
+
+        'status' => [
+            'created' => 'User created',
+            'updated' => 'User updated',
+            'deleted' => 'User deleted',
+
+            'email-verified' => 'E-Mail Address verified',
+            '2fa-disabled' => 'Two Factor Authentication disabled',
+
+            'banned' => 'User banned',
+            'unbanned' => 'User unbanned',
+        ],
     ],
 
     'roles' => [
@@ -192,6 +228,20 @@ return [
         'perm-admin' => [
             'label' => 'Administrator',
             'info' => 'When the group is admin it has all the permissions.',
+        ],
+
+        'info' => [
+            'default' => 'Default',
+            'permanent' => 'Permanent',
+            'admin' => 'Admin',
+        ],
+
+        'status' => [
+            'created' => 'Role created',
+            'updated' => 'Role updated',
+            'deleted' => 'Role deleted',
+            'permanent-role' => 'This role cannot be deleted',
+            'own-role' => 'You cannot delete your role',
         ]
     ],
 
@@ -217,6 +267,11 @@ return [
 
         'pin' => 'Pin this post',
 
+        'status' => [
+            'created' => 'Post created',
+            'updated' => 'Post updated',
+            'deleted' => 'Post deleted',
+        ]
     ],
 
     'pages' => [
@@ -225,6 +280,12 @@ return [
         'title-create' => 'Create page',
 
         'enable' => 'Enable the page',
+
+        'status' => [
+            'created' => 'Page created',
+            'updated' => 'Page updated',
+            'deleted' => 'Page deleted',
+        ]
     ],
 
     'images' => [
@@ -233,30 +294,43 @@ return [
         'title-create' => 'Upload image',
     ],
 
-    'extensions' => [
-        'plugins' => 'Plugins',
-        'themes' => 'Themes',
+    'plugins' => [
+        'title' => 'Plugins',
 
-        'installed-plugins' => 'Installed plugins',
+        'installed' => 'Installed plugins',
 
-        'current-theme' => [
+        'actions' => [
+            'reload' => 'Reload plugins',
+        ],
+
+        'status' => [
+            'reloaded' => 'Plugins reloaded',
+            'enabled' => 'Plugin enabled',
+            'disabled' => 'Plugin disabled',
+        ]
+    ],
+
+    'themes' => [
+        'title' => 'Themes',
+
+        'current' => [
             'title' => 'Current theme',
             'author' => 'Author: :author',
             'version' => 'Version: :version',
         ],
-        'installed-themes' => 'Installed themes',
-
-        'no-theme' => 'You don\'t have any theme enable.',
+        'installed' => 'Installed themes',
+        'no-enabled' => 'You don\'t have any theme enable.',
 
         'actions' => [
-            'reload-plugins' => 'Reload plugins',
-            'edit-theme-config' => 'Edit config',
-            'disable-theme' => 'Disable theme',
+            'edit-config' => 'Edit config',
+            'disable' => 'Disable theme',
         ],
 
-        'fields' => [
-            'version' => 'Version',
-        ],
+        'status' => [
+            'no-config' => 'This theme don\'t have config',
+            'invalid' => 'Invalid theme',
+            'updated' => 'Theme updated',
+        ]
     ],
 
     'logs' => [
@@ -268,6 +342,10 @@ return [
 
         'actions' => [
             'clear' => 'Clear old logs (15d+)',
+        ],
+
+        'status' => [
+            'cleared' => 'Old logs deleted',
         ],
     ],
 ];

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.extensions.themes'))
+@section('title', trans('admin.themes.title'))
 
 @push('scripts')
     <script>
@@ -17,31 +17,31 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.extensions.current-theme.title') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.current.title') }}</h6>
         </div>
         <div class="card-body">
             @if($current)
                 <h3 class="h5">{{ $current->name }}</h3>
                 <ul>
-                    <li>{{ trans('admin.extensions.current-theme.author', ['author' => join(', ', $current->authors)]) }}</li>
-                    <li>{{ trans('admin.extensions.current-theme.version', ['version' => $current->version]) }}</li>
+                    <li>{{ trans('admin.themes.current.author', ['author' => join(', ', $current->authors)]) }}</li>
+                    <li>{{ trans('admin.themes.current.version', ['version' => $current->version]) }}</li>
                 </ul>
 
                 <form action="{{ route('admin.themes.change') }}" method="POST">
                     @csrf
 
-                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> {{ trans('admin.extensions.actions.edit-theme-config') }}</a>
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> {{ trans('admin.extensions.actions.disable-theme') }}</button>
+                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}</a>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}</button>
                 </form>
             @else
-                {{ trans('admin.extensions.no-theme') }}
+                {{ trans('admin.themes.no-enabled') }}
             @endif
         </div>
     </div>
 
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.extensions.installed-themes') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.installed') }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -50,7 +50,7 @@
                     <tr>
                         <th scope="col">{{ trans('admin.fields.name') }}</th>
                         <th scope="col">{{ trans('admin.fields.author') }}</th>
-                        <th scope="col">{{ trans('admin.extensions.fields.version') }}</th>
+                        <th scope="col">{{ trans('admin.fields.version') }}</th>
                         <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>

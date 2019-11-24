@@ -91,7 +91,7 @@
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.fields.name') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.user-info') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -168,12 +168,13 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="reasonInput">Reason</label>
+                                <label for="reasonInput">{{ trans('admin.bans.fields.reason') }}</label>
                                 <input type="text" class="form-control" id="reasonInput" name="reason" required>
                             </div>
 
-                            <button class="btn btn-danger" type="submit">Ban</button>
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('admin.actions.cancel') }}</button>
+
+                            <button class="btn btn-danger" type="submit"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
                         </form>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ class PageController extends Controller
     {
         Page::create($request->validated());
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page created');
+        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));
     }
 
     /**
@@ -63,7 +63,7 @@ class PageController extends Controller
     {
         $page->update($request->validated());
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page updated');
+        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.updated'));
     }
 
     /**
@@ -77,6 +77,6 @@ class PageController extends Controller
     {
         $page->delete();
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page deleted');
+        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.deleted'));
     }
 }

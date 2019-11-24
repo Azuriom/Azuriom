@@ -21,13 +21,13 @@
                             <th scope="row">
                                 {{ $role->id }}
                                 @if($role->isPermanent())
-                                    <i class="fas fa-certificate text-primary" title="Permanent" data-toggle="tooltip"></i>
+                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.roles.info.permanent') }}" data-toggle="tooltip"></i>
                                 @endif
                                 @if($role->isDefault())
-                                    <i class="fas fa-star text-warning" title="Default" data-toggle="tooltip"></i>
+                                    <i class="fas fa-star text-warning" title="{{ trans('admin.roles.info.default') }}" data-toggle="tooltip"></i>
                                 @endif
                                 @if($role->is_admin)
-                                    <i class="fas fa-crown text-warning" title="Admin" data-toggle="tooltip"></i>
+                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.roles.info.admin') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>

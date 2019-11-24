@@ -313,19 +313,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="confirmDeleteLabel">Delete ?</h2>
+                <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('admin.confirm-delete.title') }}</h2>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Are you sure you want to delete this ? It can't be undo</div>
+            <div class="modal-body">{{ trans('admin.confirm-delete.description') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">{{ trans('admin.actions.cancel') }}</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i> {{ trans('admin.actions.cancel') }}</button>
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')
                     @csrf
 
-                    <button class="btn btn-danger" type="submit">{{ trans('admin.actions.delete') }}</button>
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-exclamation-triangle"></i> {{ trans('admin.actions.delete') }}</button>
                 </form>
             </div>
         </div>

@@ -68,7 +68,7 @@ class NavbarController extends Controller
 
         return $request->expectsJson() ? response()->json([
             'status' => 'success',
-            'message' => 'Navbar updated'
+            'message' => trans('admin.navbar-elements.status.nav-updated')
         ]) : redirect()->route('admin.navbar-elements.index');
     }
 
@@ -96,7 +96,8 @@ class NavbarController extends Controller
     {
         NavbarElement::create($request->validated());
 
-        return redirect()->route('admin.navbar-elements.index')->with('success', 'Element created');
+        return redirect()->route('admin.navbar-elements.index')
+            ->with('success', trans('admin.navbar-elements.status.created'));
     }
 
     /**
@@ -133,7 +134,8 @@ class NavbarController extends Controller
 
         $navbarElement->update($request->validated());
 
-        return redirect()->route('admin.navbar-elements.index')->with('success', 'Element updated');
+        return redirect()->route('admin.navbar-elements.index')
+            ->with('success', trans('admin.navbar-elements.status.updated'));
     }
 
     /**
@@ -152,6 +154,7 @@ class NavbarController extends Controller
 
         $navbarElement->delete();
 
-        return redirect()->route('admin.navbar-elements.index')->with('success', 'Element deleted');
+        return redirect()->route('admin.navbar-elements.index')
+            ->with('success', trans('admin.navbar-elements.status.deleted'));
     }
 }

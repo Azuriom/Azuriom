@@ -16,7 +16,7 @@
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small>@lang('google-analytics-info')</small>
+                    <small>@lang('admin.settings.seo.google-analytics-info')</small>
                 </div>
 
                 <div class="form-group">

@@ -27,7 +27,7 @@
 <small class="text-info">{{ trans('admin.roles.perm-admin.info') }}</small>
 <div class="form-group custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="administratorSwitch" name="is_admin" data-toggle="collapse" data-target="#permissionsGroup" @if($role->is_admin ?? false) checked @endif>
-    <label class="custom-control-label" for="administratorSwitch">{{ trans('admin.permissions.perm-admin.label') }}</label>
+    <label class="custom-control-label" for="administratorSwitch">{{ trans('admin.roles.perm-admin.label') }}</label>
 </div>
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">

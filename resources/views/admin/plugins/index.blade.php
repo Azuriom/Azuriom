@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.extensions.plugins'))
+@section('title', trans('admin.plugins.title'))
 
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.extensions.installed-plugins') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.installed') }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -14,7 +14,7 @@
                     <tr>
                         <th scope="col">{{ trans('admin.fields.name') }}</th>
                         <th scope="col">{{ trans('admin.fields.author') }}</th>
-                        <th scope="col">{{ trans('admin.extensions.fields.version') }}</th>
+                        <th scope="col">{{ trans('admin.fields.version') }}</th>
                         <th scope="col">{{ trans('admin.fields.action') }}</th>
                     </tr>
                     </thead>
@@ -41,7 +41,7 @@
                 <form method="POST" action="{{ route('admin.plugins.reload') }}">
                     @csrf
 
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-sync"></i> {{ trans('admin.extensions.actions.reload-plugins') }}</button>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-sync"></i> {{ trans('admin.plugins.actions.reload') }}</button>
                 </form>
 
             </div>

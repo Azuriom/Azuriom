@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\RoleRequest;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
@@ -44,7 +45,7 @@ class RoleController extends Controller
 
         $role->permissions()->sync($permissions);
 
-        return redirect()->route('admin.roles.index')->with('success', 'Role created');
+        return redirect()->route('admin.roles.index')->with('success', trans('admin.roles.status.created'));
     }
 
     /**
@@ -78,7 +79,7 @@ class RoleController extends Controller
 
         $role->update($request->validated());
 
-        return redirect()->route('admin.roles.index')->with('success', 'Role updated');
+        return redirect()->route('admin.roles.index')->with('success', trans('admin.roles.status.updated'));
     }
 
     /**
@@ -91,17 +92,17 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if ($role->isPermanent()) {
-            return redirect()->route('admin.roles.index')->with('error', 'This role cannot be deleted');
+            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.permanent-role'));
         }
 
         if (Auth::user()->role == $role) {
-            return redirect()->route('admin.roles.index')->with('error', 'You cannot delete your role');
+            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.own-role'));
         }
 
         $role->users()->update(['role_id' => 1]);
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', 'Role deleted');
+        return redirect()->route('admin.roles.index')->with('success', trans('admin.roles.status.deleted'));
     }
 }

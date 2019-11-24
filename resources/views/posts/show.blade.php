@@ -114,7 +114,7 @@
                 </div>
                 <div class="modal-body">Are you sure you want to delete this ?</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary d-inline-block" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <form id="confirmDeleteForm" method="POST">
                         @method('DELETE')
                         @csrf

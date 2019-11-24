@@ -47,7 +47,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post created');
+        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.created'));
     }
 
     /**
@@ -76,7 +76,7 @@ class PostController extends Controller
 
         $post->update(Arr::except($request->validated(), 'image'));
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post updated');
+        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.updated'));
     }
 
     /**
@@ -90,6 +90,6 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post deleted');
+        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.deleted'));
     }
 }

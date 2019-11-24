@@ -46,7 +46,7 @@ class ThemeController extends Controller
     public function edit()
     {
         if (! View::exists('config')) {
-            return redirect()->route('admin.themes.index')->with('error', 'This theme don\'t have config');
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.no-config'));
         }
 
         return view('config');
@@ -55,13 +55,13 @@ class ThemeController extends Controller
     public function changeTheme($theme = null)
     {
         if ($theme !== null && $this->extensions->getThemeDescription($theme) === null) {
-            return redirect()->route('admin.themes.index')->with('error', 'Invalid theme.');
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.invalid'));
         }
 
         Setting::updateSettings('theme', $theme);
 
         ActionLog::logUpdate('Theme');
 
-        return redirect()->route('admin.themes.index')->with('success', 'Theme updated.');
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.updated'));
     }
 }
