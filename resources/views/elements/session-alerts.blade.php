@@ -1,4 +1,4 @@
-@if (session('success'))
+@if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fas fa-check-circle"></i>
         {{ session('success') }}
@@ -8,7 +8,7 @@
     </div>
 @endif
 
-@if (session('error'))
+@if(session('error'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="fas fa-warning"></i>
         {{ session('error') }}

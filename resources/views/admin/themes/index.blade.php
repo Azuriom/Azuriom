@@ -48,10 +48,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">{{ trans('admin.fields.name') }}</th>
-                        <th scope="col">{{ trans('admin.fields.author') }}</th>
-                        <th scope="col">{{ trans('admin.fields.version') }}</th>
-                        <th scope="col">{{ trans('admin.fields.action') }}</th>
+                        <th scope="col">{{ trans('messages.fields.name') }}</th>
+                        <th scope="col">{{ trans('messages.fields.author') }}</th>
+                        <th scope="col">{{ trans('messages.fields.version') }}</th>
+                        <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,7 +62,7 @@
                             <td>{{ join(', ', $theme->authors) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
-                                <a class="btn btn-primary" data-action="theme" href="{{ route('admin.themes.change', $path) }}"><i class="fas fa-check"></i> {{ trans('admin.actions.enable') }}</a>
+                                <a class="btn btn-primary" data-action="theme" href="{{ route('admin.themes.change', $path) }}"><i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}</a>
                             </td>
                         </tr>
                     @endforeach

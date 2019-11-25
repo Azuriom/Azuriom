@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', $currentPost->title)
-@section('description', $currentPost->description)
+@section('title', $post->title)
+@section('description', $post->description)
 @section('type', 'article')
 
 @push('meta')
-    <meta property="og:article:author:username" content="{{ $currentPost->author->name }}">
-    <meta property="og:article:published_time" content="{{ $currentPost->published_at->toIso8601String() }}">
-    <meta property="og:article:modified_time" content="{{ $currentPost->updated_at->toIso8601String() }}">
+    <meta property="og:article:author:username" content="{{ $post->author->name }}">
+    <meta property="og:article:published_time" content="{{ $post->published_at->toIso8601String() }}">
+    <meta property="og:article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
 @endpush
 
 @push('scripts')
@@ -16,9 +16,9 @@
 
 @section('content')
     <div class="container content post">
-        @if(!$currentPost->isPublished())
+        @if(!$post->isPublished())
             <div class="alert alert-info alert-dismissible fade show" role="alert">
-                This post is not published yet !
+                {{ trans('posts.not-published') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -27,43 +27,41 @@
 
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h1 class="card-title">{{ $currentPost->title }}</h1>
+                <h1 class="card-title">{{ $post->title }}</h1>
 
-                @if($currentPost->image !== null)
+                @if($post->image !== null)
                     <div class="text-center">
-                        <img class="rounded" src="{{ $currentPost->imageUrl() }}" alt="{{ $currentPost->title }}" height="300">
+                        <img class="rounded" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" height="300">
                     </div>
                 @endif
 
                 <div class="card-text">
-                    {!! $currentPost->content !!}
+                    {!! $post->content !!}
                 </div>
 
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    @auth
-                        <form action="{{ route('posts.likes.' . (!$currentPost->hasLiked() ? 'add' : 'remove'), $currentPost) }}" method="POST">
-                            @csrf
-                            <button class="btn btn-primary @if($currentPost->hasLiked()) active @endif" type="submit">
-                                Likes: {{ $currentPost->likes->count() }}
-                            </button>
-                        </form>
-                    @else
-                        <button class="btn btn-primary" disabled>
-                            Likes: {{ $currentPost->likes->count() }}
-                        </button>
-                    @endauth
+                    <form action="{{ route('posts.likes.' . (!$post->isLiked() ? 'add' : 'remove'), $post) }}" method="POST">
+                        @csrf
 
-                    <span>Posted by {{ $currentPost->author->name }} on {{ $currentPost->published_at }}</span>
+                        <button class="btn btn-primary @if($post->isLiked()) active @endif" type="submit" @guest disabled @endguest>
+                            {{ trans('messages.likes', ['likes' => $post->likes->count()]) }}
+                        </button>
+                    </form>
+
+                    <span>{{ trans('messages.posts.posted', [
+                                'date' => $post->published_at,
+                                'user' => $post->author->name
+                            ]) }}</span>
                 </div>
             </div>
         </div>
 
-        @foreach($currentPost->comments as $comment)
+        @foreach($post->comments as $comment)
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    {{ $comment->author->name }}<span class="text-muted"> on {{ $comment->created_at }}</span>
+                    {{ trans('messages.comments.author', ['user' => $comment->author->name, 'date' => $comment->created_at]) }}
                 </div>
                 <div class="card-body media">
                     <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
@@ -73,7 +71,7 @@
                                 {{ $comment->content }}
                             </div>
                             @can('delete', $comment)
-                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$currentPost, $comment]) }}" data-confirm="delete">Delete</a>
+                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
                             @endif
                         </div>
                     </div>
@@ -84,22 +82,28 @@
         @can('create', \Azuriom\Models\Comment::class)
             <div class="card mt-4 shadow-sm">
                 <div class="card-header">
-                    <span class="h5">Leave a comment</span>
+                    <span class="h5">{{ trans('messages.comments.create') }}</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('posts.comments.store', $currentPost) }}" method="POST">
+                    <form action="{{ route('posts.comments.store', $post) }}" method="POST">
                         @csrf
 
                         <div class="form-group">
-                            <label for="content">Your comment</label>
+                            <label for="content">{{ trans('messages.comments.your-comment') }}</label>
                             <textarea class="form-control" id="content" name="content" rows="4"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
         @endcan
+
+        @guest
+            <div class="alert alert-info">
+                {{ trans('messages.comments.guest') }}
+            </div>
+        @endguest
     </div>
 
     <!-- Delete confirm modal -->
@@ -112,13 +116,13 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Are you sure you want to delete this ?</div>
+                <div class="modal-body">{{ trans('messages.comments.confirm-delete') }}</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
                     <form id="confirmDeleteForm" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-primary" type="submit">Delete</button>
+                        <button class="btn btn-primary" type="submit">{{ trans('messages.actions.delete') }}</button>
                     </form>
                 </div>
             </div>

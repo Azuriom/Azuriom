@@ -69,38 +69,6 @@ return [
 
     'footer' => 'Powered by :azuriom &copy; :year. Panel designed by :startbootstrap.',
 
-    'actions' => [
-        'create' => 'Create',
-        'edit' => 'Edit',
-        'update' => 'Update',
-        'delete' => 'Delete',
-        'save' => 'Save',
-        'browse' => 'Browse',
-        'choose-file' => 'Choose file',
-        'upload' => 'Upload',
-        'cancel' => 'Cancel',
-        'enable' => 'Enable',
-        'disable' => 'Disable',
-    ],
-
-    'fields' => [
-        'name' => 'Name',
-        'title' => 'Title',
-        'action' => 'Action',
-        'date' => 'Date',
-        'slug' => 'Slug',
-        'enabled' => 'Enabled',
-        'author' => 'Author',
-        'user' => 'User',
-        'image' => 'Image',
-        'type' => 'Type',
-        'file' => 'File',
-        'description' => 'Description',
-        'content' => 'Content',
-        'color' => 'Color',
-        'version' => 'Version',
-    ],
-
     /*
     |
     | Admin pages

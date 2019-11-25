@@ -4,7 +4,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-6">
-        <label for="nameInput">{{ trans('admin.fields.name') }}</label>
+        <label for="nameInput">{{ trans('messages.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $role->name ?? '') }}" required>
 
         @error('name')
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group col-md-6 mb-4">
-        <label for="colorInput">{{ trans('admin.fields.color') }}</label>
+        <label for="colorInput">{{ trans('messages.fields.color') }}</label>
         <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
 
         @error('color')

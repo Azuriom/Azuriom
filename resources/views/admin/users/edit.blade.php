@@ -76,7 +76,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
+                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
                         @unless($user->is_banned || $user->is_deleted)
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
                         @endunless
@@ -143,7 +143,7 @@
 
                     <div class="form-group">
                         <label for="addressInput">{{ trans('admin.users.fields.ip') }}</label>
-                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_ip ?? 'Unknown' }}" disabled>
+                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? 'Unknown' }}" disabled>
                     </div>
 
                 </div>
@@ -172,7 +172,7 @@
                                 <input type="text" class="form-control" id="reasonInput" name="reason" required>
                             </div>
 
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('admin.actions.cancel') }}</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
 
                             <button class="btn btn-danger" type="submit"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
                         </form>

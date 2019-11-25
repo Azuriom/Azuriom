@@ -10,11 +10,11 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ trans('admin.fields.user') }}</th>
+                        <th scope="col">{{ trans('messages.fields.user') }}</th>
                         <th scope="col">{{ trans('admin.bans.fields.banned-by') }}</th>
                         <th scope="col">{{ trans('admin.bans.fields.reason') }}</th>
-                        <th scope="col">{{ trans('admin.fields.date') }}</th>
-                        <th scope="col">{{ trans('admin.fields.action') }}</th>
+                        <th scope="col">{{ trans('messages.fields.date') }}</th>
+                        <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                             <td>{{ $ban->created_at }}</td>
                             <td>
                                 @if(! $ban->trashed())
-                                    <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('admin.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                 @else
                                     <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => $ban->deleted_at]) }}</i>
                                 @endif

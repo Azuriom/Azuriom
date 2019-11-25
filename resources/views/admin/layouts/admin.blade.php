@@ -320,12 +320,12 @@
             </div>
             <div class="modal-body">{{ trans('admin.confirm-delete.description') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i> {{ trans('admin.actions.cancel') }}</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i> {{ trans('messages.actions.cancel') }}</button>
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')
                     @csrf
 
-                    <button class="btn btn-danger" type="submit"><i class="fas fa-exclamation-triangle"></i> {{ trans('admin.actions.delete') }}</button>
+                    <button class="btn btn-danger" type="submit"><i class="fas fa-exclamation-triangle"></i> {{ trans('messages.actions.delete') }}</button>
                 </form>
             </div>
         </div>

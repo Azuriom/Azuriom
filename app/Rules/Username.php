@@ -25,6 +25,6 @@ class Username implements Rule
      */
     public function message()
     {
-        return 'Invalid username.';
+        return trans('validation.username');
     }
 }

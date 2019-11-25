@@ -26,6 +26,6 @@ class Slug implements Rule
      */
     public function message()
     {
-        return 'Invalid slug.';
+        return trans('validation.slug');
     }
 }

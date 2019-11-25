@@ -10,7 +10,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="nameInput">{{ trans('admin.fields.name') }}</label>
+                    <label for="nameInput">{{ trans('messages.fields.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $image->name) }}" required>
 
                     @error('name')
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="slugInput">{{ trans('admin.fields.slug') }}</label>
+                    <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">{{ image_url() }}/</div>
@@ -36,15 +36,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="textArea">{{ trans('admin.fields.image') }}</label>
+                    <label for="textArea">{{ trans('messages.fields.image') }}</label>
 
                     <div>
                         <img src="{{ $image->url() }}" class="img-fluid rounded img-preview" alt="{{ $image->name }}">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
 
-                <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('admin.actions.delete') }}</a>
+                <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}</a>
             </form>
         </div>
     </div>

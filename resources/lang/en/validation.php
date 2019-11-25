@@ -118,6 +118,11 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    'username' => 'The :attribute must be a valid username.',
+    'slug' => 'The :attribute must be a slug with only lowercase letters, numbers and dashes.',
+    'color' => 'The :attribute must be a hex color code.',
+    'current-password' => 'Your current password is incorrect.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -146,6 +151,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'E-Mail Address',
+    ],
 
 ];

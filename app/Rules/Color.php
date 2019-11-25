@@ -25,6 +25,6 @@ class Color implements Rule
      */
     public function message()
     {
-        return 'Invalid color.';
+        return trans('validation.color');
     }
 }

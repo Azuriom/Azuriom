@@ -55,8 +55,7 @@
 <footer class="text-white py-4 text-center">
     <div class="copyright">
         <div class="container">
-            {{ setting('copyright') }} |
-            Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.
+            {{ setting('copyright') }} | @lang('messages.copyright')
         </div>
     </div>
 </footer>

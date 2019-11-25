@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ConfirmCurrentPassword implements Rule
+class CurrentPassword implements Rule
 {
 
     /**
@@ -28,6 +28,6 @@ class ConfirmCurrentPassword implements Rule
      */
     public function message()
     {
-        return 'Invalid current password';
+        return trans('validation.current-password');
     }
 }

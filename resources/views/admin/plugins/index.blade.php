@@ -12,10 +12,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">{{ trans('admin.fields.name') }}</th>
-                        <th scope="col">{{ trans('admin.fields.author') }}</th>
-                        <th scope="col">{{ trans('admin.fields.version') }}</th>
-                        <th scope="col">{{ trans('admin.fields.action') }}</th>
+                        <th scope="col">{{ trans('messages.fields.name') }}</th>
+                        <th scope="col">{{ trans('messages.fields.author') }}</th>
+                        <th scope="col">{{ trans('messages.fields.version') }}</th>
+                        <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                                 <form method="POST" action="{{ route('admin.plugins.' . ($plugin->enabled ? 'disable' : 'enable'), $path) }}">
                                     @csrf
 
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-{{ $plugin->enabled ? 'times' : 'check' }}"></i> {{  trans('admin.actions.'.($plugin->enabled ? 'disable' : 'enable'))  }}</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-{{ $plugin->enabled ? 'times' : 'check' }}"></i> {{  trans('messages.actions.'.($plugin->enabled ? 'disable' : 'enable'))  }}</button>
                                 </form>
                             </td>
                         </tr>

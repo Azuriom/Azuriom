@@ -21,10 +21,10 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ trans('admin.fields.image') }}</th>
-                        <th scope="col">{{ trans('admin.fields.name') }}</th>
-                        <th scope="col">{{ trans('admin.fields.file') }}</th>
-                        <th scope="col">{{ trans('admin.fields.action') }}</th>
+                        <th scope="col">{{ trans('messages.fields.image') }}</th>
+                        <th scope="col">{{ trans('messages.fields.name') }}</th>
+                        <th scope="col">{{ trans('messages.fields.file') }}</th>
+                        <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,8 +40,8 @@
                             <td>{{ $image->name }}</td>
                             <td><a href="{{ $image->url() }}" target="_blank">{{ $image->file }}</a></td>
                             <td>
-                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('admin.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('admin.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -52,7 +52,7 @@
 
             {{ $images->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-upload"></i> {{ trans('admin.actions.upload') }}</a>
+            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-upload"></i> {{ trans('messages.actions.upload') }}</a>
         </div>
     </div>
 @endsection

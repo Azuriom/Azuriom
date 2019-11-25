@@ -2,7 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Rules\ConfirmCurrentPassword;
+use Azuriom\Rules\CurrentPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,25 +19,25 @@ class ProfileController extends Controller
     public function updateEmail(Request $request)
     {
         $this->validate($request, [
-            'email_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword()],
+            'email_confirm_pass' => ['required', 'string', new CurrentPassword()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users']
         ]);
 
         $request->user()->update($request->only('email'));
 
-        return redirect()->route('profile.index')->with('success', 'Email updated, please confirm it');
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password_confirm_pass' => ['required', 'string', new ConfirmCurrentPassword()],
+            'password_confirm_pass' => ['required', 'string', new CurrentPassword()],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
         $request->user()->update(['password' => Hash::make($request->input('password'))]);
 
-        return redirect()->route('profile.index')->with('success', 'Password updated');
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 
     public function show2fa(Request $request)
@@ -66,18 +66,18 @@ class ProfileController extends Controller
         ]);
 
         if (! (new Google2FA())->verifyKey($request->input('2fa_key'), str_replace(' ', '', $request->input('code')))) {
-            return redirect()->route('profile.2fa.index')->with('error', 'Invalid code');
+            return redirect()->route('profile.2fa.index')->with('error', trans('auth.invalid-2fa'));
         }
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
 
-        return redirect()->route('profile.index')->with('success', 'Two factor auth enabled')->withInput();
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.enabled'));
     }
 
     public function disable2fa(Request $request)
     {
         $request->user()->update(['google_2fa_secret' => null]);
 
-        return redirect()->route('profile.index')->with('success', 'Two factor auth disabled');
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.disabled'));
     }
 }

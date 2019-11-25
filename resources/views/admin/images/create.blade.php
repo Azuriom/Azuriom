@@ -11,7 +11,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="nameInput">{{ trans('admin.fields.name') }}</label>
+                    <label for="nameInput">{{ trans('messages.fields.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                     @error('name')
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="slugInput">{{ trans('admin.fields.slug') }}</label>
+                    <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">{{ image_url() }}/</div>
@@ -37,10 +37,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="fileInput">{{ trans('admin.fields.image') }}</label>
+                    <label for="fileInput">{{ trans('messages.fields.image') }}</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input  @error('file') is-invalid @enderror" id="fileInput" name="file" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
-                        <label class="custom-file-label" for="customFile" data-browse="{{ trans('admin.actions.browse') }}">{{ trans('admin.actions.choose-file') }}</label>
+                        <label class="custom-file-label" for="customFile" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
 
                         @error('file')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -50,7 +50,7 @@
                     <img src="#" class="mt-2 img-fluid rounded img-preview d-none" alt="Image" id="filePreview">
                 </div>
 
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('admin.actions.save') }}</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
             </form>
         </div>
     </div>

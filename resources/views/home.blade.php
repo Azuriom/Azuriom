@@ -20,7 +20,10 @@
                             <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">Read more</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Posted on {{ $post->published_at }} by {{ $post->author->name }}
+                            {{ trans('messages.posts.posted', [
+                                'date' => $post->published_at,
+                                'user' => $post->author->name
+                            ]) }}
                         </div>
                     </div>
                 @endforeach

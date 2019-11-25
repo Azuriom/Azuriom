@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'News')
+@section('title', trans('messages.posts.posts'))
 
 @section('content')
     <div class="container">
@@ -17,10 +17,13 @@
                             <h3 class="card-title">
                                 <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a></h3>
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 250, '...') }}</p>
-                            <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">Read more</a>
+                            <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">{{ trans('messages.posts.read') }}</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Posted on {{ $post->published_at }} by {{ $post->author->name }}
+                            {{ trans('messages.posts.posted', [
+                                'date' => $post->published_at,
+                                'user' => $post->author->name
+                            ]) }}
                         </div>
                     </div>
                 </div>

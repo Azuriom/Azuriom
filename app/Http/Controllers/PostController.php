@@ -36,6 +36,6 @@ class PostController extends Controller
 
         $this->authorize('view', $post);
 
-        return view('posts.show', ['currentPost' => $post]);
+        return view('posts.show', ['post' => $post]);
     }
 }

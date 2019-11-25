@@ -79,8 +79,12 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function hasLiked(User $user = null)
+    public function isLiked(User $user = null)
     {
+        if ($user === null && auth()->guest()) {
+            return false;
+        }
+
         return $this->likes->where('author_id', $user ? $user->id : auth()->id())->isNotEmpty();
     }
 
