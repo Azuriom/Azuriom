@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id')->default(1);
-            $table->string('last_ip', 45)->nullable();
+            $table->string('last_login_ip', 45)->nullable();
+            $table->timestamp('last_login_at')->nullable();
             $table->string('google_2fa_secret', 16)->nullable();
             $table->boolean('is_banned')->default(false);
             $table->boolean('is_deleted')->default(false);

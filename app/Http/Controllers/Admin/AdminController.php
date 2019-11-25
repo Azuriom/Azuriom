@@ -72,10 +72,10 @@ class AdminController extends Controller
             '+' => 0,
         ];
 
-        User::whereDate('updated_at', '>=', now()->subMonth())
-            ->get(['id', 'updated_at'])
+        User::whereDate('last_login_at', '>=', now()->subMonth())
+            ->get(['id', 'last_login_at'])
             ->each(function ($user) use (&$recentUsers) {
-                $diff = $user->updated_at->diffInDays();
+                $diff = $user->last_login_at->diffInDays();
 
                 foreach ($recentUsers as $time => $count) {
                     if ($time !== '+' && $diff <= $time) {
@@ -85,7 +85,7 @@ class AdminController extends Controller
                 }
             });
 
-        $recentUsers['+'] = User::whereDate('updated_at', '<', now()->subMonth())->count();
+        $recentUsers['+'] = User::whereDate('last_login_at', '<', now()->subMonth())->count();
 
         return $recentUsers;
     }

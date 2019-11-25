@@ -13,11 +13,12 @@ use Illuminate\Notifications\Notifiable;
  * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
- * @property string|null $last_ip
  * @property string|null $google_2fa_secret
  * @property string $remember_token
  * @property bool $is_banned
  * @property bool $is_deleted
+ * @property string|null $last_login_ip
+ * @property \Carbon\Carbon|null $last_login_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -28,7 +29,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Azuriom\Models\Role $role
  * @property \Azuriom\Models\Ban $ban
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -57,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
         'is_banned' => 'boolean',
         'is_deleted' => 'boolean',
     ];

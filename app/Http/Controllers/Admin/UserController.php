@@ -146,7 +146,7 @@ class UserController extends Controller
         ]);
 
         $user->email_verified_at = null;
-        $user->last_ip = null;
+        $user->last_login_ip = null;
         $user->is_deleted = true;
 
         $user->setRememberToken(null);
