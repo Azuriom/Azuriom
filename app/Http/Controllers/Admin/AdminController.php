@@ -60,33 +60,33 @@ class AdminController extends Controller
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }
 
-        return $recentUsers;
+        return collect($recentUsers);
     }
 
     protected function getActiveUsers()
     {
-        $recentUsers = [
-            1 => 0,
-            7 => 0,
-            30 => 0,
-            '+' => 0,
-        ];
+        $days = [1, 7, 31];
 
-        User::whereDate('last_login_at', '>=', now()->subMonth())
+        $users = User::whereDate('last_login_at', '>=', now()->subMonth())
             ->get(['id', 'last_login_at'])
-            ->each(function ($user) use (&$recentUsers) {
+            ->countBy(function ($user) use ($days) {
                 $diff = $user->last_login_at->diffInDays();
 
-                foreach ($recentUsers as $time => $count) {
-                    if ($time !== '+' && $diff <= $time) {
-                        $recentUsers[$time]++;
-                        break;
+                foreach ($days as $time) {
+                    if ($diff <= $time) {
+                        return $time;
                     }
                 }
+                return 31;
+            })->mapWithKeys(function ($value, $key) {
+                $time = now()->subDays($key)->longAbsoluteDiffForHumans();
+
+                return [$time => $value];
             });
 
-        $recentUsers['+'] = User::whereDate('last_login_at', '<', now()->subMonth())->count();
+        $oldUsers = User::whereDate('last_login_at', '<', now()->subMonth())->count();
+        $users->put('+ '.now()->subMonth()->longAbsoluteDiffForHumans(), $oldUsers);
 
-        return $recentUsers;
+        return $users;
     }
 }

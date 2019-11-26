@@ -110,16 +110,16 @@
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="mr-1">
-                            <i class="fas fa-circle text-primary"></i> 1 day
+                            <i class="fas fa-circle text-primary"></i> {{ now()->subDay()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="mr-1">
-                            <i class="fas fa-circle text-success"></i> 7 days
+                            <i class="fas fa-circle text-success"></i> {{ now()->subWeek()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="mr-1">
-                            <i class="fas fa-circle text-info"></i> 30 days
+                            <i class="fas fa-circle text-info"></i> {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="mr-1">
-                            <i class="fas fa-circle text-warning"></i> + 30 days
+                            <i class="fas fa-circle text-warning"></i> + {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
                         </span>
                     </div>
                 </div>
@@ -132,9 +132,10 @@
     <script>
         Chart.defaults.global.defaultFontColor = '#858796';
 
-        const recentUsersKeys = @json(array_keys($recentUsers));
-        const recentUsersValues = @json(array_values($recentUsers));
-        const activeUsers = @json(array_values($activeUsers));
+        const recentUsersKeys = @json($recentUsers->keys());
+        const recentUsersValues = @json($recentUsers->values());
+        const activeUsersKeys = @json($activeUsers->keys());
+        const activeUsersValues = @json($activeUsers->values());
 
         new Chart(document.getElementById('newUsersChart'), {
             type: 'line',
@@ -209,9 +210,9 @@
         new Chart(document.getElementById('activeUsersChart'), {
             type: 'doughnut',
             data: {
-                labels: ['1 day', '7 days', '30 days', '+ 30 days'],
+                labels: activeUsersKeys,
                 datasets: [{
-                    data: activeUsers,
+                    data: activeUsersValues,
                     backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e9aa0b'],
                     hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#f4b619'],
                     hoverBorderColor: 'rgba(234, 236, 244, 1)',
