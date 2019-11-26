@@ -59,7 +59,7 @@ class LangHelper
         'fo' => 'Faroese',
         'fj' => 'Fijian',
         'fi' => 'Finnish',
-        'fr' => 'French',
+        'fr' => 'Français',
         'ff' => 'Fulah',
         'gd' => 'Gaelic, Scottish Gaelic',
         'gl' => 'Galician',

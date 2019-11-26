@@ -75,6 +75,7 @@ return [
         'guest' => 'You must be logged in to leave a comment.',
         'author' => ':user on :date',
         'your-comment' => 'Your comment',
+        'post-comment' => 'Send',
         'confirm-delete' => 'Are you sure you want to delete this comment ?',
     ],
 

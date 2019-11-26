@@ -132,7 +132,7 @@ class SettingsController extends Controller
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
                     if ($value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
-                        $fail('Argon2id is not supported');
+                        $fail(trans('admin.settings.security.error'));
                     }
                 }
             ]
@@ -168,10 +168,10 @@ class SettingsController extends Controller
         $redirect = redirect()->route('admin.settings.performance');
 
         if (! $success) {
-            return $redirect->with('error', 'Error while clearing cache');
+            return $redirect->with('error', trans('admin.settings.performances.cache.error'));
         }
 
-        return $redirect->with('success', 'Cache cleared with success');
+        return $redirect->with('success', trans('admin.settings.performances.cache.success'));
     }
 
     public function enableAdvancedCache()
@@ -182,10 +182,10 @@ class SettingsController extends Controller
         $exitCode = Artisan::call('config:cache') + Artisan::call('route:cache');
 
         if ($exitCode !== 0) {
-            return $redirect->with('error', 'Error while enabling RocketBooster');
+            return $redirect->with('error', trans('admin.settings.performances.rocketbooster.status.error.enabled'));
         }
 
-        return $redirect->with('success', $cacheStatus ? 'RocketBooster reloaded' : 'RocketBooster enabled');
+        return $redirect->with('success', $cacheStatus ? trans('admin.settings.performances.rocketbooster.status.success.reloaded') : trans('admin.settings.performances.rocketbooster.status.success.enabled'));
     }
 
     public function disableAdvancedCache()
@@ -195,10 +195,10 @@ class SettingsController extends Controller
         $redirect = redirect()->route('admin.settings.performance');
 
         if ($exitCode !== 0) {
-            return $redirect->with('error', 'Error while disabling RocketBooster');
+            return $redirect->with('error', trans('admin.settings.performances.rocketbooster.status.error.disabled'));
         }
 
-        return $redirect->with('success', 'RocketBooster disabled');
+        return $redirect->with('success', trans('admin.settings.performances.rocketbooster.status.success.disabled'));
     }
 
     public function seo()

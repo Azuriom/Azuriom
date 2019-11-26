@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', trans('admin.nav.users.heading'))
 
 @push('scripts')
     <script src="{{asset('assets/admin/vendor/chart.js/Chart.min.js')}}"></script>

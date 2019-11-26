@@ -110,6 +110,39 @@ return [
             'recaptcha-info' => '<small>You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small> <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>',
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
+            'error' => 'Argon2id is not supported'
+        ],
+        'performances' => [
+            'cache' => [
+                'name' => 'Clear Cache',
+                'description' => 'Clear the website cache.',
+                'clear' => 'Clear Cache',
+                'error' => 'Error while clearing cache',
+                'success' => 'Cache cleared with success',
+            ],
+
+            'rocketbooster' => [
+                'name' => 'RocketBooster',
+                'description' => 'RocketBooster improves your website performances by adding one more exclusive cache layer.',
+                'warn' => 'If you have some issues after enablalking an extension you should reload the cache.',
+                'enable' => 'Enable RocketBooster',
+                'disable' => 'Disable RocketBooster',
+                'reload' => 'Reload RocketBooster',
+                'status' => [
+                    'title' => 'RocketBooster is currently',
+                    'enabled' => 'enabled',
+                    'disabled' => 'disabled',
+                    'error' => [
+                        'enabled' => 'Error while enabling RocketBooster',
+                        'disabled' => 'Error while disabling RocketBooster',
+                    ],
+                    'success' => [
+                        'enabled' => 'RocketBooster enabled',
+                        'disabled' => 'RocketBooster disabled',
+                        'reloaded' => 'RocketBooster reloaded',
+                    ]
+                ]
+            ]
         ],
         'seo' => [
             'google-analytics' => 'Google Analytics site id',
@@ -239,6 +272,10 @@ return [
             'created' => 'Post created',
             'updated' => 'Post updated',
             'deleted' => 'Post deleted',
+        ],
+
+        'info' => [
+            'pinned' => 'Pinned',
         ]
     ],
 

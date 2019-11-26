@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Security settings')
+@section('title', trans('admin.nav.settings.settings.security'))
 
 @section('content')
     <div class="card shadow mb-4">

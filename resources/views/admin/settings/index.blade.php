@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Global settings')
+@section('title', trans('admin.nav.settings.settings.global'))
 
 @push('footer-scripts')
     <script>
