@@ -93,7 +93,7 @@
                             <textarea class="form-control" id="content" name="content" rows="4"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">{{ trans('messages.comments.post-comment') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('messages.actions.save') }}</button>
                     </form>
                 </div>
             </div>

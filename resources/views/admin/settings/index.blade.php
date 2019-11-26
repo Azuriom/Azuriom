@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.nav.settings.settings.global'))
+@section('title', trans('admin.settings.index.title'))
 
 @push('footer-scripts')
     <script>
@@ -116,8 +116,8 @@
                     <div class="form-group col-md-6">
                         <label for="localeSelect">{{ trans('admin.settings.index.locale') }}</label>
                         <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
-                            @foreach($languages as $langCode => $langName)
-                                <option value="{{ $langCode }}" @if($langCode === app()->getLocale()) selected @endif>{{ $langName }}</option>
+                            @foreach($locales as $localeCode => $localeName)
+                                <option value="{{ $localeCode }}" @if($localeCode === app()->getLocale()) selected @endif>{{ $localeName }}</option>
                             @endforeach
                         </select>
 

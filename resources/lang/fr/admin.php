@@ -25,6 +25,7 @@ return [
             ],
             'navbar' => 'Navigation',
         ],
+
         'users' => [
             'heading' => 'Utilisateurs',
             'users' => 'Utilisateurs',
@@ -52,22 +53,20 @@ return [
 
         'profile' => [
             'profile' => 'Profil',
-            'logout' => 'Déconnexion',
         ],
-
     ],
 
     'notifications' => [
         'notifications' => 'Notifications',
-        'mark-as-read' => 'Marquer comme lu',
+        'mark-as-read' => 'Marquer comme lues',
     ],
 
     'confirm-delete' => [
         'title' => 'Supprimer ?',
-        'description' => 'Vous êtes sûr de vouloir Supprimer ça ? Vous ne pouvez pas revenir en arrière !',
+        'description' => 'Vous êtes sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
     ],
 
-    'footer' => 'Propulsé par :azuriom &copy; :year. Panel conçu par :startbootstrap.',
+    'footer' => 'Propulsé par :azuriom &copy; :year. Panel par :startbootstrap.',
 
     /*
     |
@@ -76,7 +75,7 @@ return [
     */
 
     'dashboard' => [
-        'https-warning' => 'Votre site web n\'utilise pas la connexion https, vous devez l\'activer et le forcer pour votre sécurité et celle des utilisateurs.',
+        'https-warning' => 'Votre site web n\'utilise pas le procotole https, il est recommandé de l\'activer et le forcer pour votre sécurité et celle des utilisateurs.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
 
@@ -96,19 +95,19 @@ return [
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
             'copyright' => 'Copyright',
-            'conditions-url' => 'Conditions URL',
-            'enable-user-registration' => 'Activer l\'inscription des l\'utilisateurs',
-            'enable-user-registration-label' => 'Il est possible de s\'enregistrer via des plugins par exemple.',
+            'conditions-url' => 'Liens des CGU',
+            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
+            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
         ],
         'maintenance' => [
             'enable' => 'Activer la maintenance',
             'message' => 'Message de maintenance',
         ],
         'security' => [
-            'recaptcha' => 'Activer la protection Google reCaptcha',
-            'recaptcha-site-key' => 'Clé de site',
+            'recaptcha' => 'Activer la protection par Google reCaptcha',
+            'recaptcha-site-key' => 'Clé du site',
             'recaptcha-secret-key' => 'Clé secrète',
-            'recaptcha-info' => '<small>Vous pouvez obtenir les clés de reCaptcha sur la page du manuel <a href="https://www.google.com/recaptcha/" target="_blank">Google reCaptcha</a>.</small> <small>Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.</small>',
+            'recaptcha-info' => '<small>Vous pouvez obtenir les clés Google reCaptcha sur la page de <a href="https://www.google.com/recaptcha/" target="_blank">Google reCaptcha</a>.</small> <small>Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.</small>',
             'hash' => 'Algorithme de hachage',
             'hash-info' => 'Argon2id est l\'algorithme le plus sûr mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
         ],
@@ -146,27 +145,27 @@ return [
         ],
         'seo' => [
             'google-analytics' => 'Identifiant du site Google Analytics',
-            'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page d\'accueil de <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics</a>.',
+            'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics</a>.',
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
         ],
 
         'status' => [
-            'updated' => 'Paramètres Mises à jour',
+            'updated' => 'Paramètres mis à jour.',
         ]
     ],
 
     'navbar-elements' => [
-        'title' => 'Navigation',
-        'title-edit' => 'Éditer l\'élément de la barre de navigation #:id',
-        'title-create' => 'Création d\'un élément dans la barre de navigation',
+        'title' => 'Navbar',
+        'title-edit' => 'Éditer l\'élément de la navbar #:id',
+        'title-create' => 'Ajout d\'un élément dans la navbar',
 
         'status' => [
             'nav-updated' => 'Navigation mise à jour',
 
-            'created' => 'Élément de Navigation créé',
-            'updated' => 'Élément de Navigation mis à jour',
-            'deleted' => 'Élément de Navigation supprimer',
+            'created' => 'Élément de la navbar créé',
+            'updated' => 'Élément de le navbar mis à jour',
+            'deleted' => 'Élément de la navbar supprimer',
         ]
     ],
 
@@ -191,13 +190,13 @@ return [
         'actions' => [
             'ban' => 'Bannir',
             'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'email',
+            'verify-email' => 'Vérifier l\'addresse E-Mail',
             'disable-2fa' => 'Désactiver l\'A2F',
         ],
 
-        'alert-deleted' => 'Cet utilisateur est supprimé, il ne peut pas être édité.',
+        'alert-deleted' => 'Cet utilisateur a été supprimé, il ne peut pas être édité.',
         'alert-banned' => [
-            'title' => 'Cet utilisateur est actuellement banni pour:',
+            'title' => 'Cet utilisateur est actuellement banni:',
             'banned-by' => 'Banni par: :author',
             'reason' => 'Raison',
             'date' => 'Date: :date',
@@ -215,15 +214,15 @@ return [
             'email-verified' => 'Adresse E-Mail vérifiée',
             '2fa-disabled' => 'Authentification à deux facteurs désactivée',
 
-            'banned' => 'Utilisateur Banni',
-            'unbanned' => 'Utilisateur Débanni',
+            'banned' => 'Utilisateur banni',
+            'unbanned' => 'Utilisateur débanni',
         ],
     ],
 
     'roles' => [
         'title' => 'Grades',
-        'title-edit' => 'Édition du Grade #:id',
-        'title-create' => 'Création d\'un Grade',
+        'title-edit' => 'Édition du grade #:id',
+        'title-create' => 'Création d\'un grade',
 
         'permissions' => 'Permissions',
         'perm-admin' => [
@@ -296,7 +295,7 @@ return [
     'images' => [
         'title' => 'Images',
         'title-edit' => 'Édition de l\'image #:id',
-        'title-create' => 'Téléchargement d\'une image',
+        'title-create' => 'Upload une image',
     ],
 
     'plugins' => [
@@ -309,7 +308,7 @@ return [
         ],
 
         'status' => [
-            'reloaded' => 'Plugins rechargé',
+            'reloaded' => 'Plugins rechargés',
             'enabled' => 'Plugin activé',
             'disabled' => 'Plugin désactivé',
         ]
@@ -346,11 +345,11 @@ return [
         ],
 
         'actions' => [
-            'clear' => 'Supprimer les anciennes logs (+15 jours)',
+            'clear' => 'Supprimer les anciens logs (+15 jours)',
         ],
 
         'status' => [
-            'cleared' => 'Anciennes logs Supprimées',
+            'cleared' => 'Les anciens logs ont été supprimés',
         ],
     ],
 ];

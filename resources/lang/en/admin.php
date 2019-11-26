@@ -25,6 +25,7 @@ return [
             ],
             'navbar' => 'Navbar',
         ],
+
         'users' => [
             'heading' => 'Users',
             'users' => 'Users',
@@ -52,9 +53,7 @@ return [
 
         'profile' => [
             'profile' => 'Profile',
-            'logout' => 'Logout',
         ],
-
     ],
 
     'notifications' => [
@@ -75,6 +74,8 @@ return [
     |
     */
     'dashboard' => [
+        'title' => 'Dashboard',
+
         'https-warning' => 'Your website is not using https, you should enable and force it for your security and the one of the users.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
@@ -87,6 +88,8 @@ return [
 
     'settings' => [
         'index' => [
+            'title' => 'Global settings',
+
             'site-name' => 'Site Name',
             'site-url' => 'Site URL',
             'site-description' => 'Site Description',
@@ -99,52 +102,72 @@ return [
             'enable-user-registration' => 'Enable user registration',
             'enable-user-registration-label' => 'It can still be possible to register through plugins.',
         ],
+
         'maintenance' => [
+            'title' => 'Maintenance settings',
+
             'enable' => 'Enable maintenance',
             'message' => 'Maintenance message',
         ],
+
         'security' => [
+            'title' => 'Security settings',
+
             'recaptcha' => 'Enable Google reCaptcha protection',
             'recaptcha-site-key' => 'Site key',
             'recaptcha-secret-key' => 'Secret key',
             'recaptcha-info' => '<small>You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small> <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>',
+
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
-            'error' => 'Argon2id is not supported'
+            'hash-error' => 'This hash algorithm is not supported by your current PHP version.'
         ],
+
         'performances' => [
+            'title' => 'Performance settings',
+
             'cache' => [
-                'name' => 'Clear Cache',
+                'title' => 'Clear Cache',
                 'description' => 'Clear the website cache.',
-                'clear' => 'Clear Cache',
-                'error' => 'Error while clearing cache',
-                'success' => 'Cache cleared with success',
+                'cleared' => 'Cache cleared with success.',
+                'clear-error' => 'Error while clearing cache.',
+
+                'actions' => [
+                    'clear' => 'Clear Cache',
+                ],
             ],
 
-            'rocketbooster' => [
-                'name' => 'RocketBooster',
+            'boost' => [
+                'title' => 'RocketBooster',
                 'description' => 'RocketBooster improves your website performances by adding one more exclusive cache layer.',
-                'warn' => 'If you have some issues after enablalking an extension you should reload the cache.',
-                'enable' => 'Enable RocketBooster',
-                'disable' => 'Disable RocketBooster',
-                'reload' => 'Reload RocketBooster',
+                'info' => 'If you have some issues after enabling an extension you should reload the cache.',
+
+                'current' => [
+                    'status' => 'RocketBooster is currently :status.',
+                    'enabled' => '<span class="text-success">enabled</span>',
+                    'disabled' => '<span class="text-danger">disabled</span>',
+                ],
+
                 'status' => [
-                    'title' => 'RocketBooster is currently',
-                    'enabled' => 'enabled',
-                    'disabled' => 'disabled',
-                    'error' => [
-                        'enabled' => 'Error while enabling RocketBooster',
-                        'disabled' => 'Error while disabling RocketBooster',
-                    ],
-                    'success' => [
-                        'enabled' => 'RocketBooster enabled',
-                        'disabled' => 'RocketBooster disabled',
-                        'reloaded' => 'RocketBooster reloaded',
-                    ]
-                ]
-            ]
+                    'enabled' => 'RocketBooster is now enabled.',
+                    'disabled' => 'RocketBooster is now disabled.',
+                    'reloaded' => 'RocketBooster was reloaded.',
+
+                    'enable-error' => 'Error while enabling RocketBooster.',
+                    'disable-error' => 'Error while disabling RocketBooster.',
+                ],
+
+                'actions' => [
+                    'enable' => 'Enable RocketBooster',
+                    'disable' => 'Disable RocketBooster',
+                    'reload' => 'Reload RocketBooster',
+                ],
+            ],
         ],
+
         'seo' => [
+            'title' => 'SEO settings',
+
             'google-analytics' => 'Google Analytics site id',
             'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics website</a>.',
             'meta' => 'Meta keywords',
@@ -152,7 +175,7 @@ return [
         ],
 
         'status' => [
-            'updated' => 'Settings updated',
+            'updated' => 'The settings have been updated.',
         ]
     ],
 
@@ -162,11 +185,11 @@ return [
         'title-create' => 'Create navbar element',
 
         'status' => [
-            'nav-updated' => 'Navbar updated',
+            'nav-updated' => 'Navbar updated.',
 
-            'created' => 'Navbar element created',
-            'updated' => 'Navbar element updated',
-            'deleted' => 'Navbar element deleted',
+            'created' => 'The navbar element has been created.',
+            'updated' => 'This navbar element has been updated.',
+            'deleted' => 'This navbar element has been deleted.',
         ]
     ],
 
@@ -208,15 +231,15 @@ return [
         'user-info' => 'User information',
 
         'status' => [
-            'created' => 'User created',
-            'updated' => 'User updated',
-            'deleted' => 'User deleted',
+            'created' => 'The user has been created.',
+            'updated' => 'This user has been updated.',
+            'deleted' => 'This user has been deleted.',
 
-            'email-verified' => 'E-Mail Address verified',
-            '2fa-disabled' => 'Two Factor Authentication disabled',
+            'email-verified' => 'The E-Mail Address has been verified.',
+            '2fa-disabled' => 'The Two Factor Authentication has been disabled.',
 
-            'banned' => 'User banned',
-            'unbanned' => 'User unbanned',
+            'banned' => 'This user is now banned.',
+            'unbanned' => 'This user has been unbanned.',
         ],
     ],
 
@@ -238,11 +261,11 @@ return [
         ],
 
         'status' => [
-            'created' => 'Role created',
-            'updated' => 'Role updated',
-            'deleted' => 'Role deleted',
-            'permanent-role' => 'This role cannot be deleted',
-            'own-role' => 'You cannot delete your role',
+            'created' => 'The role has been created.',
+            'updated' => 'This role has been updated.',
+            'deleted' => 'This role has been deleted.',
+            'permanent-role' => 'This role cannot be deleted.',
+            'own-role' => 'You cannot delete your role.',
         ]
     ],
 
@@ -269,9 +292,9 @@ return [
         'pin' => 'Pin this post',
 
         'status' => [
-            'created' => 'Post created',
-            'updated' => 'Post updated',
-            'deleted' => 'Post deleted',
+            'created' => 'The post has been created.',
+            'updated' => 'This post has been modified.',
+            'deleted' => 'This post has been deleted.',
         ],
 
         'info' => [
@@ -287,9 +310,9 @@ return [
         'enable' => 'Enable the page',
 
         'status' => [
-            'created' => 'Page created',
-            'updated' => 'Page updated',
-            'deleted' => 'Page deleted',
+            'created' => 'The page has been created.',
+            'updated' => 'This page has been updated.',
+            'deleted' => 'This page has been deleted.',
         ]
     ],
 
@@ -309,9 +332,9 @@ return [
         ],
 
         'status' => [
-            'reloaded' => 'Plugins reloaded',
-            'enabled' => 'Plugin enabled',
-            'disabled' => 'Plugin disabled',
+            'reloaded' => 'The plugins have been reloaded.',
+            'enabled' => 'The plugin has been enabled.',
+            'disabled' => 'The plugin has been disabled.',
         ]
     ],
 
@@ -332,9 +355,9 @@ return [
         ],
 
         'status' => [
-            'no-config' => 'This theme don\'t have config',
-            'invalid' => 'Invalid theme',
-            'updated' => 'Theme updated',
+            'no-config' => 'This theme don\'t have config.',
+            'invalid' => 'This theme is invalid.',
+            'updated' => 'The theme has been updated.',
         ]
     ],
 
@@ -350,7 +373,7 @@ return [
         ],
 
         'status' => [
-            'cleared' => 'Old logs deleted',
+            'cleared' => 'The old logs has been deleted.',
         ],
     ],
 ];

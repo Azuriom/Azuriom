@@ -6,11 +6,11 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
-use Azuriom\Support\LangHelper;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -62,7 +62,7 @@ class SettingsController extends Controller
             'images' => Image::all(),
             'icon' => setting('icon'),
             'logo' => setting('logo'),
-            'languages' => LangHelper::getAvailableLanguages(),
+            'locales' => $this->getAvailableLocales(),
             'timezones' => array_values(timezone_identifiers_list()),
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
@@ -87,7 +87,7 @@ class SettingsController extends Controller
                 'timezone' => ['required', 'timezone'],
                 'copyright' => ['nullable', 'string', 'max:150'],
                 'conditions' => ['nullable', 'url', 'max:150'],
-                'locale' => ['required', 'string', Rule::in(array_keys(LangHelper::getAvailableLanguages()))],
+                'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
             ]) + ['register' => $request->has('register')]);
@@ -132,7 +132,7 @@ class SettingsController extends Controller
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
                     if ($value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
-                        $fail(trans('admin.settings.security.error'));
+                        $fail(trans('admin.settings.security.hash-error'));
                     }
                 }
             ]
@@ -168,10 +168,10 @@ class SettingsController extends Controller
         $redirect = redirect()->route('admin.settings.performance');
 
         if (! $success) {
-            return $redirect->with('error', trans('admin.settings.performances.cache.error'));
+            return $redirect->with('error', trans('admin.settings.performances.cache.clear-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.cache.success'));
+        return $redirect->with('success', trans('admin.settings.performances.cache.cleared'));
     }
 
     public function enableAdvancedCache()
@@ -182,10 +182,10 @@ class SettingsController extends Controller
         $exitCode = Artisan::call('config:cache') + Artisan::call('route:cache');
 
         if ($exitCode !== 0) {
-            return $redirect->with('error', trans('admin.settings.performances.rocketbooster.status.error.enabled'));
+            return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
         }
 
-        return $redirect->with('success', $cacheStatus ? trans('admin.settings.performances.rocketbooster.status.success.reloaded') : trans('admin.settings.performances.rocketbooster.status.success.enabled'));
+        return $redirect->with('success', trans('admin.settings.performances.boost.status.'. ($cacheStatus ? 'reloaded' : 'enabled')));
     }
 
     public function disableAdvancedCache()
@@ -195,10 +195,10 @@ class SettingsController extends Controller
         $redirect = redirect()->route('admin.settings.performance');
 
         if ($exitCode !== 0) {
-            return $redirect->with('error', trans('admin.settings.performances.rocketbooster.status.error.disabled'));
+            return $redirect->with('error', trans('admin.settings.performances.boost.status.disable-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.rocketbooster.status.success.disabled'));
+        return $redirect->with('success', trans('admin.settings.performances.boost.status.disabled'));
     }
 
     public function seo()
@@ -255,8 +255,22 @@ class SettingsController extends Controller
         return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
     }
 
-    private function hasAdvancedCache()
+    protected function hasAdvancedCache()
     {
         return $this->app->configurationIsCached() || $this->app->routesAreCached();
+    }
+
+    protected function getAvailableLocales()
+    {
+        return $this->getAvailableLocaleCodes()->mapWithKeys(function ($file) {
+            return [$file => trans('messages.lang', [], $file)];
+        })->toArray();
+    }
+
+    protected function getAvailableLocaleCodes()
+    {
+        return collect(File::directories($this->app->langPath()))->map(function ($path) {
+            return basename($path);
+        });
     }
 }

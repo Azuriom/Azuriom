@@ -2,6 +2,8 @@
 
 return [
 
+    'lang' => 'Français',
+
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
 
     'actions' => [
@@ -24,7 +26,7 @@ return [
         'action' => 'Action',
         'date' => 'Date',
         'slug' => 'Lien',
-        'enabled' => 'Activer',
+        'enabled' => 'Activé',
         'author' => 'Auteur',
         'user' => 'Utilisateur',
         'image' => 'Image',
@@ -51,7 +53,7 @@ return [
         '2fa' => [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
-            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme par exemple Google Authenticator.',
+            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
             'title' => 'Activer l\'authentification à deux facteurs',
             'code' => 'Code',
@@ -59,9 +61,7 @@ return [
             'disabled' => 'Authentification à deux facteurs désactivée',
         ],
 
-        'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifié, veuillez vérifier si vous avez reçu un lien de vérification dans celui-ci. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.
-',
-
+        'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
     ],
 
     'posts' => [

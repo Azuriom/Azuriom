@@ -11,7 +11,7 @@
                 <ul>
                     <li>Role: {{ $user->role->name }}</li>
                     <li>Register: {{ $user->created_at }}</li>
-                    <li>Two-Factor authentication: {{ trans('messages.' . $user->hasTwoFactorAuth() ? 'yes' : 'no') }}</li>
+                    <li>Two-Factor authentication: {{ trans('messages.' . ($user->hasTwoFactorAuth() ? 'yes' : 'no')) }}</li>
                 </ul>
 
                 @if($user->hasTwoFactorAuth())

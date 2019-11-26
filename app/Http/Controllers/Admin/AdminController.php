@@ -50,12 +50,12 @@ class AdminController extends Controller
         $queryUsers = User::whereDate('created_at', '>=', $date)
             ->get(['id', 'created_at'])
             ->countBy(function ($user) {
-                return $user->created_at->format('M Y');
+                return $user->created_at->translatedFormat('M Y');
             });
 
         for ($i = 0; $i < 6; $i++) {
             $date->addMonth();
-            $time = $date->format('M Y');
+            $time = $date->translatedFormat('M Y');
 
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }

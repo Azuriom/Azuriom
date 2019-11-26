@@ -106,10 +106,10 @@
                             <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
 
                             @if($user->hasVerifiedEmail())
-                                <input type="text" class="form-control text-success" id="emailVerifiedInput" value="Yes" disabled>
+                                <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
                             @else
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="No" disabled>
+                                    <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
 
                                     @unless($user->is_deleted)
                                         <div class="input-group-append">
@@ -128,10 +128,10 @@
                             <label for="2faInput">{{ trans('admin.users.fields.2fa') }}</label>
 
                             @if(! $user->hasTwoFactorAuth())
-                                <input type="text" class="form-control text-danger" id="2faInput" value="No" disabled>
+                                <input type="text" class="form-control text-danger" id="2faInput" value="{{ trans('messages.no') }}" disabled>
                             @else
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control text-success" id="2faInput" value="Yes" disabled>
+                                    <input type="text" class="form-control text-success" id="2faInput" value="{{ trans('messages.yes') }}" disabled>
 
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-danger" type="submit">{{ trans('admin.users.actions.disable-2fa') }}</button>

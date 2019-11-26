@@ -26,7 +26,7 @@
     <label for="imageInput">{{ trans('messages.fields.image') }}</label>
     <div class="custom-file">
         <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="imagePreview">
-        <label class="custom-file-label" data-browse="{{ trans('messages.actions.browse') }}">Choose file</label>
+        <label class="custom-file-label" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
 
         @error('image')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
