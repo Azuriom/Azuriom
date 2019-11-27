@@ -18,7 +18,34 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.roles.index', ['roles' => Role::paginate(25)]);
+        return view('admin.roles.index', ['roles' => Role::orderByDesc('power')->get()]);
+    }
+
+    /**
+     * Update the resources order in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updatePower(Request $request)
+    {
+        $this->validate($request, [
+            'roles' => ['required', 'array'],
+        ]);
+
+        $roles = $request->input('roles');
+
+        $position = 1;
+
+        foreach ($roles as $roleId) {
+            Role::whereKey($roleId)->update(['power' => $position++]);
+        }
+
+        return $request->expectsJson() ? response()->json([
+            'status' => 'success',
+            'message' => trans('admin.roles.status.power-updated')
+        ]) : redirect()->route('admin.roles.index');
     }
 
     /**

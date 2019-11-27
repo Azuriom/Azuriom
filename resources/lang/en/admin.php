@@ -238,6 +238,8 @@ return [
         'ban-description' => 'Are you sure you want to ban this user ?',
 
         'status' => [
+            'power-updated' => 'The roles have been updated.',
+
             'created' => 'The user has been created.',
             'updated' => 'This user has been updated.',
             'deleted' => 'This user has been deleted.',

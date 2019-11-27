@@ -60,6 +60,7 @@ Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('nav
 
 Route::resource('users', 'UserController')->except('show')->middleware('can:admin.users');
 Route::resource('roles', 'RoleController')->except('show')->middleware('can:admin.roles');
+Route::post('/roles/power', 'RoleController@updatePower')->name('roles.update-power')->middleware('can:admin.roles');
 
 Route::resource('bans', 'BanController')->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', 'BanController')->only(['store', 'destroy'])->middleware('can:admin.users');

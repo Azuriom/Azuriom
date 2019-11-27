@@ -268,6 +268,8 @@ return [
         ],
 
         'status' => [
+            'power-updated' => 'Les grades ont été mis à jour.',
+
             'created' => 'Le grade a été créé.',
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
