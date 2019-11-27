@@ -156,20 +156,24 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title" id="banLabel">Ban {{ $user->name }}</h2>
+                        <h2 class="modal-title" id="banLabel">{{ trans('admin.users.ban-title', ['user' => $user->name]) }}</h2>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to ban this user ?</p>
+                        <p>{{ trans('admin.users.ban-description') }}</p>
 
                         <form method="POST" action="{{ route('admin.users.bans.store', $user) }}">
                             @csrf
 
                             <div class="form-group">
                                 <label for="reasonInput">{{ trans('admin.bans.fields.reason') }}</label>
-                                <input type="text" class="form-control" id="reasonInput" name="reason" required>
+                                <input type="text" class="form-control @error('reason') is-invalid @enderror" id="reasonInput" name="reason" required>
+
+                                @error('reason')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
                             </div>
 
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>

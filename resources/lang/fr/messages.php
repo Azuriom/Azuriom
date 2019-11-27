@@ -6,6 +6,11 @@ return [
 
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
 
+    'nav' => [
+        'profile' => 'Profil',
+        'admin' => 'Panel administrateur',
+    ],
+
     'actions' => [
         'create' => 'Créer',
         'edit' => 'Éditer',
@@ -50,6 +55,12 @@ return [
 
         'updated' => 'Profil mis à jour',
 
+        'info' => [
+            'role' => 'Role: :role',
+            'register' => 'Création du compte: :date',
+            '2fa' => 'Authentification à deux facteurs (A2F): :2fa'
+        ],
+
         '2fa' => [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
@@ -77,7 +88,8 @@ return [
         'author' => ':user le :date',
         'your-comment' => 'Votre commentaire',
         'post-comment' => 'Poster',
-        'confirm-delete' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+        'delete-title' => 'Supprimer ?',
+        'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],
 
     'likes' => 'Likes: :likes',

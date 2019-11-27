@@ -6,6 +6,11 @@ return [
 
     'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
 
+    'nav' => [
+        'profile' => 'Profile',
+        'admin' => 'Admin dashboard',
+    ],
+
     'actions' => [
         'create' => 'Create',
         'edit' => 'Edit',
@@ -50,6 +55,12 @@ return [
 
         'updated' => 'Profile updated',
 
+        'info' => [
+            'role' => 'Role: :role',
+            'register' => 'Register: :date',
+            '2fa' => 'Two-Factor Authentication (2FA): :2fa'
+        ],
+
         '2fa' => [
             'enable' => 'Enable 2FA',
             'disable' => 'Disable 2FA',
@@ -77,8 +88,9 @@ return [
         'guest' => 'You must be logged in to leave a comment.',
         'author' => ':user on :date',
         'your-comment' => 'Your comment',
-        'confirm-delete' => 'Are you sure you want to delete this comment ?',
+        'delete-title' => 'Delete ?',
+        'delete-description' => 'Are you sure you want to delete this comment ?',
     ],
 
-    'likes' => 'Likes: :likes',
+    'likes' => 'J\'aimes: :likes',
 ];

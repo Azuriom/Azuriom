@@ -14,10 +14,10 @@ return [
     'nav' => [
         'dashboard' => 'Tableau de bord',
         'settings' => [
-            'heading' => 'Configuration',
+            'heading' => 'Paramètres',
             'settings' => [
-                'settings' => 'Configuration',
-                'global' => 'Générale',
+                'settings' => 'Paramètres',
+                'global' => 'Général',
                 'security' => 'Sécurité',
                 'performances' => 'Performances',
                 'seo' => 'SEO',
@@ -63,7 +63,7 @@ return [
 
     'confirm-delete' => [
         'title' => 'Supprimer ?',
-        'description' => 'Vous êtes sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
+        'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
     ],
 
     'footer' => 'Propulsé par :azuriom &copy; :year. Panel par :startbootstrap.',
@@ -75,7 +75,9 @@ return [
     */
 
     'dashboard' => [
-        'https-warning' => 'Votre site web n\'utilise pas le procotole https, il est recommandé de l\'activer et le forcer pour votre sécurité et celle des utilisateurs.',
+        'title' => 'Panel administrateur',
+
+        'https-warning' => 'Votre site n\'utilise pas le procotole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
 
@@ -87,6 +89,8 @@ return [
 
     'settings' => [
         'index' => [
+            'title' => 'Paramètres généraux',
+
             'site-name' => 'Nom du site',
             'site-url' => 'URL du site',
             'site-description' => 'Description du site',
@@ -99,51 +103,75 @@ return [
             'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
             'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
         ],
+
         'maintenance' => [
+            'title' => 'Maintenance',
+
             'enable' => 'Activer la maintenance',
             'message' => 'Message de maintenance',
         ],
+
         'security' => [
+            'title' => 'Paramètres de sécurité',
+
             'recaptcha' => 'Activer la protection par Google reCaptcha',
             'recaptcha-site-key' => 'Clé du site',
             'recaptcha-secret-key' => 'Clé secrète',
             'recaptcha-info' => '<small>Vous pouvez obtenir les clés Google reCaptcha sur la page de <a href="https://www.google.com/recaptcha/" target="_blank">Google reCaptcha</a>.</small> <small>Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.</small>',
+
             'hash' => 'Algorithme de hachage',
             'hash-info' => 'Argon2id est l\'algorithme le plus sûr mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
+            'hash-error' => 'Cet algorithme.',
         ],
+
         'performances' => [
+            'title' => 'Paramètres de performance',
+
             'cache' => [
-                'name' => 'Gestion de la mémoire cache',
-                'description' => 'Vider la mémoire cache du site Web permet de faire gagner des performances à votre site.',
-                'clear' => 'Vider le cache',
-                'error' => 'Une erreur est survenue lors du vidage de la mémoire cache',
-                'success' => 'Mémoire cache vidée avec succès',
+                'title' => 'Vider le cache',
+                'description' => 'Permet de vider le cache du site.',
+
+                'status' => [
+                    'cleared' => 'Le cache a bien été vidé.',
+                    'clear-error' => 'Une erreur est survenue en vidant le cache.',
+                ],
+
+                'actions' => [
+                    'clear' => 'Vider le cache',
+                ],
             ],
 
-            'rocketbooster' => [
-                'name' => 'RocketBooster',
-                'description' => 'RocketBooster améliore les performances de votre site Web en ajoutant un cache exclusive supplémentaire.',
-                'warn' => 'Si vous avez des problèmes après avoir activé une extension, vous devriez recharger le cache.',
-                'enable' => 'Activer RocketBooster',
-                'disable' => 'Désactiver RocketBooster',
-                'reload' => 'Recharger RocketBooster',
+            'boost' => [
+                'title' => 'RocketBooster',
+                'description' => 'RocketBooster permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
+                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger RocketBooster.',
+
+                'current' => [
+                    'status' => 'RocketBooster est actuellement :status.',
+                    'enabled' => '<span class="text-success">activé</span>',
+                    'disabled' => '<span class="text-danger">désactivé</span>',
+                ],
+
                 'status' => [
-                    'title' => 'RocketBooster est actuellement',
-                    'enabled' => 'activé',
-                    'disabled' => 'désactivé',
-                    'error' => [
-                        'enabled' => 'Une erreur est survenue lors de l\'activation de RocketBooster',
-                        'disabled' => 'Une erreur est survenue lors de la désactivation de RocketBooster',
-                    ],
-                    'success' => [
-                        'enabled' => 'RocketBooster activé',
-                        'disabled' => 'RocketBooster désactivé',
-                        'reloaded' => 'RocketBooster rechargé',
-                    ]
-                ]
-            ]
+                    'enabled' => 'RocketBooster a été activé.',
+                    'disabled' => 'RocketBooster a été désactivé.',
+                    'reloaded' => 'RocketBooster a été rechargé.',
+
+                    'enable-error' => 'Une erreur est survenue en activant RocketBooster.',
+                    'disable-error' => 'Une erreur est survenue en désactivant RocketBooster.',
+                ],
+
+                'actions' => [
+                    'enable' => 'Activer RocketBooster',
+                    'disable' => 'Désactiver RocketBooster',
+                    'reload' => 'Recharger RocketBooster',
+                ],
+            ],
         ],
+
         'seo' => [
+            'title' => 'Paramètres SEO',
+
             'google-analytics' => 'Identifiant du site Google Analytics',
             'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics</a>.',
             'meta' => 'Mots-clés du site',
@@ -151,7 +179,7 @@ return [
         ],
 
         'status' => [
-            'updated' => 'Paramètres mis à jour.',
+            'updated' => 'Les paramètres ont été mis à jour.',
         ]
     ],
 
@@ -163,9 +191,9 @@ return [
         'status' => [
             'nav-updated' => 'Navigation mise à jour',
 
-            'created' => 'Élément de la navbar créé',
-            'updated' => 'Élément de le navbar mis à jour',
-            'deleted' => 'Élément de la navbar supprimer',
+            'created' => 'Élément de la navbar créé.',
+            'updated' => 'Élément de le navbar mis à jour.',
+            'deleted' => 'Élément de la navbar supprimé.',
         ]
     ],
 
@@ -204,15 +232,18 @@ return [
 
         'edit-profile' => 'Éditer le profil',
 
-        'user-info' => 'Informations sur l\'utilisateur',
+        'user-info' => 'Informations de l\'utilisateur',
+
+        'ban-title' => 'Bannir :user',
+        'ban-description' => 'Êtes-vous sûr de vouloir bannir cet utilisateur ?',
 
         'status' => [
-            'created' => 'Utilisateur créé',
-            'updated' => 'Utilisateur mis à jour',
-            'deleted' => 'Utilisateur supprimé',
+            'created' => 'L\'utilisateur a été créé.',
+            'updated' => 'L\'utilisateur a été mis à jour.',
+            'deleted' => 'L\'utilisateur a été supprimé.',
 
-            'email-verified' => 'Adresse E-Mail vérifiée',
-            '2fa-disabled' => 'Authentification à deux facteurs désactivée',
+            'email-verified' => 'L\'adresse E-Mail a été vérifiée',
+            '2fa-disabled' => 'L\'authentification à deux facteurs a été désactivée',
 
             'banned' => 'Utilisateur banni',
             'unbanned' => 'Utilisateur débanni',
@@ -237,11 +268,11 @@ return [
         ],
 
         'status' => [
-            'created' => 'Grade créé',
-            'updated' => 'Grade mis à jour',
-            'deleted' => 'Grade supprimé',
-            'permanent-role' => 'Ce grade ne peut pas être supprimé',
-            'own-role' => 'Vous ne pouvez pas supprimer votre grade',
+            'created' => 'Le grade a été créé.',
+            'updated' => 'Le grade a été mis à jour.',
+            'deleted' => 'Le grade a été supprimé.',
+            'permanent-role' => 'Ce grade ne peut pas être supprimé.',
+            'own-role' => 'Vous ne pouvez pas supprimer votre grade.',
         ]
     ],
 
@@ -268,9 +299,9 @@ return [
         'pin' => 'Épingler cet article',
 
         'status' => [
-            'created' => 'Article créé',
-            'updated' => 'Article mis à jour',
-            'deleted' => 'Article supprimé',
+            'created' => 'L\'article a été créé.',
+            'updated' => 'L\'article a été mis à jour.',
+            'deleted' => 'L\'article a été supprimé.',
         ],
 
         'info' => [
@@ -286,9 +317,9 @@ return [
         'enable' => 'Activer la page',
 
         'status' => [
-            'created' => 'Page créée',
-            'updated' => 'Page mise à jour',
-            'deleted' => 'Page supprimée',
+            'created' => 'La page a été créée.',
+            'updated' => 'La page a été mise à jour.',
+            'deleted' => 'La page a été supprimée.',
         ]
     ],
 
@@ -301,16 +332,16 @@ return [
     'plugins' => [
         'title' => 'Plugins',
 
-        'installed' => 'Plugin installé',
+        'installed' => 'Plugins installés',
 
         'actions' => [
             'reload' => 'Recharger les plugins',
         ],
 
         'status' => [
-            'reloaded' => 'Plugins rechargés',
-            'enabled' => 'Plugin activé',
-            'disabled' => 'Plugin désactivé',
+            'reloaded' => 'Les plugins ont été rechargés.',
+            'enabled' => 'Le plugin a été activé.',
+            'disabled' => 'Le plugin a été désactivé.',
         ]
     ],
 
@@ -331,9 +362,9 @@ return [
         ],
 
         'status' => [
-            'no-config' => 'Ce thème n\'a pas de configuration',
-            'invalid' => 'Thème invalide',
-            'updated' => 'Thème mis à jour',
+            'no-config' => 'Ce thème n\'a pas de configuration.',
+            'invalid' => 'Ce thème n\'est pas valide.',
+            'updated' => 'Le thème a été mis à jour.',
         ]
     ],
 
@@ -349,7 +380,7 @@ return [
         ],
 
         'status' => [
-            'cleared' => 'Les anciens logs ont été supprimés',
+            'cleared' => 'Les anciens logs ont été supprimés.',
         ],
     ],
 ];

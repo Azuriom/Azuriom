@@ -73,6 +73,7 @@ return [
     | Admin pages
     |
     */
+
     'dashboard' => [
         'title' => 'Dashboard',
 
@@ -120,7 +121,7 @@ return [
 
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
-            'hash-error' => 'This hash algorithm is not supported by your current PHP version.'
+            'hash-error' => 'This hash algorithm is not supported by your current PHP version.',
         ],
 
         'performances' => [
@@ -129,8 +130,11 @@ return [
             'cache' => [
                 'title' => 'Clear Cache',
                 'description' => 'Clear the website cache.',
-                'cleared' => 'Cache cleared with success.',
-                'clear-error' => 'Error while clearing cache.',
+
+                'status' => [
+                    'cleared' => 'Cache cleared with success.',
+                    'clear-error' => 'Error while clearing cache.',
+                ],
 
                 'actions' => [
                     'clear' => 'Clear Cache',
@@ -229,6 +233,9 @@ return [
         'edit-profile' => 'Edit profile',
 
         'user-info' => 'User information',
+
+        'ban-title' => 'Ban :user',
+        'ban-description' => 'Are you sure you want to ban this user ?',
 
         'status' => [
             'created' => 'The user has been created.',

@@ -9,9 +9,9 @@
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
                 <ul>
-                    <li>Role: {{ $user->role->name }}</li>
-                    <li>Register: {{ $user->created_at }}</li>
-                    <li>Two-Factor authentication: {{ trans('messages.' . ($user->hasTwoFactorAuth() ? 'yes' : 'no')) }}</li>
+                    <li>{{ trans('messages.profile.info.role', ['role' => $user->role->name]) }}</li>
+                    <li>{{ trans('messages.profile.info.register', ['date' => $user->created_at]) }}</li>
+                    <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans('messages.' . ($user->hasTwoFactorAuth() ? 'yes' : 'no'))]) }}</li>
                 </ul>
 
                 @if($user->hasTwoFactorAuth())

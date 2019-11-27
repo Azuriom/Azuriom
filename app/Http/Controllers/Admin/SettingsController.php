@@ -168,10 +168,10 @@ class SettingsController extends Controller
         $redirect = redirect()->route('admin.settings.performance');
 
         if (! $success) {
-            return $redirect->with('error', trans('admin.settings.performances.cache.clear-error'));
+            return $redirect->with('error', trans('admin.settings.performances.cache.status.clear-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.cache.cleared'));
+        return $redirect->with('success', trans('admin.settings.performances.cache.status.cleared'));
     }
 
     public function enableAdvancedCache()

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-3">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ route('home') }}">
             {{ site_name() }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -52,12 +52,12 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
-                                {{ __('Profile') }}
+                                {{ trans('messages.nav.profile') }}
                             </a>
 
                             @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    Admin
+                                    {{ trans('messages.nav.admin') }}
                                 </a>
                             @endif
 

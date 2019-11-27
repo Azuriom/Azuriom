@@ -67,22 +67,30 @@ class AdminController extends Controller
     {
         $days = [1, 7, 31];
 
-        $users = User::whereDate('last_login_at', '>=', now()->subMonth())
+        $users = collect([
+            1 => 0,
+            7 => 0,
+            31 => 0
+        ]);
+
+        User::whereDate('last_login_at', '>=', now()->subMonth())
             ->get(['id', 'last_login_at'])
-            ->countBy(function ($user) use ($days) {
+            ->each(function ($user) use ($days, $users) {
                 $diff = $user->last_login_at->diffInDays();
 
                 foreach ($days as $time) {
                     if ($diff <= $time) {
-                        return $time;
+                        $users->put($time, $users->get($time, 0) + 1);
+                        break;
                     }
                 }
-                return 31;
-            })->mapWithKeys(function ($value, $key) {
-                $time = now()->subDays($key)->longAbsoluteDiffForHumans();
-
-                return [$time => $value];
             });
+
+        $users = $users->mapWithKeys(function ($value, $key) {
+            $time = now()->subDays($key)->longAbsoluteDiffForHumans();
+
+            return [$time => $value];
+        });
 
         $oldUsers = User::whereDate('last_login_at', '<', now()->subMonth())->count();
         $users->put('+ '.now()->subMonth()->longAbsoluteDiffForHumans(), $oldUsers);
