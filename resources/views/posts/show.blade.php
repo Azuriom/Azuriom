@@ -42,13 +42,10 @@
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <form action="{{ route('posts.likes.' . (!$post->isLiked() ? 'add' : 'remove'), $post) }}" method="POST">
-                        @csrf
-
-                        <button class="btn btn-primary @if($post->isLiked()) active @endif" type="submit" @guest disabled @endguest>
-                            {{ trans('messages.likes', ['likes' => $post->likes->count()]) }}
-                        </button>
-                    </form>
+                    <button type="button" class="btn btn-primary @if($post->isLiked()) active @endif" @guest disabled @endguest data-like-url="{{ route('posts.like', $post) }}">
+                        @lang('messages.likes', ['likes' => '<span class="likes-count">'.$post->likes->count().'</span>'])
+                        <span class="d-none spinner-border spinner-border-sm like-spinner"></span>
+                    </button>
 
                     <span>{{ trans('messages.posts.posted', [
                                 'date' => $post->published_at,
