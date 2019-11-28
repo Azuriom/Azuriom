@@ -11,5 +11,5 @@ interface GameBridge
      *
      * @param  User  $user
      */
-    function getAvatarUrl(User $user);
+    public function getAvatarUrl(User $user);
 }

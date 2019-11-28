@@ -27,7 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Post extends Model
 {
-    use Loggable, HasUser, HasImage;
+    use HasImage;
+    use HasUser;
+    use Loggable;
 
     /**
      * The attributes that are mass assignable.

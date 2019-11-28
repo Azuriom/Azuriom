@@ -24,7 +24,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class Ban extends Model
 {
-    use Loggable, HasUser, SoftDeletes;
+    use HasUser;
+    use Loggable;
+    use SoftDeletes;
 
     protected const DELETED_AT = 'removed_at';
 

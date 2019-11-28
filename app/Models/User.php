@@ -29,7 +29,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Azuriom\Models\Role $role
  * @property \Azuriom\Models\Ban $ban
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 

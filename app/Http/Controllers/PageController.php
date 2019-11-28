@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Page;
-use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {

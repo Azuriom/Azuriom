@@ -13,7 +13,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public abstract function loadRoutes();
+    abstract public function loadRoutes();
 
     /**
      * Bootstrap any plugin services.
