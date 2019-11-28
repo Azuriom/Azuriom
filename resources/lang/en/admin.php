@@ -187,8 +187,20 @@ return [
 
     'navbar-elements' => [
         'title' => 'Navbar',
-        'title-edit' => 'Edit navbar element #:id',
+        'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
+
+        'dropdown-info' => 'You can add elements to this dropdown when this element is save.',
+
+        'fields' => [
+            'home' => 'Home',
+            'link' => 'External link',
+            'page' => 'Page',
+            'post' => 'Post',
+            'posts' => 'Posts list',
+            'dropdown' => 'Dropdown',
+            'new-tab' => 'Open in new tab',
+        ],
 
         'status' => [
             'nav-updated' => 'Navbar updated.',
@@ -200,6 +212,10 @@ return [
     ],
 
     'users' => [
+        'title' => 'Users',
+        'title-edit' => 'Edit user :user',
+        'title-create' => 'Create user',
+
         'fields' => [
             'name' => 'Username',
             'email' => 'E-Mail Address',
@@ -254,7 +270,7 @@ return [
 
     'roles' => [
         'title' => 'Roles',
-        'title-edit' => 'Edit role #:id',
+        'title-edit' => 'Edit role :role',
         'title-create' => 'Create role',
 
         'permissions' => 'Permissions',
@@ -274,6 +290,7 @@ return [
             'updated' => 'This role has been updated.',
             'deleted' => 'This role has been deleted.',
 
+            'add-admin' => 'You can\'t add the admin permission to a role.',
             'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
             'own-role' => 'You cannot delete your role.',
@@ -293,7 +310,7 @@ return [
 
     'posts' => [
         'title' => 'Posts',
-        'title-edit' => 'Edit post #:id',
+        'title-edit' => 'Edit post :post',
         'title-create' => 'Create post',
 
         'fields' => [
@@ -315,7 +332,7 @@ return [
 
     'pages' => [
         'title' => 'Pages',
-        'title-edit' => 'Edit page #:id',
+        'title-edit' => 'Edit page #:page',
         'title-create' => 'Create page',
 
         'enable' => 'Enable the page',
@@ -329,7 +346,7 @@ return [
 
     'images' => [
         'title' => 'Images',
-        'title-edit' => 'Edit image #:id',
+        'title-edit' => 'Edit image :image',
         'title-create' => 'Upload image',
     ],
 

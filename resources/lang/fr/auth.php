@@ -22,7 +22,7 @@ return [
     'verify' => 'Vérifiez votre adresse e-mail',
     'passwords' => [
         'reset' => 'Réinitialiser le mot de passe',
-        'send' => 'Envoyer le lien de réinitialisation du mot de passe',
+        'send' => 'Envoyer',
     ],
 
     'name' => 'Nom d\'utilisateur',

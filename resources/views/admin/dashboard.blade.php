@@ -3,7 +3,7 @@
 @section('title', trans('admin.dashboard.title'))
 
 @push('scripts')
-    <script src="{{asset('assets/admin/vendor/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/chart.js/Chart.min.js')}}"></script>
 @endpush
 
 @section('content')

@@ -3,9 +3,9 @@
 @section('title', 'Enable 2fa')
 
 @section('content')
-    <div class="container">
+    <div class="container content">
         <div class="card mb-4">
-            <h4 class="card-header">{{ trans('messages.profile.2fa.title') }}</h4>
+            <div class="card-header">{{ trans('messages.profile.2fa.title') }}</div>
 
             <div class="card-body">
                 <p>{{ trans('messages.profile.2fa.info') }}</p>

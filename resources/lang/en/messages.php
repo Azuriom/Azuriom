@@ -31,6 +31,7 @@ return [
         'action' => 'Action',
         'date' => 'Date',
         'slug' => 'Slug',
+        'link' => 'Link',
         'enabled' => 'Enabled',
         'author' => 'Author',
         'user' => 'User',
@@ -45,6 +46,7 @@ return [
 
     'yes' => 'Yes',
     'no' => 'No',
+    'unknown' => 'Unknown',
 
     'maintenance' => 'Maintenance',
 

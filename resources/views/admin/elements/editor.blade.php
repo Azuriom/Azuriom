@@ -1,5 +1,5 @@
 @push('footer-scripts')
-    <script src="{{ asset('assets/admin/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         tinymce.init({
             selector: '.html-editor',

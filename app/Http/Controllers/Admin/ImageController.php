@@ -47,7 +47,7 @@ class ImageController extends Controller
      */
     public function store(ImageRequest $request)
     {
-        $file = $request->file('file');
+        $file = $request->file('image');
         $mimeType = $file->getMimeType();
         $extension = $this->normalizeExtensions($file->extension());
         $fileName = $request->input('slug').'.'.$extension;

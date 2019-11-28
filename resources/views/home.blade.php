@@ -20,10 +20,7 @@
                             <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">{{ trans('messages.posts.read') }}</a>
                         </div>
                         <div class="card-footer text-muted">
-                            {{ trans('messages.posts.posted', [
-                                'date' => $post->published_at,
-                                'user' => $post->author->name
-                            ]) }}
+                            {{ trans('messages.posts.posted', ['date' => $post->published_at, 'user' => $post->author->name]) }}
                         </div>
                     </div>
                 @endforeach

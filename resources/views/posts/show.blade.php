@@ -61,7 +61,7 @@
                     {{ trans('messages.comments.author', ['user' => $comment->author->name, 'date' => $comment->created_at]) }}
                 </div>
                 <div class="card-body media">
-                    <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+                    <img class="d-flex mr-3 rounded" src="{{ game()->getAvatarUrl(Auth::user(), 64) }}" alt="{{ Auth::user()->name }}" height="55">
                     <div class="media-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="content-body">
@@ -87,7 +87,11 @@
 
                         <div class="form-group">
                             <label for="content">{{ trans('messages.comments.your-comment') }}</label>
-                            <textarea class="form-control" id="content" name="content" rows="4"></textarea>
+                            <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="4" required></textarea>
+
+                            @error('content')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-primary">{{ trans('messages.actions.save') }}</button>
@@ -116,9 +120,11 @@
                 <div class="modal-body">{{ trans('messages.comments.delete-description') }}</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
+
                     <form id="confirmDeleteForm" method="POST">
                         @method('DELETE')
                         @csrf
+
                         <button class="btn btn-danger" type="submit">{{ trans('messages.actions.delete') }}</button>
                     </form>
                 </div>

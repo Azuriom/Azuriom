@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Edit user #'.$user->id)
+@section('title', trans('admin.users.title-edit', ['user' => $user->name]))
 
 @section('content')
     @if($user->is_deleted)
-        <div class="alert alert-danger">
-            {{ trans('admin.users.alert-deleted') }}
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
     @elseif($user->is_banned)
         <div class="alert alert-warning shadow">
@@ -143,7 +143,7 @@
 
                     <div class="form-group">
                         <label for="addressInput">{{ trans('admin.users.fields.ip') }}</label>
-                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? 'Unknown' }}" disabled>
+                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
                     </div>
 
                 </div>

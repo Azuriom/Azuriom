@@ -3,9 +3,7 @@
 @section('title', trans('messages.posts.posts'))
 
 @section('content')
-    <div class="container">
-        <h1>News</h1>
-
+    <div class="container content">
         <div class="row">
             @foreach($posts as $post)
                 <div class="col-md-6">

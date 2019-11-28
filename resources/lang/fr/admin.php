@@ -187,8 +187,20 @@ return [
 
     'navbar-elements' => [
         'title' => 'Navbar',
-        'title-edit' => 'Éditer l\'élément de la navbar #:id',
+        'title-edit' => 'Édition l\'élément de la navbar :element',
         'title-create' => 'Ajout d\'un élément dans la navbar',
+
+        'dropdown-info' => 'Vous pourrez ajouter des élements une fois que l\'élément sera sauvegardé.',
+
+        'fields' => [
+            'home' => 'Page d\'accueil',
+            'link' => 'Lien externe',
+            'page' => 'Page',
+            'post' => 'Article',
+            'posts' => 'Liste des articles',
+            'dropdown' => 'Menu déroulant',
+            'new-tab' => 'Ouvrir dans un nouvel onglet',
+        ],
 
         'status' => [
             'nav-updated' => 'Navigation mise à jour',
@@ -200,6 +212,10 @@ return [
     ],
 
     'users' => [
+        'title' => 'Utilisateurs',
+        'title-edit' => 'Edition de l\'utilisateur :user',
+        'title-create' => 'Création d\'un utilisateur',
+
         'fields' => [
             'name' => 'Nom d\'utilisateur',
             'email' => 'Adresse E-Mail',
@@ -254,7 +270,7 @@ return [
 
     'roles' => [
         'title' => 'Grades',
-        'title-edit' => 'Édition du grade #:id',
+        'title-edit' => 'Édition du grade :role',
         'title-create' => 'Création d\'un grade',
 
         'permissions' => 'Permissions',
@@ -274,6 +290,7 @@ return [
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
 
+            'add-admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
             'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
             'own-role' => 'Vous ne pouvez pas supprimer votre grade.',
@@ -293,7 +310,7 @@ return [
 
     'posts' => [
         'title' => 'Articles',
-        'title-edit' => 'Édition de l\'article #:id',
+        'title-edit' => 'Édition de l\'article :post',
         'title-create' => 'Création d\'un article',
 
         'fields' => [
@@ -315,7 +332,7 @@ return [
 
     'pages' => [
         'title' => 'Pages',
-        'title-edit' => 'Édition de la page #:id',
+        'title-edit' => 'Édition de la page :page',
         'title-create' => 'Création d\'une page',
 
         'enable' => 'Activer la page',
@@ -329,7 +346,7 @@ return [
 
     'images' => [
         'title' => 'Images',
-        'title-edit' => 'Édition de l\'image #:id',
+        'title-edit' => 'Édition de l\'image :image',
         'title-create' => 'Upload une image',
     ],
 

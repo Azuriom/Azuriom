@@ -20,17 +20,17 @@
                     <tbody>
 
                     @foreach($bans as $ban)
-                        <tr @if($ban->trashed()) class="text-strikethrough" @endif>
+                        <tr>
                             <th scope="row">{{ $ban->id }}</th>
-                            <td><a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a></td>
+                            <td @if($ban->trashed()) class="text-strikethrough" @endif><a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a></td>
                             <td><a href="{{ route('admin.users.edit', $ban->author) }}">{{ $ban->author->name }}</a></td>
-                            <td>{{ $ban->reason }}</td>
+                            <td @if($ban->trashed()) class="text-strikethrough" @endif>{{ $ban->reason }}</td>
                             <td>{{ $ban->created_at }}</td>
                             <td>
                                 @if(! $ban->trashed())
                                     <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                 @else
-                                    <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => $ban->deleted_at]) }}</i>
+                                    <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => $ban->removed_at]) }}</i>
                                 @endif
                             </td>
                         </tr>

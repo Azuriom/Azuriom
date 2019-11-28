@@ -31,6 +31,7 @@ return [
         'action' => 'Action',
         'date' => 'Date',
         'slug' => 'Lien',
+        'link' => 'Lien',
         'enabled' => 'Activé',
         'author' => 'Auteur',
         'user' => 'Utilisateur',
@@ -45,6 +46,7 @@ return [
 
     'yes' => 'Oui',
     'no' => 'Non',
+    'unknown' => 'Inconnu(e)',
 
     'maintenance' => 'Maintenance',
 
@@ -79,7 +81,7 @@ return [
         'posts' => 'Articles',
         'posted' => 'Posté le :date par :user',
         'not-published' => 'Cet article n\'est pas encore publié',
-        'read' => 'En savoir plus',
+        'read' => 'Lire la suite',
     ],
 
     'comments' => [

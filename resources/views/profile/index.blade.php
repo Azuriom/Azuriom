@@ -3,9 +3,9 @@
 @section('title', 'Profile')
 
 @section('content')
-    <div class="container">
+    <div class="container content">
         <div class="card shadow-sm">
-            <h5 class="card-header">{{ trans('messages.profile.title') }}</h5>
+            <div class="card-header">{{ trans('messages.profile.title') }}</div>
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
                 <ul>
@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card shadow-sm mt-3">
-                    <h5 class="card-header">{{ trans('messages.profile.change-password') }}</h5>
+                    <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
                     <div class="card-body">
                         <form action="{{ route('profile.password') }}" method="POST">
                             @csrf
@@ -78,7 +78,7 @@
 
             <div class="col-md-6">
                 <div class="card shadow-sm mt-3">
-                    <h5 class="card-header">{{ trans('messages.profile.change-email') }}</h5>
+                    <div class="card-header">{{ trans('messages.profile.change-email') }}</div>
                     <div class="card-body">
                         <form action="{{ route('profile.email') }}" method="POST">
                             @csrf

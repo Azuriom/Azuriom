@@ -153,6 +153,15 @@ return [
 
     'attributes' => [
         'email' => 'adresse e-mail',
+        'name' => 'nom',
+        'title' => 'titre',
+        'slug' => 'lien',
+        'content' => 'contenu',
+        'image' => 'fichier',
+        'password' => 'mot de passe',
+        'role' => 'grade',
+        'color' => 'couleur',
+        'reason' => 'raison',
     ],
 
 ];
