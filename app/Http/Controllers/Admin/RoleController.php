@@ -27,9 +27,12 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function updatePower(Request $request)
     {
+        $this->authorize('admin.admin');
+
         $this->validate($request, [
             'roles' => ['required', 'array'],
         ]);
@@ -80,9 +83,12 @@ class RoleController extends Controller
      *
      * @param  \Azuriom\Models\Role  $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Role $role)
     {
+        $this->authorize('update', $role);
+
         $role->loadMissing('permissions');
 
         return view('admin.roles.edit', [
@@ -97,9 +103,16 @@ class RoleController extends Controller
      * @param  \Azuriom\Http\Requests\RoleRequest  $request
      * @param  \Azuriom\Models\Role  $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(RoleRequest $request, Role $role)
     {
+        $this->authorize('update', $role);
+
+        if ($request->user()->isAdmin() && $role->is($request->user()->role) && ! $request->is_admin) {
+            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.remove-admin'));
+        }
+
         $permissions = array_keys($request->input('permissions', []));
 
         $role->permissions()->sync($permissions);
@@ -118,11 +131,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        if ($role->isPermanent()) {
+        $this->authorize('delete', $role);
+
+        if ($role->isDefault()) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.permanent-role'));
         }
 
-        if (Auth::user()->role == $role) {
+        if ($role->is(Auth::user()->role)) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.own-role'));
         }
 

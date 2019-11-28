@@ -20,7 +20,7 @@
     <!-- Page level scripts -->
     @stack('scripts')
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
     <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -39,7 +39,7 @@
         <nav class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}" target="_blank">
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('img/azuriom-white.svg') }}" alt="Azuriom">
                 </div>
@@ -248,6 +248,10 @@
                                 <a class="dropdown-item" href="{{ route('admin.users.edit', Auth::user()) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.profile.profile') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('home') }}">
+                                    <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    {{ trans('admin.nav.back-website') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">

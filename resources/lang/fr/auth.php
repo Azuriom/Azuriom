@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Ces références ne correspondent pas à nos dossiers.',
+    'failed' => 'Ces identifiants ne correspondent pas à nos données.',
     'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans :seconds secondes.',
 
     'register' => 'Inscription',

@@ -10,9 +10,16 @@
 
                 @include('admin.roles._form')
 
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
-                @if(! $role->isPermanent())
-                    <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+
+                @if(! $role->isDefault())
+                    @can('delete', $role)
+                        <a href="{{ route('admin.roles.destroy', $role) }}" class="btn btn-danger" data-confirm="delete">
+                            <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                        </a>
+                    @endcan
                 @endif
             </form>
         </div>

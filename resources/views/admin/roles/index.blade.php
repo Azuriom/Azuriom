@@ -113,9 +113,6 @@
 
                                     <span class="badge badge-label" style="{{ $role->getBadgeStyle() }}; font-size: 1.05em">{{ $role->name }}</span>
 
-                                    @if($role->isPermanent())
-                                        <i class="fas fa-certificate text-primary" title="{{ trans('admin.roles.info.permanent') }}" data-toggle="tooltip"></i>
-                                    @endif
                                     @if($role->isDefault())
                                         <i class="fas fa-star text-info" title="{{ trans('admin.roles.info.default') }}" data-toggle="tooltip"></i>
                                     @endif
@@ -124,8 +121,12 @@
                                     @endif
                                 </span>
                                 <span>
-                                    <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isPermanent()) disabled @endif" @if(!$role->isPermanent()) title="Delete" disabled data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
+                                    @can('update', $role)
+                                        <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                    @endcan
+                                    @can('delete', $role)
+                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isDefault()) disabled @endif" @if(!$role->isDefault()) title="Delete" disabled data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
+                                    @endcan
                                 </span>
                             </div>
                         </div>

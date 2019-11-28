@@ -54,6 +54,8 @@ return [
         'profile' => [
             'profile' => 'Profil',
         ],
+
+        'back-website' => 'Retour au site',
     ],
 
     'notifications' => [
@@ -263,16 +265,16 @@ return [
 
         'info' => [
             'default' => 'Grade par défaut',
-            'permanent' => 'Grade Permanent',
             'admin' => 'Grade Administrateur',
         ],
 
         'status' => [
             'power-updated' => 'Les grades ont été mis à jour.',
-
             'created' => 'Le grade a été créé.',
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
+
+            'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
             'own-role' => 'Vous ne pouvez pas supprimer votre grade.',
         ]

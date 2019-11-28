@@ -54,6 +54,8 @@ return [
         'profile' => [
             'profile' => 'Profile',
         ],
+
+        'back-website' => 'Go back to website',
     ],
 
     'notifications' => [
@@ -238,8 +240,6 @@ return [
         'ban-description' => 'Are you sure you want to ban this user ?',
 
         'status' => [
-            'power-updated' => 'The roles have been updated.',
-
             'created' => 'The user has been created.',
             'updated' => 'This user has been updated.',
             'deleted' => 'This user has been deleted.',
@@ -265,14 +265,16 @@ return [
 
         'info' => [
             'default' => 'Default',
-            'permanent' => 'Permanent',
             'admin' => 'Admin',
         ],
 
         'status' => [
+            'power-updated' => 'The roles have been updated.',
             'created' => 'The role has been created.',
             'updated' => 'This role has been updated.',
             'deleted' => 'This role has been deleted.',
+
+            'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
             'own-role' => 'You cannot delete your role.',
         ]

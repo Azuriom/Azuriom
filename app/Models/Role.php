@@ -94,18 +94,6 @@ class Role extends Model
     }
 
     /**
-     * Return true if this role is a permanent role.
-     * The roles created by the application with the id 1 or 2
-     * are permanents roles and can't be deleted.
-     *
-     * @return bool
-     */
-    public function isPermanent()
-    {
-        return $this->id === 1 || $this->id === 2;
-    }
-
-    /**
      * Return true if this role is the default role.
      * The role created by the application with the id 1
      * is always the default role that new users will get
