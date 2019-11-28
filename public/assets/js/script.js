@@ -1,3 +1,5 @@
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 $('[data-confirm="delete"]').on('click', function (e) {
     e.preventDefault();
 

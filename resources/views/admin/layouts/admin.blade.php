@@ -11,9 +11,9 @@
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('assets/admin/vendor/jquery/jquery.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/vendor/axios/axios.min.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/axios/axios.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}" defer></script>
     <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
 
@@ -23,7 +23,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
-    <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">

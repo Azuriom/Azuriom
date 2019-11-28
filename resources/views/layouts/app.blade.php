@@ -25,7 +25,10 @@
     <link rel="shortcut icon" href="{{ favicon() }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('assets/vendor/axios/axios.min.js') }}" defer></script>
+    <script src="{{ asset('assets/js/script.js') }}" defer></script>
 
     <!-- Page level scripts -->
     @stack('scripts')
@@ -35,7 +38,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('assets/admin/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 
@@ -72,6 +75,10 @@
     }
     #app {
         flex-shrink: 0;
+    }
+    .content {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
     }
     footer {
         margin-top: auto;
