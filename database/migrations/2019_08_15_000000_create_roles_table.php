@@ -17,9 +17,13 @@ class CreateRolesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->char('color', 6);
-            $table->unsignedInteger('power');
+            $table->unsignedInteger('power')->default(0);
             $table->boolean('is_admin')->default(false);
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
@@ -31,5 +35,9 @@ class CreateRolesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('roles');
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['role_id']);
+        });
     }
 }

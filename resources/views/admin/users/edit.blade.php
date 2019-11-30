@@ -13,14 +13,14 @@
             <ul>
                 <li>{{ trans('admin.users.alert-banned.banned-by', ['author' => $user->ban->author->name]) }}</li>
                 <li>{{ trans('admin.users.alert-banned.reason', ['reason' => $user->ban->reason]) }}</li>
-                <li>{{ trans('admin.users.alert-banned.date', ['date' => $user->ban->created_at]) }}</li>
+                <li>{{ trans('admin.users.alert-banned.date', ['date' => format_date_compact($user->ban->created_at)]) }}</li>
             </ul>
 
             <form method="POST" action="{{ route('admin.users.bans.destroy', [$user, $user->ban]) }}">
                 @method('DELETE')
                 @csrf
 
-                <button type="submit" class="btn btn-warning"><i class="fas fa-ban"></i> Unban</button>
+                <button type="submit" class="btn btn-warning"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.unban') }}</button>
             </form>
         </div>
     @endif
@@ -96,7 +96,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="registerInput">{{ trans('admin.users.fields.register-date') }}</label>
-                        <input type="text" class="form-control" id="registerInput" value="{{ $user->created_at }}" disabled>
+                        <input type="text" class="form-control" id="registerInput" value="{{ format_date_compact($user->created_at) }}" disabled>
                     </div>
 
                     <form action="{{ route('admin.users.verify', $user) }}" method="POST">

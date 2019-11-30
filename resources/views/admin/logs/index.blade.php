@@ -29,7 +29,7 @@
                                 <i class="fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
                                 {{ $log->formatAction() }}
                             </td>
-                            <td>{{ $log->created_at }}</td>
+                            <td>{{ format_date_compact($log->created_at) }}</td>
                         </tr>
                     @endforeach
 

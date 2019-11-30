@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Enable 2fa')
+@section('title', trans('messages.profile.2fa.title'))
 
 @section('content')
     <div class="container content">

@@ -29,7 +29,7 @@
             <div class="card-body">
                 <h1 class="card-title">{{ $post->title }}</h1>
 
-                @if($post->image !== null)
+                @if($post->hasImage())
                     <div class="text-center">
                         <img class="rounded" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" height="300">
                     </div>
@@ -47,10 +47,7 @@
                         <span class="d-none spinner-border spinner-border-sm like-spinner"></span>
                     </button>
 
-                    <span>{{ trans('messages.posts.posted', [
-                                'date' => $post->published_at,
-                                'user' => $post->author->name
-                            ]) }}</span>
+                    <span>{{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}</span>
                 </div>
             </div>
         </div>
@@ -58,7 +55,7 @@
         @foreach($post->comments as $comment)
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    {{ trans('messages.comments.author', ['user' => $comment->author->name, 'date' => $comment->created_at]) }}
+                    {{ trans('messages.comments.author', ['user' => $comment->author->name, 'date' => format_date($comment->created_at, true)]) }}
                 </div>
                 <div class="card-body media">
                     <img class="d-flex mr-3 rounded" src="{{ game()->getAvatarUrl(Auth::user(), 64) }}" alt="{{ Auth::user()->name }}" height="55">

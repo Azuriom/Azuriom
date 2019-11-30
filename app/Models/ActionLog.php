@@ -102,6 +102,10 @@ class ActionLog extends Model
      */
     public static function log(string $action, $target)
     {
+        if (Auth::guest()) {
+            return;
+        }
+
         $log = new self([
             'user_id' => Auth::id(),
             'action' => $action

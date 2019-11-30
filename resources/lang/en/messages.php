@@ -6,12 +6,17 @@ return [
 
     'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
 
+    'date' => 'F j, Y',
+    'date-full' => 'F j, Y \a\t g:i A',
+    'date-compact' => 'm/d/Y \a\t g:i A',
+
     'nav' => [
         'profile' => 'Profile',
         'admin' => 'Admin dashboard',
     ],
 
     'actions' => [
+        'add' => 'Add',
         'create' => 'Create',
         'edit' => 'Edit',
         'update' => 'Update',
@@ -47,6 +52,8 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'unknown' => 'Unknown',
+
+    'home' => 'Home',
 
     'maintenance' => 'Maintenance',
 

@@ -235,6 +235,7 @@ return [
 
         'actions' => [
             'ban' => 'Ban',
+            'unban' => 'Unban',
             'delete' => 'Delete',
             'verify-email' => 'Verify email',
             'disable-2fa' => 'Disable 2fa',
@@ -244,7 +245,7 @@ return [
         'alert-banned' => [
             'title' => 'This user is currently banned:',
             'banned-by' => 'Banned by: :author',
-            'reason' => 'Reason',
+            'reason' => 'Reason: :reason',
             'date' => 'Date: :date',
         ],
 

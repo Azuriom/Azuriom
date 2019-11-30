@@ -67,6 +67,16 @@ trait HasImage
         return url(Storage::url($this->getImagePath().$image));
     }
 
+    /**
+     * Return true if this this model has an image.
+     *
+     * @return bool
+     */
+    public function hasImage()
+    {
+        return $this->image !== null;
+    }
+
     protected function getImageKey()
     {
         return $this->imageKey ?? 'image';

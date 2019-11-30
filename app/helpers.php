@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('add_active')) {
@@ -25,6 +26,20 @@ if (! function_exists('color_contrast')) {
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
         return ($yiq >= 128) ? 'black' : 'white';
+    }
+}
+
+if (! function_exists('format_date')) {
+    function format_date(Carbon $date, bool $fullTime = false)
+    {
+        return $date->translatedFormat(trans('messages.date'.($fullTime ? '-full' : '')));
+    }
+}
+
+if (! function_exists('format_date_compact')) {
+    function format_date_compact(Carbon $date)
+    {
+        return $date->format(trans('messages.date-compact'));
     }
 }
 

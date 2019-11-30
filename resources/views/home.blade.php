@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', trans('messages.home'))
 
 @section('content')
     <div class="home-background mb-4" style="background: url(https://via.placeholder.com/2000x500) no-repeat center">
@@ -12,7 +12,9 @@
             <div class="col-md-8">
                 @foreach($posts as $post)
                     <div class="post-preview card mb-3 shadow-sm">
-                        <img src="https://via.placeholder.com/750x300" class="bd-placeholder-img card-img-top">
+                        @if($post->hasImage())
+                            <img src="{{ $post->imageUrl() }}" class="bd-placeholder-img card-img-top">
+                        @endif
                         <div class="card-body">
                             <h3 class="card-title">
                                 <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a></h3>
@@ -20,7 +22,7 @@
                             <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">{{ trans('messages.posts.read') }}</a>
                         </div>
                         <div class="card-footer text-muted">
-                            {{ trans('messages.posts.posted', ['date' => $post->published_at, 'user' => $post->author->name]) }}
+                            {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
                         </div>
                     </div>
                 @endforeach

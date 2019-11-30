@@ -14,7 +14,7 @@ class RolesTableSeeder extends Seeder
     {
         Role::firstOrCreate([
             'name' => 'Member',
-            'color' => '212529'
+            'color' => '212529',
         ]);
 
         Role::firstOrCreate([

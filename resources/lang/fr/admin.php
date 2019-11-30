@@ -235,6 +235,7 @@ return [
 
         'actions' => [
             'ban' => 'Bannir',
+            'unban' => 'Débannir',
             'delete' => 'Supprimer',
             'verify-email' => 'Vérifier l\'addresse E-Mail',
             'disable-2fa' => 'Désactiver l\'A2F',
@@ -244,7 +245,7 @@ return [
         'alert-banned' => [
             'title' => 'Cet utilisateur est actuellement banni:',
             'banned-by' => 'Banni par: :author',
-            'reason' => 'Raison',
+            'reason' => 'Raison: :reason',
             'date' => 'Date: :date',
         ],
 

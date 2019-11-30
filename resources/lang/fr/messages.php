@@ -6,12 +6,17 @@ return [
 
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
 
+    'date' => 'j F Y',
+    'date-full' => 'j F Y \à G:i',
+    'date-compact' => 'd/m/Y \à G:i',
+
     'nav' => [
         'profile' => 'Profil',
         'admin' => 'Panel administrateur',
     ],
 
     'actions' => [
+        'add' => 'Ajouter',
         'create' => 'Créer',
         'edit' => 'Éditer',
         'update' => 'Mettre à jour',
@@ -48,6 +53,8 @@ return [
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',
 
+    'home' => 'Accueil',
+
     'maintenance' => 'Maintenance',
 
     'profile' => [
@@ -68,7 +75,7 @@ return [
             'disable' => 'Désactiver l\'A2F',
             'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
-            'title' => 'Activer l\'authentification à deux facteurs',
+            'title' => 'Activer l\'A2F',
             'code' => 'Code',
             'enabled' => 'Authentification à deux facteurs activée',
             'disabled' => 'Authentification à deux facteurs désactivée',

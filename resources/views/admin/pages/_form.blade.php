@@ -44,6 +44,6 @@
 </div>
 
 <div class="form-group custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" @if($page->is_enabled ?? false) checked @endif>
+    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" @if($page->is_enabled ?? true) checked @endif>
     <label class="custom-control-label" for="enableSwitch">{{ trans('admin.pages.enable') }}</label>
 </div>
