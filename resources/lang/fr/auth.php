@@ -21,6 +21,7 @@ return [
     'logout' => 'Déconnexion',
     'verify' => 'Vérifiez votre adresse e-mail',
     'passwords' => [
+        'confirm' => 'Confirmer le mot de passe',
         'reset' => 'Réinitialiser le mot de passe',
         'send' => 'Envoyer',
     ],
@@ -39,5 +40,9 @@ return [
 
     'verify-sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
     'verify-check' => 'Avant de continuer, veuillez vérifier si vous n\'avez pas reçu de lien de vérification dans votre adresse e-mail.',
+    'verify-request' => 'Si vous n\'avez pas reçu le mail vous pouvez en demander un autre.',
+    'verify-resend' => 'Renvoyer',
+
+    'need-confirm' => 'Merci de vérifier votre mot de passe avant de continuer.',
 
 ];

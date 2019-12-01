@@ -21,6 +21,7 @@ return [
     'logout' => 'Logout',
     'verify' => 'Verify Your Email Address',
     'passwords' => [
+        'confirm' => 'Confirm password',
         'reset' => 'Reset Password',
         'send' => 'Send Password Reset Link',
     ],
@@ -39,5 +40,9 @@ return [
 
     'verify-sent' => 'A fresh verification link has been sent to your email address.',
     'verify-check' => 'Before proceeding, please check your email for a verification link.',
+    'verify-request' => 'If you did not receive the email you can request another.',
+    'verify-resend' => 'Resend mail',
+
+    'need-confirm' => 'Please confirm your password before continuing.',
 
 ];

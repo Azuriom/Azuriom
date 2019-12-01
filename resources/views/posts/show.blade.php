@@ -30,9 +30,7 @@
                 <h1 class="card-title">{{ $post->title }}</h1>
 
                 @if($post->hasImage())
-                    <div class="text-center">
-                        <img class="rounded" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" height="300">
-                    </div>
+                    <img class="img-fluid rounded mx-auto mb-2" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
                 @endif
 
                 <div class="card-text">

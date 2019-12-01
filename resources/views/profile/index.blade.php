@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container content">
-        <div class="card shadow-sm">
+        <div class="card mb-4 shadow-sm">
             <div class="card-header">{{ trans('messages.profile.title') }}</div>
             <div class="card-body">
                 <h4 class="card-title">{{ $user->name }}</h4>
@@ -28,20 +28,25 @@
 
         @if(! $user->hasVerifiedEmail())
             @if (session('resent'))
-                <div class="alert alert-success mt-2" role="alert">
+                <div class="alert alert-success mb-4" role="alert">
                     {{ trans('auth.verify-sent') }}
                 </div>
             @endif
 
-            <div class="alert alert-warning mt-3">
-                <p>{{ trans('messages.profile.email-not-verified') }}</p>
-                {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+            <div class="alert alert-warning mb-4">
+                <p>{{ trans('auth.verify-check') }}</p>
+                <p>{{ trans('auth.verify-request') }}</p>
+
+                <form method="POST" action="{{ route('verification.resend') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">{{ trans('auth.verify-resend') }}</button>
+                </form>
             </div>
         @endif
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card shadow-sm mt-3">
+                <div class="card shadow-sm mb-4">
                     <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
                     <div class="card-body">
                         <form action="{{ route('profile.password') }}" method="POST">
@@ -77,7 +82,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card shadow-sm mt-3">
+                <div class="card shadow-sm mb-4">
                     <div class="card-header">{{ trans('messages.profile.change-email') }}</div>
                     <div class="card-body">
                         <form action="{{ route('profile.email') }}" method="POST">

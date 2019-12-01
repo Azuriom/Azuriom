@@ -18,7 +18,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/maintenance', 'HomeController@maintenance')->name('maintenance');
 
 Route::prefix('user')->group(function () {
-    Auth::routes(['verify' => true]);
+    Auth::routes([
+        'verify' => true,
+        'register' => setting('register', true)
+    ]);
 
     Route::get('/2fa', 'Auth\LoginController@show2fa')->name('login.2fa');
     Route::post('/2fa', 'Auth\LoginController@login2fa');

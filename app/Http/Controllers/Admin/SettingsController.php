@@ -94,7 +94,13 @@ class SettingsController extends Controller
 
         ActionLog::logUpdate('Settings');
 
-        return redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
+        $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
+
+        if (setting('register', false) !== $request->has('register') && $this->app->routesAreCached()) {
+            Artisan::call('route:cache');
+        }
+
+        return $response;
     }
 
     /**
@@ -165,13 +171,13 @@ class SettingsController extends Controller
     {
         $success = (Artisan::call('view:clear') === 0) && $this->cache->flush();
 
-        $redirect = redirect()->route('admin.settings.performance');
+        $response = redirect()->route('admin.settings.performance');
 
         if (! $success) {
-            return $redirect->with('error', trans('admin.settings.performances.cache.status.clear-error'));
+            return $response->with('error', trans('admin.settings.performances.cache.status.clear-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.cache.status.cleared'));
+        return $response->with('success', trans('admin.settings.performances.cache.status.cleared'));
     }
 
     public function enableAdvancedCache()
@@ -192,13 +198,13 @@ class SettingsController extends Controller
     {
         $exitCode = Artisan::call('route:clear') + Artisan::call('config:clear');
 
-        $redirect = redirect()->route('admin.settings.performance');
+        $response = redirect()->route('admin.settings.performance');
 
         if ($exitCode !== 0) {
-            return $redirect->with('error', trans('admin.settings.performances.boost.status.disable-error'));
+            return $response->with('error', trans('admin.settings.performances.boost.status.disable-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.boost.status.disabled'));
+        return $response->with('success', trans('admin.settings.performances.boost.status.disabled'));
     }
 
     public function seo()

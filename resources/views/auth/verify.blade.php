@@ -16,8 +16,13 @@
                         </div>
                     @endif
 
-                    {{ trans('auth.verify-check') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                     <p>{{ trans('auth.verify-check') }}</p>
+                     <p>{{ trans('auth.verify-request') }}</p>
+
+                     <form method="POST" action="{{ route('verification.resend') }}">
+                         @csrf
+                         <button type="submit" class="btn btn-primary">{{ trans('auth.verify-resend') }}</button>
+                     </form>
                 </div>
             </div>
         </div>
