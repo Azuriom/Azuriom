@@ -2,13 +2,16 @@
 
 @section('title', trans('admin.themes.title'))
 
-@push('scripts')
+@push('footer-scripts')
     <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            $('[data-action="theme"]').on('click', function (e) {
-                e.preventDefault();
+        document.querySelectorAll('[data-route]').forEach(function (el) {
+            el.addEventListener('click', function (ev) {
+                ev.preventDefault();
 
-                $('#themeForm').attr('action', $(this).attr('href')).submit();
+                const themeForm = document.getElementById('themeForm');
+
+                themeForm.setAttribute('action', el.dataset['route']);
+                themeForm.submit();
             });
         });
     </script>
@@ -62,7 +65,7 @@
                             <td>{{ join(', ', $theme->authors) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
-                                <a class="btn btn-primary" data-action="theme" href="{{ route('admin.themes.change', $path) }}"><i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}</a>
+                                <button type="button" class="btn btn-primary" data-route="{{ route('admin.themes.change', $path) }}"><i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}</button>
                             </td>
                         </tr>
                     @endforeach

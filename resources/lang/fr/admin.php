@@ -371,11 +371,11 @@ return [
         'title' => 'Thèmes',
 
         'current' => [
-            'title' => 'Thèmes actuel',
+            'title' => 'Thème actuel',
             'author' => 'Auteur: :author',
             'version' => 'Version: :version',
         ],
-        'installed' => 'Thèmes installé',
+        'installed' => 'Thèmes installés',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par defaut est automatiquement mis en place.',
 
         'actions' => [
