@@ -103,7 +103,7 @@
             }).then(function (json) {
                 createAlert('success', json.data.message, true);
             }).catch(function (error) {
-                createAlert('danger', error, true)
+                createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
             }).finally(function () {
                 saveButton.removeAttribute('disabled');
                 saveButtonIcon.classList.add('d-none');

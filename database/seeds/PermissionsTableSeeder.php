@@ -13,8 +13,8 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'posts.comments.add',
-            'posts.comments.delete.all',
+            'comments.create',
+            'comments.delete.other',
             'admin.access',
             'admin.logs',
             'admin.images',

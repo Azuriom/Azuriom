@@ -34,7 +34,7 @@
             @endif
 
             <div class="alert alert-warning mb-4">
-                <p>{{ trans('auth.verify-check') }}</p>
+                <p>{{ trans('messages.profile.not-verified') }}</p>
                 <p>{{ trans('auth.verify-request') }}</p>
 
                 <form method="POST" action="{{ route('verification.resend') }}">

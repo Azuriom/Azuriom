@@ -59,7 +59,7 @@
                                 <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
                             </div>
                             <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" data-image-select="faviconPreview" name="icon">
-                                <option value="" @if(!$icon) selected @endif>None</option>
+                                <option value="" @if(!$icon) selected @endif>{{ trans('messages.none') }}</option>
                                 @foreach($images as $image)
                                     <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>{{ $image->name }}</option>
                                 @endforeach

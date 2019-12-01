@@ -52,6 +52,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'unknown' => 'Unknown',
+    'none' => 'None',
 
     'home' => 'Home',
 
@@ -61,6 +62,8 @@ return [
         'title' => 'My Profile',
         'change-email' => 'Change E-Mail Address',
         'change-password' => 'Change Password',
+
+        'not-verified' => 'Your email is not verified, please check your email for a verification link.',
 
         'updated' => 'Profile updated',
 

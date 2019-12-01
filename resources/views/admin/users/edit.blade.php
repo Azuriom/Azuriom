@@ -81,7 +81,7 @@
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
                         @endunless
                         @unless($user->is_deleted)
-                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if($user->isAdmin()) data-confirm="delete" disabled @endif><i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}</a>
+                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" disabled @endif><i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}</a>
                         @endunless
                     </form>
                 </div>
