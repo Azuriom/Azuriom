@@ -15,7 +15,7 @@
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^6.2",
-        "laravel/tinker": "^1.0",
+        "laravel/tinker": "^2.0",
         "pragmarx/google2fa": "^6.0",
         "wikimedia/composer-merge-plugin": "^1.4"
     },
