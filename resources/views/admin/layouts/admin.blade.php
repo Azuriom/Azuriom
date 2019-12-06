@@ -95,7 +95,7 @@
                 <div class="nav-item {{ add_active('admin.servers.*') }}">
                     <a class="nav-link" href="{{ route('admin.servers.index') }}">
                         <i class="fas fa-fw fa-server"></i>
-                        <span>{{ trans('admin.nav.servers') }}</span>
+                        <span>{{ trans('admin.nav.settings.servers') }}</span>
                     </a>
                 </div>
             @endcan
