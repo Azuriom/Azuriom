@@ -69,5 +69,7 @@ Route::resource('pages', 'PageController')->except('show')->middleware('can:admi
 Route::resource('posts', 'PostController')->except('show')->middleware('can:admin.posts');
 Route::resource('images', 'ImageController')->except('show')->middleware('can:admin.images');
 
+Route::resource('servers', 'ServerController')->except('show');
+
 Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', 'ActionLogController')->only(['index'])->middleware('can:admin.logs');

@@ -24,6 +24,7 @@ return [
                 'maintenance' => 'Maintenance',
             ],
             'navbar' => 'Navbar',
+            'servers' => 'Servers',
         ],
 
         'users' => [
@@ -209,6 +210,29 @@ return [
             'updated' => 'This navbar element has been updated.',
             'deleted' => 'This navbar element has been deleted.',
         ]
+    ],
+
+    'servers' => [
+        'title' => 'Servers',
+        'title-edit' => 'Edit server :server',
+        'title-create' => 'Add server',
+
+        'ping-no-commands' => 'You can\'t execute command with ping link.',
+
+        'fields' => [
+            'address' => 'Address',
+            'port' => 'Port',
+            'status' => 'Status',
+
+            'rcon-password' => 'Rcon Password',
+            'rcon-port' => 'Rcon Port',
+        ],
+
+        'status' => [
+            'created' => 'The server has been added.',
+            'updated' => 'The server has been updated.',
+            'deleted' => 'The server has been deleted.',
+        ],
     ],
 
     'users' => [

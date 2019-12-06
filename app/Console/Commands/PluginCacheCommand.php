@@ -22,16 +22,6 @@ class PluginCacheCommand extends Command
     protected $description = 'Cache the plugins service providers';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @param  \Azuriom\Extensions\ExtensionsManager  $extensions

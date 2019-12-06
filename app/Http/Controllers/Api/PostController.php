@@ -18,6 +18,7 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
+     *
      * @param  Post  $post
      * @return PostResource
      */

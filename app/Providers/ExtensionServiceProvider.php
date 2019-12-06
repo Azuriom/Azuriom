@@ -44,8 +44,13 @@ class ExtensionServiceProvider extends ServiceProvider
         $theme = setting('theme');
 
         if ($theme !== null) {
-            $finder = $this->app['view']->getFinder();
-            $finder->prependLocation(theme_path($theme));
+            $path = theme_path($theme);
+
+            $this->app['view']->getFinder()->prependLocation($path);
+
+            config([
+                'view.paths' => array_merge([$path], config('view.paths', []))
+            ]);
         }
     }
 }

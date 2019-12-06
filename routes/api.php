@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->namespace('Api')->group(function () {
     Route::apiResource('posts', 'PostController')->only(['index', 'show']);
+
+    Route::get('/azlink', 'ServerController@status')->name('azlink');
+    Route::post('/azlink', 'ServerController@fetch');
 });

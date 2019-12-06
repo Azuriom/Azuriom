@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('ban')->paginate(25);
+        $users = User::with('ban')->paginate();
 
         foreach ($users as $user) {
             $user->refreshActiveBan();

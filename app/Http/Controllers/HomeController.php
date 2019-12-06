@@ -27,11 +27,11 @@ class HomeController extends Controller
     public function maintenance(Request $request)
     {
         if (! setting('maintenance-status', false)) {
-            return redirect()->route('home');
+            return redirect()->home();
         }
 
         if ($request->user() !== null && $request->user()->can('maintenance.access')) {
-            return redirect()->route('home');
+            return redirect()->home();
         }
 
         return view('maintenance');

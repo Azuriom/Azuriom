@@ -57,7 +57,7 @@
                     <span>{{ trans('admin.nav.dashboard') }}</span></a>
             </div>
 
-            @canany(['admin.settings', 'admin.navbar'])
+            @canany(['admin.settings', 'admin.navbar', 'admin.servers'])
                 <hr class="sidebar-divider">
 
                 <div class="sidebar-heading">{{ trans('admin.nav.settings.heading') }}</div>
@@ -87,6 +87,15 @@
                     <a class="nav-link" href="{{ route('admin.navbar-elements.index') }}">
                         <i class="fas fa-fw fa-bars"></i>
                         <span>{{ trans('admin.nav.settings.navbar') }}</span>
+                    </a>
+                </div>
+            @endcan
+
+            @can('admin.servers')
+                <div class="nav-item {{ add_active('admin.servers.*') }}">
+                    <a class="nav-link" href="{{ route('admin.servers.index') }}">
+                        <i class="fas fa-fw fa-server"></i>
+                        <span>{{ trans('admin.nav.servers') }}</span>
                     </a>
                 </div>
             @endcan

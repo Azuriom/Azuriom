@@ -111,6 +111,10 @@ class ExtensionsManager
      */
     public function findPlugins()
     {
+        if (! $this->files->exists(plugin_path())) {
+            return collect();
+        }
+
         return collect($this->files->directories(plugin_path()))->map(function ($path) {
             return $this->files->name($path);
         });
