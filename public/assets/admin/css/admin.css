@@ -5,6 +5,10 @@ a.disabled,
     opacity: .55;
 }
 
+.cursor-copy {
+    cursor: copy;
+}
+
 .sidebar-brand-icon img {
     height: 2rem;
 }

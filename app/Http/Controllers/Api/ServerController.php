@@ -18,14 +18,14 @@ class ServerController extends Controller
             $header = $request->header('Authorization', '');
 
             if (! Str::startsWith($header, 'Basic ')) {
-                return response()->json(['status' => 'error', 'message' => 'No key']);
+                abort(401, 'No server key provided.');
             }
 
             $token = base64_decode(Str::substr($header, 6));
             $server = Server::where('token', $token)->first();
 
             if ($server === null) {
-                return response()->json(['status' => 'error', 'message' => 'Invalid key']);
+                abort(403, 'Invalid server key.');
             }
 
             $request->merge(['server-id' => $server->id]);
@@ -43,10 +43,20 @@ class ServerController extends Controller
     {
         $server = Server::findOrFail($request->input('server-id'));
 
-        $data = $request->json();
+        $players = $request->json('players');
 
-        $server->updateData($data);
+        $server->updateData([
+            'players' => count($players),
+            'cpu' => $request->json('system.cpu'),
+            'ram' => $request->json('system.ram'),
+            'tps' => $request->json('worlds.tps'),
+            'loaded_chunks' => $request->json('worlds.chunks'),
+            'entities' => $request->json('worlds.entities'),
+        ], $request->json('full') ? 10 : 30);
 
-        return response()->json(['status' => 'ok',]);
+        return response()->json([
+            'status' => 'ok',
+            'commands' => []
+        ]);
     }
 }

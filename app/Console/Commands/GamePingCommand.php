@@ -29,10 +29,10 @@ class GamePingCommand extends Command
      */
     public function handle()
     {
-        $servers = Server::whereIn('type', ['mc-ping', 'mc-rcon']);
+        $servers = Server::executable()->get();
 
         foreach ($servers as $server) {
-            $data = $server->bridge()->getServerData($server);
+            $data = $server->bridge()->getServerData();
 
             $server->updateData($data);
         }

@@ -124,7 +124,7 @@ return [
 
             'hash' => 'Algorithme de hachage',
             'hash-info' => 'Argon2id est l\'algorithme le plus sûr mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
-            'hash-error' => 'Cet algorithme.',
+            'hash-error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
         ],
 
         'performances' => [

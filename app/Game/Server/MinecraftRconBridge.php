@@ -2,49 +2,44 @@
 
 namespace Azuriom\Game\Server;
 
-use Azuriom\Models\Server;
 use Thedudeguy\Rcon;
 
-class MinecraftRconBridge implements ServerBridge
+class MinecraftRconBridge extends ServerBridge
 {
     use MinecraftPinger;
 
-    /**
-     * @inheritDoc
-     */
-    public function getServerData(Server $server)
+    public function getServerData()
     {
-        return $this->ping($server->ip, $server->port ?? 25565) ?? null;
+        return $this->ping($this->server->ip, $server->port ?? 25565) ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getOnlinePlayers(Server $server)
+    public function verifyLink(string $ip, int $port, array $data = [])
     {
-        $data = $this->getServerData($server);
+        if ($this->ping($ip, $port) === null) {
+            return false;
+        }
 
-        return $data ? $data['players'] : null;
+        $password = decrypt($this->server->data['rcon-password'], false);
+
+        $rcon = new Rcon($ip, $data['rcon-port'] ?? 25575, $password, 3);
+
+        return $rcon->connect() && $rcon->sendCommand('list');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function executeCommand(Server $server, string $command)
+    public function executeCommands(array $commands, ?string $playerName)
     {
-        $password = decrypt($server->data['rcon-password'], false);
+        $password = decrypt($this->server->data['rcon-password'], false);
 
-        $rcon = new Rcon($server->ip, $server->data['rcon-port'] ?? 25575, $password, 3);
+        $rcon = new Rcon($this->server->ip, $server->data['rcon-port'] ?? 25575, $password, 3);
 
         if ($rcon->connect()) {
-            $rcon->sendCommand($command);
+            foreach ($commands as $command) {
+                $rcon->sendCommand(str_replace('{player}', $playerName ?? '?', $command));
+            }
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function canExecuteCommand(Server $server)
+    public function canExecuteCommand()
     {
         return true;
     }

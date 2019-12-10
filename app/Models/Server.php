@@ -2,9 +2,11 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Game\Server\MinecraftAzLinkBridge;
 use Azuriom\Game\Server\MinecraftPingBridge;
 use Azuriom\Game\Server\MinecraftRconBridge;
 use Azuriom\Models\Traits\Loggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -14,11 +16,14 @@ use Illuminate\Support\Facades\Cache;
  * @property string $ip
  * @property int $port
  * @property string $type
+ * @property string $token
  * @property array $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerStat[] $stats
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder executable()
  */
 class Server extends Model
 {
@@ -32,6 +37,7 @@ class Server extends Model
     private const TYPES = [
         'mc-ping' => MinecraftPingBridge::class,
         'mc-rcon' => MinecraftRconBridge::class,
+        'mc-azlink' => MinecraftAzLinkBridge::class,
     ];
 
     /**
@@ -64,7 +70,7 @@ class Server extends Model
 
     public function fullAddress()
     {
-        return $this->ip.($this->port ?? '');
+        return $this->ip.($this->port ? ':'.$this->port : '');
     }
 
     public static function types()
@@ -75,7 +81,7 @@ class Server extends Model
     public function getPlayers()
     {
         return Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
-            return $this->bridge()->getServerData($this);
+            return $this->bridge()->getServerData();
         });
     }
 
@@ -89,17 +95,33 @@ class Server extends Model
         return $this->getPlayers()['max'] ?? -1;
     }
 
-    public function updateData(array $data)
+    public function updateData(array $data, int $time = 15)
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinute());
 
-        if (! $this->stats()->where('created_at', '>=', now()->subMinutes(15))->exists()) {
+        if ($time > 0 && ! $this->stats()->where('created_at', '>=', now()->subMinutes($time))->exists()) {
             $this->stats()->create($data);
         }
     }
 
     public function bridge()
     {
-        return app(self::TYPES[$this->type]);
+        return app(self::TYPES[$this->type], ['server' => $this]);
+    }
+
+    public function getLinkCommand()
+    {
+        return '/azlink setup '.url('/').' '.$this->token;
+    }
+
+    /**
+     * Scope a query to only include enabled pages.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExecutable(Builder $query)
+    {
+        return $query->whereIn('type', ['mc-rcon', 'mc-link']);
     }
 }

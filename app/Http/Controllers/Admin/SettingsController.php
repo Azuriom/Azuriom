@@ -27,6 +27,16 @@ class SettingsController extends Controller
     ];
 
     /**
+     * The hash algorithms PHP constants.
+     *
+     * @var array
+     */
+    private $hashCompatibility = [
+        'argon' => 'PASSWORD_ARGON2I',
+        'argon2id' => 'PASSWORD_ARGON2ID'
+    ];
+
+    /**
      * The application instance.
      *
      * @var \Illuminate\Contracts\Foundation\Application
@@ -54,7 +64,7 @@ class SettingsController extends Controller
     /**
      * Show the application settings.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -75,7 +85,7 @@ class SettingsController extends Controller
      * Update the application settings.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
@@ -106,7 +116,7 @@ class SettingsController extends Controller
     /**
      * Show the application security settings.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function security()
     {
@@ -123,7 +133,7 @@ class SettingsController extends Controller
      * Update the application security settings.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Exception
      */
@@ -137,7 +147,11 @@ class SettingsController extends Controller
             'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50'],
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
-                    if ($value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
+                    if (! array_key_exists($value, $this->hashCompatibility)) {
+                        return;
+                    }
+
+                    if (! defined($this->hashCompatibility[$value])) {
                         $fail(trans('admin.settings.security.hash-error'));
                     }
                 }
@@ -165,7 +179,7 @@ class SettingsController extends Controller
     /**
      * Clear the application cache.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function clearCache()
     {
@@ -191,7 +205,8 @@ class SettingsController extends Controller
             return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
         }
 
-        return $redirect->with('success', trans('admin.settings.performances.boost.status.'. ($cacheStatus ? 'reloaded' : 'enabled')));
+        return $redirect->with('success',
+            trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled')));
     }
 
     public function disableAdvancedCache()
@@ -218,7 +233,7 @@ class SettingsController extends Controller
      * Update the application SEO settings.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateSeo(Request $request)
@@ -236,7 +251,7 @@ class SettingsController extends Controller
     /**
      * Show the application maintenance settings.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function maintenance()
     {
@@ -247,7 +262,7 @@ class SettingsController extends Controller
      * Update the application maintenance settings.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateMaintenance(Request $request)

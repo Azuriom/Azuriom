@@ -5,6 +5,8 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
+            <h5>Status: <i class="fas fa-circle text-{{ $server->getOnlinePlayers() < 0 ? 'danger' : 'success' }}"> </i></h5>
+
             <form action="{{ route('admin.servers.update', $server) }}" method="POST">
                 @method('PUT')
 

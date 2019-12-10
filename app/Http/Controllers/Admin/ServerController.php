@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\ServerRequest;
 use Azuriom\Models\Server;
+use Illuminate\Support\Str;
 
 class ServerController extends Controller
 {
@@ -36,7 +37,11 @@ class ServerController extends Controller
      */
     public function store(ServerRequest $request)
     {
-        Server::create($request->validated());
+        $server = Server::create($request->validated() + ['token' => Str::random(32)]);
+
+        if ($request->input('redirect') === 'edit') {
+            return redirect()->route('admin.servers.edit', $server);
+        }
 
         return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.created'));
     }

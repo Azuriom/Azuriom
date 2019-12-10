@@ -2,43 +2,28 @@
 
 namespace Azuriom\Game\Server;
 
-use Azuriom\Models\Server;
 use RuntimeException;
 
-class MinecraftPingBridge implements ServerBridge
+class MinecraftPingBridge extends ServerBridge
 {
     use MinecraftPinger;
 
-    /**
-     * @inheritDoc
-     */
-    public function getServerData(Server $server)
+    public function getServerData()
     {
-        return $this->ping($server->ip, $server->port ?? 25565) ?? null;
+        return $this->ping($this->server->ip, $server->port ?? 25565) ?? null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getOnlinePlayers(Server $server)
+    public function verifyLink(string $ip, int $port, array $data = [])
     {
-        $data = $this->getServerData($server);
-
-        return $data ? $data['players'] : null;
+        return $this->ping($ip, $port) !== null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function executeCommand(Server $server, string $command)
+    public function executeCommands(array $commands, ?string $playerName)
     {
         throw new RuntimeException('Command cannot be executed with ping link.');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function canExecuteCommand(Server $server)
+    public function canExecuteCommand()
     {
         return false;
     }

@@ -1,14 +1,28 @@
 @push('footer-scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
     <script>
+        const clipboardJs = new ClipboardJS('#linkCommand');
+
+        clipboardJs.on('success', function (e) {
+            e.clearSelection();
+
+            const oldTitle = e.trigger.dataset['originalTitle'];
+
+            if ($.fn.tooltip) {
+                e.trigger.setAttribute('data-original-title', e.trigger.dataset['copied']);
+                $(e.trigger).tooltip('show');
+                e.trigger.setAttribute('data-original-title', oldTitle === undefined ? '' : oldTitle);
+            }
+        });
+
         function updateType(el) {
             document.querySelectorAll('[data-server-type]').forEach(function (e) {
                 e.classList.add('d-none');
             });
 
-            const current = document.querySelector('[data-server-type="' + el.value + '"]');
-            if (current) {
-                current.classList.remove('d-none');
-            }
+            document.querySelectorAll('[data-server-type="' + el.value + '"]').forEach(function (e) {
+                e.classList.remove('d-none');
+            });
         }
 
         const typeSelect = document.getElementById('typeSelect');
@@ -24,7 +38,7 @@
                 const input = document.getElementById(el.dataset['passwordToggle']);
                 const icon = el.querySelector('.fas');
 
-                if (! input) {
+                if (!input) {
                     return;
                 }
 
@@ -64,7 +78,7 @@
         <label for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
             @foreach($types as $type)
-                <option value="{{ $type }}" @if($type === old('type', $server->type ?? '')) selected @endif>{{ $type }}</option>
+                <option value="{{ $type }}" @if($type === old('type', $server->type ?? '')) selected @endif>{{ trans('admin.servers.type.'.$type) }}</option>
             @endforeach
         </select>
 
@@ -95,7 +109,9 @@
 </div>
 
 <div data-server-type="mc-ping" class="form-group d-none">
-    <small class="text-danger">{{ trans('admin.servers.ping-no-commands') }}</small>
+    <div class="alert alert-info">
+        {{ trans('admin.servers.ping-no-commands') }}
+    </div>
 </div>
 
 <div data-server-type="mc-rcon" class="form-group d-none">
@@ -106,7 +122,9 @@
             <div class="input-group">
                 <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon.password']) ? decrypt($server->data['rcon.password'], false) : '') }}">
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" data-password-toggle="rconPasswordInput"><i class="fas fa-eye"></i></button>
+                    <button type="button" class="btn btn-outline-primary" data-password-toggle="rconPasswordInput">
+                        <i class="fas fa-eye"></i>
+                    </button>
                 </div>
 
                 @error('rcon-password')
@@ -125,3 +143,32 @@
         </div>
     </div>
 </div>
+
+@isset($server)
+    <div data-server-type="mc-azlink" class="form-group d-none">
+        @if($server->getOnlinePlayers() < 0)
+            <div class="alert alert-primary">
+                {{ trans('admin.servers.azlink.link') }}
+                <ol class="mb-0">
+                    <li>@lang('admin.servers.azlink.link-1')</li>
+                    <li>{{ trans('admin.servers.azlink.link-2') }}</li>
+                    <li>
+                        {{ trans('admin.servers.azlink.link-3') }}
+                        <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                        .
+                    </li>
+                </ol>
+            </div>
+        @else
+            <div class="alert alert-info">
+                {{ trans('admin.servers.azlink.link-info') }}
+                <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                .
+            </div>
+        @endif
+    </div>
+@else
+    <button type="submit" data-server-type="mc-azlink" name="redirect" value="edit" class="btn btn-success">
+        <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
+    </button>
+@endempty

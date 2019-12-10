@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Azuriom\Models\User $author
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder published()
  */
 class Post extends Model
 {

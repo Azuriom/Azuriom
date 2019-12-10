@@ -228,11 +228,26 @@ return [
             'rcon-port' => 'Rcon Port',
         ],
 
+        'azlink' => [
+            'link' => 'To link your Minecraft server to your website using AzLink:',
+            'link-1' => '<a href="https://azuriom.com/azlink">Download the plugin AzLink</a> and install it on your server.',
+            'link-2' => 'Restart the server.',
+            'link-3' => 'Execute this command on the server: ',
+
+            'link-info' => 'You can link your Minecraft server to your website with this command: '
+        ],
+
         'status' => [
             'created' => 'The server has been added.',
             'updated' => 'The server has been updated.',
             'deleted' => 'The server has been deleted.',
         ],
+
+        'type' => [
+            'mc-ping' => 'Ping',
+            'mc-rcon' => 'Rcon',
+            'mc-azlink' => 'AzLink',
+        ]
     ],
 
     'users' => [

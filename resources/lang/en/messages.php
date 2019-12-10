@@ -22,12 +22,14 @@ return [
         'update' => 'Update',
         'delete' => 'Delete',
         'save' => 'Save',
+        'continue' => 'Continue',
         'browse' => 'Browse',
         'choose-file' => 'Choose file',
         'upload' => 'Upload',
         'cancel' => 'Cancel',
         'enable' => 'Enable',
         'disable' => 'Disable',
+        'copy' => 'Copy',
     ],
 
     'fields' => [
@@ -47,12 +49,15 @@ return [
         'content' => 'Content',
         'color' => 'Color',
         'version' => 'Version',
+        'game' => 'Game',
     ],
 
     'yes' => 'Yes',
     'no' => 'No',
     'unknown' => 'Unknown',
     'none' => 'None',
+
+    'copied' => 'Copied',
 
     'home' => 'Home',
 
@@ -104,5 +109,5 @@ return [
         'delete-description' => 'Are you sure you want to delete this comment ?',
     ],
 
-    'likes' => 'J\'aimes: :likes',
+    'likes' => 'Likes: :likes',
 ];
