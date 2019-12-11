@@ -229,12 +229,12 @@ return [
         ],
 
         'azlink' => [
-            'link' => 'To link your Minecraft server to your website using AzLink:',
+            'link' => 'To link your server to your website using AzLink:',
             'link-1' => '<a href="https://azuriom.com/azlink">Download the plugin AzLink</a> and install it on your server.',
             'link-2' => 'Restart the server.',
             'link-3' => 'Execute this command on the server: ',
 
-            'link-info' => 'You can link your Minecraft server to your website with this command: '
+            'link-info' => 'You can link your server to your website with this command: ',
         ],
 
         'status' => [

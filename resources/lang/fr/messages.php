@@ -22,12 +22,14 @@ return [
         'update' => 'Mettre à jour',
         'delete' => 'Supprimer',
         'save' => 'Sauvegarder',
+        'continue' => 'Continuer',
         'browse' => 'Parcourir',
         'choose-file' => 'Choisir le fichier',
         'upload' => 'Télécharger',
         'cancel' => 'Annuler',
         'enable' => 'Activer',
         'disable' => 'Désactiver',
+        'copy' => 'Copier',
     ],
 
     'fields' => [
@@ -47,12 +49,15 @@ return [
         'content' => 'Contenu',
         'color' => 'Couleur',
         'version' => 'Version',
+        'game' => 'Jeu',
     ],
 
     'yes' => 'Oui',
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',
     'none' => 'Aucun(e)',
+
+    'copied' => 'Copié',
 
     'home' => 'Accueil',
 

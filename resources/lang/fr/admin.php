@@ -228,11 +228,26 @@ return [
             'rcon-port' => 'Port Rcon',
         ],
 
+        'azlink' => [
+            'link' => 'Pour lier votre serveur à votre site Web en utilisant AzLink vous devez:',
+            'link-1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
+            'link-2' => 'Redémarrer votre serveur.',
+            'link-3' => 'Exécuter cette commande sur votre serveur: ',
+
+            'link-info' => 'Vous pouvez lier votre serveur à votre site Web avec cette commande: ',
+        ],
+
         'status' => [
             'created' => 'Le serveur a été ajouté.',
             'updated' => 'Le serveur a été mis à jour.',
             'deleted' => 'Le serveur a été supprimé.',
         ],
+
+        'type' => [
+            'mc-ping' => 'Ping',
+            'mc-rcon' => 'Rcon',
+            'mc-azlink' => 'AzLink',
+        ]
     ],
 
     'users' => [
