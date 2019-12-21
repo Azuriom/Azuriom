@@ -66,6 +66,8 @@
     @error('published_at')
     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
     @enderror
+
+    <small class="text-info">{{ trans('admin.posts.published-info') }}</small>
 </div>
 
 <div class="form-group custom-control custom-switch">

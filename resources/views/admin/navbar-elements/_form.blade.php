@@ -54,6 +54,10 @@
             <option value="{{ $page->id }}" @if($page->slug === (isset($navbarElement) && $navbarElement->getTypeValue('page'))) selected @endif>{{ $page->title }}</option>
         @endforeach
     </select>
+
+    @error('page')
+    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+    @enderror
 </div>
 
 <div data-nav-element="post" class="form-group d-none">
@@ -63,6 +67,10 @@
             <option value="{{ $post->id }}" @if($post->slug === (isset($navbarElement) && $navbarElement->getTypeValue('post'))) selected @endif>{{ $post->title }}</option>
         @endforeach
     </select>
+
+    @error('post')
+    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+    @enderror
 </div>
 
 <div data-nav-element="link" class="form-group d-none">
@@ -70,6 +78,19 @@
     <input type="text" class="form-control @error('link') is-invalid @enderror" id="linkInput" name="link" value="{{ old('link', (isset($navbarElement) ? $navbarElement->getTypeValue('link') : '')) }}">
 
     @error('link')
+    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+    @enderror
+</div>
+
+<div data-nav-element="plugin" class="form-group d-none">
+    <label for="pluginSelect">{{ trans('messages.fields.link') }}</label>
+    <select class="custom-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
+        @foreach($pluginRoutes as $route => $name)
+            <option value="{{ $route  }}" @if($route === (isset($navbarElement) && $navbarElement->getTypeValue('plugin'))) selected @endif>{{ $name }}</option>
+        @endforeach
+    </select>
+
+    @error('plugin')
     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
     @enderror
 </div>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @stack('meta')
+@stack('meta')
 
-    <!-- CSRF Token -->
+<!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
@@ -18,9 +18,9 @@
     <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
 
     <!-- Page level scripts -->
-    @stack('scripts')
+@stack('scripts')
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
     <link href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
@@ -69,7 +69,7 @@
                         <i class="fas fa-fw fa-wrench"></i>
                         <span>{{ trans('admin.nav.settings.heading') }}</span>
                     </a>
-                    <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
                             <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">{{ trans('admin.nav.settings.settings.global') }}</a>
@@ -190,6 +190,39 @@
                     </a>
                 </div>
             @endcan
+
+            <hr class="sidebar-divider">
+
+            @if(! extensions()->getAdminNavItems()->isEmpty())
+                <div class="sidebar-heading">Plugins</div>
+            @endif
+
+            @foreach(extensions()->getAdminNavItems() as $navItem)
+                @if(! isset($navItem['permission']) || Gate::check($navItem['permission']))
+                    @if($navItem['type'] ?? '' !== 'dropdown')
+                        <div class="nav-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
+                            <a class="nav-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-toggle="collapse" data-target="#collapse{{ $navItem['name'] }}" aria-expanded="true" aria-controls="collapse{{ $navItem['name'] }}">
+                                <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                <span>{{ trans($navItem['name']) }}</span>
+                            </a>
+                            <div id="collapse{{ $navItem['name'] }}" class="collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    @foreach($navItem['items'] ?? [] as $name => $route)
+                                        <a class="collapse-item {{ add_active(str_replace('index', '*', $route)) }}" href="{{ route($route) }}">{{ trans($name) }}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="nav-item {{ add_active($navItem['route']) }}">
+                            <a class="nav-link" href="{{ route($navItem['route']) }}">
+                                <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                <span>{{ trans($navItem['name']) }}</span>
+                            </a>
+                        </div>
+                    @endif
+                @endif
+            @endforeach
 
             @can('admin.logs')
                 <hr class="sidebar-divider">
@@ -333,12 +366,14 @@
             </div>
             <div class="modal-body">{{ trans('admin.confirm-delete.description') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal"><i class="fas fa-arrow-left"></i> {{ trans('messages.actions.cancel') }}</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                    <i class="fas fa-arrow-left"></i> {{ trans('messages.actions.cancel') }}</button>
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')
                     @csrf
 
-                    <button class="btn btn-danger" type="submit"><i class="fas fa-exclamation-triangle"></i> {{ trans('messages.actions.delete') }}</button>
+                    <button class="btn btn-danger" type="submit">
+                        <i class="fas fa-exclamation-triangle"></i> {{ trans('messages.actions.delete') }}</button>
                 </form>
             </div>
         </div>

@@ -52,7 +52,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        // $this->registerPolicies();
 
         $this->loadViews();
 
@@ -60,6 +60,34 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
         $this->loadMigrations();
 
+        $this->registerRouteDescriptions();
+
+        $this->registerAdminNavigation();
+
         //
+    }
+
+    /**
+     * Returns the routes that should be able to be added to the navbar.
+     *
+     * @return array
+     */
+    protected function routeDescriptions()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Return the admin navigations routes to register in the dashboard.
+     *
+     * @return array
+     */
+    protected function adminNavigation()
+    {
+        return [
+            //
+        ];
     }
 }

@@ -18,7 +18,7 @@ class CreateNavbarElementsTable extends Migration
             $table->string('name');
             $table->string('value');
             $table->unsignedInteger('position')->default(0);
-            $table->enum('type', ['home', 'link', 'page', 'post', 'posts', 'dropdown']);
+            $table->enum('type', ['home', 'link', 'page', 'post', 'posts', 'plugin', 'dropdown']);
             $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('new_tab')->default(false);
 

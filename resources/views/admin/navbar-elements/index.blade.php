@@ -156,7 +156,7 @@
                 <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 <i class="fas fa-sync fa-spin d-none btn-animation"></i>
             </button>
-            <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}"><i class="fas fa-plus"></i> {{ trans('messages.actions.create') }}
+            <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}"><i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

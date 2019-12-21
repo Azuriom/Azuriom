@@ -51,7 +51,7 @@
             {{ $posts->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.posts.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.create') }}
+                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

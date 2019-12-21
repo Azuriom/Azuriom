@@ -47,6 +47,7 @@ class NavbarElementRequest extends FormRequest
             'name' => ['required', 'string', 'max:150'],
             'type' => ['string', Rule::in(NavbarElement::types())],
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:100'],
+            'plugin' => ['required_if:type,plugin', 'nullable', 'string', 'max:100'],
             'value' => ['sometimes'],
             'new_tab' => ['filled', 'boolean']
         ];
@@ -59,7 +60,9 @@ class NavbarElementRequest extends FormRequest
      */
     protected function getLinkValue()
     {
-        switch ($this->input('type')) {
+        $type = $this->input('type');
+
+        switch ($type) {
             case 'page':
                 $page = Page::find($this->input('page'));
                 return $page ? $page->slug : '';
@@ -67,7 +70,8 @@ class NavbarElementRequest extends FormRequest
                 $post = Post::find($this->input('post'));
                 return $post ? $post->slug : '';
             case 'link':
-                return $this->input('link');
+            case 'plugin':
+                return $this->input($type);
             default:
                 return '#';
         }

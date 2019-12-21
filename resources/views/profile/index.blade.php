@@ -33,7 +33,7 @@
                 </div>
             @endif
 
-            <div class="alert alert-warning mb-4">
+            <div class="alert alert-warning mb-4" role="alert">
                 <p>{{ trans('messages.profile.not-verified') }}</p>
                 <p>{{ trans('auth.verify-request') }}</p>
 

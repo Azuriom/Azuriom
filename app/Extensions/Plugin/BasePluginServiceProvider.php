@@ -80,6 +80,16 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom($this->pluginPath('database/migrations'));
     }
 
+    protected function registerRouteDescriptions()
+    {
+        extensions()->addRouteDescription($this->routeDescriptions());
+    }
+
+    protected function registerAdminNavigation()
+    {
+        extensions()->addAdminNavItem($this->adminNavigation());
+    }
+
     protected function middlewareGroup($name, $middleware = null)
     {
         if (is_array($name)) {
@@ -102,6 +112,31 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Returns the routes that should be able to be added to the navbar.
+     *
+     * @return array
+     */
+    protected function routeDescriptions()
+    {
+        return [];
+    }
+
+    /**
+     * Return the admin navigations routes to register in the dashboard.
+     *
+     * @return array
+     */
+    protected function adminNavigation()
+    {
+        return [];
+    }
+
+    /**
+     * Return the policies to register.
+     *
+     * @return array
+     */
     public function policies()
     {
         return $this->policies;

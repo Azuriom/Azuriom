@@ -85,3 +85,10 @@ if (! function_exists('game')) {
         return app('game');
     }
 }
+
+if (! function_exists('extensions')) {
+    function extensions()
+    {
+        return app('extensions');
+    }
+}

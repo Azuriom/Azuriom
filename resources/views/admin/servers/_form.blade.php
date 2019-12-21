@@ -109,7 +109,8 @@
 </div>
 
 <div data-server-type="mc-ping" class="form-group d-none">
-    <div class="alert alert-info">
+    <div class="alert alert-info" role="alert">
+        <i class="fas fa-info-circle"></i>
         {{ trans('admin.servers.ping-no-commands') }}
     </div>
 </div>
@@ -120,7 +121,7 @@
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
 
             <div class="input-group">
-                <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon.password']) ? decrypt($server->data['rcon.password'], false) : '') }}">
+                <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon.password'], false) : '') }}">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary" data-password-toggle="rconPasswordInput">
                         <i class="fas fa-eye"></i>
@@ -135,7 +136,7 @@
 
         <div class="form-group col-md-4">
             <label for="rconPortInput">{{ trans('admin.servers.fields.rcon-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon.port'] ?? '') }}">
+            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '') }}">
 
             @error('rcon-port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -147,7 +148,7 @@
 @isset($server)
     <div data-server-type="mc-azlink" class="form-group d-none">
         @if($server->getOnlinePlayers() < 0)
-            <div class="alert alert-primary">
+            <div class="alert alert-primary" role="alert">
                 {{ trans('admin.servers.azlink.link') }}
                 <ol class="mb-0">
                     <li>@lang('admin.servers.azlink.link-1')</li>
@@ -160,7 +161,8 @@
                 </ol>
             </div>
         @else
-            <div class="alert alert-info">
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle"></i>
                 {{ trans('admin.servers.azlink.link-info') }}
                 <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
                 .

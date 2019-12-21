@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 
 /**
  * @property int $id
@@ -27,7 +28,7 @@ class NavbarElement extends Model
      * @var array
      */
     private const TYPES = [
-        'home', 'link', 'page', 'post', 'posts', 'dropdown',
+        'home', 'link', 'page', 'post', 'posts', 'plugin', 'dropdown',
     ];
 
     /**
@@ -78,6 +79,8 @@ class NavbarElement extends Model
                 return route('posts.show', $this->value);
             case 'posts':
                 return route('posts.index');
+            case 'plugin':
+                return Route::has($this->value) ? route($this->value) : '#';
             default:
                 return '#';
         }

@@ -31,9 +31,11 @@ class ServerRequest extends FormRequest
 
         if ($this->input('type') === 'mc-rcon') {
             $validated['data'] = [
-                'rcon.port' => $this->input('rcon-port'),
-                'rcon.password' => encrypt($this->input('rcon-password'), false)
+                'rcon-port' => $this->input('rcon-port'),
+                'rcon-password' => encrypt($this->input('rcon-password'), false)
             ];
+        } else {
+            $validated['data'] = null;
         }
 
         return $validated;

@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\InteractsWithMoney;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
+ * @property float $money
  * @property string|null $google_2fa_secret
  * @property string $remember_token
  * @property bool $is_banned
@@ -31,6 +33,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use InteractsWithMoney;
     use Notifiable;
 
     /**
@@ -39,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'google_2fa_secret', 'is_banned',
+        'name', 'email', 'password', 'money', 'google_2fa_secret', 'is_banned',
     ];
 
     /**

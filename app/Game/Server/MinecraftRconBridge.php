@@ -2,6 +2,7 @@
 
 namespace Azuriom\Game\Server;
 
+use Exception;
 use Thedudeguy\Rcon;
 
 class MinecraftRconBridge extends ServerBridge
@@ -32,10 +33,12 @@ class MinecraftRconBridge extends ServerBridge
 
         $rcon = new Rcon($this->server->ip, $server->data['rcon-port'] ?? 25575, $password, 3);
 
-        if ($rcon->connect()) {
-            foreach ($commands as $command) {
-                $rcon->sendCommand(str_replace('{player}', $playerName ?? '?', $command));
-            }
+        if (! $rcon->connect()) {
+            throw new Exception('Unable to connect to rcon.');
+        }
+
+        foreach ($commands as $command) {
+            $rcon->sendCommand(str_replace('{player}', $playerName ?? '?', $command));
         }
     }
 

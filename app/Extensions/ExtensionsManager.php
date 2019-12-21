@@ -38,6 +38,20 @@ class ExtensionsManager
     private $loadedPlugins;
 
     /**
+     * The plugins route descriptions.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    private $routeDescriptions;
+
+    /**
+     * The admin panel navigation.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    private $adminNavItems;
+
+    /**
      * Create a new ExtensionsManager instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
@@ -49,6 +63,8 @@ class ExtensionsManager
         $this->app = $app;
         $this->files = $files;
         $this->composer = $composer;
+        $this->routeDescriptions = collect();
+        $this->adminNavItems = collect();
     }
 
     /**
@@ -240,5 +256,33 @@ class ExtensionsManager
         } else {
             $this->composer->dumpAutoloads();
         }
+    }
+
+    public function addRouteDescription(array $items) {
+        foreach ($items as $key => $value) {
+            $this->routeDescriptions->put($key, $value);
+        }
+    }
+
+    public function addAdminNavItem(array $items) {
+        foreach ($items as $key => $value) {
+            $this->adminNavItems->put($key, $value);
+        }
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getRouteDescriptions()
+    {
+        return $this->routeDescriptions;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getAdminNavItems()
+    {
+        return $this->adminNavItems;
     }
 }

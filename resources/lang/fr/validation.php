@@ -118,7 +118,7 @@ return [
     'url' => 'Le champ :attribute n\'a pas un format valide.',
     'uuid' => 'Le champ :attribute doit etre un UUID valide.',
 
-    'username' => 'Le champ :attribute doit être un nom d\'utilisateur valide.',
+    'username' => 'Le champ :attribute doit être un nom un pseudo valide.',
     'slug' => 'Le champ :attribute doit être un lien avec seulement des lettres minuscules, des chiffres et des tirets.',
     'color' => 'Le champ :attribute doit être un code couleur hexadécimal.',
     'current-password' => 'Votre mot de passe actuel est incorrect.',

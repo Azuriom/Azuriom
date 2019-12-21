@@ -25,7 +25,7 @@ return [
         'continue' => 'Continuer',
         'browse' => 'Parcourir',
         'choose-file' => 'Choisir le fichier',
-        'upload' => 'Télécharger',
+        'upload' => 'Uploader',
         'cancel' => 'Annuler',
         'enable' => 'Activer',
         'disable' => 'Désactiver',

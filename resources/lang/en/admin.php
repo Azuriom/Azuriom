@@ -199,6 +199,7 @@ return [
             'page' => 'Page',
             'post' => 'Post',
             'posts' => 'Posts list',
+            'plugin' => 'Plugin',
             'dropdown' => 'Dropdown',
             'new-tab' => 'Open in new tab',
         ],
@@ -217,7 +218,7 @@ return [
         'title-edit' => 'Edit server :server',
         'title-create' => 'Add server',
 
-        'ping-no-commands' => 'You can\'t execute command with ping link.',
+        'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
 
         'fields' => [
             'address' => 'Address',
@@ -352,6 +353,8 @@ return [
         'title' => 'Posts',
         'title-edit' => 'Edit post :post',
         'title-create' => 'Create post',
+
+        'published-info' => 'This post will not be visible publicly until this date.',
 
         'fields' => [
             'published-at' => 'Published at',

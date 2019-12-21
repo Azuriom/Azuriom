@@ -4,12 +4,12 @@
 
 @section('content')
     @if($user->is_deleted)
-        <div class="alert alert-warning">
+        <div class="alert alert-warning" role="alert">
             <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
     @elseif($user->is_banned)
-        <div class="alert alert-warning shadow">
-            <h5>{{ trans('admin.users.alert-banned.title') }}</h5>
+        <div class="alert alert-warning shadow" role="alert">
+            <h5><i class="fas fa-exclamation-circle"></i> {{ trans('admin.users.alert-banned.title') }}</h5>
             <ul>
                 <li>{{ trans('admin.users.alert-banned.banned-by', ['author' => $user->ban->author->name]) }}</li>
                 <li>{{ trans('admin.users.alert-banned.reason', ['reason' => $user->ban->reason]) }}</li>

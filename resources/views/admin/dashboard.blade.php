@@ -8,7 +8,9 @@
 
 @section('content')
     @if(! $secure)
-        <div class="alert alert-warning shadow-sm">{{ trans('admin.dashboard.https-warning') }}</div>
+        <div class="alert alert-warning shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.https-warning') }}
+        </div>
     @endif
 
     <!-- Content Row -->

@@ -199,6 +199,7 @@ return [
             'page' => 'Page',
             'post' => 'Article',
             'posts' => 'Liste des articles',
+            'plugin' => 'Plugin',
             'dropdown' => 'Menu déroulant',
             'new-tab' => 'Ouvrir dans un nouvel onglet',
         ],
@@ -217,7 +218,7 @@ return [
         'title-edit' => 'Édition du serveur :server',
         'title-create' => 'Ajout d\'un serveur',
 
-        'ping-no-commands' => 'Vous ne pouvez pas exécuter de commande avec une liaison par ping.',
+        'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
 
         'fields' => [
             'address' => 'Adresse',
@@ -256,7 +257,7 @@ return [
         'title-create' => 'Création d\'un utilisateur',
 
         'fields' => [
-            'name' => 'Nom d\'utilisateur',
+            'name' => 'Pseudo',
             'email' => 'Adresse E-Mail',
             'role' => 'Grade',
             'password' => 'Mot de passe',
@@ -352,6 +353,8 @@ return [
         'title' => 'Articles',
         'title-edit' => 'Édition de l\'article :post',
         'title-create' => 'Création d\'un article',
+
+        'published-info' => 'Cet article sera visible de facon publique qu\'à partir de cette date.',
 
         'fields' => [
             'published-at' => 'Publié le',

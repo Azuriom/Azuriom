@@ -26,10 +26,10 @@ return [
         'send' => 'Envoyer',
     ],
 
-    'name' => 'Nom d\'utilisateur',
+    'name' => 'Pseudo',
     'email' => 'Adresse E-Mail ',
     'password' => 'Mot de passe',
-    'confirm-password' => 'Confirmer le mot de passe',
+    'confirm-password' => 'Confirmation du mot de passe',
     'current-password' => 'Mot de passe actuel',
 
     '2fa-code' => 'Code d\'authentification à deux facteurs',

@@ -82,7 +82,8 @@ class NavbarController extends Controller
         return view('admin.navbar-elements.create', [
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
-            'posts' => Post::published()->get()
+            'posts' => Post::published()->get(),
+            'pluginRoutes' => extensions()->getRouteDescriptions(),
         ]);
     }
 
@@ -112,7 +113,8 @@ class NavbarController extends Controller
             'navbarElement' => $navbarElement,
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
-            'posts' => Post::published()->get()
+            'posts' => Post::published()->get(),
+            'pluginRoutes' => extensions()->getRouteDescriptions(),
         ]);
     }
 
