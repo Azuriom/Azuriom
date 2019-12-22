@@ -44,8 +44,8 @@ Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(fun
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
     Route::get('/', 'ThemeController@index')->name('index');
     Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('change');
-    Route::get('/edit', 'ThemeController@edit')->name('edit');
-    Route::post('/update', 'ThemeController@update')->name('update');
+    Route::get('/edit/{theme}', 'ThemeController@edit')->name('edit');
+    Route::post('/update/{theme}', 'ThemeController@update')->name('update');
 });
 
 Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->group(function () {

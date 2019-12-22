@@ -27,9 +27,9 @@
                             <td>{{ $server->fullAddress() }}</td>
                             <td>
                                 @if(($players = $server->getOnlinePlayers()) >= 0)
-                                    <span class="badge badge-success">{{ $players }} players</span>
+                                    <span class="badge badge-success">{{ trans_choice('admin.servers.players', $players) }}</span>
                                 @else
-                                    <span class="badge badge-danger">Offline</span>
+                                    <span class="badge badge-danger">{{ trans('admin.servers.offline') }}</span>
                                 @endif
                             </td>
                             <td>{{ trans('admin.servers.type.'.$server->type) }}</td>

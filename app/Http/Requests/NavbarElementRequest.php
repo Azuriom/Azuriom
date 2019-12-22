@@ -46,7 +46,7 @@ class NavbarElementRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:150'],
             'type' => ['string', Rule::in(NavbarElement::types())],
-            'link' => ['required_if:type,link', 'nullable', 'string', 'max:100'],
+            'link' => ['required_if:type,link', 'nullable', Rule::in(extensions()->getRouteDescriptions()->keys())],
             'plugin' => ['required_if:type,plugin', 'nullable', 'string', 'max:100'],
             'value' => ['sometimes'],
             'new_tab' => ['filled', 'boolean']

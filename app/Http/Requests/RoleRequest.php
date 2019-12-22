@@ -27,7 +27,7 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:25'],
+            'name' => ['required', 'string', 'max:100'],
             'color' => ['required', new Color()],
             'is_admin' => ['filled', 'boolean']
         ];

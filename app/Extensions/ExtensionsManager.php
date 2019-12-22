@@ -177,19 +177,31 @@ class ExtensionsManager
     }
 
     /**
+     * Get the content of the config.json of the theme is present
+     *
+     * @param  string  $theme
+     * @return array|null
+     */
+    public function getThemeConfig(string $theme)
+    {
+        return $this->getJson(theme_path($theme.'/config.json'), true);
+    }
+
+    /**
      * Read the content of a json
      *
      * @param  string  $path
+     * @param  bool  $asoc
      * @return mixed|null
      */
-    protected function getJson(string $path)
+    protected function getJson(string $path, bool $asoc = false)
     {
         if (! $this->files->isFile($path)) {
             return null;
         }
 
         try {
-            return json_decode($this->files->get($path));
+            return json_decode($this->files->get($path), $asoc);
         } catch (FileNotFoundException $e) {
             return null;
         }
@@ -258,13 +270,15 @@ class ExtensionsManager
         }
     }
 
-    public function addRouteDescription(array $items) {
+    public function addRouteDescription(array $items)
+    {
         foreach ($items as $key => $value) {
             $this->routeDescriptions->put($key, $value);
         }
     }
 
-    public function addAdminNavItem(array $items) {
+    public function addAdminNavItem(array $items)
+    {
         foreach ($items as $key => $value) {
             $this->adminNavItems->put($key, $value);
         }

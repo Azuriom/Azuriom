@@ -33,7 +33,7 @@
                 <form action="{{ route('admin.themes.change') }}" method="POST">
                     @csrf
 
-                    <a class="btn btn-primary" href="#"><i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}</a>
+                    <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}"><i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}</a>
                     <button type="submit" class="btn btn-warning"><i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}</button>
                 </form>
             @else

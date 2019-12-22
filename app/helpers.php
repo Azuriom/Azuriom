@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Extensions\ExtensionsManager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -7,13 +8,6 @@ if (! function_exists('add_active')) {
     function add_active(string ...$patterns)
     {
         return Route::currentRouteNamed(...$patterns) ? 'active' : '';
-    }
-}
-
-if (! function_exists('image_url')) {
-    function image_url(string $name = '/')
-    {
-        return url(Storage::url('img/'.$name));
     }
 }
 
@@ -65,10 +59,10 @@ if (! function_exists('site_name')) {
     }
 }
 
-if (! function_exists('theme_path')) {
-    function theme_path($path = '')
+if (! function_exists('image_url')) {
+    function image_url(string $name = '/')
     {
-        return resource_path('themes/'.$path);
+        return url(Storage::url('img/'.$name));
     }
 }
 
@@ -76,6 +70,20 @@ if (! function_exists('plugin_path')) {
     function plugin_path($path = '')
     {
         return base_path('plugins/'.$path);
+    }
+}
+
+if (! function_exists('theme_path')) {
+    function theme_path($path = '')
+    {
+        return resource_path('themes/'.$path);
+    }
+}
+
+if (! function_exists('theme_config')) {
+    function theme_config(string $name, $default = null)
+    {
+        return config('theme.'.$name, $default);
     }
 }
 
@@ -89,6 +97,6 @@ if (! function_exists('game')) {
 if (! function_exists('extensions')) {
     function extensions()
     {
-        return app('extensions');
+        return app(ExtensionsManager::class);
     }
 }

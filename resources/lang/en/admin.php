@@ -238,6 +238,9 @@ return [
             'link-info' => 'You can link your server to your website with this command: ',
         ],
 
+        'players' => ':count player|:count players',
+        'offline' => 'Offline',
+
         'status' => [
             'created' => 'The server has been added.',
             'updated' => 'The server has been updated.',

@@ -238,6 +238,9 @@ return [
             'link-info' => 'Vous pouvez lier votre serveur à votre site Web avec cette commande: ',
         ],
 
+        'players' => ':count joueur|:count joueurs',
+        'offline' => 'Hors-ligne',
+
         'status' => [
             'created' => 'Le serveur a été ajouté.',
             'updated' => 'Le serveur a été mis à jour.',

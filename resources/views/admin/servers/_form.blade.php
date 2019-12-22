@@ -121,7 +121,7 @@
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
 
             <div class="input-group">
-                <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon.password'], false) : '') }}">
+                <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary" data-password-toggle="rconPasswordInput">
                         <i class="fas fa-eye"></i>
