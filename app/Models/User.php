@@ -42,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'google_2fa_secret', 'is_banned',
+        'name', 'email', 'password', 'money', 'game_id', 'access_token', 'google_2fa_secret', 'is_banned',
     ];
 
     /**
@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'google_2fa_secret',
+        'password', 'remember_token', 'access_token', 'google_2fa_secret',
     ];
 
     /**

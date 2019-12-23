@@ -191,9 +191,9 @@
                 </div>
             @endcan
 
-            <hr class="sidebar-divider">
-
             @if(! extensions()->getAdminNavItems()->isEmpty())
+                <hr class="sidebar-divider">
+
                 <div class="sidebar-heading">Plugins</div>
             @endif
 

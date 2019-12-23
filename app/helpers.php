@@ -97,6 +97,6 @@ if (! function_exists('game')) {
 if (! function_exists('extensions')) {
     function extensions()
     {
-        return app(ExtensionsManager::class);
+        return app('extensions');
     }
 }

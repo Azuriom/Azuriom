@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/v1')->namespace('Api')->group(function () {
     Route::apiResource('posts', 'PostController')->only(['index', 'show']);
 
+    Route::prefix('/auth')->name('auth.')->group(function() {
+        Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');
+        Route::post('/verify', 'AuthController@verify')->name('verify');
+        Route::post('/logout', 'AuthController@logout')->name('logout');
+    });
+
     Route::get('/azlink', 'ServerController@status')->name('azlink');
     Route::post('/azlink', 'ServerController@fetch');
 });
