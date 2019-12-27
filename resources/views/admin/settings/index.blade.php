@@ -127,20 +127,31 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
-                    <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
+                <div class="form-row">
+                    <div class="form-group col-lg-6">
+                        <label for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
+                        <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
 
-                    @error('copyright')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
+                        @error('copyright')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label for="conditionsInput">{{ trans('admin.settings.index.conditions-url') }}</label>
+                        <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+
+                        @error('conditions')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="conditionsInput">{{ trans('admin.settings.index.conditions-url') }}</label>
-                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+                    <label for="moneyNameInput">Money</label>
+                    <input type="text" class="form-control @error('money') is-invalid @enderror" id="copyrightInput" name="money" value="{{ old('money', $money) }}">
 
-                    @error('conditions')
+                    @error('money')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
@@ -153,7 +164,9 @@
                     <small>{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
             </form>
         </div>
     </div>

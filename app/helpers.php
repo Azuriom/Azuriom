@@ -59,6 +59,21 @@ if (! function_exists('site_name')) {
     }
 }
 
+if (! function_exists('money_name')) {
+    function money_name($money = 2)
+    {
+        $moneyName = setting('money', 'points');
+        return trans()->getSelector()->choose($moneyName, $money, trans()->getLocale());
+    }
+}
+
+if (! function_exists('format_money')) {
+    function format_money(float $money)
+    {
+        return $money.' '.money_name($money);
+    }
+}
+
 if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {

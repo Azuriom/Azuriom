@@ -260,10 +260,6 @@ return [
         'title-create' => 'Création d\'un utilisateur',
 
         'fields' => [
-            'name' => 'Pseudo',
-            'email' => 'Adresse E-Mail',
-            'role' => 'Grade',
-            'password' => 'Mot de passe',
             'register-date' => 'Inscrit le',
             'email-verified' => 'Adresse E-Mail vérifiée',
             '2fa' => 'Authentification à deux facteurs',

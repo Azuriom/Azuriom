@@ -77,6 +77,7 @@ class SettingsController extends Controller
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
             'conditions' => setting('conditions'),
+            'money' => setting('money'),
             'register' => setting('register', true),
         ]);
     }
@@ -100,6 +101,7 @@ class SettingsController extends Controller
                 'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
+                'money' => ['required', 'string', 'max:15']
             ]) + ['register' => $request->has('register')]);
 
         ActionLog::logUpdate('Settings');

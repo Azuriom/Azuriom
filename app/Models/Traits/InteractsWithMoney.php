@@ -13,4 +13,9 @@ trait InteractsWithMoney
     {
         $this->money -= $amount;
     }
+
+    public function hasMoney(float $amount)
+    {
+        return $this->money >= $amount;
+    }
 }

@@ -110,7 +110,8 @@ class UserController extends Controller
 
         ActionLog::logUpdate($user);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.email-verified'));
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', trans('admin.users.status.email-verified'));
     }
 
     public function disable2fa(User $user)
@@ -142,6 +143,8 @@ class UserController extends Controller
             'email' => 'deleted'.$user->id.'@deleted.ltd',
             'password' => Hash::make(Str::random()),
             'role_id' => 1,
+            'game_id' => null,
+            'access_token' => null,
             'google_2fa_secret' => null,
         ]);
 

@@ -44,12 +44,9 @@ abstract class ServerBridge
     /**
      * Test the connection to the server.
      *
-     * @param  string  $ip
-     * @param  int  $port
-     * @param  array  $data
      * @return bool
      */
-    abstract public function verifyLink(string $ip, int $port, array $data = []);
+    abstract public function verifyLink();
 
     /**
      * Execute a command on the given server.

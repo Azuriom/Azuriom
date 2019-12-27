@@ -47,6 +47,8 @@ return [
         'file' => 'File',
         'description' => 'Description',
         'content' => 'Content',
+        'role' => 'Role',
+        'money' => 'Money',
         'color' => 'Color',
         'version' => 'Version',
         'game' => 'Game',

@@ -4,6 +4,8 @@ namespace Azuriom\Game\Server;
 
 class MinecraftAzLinkBridge extends ServerBridge
 {
+    use MinecraftPinger;
+
     public function getServerData()
     {
         // Data are sent by the plugins every minute,
@@ -13,9 +15,9 @@ class MinecraftAzLinkBridge extends ServerBridge
         return null;
     }
 
-    public function verifyLink(string $ip, int $port, array $data = [])
+    public function verifyLink()
     {
-        // TODO
+        return $this->ping($this->server->ip, $this->server->port ?? 25565) !== null;
     }
 
     public function executeCommands(array $commands, ?string $playerName) {

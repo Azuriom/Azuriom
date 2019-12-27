@@ -47,6 +47,8 @@ return [
         'file' => 'Fichier',
         'description' => 'Description',
         'content' => 'Contenu',
+        'role' => 'Role',
+        'money' => 'Argent',
         'color' => 'Couleur',
         'version' => 'Version',
         'game' => 'Jeu',

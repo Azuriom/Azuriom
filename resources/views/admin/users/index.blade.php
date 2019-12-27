@@ -10,9 +10,9 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ trans('admin.users.fields.name') }}</th>
-                        <th scope="col">{{ trans('admin.users.fields.email') }}</th>
-                        <th scope="col">{{ trans('admin.users.fields.role') }}</th>
+                        <th scope="col">{{ trans('auth.name') }}</th>
+                        <th scope="col">{{ trans('auth.email') }}</th>
+                        <th scope="col">{{ trans('messages.fields.role') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>

@@ -10,12 +10,12 @@ class MinecraftPingBridge extends ServerBridge
 
     public function getServerData()
     {
-        return $this->ping($this->server->ip, $server->port ?? 25565) ?? null;
+        return $this->ping($this->server->ip, $this->server->port ?? 25565) ?? null;
     }
 
-    public function verifyLink(string $ip, int $port, array $data = [])
+    public function verifyLink()
     {
-        return $this->ping($ip, $port) !== null;
+        return $this->getServerData() !== null;
     }
 
     public function executeCommands(array $commands, ?string $playerName)

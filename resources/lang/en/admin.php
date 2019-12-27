@@ -260,10 +260,6 @@ return [
         'title-create' => 'Create user',
 
         'fields' => [
-            'name' => 'Username',
-            'email' => 'E-Mail Address',
-            'role' => 'Role',
-            'password' => 'Password',
             'register-date' => 'Register at',
             'email-verified' => 'E-Mail Address verified',
             '2fa' => 'Two Factor Authentication',

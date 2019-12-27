@@ -9,7 +9,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="nameInput">{{ trans('admin.users.fields.name') }}</label>
+                    <label for="nameInput">{{ trans('auth.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                     @error('name')
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="emailInput">{{ trans('admin.users.fields.email') }}</label>
+                    <label for="emailInput">{{ trans('auth.email') }}</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email') }}" required>
 
                     @error('email')
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="passwordInput">{{ trans('admin.users.fields.password') }}</label>
+                    <label for="passwordInput">{{ trans('auth.password') }}</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
 
                     @error('password')
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="roleSelect">{{ trans('admin.users.fields.role') }}</label>
+                    <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
                     <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role">
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>

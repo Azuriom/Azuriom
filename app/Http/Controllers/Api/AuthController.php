@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (! setting('auth-api', false)) {
-                return response()->json(['status' => 'error', 'message' => 'Auth API is not enabled'], 403);
+                return response()->json(['status' => 'error', 'message' => 'Auth API is not enabled'], 422);
             }
 
             return $next($request);
@@ -46,6 +46,10 @@ class AuthController extends Controller
 
         $user = Auth::getLastAttempted();
 
+        if ($user->is_banned) {
+            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
+        }
+
         if ($user->game_id === null) {
             $user->game_id = Uuids::uuidFromName("AzuriomPlayer: {$user->id}");
         }
@@ -67,6 +71,10 @@ class AuthController extends Controller
         $this->validate($request, ['access_token' => 'required|string']);
 
         $user = User::where('access_token', $request->input('access_token'));
+
+        if ($user->is_banned) {
+            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
+        }
 
         if ($user === null) {
             return response()->json(['status' => 'error', 'message' => 'Invalid token'], 422);

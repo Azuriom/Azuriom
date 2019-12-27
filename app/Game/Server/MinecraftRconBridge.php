@@ -4,6 +4,7 @@ namespace Azuriom\Game\Server;
 
 use Exception;
 use Thedudeguy\Rcon;
+use Throwable;
 
 class MinecraftRconBridge extends ServerBridge
 {
@@ -11,29 +12,29 @@ class MinecraftRconBridge extends ServerBridge
 
     public function getServerData()
     {
-        return $this->ping($this->server->ip, $server->port ?? 25565) ?? null;
+        return $this->ping($this->server->ip, $this->server->port ?? 25565) ?? null;
     }
 
-    public function verifyLink(string $ip, int $port, array $data = [])
+    public function verifyLink()
     {
-        if ($this->ping($ip, $port) === null) {
+        if ($this->getServerData() === null) {
             return false;
         }
 
-        $password = decrypt($this->server->data['rcon-password'], false);
+        try {
+            $rcon = $this->createRcon();
 
-        $rcon = new Rcon($ip, $data['rcon-port'] ?? 25575, $password, 3);
-
-        return $rcon->connect() && $rcon->sendCommand('list');
+            return $rcon->sendCommand('list');
+        } catch (Throwable $t) {
+            return false;
+        }
     }
 
     public function executeCommands(array $commands, ?string $playerName)
     {
-        $password = decrypt($this->server->data['rcon-password'], false);
+        $rcon = $this->createRcon();
 
-        $rcon = new Rcon($this->server->ip, $server->data['rcon-port'] ?? 25575, $password, 3);
-
-        if (! $rcon->connect()) {
+        if (! $rcon) {
             throw new Exception('Unable to connect to rcon.');
         }
 
@@ -45,5 +46,14 @@ class MinecraftRconBridge extends ServerBridge
     public function canExecuteCommand()
     {
         return true;
+    }
+
+    protected function createRcon()
+    {
+        $password = decrypt($this->server->data['rcon-password'], false);
+
+        $rcon = new Rcon($this->server->ip, $this->server->data['rcon-port'] ?? 25575, $password, 3);
+
+        return $rcon->connect() ? $rcon : false;
     }
 }

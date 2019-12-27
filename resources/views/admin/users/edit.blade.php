@@ -37,7 +37,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="nameInput">{{ trans('admin.users.fields.name') }}</label>
+                            <label for="nameInput">{{ trans('auth.name') }}</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
 
                             @error('name')
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="emailInput">{{ trans('admin.users.fields.email') }}</label>
+                            <label for="emailInput">{{ trans('auth.email') }}</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
 
                             @error('email')
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="passwordInput">{{ trans('admin.users.fields.password') }}</label>
+                            <label for="passwordInput">{{ trans('auth.password') }}</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
 
                             @error('password')
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="roleSelect">{{ trans('admin.users.fields.role') }}</label>
+                            <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
                             <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->is_deleted) disabled @endif>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role->is($role)) selected @endif>{{ $role->name }}</option>
@@ -76,12 +76,27 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
+                            <div class="input-group">
+                                <input type="number" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->is_deleted) disabled @endif>
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{ money_name() }}</span>
+                                </div>
+
+                                @error('money')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
                         @unless($user->is_banned || $user->is_deleted)
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
                         @endunless
                         @unless($user->is_deleted)
-                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" disabled @endif><i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}</a>
+                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" @endif><i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}</a>
                         @endunless
                     </form>
                 </div>
