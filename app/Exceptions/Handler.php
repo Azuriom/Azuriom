@@ -113,7 +113,7 @@ class Handler extends ExceptionHandler
      */
     protected function reportException(Exception $exception)
     {
-        if (! config('app.debug')) {
+        if (config('app.debug')) {
             return;
         }
 

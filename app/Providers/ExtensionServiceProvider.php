@@ -71,5 +71,9 @@ class ExtensionServiceProvider extends ServiceProvider
                 $config->set('theme.'.$key, $value);
             }
         }
+
+        if (is_dir($path.'/lang')) {
+            $this->loadTranslationsFrom($path.'/lang', 'theme.'.$theme);
+        }
     }
 }

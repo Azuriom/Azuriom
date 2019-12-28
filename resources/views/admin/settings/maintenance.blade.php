@@ -9,7 +9,7 @@
                 @csrf
 
                 <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="maintenance-message" @if(setting('maintenance-status', false)) checked @endif>
+                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="maintenance-status" @if(setting('maintenance-status', false)) checked @endif>
                     <label class="custom-control-label" for="enableSwitch">{{ trans('admin.settings.maintenance.enable') }}</label>
                 </div>
 

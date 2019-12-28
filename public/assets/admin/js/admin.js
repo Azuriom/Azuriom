@@ -5,8 +5,23 @@ function confirmDelete(url) {
 
 function createAlert(color, message, dismiss) {
     const button = dismiss ? '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' : '';
+    let icon;
 
-    $('#status-message').html('<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + message + button + '</div>');
+    switch (color) {
+        case 'success':
+            icon = 'check-circle';
+            break;
+        case 'danger':
+            icon = 'exclamation-circle';
+            break;
+        case 'info':
+            icon = 'info-circle';
+            break;
+    }
+
+    icon = icon ? '<i class="fas fa-' + icon + '"></i> ' : '';
+
+    $('#status-message').html('<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>');
 }
 
 $('[data-toggle="tooltip"]').tooltip();

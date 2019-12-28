@@ -70,6 +70,7 @@ Route::resource('posts', 'PostController')->except('show')->middleware('can:admi
 Route::resource('images', 'ImageController')->except('show')->middleware('can:admin.images');
 
 Route::resource('servers', 'ServerController')->except('show');
+Route::post('/servers/{server}/verify/azlink', 'ServerController@verifyAzLink')->name('servers.verify-azlink');
 
 Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', 'ActionLogController')->only(['index'])->middleware('can:admin.logs');

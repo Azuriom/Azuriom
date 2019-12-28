@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Cache;
  * @property \Carbon\Carbon $updated_at
  *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerStat[] $stats
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerCommand[] $commands
  *
  * @method static \Illuminate\Database\Eloquent\Builder executable()
  */
@@ -68,6 +69,16 @@ class Server extends Model
         return $this->hasMany(ServerStat::class);
     }
 
+    /**
+     * Get the commands waiting to be dispatch on this server.
+     *
+     * Currently this should only be use for servers using AzLink.
+     */
+    public function commands()
+    {
+        return $this->hasMany(ServerCommand::class);
+    }
+
     public function fullAddress()
     {
         return $this->ip.($this->port ? ':'.$this->port : '');
@@ -95,11 +106,11 @@ class Server extends Model
         return $this->getPlayers()['max'] ?? -1;
     }
 
-    public function updateData(array $data, int $time = 15)
+    public function updateData(array $data, bool $full = false)
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinute());
 
-        if ($time > 0 && ! $this->stats()->where('created_at', '>=', now()->subMinutes($time))->exists()) {
+        if ($full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
             $this->stats()->create($data);
         }
     }

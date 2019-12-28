@@ -7,7 +7,7 @@
         <div class="card-body">
             <h5>Status: <i class="fas fa-circle text-{{ $server->getOnlinePlayers() < 0 ? 'danger' : 'success' }}"> </i></h5>
 
-            <form action="{{ route('admin.servers.update', $server) }}" method="POST">
+            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm">
                 @method('PUT')
 
                 @include('admin.servers._form')

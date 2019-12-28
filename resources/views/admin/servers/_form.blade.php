@@ -1,7 +1,7 @@
 @push('footer-scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
     <script>
-        const clipboardJs = new ClipboardJS('#linkCommand');
+        const clipboardJs = new ClipboardJS('[data-clipboard-target]');
 
         clipboardJs.on('success', function (e) {
             e.clearSelection();
@@ -59,7 +59,49 @@
                 }
             });
         });
+
+        const azLinkPortInput = document.getElementById('azlinkPortInput');
+
+        if (azLinkPortInput) {
+            azLinkPortInput.addEventListener('input', function (e) {
+                let port = azLinkPortInput.value;
+
+                if (port < 1 || port > 65535) {
+                    port = '25888';
+                }
+
+                document.getElementById('azLinkPortDisplay').innerText = port;
+            });
+        }
+
     </script>
+    @isset($server)
+        <script>
+            const verifyButton = document.getElementById('verifyAzLink');
+            const verifyButtonIcon = verifyButton.querySelector('.btn-animation');
+
+            verifyButton.addEventListener('click', function () {
+                verifyButton.setAttribute('disabled', '');
+                verifyButtonIcon.classList.remove('d-none');
+
+                const formData = new FormData(document.getElementById('serverForm'));
+                formData.delete('_method');
+
+                axios.post('{{ route('admin.servers.verify-azlink', $server) }}', formData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (json) {
+                    createAlert('success', json.data.message, true);
+                }).catch(function (error) {
+                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                }).finally(function () {
+                    verifyButton.removeAttribute('disabled');
+                    verifyButtonIcon.classList.add('d-none');
+                });
+            });
+        </script>
+    @endisset
 @endpush
 
 @csrf
@@ -136,7 +178,7 @@
 
         <div class="form-group col-md-4">
             <label for="rconPortInput">{{ trans('admin.servers.fields.rcon-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '') }}">
+            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '25575') }}">
 
             @error('rcon-port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -145,32 +187,64 @@
     </div>
 </div>
 
-@isset($server)
-    <div data-server-type="mc-azlink" class="form-group d-none">
-        @if($server->getOnlinePlayers() < 0)
-            <div class="alert alert-primary" role="alert">
-                {{ trans('admin.servers.azlink.link') }}
-                <ol class="mb-0">
-                    <li>@lang('admin.servers.azlink.link-1')</li>
-                    <li>{{ trans('admin.servers.azlink.link-2') }}</li>
-                    <li>
-                        {{ trans('admin.servers.azlink.link-3') }}
-                        <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
-                        .
-                    </li>
-                </ol>
-            </div>
-        @else
-            <div class="alert alert-info" role="alert">
-                <i class="fas fa-info-circle"></i>
-                {{ trans('admin.servers.azlink.link-info') }}
-                <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
-                .
-            </div>
-        @endif
+<div data-server-type="mc-azlink" class="d-none">
+    <div class="form-group custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
+        <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>
     </div>
-@else
-    <button type="submit" data-server-type="mc-azlink" name="redirect" value="edit" class="btn btn-success">
-        <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
-    </button>
-@endempty
+
+    <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
+        <div class="card card-body mb-3">
+            <div class="form-group">
+                <label for="azlinkPortInput">{{ trans('admin.servers.fields.azlink-port') }}</label>
+                <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
+
+                @error('azlink-port')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
+
+            <div class="alert alert-info mb-0" role="alert">
+                <i class="fas fa-info-circle"></i>
+                {{ trans('admin.servers.azlink.port-info') }}
+                <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
+                    <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+            </div>
+        </div>
+    </div>
+
+    @isset($server)
+        <div class="form-group">
+            @if($server->getOnlinePlayers() < 0)
+                <div class="alert alert-primary" role="alert">
+                    {{ trans('admin.servers.azlink.link') }}
+                    <ol class="mb-0">
+                        <li>@lang('admin.servers.azlink.link-1')</li>
+                        <li>{{ trans('admin.servers.azlink.link-2') }}</li>
+                        <li>
+                            {{ trans('admin.servers.azlink.link-3') }}
+                            <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                            .
+                        </li>
+                    </ol>
+                </div>
+            @else
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ trans('admin.servers.azlink.link-info') }}
+                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                    .
+                </div>
+            @endif
+        </div>
+
+        <button type="button" class="btn btn-success mb-2" id="verifyAzLink">
+            <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
+            <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+        </button>
+    @else
+        <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
+            <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
+        </button>
+    @endempty
+</div>

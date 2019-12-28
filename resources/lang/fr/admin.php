@@ -227,6 +227,12 @@ return [
 
             'rcon-password' => 'Mot de passe Rcon',
             'rcon-port' => 'Port Rcon',
+
+            'azlink-port' => 'Port AzLink',
+        ],
+
+        'actions' => [
+            'verify-connection' => 'Vérifier la connexion',
         ],
 
         'azlink' => [
@@ -235,7 +241,10 @@ return [
             'link-2' => 'Redémarrer votre serveur.',
             'link-3' => 'Exécuter cette commande sur votre serveur: ',
 
-            'link-info' => 'Vous pouvez lier votre serveur à votre site Web avec cette commande: ',
+            'link-info' => 'Vous pouvez lier votre serveur à votre site web avec la commande: ',
+            'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
+
+            'custom-port' => 'Utiliser un port AzLink personnalisé',
         ],
 
         'players' => ':count joueur|:count joueurs',
@@ -245,6 +254,13 @@ return [
             'created' => 'Le serveur a été ajouté.',
             'updated' => 'Le serveur a été mis à jour.',
             'deleted' => 'Le serveur a été supprimé.',
+
+            'connect-success' => 'La connexion au serveur a été éffectuée avec succès !',
+            'connect-error' => 'La connexion au serveur a échouée',
+
+            'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
+            'azlink-connect' => 'La connexion au serveur a échouée, l\'ip et/ou le port sont incorrects, ou le port est fermé.',
+            'azlink-badresponse' => 'La connexion au serveur a échouée (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
         ],
 
         'type' => [

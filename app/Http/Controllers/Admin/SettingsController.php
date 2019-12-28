@@ -270,7 +270,7 @@ class SettingsController extends Controller
     public function updateMaintenance(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-            'maintenance-message' => ['required', 'string', 'max:250']
+            'maintenance-message' => ['nullable', 'string', 'max:255']
         ]));
 
         Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));

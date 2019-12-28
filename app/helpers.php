@@ -1,6 +1,5 @@
 <?php
 
-use Azuriom\Extensions\ExtensionsManager;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -99,6 +98,14 @@ if (! function_exists('theme_config')) {
     function theme_config(string $name, $default = null)
     {
         return config('theme.'.$name, $default);
+    }
+}
+
+if (! function_exists('theme_trans')) {
+    function theme_trans(string $key, array $replace = [], $locale = null)
+    {
+        $theme = setting('theme');
+        return trans("theme.{$theme}::{$key}", $replace, $locale);
     }
 }
 

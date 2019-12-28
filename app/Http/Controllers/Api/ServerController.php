@@ -52,11 +52,18 @@ class ServerController extends Controller
             'tps' => $request->json('worlds.tps'),
             'loaded_chunks' => $request->json('worlds.chunks'),
             'entities' => $request->json('worlds.entities'),
-        ], $request->json('full') ? 10 : 30);
+        ], $request->json('full'));
+
+        $commands = $server->commands->groupBy('player_name')
+            ->map(function ($serverCommands) {
+                return $serverCommands->pluck('command');
+            });
+
+        $server->commands()->delete();
 
         return response()->json([
             'status' => 'ok',
-            'commands' => []
+            'commands' => $commands
         ]);
     }
 }

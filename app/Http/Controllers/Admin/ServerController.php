@@ -5,7 +5,10 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\ServerRequest;
 use Azuriom\Models\Server;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ServerController extends Controller
 {
@@ -37,7 +40,13 @@ class ServerController extends Controller
      */
     public function store(ServerRequest $request)
     {
-        $server = Server::create($request->validated() + ['token' => Str::random(32)]);
+        $server = new Server($request->validated() + ['token' => Str::random(32)]);
+
+        if (! $server->bridge()->verifyLink()) {
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error'));
+        }
+
+        $server->save();
 
         if ($request->input('redirect') === 'edit') {
             return redirect()->route('admin.servers.edit', $server);
@@ -69,9 +78,51 @@ class ServerController extends Controller
      */
     public function update(ServerRequest $request, Server $server)
     {
-        $server->update($request->validated());
+        $server->fill($request->validated());
+
+        if (! $server->bridge()->verifyLink()) {
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error'));
+        }
+
+        $server->save();
 
         return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
+    }
+
+
+    public function verifyAzLink(ServerRequest $request, Server $server)
+    {
+        if ($server->type !== 'mc-azlink') {
+            return response()->json(['status' => 'error', 'message' => trans('admin.servers.status.not-azlink')], 422);
+        }
+
+        $server->fill($request->validated());
+
+        try {
+            $server->bridge()->sendServerRequest();
+
+            return response()->json([
+                'status' => 'success', 'message' => trans('admin.servers.status.connect-success')
+            ]);
+        } catch (Throwable $t) {
+            if ($t instanceof ConnectException) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => trans('admin.servers.status.azlink-connect')
+                ], 422);
+            }
+
+            if ($t instanceof BadResponseException) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => trans('admin.servers.status.azlink-badresponse', [
+                        'code' => $t->getResponse()->getStatusCode()
+                    ]),
+                ], 422);
+            }
+
+            return response()->json(['status' => 'error', 'message' => $t->getMessage()], 422);
+        }
     }
 
     /**

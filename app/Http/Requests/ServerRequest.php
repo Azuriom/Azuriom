@@ -22,6 +22,7 @@ class ServerRequest extends FormRequest
             'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-password' => ['required_if:type,mc-rcon', 'nullable', 'string'],
+            'azlink-port' => ['sometimes', 'nullable', 'integer', 'min:1', 'max:65535'],
         ];
     }
 
@@ -29,10 +30,16 @@ class ServerRequest extends FormRequest
     {
         $validated = $this->validator->validated();
 
-        if ($this->input('type') === 'mc-rcon') {
+        $type = $this->input('type');
+
+        if ($type === 'mc-rcon') {
             $validated['data'] = [
                 'rcon-port' => $this->input('rcon-port'),
                 'rcon-password' => encrypt($this->input('rcon-password'), false)
+            ];
+        } elseif ($type === 'mc-azlink' && $this->filled('azlink-custom-port')) {
+            $validated['data'] = [
+                'azlink-port' => $this->input('azlink-port'),
             ];
         } else {
             $validated['data'] = null;
