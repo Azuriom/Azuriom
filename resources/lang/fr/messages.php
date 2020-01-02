@@ -92,6 +92,8 @@ return [
         ],
 
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
+
+        'suspended' => 'Ce compte est actuellement banni.',
     ],
 
     'posts' => [

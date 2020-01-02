@@ -29,7 +29,7 @@ class CheckForMaintenanceSettings
     {
         if (setting('maintenance-status', false)) {
 
-            if ($request->routeIs($this->except)) {
+            if ($request->routeIs($this->except) || $request->route()->uri() === 'user/login') {
                 return $next($request);
             }
 

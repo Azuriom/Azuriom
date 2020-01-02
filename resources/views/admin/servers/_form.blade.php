@@ -1,5 +1,5 @@
 @push('footer-scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script src="{{ asset('vendor/clipboard/clipboard.min.js') }}"></script>
     <script>
         const clipboardJs = new ClipboardJS('[data-clipboard-target]');
 
@@ -33,33 +33,6 @@
             updateType(ev.target);
         });
 
-        document.querySelectorAll('[data-password-toggle]').forEach(function (el) {
-            el.addEventListener('click', function () {
-                const input = document.getElementById(el.dataset['passwordToggle']);
-                const icon = el.querySelector('.fas');
-
-                if (!input) {
-                    return;
-                }
-
-                if (input.getAttribute('type') === 'text') {
-                    input.setAttribute('type', 'password');
-
-                    if (icon) {
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                    }
-                } else {
-                    input.setAttribute('type', 'text');
-
-                    if (icon) {
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                    }
-                }
-            });
-        });
-
         const azLinkPortInput = document.getElementById('azlinkPortInput');
 
         if (azLinkPortInput) {
@@ -87,18 +60,15 @@
                 const formData = new FormData(document.getElementById('serverForm'));
                 formData.delete('_method');
 
-                axios.post('{{ route('admin.servers.verify-azlink', $server) }}', formData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(function (json) {
-                    createAlert('success', json.data.message, true);
-                }).catch(function (error) {
-                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
-                }).finally(function () {
-                    verifyButton.removeAttribute('disabled');
-                    verifyButtonIcon.classList.add('d-none');
-                });
+                axios.post('{{ route('admin.servers.verify-azlink', $server) }}', formData)
+                    .then(function (json) {
+                        createAlert('success', json.data.message, true);
+                    }).catch(function (error) {
+                        createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                    }).finally(function () {
+                        verifyButton.removeAttribute('disabled');
+                        verifyButtonIcon.classList.add('d-none');
+                    });
             });
         </script>
     @endisset
@@ -166,7 +136,7 @@
                 <input type="password" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary" data-password-toggle="rconPasswordInput">
-                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-eye-slash"></i>
                     </button>
                 </div>
 

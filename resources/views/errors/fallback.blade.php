@@ -10,7 +10,7 @@
     <title>{{ trans('errors.error') }} | Azuriom</title>
 
     <!-- Styles -->
-    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <style>
         html,
         body,

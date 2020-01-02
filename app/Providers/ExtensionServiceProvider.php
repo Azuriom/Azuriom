@@ -6,6 +6,7 @@ use Azuriom\Extensions\ExtensionsManager;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Support\ServiceProvider;
+use Throwable;
 
 class ExtensionServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class ExtensionServiceProvider extends ServiceProvider
 
         foreach ($extensions->loadPlugins() as $path => $plugin) {
             foreach ($plugin->providers ?? [] as $pluginProvider) {
-                if (class_exists($pluginProvider)) {
+                try {
                     $provider = new $pluginProvider($this->app);
 
                     if (method_exists($provider, 'bindName')) {
@@ -31,6 +32,8 @@ class ExtensionServiceProvider extends ServiceProvider
                     }
 
                     $this->app->register($provider);
+                } catch (Throwable $t) {
+                    report($t);
                 }
             }
         }

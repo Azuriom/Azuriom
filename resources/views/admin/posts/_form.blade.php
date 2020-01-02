@@ -1,6 +1,5 @@
 @include('admin.elements.editor')
 @include('admin.elements.date-picker')
-@include('admin.elements.image-upload')
 
 @csrf
 

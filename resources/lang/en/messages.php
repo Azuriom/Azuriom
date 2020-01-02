@@ -93,6 +93,7 @@ return [
 
         'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',
 
+        'suspended' => 'This account is suspended.',
     ],
 
     'posts' => [

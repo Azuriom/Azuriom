@@ -10,10 +10,6 @@
     <meta property="og:article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
 @endpush
 
-@push('scripts')
-    <script src="{{ asset('assets/js/script.js') }}" defer></script>
-@endpush
-
 @section('content')
     <div class="container content post">
         @if(!$post->isPublished())

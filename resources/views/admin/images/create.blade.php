@@ -2,8 +2,6 @@
 
 @section('title', trans('admin.images.title-create'))
 
-@include('admin.elements.image-upload')
-
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">

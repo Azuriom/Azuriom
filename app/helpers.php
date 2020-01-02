@@ -29,6 +29,20 @@ if (! function_exists('format_date')) {
     }
 }
 
+if (! function_exists('asset')) {
+    /**
+     * Generate an asset path for the application.
+     *
+     * @param  string  $path
+     * @param  bool|null  $secure
+     * @return string
+     */
+    function asset(string $path, $secure = null)
+    {
+        return app('url')->asset('assets/'.$path, $secure);
+    }
+}
+
 if (! function_exists('format_date_compact')) {
     function format_date_compact(Carbon $date)
     {
@@ -110,6 +124,11 @@ if (! function_exists('theme_trans')) {
 }
 
 if (! function_exists('game')) {
+    /**
+     * Get the current game bridge implementation.
+     *
+     * @return \Azuriom\Game\GameBridge
+     */
     function game()
     {
         return app('game');
@@ -117,6 +136,11 @@ if (! function_exists('game')) {
 }
 
 if (! function_exists('extensions')) {
+    /**
+     * Get the extensions manager.
+     *
+     * @return \Azuriom\Extensions\ExtensionsManager
+     */
     function extensions()
     {
         return app('extensions');

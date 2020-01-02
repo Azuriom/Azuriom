@@ -12,6 +12,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "fideloper/proxy": "^4.0",
+        "funkjedi/composer-include-files": "^1.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^6.2",
@@ -46,15 +47,15 @@
             "merge-dev": true,
             "merge-extra": false,
             "merge-scripts": false
-        }
+        },
+        "include_files": [
+            "app/helpers.php"
+        ]
     },
     "autoload": {
         "psr-4": {
             "Azuriom\\": "app/"
         },
-        "files": [
-            "app/helpers.php"
-        ],
         "classmap": [
             "database/seeds",
             "database/factories"

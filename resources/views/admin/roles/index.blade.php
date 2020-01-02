@@ -2,58 +2,9 @@
 
 @section('title', trans('admin.roles.title'))
 
-
-@push('styles')
-    <style>
-        .sortable .sortable {
-            padding-left: 2.8em;
-        }
-
-        .sortable {
-            margin: 0;
-            padding-top: 0.6em;
-        }
-
-        .sortable-item {
-            display: block;
-            position: relative;
-            margin: 0 0 0.9em;
-            padding: 0;
-            min-height: 20px;
-        }
-
-        .sortable-dropdown {
-            margin-bottom: 1rem;
-        }
-
-        .sortable-dropdown .sortable-item {
-            margin-bottom: 0.6em;
-        }
-
-        .sortable-handle {
-            padding: 0.5em;
-            box-sizing: border-box;
-        }
-
-        .sortable-handle,
-        .cursor-move {
-            cursor: move;
-        }
-
-        .sortable-handle:hover {
-            color: #2ea8e5;
-        }
-
-        .sortable-ghost .card {
-            background: #f2fbff;
-            border: 1px dashed #b6bcbf;
-        }
-    </style>
-@endpush
-
 @if(Auth::user()->isAdmin())
     @push('footer-scripts')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.1/Sortable.min.js"></script>
+        <script src="{{ asset('vendor/sortablejs/Sortable.min.js') }}"></script>
         <script>
             const sortable = Sortable.create(document.getElementById('roles'), {
                 animation: 150,
@@ -80,10 +31,6 @@
 
                 axios.post('{{ route('admin.roles.update-power') }}', {
                     'roles': serialize(sortable.el).reverse()
-                }, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
                 }).then(function (json) {
                     createAlert('success', json.data.message, true);
                 }).catch(function (error) {

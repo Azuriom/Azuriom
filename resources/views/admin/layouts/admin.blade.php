@@ -3,31 +3,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-@stack('meta')
+    @stack('meta')
 
-<!-- CSRF Token -->
+    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}" defer></script>
-    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('assets/vendor/axios/axios.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}" defer></script>
-    <script src="{{ asset('assets/admin/js/admin.js') }}" defer></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}" defer></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('vendor/axios/axios.min.js') }}" defer></script>
+    <script src="{{ asset('admin/js/sb-admin-2.min.js') }}" defer></script>
+    <script src="{{ asset('admin/js/admin.js') }}" defer></script>
 
     <!-- Page level scripts -->
-@stack('scripts')
+    @stack('scripts')
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
-    <link href="{{ asset('assets/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/admin.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 <body>
@@ -41,9 +41,9 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                 <div class="sidebar-brand-icon">
-                    <img src="{{ asset('img/azuriom-white.svg') }}" alt="Azuriom">
+                    <img src="{{ asset('svg/azuriom-white.svg') }}" alt="Azuriom">
                 </div>
-                <div class="sidebar-brand-text mx-3"><img src="{{ asset('img/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup>
+                <div class="sidebar-brand-text mx-3"><img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup>
                 </div>
             </a>
 

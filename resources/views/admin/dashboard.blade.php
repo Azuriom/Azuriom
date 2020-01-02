@@ -2,10 +2,6 @@
 
 @section('title', trans('admin.dashboard.title'))
 
-@push('scripts')
-    <script src="{{asset('assets/vendor/chart.js/Chart.min.js')}}"></script>
-@endpush
-
 @section('content')
     @if(! $secure)
         <div class="alert alert-warning shadow-sm" role="alert">
@@ -131,6 +127,7 @@
 @endsection
 
 @push('footer-scripts')
+    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
     <script>
         Chart.defaults.global.defaultFontColor = '#858796';
 

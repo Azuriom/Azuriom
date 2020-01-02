@@ -24,6 +24,37 @@ function createAlert(color, message, dismiss) {
     $('#status-message').html('<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>');
 }
 
+$('[data-password-toggle]').on('click', function (e) {
+    e.preventDefault();
+
+    const input = $(document.getElementById($(this).data('passwordToggle')));
+    const icon = $($(this).find('.fas'));
+
+    if (input.attr('type') === 'text') {
+        input.attr('type', 'password');
+        icon.removeClass('fa-eye').addClass('fa-eye-slash');
+    } else {
+        input.attr('type', 'text');
+        icon.removeClass('fa-eye-slash').addClass('fa-eye');
+    }
+});
+
+$('[data-image-preview]').on('change', function (e) {
+    if (e.currentTarget.files && e.currentTarget.files[0]) {
+        const reader = new FileReader();
+        const preview = document.getElementById($(this).data('image-preview'));
+
+        reader.onload = function (e) {
+            if (preview) {
+                preview.src = e.currentTarget.result;
+                preview.classList.remove('d-none');
+            }
+        };
+
+        reader.readAsDataURL(e.currentTarget.files[0]);
+    }
+});
+
 $('[data-toggle="tooltip"]').tooltip();
 
 $('[data-confirm="delete"]').on('click', function (e) {

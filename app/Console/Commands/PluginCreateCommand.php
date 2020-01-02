@@ -67,7 +67,7 @@ class PluginCreateCommand extends Command
 
         $this->createPluginJson($path, $name, $namespace);
 
-        $this->createComposerJson($path, $name);
+        $this->createComposerJson($path, $name, $namespace);
 
         $sourcePath = __DIR__.'/stubs/plugin';
 
@@ -105,12 +105,20 @@ class PluginCreateCommand extends Command
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    private function createComposerJson(string $path, string $name)
+    private function createComposerJson(string $path, string $name, string $namespace)
     {
         $this->files->put($path.'/composer.json', json_encode([
             'name' => 'azuriom/'.strtolower($name),
             'type' => 'azuriom-plugin',
             'description' => $this->option('description'),
+            'autoload' => [
+                'psr-4' => [
+                    "{$namespace}\\" => 'src/',
+                ],
+                'files' => [
+                    'src/helpers.php',
+                ],
+            ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

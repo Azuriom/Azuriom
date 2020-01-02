@@ -57,7 +57,11 @@ class LoginController extends Controller
             }
 
             if ($user->refreshActiveBan()->is_banned) {
-                return redirect()->back()->with('error', 'This account is suspended');
+                return redirect()->back()->with('error', trans('messages.profile.suspended'));
+            }
+
+            if (setting('maintenance-status', false) && ! $request->user()->can('maintenance.access')) {
+                return redirect()->back()->with('error', trans('auth.maintenance'));
             }
 
             if (! $user->hasTwoFactorAuth()) {
@@ -108,7 +112,7 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request);
         }
 
-        return redirect()->route('login.2fa')->withErrors(['code' => 'Invalid code']);
+        return redirect()->route('login.2fa')->withErrors(['code' => trans('auth.2fa-invalid')]);
     }
 
     protected function authenticated(Request $request, $user)

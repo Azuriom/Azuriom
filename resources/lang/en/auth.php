@@ -35,6 +35,8 @@ return [
     '2fa-code' => 'Two Factor Auth Code',
     '2fa-invalid' => 'Invalid code',
 
+    'maintenance' => 'The website is under maintenance.',
+
     'remember-me' => 'Remember Me',
     'forgot-password' => 'Forgot Your Password?',
 

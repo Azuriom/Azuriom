@@ -2,17 +2,6 @@
 
 @section('title', trans('admin.images.title'))
 
-@push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.css" rel="stylesheet">
-@endpush
-
-@push('footer-scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.0/baguetteBox.min.js"></script>
-    <script>
-        baguetteBox.run('.gallery');
-    </script>
-@endpush
-
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -32,10 +21,8 @@
                     @foreach($images as $image)
                         <tr>
                             <th scope="row">{{ $image->id }}</th>
-                            <td class="gallery">
-                                <a href="{{ $image->url() }}" target="_blank">
-                                    <img src="{{ $image->url() }}" class="img-small rounded" alt="{{ $image->name }}">
-                                </a>
+                            <td>
+                                <img src="{{ $image->url() }}" class="img-small rounded" alt="{{ $image->name }}">
                             </td>
                             <td>{{ $image->name }}</td>
                             <td><a href="{{ $image->url() }}" target="_blank">{{ $image->file }}</a></td>

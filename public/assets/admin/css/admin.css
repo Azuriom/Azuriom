@@ -1,12 +1,25 @@
+/* Fix for https://github.com/FezVrasta/popper.js/issues/457 */
+.tooltip {
+    top: 0;
+}
+
+.rotate-45 {
+    transform: rotate(45deg);
+}
+
+.cursor-copy {
+    cursor: copy;
+}
+
+.text-strikethrough  {
+    text-decoration: line-through;
+}
+
 a.disabled,
 .btn.disabled,
 .btn:disabled {
     cursor: not-allowed;
     opacity: .55;
-}
-
-.cursor-copy {
-    cursor: copy;
 }
 
 .sidebar-brand-icon img {
@@ -21,11 +34,6 @@ a.disabled,
     .sidebar:not(.toggled) .sidebar-brand-icon {
         display: none;
     }
-}
-
-/* Fix for https://github.com/FezVrasta/popper.js/issues/457 */
-.tooltip {
-    top: 0;
 }
 
 .tox-tinymce {
@@ -59,10 +67,48 @@ a.disabled,
     font-weight: inherit;
 }
 
-.rotate-45 {
-    transform: rotate(45deg);
+/*
+ * SortableJS
+ */
+.sortable .sortable {
+    padding-left: 2.8em;
 }
 
-.text-strikethrough  {
-    text-decoration: line-through;
+.sortable {
+    margin: 0;
+    padding-top: 0.6em;
+}
+
+.sortable-item {
+    display: block;
+    position: relative;
+    margin: 0 0 0.9em;
+    padding: 0;
+    min-height: 20px;
+}
+
+.sortable-dropdown {
+    margin-bottom: 0.3rem;
+}
+
+.sortable-dropdown .sortable-item {
+    margin-bottom: 0.6em;
+}
+
+.sortable-handle {
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.sortable-handle {
+    cursor: move;
+}
+
+.sortable-handle:hover {
+    color: #2ea8e5;
+}
+
+.sortable-ghost .card {
+    background: #f2fbff;
+    border: 1px dashed #b6bcbf;
 }
