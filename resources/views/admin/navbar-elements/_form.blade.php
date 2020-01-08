@@ -51,7 +51,7 @@
     <label for="pageSelect">{{ trans('admin.navbar-elements.fields.page') }}</label>
     <select class="custom-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
         @foreach($pages as $page)
-            <option value="{{ $page->id }}" @if($page->slug === (isset($navbarElement) && $navbarElement->getTypeValue('page'))) selected @endif>{{ $page->title }}</option>
+            <option value="{{ $page->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('page') === $page->slug)) selected @endif>{{ $page->title }}</option>
         @endforeach
     </select>
 
@@ -64,7 +64,7 @@
     <label for="postSelect">{{ trans('admin.navbar-elements.fields.post') }}</label>
     <select class="custom-select @error('post') is-invalid @enderror" id="postSelect" name="post">
         @foreach($posts as $post)
-            <option value="{{ $post->id }}" @if($post->slug === (isset($navbarElement) && $navbarElement->getTypeValue('post'))) selected @endif>{{ $post->title }}</option>
+            <option value="{{ $post->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('post') === $post->slug)) selected @endif>{{ $post->title }}</option>
         @endforeach
     </select>
 
@@ -86,7 +86,7 @@
     <label for="pluginSelect">{{ trans('messages.fields.link') }}</label>
     <select class="custom-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
         @foreach($pluginRoutes as $route => $name)
-            <option value="{{ $route  }}" @if($route === (isset($navbarElement) && $navbarElement->getTypeValue('plugin'))) selected @endif>{{ $name }}</option>
+            <option value="{{ $route  }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route)) selected @endif>{{ $name }}</option>
         @endforeach
     </select>
 

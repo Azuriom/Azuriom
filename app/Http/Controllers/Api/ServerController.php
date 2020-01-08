@@ -4,7 +4,9 @@ namespace Azuriom\Http\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Server;
+use Azuriom\Models\ServerCommand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ServerController extends Controller
@@ -41,9 +43,9 @@ class ServerController extends Controller
 
     public function fetch(Request $request)
     {
-        $server = Server::findOrFail($request->input('server-id'));
+        $server = Server::find($request->input('server-id'));
 
-        $players = $request->json('players');
+        $players = Arr::pluck($request->json('players'), 'name', 'uuid');
 
         $server->updateData([
             'players' => count($players),
@@ -54,12 +56,17 @@ class ServerController extends Controller
             'entities' => $request->json('worlds.entities'),
         ], $request->json('full'));
 
-        $commands = $server->commands->groupBy('player_name')
+        $commands = $server->commands()
+            ->whereIn('player_name', $players)
+            ->orWhere('need_online', false)
+            ->get();
+
+        ServerCommand::whereIn('id', $commands->pluck('id'))->delete();
+
+        $commands = $commands->groupBy('player_name')
             ->map(function ($serverCommands) {
                 return $serverCommands->pluck('command');
             });
-
-        $server->commands()->delete();
 
         return response()->json([
             'status' => 'ok',

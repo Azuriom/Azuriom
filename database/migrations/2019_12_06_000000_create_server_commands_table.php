@@ -17,6 +17,7 @@ class CreateServerCommandsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('server_id');
             $table->string('player_name');
+            $table->boolean('need_online')->default(false);
             $table->string('command');
             $table->timestamps();
         });

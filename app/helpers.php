@@ -22,24 +22,14 @@ if (! function_exists('color_contrast')) {
     }
 }
 
+/*
+ * Translation related helpers
+ */
+
 if (! function_exists('format_date')) {
     function format_date(Carbon $date, bool $fullTime = false)
     {
         return $date->translatedFormat(trans('messages.date'.($fullTime ? '-full' : '')));
-    }
-}
-
-if (! function_exists('asset')) {
-    /**
-     * Generate an asset path for the application.
-     *
-     * @param  string  $path
-     * @param  bool|null  $secure
-     * @return string
-     */
-    function asset(string $path, $secure = null)
-    {
-        return app('url')->asset('assets/'.$path, $secure);
     }
 }
 
@@ -49,6 +39,32 @@ if (! function_exists('format_date_compact')) {
         return $date->format(trans('messages.date-compact'));
     }
 }
+
+if (! function_exists('trans_bool')) {
+    function trans_bool(bool $bool)
+    {
+        return trans('messages.'.($bool ? 'yes' : 'no'));
+    }
+}
+
+if (! function_exists('money_name')) {
+    function money_name($money = 2)
+    {
+        $moneyName = setting('money', 'points');
+        return trans()->getSelector()->choose($moneyName, $money, trans()->getLocale());
+    }
+}
+
+if (! function_exists('format_money')) {
+    function format_money(float $money)
+    {
+        return $money.' '.money_name($money);
+    }
+}
+
+/*
+ * Settings/Config helpers
+ */
 
 if (! function_exists('setting')) {
     function setting(string $name, $default = null)
@@ -72,21 +88,6 @@ if (! function_exists('site_name')) {
     }
 }
 
-if (! function_exists('money_name')) {
-    function money_name($money = 2)
-    {
-        $moneyName = setting('money', 'points');
-        return trans()->getSelector()->choose($moneyName, $money, trans()->getLocale());
-    }
-}
-
-if (! function_exists('format_money')) {
-    function format_money(float $money)
-    {
-        return $money.' '.money_name($money);
-    }
-}
-
 if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {
@@ -94,34 +95,85 @@ if (! function_exists('image_url')) {
     }
 }
 
+/*
+ * Extensions helpers
+ */
+
+if (! function_exists('plugins')) {
+    /**
+     * Get the plugins manager.
+     *
+     * @return \Azuriom\Extensions\Plugin\PluginManager
+     */
+    function plugins()
+    {
+        return app('plugins');
+    }
+}
+
+if (! function_exists('themes')) {
+    /**
+     * Get the themes manager.
+     *
+     * @return \Azuriom\Extensions\Theme\ThemeManager
+     */
+    function themes()
+    {
+        return app('themes');
+    }
+}
+
 if (! function_exists('plugin_path')) {
-    function plugin_path($path = '')
+    function plugin_path(string $path = '')
     {
         return base_path('plugins/'.$path);
     }
 }
 
+if (! function_exists('themes_path')) {
+    /**
+     * Get the path of the themes directory
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function themes_path(string $path = '')
+    {
+        return themes()->themesPath($path);
+    }
+}
+
 if (! function_exists('theme_path')) {
-    function theme_path($path = '')
+    /**
+     * Get the path of a theme. If no theme is specified the current theme
+     * is used
+     *
+     * @param  string  $path
+     * @param  string|null  $theme
+     * @return string
+     */
+    function theme_path(string $path = '', string $theme = null)
     {
-        return resource_path('themes/'.$path);
+        return themes()->path($path, $theme);
     }
 }
 
-if (! function_exists('theme_config')) {
-    function theme_config(string $name, $default = null)
+if (! function_exists('theme_asset')) {
+    /**
+     * Generate an asset path for the current theme.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function theme_asset(string $path)
     {
-        return config('theme.'.$name, $default);
+        return asset('themes/'.themes()->currentTheme().'/'.$path);
     }
 }
 
-if (! function_exists('theme_trans')) {
-    function theme_trans(string $key, array $replace = [], $locale = null)
-    {
-        $theme = setting('theme');
-        return trans("theme.{$theme}::{$key}", $replace, $locale);
-    }
-}
+/*
+ * Other helpers
+ */
 
 if (! function_exists('game')) {
     /**
@@ -132,17 +184,5 @@ if (! function_exists('game')) {
     function game()
     {
         return app('game');
-    }
-}
-
-if (! function_exists('extensions')) {
-    /**
-     * Get the extensions manager.
-     *
-     * @return \Azuriom\Extensions\ExtensionsManager
-     */
-    function extensions()
-    {
-        return app('extensions');
     }
 }

@@ -2,11 +2,9 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Extensions\ExtensionsManager;
-use Illuminate\Cache\Repository as Cache;
-use Illuminate\Config\Repository as Config;
+use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\Theme\ThemeManager;
 use Illuminate\Support\ServiceProvider;
-use Throwable;
 
 class ExtensionServiceProvider extends ServiceProvider
 {
@@ -18,65 +16,37 @@ class ExtensionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $extensions = $this->app->make(ExtensionsManager::class);
+        $plugins = $this->app->make(PluginManager::class);
 
-        $this->app->instance('extensions', $extensions);
+        $this->app->instance('plugins', $plugins);
+        $this->app->alias('plugins', PluginManager::class);
 
-        foreach ($extensions->loadPlugins() as $path => $plugin) {
-            foreach ($plugin->providers ?? [] as $pluginProvider) {
-                try {
-                    $provider = new $pluginProvider($this->app);
+        $this->app->instance('themes', $this->app->make(ThemeManager::class));
+        $this->app->alias('themes', ThemeManager::class);
 
-                    if (method_exists($provider, 'bindName')) {
-                        $provider->bindName($path);
-                    }
-
-                    $this->app->register($provider);
-                } catch (Throwable $t) {
-                    report($t);
-                }
-            }
-        }
+        $plugins->loadPlugins($this->app);
     }
 
     /**
      * Bootstrap services.
      *
-     * @param  \Azuriom\Extensions\ExtensionsManager  $extensionsManager
-     * @param  \Illuminate\Cache\Repository  $cache
-     * @param  \Illuminate\Config\Repository  $config
+     * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes
      * @return void
      */
-    public function boot(ExtensionsManager $extensionsManager, Cache $cache, Config $config)
+    public function boot(ThemeManager $themes)
     {
         $theme = setting('theme');
 
         if ($theme === null) {
             return;
         }
-        $path = theme_path($theme);
 
-        // Add theme path to view finder
-        $this->app['view']->getFinder()->prependLocation($path);
+        $themes->loadTheme($theme);
 
-        $config->set([
-            'view.paths' => array_merge([$path], $config->get('view.paths', []))
-        ]);
+        $themeLangPath = $themes->path('lang', $theme);
 
-        // Load theme config
-        $themeConfig = $cache->remember('theme.config', now()->addDay(),
-            function () use ($extensionsManager, $theme) {
-                return $extensionsManager->getThemeConfig($theme);
-            });
-
-        if ($themeConfig !== null) {
-            foreach ($themeConfig as $key => $value) {
-                $config->set('theme.'.$key, $value);
-            }
-        }
-
-        if (is_dir($path.'/lang')) {
-            $this->loadTranslationsFrom($path.'/lang', 'theme.'.$theme);
+        if (is_dir($themeLangPath)) {
+            $this->loadTranslationsFrom($themeLangPath, 'theme');
         }
     }
 }

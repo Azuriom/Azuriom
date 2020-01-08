@@ -2,7 +2,7 @@
 
 namespace Azuriom\Console\Commands;
 
-use Azuriom\Extensions\ExtensionsManager;
+use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
@@ -26,10 +26,10 @@ class PluginClearCommand extends Command
      * Execute the console command.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Azuriom\Extensions\ExtensionsManager  $extensions
+     * @param  \Azuriom\Extensions\Plugin\PluginManager  $extensions
      * @return mixed
      */
-    public function handle(Filesystem $files, ExtensionsManager $extensions)
+    public function handle(Filesystem $files, PluginManager $extensions)
     {
         if ($files->exists($extensions->getCachedPluginsPath())) {
             $files->delete($extensions->getCachedPluginsPath());

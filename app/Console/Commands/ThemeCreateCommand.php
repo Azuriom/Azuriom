@@ -55,7 +55,7 @@ class ThemeCreateCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        $path = theme_path($this->argument('path') ?? strtolower($name));
+        $path = themes_path($this->argument('path') ?? strtolower($name));
 
         if ($this->files->exists($path)) {
             $this->error('The theme '.$path.' already exists!');

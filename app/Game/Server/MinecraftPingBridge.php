@@ -18,9 +18,9 @@ class MinecraftPingBridge extends ServerBridge
         return $this->getServerData() !== null;
     }
 
-    public function executeCommands(array $commands, ?string $playerName)
+    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
     {
-        throw new RuntimeException('Command cannot be executed with ping link.');
+        report(new RuntimeException('Command cannot be executed with ping link.'));
     }
 
     public function canExecuteCommand()

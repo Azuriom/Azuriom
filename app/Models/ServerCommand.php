@@ -20,7 +20,7 @@ class ServerCommand extends Model
      * @var array
      */
     protected $fillable = [
-        'player_name', 'command',
+        'player_name', 'need_online', 'command',
     ];
 
     /**

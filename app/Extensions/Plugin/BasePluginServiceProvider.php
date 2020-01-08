@@ -82,12 +82,12 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function registerRouteDescriptions()
     {
-        extensions()->addRouteDescription($this->routeDescriptions());
+        $this->app['plugins']->addRouteDescription($this->routeDescriptions());
     }
 
     protected function registerAdminNavigation()
     {
-        extensions()->addAdminNavItem($this->adminNavigation());
+        $this->app['plugins']->addAdminNavItem($this->adminNavigation());
     }
 
     protected function middlewareGroup($name, $middleware = null)
@@ -144,7 +144,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function pluginPath($path = '')
     {
-        return plugin_path($this->pluginName.'/'.$path);
+        return $this->app['plugins']->path($this->pluginName, $path);
     }
 
     protected function pluginResourcePath($path = '')

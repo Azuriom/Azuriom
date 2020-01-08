@@ -287,7 +287,7 @@ class SettingsController extends Controller
     {
         return $this->getAvailableLocaleCodes()->mapWithKeys(function ($file) {
             return [$file => trans('messages.lang', [], $file)];
-        })->toArray();
+        });
     }
 
     protected function getAvailableLocaleCodes()

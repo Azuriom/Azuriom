@@ -25,7 +25,7 @@ class MinecraftAzLinkBridge extends ServerBridge
         return true;
     }
 
-    public function executeCommands(array $commands, ?string $playerName)
+    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
     {
         foreach ($commands as $command) {
             $this->server->commands()->create([

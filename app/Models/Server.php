@@ -115,6 +115,9 @@ class Server extends Model
         }
     }
 
+    /**
+     * @return \Azuriom\Game\Server\ServerBridge
+     */
     public function bridge()
     {
         return app(self::TYPES[$this->type], ['server' => $this]);

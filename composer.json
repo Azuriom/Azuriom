@@ -18,8 +18,7 @@
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
         "pragmarx/google2fa": "^6.0",
-        "thedudeguy/rcon": "^1.0",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "thedudeguy/rcon": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -28,6 +27,9 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"
+    },
+    "suggest": {
+        "wikimedia/composer-merge-plugin": "This allow to merge the composer.json of the plugins in the main composer autoload"
     },
     "config": {
         "optimize-autoloader": true,
@@ -49,13 +51,16 @@
             "merge-scripts": false
         },
         "include_files": [
-            "app/helpers.php"
+            "app/base_helpers.php"
         ]
     },
     "autoload": {
         "psr-4": {
             "Azuriom\\": "app/"
         },
+        "files": [
+            "app/helpers.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"

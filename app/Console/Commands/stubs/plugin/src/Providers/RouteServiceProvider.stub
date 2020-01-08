@@ -31,7 +31,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
         Route::prefix($this->pluginName)
             ->middleware('web')
             ->namespace($this->namespace)
-            ->name($this->pluginName)
+            ->name("{$this->pluginName}.")
             ->group(plugin_path($this->pluginName.'/routes/web.php'));
     }
 }

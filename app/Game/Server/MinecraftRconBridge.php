@@ -30,7 +30,7 @@ class MinecraftRconBridge extends ServerBridge
         }
     }
 
-    public function executeCommands(array $commands, ?string $playerName)
+    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
     {
         $rcon = $this->createRcon();
 

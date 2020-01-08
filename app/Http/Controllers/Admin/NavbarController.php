@@ -83,7 +83,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
-            'pluginRoutes' => extensions()->getRouteDescriptions(),
+            'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
 
@@ -114,7 +114,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
-            'pluginRoutes' => extensions()->getRouteDescriptions(),
+            'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
 

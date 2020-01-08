@@ -191,13 +191,13 @@
                 </div>
             @endcan
 
-            @if(! extensions()->getAdminNavItems()->isEmpty())
+            @if(! plugins()->getAdminNavItems()->isEmpty())
                 <hr class="sidebar-divider">
 
                 <div class="sidebar-heading">Plugins</div>
             @endif
 
-            @foreach(extensions()->getAdminNavItems() as $navItem)
+            @foreach(plugins()->getAdminNavItems() as $navItem)
                 @if(! isset($navItem['permission']) || Gate::check($navItem['permission']))
                     @if($navItem['type'] ?? '' !== 'dropdown')
                         <div class="nav-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
@@ -332,7 +332,7 @@
                     <div class="copyright text-center my-auto">
                         <span>
                             @lang('admin.footer', [
-                                'year' => '2019',
+                                'year' => '2019-'.now()->year,
                                 'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>',
                                 'startbootstrap' => '<a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>'
                             ])

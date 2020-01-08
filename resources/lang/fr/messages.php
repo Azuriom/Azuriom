@@ -50,6 +50,7 @@ return [
         'role' => 'Role',
         'money' => 'Argent',
         'color' => 'Couleur',
+        'url' => 'URL',
         'version' => 'Version',
         'game' => 'Jeu',
     ],

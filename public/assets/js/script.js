@@ -19,7 +19,7 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
 
         likeLoading = true;
 
-        const likeSpinner = el.querySelector('.like-spinner');
+        const likeSpinner = el.querySelector('.load-spinner');
 
         if (likeSpinner) {
             likeSpinner.classList.remove('d-none');

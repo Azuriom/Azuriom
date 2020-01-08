@@ -2,23 +2,24 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
-use Azuriom\Extensions\ExtensionsManager;
+use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Setting;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class ThemeController extends Controller
 {
     /**
-     * The extension manager
+     * The themes manager instance.
      *
-     * @var \Azuriom\Extensions\ExtensionsManager $extensions ;
+     * @var \Azuriom\Extensions\Theme\ThemeManager $themes
      */
-    private $extensions;
+    private $themes;
 
     /**
      * The filesystem instance.
@@ -31,12 +32,12 @@ class ThemeController extends Controller
      * Create a new ThemeController instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Azuriom\Extensions\ExtensionsManager  $extensions
+     * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes
      */
-    public function __construct(Filesystem $files, ExtensionsManager $extensions)
+    public function __construct(Filesystem $files, ThemeManager $themes)
     {
         $this->files = $files;
-        $this->extensions = $extensions;
+        $this->themes = $themes;
     }
 
     /**
@@ -46,9 +47,13 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $themes = $this->extensions->getThemesDescriptions();
+        $themes = new Collection($this->themes->findThemesDescriptions());
 
-        $current = $themes->pull(setting('theme', 'default'));
+        $current = null;
+
+        if ($this->themes->hasTheme()) {
+            $current = $themes->pull($this->themes->currentTheme());
+        }
 
         return view('admin.themes.index', [
             'themes' => $themes,
@@ -59,7 +64,7 @@ class ThemeController extends Controller
 
     public function edit(string $theme)
     {
-        $viewPath = theme_path($theme.'/config/config.blade.php');
+        $viewPath = $this->themes->path('config/config.blade.php', $theme);
 
         if (! $this->files->exists($viewPath)) {
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.no-config'));
@@ -78,14 +83,14 @@ class ThemeController extends Controller
      */
     public function update(Request $request, string $theme)
     {
-        $rulesPath = theme_path($theme.'/config/rules.php');
+        $rulesPath = $this->themes->path('config/rules.php', $theme);
 
         try {
             $validated = $this->validate($request, $this->files->getRequire($rulesPath));
 
             $json = json_encode($validated, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
-            $this->files->put(theme_path($theme.'/config.json'), $json);
+            $this->files->put($this->themes->path('config.json', $theme), $json);
 
             Cache::put('theme.config', $validated, now()->addDay());
 
@@ -97,13 +102,15 @@ class ThemeController extends Controller
 
     public function changeTheme($theme = null)
     {
-        if ($theme !== null && $this->extensions->getThemeDescription($theme) === null) {
+        if ($theme !== null && $this->themes->findDescription($theme) === null) {
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.invalid'));
         }
 
         Setting::updateSettings('theme', $theme);
 
         ActionLog::logUpdate('Theme');
+
+        Cache::forget('theme.config');
 
         return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.updated'));
     }

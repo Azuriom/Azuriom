@@ -2,7 +2,7 @@
 
 namespace Azuriom\Console\Commands;
 
-use Azuriom\Extensions\ExtensionsManager;
+use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Console\Command;
 
 class PluginCacheCommand extends Command
@@ -24,12 +24,12 @@ class PluginCacheCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Azuriom\Extensions\ExtensionsManager  $extensions
+     * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
      * @return mixed
      */
-    public function handle(ExtensionsManager $extensions)
+    public function handle(PluginManager $plugins)
     {
-        $extensions->cachePlugins();
+        $plugins->cachePlugins();
 
         $this->info('Cached plugins files generated successfully.');
     }
