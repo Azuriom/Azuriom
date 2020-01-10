@@ -164,6 +164,14 @@
                     <small>{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
                 </div>
 
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif>
+                        <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.index.auth-api') }}</label>
+                    </div>
+                    <small>@lang('admin.settings.index.auth-api-label')</small>
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 </button>

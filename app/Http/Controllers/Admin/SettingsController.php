@@ -16,6 +16,26 @@ use Illuminate\Validation\Rule;
 class SettingsController extends Controller
 {
     /**
+     * The supported mail drivers
+     *
+     * @var array
+     */
+    private $mailEncryptionTypes = [
+        'tls' => 'TLS',
+        'ssl' => 'SSL',
+    ];
+
+    /**
+     * The supported mail drivers
+     *
+     * @var array
+     */
+    private $mailDrivers = [
+        'smtp' => 'SMTP',
+        'sendmail' => 'Sendmail',
+    ];
+
+    /**
      * The supported hash algorithms
      *
      * @var array
@@ -79,6 +99,7 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'money' => setting('money'),
             'register' => setting('register', true),
+            'authApi' => setting('auth-api', false),
         ]);
     }
 
@@ -102,7 +123,10 @@ class SettingsController extends Controller
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
                 'money' => ['required', 'string', 'max:15']
-            ]) + ['register' => $request->has('register')]);
+            ]) + [
+                'register' => $request->has('register'),
+                'auth-api' => $request->has('auth-api'),
+            ]);
 
         ActionLog::logUpdate('Settings');
 
@@ -248,6 +272,48 @@ class SettingsController extends Controller
         ActionLog::logUpdate('Settings');
 
         return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
+    }
+
+    /**
+     * Show the application mail settings.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function mail()
+    {
+        return view('admin.settings.mail', [
+            'drivers' => $this->mailDrivers,
+            'encryptionTypes' => $this->mailEncryptionTypes
+        ]);
+    }
+
+    /**
+     * Update the application mail settings.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateMail(Request $request)
+    {
+        $mailSettings = $this->validate($request, [
+            'from-address' => ['required', 'string', 'email'],
+            'encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
+            'driver' => ['required', Rule::in(array_keys($this->mailDrivers))],
+            'host' => ['required_if:driver,smtp', 'nullable', 'string'],
+            'port' => ['required_if:driver,smtp', 'nullable', 'integer', 'min:1', 'max:65535'],
+            'username' => ['nullable', 'string'],
+            'password' => ['nullable', 'string'],
+            'sendmail-path' => ['required_if:driver,sendmail', 'nullable', 'string'],
+        ]);
+
+        foreach ($mailSettings as $key => $value) {
+            Setting::updateSettings('mail.'.$key, empty($value) ? null : $value);
+        }
+
+        ActionLog::logUpdate('Settings');
+
+        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
     }
 
     /**

@@ -21,6 +21,7 @@ return [
                 'security' => 'Sécurité',
                 'performances' => 'Performances',
                 'seo' => 'SEO',
+                'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
             ],
             'navbar' => 'Navigation',
@@ -105,6 +106,8 @@ return [
             'conditions-url' => 'Liens des CGU',
             'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
             'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
+            'auth-api' => 'Activer l\'API auth',
+            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
         ],
 
         'maintenance' => [
@@ -179,6 +182,22 @@ return [
             'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics</a>.',
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
+        ],
+
+        'mail' => [
+            'title' => 'Paramètres Mail',
+
+            'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
+            'encryption' => 'Protocol de chiffrement Mail',
+            'driver' => 'Type Mail',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail for pour envoyer des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://docs.azuriom.com" target="_blank" rel="noopener">documentations</a>.',
+            'host' => 'Adresse de l\'hôte SMTP',
+            'port' => 'Port de l\'hôte SMTP',
+            'username' => 'Utilisateur du serveur SMTP',
+            'password' => 'Mot de passe du serveur SMTP',
+
+            'sendmail-path' => 'Chemin système vers Sendmail',
+            'sendmail-path-info' => 'Le chemin système vers Sendmail sur vote serveur. Il est recommandé de modifier cette valeur que si nescessaire.',
         ],
 
         'status' => [

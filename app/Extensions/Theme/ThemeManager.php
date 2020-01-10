@@ -56,13 +56,13 @@ class ThemeManager extends ExtensionManager
 
         $this->currentTheme = $theme;
 
-        $path = $this->path();
+        $viewsPath = $this->path('views');
 
         // Add theme path to view finder
-        view()->getFinder()->prependLocation($path);
+        view()->getFinder()->prependLocation($viewsPath);
 
         config([
-            'view.paths' => array_merge([$path], config('view.paths', []))
+            'view.paths' => array_merge([$viewsPath], config('view.paths', []))
         ]);
 
         $this->loadConfig($theme);

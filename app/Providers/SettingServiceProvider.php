@@ -7,9 +7,19 @@ use Exception;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class SettingServiceProvider extends ServiceProvider
 {
+    /**
+     * The settings that are encrypted for storage.
+     *
+     * @var array
+     */
+    protected $encrypted = [
+        //
+    ];
+
     /**
      * Bootstrap services.
      *
@@ -26,6 +36,9 @@ class SettingServiceProvider extends ServiceProvider
 
             foreach ($settings as $name => $value) {
                 switch ($name) {
+                    case 'name':
+                        $config->set('mail.from.name', $value);
+                        break;
                     case 'locale':
                         $this->app->setLocale($value);
                         break;
@@ -44,6 +57,14 @@ class SettingServiceProvider extends ServiceProvider
                             $config->set('hashing.driver', $value);
                         }
                         break;
+                }
+
+                if (in_array($name, $this->encrypted, true)) {
+                    $value = decrypt($value, false);
+                }
+
+                if (Str::startsWith($name, 'mail.')) {
+                    $config->set($name, $value);
                 }
 
                 $config->set('setting.'.$name, $value);

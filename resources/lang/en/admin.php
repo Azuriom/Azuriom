@@ -21,6 +21,7 @@ return [
                 'security' => 'Security',
                 'performances' => 'Performances',
                 'seo' => 'SEO',
+                'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
             ],
             'navbar' => 'Navbar',
@@ -105,6 +106,8 @@ return [
             'conditions-url' => 'Conditions URL',
             'enable-user-registration' => 'Enable user registration',
             'enable-user-registration-label' => 'It can still be possible to register through plugins.',
+            'auth-api' => 'Enable Auth API',
+            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> for an easy and quick integration.',
         ],
 
         'maintenance' => [
@@ -179,6 +182,22 @@ return [
             'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics website</a>.',
             'meta' => 'Meta keywords',
             'meta-info' => 'The keywords must be separated with a comma.',
+        ],
+
+        'mail' => [
+            'title' => 'Mail settings',
+
+            'from-address' => 'E-Mail address used to send e-mails.',
+            'encryption' => 'E-Mail Encryption Protocol',
+            'driver' => 'E-Mail type',
+            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://docs.azuriom.com" target="_blank" rel="noopener">documentations</a>.',
+            'host' => 'SMTP Host Address',
+            'port' => 'SMTP Host Port',
+            'username' => 'SMTP Server Username',
+            'password' => 'SMTP Server Password',
+
+            'sendmail-path' => 'Sendmail System Path',
+            'sendmail-path-info' => 'The path to sendmail on the server, you shouldn\'t change this unless specific reason.',
         ],
 
         'status' => [
