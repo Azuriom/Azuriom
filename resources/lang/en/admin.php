@@ -256,12 +256,12 @@ return [
         ],
 
         'azlink' => [
-            'link' => 'To link your server to your website using AzLink:',
+            'link' => 'To link Minecraft to your website using AzLink:',
             'link-1' => '<a href="https://azuriom.com/azlink">Download the plugin AzLink</a> and install it on your server.',
             'link-2' => 'Restart the server.',
             'link-3' => 'Execute this command on the server: ',
 
-            'link-info' => 'You can link your server to your website with the command: ',
+            'link-info' => 'You can link your Minecraft server to your website with the command: ',
             'port-info' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
 
             'custom-port' => 'Use a custom AzLink port',

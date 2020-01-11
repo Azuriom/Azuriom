@@ -50,6 +50,7 @@ return [
 
         'other' => [
             'heading' => 'Autres',
+            'update' => 'Mises à jour',
             'logs' => 'Logs',
         ],
 
@@ -255,12 +256,12 @@ return [
         ],
 
         'azlink' => [
-            'link' => 'Pour lier votre serveur à votre site Web en utilisant AzLink vous devez:',
+            'link' => 'Pour lier votre serveur Minecraft à votre site Web en utilisant AzLink vous devez:',
             'link-1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
             'link-2' => 'Redémarrer votre serveur.',
             'link-3' => 'Exécuter cette commande sur votre serveur: ',
 
-            'link-info' => 'Vous pouvez lier votre serveur à votre site web avec la commande: ',
+            'link-info' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
             'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
 
             'custom-port' => 'Utiliser un port AzLink personnalisé',
@@ -464,6 +465,37 @@ return [
             'invalid' => 'Ce thème n\'est pas valide.',
             'updated' => 'Le thème a été mis à jour.',
         ]
+    ],
+
+    'update' => [
+        'title' => 'Mise à jour',
+
+        'subtitle-update' => 'Mise à jour disponible',
+        'subtitle-no-update' => 'Pas de mise à jour disponible',
+
+        'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
+        'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
+        'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
+
+        'backup-info' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
+
+        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
+
+        'status' => [
+            'download-success' => 'La dernière version d\'Azuriom a été téléchargée, vous pouvez maintenant l\'installer.',
+            'install-success' => 'La dernière version d\'Azuriom a été installée avec succès.',
+
+            'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom.',
+            'error-fetch' => 'Une erreur s\'est produite lors de la vérification de la mise à jour: :error',
+            'error-download' => 'Une erreur s\'est produite lors du téléchargement de la mise à jour: :error',
+            'error-install' => 'Une erreur s\'est produite lors de l\'installation de la mise à jour: :error',
+        ],
+
+        'actions' => [
+            'check' => 'Vérifier les mises à jour',
+            'install' => 'Installer',
+            'download' => 'Télécharger',
+        ],
     ],
 
     'logs' => [
