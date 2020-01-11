@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Image;
 use Azuriom\Models\Page;
@@ -31,6 +32,10 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
+        $updates = $this->app->make(UpdateManager::class);
+        $newVersion = $updates->hasUpdate() ? $updates->getLastVersion() : null;
+        $apiAlerts = $updates->getApiAlerts();
+
         return view('admin.dashboard', [
             'secure' => $request->secure() || ! $this->app->isProduction(),
             'userCount' => User::count(),
@@ -38,7 +43,9 @@ class AdminController extends Controller
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),
             'recentUsers' => $this->getRecentUsers(),
-            'activeUsers' => $this->getActiveUsers()
+            'activeUsers' => $this->getActiveUsers(),
+            'newVersion' => $newVersion,
+            'apiAlerts' => $apiAlerts,
         ]);
     }
 

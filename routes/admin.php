@@ -58,6 +58,13 @@ Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->gro
     Route::post('/{slug}/disable', 'PluginController@disable')->name('disable');
 });
 
+Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(function () {
+    Route::get('/', 'UpdateController@index')->name('index');
+    Route::post('/fetch', 'UpdateController@fetch')->name('fetch');
+    Route::post('/download', 'UpdateController@download')->name('download');
+    Route::post('/install', 'UpdateController@install')->name('install');
+});
+
 Route::resource('navbar-elements', 'NavbarController')->except('show')->middleware('can:admin.navbar');
 Route::post('/navbar-elements/order', 'NavbarController@updateOrder')->name('navbar-elements.update-order')->middleware('can:admin.navbar');
 

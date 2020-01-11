@@ -9,6 +9,19 @@
         </div>
     @endif
 
+    @if($newVersion !== null)
+        <div class="alert alert-info shadow-sm" role="alert">
+            <i class="fas fa-plus"></i> A new version of Azuriom is available: {{ $newVersion }}.
+            <a href="{{ route('admin.update.index') }}">{{ trans('admin.update.actions.install') }}</a>.
+        </div>
+    @endif
+
+    @foreach($apiAlerts as $alertLevel => $alertMessage)
+            <div class="alert alert-{{ $alertLevel }} shadow-sm" role="alert">
+                {!! $alertMessage !!}
+            </div>
+    @endforeach
+
     <!-- Content Row -->
     <div class="row">
 

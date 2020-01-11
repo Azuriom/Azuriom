@@ -50,6 +50,7 @@ return [
 
         'other' => [
             'heading' => 'Other',
+            'update' => 'Update',
             'logs' => 'Logs',
         ],
 
@@ -464,6 +465,37 @@ return [
             'invalid' => 'This theme is invalid.',
             'updated' => 'The theme has been updated.',
         ]
+    ],
+
+    'update' => [
+        'title' => 'Update',
+
+        'subtitle-update' => 'Update available',
+        'subtitle-no-update' => 'No updates available',
+
+        'update' => 'The version <code>:last-version</code> of Azuriom is available and you are on version <code>:version</code>.',
+        'download' => 'The latest version of Azuriom is ready for download.',
+        'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
+
+        'backup-info' => 'Before updating Azuriom, you should make a backup of your site !',
+
+        'up-to-date' => 'You are running the latest version of Azuriom: <code>:version</code>.',
+
+        'status' => [
+            'download-success' => 'The latest version has been downloaded, you can now install it.',
+            'install-success' => 'The update has been installed successfully.',
+
+            'up-to-date' => 'You are using the latest version of Azuriom.',
+            'error-fetch' => 'An error occurred while fetching updates: :error',
+            'error-download' => 'An error occurred while downloading: :error',
+            'error-install' => 'An error occurred while installing: :error',
+        ],
+
+        'actions' => [
+            'check' => 'Check updates',
+            'install' => 'Install',
+            'download' => 'Download',
+        ],
     ],
 
     'logs' => [

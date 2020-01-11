@@ -136,11 +136,9 @@ class Handler extends ExceptionHandler
 
             $data = json_encode([
                 'version' => Azuriom::version(),
-                'php' => phpversion(),
-                'request' => [
-                    'url' => request()->url(),
-                    'method' => request()->method(),
-                ],
+                'php_version' => phpversion(),
+                'url' => request()->url(),
+                'method' => request()->method(),
                 'exceptions' => $exceptions,
             ]);
 

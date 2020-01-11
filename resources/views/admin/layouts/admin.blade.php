@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @stack('meta')
+@stack('meta')
 
-    <!-- CSRF Token -->
+<!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
@@ -18,9 +18,9 @@
     <script src="{{ asset('admin/js/admin.js') }}" defer></script>
 
     <!-- Page level scripts -->
-    @stack('scripts')
+@stack('scripts')
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,800" rel="stylesheet">
     <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
@@ -225,11 +225,22 @@
                 @endif
             @endforeach
 
-            @can('admin.logs')
+            @canany(['admin.update', 'admin.logs'])
                 <hr class="sidebar-divider">
 
                 <div class="sidebar-heading">{{ trans('admin.nav.other.heading') }}</div>
+            @endcanany
 
+            @can('admin.update')
+                <div class="nav-item {{ add_active('admin.update.*') }}">
+                    <a class="nav-link" href="{{ route('admin.update.index') }}">
+                        <i class="fas fa-fw fa-cloud-download-alt"></i>
+                        <span>{{ trans('admin.nav.other.update') }}</span>
+                    </a>
+                </div>
+            @endcan
+
+            @can('admin.logs')
                 <div class="nav-item {{ add_active('admin.logs.*') }}">
                     <a class="nav-link" href="{{ route('admin.logs.index') }}">
                         <i class="fas fa-fw fa-history"></i>
@@ -263,8 +274,16 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        @can('admin.update')
+                            @if($hasUpdate)
+                                <li class="nav-item mx-1">
+                                    <a class="nav-link text-info" href="{{ route('admin.update.index') }}">
+                                        <i class="fas fa-cloud-download-alt"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        @endcan
 
-                        <!-- Nav Item - Notifications -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- Counter - Notifications -->
@@ -280,7 +299,6 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>

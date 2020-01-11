@@ -81,6 +81,14 @@ if (! function_exists('favicon')) {
     }
 }
 
+if (! function_exists('site_logo')) {
+    function site_logo()
+    {
+        $logo = setting('logo');
+        return $logo !== null ? image_url($logo) : asset('img/azuriom.png');
+    }
+}
+
 if (! function_exists('site_name')) {
     function site_name()
     {
