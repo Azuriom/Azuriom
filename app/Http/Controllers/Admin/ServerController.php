@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\ServerRequest;
 use Azuriom\Models\Server;
+use Exception;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Str;
@@ -42,8 +43,14 @@ class ServerController extends Controller
     {
         $server = new Server($request->validated() + ['token' => Str::random(32)]);
 
-        if (! $server->bridge()->verifyLink()) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error'));
+        try {
+            if (! $server->bridge()->verifyLink()) {
+                throw new Exception('Unable to connect to the server');
+            }
+        } catch (Throwable $t) {
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
+                'error' => utf8_encode($t->getMessage()),
+            ]));
         }
 
         $server->save();
@@ -80,10 +87,15 @@ class ServerController extends Controller
     {
         $server->fill($request->validated());
 
-        if (! $server->bridge()->verifyLink()) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error'));
+        try {
+            if (! $server->bridge()->verifyLink()) {
+                throw new Exception('Unable to connect to the server');
+            }
+        } catch (Throwable $t) {
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
+                'error' => utf8_encode($t->getMessage()),
+            ]));
         }
-
         $server->save();
 
         return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));

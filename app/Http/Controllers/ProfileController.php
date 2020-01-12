@@ -3,11 +3,12 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Rules\CurrentPassword;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
-use PragmaRX\Google2FA\Support\Url;
 
 class ProfileController extends Controller
 {
@@ -48,13 +49,16 @@ class ProfileController extends Controller
 
         $google2fa = new Google2FA();
         $secretKey = old('2fa_key', $google2fa->generateSecretKey());
-        $qrCodeUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secretKey);
+        $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secretKey);
 
-        $googleQrUrl = Url::generateGoogleQRCodeUrl('https://chart.googleapis.com/', 'chart', 'chs=250x250&cht=qr&chl=', $qrCodeUrl);
+        $qrCode = new QRCode(new QROptions([
+            'imageTransparent' => false,
+        ]));
+        $qrCodeUrl = $qrCode->render($otpUrl);
 
         return view('profile.2fa', [
             'secretKey' => $secretKey,
-            'qrCodeUrl' => $googleQrUrl
+            'qrCodeUrl' => $qrCodeUrl
         ]);
     }
 

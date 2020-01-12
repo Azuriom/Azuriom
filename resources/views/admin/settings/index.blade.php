@@ -44,7 +44,7 @@
 
                 <div class="form-group">
                     <label for="descriptionInput">{{ trans('admin.settings.index.site-description') }}</label>
-                    <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', setting('description')) }}" required>
+                    <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', setting('description')) }}">
 
                     @error('description')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -82,7 +82,7 @@
                                 <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
                             </div>
                             <select class="custom-select @error('logo') is-invalid @enderror" id="logoSelect" data-image-select="logoPreview" name="logo">
-                                <option value="" @if(!$logo) selected @endif>None</option>
+                                <option value="" @if(!$logo) selected @endif>{{ trans('messages.none') }}</option>
                                 @foreach($images as $image)
                                     <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>{{ $image->name }}</option>
                                 @endforeach

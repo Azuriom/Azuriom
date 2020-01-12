@@ -48,7 +48,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
 
-            <ol class="list-unstyled sortable" id="roles">
+            <ol class="list-unstyled sortable mb-3" id="roles">
                 @foreach($roles as $role)
                     <li class="sortable-item sortable-dropdown" data-id="{{ $role->id }}">
                         <div class="card">

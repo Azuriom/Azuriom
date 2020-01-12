@@ -70,7 +70,7 @@
                                         <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" {{ old('conditions') ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="conditions">
-                                            I accept the <a href="{{ $conditions }}">conditions</a>.
+                                            @lang('auth.conditions', ['url' => $conditions])
                                         </label>
 
                                         @error('conditions')

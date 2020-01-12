@@ -32,6 +32,8 @@ return [
     'confirm-password' => 'Confirm Password',
     'current-password' => 'Current password',
 
+    'conditions' => 'I accept the <a href=":conditions" target="_blank" rel="noopener">conditions</a>.',
+
     '2fa-code' => 'Two Factor Auth Code',
     '2fa-invalid' => 'Invalid code',
 

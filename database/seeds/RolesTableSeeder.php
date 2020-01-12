@@ -16,7 +16,7 @@ class RolesTableSeeder extends Seeder
             'id' => 1
         ], [
             'name' => trans('seed.roles.member'),
-            'color' => '212529',
+            'color' => 'a5a5a5',
         ]);
 
         Role::firstOrCreate([
@@ -24,7 +24,8 @@ class RolesTableSeeder extends Seeder
         ], [
             'name' => trans('seed.roles.admin'),
             'color' => 'e10d11',
-            'is_admin' => true
+            'is_admin' => true,
+            'power' => 10,
         ]);
     }
 }

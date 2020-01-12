@@ -15,7 +15,7 @@ class MinecraftPingBridge extends ServerBridge
 
     public function verifyLink()
     {
-        return $this->getServerData() !== null;
+        return $this->makePing($this->server->ip, $this->server->port ?? 25565);
     }
 
     public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)

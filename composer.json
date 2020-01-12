@@ -12,6 +12,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "ext-zip": "*",
+        "chillerlan/php-qrcode": "^3.2",
         "fideloper/proxy": "^4.0",
         "funkjedi/composer-include-files": "^1.0",
         "google/recaptcha": "^1.2",

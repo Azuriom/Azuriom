@@ -35,6 +35,8 @@ return [
     '2fa-code' => 'Code d\'authentification à deux facteurs',
     '2fa-invalid' => 'Code invalide',
 
+    'conditions' => 'J\'accepte les <a href=":conditions" target="_blank">conditions</a>.',
+
     'maintenance' => 'Le site est actuellement en maintenance.',
 
     'remember-me' => 'Se souvenir de moi',

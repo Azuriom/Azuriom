@@ -60,7 +60,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <ol class="list-unstyled sortable sortable-list" id="sortable">
+            <ol class="list-unstyled sortable sortable-list mb-2" id="sortable">
                 @foreach($navbarElements as $navbarElement)
                     <li class="sortable-item @if($navbarElement->isDropdown()) sortable-parent @endif" data-id="{{ $navbarElement->id }}">
                         <div class="card">

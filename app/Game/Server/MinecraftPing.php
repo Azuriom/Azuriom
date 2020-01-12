@@ -3,7 +3,6 @@
 namespace Azuriom\Game\Server;
 
 use Exception;
-use MinecraftPinger\MinecraftPingException;
 
 /**
  * PHP Minecraft Pinger
@@ -60,7 +59,7 @@ class MinecraftPing
         $length = $this->readVarInt(); // packet length
 
         if ($length < 10) {
-            throw new Exception('Invalid length');
+            throw new Exception('Invalid length: '.$length);
         }
 
         fgetc($this->socket); // packet type
@@ -97,6 +96,12 @@ class MinecraftPing
         return $response;
     }
 
+    /**
+     * Read a var int.
+     *
+     * @return int
+     * @throws Exception
+     */
     private function readVarInt()
     {
         $i = 0;
@@ -114,7 +119,7 @@ class MinecraftPing
             $i |= ($k & 0x7F) << $j++ * 7;
 
             if ($j > 5) {
-                throw new MinecraftPingException('VarInt too big');
+                throw new Exception('VarInt too big: '.$j);
             }
 
             if (($k & 0x80) != 128) {
@@ -134,7 +139,7 @@ class MinecraftPing
     public function connect(int $timeout = 3)
     {
         $connectTimeout = $timeout;
-        $this->socket = @fsockopen($this->address, $this->port, $errno, $errstr, $connectTimeout);
+        $this->socket = fsockopen($this->address, $this->port, $errno, $errstr, $connectTimeout);
 
         if (! $this->socket) {
             $this->socket = null;

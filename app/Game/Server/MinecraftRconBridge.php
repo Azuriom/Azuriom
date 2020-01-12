@@ -4,30 +4,20 @@ namespace Azuriom\Game\Server;
 
 use Exception;
 use Thedudeguy\Rcon;
-use Throwable;
 
-class MinecraftRconBridge extends ServerBridge
+class MinecraftRconBridge extends MinecraftPingBridge
 {
     use MinecraftPinger;
 
-    public function getServerData()
-    {
-        return $this->ping($this->server->ip, $this->server->port ?? 25565) ?? null;
-    }
-
     public function verifyLink()
     {
-        if ($this->getServerData() === null) {
+        if (! parent::verifyLink()) {
             return false;
         }
 
-        try {
-            $rcon = $this->createRcon();
+        $rcon = $this->createRcon();
 
-            return $rcon->sendCommand('list');
-        } catch (Throwable $t) {
-            return false;
-        }
+        return $rcon->sendCommand('list');
     }
 
     public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)

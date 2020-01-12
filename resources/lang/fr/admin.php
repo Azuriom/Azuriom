@@ -191,7 +191,7 @@ return [
             'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
             'encryption' => 'Protocol de chiffrement Mail',
             'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail for pour envoyer des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://docs.azuriom.com" target="_blank" rel="noopener">documentations</a>.',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail for pour envoyer des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://docs.azuriom.com" target="_blank" rel="noopener">documentation</a>.',
             'host' => 'Adresse de l\'hôte SMTP',
             'port' => 'Port de l\'hôte SMTP',
             'username' => 'Utilisateur du serveur SMTP',
@@ -276,7 +276,7 @@ return [
             'deleted' => 'Le serveur a été supprimé.',
 
             'connect-success' => 'La connexion au serveur a été éffectuée avec succès !',
-            'connect-error' => 'La connexion au serveur a échouée',
+            'connect-error' => 'La connexion au serveur a échouée: :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
             'azlink-connect' => 'La connexion au serveur a échouée, l\'ip et/ou le port sont incorrects, ou le port est fermé.',

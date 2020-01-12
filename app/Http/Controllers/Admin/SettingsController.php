@@ -114,7 +114,7 @@ class SettingsController extends Controller
     {
         Setting::updateSettings($this->validate($request, [
                 'name' => ['required', 'string', 'max:50'],
-                'description' => ['required', 'string', 'max:255'],
+                'description' => ['nullable', 'string', 'max:255'],
                 'url' => ['required', 'url'],
                 'timezone' => ['required', 'timezone'],
                 'copyright' => ['nullable', 'string', 'max:150'],
@@ -308,7 +308,7 @@ class SettingsController extends Controller
         ]);
 
         foreach ($mailSettings as $key => $value) {
-            Setting::updateSettings('mail.'.$key, empty($value) ? null : $value);
+            Setting::updateSettings('mail.'.str_replace('-', '.', $key), empty($value) ? null : $value);
         }
 
         ActionLog::logUpdate('Settings');
