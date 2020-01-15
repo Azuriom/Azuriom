@@ -120,10 +120,10 @@
 
                 <div data-mail-type="sendmail">
                     <div class="form-group">
-                        <label for="sendmail-pathInput">{{ trans('admin.settings.mail.sendmail-path') }}</label>
-                        <input type="text" class="form-control @error('sendmail-path') is-invalid @enderror" id="sendmail-pathInput" name="sendmail-path" value="{{ old('sendmail-path', config('mail.sendmail-path', '/usr/sbin/sendmail -bs')) }}" required>
+                        <label for="sendmailPathInput">{{ trans('admin.settings.mail.sendmail-path') }}</label>
+                        <input type="text" class="form-control @error('sendmail') is-invalid @enderror" id="sendmailPathInput" name="sendmail" value="{{ old('sendmail', config('mail.sendmail', '/usr/sbin/sendmail -bs')) }}" required>
 
-                        @error('sendmail-path')
+                        @error('sendmail')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
 

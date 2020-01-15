@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
 
 class PluginController extends Controller
 {
@@ -56,13 +57,25 @@ class PluginController extends Controller
     {
         $this->plugins->enable($plugin);
 
-        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
+        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
+
+        if (app()->routesAreCached()) {
+            Artisan::call('route:cache');
+        }
+
+        return $response;
     }
 
     public function disable(string $plugin)
     {
         $this->plugins->disable($plugin);
 
-        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.disabled'));
+        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.disabled'));
+
+        if (app()->routesAreCached()) {
+            Artisan::call('route:cache');
+        }
+
+        return $response;
     }
 }

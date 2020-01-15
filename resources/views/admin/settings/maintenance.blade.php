@@ -2,6 +2,8 @@
 
 @section('title', trans('admin.settings.maintenance.title'))
 
+@include('admin.elements.editor')
+
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -15,7 +17,7 @@
 
                 <div class="form-group">
                     <label for="maintenanceArea">{{ trans('admin.settings.maintenance.message') }}</label>
-                    <input type="text" class="form-control @error('maintenance-message') is-invalid @enderror" id="maintenanceArea" name="maintenance-message" value="{{ old('maintenance-message', setting('maintenance-message')) }}">
+                    <textarea class="form-control html-editor @error('maintenance-message') is-invalid @enderror" id="maintenanceArea" name="maintenance-message" rows="5">{{ old('maintenance-message', setting('maintenance-message')) }}</textarea>
 
                     @error('maintenance-message')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

@@ -10,11 +10,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
-            </ul>
-
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
                 @foreach($navbar as $element)
                     @if(!$element->isDropdown())
                         <li class="nav-item">
@@ -33,6 +28,10 @@
                         </li>
                     @endif
                 @endforeach
+            </ul>
+
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
 
                 <!-- Authentication Links -->
                 @guest

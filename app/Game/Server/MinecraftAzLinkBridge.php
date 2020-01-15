@@ -54,6 +54,7 @@ class MinecraftAzLinkBridge extends ServerBridge
         $client->post("http://{$this->server->ip}:{$port}", [
             'headers' => [
                 'Authorization' => hash('sha256', $this->server->token),
+                'Content-Type' => 'application/json',
             ],
         ]);
     }

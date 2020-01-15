@@ -38,13 +38,7 @@ abstract class ExtensionManager
         }
 
         try {
-            $json = json_decode($this->files->get($path), $asoc);
-
-            if ($json && ! isset($json->enabled)) {
-                $json->enabled = false;
-            }
-
-            return $json;
+            return json_decode($this->files->get($path), $asoc);
         } catch (FileNotFoundException $e) {
             return null;
         }

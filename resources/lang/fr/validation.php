@@ -116,7 +116,7 @@ return [
     'unique' => 'Le champ :attribute a déjà été pris.',
     'uploaded' => 'Le champ :attribute n\'a pas été téléchargé.',
     'url' => 'Le champ :attribute n\'a pas un format valide.',
-    'uuid' => 'Le champ :attribute doit etre un UUID valide.',
+    'uuid' => 'Le champ :attribute doit être un UUID valide.',
 
     'username' => 'Le champ :attribute doit être un nom un pseudo valide.',
     'slug' => 'Le champ :attribute doit être un lien avec seulement des lettres minuscules, des chiffres et des tirets.',

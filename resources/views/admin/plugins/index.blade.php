@@ -26,10 +26,12 @@
                             <td>{{ join(', ', $plugin->authors) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
-                                <form method="POST" action="{{ route('admin.plugins.' . ($plugin->enabled ? 'disable' : 'enable'), $path) }}">
+                                <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}">
                                     @csrf
 
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-{{ $plugin->enabled ? 'times' : 'check' }}"></i> {{  trans('messages.actions.'.($plugin->enabled ? 'disable' : 'enable'))  }}</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-{{ plugins()->isEnabled($path)  ? 'times' : 'check' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -41,7 +43,9 @@
                 <form method="POST" action="{{ route('admin.plugins.reload') }}">
                     @csrf
 
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-sync"></i> {{ trans('admin.plugins.actions.reload') }}</button>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-sync"></i> {{ trans('admin.plugins.actions.reload') }}
+                    </button>
                 </form>
 
             </div>

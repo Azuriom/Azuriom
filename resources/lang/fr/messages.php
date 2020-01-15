@@ -46,6 +46,7 @@ return [
         'type' => 'Type',
         'file' => 'Fichier',
         'description' => 'Description',
+        'short-description' => 'Description courte',
         'content' => 'Contenu',
         'role' => 'Role',
         'money' => 'Argent',

@@ -101,7 +101,7 @@ class PluginManager extends ExtensionManager
      */
     public function pluginsPath(string $path = '')
     {
-        return $this->pluginsPath.$path;
+        return $this->pluginsPath.'/'.$path;
     }
 
     /**
@@ -139,7 +139,7 @@ class PluginManager extends ExtensionManager
      */
     public function getCachedPluginsPath()
     {
-        return base_path('/bootstrap/cache/plugins.php');
+        return storage_path('app/plugins');
     }
 
     /**
@@ -182,11 +182,7 @@ class PluginManager extends ExtensionManager
             return null;
         }
 
-        try {
-            $json->composer = json_decode($this->files->get($this->path($plugin, 'composer.json')), true);
-        } catch (FileNotFoundException $e) {
-            return null;
-        }
+        $json->composer = $this->getJson($this->path($plugin, 'composer.json'), true);
 
         return $json;
     }
@@ -245,6 +241,8 @@ class PluginManager extends ExtensionManager
     public function enable(string $plugin)
     {
         $this->setPluginEnabled($plugin, true);
+
+        app('migrator')->run([$this->path($plugin, 'database/migrations')]);
     }
 
     public function disable(string $plugin)
@@ -282,13 +280,26 @@ class PluginManager extends ExtensionManager
         return $this->adminNavItems;
     }
 
-    public function cachePlugins()
+    public function cachePlugins(array $enabledPlugins = null)
     {
-        $plugins = array_filter($this->findPluginsDescriptions(), function ($plugin) {
-            return $plugin->enabled ?? true;
-        });
+        if ($enabledPlugins === null) {
+            $enabledPlugins = $this->getJson($this->pluginsPath('plugins.json'), true) ?? [];
+        }
 
-        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($plugins, true).';');
+        $plugins = array_filter($this->findPluginsDescriptions(), function ($plugin) use ($enabledPlugins) {
+            return in_array($plugin, $enabledPlugins, true);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $plugins = array_map(function ($plugin) {
+            return (array) $plugin;
+        }, $plugins);
+
+        if (empty($enabledPlugins)) {
+            $this->files->delete($this->getCachedPluginsPath());
+            return [];
+        }
+
+        $this->files->put($this->getCachedPluginsPath(), serialize($plugins));
 
         return $plugins;
     }
@@ -297,7 +308,9 @@ class PluginManager extends ExtensionManager
     {
         if ($this->files->isFile($this->getCachedPluginsPath())) {
             try {
-                $this->plugins = $this->files->getRequire($this->getCachedPluginsPath());
+                $this->plugins = array_map(function ($array) {
+                    return (object) $array;
+                }, unserialize($this->files->get($this->getCachedPluginsPath())));
 
                 return $this->plugins;
             } catch (FileNotFoundException $e) {
@@ -318,12 +331,19 @@ class PluginManager extends ExtensionManager
             return false;
         }
 
-        $description->enabled = $enabled;
+        $plugins = array_keys($this->plugins);
 
-        $json = json_encode($description, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        if ($enabled) {
+            $plugins[] = $plugin;
+        } else {
+            foreach (array_keys($plugins, $plugin, true) as $key) {
+                unset($plugins[$key]);
+            }
+        }
 
-        $this->files->put($this->path($plugin, 'plugin.json'), $json);
-        $this->cachePlugins();
+        $this->files->put($this->pluginsPath('plugins.json'), json_encode($plugins));
+
+        $this->cachePlugins($plugins);
 
         return true;
     }
@@ -352,7 +372,7 @@ class PluginManager extends ExtensionManager
         $pluginAssetsPath = $this->path($plugin, 'assets');
 
         if ($this->files->exists($pluginAssetsPath)) {
-            $this->files->link($pluginAssetsPath, $this->publicPath('', $plugin));
+            $this->files->link($pluginAssetsPath, $this->pluginsPublicPath("/{$plugin}"));
         }
     }
 }

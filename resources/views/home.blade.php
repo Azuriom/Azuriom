@@ -3,14 +3,14 @@
 @section('title', trans('messages.home'))
 
 @section('content')
-    <div class="home-background mb-4" style="background: url(https://via.placeholder.com/2000x500) no-repeat center">
+    <div class="home-background mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') no-repeat center">
 
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                @foreach($posts as $post)
+            @foreach($posts as $post)
+                <div class="col-md-6">
                     <div class="post-preview card mb-3 shadow-sm">
                         @if($post->hasImage())
                             <img src="{{ $post->imageUrl() }}" class="bd-placeholder-img card-img-top">
@@ -25,15 +25,8 @@
                             {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
                         </div>
                     </div>
-                @endforeach
-            </div>
-
-            <div class="col-md-4">
-                <iframe src="https://discordapp.com/widget?id=613443499031003177&theme=dark" height="500" class="discord-widget mb-3" allowtransparency="true"></iframe>
-
-                <a class="twitter-timeline" data-theme="dark" data-height="500" href="https://twitter.com/LaravelPHP">Tweets by Laravel</a>
-                <script async src="https://platform.twitter.com/widgets.js"></script>
-            </div>
+                </div>
+            @endforeach
         </div>
     </div>
 @endsection

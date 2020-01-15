@@ -94,7 +94,7 @@ class ThemeController extends Controller
 
             Cache::put('theme.config', $validated, now()->addDay());
 
-            return redirect()->route('admin.themes.index')->with('success', 'Theme config updated');
+            return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.config-updated'));
         } catch (FileNotFoundException $e) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
         }

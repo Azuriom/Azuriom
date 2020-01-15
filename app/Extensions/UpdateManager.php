@@ -68,7 +68,7 @@ class UpdateManager
             return null;
         }
 
-        return $updates['version'];
+        return $updates['version'] ?? null;
     }
 
     public function getUpdate(bool $force = false)
@@ -79,7 +79,7 @@ class UpdateManager
             return null;
         }
 
-        return $updates['update'];
+        return $updates['update'] ?? null;
     }
 
     public function fetch(bool $force = false)
@@ -112,7 +112,13 @@ class UpdateManager
                 'headers' => ['User-Agent' => $this->getUserAgent()],
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $updates = json_decode($response->getBody()->getContents(), true);
+
+            if ($updates !== null) {
+                $this->updates = $updates;
+            }
+
+            return $updates;
         } catch (Throwable $t) {
             logger()->warning('Unable to check updates '.$t->getMessage());
             return [];
@@ -150,7 +156,7 @@ class UpdateManager
             'headers' => ['User-Agent' => $this->getUserAgent()],
         ]);
 
-        if (hash_equals($info['hash'], $this->files->hash($path))) {
+        if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
             throw new Exception('File hash don t math excepted hash !');
@@ -159,7 +165,7 @@ class UpdateManager
 
     public function install(array $info)
     {
-        $file = $info['file'];
+        $file = storage_path('app/updates/'.$info['file']);
 
         if ($this->files->extension($file) !== 'zip') {
             throw new Exception('Invalid file extension');

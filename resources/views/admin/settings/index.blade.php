@@ -99,6 +99,29 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="imageSelect">{{ trans('admin.settings.index.background') }}</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                        </div>
+                        <select class="custom-select @error('background') is-invalid @enderror" id="imageSelect" data-image-select="backgroundPreview" name="background">
+                            <option value="" @if(!$background) selected @endif>{{ trans('messages.none') }}</option>
+                            @foreach($images as $image)
+                                <option value="{{ $image->file }}" @if($image->file === $background) selected @endif>{{ $image->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mt-3 @if(!$background) d-none @endif">
+                        <img src="{{ $background ? image_url($background) : '#' }}" class="img-fluid rounded img-preview-sm" alt="background" id="backgroundPreview">
+                    </div>
+
+                    @error('background')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="timezoneSelect">{{ trans('admin.settings.index.timezone') }}</label>

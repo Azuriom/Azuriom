@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->firstOrFail();
+        $page = Page::enabled()->where('slug', $slug)->firstOrFail();
 
         $this->authorize('view', $page);
 

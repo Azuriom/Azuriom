@@ -92,6 +92,7 @@ class SettingsController extends Controller
             'images' => Image::all(),
             'icon' => setting('icon'),
             'logo' => setting('logo'),
+            'background' => setting('background'),
             'locales' => $this->getAvailableLocales(),
             'timezones' => array_values(timezone_identifiers_list()),
             'currentTimezone' => config('app.timezone'),
@@ -114,7 +115,7 @@ class SettingsController extends Controller
     {
         Setting::updateSettings($this->validate($request, [
                 'name' => ['required', 'string', 'max:50'],
-                'description' => ['nullable', 'string', 'max:255'],
+                'description' => ['nullable', 'string', 'max:200'],
                 'url' => ['required', 'url'],
                 'timezone' => ['required', 'timezone'],
                 'copyright' => ['nullable', 'string', 'max:150'],
@@ -122,6 +123,7 @@ class SettingsController extends Controller
                 'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
+                'background' => ['nullable', 'exists:images,file'],
                 'money' => ['required', 'string', 'max:15']
             ]) + [
                 'register' => $request->has('register'),
@@ -304,8 +306,10 @@ class SettingsController extends Controller
             'port' => ['required_if:driver,smtp', 'nullable', 'integer', 'min:1', 'max:65535'],
             'username' => ['nullable', 'string'],
             'password' => ['nullable', 'string'],
-            'sendmail-path' => ['required_if:driver,sendmail', 'nullable', 'string'],
+            'sendmail' => ['required_if:driver,sendmail', 'nullable', 'string'],
         ]);
+
+        $mailSettings['password'] = encrypt($mailSettings['password'], false);
 
         foreach ($mailSettings as $key => $value) {
             Setting::updateSettings('mail.'.str_replace('-', '.', $key), empty($value) ? null : $value);
@@ -336,7 +340,7 @@ class SettingsController extends Controller
     public function updateMaintenance(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-            'maintenance-message' => ['nullable', 'string', 'max:255']
+            'maintenance-message' => ['nullable', 'string']
         ]));
 
         Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));

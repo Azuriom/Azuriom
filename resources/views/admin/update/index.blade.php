@@ -12,8 +12,6 @@
                 saveButtonIcon.classList.remove('d-none');
 
                 axios.post(el.dataset['updateRoute']).then(function (json) {
-                    createAlert('success', json.data.message, true);
-
                     window.location.reload();
                 }).catch(function (error) {
                     createAlert('danger', error.response.data.message ? error.response.data.message : error, true)

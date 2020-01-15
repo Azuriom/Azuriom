@@ -44,11 +44,16 @@ class UserCreateCommand extends Command
         $data['email'] = $this->option('email') ?? $this->ask('The Email address of the user');
         $data['password'] = Hash::make($this->option('password') ?? $this->secret('The password of the user'));
 
-        if ($admin) {
-            $data['role_id'] = Role::where('is_admin', true)->firstOrFail()->id;
-        }
+        $user = User::create($data);
+        $user->markEmailAsVerified();
 
-        User::create($data)->markEmailAsVerified();
+        if ($admin) {
+            $role = Role::where('is_admin', true)->orderByDesc('power')->value('id');
+
+            if ($role) {
+                $user->role()->associate($role)->save();
+            }
+        }
 
         $this->info('User created !');
     }

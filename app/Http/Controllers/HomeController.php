@@ -21,8 +21,6 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        $themes = app(ThemeManager::class);
-
         return view('home', ['posts' => $posts]);
     }
 

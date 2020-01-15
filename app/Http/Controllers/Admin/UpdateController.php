@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Throwable;
 
 class UpdateController extends Controller
@@ -54,7 +55,7 @@ class UpdateController extends Controller
         return $response;
     }
 
-    public function download()
+    public function download(Request $request)
     {
         $update = $this->updates->getUpdate(true);
 
@@ -76,13 +77,12 @@ class UpdateController extends Controller
             ], 422);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => trans('admin.update.status.download-success'),
-        ]);
+        $request->session()->flash('success', trans('admin.update.status.download-success'));
+
+        return response()->json(['status' => 'success']);
     }
 
-    public function install()
+    public function install(Request $request)
     {
         $update = $this->updates->getUpdate(true);
 
@@ -104,9 +104,8 @@ class UpdateController extends Controller
             ], 422);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => trans('admin.update.status.install-success'),
-        ]);
+        $request->session()->flash('success', trans('admin.update.status.install-success'));
+
+        return response()->json(['status' => 'success']);
     }
 }

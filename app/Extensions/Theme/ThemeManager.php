@@ -236,7 +236,7 @@ class ThemeManager extends ExtensionManager
 
     protected function getConfig(string $theme)
     {
-        return $this->getJson(themes_path($theme.'/config.json'), true);
+        return $this->getJson($this->path('config.json', $theme), true);
     }
 
     protected function createAssetsLink(string $theme)
@@ -248,7 +248,7 @@ class ThemeManager extends ExtensionManager
         $themeAssetsPath = $this->path('assets', $theme);
 
         if ($this->files->exists($themeAssetsPath)) {
-            $this->files->link($themeAssetsPath, $this->publicPath('', $theme));
+            $this->files->link($themeAssetsPath, $this->themesPublicPath('/'.$theme));
         }
     }
 }

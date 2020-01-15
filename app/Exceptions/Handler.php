@@ -112,10 +112,14 @@ class Handler extends ExceptionHandler
 
     /**
      * Report the exception to Azuriom to provide quick fix of errors.
-     * @param  Exception  $exception
+     * @param  Exception  $e
      */
-    protected function reportException(Exception $exception)
+    protected function reportException(Exception $e)
     {
+        if ($this->shouldntReport($e)) {
+            return;
+        }
+
         if (config('app.debug')) {
             return;
         }
@@ -123,7 +127,7 @@ class Handler extends ExceptionHandler
         try {
             $exceptions = collect([]);
 
-            $ex = $exception;
+            $ex = $e;
 
             do {
                 $exceptions->push([
@@ -134,17 +138,17 @@ class Handler extends ExceptionHandler
                 ]);
             } while (($ex = $ex->getPrevious()));
 
-            $data = json_encode([
+            $data = [
                 'version' => Azuriom::version(),
                 'php_version' => phpversion(),
                 'url' => request()->url(),
                 'method' => request()->method(),
                 'exceptions' => $exceptions,
-            ]);
+            ];
 
             $client = new \GuzzleHttp\Client(['timeout' => 5]);
 
-            $client->post('https://azuriom.com/api/errors/report', ['body' => $data,]);
+            $client->post('https://azuriom.com/api/errors/report', ['json' => $data,]);
         } catch (Throwable $t) {
             //
         }

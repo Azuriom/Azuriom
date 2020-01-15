@@ -59,6 +59,9 @@ return [
         ],
 
         'back-website' => 'Retour au site',
+
+        'support' => 'Support',
+        'documentation' => 'Documentation'
     ],
 
     'notifications' => [
@@ -100,6 +103,7 @@ return [
             'site-url' => 'URL du site',
             'site-description' => 'Description du site',
             'favicon' => 'Favicon',
+            'background' => 'Background',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
@@ -191,14 +195,14 @@ return [
             'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
             'encryption' => 'Protocol de chiffrement Mail',
             'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail for pour envoyer des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://docs.azuriom.com" target="_blank" rel="noopener">documentation</a>.',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener">documentation</a>.',
             'host' => 'Adresse de l\'hôte SMTP',
             'port' => 'Port de l\'hôte SMTP',
             'username' => 'Utilisateur du serveur SMTP',
             'password' => 'Mot de passe du serveur SMTP',
 
             'sendmail-path' => 'Chemin système vers Sendmail',
-            'sendmail-path-info' => 'Le chemin système vers Sendmail sur vote serveur. Il est recommandé de modifier cette valeur que si nescessaire.',
+            'sendmail-path-info' => 'Le chemin système vers Sendmail sur votre serveur. Il est recommandé de modifier cette valeur que si nécessaire.',
         ],
 
         'status' => [
@@ -462,6 +466,7 @@ return [
 
         'status' => [
             'no-config' => 'Ce thème n\'a pas de configuration.',
+            'config-updated' => 'La configuration du thème a été mise à jour..',
             'invalid' => 'Ce thème n\'est pas valide.',
             'updated' => 'Le thème a été mis à jour.',
         ]
