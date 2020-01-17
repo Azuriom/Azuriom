@@ -57,7 +57,7 @@ return [
         'array' => 'Le champ :attribute doit avoir :value élements ou plus.',
     ],
     'image' => 'Le champ :attribute doit être une image.',
-    'in' => 'Le champ selectionné :attribute n\'est pas valide.',
+    'in' => 'La valeur du champ :attribute n\'est pas valide.',
     'in_array' => 'Le champ :attribute n\'existe pas dans :other.',
     'integer' => 'Le champ :attribute doit être un nombre entier.',
     'ip' => 'Le champ :attribute doit être une adresse IP valide.',

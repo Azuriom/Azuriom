@@ -2,7 +2,6 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
 

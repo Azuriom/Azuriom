@@ -2,6 +2,9 @@
 
 namespace Azuriom\Models\Traits;
 
+/**
+ * Add a prefix to the table name
+ */
 trait HasTablePrefix
 {
     /**

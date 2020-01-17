@@ -7,6 +7,9 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * Trait to link an image to a model.
+ */
 trait HasImage
 {
     protected static function bootHasImage()

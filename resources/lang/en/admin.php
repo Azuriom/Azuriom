@@ -283,7 +283,7 @@ return [
             'connect-error' => 'The connection to the server failed: :error',
 
             'not-azlink' => 'This server is not connected via AzLink.',
-            'azlink-connect' => 'The connection to the server has failed, the ip and/or port are incorrect, or the port is closed.',
+            'azlink-connect' => 'The connection to the server has failed, the address and/or port are incorrect, or the port is closed.',
             'azlink-badresponse' => 'The connection to the server has failed (code :code), the token is invalid or the server is misconfigured. You can redo the link command to fix this.',
         ],
 

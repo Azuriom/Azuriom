@@ -4,6 +4,9 @@ namespace Azuriom\Models\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Associate a user when creating a model.
+ */
 trait HasUser
 {
     protected static function bootHasUser()

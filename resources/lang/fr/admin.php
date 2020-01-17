@@ -283,7 +283,7 @@ return [
             'connect-error' => 'La connexion au serveur a échouée: :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
-            'azlink-connect' => 'La connexion au serveur a échouée, l\'ip et/ou le port sont incorrects, ou le port est fermé.',
+            'azlink-connect' => 'La connexion au serveur a échouée, l\'address et/ou le port sont incorrects, ou le port est fermé.',
             'azlink-badresponse' => 'La connexion au serveur a échouée (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
         ],
 
