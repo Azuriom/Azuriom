@@ -18,7 +18,7 @@ class ImageRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:150'],
             'slug' => ['required', 'string', 'max:100', new Slug()],
-            'image' => [Rule::requiredIf(! $this->image), 'nullable', 'image', 'max:2000'],
+            'image' => [Rule::requiredIf(! $this->image), 'nullable', 'image'],
         ];
     }
 }

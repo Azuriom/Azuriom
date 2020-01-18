@@ -115,7 +115,7 @@ class SettingsController extends Controller
     {
         Setting::updateSettings($this->validate($request, [
                 'name' => ['required', 'string', 'max:50'],
-                'description' => ['nullable', 'string', 'max:200'],
+                'description' => ['nullable', 'string', 'max:255'],
                 'url' => ['required', 'url'],
                 'timezone' => ['required', 'timezone'],
                 'copyright' => ['nullable', 'string', 'max:150'],
