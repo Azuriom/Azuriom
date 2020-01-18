@@ -62,7 +62,12 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->hasMany(Permission::class);
+    }
+
+    public function rawPermissions()
+    {
+        return $this->permissions->pluck('permission');
     }
 
     public function hasPermission($permission)
@@ -70,13 +75,25 @@ class Role extends Model
         return $this->is_admin || $this->hasRawPermission($permission);
     }
 
-    public function hasRawPermission($permission)
+    public function hasRawPermission(string $permission)
     {
-        if (is_string($permission)) {
-            $permission = Permission::where('name', $permission)->first();
+        return $this->permissions->contains('permission', $permission);
+    }
+
+    public function syncPermissions(array $newPermissions, bool $remove = true)
+    {
+        $permissions = $this->rawPermissions();
+
+        // Create the new permissions
+        foreach (array_diff($newPermissions, $permissions->all()) as $permission) {
+            $this->permissions()->create(['permission' => $permission]);
         }
 
-        return $permission && $this->permissions->contains($permission);
+        if ($remove) {
+            // Delete the removed permissions
+            $removedPermissions = $permissions->diff($newPermissions);
+            $this->permissions()->whereIn('permission', $removedPermissions)->delete();
+        }
     }
 
     /**

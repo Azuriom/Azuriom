@@ -58,7 +58,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create', ['permissions' => Permission::all()]);
+        return view('admin.roles.create', ['permissions' => Permission::permissions()]);
     }
 
     /**
@@ -71,9 +71,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->validated());
 
-        $permissions = array_keys($request->input('permissions', []));
-
-        $role->permissions()->sync($permissions);
+        $role->syncPermissions($request->input('permissions', []));
 
         return redirect()->route('admin.roles.index')->with('success', trans('admin.roles.status.created'));
     }
@@ -93,7 +91,7 @@ class RoleController extends Controller
 
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::all()
+            'permissions' => Permission::permissionsWithName()
         ]);
     }
 
@@ -117,9 +115,7 @@ class RoleController extends Controller
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.add-admin'));
         }
 
-        $permissions = array_keys($request->input('permissions', []));
-
-        $role->permissions()->sync($permissions);
+        $role->syncPermissions(array_keys($request->input('permissions', [])));
 
         $role->update($request->validated());
 

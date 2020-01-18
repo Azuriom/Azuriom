@@ -12,9 +12,7 @@ class NavbarElementsTableSeeder extends Seeder
      */
     public function run()
     {
-        NavbarElement::firstOrCreate([
-            'type' => 'home'
-        ], [
+        NavbarElement::firstOrCreate(['type' => 'home'], [
             'name' => trans('seed.navbar.home'),
             'value' => '#',
         ]);

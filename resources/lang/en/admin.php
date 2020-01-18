@@ -377,6 +377,20 @@ return [
         ]
     ],
 
+    'permissions' => [
+        'create-comments' => 'Comment a post',
+        'delete-other-comments' => 'Delete a post comment from another user',
+        'admin-access' => 'Access to the admin dashboard',
+        'admin-logs' => 'View and manage site logs',
+        'admin-images' => 'View and manage images',
+        'admin-navbar' => 'View and manage navbar',
+        'admin-pages' => 'View and manage pages',
+        'admin-posts' => 'View and manage posts',
+        'admin-settings' => 'View and manage settings',
+        'admin-themes' => 'View and manage themes',
+        'admin-plugins' => 'View and manage plugins',
+    ],
+
     'bans' => [
         'title' => 'Bans',
 

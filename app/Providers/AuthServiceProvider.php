@@ -11,8 +11,8 @@ use Azuriom\Policies\CommentPolicy;
 use Azuriom\Policies\PagePolicy;
 use Azuriom\Policies\PostPolicy;
 use Azuriom\Policies\RolePolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -43,13 +43,7 @@ class AuthServiceProvider extends ServiceProvider
             }
 
             if (empty($arguments)) {
-                $user->role->loadMissing('permissions');
-
-                $permission = $user->role->permissions->where('name', $ability)->first();
-
-                if ($permission !== null) {
-                    return $user->hasPermission($permission);
-                }
+                return $user->role->hasRawPermission($ability);
             }
         });
     }

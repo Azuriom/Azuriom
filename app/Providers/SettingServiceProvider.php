@@ -31,7 +31,7 @@ class SettingServiceProvider extends ServiceProvider
     {
         try {
             $settings = $cache->remember('settings', now()->addDay(), function () {
-                return Setting::all()->pluck('value', 'name')->toArray();
+                return Setting::all()->pluck('value', 'name')->all();
             });
 
             foreach ($settings as $name => $value) {

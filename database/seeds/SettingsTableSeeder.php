@@ -18,11 +18,7 @@ class SettingsTableSeeder extends Seeder
         ];
 
         foreach ($defaultSettings as $setting => $value) {
-            Setting::firstOrCreate([
-                'name' => $setting
-            ], [
-                'value' => $value
-            ]);
+            Setting::firstOrCreate(['name' => $setting], ['value' => $value]);
         }
     }
 }

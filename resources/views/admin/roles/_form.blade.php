@@ -32,10 +32,10 @@
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">
     <div class="card card-body mb-2">
-        @foreach($permissions as $permission)
+        @foreach($permissions as $permission => $permissionDescription)
             <div class="form-group custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="permission{{ $permission->id }}" name="permissions[{{ $permission->id }}]" @if(isset($role) && $role->hasRawPermission($permission) ?? false) checked @endif>
-                <label class="custom-control-label" for="permission{{ $permission->id }}">{{ $permission->name }}</label>
+                <input type="checkbox" class="custom-control-input" id="permission{{ $loop->index }}" name="permissions[{{ $permission }}]" @if(isset($role) && $role->hasRawPermission($permission) ?? false) checked @endif>
+                <label class="custom-control-label" for="permission{{ $loop->index }}">{{ trans($permissionDescription) }}</label>
             </div>
         @endforeach
     </div>

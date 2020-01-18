@@ -7,11 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
+ * @property int $role_id
  *
- * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
+ * @property \Azuriom\Models\Role $role
  */
 class Permission extends Model
 {
+    private static $permissions = [
+        'comments.create' => 'admin.permissions.create-comments',
+        'comments.delete.other' => 'admin.permissions.delete-other-comments',
+        'admin.access' => 'admin.permissions.admin-access',
+        'admin.logs' => 'admin.permissions.admin-logs',
+        'admin.images' => 'admin.permissions.admin-images',
+        'admin.navbar' => 'admin.permissions.admin-navbar',
+        'admin.pages' => 'admin.permissions.admin-pages',
+        'admin.posts' => 'admin.permissions.admin-posts',
+        'admin.settings' => 'admin.permissions.admin-settings',
+        'admin.themes' => 'admin.permissions.admin-themes',
+        'admin.plugins' => 'admin.permissions.admin-plugins',
+    ];
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -25,14 +40,29 @@ class Permission extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'permission',
     ];
 
     /**
      * Get the roles that has this permission.
      */
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo(Role::class);
+    }
+
+    public static function permissionsWithName()
+    {
+        return self::$permissions;
+    }
+
+    public static function permissions()
+    {
+        return array_keys(self::$permissions);
+    }
+
+    public static function registerPermissions(array $permissions)
+    {
+        self::$permissions = self::$permissions + $permissions;
     }
 }
