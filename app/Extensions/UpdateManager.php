@@ -106,11 +106,7 @@ class UpdateManager
     public function forceFetchUpdates()
     {
         try {
-            $client = new Client();
-
-            $response = $client->get('https://azuriom.com/api/updates', [
-                'headers' => ['User-Agent' => $this->getUserAgent()],
-            ]);
+            $response = $this->getHttpClient()->get('https://azuriom.com/api/updates');
 
             $updates = json_decode($response->getBody()->getContents(), true);
 
@@ -127,19 +123,13 @@ class UpdateManager
 
     public function forceFetchUpdatesOrFail()
     {
-        $client = new Client();
-
-        $response = $client->get('https://azuriom.com/api/updates', [
-            'headers' => ['User-Agent' => $this->getUserAgent()],
-        ]);
+        $response = $this->getHttpClient()->get('https://azuriom.com/api/updates');
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     public function download(array $info)
     {
-        $client = new Client();
-
         $dir = storage_path('app/updates/');
         $path = $dir.$info['file'];
 
@@ -151,10 +141,7 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $client->get($info['url'], [
-            'sink' => $path,
-            'headers' => ['User-Agent' => $this->getUserAgent()],
-        ]);
+        $this->getHttpClient()->get($info['url'], ['sink' => $path]);
 
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
@@ -192,8 +179,14 @@ class UpdateManager
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
 
-    private function getUserAgent()
+    private function getHttpClient()
     {
-        return 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
+        $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
+
+        return new Client([
+            'headers' => [
+                'User-Agent' => $userAgent,
+            ],
+        ]);
     }
 }
