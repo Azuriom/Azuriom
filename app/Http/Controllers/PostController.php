@@ -14,7 +14,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('author')
-            ->withCount('comments')
             ->scopes('published')
             ->orderByDesc('is_pinned')
             ->latest('published_at')

@@ -8,6 +8,7 @@ use Azuriom\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use PragmaRX\Google2FA\Google2FA;
+use Throwable;
 
 class LoginController extends Controller
 {
@@ -107,19 +108,51 @@ class LoginController extends Controller
 
         $this->validate($request, ['code' => 'required|string']);
 
-        if ((new Google2FA())->verifyKey($user->google_2fa_secret, str_replace(' ', '', $request->input('code')))) {
-            $this->guard()->login($user, $request->session()->get('2fa_remember'));
+        $code = str_replace(' ', '', $request->input('code'));
 
-            return $this->sendLoginResponse($request);
+        if (! (new Google2FA())->verifyKey($user->google_2fa_secret, $code)) {
+            return redirect()->route('login.2fa')->withErrors(['code' => trans('auth.2fa-invalid')]);
         }
 
-        return redirect()->route('login.2fa')->withErrors(['code' => trans('auth.2fa-invalid')]);
+        $this->guard()->login($user, $request->session()->get('2fa_remember'));
+
+        return $this->sendLoginResponse($request);
     }
 
+    /**
+     * @param  Request  $request
+     * @param  \Azuriom\Models\User  $user
+     */
     protected function authenticated(Request $request, $user)
     {
         $user->last_login_ip = $request->ip();
         $user->last_login_at = now();
         $user->save();
+
+        try {
+            $name = game()->getUserName($user);
+
+            if ($name && $name !== $user->name && ! User::where('name', $name)->exists()) {
+                $user->update(['name' => $name]);
+            }
+        } catch (Throwable $t) {
+            report($t);
+        }
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        $username = $request->input($this->username());
+
+        $validMail = filter_var($username, FILTER_VALIDATE_EMAIL) !== false;
+        $field = $validMail ? $this->username() : 'name';
+
+        return [$field => $username] + $request->only('password');
     }
 }

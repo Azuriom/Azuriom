@@ -64,8 +64,6 @@ class NavbarController extends Controller
             }
         }
 
-        ActionLog::logUpdate('Navbar');
-
         return $request->expectsJson() ? response()->json([
             'status' => 'success',
             'message' => trans('admin.navbar-elements.status.nav-updated')

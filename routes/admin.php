@@ -47,15 +47,21 @@ Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(fun
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
     Route::get('/', 'ThemeController@index')->name('index');
     Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('change');
-    Route::get('/edit/{theme}', 'ThemeController@edit')->name('edit');
-    Route::post('/update/{theme}', 'ThemeController@update')->name('update');
+    Route::get('/{theme}/config', 'ThemeController@edit')->name('edit');
+    Route::post('/{theme}/config', 'ThemeController@config')->name('config');
+    Route::post('/{theme}/update', 'ThemeController@update')->name('update');
+    Route::post('/{themeId}/download', 'ThemeController@download')->name('download');
+    Route::delete('/{theme}', 'ThemeController@delete')->name('delete');
 });
 
 Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->group(function () {
     Route::get('/', 'PluginController@index')->name('index');
     Route::post('/reload', 'PluginController@reload')->name('reload');
-    Route::post('/{slug}/enable', 'PluginController@enable')->name('enable');
-    Route::post('/{slug}/disable', 'PluginController@disable')->name('disable');
+    Route::post('/{plugin}/enable', 'PluginController@enable')->name('enable');
+    Route::post('/{plugin}/disable', 'PluginController@disable')->name('disable');
+    Route::post('/{plugin}/update', 'PluginController@update')->name('update');
+    Route::post('/{pluginId}/download', 'PluginController@download')->name('download');
+    Route::delete('/{plugin}', 'PluginController@delete')->name('delete');
 });
 
 Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(function () {

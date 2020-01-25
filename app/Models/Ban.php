@@ -83,7 +83,7 @@ class Ban extends Model
     public function removeBan(User $remover = null)
     {
         $this->remover()->associate($remover ?? Auth::user());
-        $this->update();
+        $this->save();
 
         $this->delete();
 

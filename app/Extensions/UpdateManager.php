@@ -82,6 +82,28 @@ class UpdateManager
         return $updates['update'] ?? null;
     }
 
+    public function getPlugins(bool $force = false)
+    {
+        $updates = $this->fetch($force);
+
+        if (empty($updates)) {
+            return null;
+        }
+
+        return $updates['plugins'] ?? [];
+    }
+
+    public function getThemes(bool $force = false)
+    {
+        $updates = $this->fetch($force);
+
+        if (empty($updates)) {
+            return null;
+        }
+
+        return $updates['themes'] ?? [];
+    }
+
     public function fetch(bool $force = false)
     {
         if ($this->updates !== null) {
@@ -92,13 +114,13 @@ class UpdateManager
             $updates = $this->forceFetchUpdates();
 
             if ($updates !== null) {
-                Cache::put('updates', $updates, now()->addHour());
+                Cache::put('updates', $updates, now()->addMinutes(15));
             }
 
             return $updates;
         }
 
-        return Cache::remember('updates', now()->addHour(), function () {
+        return Cache::remember('updates', now()->addMinutes(15), function () {
             return $this->forceFetchUpdates();
         });
     }
@@ -128,9 +150,14 @@ class UpdateManager
         return json_decode($response->getBody()->getContents(), true);
     }
 
-    public function download(array $info)
+    public function installExtension(array $info)
     {
-        $dir = storage_path('app/updates/');
+        $dir = storage_path('');
+    }
+
+    public function download(array $info, string $tempDir = '')
+    {
+        $dir = storage_path('app/updates/'.$tempDir);
         $path = $dir.$info['file'];
 
         if (! $this->files->exists($dir)) {
@@ -146,13 +173,13 @@ class UpdateManager
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('File hash don t math excepted hash !');
+            throw new Exception('File hash don\'t match excepted hash !');
         }
     }
 
-    public function install(array $info)
+    public function install(array $info, string $targetDir, string $tempDir = '')
     {
-        $file = storage_path('app/updates/'.$info['file']);
+        $file = storage_path('app/updates/'.$tempDir.$info['file']);
 
         if ($this->files->extension($file) !== 'zip') {
             throw new Exception('Invalid file extension');
@@ -168,7 +195,7 @@ class UpdateManager
             throw new Exception('Unable to open zip: '.$status);
         }
 
-        if (! $zip->extractTo(base_path())) {
+        if (! $zip->extractTo($targetDir)) {
             throw new Exception('Unable to extract zip');
         }
 

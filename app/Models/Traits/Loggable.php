@@ -16,7 +16,9 @@ trait Loggable
 
         foreach ($events as $event) {
             static::$event(function (Model $model) use ($event) {
-                ActionLog::log($event, $model);
+                $action = str_replace('_', '-', $model->getTable()).'.'.$event;
+
+                ActionLog::log($action, $model);
             });
         }
     }

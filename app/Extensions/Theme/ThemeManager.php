@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions\Theme;
 
 use Azuriom\Extensions\ExtensionManager;
+use Azuriom\Extensions\UpdateManager;
 use Illuminate\Filesystem\Filesystem;
 use RuntimeException;
 
@@ -147,7 +148,11 @@ class ThemeManager extends ExtensionManager
         $themes = [];
 
         foreach ($directories as $dir) {
-            $themes[$this->files->basename($dir)] = $this->getJson($dir.'/theme.json');
+            $description = $this->getJson($dir.'/theme.json');
+
+            if ($description) {
+                $themes[$this->files->basename($dir)] = $description;
+            }
         }
 
         return $themes;
@@ -195,9 +200,9 @@ class ThemeManager extends ExtensionManager
             return;
         }
 
-        $this->files->delete($this->themesPublicPath($theme));
+        $this->files->deleteDirectory($this->publicPath('', $theme));
 
-        $this->files->delete($this->path($theme));
+        $this->files->deleteDirectory($this->path('', $theme));
     }
 
     /**
@@ -218,6 +223,59 @@ class ThemeManager extends ExtensionManager
     public function hasTheme()
     {
         return $this->currentTheme !== null;
+    }
+
+    public function getOnlineThemes(bool $force = false)
+    {
+        $themes = app(UpdateManager::class)->getThemes($force);
+
+        $installedThemes = collect($this->findThemesDescriptions())
+            ->filter(function ($theme) {
+                return isset($theme->apiId);
+            })
+            ->pluck('apiId')
+            ->all();
+
+        return array_filter($themes, function ($theme) use ($installedThemes) {
+            return ! in_array($theme['id'], $installedThemes);
+        });
+    }
+
+    public function getThemesToUpdate(bool $force = false)
+    {
+        $themes = app(UpdateManager::class)->getThemes($force);
+
+        return array_filter($this->findThemesDescriptions(), function ($theme) use ($themes) {
+            $id = $theme->apiId ?? 0;
+
+            if (! array_key_exists($id, $themes)) {
+                return false;
+            }
+
+            return version_compare($themes[$id]['version'], $theme->version, '>');
+        });
+    }
+
+    public function install($themeId)
+    {
+        $updateManager = app(UpdateManager::class);
+
+        $themes = $updateManager->getThemes(true);
+
+        if (! array_key_exists($themeId, $themes)) {
+            throw new RuntimeException('Cannot find theme with id '.$themeId);
+        }
+
+        $themeInfo = $themes[$themeId];
+
+        $themeDir = $this->path('', strtolower($themeInfo['name']));
+
+        if (! $this->files->isDirectory($themeDir)) {
+            $this->files->makeDirectory($themeDir);
+        }
+
+        $updateManager->download($themeInfo, 'themes/');
+        $updateManager->install($themeInfo, $themeDir, 'themes/');
     }
 
     protected function loadConfig(string $theme)

@@ -67,6 +67,8 @@ return [
 
     'maintenance' => 'Maintenance',
 
+    'status-error' => 'Une erreur est survenue: :error',
+
     'profile' => [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',

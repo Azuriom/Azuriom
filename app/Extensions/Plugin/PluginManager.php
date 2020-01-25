@@ -3,11 +3,14 @@
 namespace Azuriom\Extensions\Plugin;
 
 use Azuriom\Extensions\ExtensionManager;
+use Azuriom\Extensions\UpdateManager;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
+use RuntimeException;
 use Throwable;
 
 class PluginManager extends ExtensionManager
@@ -156,7 +159,11 @@ class PluginManager extends ExtensionManager
         foreach ($directories as $dir) {
             $name = $this->files->basename($dir);
 
-            $plugins[$name] = $this->findDescription($name);
+            $description = $this->findDescription($name);
+
+            if ($description) {
+                $plugins[$name] = $description;
+            }
         }
 
         return $plugins;
@@ -212,9 +219,9 @@ class PluginManager extends ExtensionManager
             return;
         }
 
-        $this->files->delete($this->pluginsPublicPath($plugin));
+        $this->files->deleteDirectory($this->publicPath($plugin));
 
-        $this->files->delete($this->path($plugin));
+        $this->files->deleteDirectory($this->path($plugin));
     }
 
     /**
@@ -302,6 +309,73 @@ class PluginManager extends ExtensionManager
         $this->files->put($this->getCachedPluginsPath(), serialize($plugins));
 
         return $plugins;
+    }
+
+    public function refreshRoutesCache()
+    {
+        if (! app()->routesAreCached()) {
+            return;
+        }
+
+        Artisan::call('route:cache');
+
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate(app()->getCachedRoutesPath());
+        }
+    }
+
+    public function getOnlinePlugins(bool $force = false)
+    {
+        $plugins = app(UpdateManager::class)->getPlugins($force);
+
+        $installedPlugins = collect($this->findPluginsDescriptions())
+            ->filter(function ($plugin) {
+                return isset($plugin->apiId);
+            })
+            ->pluck('apiId')
+            ->all();
+
+        return array_filter($plugins, function ($plugin) use ($installedPlugins) {
+            return ! in_array($plugin['id'], $installedPlugins);
+        });
+    }
+
+    public function getPluginToUpdate(bool $force = false)
+    {
+        $plugins = app(UpdateManager::class)->getPlugins($force);
+
+        return array_filter($this->findPluginsDescriptions(), function ($plugin) use ($plugins) {
+            $id = $plugin->apiId ?? 0;
+
+            if (! array_key_exists($id, $plugins)) {
+                return false;
+            }
+
+            return version_compare($plugins[$id]['version'], $plugin->version, '>');
+        });
+    }
+
+    public function install($pluginId)
+    {
+        $updateManager = app(UpdateManager::class);
+
+        $plugins = $updateManager->getPlugins(true);
+
+        if (! array_key_exists($pluginId, $plugins)) {
+            throw new RuntimeException('Cannot find plugin with id '.$pluginId);
+        }
+
+        $pluginInfo = $plugins[$pluginId];
+
+        $pluginDir = $this->path(strtolower($pluginInfo['name']));
+
+        if (! $this->files->isDirectory($pluginDir)) {
+            $this->files->makeDirectory($pluginDir);
+        }
+
+        $updateManager->download($pluginInfo, 'plugins/');
+
+        $updateManager->install($pluginInfo, $pluginDir, 'plugins/');
     }
 
     protected function getPlugins()

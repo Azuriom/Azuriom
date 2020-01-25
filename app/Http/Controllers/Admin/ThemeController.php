@@ -9,8 +9,8 @@ use Azuriom\Models\Setting;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Throwable;
 
 class ThemeController extends Controller
 {
@@ -47,7 +47,8 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $themes = new Collection($this->themes->findThemesDescriptions());
+        $themes = collect($this->themes->findThemesDescriptions());
+        $availableThemes = collect($this->themes->getOnlineThemes());
 
         $current = null;
 
@@ -59,7 +60,50 @@ class ThemeController extends Controller
             'themes' => $themes,
             'current' => $current,
             'currentPath' => setting('theme', 'default'),
+            'availableThemes' => $availableThemes,
+            'themesUpdates' => collect($this->themes->getThemesToUpdate()),
         ]);
+    }
+
+    public function update(string $theme)
+    {
+        $description = $this->themes->findDescription($theme);
+
+        try {
+            if ($description !== null && isset($description->apiId)) {
+                $this->themes->install($description->apiId);
+            }
+        } catch (Throwable $t) {
+            return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
+                'error' => $t->getMessage()
+            ]));
+        }
+
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.installed'));
+    }
+
+    public function download(string $themeId)
+    {
+        try {
+            $this->themes->install($themeId);
+        } catch (Throwable $t) {
+            return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
+                'error' => $t->getMessage()
+            ]));
+        }
+
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.installed'));
+    }
+
+    public function delete(string $theme)
+    {
+        if ($this->themes->currentTheme() === $theme) {
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.error-delete'));
+        }
+
+        $this->themes->delete($theme);
+
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.deleted'));
     }
 
     public function edit(string $theme)
@@ -81,7 +125,7 @@ class ThemeController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, string $theme)
+    public function config(Request $request, string $theme)
     {
         $rulesPath = $this->themes->path('config/rules.php', $theme);
 
@@ -94,7 +138,8 @@ class ThemeController extends Controller
 
             Cache::put('theme.config', $validated, now()->addDay());
 
-            return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.config-updated'));
+            return redirect()->route('admin.themes.index')->with('success',
+                trans('admin.themes.status.config-updated'));
         } catch (FileNotFoundException $e) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
         }
@@ -108,7 +153,7 @@ class ThemeController extends Controller
 
         Setting::updateSettings('theme', $theme);
 
-        ActionLog::logUpdate('Theme');
+        ActionLog::log('themes.changed');
 
         Cache::forget('theme.config');
 

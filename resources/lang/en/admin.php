@@ -85,6 +85,7 @@ return [
     'dashboard' => [
         'title' => 'Dashboard',
 
+        'new-update' => 'A new version of Azuriom is available: :version',
         'https-warning' => 'Your website is not using https, you should enable and force it for your security and the one of the users.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
@@ -113,6 +114,7 @@ return [
             'enable-user-registration-label' => 'It can still be possible to register through plugins.',
             'auth-api' => 'Enable Auth API',
             'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> for an easy and quick integration.',
+            'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
         ],
 
         'maintenance' => [
@@ -450,6 +452,7 @@ return [
         'title' => 'Plugins',
 
         'installed' => 'Installed plugins',
+        'available' => 'Available plugins',
 
         'actions' => [
             'reload' => 'Reload plugins',
@@ -459,6 +462,11 @@ return [
             'reloaded' => 'The plugins have been reloaded.',
             'enabled' => 'The plugin has been enabled.',
             'disabled' => 'The plugin has been disabled.',
+            'updated' => 'The plugin has been updated.',
+            'installed' => 'The plugin has been installed.',
+            'deleted' => 'The plugin has been deleted.',
+
+            'error-delete' => 'The plugin must be disabled before it can be delete.',
         ]
     ],
 
@@ -471,6 +479,7 @@ return [
             'version' => 'Version: :version',
         ],
         'installed' => 'Installed themes',
+        'available' => 'Available themes',
         'no-enabled' => 'You don\'t have any theme enable.',
 
         'actions' => [
@@ -483,6 +492,10 @@ return [
             'config-updated' => 'The theme config has been updated.',
             'invalid' => 'This theme is invalid.',
             'updated' => 'The theme has been updated.',
+            'installed' => 'The theme has been installed.',
+            'deleted' => 'The theme has been deleted.',
+
+            'error-delete' => 'You can\'t delete the current theme.',
         ]
     ],
 
@@ -520,16 +533,58 @@ return [
     'logs' => [
         'title' => 'Logs',
 
-        'fields' => [
-            'target' => 'Target',
-        ],
-
         'actions' => [
             'clear' => 'Clear old logs (15d+)',
         ],
 
         'status' => [
             'cleared' => 'The old logs has been deleted.',
+        ],
+
+        'pages' => [
+            'created' => 'Created page #:id',
+            'updated' => 'Updated page #:id',
+            'deleted' => 'Deleted page #:id',
+        ],
+
+        'posts' => [
+            'created' => 'Created post #:id',
+            'updated' => 'Updated post #:id',
+            'deleted' => 'Deleted post #:id',
+        ],
+
+        'roles' => [
+            'created' => 'Created role #:id',
+            'updated' => 'Updated role #:id',
+            'deleted' => 'Deleted role #:id',
+        ],
+
+        'servers' => [
+            'created' => 'Created server #:id',
+            'updated' => 'Updated server #:id',
+            'deleted' => 'Deleted server #:id',
+        ],
+
+        'users' => [
+            'updated' => 'Updated user #:id',
+            'deleted' => 'Deleted user #:id',
+        ],
+
+        'settings' => [
+            'updated' => 'Updated settings',
+        ],
+
+        'updates' => [
+            'installed' => 'Installed Azuriom update',
+        ],
+
+        'plugins' => [
+            'enabled' => 'Enabled plugin',
+            'disabled' => 'Disabled plugin',
+        ],
+
+        'themes' => [
+            'changed' => 'Changed theme',
         ],
     ],
 ];

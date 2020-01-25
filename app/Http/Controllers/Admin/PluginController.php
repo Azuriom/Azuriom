@@ -4,8 +4,9 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Artisan;
+use Throwable;
 
 class PluginController extends Controller
 {
@@ -24,7 +25,8 @@ class PluginController extends Controller
     private $files;
 
     /**
-     * ThemeController constructor.
+     * Create a new PluginController instance.
+     *
      * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
      * @param  \Illuminate\Filesystem\Filesystem  $files
      */
@@ -41,9 +43,15 @@ class PluginController extends Controller
      */
     public function index()
     {
-        $plugins = $this->plugins->findPluginsDescriptions();
+        $plugins = collect($this->plugins->findPluginsDescriptions());
+        $availablePlugins = collect($this->plugins->getOnlinePlugins());
+        $pluginsUpdates = collect($this->plugins->getPluginToUpdate());
 
-        return view('admin.plugins.index', ['plugins' => $plugins]);
+        return view('admin.plugins.index', [
+            'plugins' => $plugins,
+            'availablePlugins' => $availablePlugins,
+            'pluginsUpdates' => $pluginsUpdates,
+        ]);
     }
 
     public function reload()
@@ -59,9 +67,9 @@ class PluginController extends Controller
 
         $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
 
-        if (app()->routesAreCached()) {
-            Artisan::call('route:cache');
-        }
+        $this->plugins->refreshRoutesCache();
+
+        ActionLog::log('plugins.enabled');
 
         return $response;
     }
@@ -72,10 +80,55 @@ class PluginController extends Controller
 
         $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.disabled'));
 
-        if (app()->routesAreCached()) {
-            Artisan::call('route:cache');
-        }
+        $this->plugins->refreshRoutesCache();
+
+        ActionLog::log('plugins.disabled');
 
         return $response;
+    }
+
+    public function update(string $plugin)
+    {
+        $description = $this->plugins->findDescription($plugin);
+
+        try {
+            if ($description !== null && isset($description->apiId)) {
+                $this->plugins->install($description->apiId);
+            }
+        } catch (Throwable $t) {
+            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
+                'error' => $t->getMessage()
+            ]));
+        }
+
+        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.updated'));
+
+        $this->plugins->refreshRoutesCache();
+
+        return $response;
+    }
+
+    public function download(string $pluginId)
+    {
+        try {
+            $this->plugins->install($pluginId);
+        } catch (Throwable $t) {
+            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
+                'error' => $t->getMessage()
+            ]));
+        }
+
+        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.installed'));
+    }
+
+    public function delete(string $plugin)
+    {
+        if ($this->plugins->isEnabled($plugin)) {
+            return redirect()->route('admin.plugins.index')->with('error', trans('admin.plugins.status.error-delete'));
+        }
+
+        $this->plugins->delete($plugin);
+
+        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.deleted'));
     }
 }

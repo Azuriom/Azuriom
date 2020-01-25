@@ -201,17 +201,17 @@
                 <div class="sidebar-heading">Plugins</div>
             @endif
 
-            @foreach(plugins()->getAdminNavItems() as $navItem)
+            @foreach(plugins()->getAdminNavItems() as $navId => $navItem)
                 @if(! isset($navItem['permission']) || Gate::check($navItem['permission']))
-                    @if($navItem['type'] ?? '' !== 'dropdown')
+                    @if($navItem['type'] ?? '' === 'dropdown')
                         <div class="nav-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
-                            <a class="nav-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-toggle="collapse" data-target="#collapse{{ $navItem['name'] }}" aria-expanded="true" aria-controls="collapse{{ $navItem['name'] }}">
+                            <a class="nav-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-toggle="collapse" data-target="#collapse{{ ucfirst($navId) }}" aria-expanded="true" aria-controls="collapse{{ ucfirst($navId) }}">
                                 <i class="fa-fw {{ $navItem['icon'] }}"></i>
                                 <span>{{ trans($navItem['name']) }}</span>
                             </a>
-                            <div id="collapse{{ $navItem['name'] }}" class="collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
+                            <div id="collapse{{ ucfirst($navId) }}" class="collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
-                                    @foreach($navItem['items'] ?? [] as $name => $route)
+                                    @foreach($navItem['items'] ?? [] as $route => $name)
                                         <a class="collapse-item {{ add_active(str_replace('index', '*', $route)) }}" href="{{ route($route) }}">{{ trans($name) }}</a>
                                     @endforeach
                                 </div>

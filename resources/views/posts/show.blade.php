@@ -52,7 +52,7 @@
                     {{ trans('messages.comments.author', ['user' => $comment->author->name, 'date' => format_date($comment->created_at, true)]) }}
                 </div>
                 <div class="card-body media">
-                    <img class="d-flex mr-3 rounded" src="{{ game()->getAvatarUrl(Auth::user(), 64) }}" alt="{{ Auth::user()->name }}" height="55">
+                    <img class="d-flex mr-3 rounded" src="{{ game()->getAvatarUrl($comment->author, 64) }}" alt="{{ Auth::user()->name }}" height="55">
                     <div class="media-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="content-body">

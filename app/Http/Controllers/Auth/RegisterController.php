@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Auth;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
+use Azuriom\Rules\GameAuth;
 use Azuriom\Rules\Username;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -66,7 +67,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:25', 'unique:users', new Username()],
+            'name' => ['required', 'string', 'max:25', 'unique:users', new Username(), new GameAuth()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'conditions' => [setting('conditions', false) ? 'accepted' : 'nullable']
@@ -85,6 +86,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'game_id' => game()->getUserUniqueId($data['name']),
         ]);
         $user->last_login_ip = Request::ip();
         $user->last_login_at = now();

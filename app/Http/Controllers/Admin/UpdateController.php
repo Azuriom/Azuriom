@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -94,7 +95,7 @@ class UpdateController extends Controller
         }
 
         try {
-            $this->updates->install($update);
+            $this->updates->install($update, base_path());
         } catch (Throwable $t) {
             return response()->json([
                 'status' => 'error',
@@ -105,6 +106,8 @@ class UpdateController extends Controller
         }
 
         $request->session()->flash('success', trans('admin.update.status.install-success'));
+
+        ActionLog::log('updates.installed');
 
         return response()->json(['status' => 'success']);
     }

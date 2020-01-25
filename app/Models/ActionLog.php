@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @property int $id
  * @property int $user_id
- * @property string $type
- * @property int|null $target_id
  * @property string $action
+ * @property int|null $target_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -19,6 +18,39 @@ use Illuminate\Support\Facades\Auth;
  */
 class ActionLog extends Model
 {
+    private static $actions = [
+        'settings.updated' => [
+            'icon' => 'sync',
+            'color' => 'warning',
+            'message' => 'admin.logs.settings.updated',
+        ],
+        'theme.changed' => [
+            'icon' => 'sync',
+            'color' => 'warning',
+            'message' => 'admin.logs.themes.changed',
+        ],
+        'updates.installed' => [
+            'icon' => 'sync',
+            'color' => 'warning',
+            'message' => 'admin.logs.updates.updated',
+        ],
+        'plugins.enabled' => [
+            'icon' => 'plus',
+            'color' => 'success',
+            'message' => 'admin.logs.plugins.enabled',
+        ],
+        'plugins.disabled' => [
+            'icon' => 'minus',
+            'color' => 'danger',
+            'message' => 'admin.logs.plugins.disabled',
+        ],
+        'themes.changed' => [
+            'icon' => 'plus',
+            'color' => 'success',
+            'message' => 'admin.logs.themes.changed',
+        ],
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,14 +60,18 @@ class ActionLog extends Model
         'user_id', 'type', 'target_id', 'action',
     ];
 
-    /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    protected $with = [
-        'user',
-    ];
+    public static function boot()
+    {
+        parent::boot();
+
+        self::registerLogModels([
+            Post::class,
+            Page::class,
+            Role::class,
+            Server::class,
+            User::class,
+        ], 'admin.logs');
+    }
 
     /**
      * Get the author of this action.
@@ -55,43 +91,20 @@ class ActionLog extends Model
 
     protected function getTargetTypeAttribute()
     {
-        return $this->target_id !== null ? ('\Azuriom\\Models\\'.$this->type) : null;
-    }
+        if ($this->target_id === null) {
+            return null;
+        }
 
-    protected function setTargetTypeAttribute($value)
-    {
-        $this->type = substr($value, strrpos($value, '\\') + 1);
-    }
-
-    public function formatAction()
-    {
-        return ucfirst(strtolower($this->action));
+        return $this->getActionFormat()['model'] ?? null;
     }
 
     public function getActionFormat()
     {
-        switch ($this->action) {
-            case 'created':
-                return [
-                    'color' => 'success',
-                    'icon' => 'plus'
-                ];
-            case 'updated':
-                return [
-                    'color' => 'warning',
-                    'icon' => 'redo'
-                ];
-            case 'deleted':
-                return [
-                    'color' => 'danger',
-                    'icon' => 'minus'
-                ];
-            default:
-                return [
-                    'color' => 'primary',
-                    'icon' => 'question'
-                ];
-        }
+        return self::$actions[$this->action] ?? [
+                'icon' => 'question',
+                'color' => 'muted',
+                'message' => '?',
+            ];
     }
 
     /**
@@ -100,7 +113,7 @@ class ActionLog extends Model
      * @param  string  $action
      * @param $target \Illuminate\Database\Eloquent\Model|string
      */
-    public static function log(string $action, $target)
+    public static function log(string $action, Model $target = null)
     {
         if (Auth::guest()) {
             return;
@@ -111,27 +124,52 @@ class ActionLog extends Model
             'action' => $action
         ]);
 
-        if (is_string($target)) {
-            $log->type = $target;
-        } else {
-            $log->target()->associate($target);
+        if ($target !== null) {
+            $log->fill(['target_id' => $target->getKey()]);
         }
 
         $log->save();
     }
 
-    public static function logCreate($target)
+    public static function registerLogModels(array $models, string $transNamespacePrefix)
     {
-        self::log('created', $target);
+        foreach ($models as $item) {
+            self::registerLogModel($item, $transNamespacePrefix);
+        }
     }
 
-    public static function logUpdate($target)
+    public static function registerLogModel(string $class, string $transNamespacePrefix)
     {
-        self::log('updated', $target);
+        $table = str_replace('_', '-', (new $class())->getTable());
+
+        self::$actions[$table.'.created'] = [
+            'icon' => 'plus',
+            'color' => 'success',
+            'message' => "{$transNamespacePrefix}.{$table}.created",
+            'model' => $class,
+        ];
+
+        self::$actions[$table.'.updated'] = [
+            'icon' => 'sync',
+            'color' => 'warning',
+            'message' => "{$transNamespacePrefix}.{$table}.updated",
+            'model' => $class,
+        ];
+
+        self::$actions[$table.'.deleted'] = [
+            'icon' => 'minus',
+            'color' => 'danger',
+            'message' => "{$transNamespacePrefix}.{$table}.deleted",
+            'model' => $class,
+        ];
     }
 
-    public static function logDelete($target)
+    public static function registerLogs($key, $value = null)
     {
-        self::log('deleted', $target);
+        $keys = is_array($key) ? $key : [$key => $value];
+
+        foreach ($keys as $key => $value) {
+            self::$actions[$key] = $value;
+        }
     }
 }

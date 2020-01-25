@@ -85,6 +85,7 @@ return [
     'dashboard' => [
         'title' => 'Panel administrateur',
 
+        'new-update' => 'Une nouvelle version d\'Azuriom est disponible: :version',
         'https-warning' => 'Votre site n\'utilise pas le procotole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
@@ -113,6 +114,7 @@ return [
             'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
             'auth-api' => 'Activer l\'API auth',
             'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
+            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
         ],
 
         'maintenance' => [

@@ -10,9 +10,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ trans('messages.fields.type') }}</th>
                         <th scope="col">{{ trans('messages.fields.user') }}</th>
-                        <th scope="col">{{ trans('admin.logs.fields.target') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                         <th scope="col">{{ trans('messages.fields.date') }}</th>
                     </tr>
@@ -22,12 +20,10 @@
                     @foreach($logs as $log)
                         <tr>
                             <th scope="row">{{ $log->id }}</th>
-                            <td>{{ $log->type }}</td>
                             <td>{{ $log->user->name }}</td>
-                            <td>{{ $log->target !== null ? ($log->target->name ?? $log->target->title) : 'X' }}</td>
-                            <td class="text-{{ $log->getActionFormat()['color'] }}">
-                                <i class="fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
-                                {{ $log->formatAction() }}
+                            <td>
+                                <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                {{ trans($log->getActionFormat()['message'], ['id' => $log->target_id]) }}
                             </td>
                             <td>{{ format_date_compact($log->created_at) }}</td>
                         </tr>

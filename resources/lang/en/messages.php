@@ -25,6 +25,7 @@ return [
         'continue' => 'Continue',
         'browse' => 'Browse',
         'choose-file' => 'Choose file',
+        'download' => 'Download',
         'upload' => 'Upload',
         'cancel' => 'Cancel',
         'enable' => 'Enable',
@@ -66,6 +67,8 @@ return [
     'home' => 'Home',
 
     'maintenance' => 'Maintenance',
+
+    'status-error' => 'An error occurred: :error',
 
     'profile' => [
         'title' => 'My Profile',

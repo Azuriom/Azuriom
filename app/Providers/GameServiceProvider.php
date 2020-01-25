@@ -2,11 +2,17 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Game\MinecraftGame;
+use Azuriom\Game\MinecraftOfflineGame;
+use Azuriom\Game\MinecraftOnlineGame;
 use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider
 {
+    public const GAMES = [
+        'mc-online' => MinecraftOnlineGame::class,
+        'mc-offline' => MinecraftOfflineGame::class,
+    ];
+
     /**
      * Register services.
      *
@@ -24,6 +30,8 @@ class GameServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton('game', MinecraftGame::class);
+        $game = self::GAMES[setting('game-type', 'mc-offline')];
+
+        $this->app->singleton('game', $game);
     }
 }

@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('description');
             $table->string('slug')->unique();
             $table->text('content');
-            $table->boolean('is_pinned');
+            $table->boolean('is_pinned')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
 

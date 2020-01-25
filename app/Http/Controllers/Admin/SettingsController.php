@@ -101,6 +101,7 @@ class SettingsController extends Controller
             'money' => setting('money'),
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
+            'minecraftVerification' => setting('game-type') === 'mc-online',
         ]);
     }
 
@@ -124,13 +125,14 @@ class SettingsController extends Controller
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
                 'background' => ['nullable', 'exists:images,file'],
-                'money' => ['required', 'string', 'max:15']
+                'money' => ['required', 'string', 'max:15'],
             ]) + [
                 'register' => $request->has('register'),
                 'auth-api' => $request->has('auth-api'),
+                'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
             ]);
 
-        ActionLog::logUpdate('Settings');
+        ActionLog::log('settings.updated');
 
         $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
 
@@ -194,7 +196,7 @@ class SettingsController extends Controller
             Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
         }
 
-        ActionLog::logUpdate('Settings');
+        ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.security')->with('success', trans('admin.settings.status.updated'));
     }
@@ -271,7 +273,7 @@ class SettingsController extends Controller
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
         ]));
 
-        ActionLog::logUpdate('Settings');
+        ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
     }
@@ -315,7 +317,7 @@ class SettingsController extends Controller
             Setting::updateSettings('mail.'.str_replace('-', '.', $key), empty($value) ? null : $value);
         }
 
-        ActionLog::logUpdate('Settings');
+        ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
     }

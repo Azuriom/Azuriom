@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id')->default(1);
-            $table->unsignedDecimal('money')->default(0);
+            $table->unsignedDecimal('money', 14)->default(0);
             $table->string('game_id')->nullable();
             $table->string('access_token')->nullable();
             $table->string('last_login_ip', 45)->nullable();

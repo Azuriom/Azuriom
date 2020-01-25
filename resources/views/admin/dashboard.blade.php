@@ -11,7 +11,7 @@
 
     @if($newVersion !== null)
         <div class="alert alert-info shadow-sm" role="alert">
-            <i class="fas fa-plus"></i> A new version of Azuriom is available: {{ $newVersion }}.
+            <i class="fas fa-plus"></i> {{ trans('admin.dashboard.new-update', ['version' => $newVersion]) }}.
             <a href="{{ route('admin.update.index') }}">{{ trans('admin.update.actions.install') }}</a>.
         </div>
     @endif
