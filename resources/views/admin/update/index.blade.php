@@ -11,14 +11,17 @@
                 el.setAttribute('disabled', '');
                 saveButtonIcon.classList.remove('d-none');
 
-                axios.post(el.dataset['updateRoute']).then(function (json) {
-                    window.location.reload();
-                }).catch(function (error) {
-                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
-                }).finally(function () {
-                    el.removeAttribute('disabled');
-                    saveButtonIcon.classList.add('d-none');
-                });
+                axios.post(el.dataset['updateRoute'])
+                    .then(function (json) {
+                        window.location.reload();
+                    })
+                    .catch(function (error) {
+                        createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                    })
+                    .finally(function () {
+                        el.removeAttribute('disabled');
+                        saveButtonIcon.classList.add('d-none');
+                    });
             });
         });
 

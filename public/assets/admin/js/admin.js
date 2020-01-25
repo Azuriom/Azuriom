@@ -94,4 +94,21 @@ $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
     }
 });
 
+function updateToggleSelect(selector, el) {
+    $('[' + selector + ']').addClass('d-none');
+    $('[' + selector + '="' + el.val() + '"]').removeClass('d-none');
+}
+
+$('[data-toggle-select]').each(function () {
+    const el = $(this);
+
+    const selector = 'data-' + el.data('toggleSelect');
+
+    updateToggleSelect(selector, el);
+
+    el.on('change', function () {
+        updateToggleSelect(selector, $(this));
+    });
+});
+
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

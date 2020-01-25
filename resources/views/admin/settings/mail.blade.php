@@ -2,29 +2,6 @@
 
 @section('title', trans('admin.settings.mail.title'))
 
-@push('footer-scripts')
-    <script>
-        function updateType(el) {
-            document.querySelectorAll('[data-mail-type]').forEach(function (e) {
-                e.classList.add('d-none');
-            });
-
-            const current = document.querySelector('[data-mail-type="' + el.value + '"]');
-            if (current) {
-                current.classList.remove('d-none');
-            }
-        }
-
-        const typeSelect = document.getElementById('driverSelect');
-
-        updateType(typeSelect);
-
-        typeSelect.addEventListener('change', function (ev) {
-            updateType(ev.target);
-        });
-    </script>
-@endpush
-
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -45,7 +22,7 @@
                     <div class="form-group col-md-8">
                         <label for="driverSelect">{{ trans('admin.settings.mail.driver') }}</label>
 
-                        <select class="custom-select" id="driverSelect" name="driver">
+                        <select class="custom-select" id="driverSelect" name="driver" data-toggle-select="mail-type">
                             @foreach($drivers as $driver => $driverName)
                                 <option value="{{ $driver }}" @if(config('mail.driver') === $driver) selected @endif>{{ $driverName }}</option>
                             @endforeach

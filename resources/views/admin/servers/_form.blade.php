@@ -15,24 +15,6 @@
             }
         });
 
-        function updateType(el) {
-            document.querySelectorAll('[data-server-type]').forEach(function (e) {
-                e.classList.add('d-none');
-            });
-
-            document.querySelectorAll('[data-server-type="' + el.value + '"]').forEach(function (e) {
-                e.classList.remove('d-none');
-            });
-        }
-
-        const typeSelect = document.getElementById('typeSelect');
-
-        updateType(typeSelect);
-
-        typeSelect.addEventListener('change', function (ev) {
-            updateType(ev.target);
-        });
-
         const azLinkPortInput = document.getElementById('azlinkPortInput');
 
         if (azLinkPortInput) {
@@ -88,7 +70,7 @@
 
     <div class="form-group col-md-6">
         <label for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required>
+        <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-toggle-select="server-type">
             @foreach($types as $type)
                 <option value="{{ $type }}" @if($type === old('type', $server->type ?? '')) selected @endif>{{ trans('admin.servers.type.'.$type) }}</option>
             @endforeach
