@@ -24,7 +24,7 @@ class CreateServerStatsTable extends Migration
             $table->unsignedInteger('entities')->nullable();
             $table->timestamps();
 
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
         });
     }
 

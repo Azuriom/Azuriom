@@ -18,7 +18,7 @@ class ServerRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:100'],
             'type' => ['required', 'string', Rule::in(Server::types())],
-            'ip' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-password' => ['required_if:type,mc-rcon', 'nullable', 'string'],

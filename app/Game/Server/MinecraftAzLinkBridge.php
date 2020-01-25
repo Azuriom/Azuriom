@@ -51,7 +51,7 @@ class MinecraftAzLinkBridge extends ServerBridge
         $client = new Client(['timeout' => 5]);
 
         $port = $this->server->data['azlink-port'] ?? self::DEFAULT_PORT;
-        $client->post("http://{$this->server->ip}:{$port}", [
+        $client->post("http://{$this->server->address}:{$port}", [
             'headers' => [
                 'Authorization' => hash('sha256', $this->server->token),
                 'Content-Type' => 'application/json',

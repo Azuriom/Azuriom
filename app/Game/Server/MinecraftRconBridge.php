@@ -42,7 +42,7 @@ class MinecraftRconBridge extends MinecraftPingBridge
     {
         $password = decrypt($this->server->data['rcon-password'], false);
 
-        $rcon = new Rcon($this->server->ip, $this->server->data['rcon-port'] ?? 25575, $password, 3);
+        $rcon = new Rcon($this->server->address, $this->server->data['rcon-port'] ?? 25575, $password, 3);
 
         return $rcon->connect() ? $rcon : false;
     }

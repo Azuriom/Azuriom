@@ -74,6 +74,8 @@ class ThemeController extends Controller
                 $this->themes->install($description->apiId);
             }
         } catch (Throwable $t) {
+            report($t);
+
             return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
                 'error' => $t->getMessage()
             ]));
@@ -87,6 +89,8 @@ class ThemeController extends Controller
         try {
             $this->themes->install($themeId);
         } catch (Throwable $t) {
+            report($t);
+
             return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
                 'error' => $t->getMessage()
             ]));

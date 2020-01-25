@@ -157,7 +157,13 @@ class UpdateManager
 
     public function download(array $info, string $tempDir = '')
     {
-        $dir = storage_path('app/updates/'.$tempDir);
+        $updatesPath = storage_path('app/updates/');
+
+        if (! $this->files->exists($updatesPath)) {
+            $this->files->makeDirectory($updatesPath);
+        }
+
+        $dir = $updatesPath.$tempDir;
         $path = $dir.$info['file'];
 
         if (! $this->files->exists($dir)) {

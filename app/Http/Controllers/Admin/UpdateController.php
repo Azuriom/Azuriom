@@ -44,6 +44,8 @@ class UpdateController extends Controller
         try {
             $this->updates->forceFetchUpdatesOrFail();
         } catch (Throwable $t) {
+            report($t);
+
             return $response->with('error', trans('admin.update.status.error-fetch', [
                 'error' => $t->getMessage()
             ]));
@@ -70,6 +72,8 @@ class UpdateController extends Controller
         try {
             $this->updates->download($update);
         } catch (Throwable $t) {
+            report($t);
+
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-download', [
@@ -97,6 +101,8 @@ class UpdateController extends Controller
         try {
             $this->updates->install($update, base_path());
         } catch (Throwable $t) {
+            report($t);
+
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-install', [

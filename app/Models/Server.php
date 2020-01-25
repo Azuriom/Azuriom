@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * @property int $id
  * @property string $name
- * @property string $ip
+ * @property string $address
  * @property int $port
  * @property string $type
  * @property string $token
@@ -47,7 +47,7 @@ class Server extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'ip', 'port', 'token', 'type', 'data',
+        'name', 'address', 'port', 'token', 'type', 'data',
     ];
 
     /**
@@ -81,7 +81,7 @@ class Server extends Model
 
     public function fullAddress()
     {
-        return $this->ip.($this->port ? ':'.$this->port : '');
+        return $this->address.($this->port ? ':'.$this->port : '');
     }
 
     public static function types()

@@ -84,10 +84,10 @@
 
 <div class="form-row">
     <div class="form-group col-md-8">
-        <label for="ipInput">{{ trans('admin.servers.fields.address') }}</label>
-        <input type="text" class="form-control @error('ip') is-invalid @enderror" id="ipInput" name="ip" value="{{ old('ip', $server->ip ?? '') }}" required>
+        <label for="addressInput">{{ trans('admin.servers.fields.address') }}</label>
+        <input type="text" class="form-control @error('address') is-invalid @enderror" id="addressInput" name="address" value="{{ old('address', $server->address ?? '') }}" required>
 
-        @error('ip')
+        @error('address')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>

@@ -452,6 +452,7 @@ return [
         'title' => 'Plugins',
 
         'installed' => 'Plugins installés',
+        'available' => 'Plugins disponibles',
 
         'actions' => [
             'reload' => 'Recharger les plugins',
@@ -461,6 +462,11 @@ return [
             'reloaded' => 'Les plugins ont été rechargés.',
             'enabled' => 'Le plugin a été activé.',
             'disabled' => 'Le plugin a été désactivé.',
+            'updated' => 'Le plugin a été mis à jour.',
+            'installed' => 'Le plugin a été installé.',
+            'deleted' => 'Le plus a été supprimé.',
+
+            'error-delete' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
         ]
     ],
 
@@ -473,6 +479,7 @@ return [
             'version' => 'Version: :version',
         ],
         'installed' => 'Thèmes installés',
+        'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par defaut est automatiquement mis en place.',
 
         'actions' => [
@@ -485,6 +492,10 @@ return [
             'config-updated' => 'La configuration du thème a été mise à jour..',
             'invalid' => 'Ce thème n\'est pas valide.',
             'updated' => 'Le thème a été mis à jour.',
+            'installed' => 'Le thème a été installé.',
+            'deleted' => 'Le thème a été supprimé.',
+
+            'error-delete' => 'Vous ne pouvez pas supprimer le thème actif.',
         ]
     ],
 
@@ -522,16 +533,58 @@ return [
     'logs' => [
         'title' => 'Logs',
 
-        'fields' => [
-            'target' => 'Cible',
-        ],
-
         'actions' => [
             'clear' => 'Supprimer les anciens logs (+15 jours)',
         ],
 
         'status' => [
             'cleared' => 'Les anciens logs ont été supprimés.',
+        ],
+
+        'pages' => [
+            'created' => 'Création de la page #:id',
+            'updated' => 'Mise à jour de la page #:id',
+            'deleted' => 'Suppression de la page #:id',
+        ],
+
+        'posts' => [
+            'created' => 'Création de l\'article #:id',
+            'updated' => 'Mise à jour de l\'article #:id',
+            'deleted' => 'Suppression de l\'article #:id',
+        ],
+
+        'roles' => [
+            'created' => 'Création du grade #:id',
+            'updated' => 'Mise à jour du grade #:id',
+            'deleted' => 'Suppression du grade #:id',
+        ],
+
+        'servers' => [
+            'created' => 'Création du serveur #:id',
+            'updated' => 'Mise à jour du serveur #:id',
+            'deleted' => 'Suppression du serveur #:id',
+        ],
+
+        'users' => [
+            'updated' => 'Mise à jour de l\'utilisateur #:id',
+            'deleted' => 'Suppression de l\'utilisateur #:id',
+        ],
+
+        'settings' => [
+            'updated' => 'Mise à jour des paramètres',
+        ],
+
+        'updates' => [
+            'installed' => 'Installation d\'une mise à jour d\'Azuriom',
+        ],
+
+        'plugins' => [
+            'enabled' => 'Activation de plugin',
+            'disabled' => 'Désactivation de plugin',
+        ],
+
+        'themes' => [
+            'changed' => 'Changement de theme',
         ],
     ],
 ];
