@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Loggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\User[] $users
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Permission[] $permissions
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder admin()
  */
 class Role extends Model
 {
@@ -131,5 +134,16 @@ class Role extends Model
     public static function defaultRole()
     {
         return Role::find(1);
+    }
+
+    /**
+     * Scope a query to only include admin roles.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAdmin(Builder $query)
+    {
+        return $query->where('is_admin', true);
     }
 }

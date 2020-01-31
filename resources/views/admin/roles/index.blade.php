@@ -69,10 +69,10 @@
                                 </span>
                                 <span>
                                     @can('update', $role)
-                                        <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                     @endcan
                                     @can('delete', $role)
-                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isDefault()) disabled @endif" @if(!$role->isDefault()) title="Delete" disabled data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
+                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isDefault()) disabled @endif" @if(!$role->isDefault()) title="{{ trans('messages.actions.delete') }}" disabled data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
                                     @endcan
                                 </span>
                             </div>

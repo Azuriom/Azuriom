@@ -7,7 +7,7 @@ use Azuriom\Http\Controllers\Controller;
 class DummyPluginHomeController extends Controller
 {
     /**
-     * Show the the home plugin page.
+     * Show the home plugin page.
      *
      * @return \Illuminate\Http\Response
      */

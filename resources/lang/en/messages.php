@@ -17,6 +17,7 @@ return [
 
     'actions' => [
         'add' => 'Add',
+        'show' => 'Show',
         'create' => 'Create',
         'edit' => 'Edit',
         'update' => 'Update',
@@ -31,6 +32,7 @@ return [
         'enable' => 'Enable',
         'disable' => 'Disable',
         'copy' => 'Copy',
+        'comment' => 'Comment',
     ],
 
     'fields' => [
@@ -53,6 +55,7 @@ return [
         'money' => 'Money',
         'color' => 'Color',
         'url' => 'URL',
+        'status' => 'Status',
         'version' => 'Version',
         'game' => 'Game',
     ],
@@ -111,7 +114,7 @@ return [
     'comments' => [
         'create' => 'Leave a comment',
         'guest' => 'You must be logged in to leave a comment.',
-        'author' => ':user on :date',
+        'author' => '<strong>:user</strong> commented on :date',
         'your-comment' => 'Your comment',
         'delete-title' => 'Delete ?',
         'delete-description' => 'Are you sure you want to delete this comment ?',

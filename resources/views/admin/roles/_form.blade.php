@@ -2,6 +2,25 @@
 
 @csrf
 
+
+@push('footer-scripts')
+    <script>
+        document.querySelectorAll('[data-role-permission]').forEach(function (el) {
+            const perm = el.dataset['rolePermission'];
+
+            if (! perm.includes('admin.') || perm === 'admin.access') {
+                return;
+            }
+
+            el.addEventListener('change', function (ev) {
+                if (el.checked) {
+                    document.querySelector('[name="permissions[admin.access]"]').checked = true;
+                }
+            });
+        });
+    </script>
+@endpush
+
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="nameInput">{{ trans('messages.fields.name') }}</label>
@@ -34,7 +53,7 @@
     <div class="card card-body mb-2">
         @foreach($permissions as $permission => $permissionDescription)
             <div class="form-group custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="permission{{ $loop->index }}" name="permissions[{{ $permission }}]" @if(isset($role) && $role->hasRawPermission($permission) ?? false) checked @endif>
+                <input type="checkbox" class="custom-control-input" id="permission{{ $loop->index }}" name="permissions[{{ $permission }}]" @if(isset($role) && $role->hasRawPermission($permission) ?? false) checked @endif data-role-permission="{{ $permission }}">
                 <label class="custom-control-label" for="permission{{ $loop->index }}">{{ trans($permissionDescription) }}</label>
             </div>
         @endforeach

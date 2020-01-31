@@ -9,17 +9,22 @@ use Azuriom\Models\Post;
 class PostCommentController extends Controller
 {
     /**
+     * Construct a new PostCommentController instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Azuriom\Http\Requests\CommentRequest  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(CommentRequest $request, Post $post)
     {
-        $this->authorize('create', Comment::class);
-
         $post->comments()->create($request->validated());
 
         return redirect()->route('posts.show', $post->slug);
@@ -35,8 +40,6 @@ class PostCommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        $this->authorize('delete', $comment);
-
         $comment->delete();
 
         return redirect()->route('posts.show', $post->slug);

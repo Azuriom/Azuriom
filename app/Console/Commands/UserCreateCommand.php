@@ -48,7 +48,7 @@ class UserCreateCommand extends Command
         $user->markEmailAsVerified();
 
         if ($admin) {
-            $role = Role::where('is_admin', true)->orderByDesc('power')->value('id');
+            $role = Role::admin()->orderByDesc('power')->value('id');
 
             if ($role) {
                 $user->role()->associate($role)->save();

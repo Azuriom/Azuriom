@@ -30,11 +30,15 @@
                     <li>{{ trans('admin.themes.current.version', ['version' => $current->version]) }}</li>
                 </ul>
 
-                <form action="{{ route('admin.themes.change') }}" method="POST"  class="d-inline-block">
+                <form action="{{ route('admin.themes.change') }}" method="POST" class="d-inline-block">
                     @csrf
 
-                    <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}"><i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}
-                    </a>
+                    @if($currentHasConfig)
+                        <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}">
+                            <i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}
+                        </a>
+                    @endif
+
                     <button type="submit" class="btn btn-warning">
                         <i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}
                     </button>

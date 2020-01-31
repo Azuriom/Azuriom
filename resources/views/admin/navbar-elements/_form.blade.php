@@ -63,7 +63,7 @@
     <label for="pluginSelect">{{ trans('messages.fields.link') }}</label>
     <select class="custom-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
         @foreach($pluginRoutes as $route => $name)
-            <option value="{{ $route  }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route)) selected @endif>{{ $name }}</option>
+            <option value="{{ $route  }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route)) selected @endif>{{ trans($name) }}</option>
         @endforeach
     </select>
 

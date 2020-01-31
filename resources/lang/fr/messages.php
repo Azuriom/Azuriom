@@ -17,6 +17,7 @@ return [
 
     'actions' => [
         'add' => 'Ajouter',
+        'show' => 'Voir',
         'create' => 'Créer',
         'edit' => 'Éditer',
         'update' => 'Mettre à jour',
@@ -30,6 +31,7 @@ return [
         'enable' => 'Activer',
         'disable' => 'Désactiver',
         'copy' => 'Copier',
+        'comment' => 'Commenter',
     ],
 
     'fields' => [
@@ -52,6 +54,7 @@ return [
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
+        'status' => 'Status',
         'version' => 'Version',
         'game' => 'Jeu',
     ],
@@ -110,7 +113,7 @@ return [
     'comments' => [
         'create' => 'Laisser un commentaire',
         'guest' => 'Vous devez être connecté pour laisser un commentaire.',
-        'author' => ':user le :date',
+        'author' => '<strong>:user</strong> a commenté le :date',
         'your-comment' => 'Votre commentaire',
         'post-comment' => 'Poster',
         'delete-title' => 'Supprimer ?',

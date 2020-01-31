@@ -56,10 +56,13 @@ class ThemeController extends Controller
             $current = $themes->pull($this->themes->currentTheme());
         }
 
+        $currentThemeConfig = $this->themes->path('config/rules.php', $this->themes->currentTheme());
+
         return view('admin.themes.index', [
             'themes' => $themes,
             'current' => $current,
             'currentPath' => setting('theme', 'default'),
+            'currentHasConfig' => $this->files->isFile($currentThemeConfig),
             'availableThemes' => $availableThemes,
             'themesUpdates' => collect($this->themes->getThemesToUpdate()),
         ]);
