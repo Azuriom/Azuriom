@@ -14,7 +14,7 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - cp .env.example .env
+  - cp .env.travis .env
   - mysql -e 'CREATE DATABASE IF NOT EXISTS azuriom;'
 
 install:
