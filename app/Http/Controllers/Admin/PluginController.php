@@ -11,9 +11,9 @@ use Throwable;
 class PluginController extends Controller
 {
     /**
-     * The extension manager
+     * The extension manager.
      *
-     * @var \Azuriom\Extensions\Plugin\PluginManager $plugins
+     * @var \Azuriom\Extensions\Plugin\PluginManager
      */
     private $plugins;
 
@@ -99,7 +99,7 @@ class PluginController extends Controller
             report($t);
 
             return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
-                'error' => $t->getMessage()
+                'error' => $t->getMessage(),
             ]));
         }
 
@@ -118,7 +118,7 @@ class PluginController extends Controller
             report($t);
 
             return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
-                'error' => $t->getMessage()
+                'error' => $t->getMessage(),
             ]));
         }
 

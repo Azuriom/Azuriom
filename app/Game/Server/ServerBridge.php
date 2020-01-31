@@ -23,7 +23,7 @@ abstract class ServerBridge
     }
 
     /**
-     * Get all the server data
+     * Get all the server data.
      *
      * @return array|null
      */

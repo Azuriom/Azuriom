@@ -5,7 +5,7 @@ namespace Azuriom\Game\Server;
 use Exception;
 
 /**
- * PHP Minecraft Pinger
+ * PHP Minecraft Pinger.
  *
  * This class is based on https://github.com/xPaw/PHP-Minecraft-Query, under MIT license.
  * Adapted to Azuriom to follow PSR 12 and prevent exceptions thrown in the constructor.

@@ -134,7 +134,7 @@ class Handler extends ExceptionHandler
                     'message' => $ex->getMessage(),
                     'file' => $ex->getFile(),
                     'line' => $ex->getLine(),
-                    'trace' => $ex->getTraceAsString()
+                    'trace' => $ex->getTraceAsString(),
                 ]);
             } while (($ex = $ex->getPrevious()));
 
@@ -148,7 +148,7 @@ class Handler extends ExceptionHandler
 
             $client = new \GuzzleHttp\Client(['timeout' => 5]);
 
-            $client->post('https://azuriom.com/api/errors/report', ['json' => $data,]);
+            $client->post('https://azuriom.com/api/errors/report', ['json' => $data]);
         } catch (Throwable $t) {
             //
         }

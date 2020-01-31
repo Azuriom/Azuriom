@@ -118,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the bans that the user receives
+     * Get the bans that the user receives.
      */
     public function bans()
     {

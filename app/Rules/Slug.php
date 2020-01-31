@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class Slug implements Rule
 {
-
     /**
      * Determine if the validation rule passes.
      *

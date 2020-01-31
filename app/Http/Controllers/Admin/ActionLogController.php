@@ -15,12 +15,12 @@ class ActionLogController extends Controller
     public function index()
     {
         return view('admin.logs.index', [
-            'logs' => ActionLog::with('target')->latest()->paginate()
+            'logs' => ActionLog::with('target')->latest()->paginate(),
         ]);
     }
 
     /**
-     * Clear old records
+     * Clear old records.
      *
      * @return \Illuminate\Http\Response
      * @throws \Exception

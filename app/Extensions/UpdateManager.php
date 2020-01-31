@@ -139,6 +139,7 @@ class UpdateManager
             return $updates;
         } catch (Throwable $t) {
             logger()->warning('Unable to check updates '.$t->getMessage());
+
             return [];
         }
     }

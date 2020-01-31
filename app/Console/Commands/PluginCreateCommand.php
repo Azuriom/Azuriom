@@ -60,6 +60,7 @@ class PluginCreateCommand extends Command
 
         if ($this->files->exists($path)) {
             $this->error('The plugin '.$path.' already exists!');
+
             return false;
         }
 
@@ -96,12 +97,12 @@ class PluginCreateCommand extends Command
             'version' => '1.0.0',
             'url' => $this->option('url'),
             'authors' => [
-                $this->option('author')
+                $this->option('author'),
             ],
             'providers' => [
                 "\\{$namespace}\\Providers\\{$name}ServiceProvider",
                 "\\{$namespace}\\Providers\\RouteServiceProvider",
-            ]
+            ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

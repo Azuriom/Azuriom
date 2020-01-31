@@ -32,7 +32,7 @@ class PageRequest extends FormRequest
             'description' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('pages')->ignore($this->page, 'slug')],
             'content' => ['required', 'string'],
-            'is_enabled' =>  ['filled', 'boolean']
+            'is_enabled' =>  ['filled', 'boolean'],
         ];
     }
 }

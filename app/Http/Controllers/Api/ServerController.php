@@ -38,7 +38,7 @@ class ServerController extends Controller
 
     public function status()
     {
-        return response()->json(['status' => 'ok',]);
+        return response()->json(['status' => 'ok']);
     }
 
     public function fetch(Request $request)
@@ -70,7 +70,7 @@ class ServerController extends Controller
 
         return response()->json([
             'status' => 'ok',
-            'commands' => $commands
+            'commands' => $commands,
         ]);
     }
 }

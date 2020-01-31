@@ -101,7 +101,6 @@ class ServerController extends Controller
         return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
     }
 
-
     public function verifyAzLink(ServerRequest $request, Server $server)
     {
         if ($server->type !== 'mc-azlink') {
@@ -114,13 +113,13 @@ class ServerController extends Controller
             $server->bridge()->sendServerRequest();
 
             return response()->json([
-                'status' => 'success', 'message' => trans('admin.servers.status.connect-success')
+                'status' => 'success', 'message' => trans('admin.servers.status.connect-success'),
             ]);
         } catch (Throwable $t) {
             if ($t instanceof ConnectException) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => trans('admin.servers.status.azlink-connect')
+                    'message' => trans('admin.servers.status.azlink-connect'),
                 ], 422);
             }
 
@@ -128,7 +127,7 @@ class ServerController extends Controller
                 return response()->json([
                     'status' => 'error',
                     'message' => trans('admin.servers.status.azlink-badresponse', [
-                        'code' => $t->getResponse()->getStatusCode()
+                        'code' => $t->getResponse()->getStatusCode(),
                     ]),
                 ], 422);
             }

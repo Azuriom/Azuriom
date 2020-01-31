@@ -25,7 +25,7 @@ abstract class ExtensionManager
     }
 
     /**
-     * Read the content of a json
+     * Read the content of a json.
      *
      * @param  string  $path
      * @param  bool  $asoc

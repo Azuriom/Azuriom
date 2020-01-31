@@ -61,7 +61,7 @@ return [
         'back-website' => 'Retour au site',
 
         'support' => 'Support',
-        'documentation' => 'Documentation'
+        'documentation' => 'Documentation',
     ],
 
     'notifications' => [
@@ -209,7 +209,7 @@ return [
 
         'status' => [
             'updated' => 'Les paramètres ont été mis à jour.',
-        ]
+        ],
     ],
 
     'navbar-elements' => [
@@ -236,7 +236,7 @@ return [
             'created' => 'Élément de la navbar créé.',
             'updated' => 'Élément de le navbar mis à jour.',
             'deleted' => 'Élément de la navbar supprimé.',
-        ]
+        ],
     ],
 
     'servers' => [
@@ -293,7 +293,7 @@ return [
             'mc-ping' => 'Ping',
             'mc-rcon' => 'Rcon',
             'mc-azlink' => 'AzLink',
-        ]
+        ],
     ],
 
     'users' => [
@@ -376,7 +376,7 @@ return [
             'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
             'own-role' => 'Vous ne pouvez pas supprimer votre grade.',
-        ]
+        ],
     ],
 
     'permissions' => [
@@ -425,7 +425,7 @@ return [
 
         'info' => [
             'pinned' => 'Épinglé',
-        ]
+        ],
     ],
 
     'pages' => [
@@ -439,7 +439,7 @@ return [
             'created' => 'La page a été créée.',
             'updated' => 'La page a été mise à jour.',
             'deleted' => 'La page a été supprimée.',
-        ]
+        ],
     ],
 
     'images' => [
@@ -467,7 +467,7 @@ return [
             'deleted' => 'Le plus a été supprimé.',
 
             'error-delete' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
-        ]
+        ],
     ],
 
     'themes' => [
@@ -496,7 +496,7 @@ return [
             'deleted' => 'Le thème a été supprimé.',
 
             'error-delete' => 'Vous ne pouvez pas supprimer le thème actif.',
-        ]
+        ],
     ],
 
     'update' => [

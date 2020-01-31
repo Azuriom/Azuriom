@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ram
  * @property int $cpu
  * @property int $tps
- * @property double $loaded_chunks
+ * @property float $loaded_chunks
  * @property int $entities
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -26,7 +26,7 @@ class ServerStat extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'players', 'ram', 'cpu', 'tps', 'loaded_chunks', 'entities'
+        'name', 'players', 'ram', 'cpu', 'tps', 'loaded_chunks', 'entities',
     ];
 
     public function server()

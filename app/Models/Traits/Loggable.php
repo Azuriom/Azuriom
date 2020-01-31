@@ -6,7 +6,7 @@ use Azuriom\Models\ActionLog;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Log actions of this model
+ * Log actions of this model.
  */
 trait Loggable
 {

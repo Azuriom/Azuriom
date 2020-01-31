@@ -3,7 +3,7 @@
 namespace Azuriom\Models\Traits;
 
 /**
- * Add a prefix to the table name
+ * Add a prefix to the table name.
  */
 trait HasTablePrefix
 {
@@ -15,7 +15,7 @@ trait HasTablePrefix
     public function getTable()
     {
         if ($this->table === null) {
-            $this->setTable($this->prefix . parent::getTable());
+            $this->setTable($this->prefix.parent::getTable());
         }
 
         return $this->table;

@@ -17,7 +17,7 @@ class SettingServiceProvider extends ServiceProvider
      * @var array
      */
     protected $encrypted = [
-        'mail.password'
+        'mail.password',
     ];
 
     /**

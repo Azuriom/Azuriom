@@ -4,7 +4,6 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\NavbarElementRequest;
-use Azuriom\Models\ActionLog;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
@@ -38,7 +37,7 @@ class NavbarController extends Controller
     {
         $this->validate($request, [
             'order.*.id' => ['required', 'integer'],
-            'order.*.children' => ['sometimes', 'array']
+            'order.*.children' => ['sometimes', 'array'],
         ]);
 
         $elements = $request->input('order');
@@ -51,7 +50,7 @@ class NavbarController extends Controller
 
             NavbarElement::whereKey($id)->update([
                 'position' => $position++,
-                'parent_id' => null
+                'parent_id' => null,
             ]);
 
             $childPosition = 1;
@@ -59,14 +58,14 @@ class NavbarController extends Controller
             foreach ($children as $child) {
                 NavbarElement::whereKey($child['id'])->update([
                     'position' => $childPosition++,
-                    'parent_id' => $id
+                    'parent_id' => $id,
                 ]);
             }
         }
 
         return $request->expectsJson() ? response()->json([
             'status' => 'success',
-            'message' => trans('admin.navbar-elements.status.nav-updated')
+            'message' => trans('admin.navbar-elements.status.nav-updated'),
         ]) : redirect()->route('admin.navbar-elements.index');
     }
 

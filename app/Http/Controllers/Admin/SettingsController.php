@@ -16,7 +16,7 @@ use Illuminate\Validation\Rule;
 class SettingsController extends Controller
 {
     /**
-     * The supported mail drivers
+     * The supported mail drivers.
      *
      * @var array
      */
@@ -26,7 +26,7 @@ class SettingsController extends Controller
     ];
 
     /**
-     * The supported mail drivers
+     * The supported mail drivers.
      *
      * @var array
      */
@@ -36,14 +36,14 @@ class SettingsController extends Controller
     ];
 
     /**
-     * The supported hash algorithms
+     * The supported hash algorithms.
      *
      * @var array
      */
     private $hashAlgorithms = [
         'bcrypt' => 'Bcrypt',
         'argon' => 'Argon2i',
-        'argon2id' => 'Argon2id'
+        'argon2id' => 'Argon2id',
     ];
 
     /**
@@ -53,7 +53,7 @@ class SettingsController extends Controller
      */
     private $hashCompatibility = [
         'argon' => 'PASSWORD_ARGON2I',
-        'argon2id' => 'PASSWORD_ARGON2ID'
+        'argon2id' => 'PASSWORD_ARGON2ID',
     ];
 
     /**
@@ -115,22 +115,22 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-                'name' => ['required', 'string', 'max:50'],
-                'description' => ['nullable', 'string', 'max:255'],
-                'url' => ['required', 'url'],
-                'timezone' => ['required', 'timezone'],
-                'copyright' => ['nullable', 'string', 'max:150'],
-                'conditions' => ['nullable', 'url', 'max:150'],
-                'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
-                'icon' => ['nullable', 'exists:images,file'],
-                'logo' => ['nullable', 'exists:images,file'],
-                'background' => ['nullable', 'exists:images,file'],
-                'money' => ['required', 'string', 'max:15'],
-            ]) + [
-                'register' => $request->has('register'),
-                'auth-api' => $request->has('auth-api'),
-                'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
-            ]);
+            'name' => ['required', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'url' => ['required', 'url'],
+            'timezone' => ['required', 'timezone'],
+            'copyright' => ['nullable', 'string', 'max:150'],
+            'conditions' => ['nullable', 'url', 'max:150'],
+            'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
+            'icon' => ['nullable', 'exists:images,file'],
+            'logo' => ['nullable', 'exists:images,file'],
+            'background' => ['nullable', 'exists:images,file'],
+            'money' => ['required', 'string', 'max:15'],
+        ]) + [
+            'register' => $request->has('register'),
+            'auth-api' => $request->has('auth-api'),
+            'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
+        ]);
 
         ActionLog::log('settings.updated');
 
@@ -155,7 +155,7 @@ class SettingsController extends Controller
         return view('admin.settings.security', [
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
-            'showReCaptcha' => $show
+            'showReCaptcha' => $show,
         ]);
     }
 
@@ -184,8 +184,8 @@ class SettingsController extends Controller
                     if (! defined($this->hashCompatibility[$value])) {
                         $fail(trans('admin.settings.security.hash-error'));
                     }
-                }
-            ]
+                },
+            ],
         ]);
 
         if ($enableReCaptcha) {
@@ -287,7 +287,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.mail', [
             'drivers' => $this->mailDrivers,
-            'encryptionTypes' => $this->mailEncryptionTypes
+            'encryptionTypes' => $this->mailEncryptionTypes,
         ]);
     }
 
@@ -342,7 +342,7 @@ class SettingsController extends Controller
     public function updateMaintenance(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-            'maintenance-message' => ['nullable', 'string']
+            'maintenance-message' => ['nullable', 'string'],
         ]));
 
         Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));

@@ -77,7 +77,7 @@ class AdminController extends Controller
         $users = collect([
             1 => 0,
             7 => 0,
-            31 => 0
+            31 => 0,
         ]);
 
         User::whereDate('last_login_at', '>=', now()->subMonth())

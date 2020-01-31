@@ -102,7 +102,7 @@ class Role extends Model
     /**
      * Get the CSS inline style rules of this role.
      * The background color is the role color and the text
-     * color is white or black depending on the role color
+     * color is white or black depending on the role color.
      *
      * @return string
      */
@@ -117,7 +117,7 @@ class Role extends Model
      * Return true if this role is the default role.
      * The role created by the application with the id 1
      * is always the default role that new users will get
-     * when they will register
+     * when they will register.
      *
      * @return bool
      */
@@ -133,7 +133,7 @@ class Role extends Model
      */
     public static function defaultRole()
     {
-        return Role::find(1);
+        return self::find(1);
     }
 
     /**
