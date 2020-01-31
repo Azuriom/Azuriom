@@ -9,7 +9,7 @@ class Azuriom
      *
      * @var string
      */
-    private const VERSION = '0.0.2';
+    private const VERSION = '0.1.0';
 
     /**
      * Get the current version of Azuriom CMS.

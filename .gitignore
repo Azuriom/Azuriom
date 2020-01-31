@@ -3,6 +3,9 @@
 *.iml
 *.iws
 
+# Mac
+.DS_Store
+
 # Laravel
 /node_modules
 /public/hot

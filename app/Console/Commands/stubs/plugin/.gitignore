@@ -1,1 +1,10 @@
-/vendor
+# PhpStorm
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Composer
+/vendor/
