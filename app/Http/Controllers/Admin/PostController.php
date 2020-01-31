@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         return view('admin.posts.index', [
-            'posts' => Post::with('author')->paginate()
+            'posts' => Post::with('author')->paginate(),
         ]);
     }
 

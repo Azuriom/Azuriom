@@ -5,7 +5,7 @@ namespace Azuriom\Extensions\Plugin;
 trait HasPlugin
 {
     /**
-     * The associated module name
+     * The associated module name.
      *
      * @var string
      */

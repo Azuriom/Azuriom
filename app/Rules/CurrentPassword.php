@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class CurrentPassword implements Rule
 {
-
     /**
      * Determine if the validation rule passes.
      *

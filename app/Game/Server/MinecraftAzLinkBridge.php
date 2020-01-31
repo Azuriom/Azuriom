@@ -16,8 +16,6 @@ class MinecraftAzLinkBridge extends ServerBridge
         // Data are sent by the plugins every minute,
         // this method will not be call unless the
         // server is down.
-
-        return null;
     }
 
     public function verifyLink()

@@ -31,7 +31,7 @@ class Server extends Model
     use Loggable;
 
     /**
-     * The servers types
+     * The servers types.
      *
      * @var array
      */

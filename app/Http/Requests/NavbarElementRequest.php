@@ -32,7 +32,7 @@ class NavbarElementRequest extends FormRequest
         $this->mergeCheckboxes();
 
         $this->merge([
-            'value' => $this->getLinkValue()
+            'value' => $this->getLinkValue(),
         ]);
     }
 
@@ -49,7 +49,7 @@ class NavbarElementRequest extends FormRequest
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
             'plugin' => ['required_if:type,plugin', 'nullable',  Rule::in(plugins()->getRouteDescriptions()->keys())],
             'value' => ['sometimes'],
-            'new_tab' => ['filled', 'boolean']
+            'new_tab' => ['filled', 'boolean'],
         ];
     }
 
@@ -65,9 +65,11 @@ class NavbarElementRequest extends FormRequest
         switch ($type) {
             case 'page':
                 $page = Page::find($this->input('page'));
+
                 return $page ? $page->slug : '';
             case 'post':
                 $post = Post::find($this->input('post'));
+
                 return $post ? $post->slug : '';
             case 'link':
             case 'plugin':

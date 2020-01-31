@@ -92,7 +92,7 @@ class ActionLog extends Model
     protected function getTargetTypeAttribute()
     {
         if ($this->target_id === null) {
-            return null;
+            return;
         }
 
         return $this->getActionFormat()['model'] ?? null;
@@ -101,10 +101,10 @@ class ActionLog extends Model
     public function getActionFormat()
     {
         return self::$actions[$this->action] ?? [
-                'icon' => 'question',
-                'color' => 'muted',
-                'message' => '?',
-            ];
+            'icon' => 'question',
+            'color' => 'muted',
+            'message' => '?',
+        ];
     }
 
     /**
@@ -121,7 +121,7 @@ class ActionLog extends Model
 
         $log = new self([
             'user_id' => Auth::id(),
-            'action' => $action
+            'action' => $action,
         ]);
 
         if ($target !== null) {

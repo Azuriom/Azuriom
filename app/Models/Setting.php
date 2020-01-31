@@ -41,9 +41,9 @@ class Setting extends Model
 
         foreach ($keys as $key => $value) {
             if ($value !== null) {
-                Setting::updateOrCreate(['name' => $key], ['value' => $value]);
+                self::updateOrCreate(['name' => $key], ['value' => $value]);
             } else {
-                Setting::where('name', $key)->delete();
+                self::where('name', $key)->delete();
             }
 
             config()->set('setting.'.$key, $value);

@@ -29,7 +29,7 @@ class RoleRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:100'],
             'color' => ['required', new Color()],
-            'is_admin' => ['filled', 'boolean']
+            'is_admin' => ['filled', 'boolean'],
         ];
     }
 }

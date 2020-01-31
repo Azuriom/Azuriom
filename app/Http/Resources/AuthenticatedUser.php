@@ -25,7 +25,7 @@ class AuthenticatedUser extends JsonResource
             'banned' => $this->is_banned,
             'uuid' => $this->game_id,
             'access_token' => $this->access_token,
-            'created_at' => $this->created_at->toIso8601String()
+            'created_at' => $this->created_at->toIso8601String(),
         ];
     }
 }

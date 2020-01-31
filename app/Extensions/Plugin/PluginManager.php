@@ -180,13 +180,13 @@ class PluginManager extends ExtensionManager
         $path = $this->path($plugin, 'plugin.json');
 
         if ($path === null) {
-            return null;
+            return;
         }
 
         $json = $this->getJson($path);
 
         if ($json === null) {
-            return null;
+            return;
         }
 
         $json->composer = $this->getJson($this->path($plugin, 'composer.json'), true);
@@ -225,7 +225,7 @@ class PluginManager extends ExtensionManager
     }
 
     /**
-     * Get the enabled plugins
+     * Get the enabled plugins.
      *
      * @return array
      */
@@ -235,7 +235,7 @@ class PluginManager extends ExtensionManager
     }
 
     /**
-     * Return if a plugin is enabled
+     * Return if a plugin is enabled.
      *
      * @param  string  $plugin
      * @return bool
@@ -303,6 +303,7 @@ class PluginManager extends ExtensionManager
 
         if (empty($enabledPlugins)) {
             $this->files->delete($this->getCachedPluginsPath());
+
             return [];
         }
 

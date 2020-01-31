@@ -65,7 +65,7 @@ class UpdateManager
         $updates = $this->getUpdate($force);
 
         if (empty($updates)) {
-            return null;
+            return;
         }
 
         return $updates['version'] ?? null;
@@ -76,7 +76,7 @@ class UpdateManager
         $updates = $this->fetch($force);
 
         if (empty($updates)) {
-            return null;
+            return;
         }
 
         return $updates['update'] ?? null;
@@ -87,7 +87,7 @@ class UpdateManager
         $updates = $this->fetch($force);
 
         if (empty($updates)) {
-            return null;
+            return;
         }
 
         return $updates['plugins'] ?? [];
@@ -98,7 +98,7 @@ class UpdateManager
         $updates = $this->fetch($force);
 
         if (empty($updates)) {
-            return null;
+            return;
         }
 
         return $updates['themes'] ?? [];
@@ -139,6 +139,7 @@ class UpdateManager
             return $updates;
         } catch (Throwable $t) {
             logger()->warning('Unable to check updates '.$t->getMessage());
+
             return [];
         }
     }

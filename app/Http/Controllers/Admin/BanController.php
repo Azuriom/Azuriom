@@ -17,7 +17,7 @@ class BanController extends Controller
     public function index()
     {
         return view('admin.bans.index', [
-            'bans' => Ban::withTrashed()->with(['user', 'author'])->paginate()
+            'bans' => Ban::withTrashed()->with(['user', 'author'])->paginate(),
         ]);
     }
 
@@ -32,7 +32,7 @@ class BanController extends Controller
     {
         Ban::create([
             'user_id' => $user->id,
-            'reason' => $request->input('reason')
+            'reason' => $request->input('reason'),
         ]);
 
         $user->update(['is_banned' => true]);

@@ -15,7 +15,7 @@ class CheckForMaintenanceSettings
         'maintenance',
         'login',
         'logout',
-        'admin.*'
+        'admin.*',
     ];
 
     /**
@@ -28,7 +28,6 @@ class CheckForMaintenanceSettings
     public function handle($request, Closure $next)
     {
         if (setting('maintenance-status', false)) {
-
             if ($request->routeIs($this->except) || $request->route()->uri() === 'user/login') {
                 return $next($request);
             }

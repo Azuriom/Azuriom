@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 class ImageController extends Controller
 {
     /**
-     * The storage path for uploaded images
+     * The storage path for uploaded images.
      *
      * @var string
      */
@@ -53,7 +53,7 @@ class ImageController extends Controller
         $fileName = $request->input('slug').'.'.$extension;
 
         Validator::make(['slug' => $fileName], [
-            'slug' => [Rule::unique('images', 'file')]
+            'slug' => [Rule::unique('images', 'file')],
         ])->validate();
 
         $file->storeAs($this->imagePath, $fileName);
@@ -61,7 +61,7 @@ class ImageController extends Controller
         Image::create([
             'name' => $request->input('name'),
             'file' => $fileName,
-            'type' => $mimeType
+            'type' => $mimeType,
         ]);
 
         return redirect()->route('admin.images.index')->with('success', 'Image uploaded');
@@ -91,7 +91,7 @@ class ImageController extends Controller
         $fileName = $request->input('slug').'.'.$image->getExtension();
 
         Validator::make(['slug' => $fileName], [
-            'slug' => [Rule::unique('images', 'file')->ignore($image->file, 'file')]
+            'slug' => [Rule::unique('images', 'file')->ignore($image->file, 'file')],
         ])->validate();
 
         if ($image->file !== $fileName) {
@@ -100,7 +100,7 @@ class ImageController extends Controller
 
         $image->update([
             'name' => $request->input('name'),
-            'file' => $fileName
+            'file' => $fileName,
         ]);
 
         return redirect()->route('admin.images.index')->with('success', 'Image updated');

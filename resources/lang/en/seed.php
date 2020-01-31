@@ -12,12 +12,12 @@ return [
     */
 
     'navbar' => [
-        'home' => 'Home'
+        'home' => 'Home',
     ],
 
     'roles' => [
-      'member' => 'Member',
-      'admin' => 'Admin'
+        'member' => 'Member',
+        'admin' => 'Admin',
     ],
 
     'settings' => [

@@ -54,7 +54,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         return view('auth.register', [
-            'conditions' => setting('conditions')
+            'conditions' => setting('conditions'),
         ]);
     }
 
@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:25', 'unique:users', new Username(), new GameAuth()],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'conditions' => [setting('conditions', false) ? 'accepted' : 'nullable']
+            'conditions' => [setting('conditions', false) ? 'accepted' : 'nullable'],
         ]);
     }
 

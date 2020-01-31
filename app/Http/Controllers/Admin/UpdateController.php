@@ -33,7 +33,7 @@ class UpdateController extends Controller
         return view('admin.update.index', [
             'lastVersion' => $version,
             'hasUpdate' => $this->updates->hasUpdate(),
-            'isDownloaded' => $this->updates->isLastVersionDownloaded()
+            'isDownloaded' => $this->updates->isLastVersionDownloaded(),
         ]);
     }
 
@@ -47,7 +47,7 @@ class UpdateController extends Controller
             report($t);
 
             return $response->with('error', trans('admin.update.status.error-fetch', [
-                'error' => $t->getMessage()
+                'error' => $t->getMessage(),
             ]));
         }
 
@@ -65,7 +65,7 @@ class UpdateController extends Controller
         if (! $this->updates->hasUpdate()) {
             return response()->json([
                 'status' => 'success',
-                'message' => trans('admin.update.status.up-to-date')
+                'message' => trans('admin.update.status.up-to-date'),
             ]);
         }
 
@@ -77,8 +77,8 @@ class UpdateController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-download', [
-                    'error' => $t->getMessage()
-                ])
+                    'error' => $t->getMessage(),
+                ]),
             ], 422);
         }
 
@@ -94,7 +94,7 @@ class UpdateController extends Controller
         if (! $this->updates->hasUpdate()) {
             return response()->json([
                 'status' => 'success',
-                'message' => trans('admin.update.status.up-to-date')
+                'message' => trans('admin.update.status.up-to-date'),
             ]);
         }
 
@@ -106,8 +106,8 @@ class UpdateController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-install', [
-                    'error' => $t->getMessage()
-                ])
+                    'error' => $t->getMessage(),
+                ]),
             ], 422);
         }
 

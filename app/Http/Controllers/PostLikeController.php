@@ -22,7 +22,7 @@ class PostLikeController extends Controller
 
         return $request->expectsJson() ? response()->json([
             'likes' => $post->likes->count(),
-            'liked' => true
+            'liked' => true,
         ]) : redirect()->route('posts.show', $post->slug);
     }
 
@@ -39,7 +39,7 @@ class PostLikeController extends Controller
 
         return $request->expectsJson() ? response()->json([
             'likes' => $post->likes->count(),
-            'liked' => false
+            'liked' => false,
         ]) : redirect()->route('posts.show', $post->slug);
     }
 }

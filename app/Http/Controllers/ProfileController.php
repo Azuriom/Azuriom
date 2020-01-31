@@ -21,7 +21,7 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'email_confirm_pass' => ['required', 'string', new CurrentPassword()],
-            'email' => ['required', 'string', 'email', 'max:50', 'unique:users']
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
         $request->user()->update($request->only('email'));
@@ -33,7 +33,7 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'password_confirm_pass' => ['required', 'string', new CurrentPassword()],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $request->user()->update(['password' => Hash::make($request->input('password'))]);
@@ -58,7 +58,7 @@ class ProfileController extends Controller
 
         return view('profile.2fa', [
             'secretKey' => $secretKey,
-            'qrCodeUrl' => $qrCodeUrl
+            'qrCodeUrl' => $qrCodeUrl,
         ]);
     }
 
@@ -66,7 +66,7 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             '2fa_key' => ['required', 'string', 'min:8'],
-            'code' => ['required', 'string']
+            'code' => ['required', 'string'],
         ]);
 
         if (! (new Google2FA())->verifyKey($request->input('2fa_key'), str_replace(' ', '', $request->input('code')))) {

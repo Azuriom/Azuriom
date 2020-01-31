@@ -59,6 +59,7 @@ class ThemeCreateCommand extends Command
 
         if ($this->files->exists($path)) {
             $this->error('The theme '.$path.' already exists!');
+
             return false;
         }
 
@@ -83,8 +84,8 @@ class ThemeCreateCommand extends Command
             'version' => '1.0.0',
             'url' => $this->option('url'),
             'authors' => [
-                $this->option('author')
-            ]
+                $this->option('author'),
+            ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

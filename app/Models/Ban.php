@@ -51,7 +51,7 @@ class Ban extends Model
     protected $userKey = 'author_id';
 
     /**
-     * Get the banned user
+     * Get the banned user.
      */
     public function user()
     {
@@ -59,7 +59,7 @@ class Ban extends Model
     }
 
     /**
-     * Get the author of the ban
+     * Get the author of the ban.
      */
     public function author()
     {
@@ -67,7 +67,7 @@ class Ban extends Model
     }
 
     /**
-     * Get the remover of the ban
+     * Get the remover of the ban.
      */
     public function remover()
     {

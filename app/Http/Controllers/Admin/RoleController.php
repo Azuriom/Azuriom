@@ -47,7 +47,7 @@ class RoleController extends Controller
 
         return $request->expectsJson() ? response()->json([
             'status' => 'success',
-            'message' => trans('admin.roles.status.power-updated')
+            'message' => trans('admin.roles.status.power-updated'),
         ]) : redirect()->route('admin.roles.index');
     }
 
@@ -91,7 +91,7 @@ class RoleController extends Controller
 
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::permissionsWithName()
+            'permissions' => Permission::permissionsWithName(),
         ]);
     }
 

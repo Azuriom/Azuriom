@@ -19,10 +19,11 @@ class GameAuth implements Rule
         try {
             $id = game()->getUserUniqueId($value);
 
-           return $id !== null && $id !== false;
+            return $id !== null && $id !== false;
         } catch (Throwable $t) {
             //
         }
+
         return false;
     }
 

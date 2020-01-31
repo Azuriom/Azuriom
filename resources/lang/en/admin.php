@@ -61,7 +61,7 @@ return [
         'back-website' => 'Go back to website',
 
         'support' => 'Support',
-        'documentation' => 'Documentation'
+        'documentation' => 'Documentation',
     ],
 
     'notifications' => [
@@ -209,7 +209,7 @@ return [
 
         'status' => [
             'updated' => 'The settings have been updated.',
-        ]
+        ],
     ],
 
     'navbar-elements' => [
@@ -236,7 +236,7 @@ return [
             'created' => 'The navbar element has been created.',
             'updated' => 'This navbar element has been updated.',
             'deleted' => 'This navbar element has been deleted.',
-        ]
+        ],
     ],
 
     'servers' => [
@@ -293,7 +293,7 @@ return [
             'mc-ping' => 'Ping',
             'mc-rcon' => 'Rcon',
             'mc-azlink' => 'AzLink',
-        ]
+        ],
     ],
 
     'users' => [
@@ -376,7 +376,7 @@ return [
             'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
             'own-role' => 'You cannot delete your role.',
-        ]
+        ],
     ],
 
     'permissions' => [
@@ -425,7 +425,7 @@ return [
 
         'info' => [
             'pinned' => 'Pinned',
-        ]
+        ],
     ],
 
     'pages' => [
@@ -439,7 +439,7 @@ return [
             'created' => 'The page has been created.',
             'updated' => 'This page has been updated.',
             'deleted' => 'This page has been deleted.',
-        ]
+        ],
     ],
 
     'images' => [
@@ -467,7 +467,7 @@ return [
             'deleted' => 'The plugin has been deleted.',
 
             'error-delete' => 'The plugin must be disabled before it can be delete.',
-        ]
+        ],
     ],
 
     'themes' => [
@@ -496,7 +496,7 @@ return [
             'deleted' => 'The theme has been deleted.',
 
             'error-delete' => 'You can\'t delete the current theme.',
-        ]
+        ],
     ],
 
     'update' => [

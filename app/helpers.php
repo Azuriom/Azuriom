@@ -51,6 +51,7 @@ if (! function_exists('money_name')) {
     function money_name($money = 2)
     {
         $moneyName = setting('money', 'points');
+
         return trans()->getSelector()->choose($moneyName, $money, trans()->getLocale());
     }
 }
@@ -77,6 +78,7 @@ if (! function_exists('favicon')) {
     function favicon()
     {
         $icon = setting('icon');
+
         return $icon !== null ? image_url($icon) : asset('img/azuriom.png');
     }
 }
@@ -85,6 +87,7 @@ if (! function_exists('site_logo')) {
     function site_logo()
     {
         $logo = setting('logo');
+
         return $logo !== null ? image_url($logo) : asset('img/azuriom.png');
     }
 }
@@ -140,7 +143,7 @@ if (! function_exists('plugin_path')) {
 
 if (! function_exists('themes_path')) {
     /**
-     * Get the path of the themes directory
+     * Get the path of the themes directory.
      *
      * @param  string  $path
      * @return string
@@ -154,7 +157,7 @@ if (! function_exists('themes_path')) {
 if (! function_exists('theme_path')) {
     /**
      * Get the path of a theme. If no theme is specified the current theme
-     * is used
+     * is used.
      *
      * @param  string  $path
      * @param  string|null  $theme

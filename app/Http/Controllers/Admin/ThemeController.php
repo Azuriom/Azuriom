@@ -17,7 +17,7 @@ class ThemeController extends Controller
     /**
      * The themes manager instance.
      *
-     * @var \Azuriom\Extensions\Theme\ThemeManager $themes
+     * @var \Azuriom\Extensions\Theme\ThemeManager
      */
     private $themes;
 
@@ -80,7 +80,7 @@ class ThemeController extends Controller
             report($t);
 
             return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
-                'error' => $t->getMessage()
+                'error' => $t->getMessage(),
             ]));
         }
 
@@ -95,7 +95,7 @@ class ThemeController extends Controller
             report($t);
 
             return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
-                'error' => $t->getMessage()
+                'error' => $t->getMessage(),
             ]));
         }
 

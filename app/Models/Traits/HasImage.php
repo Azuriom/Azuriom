@@ -64,7 +64,7 @@ trait HasImage
         $image = $this->getAttribute($this->getImageKey());
 
         if ($image === null) {
-            return null;
+            return;
         }
 
         return url(Storage::url($this->getImagePath().$image));

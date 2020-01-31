@@ -4,7 +4,6 @@ namespace Azuriom\Console\Commands;
 
 use Azuriom\Models\Server;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 
 class GamePingCommand extends Command
 {

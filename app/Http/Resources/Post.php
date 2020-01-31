@@ -2,8 +2,8 @@
 
 namespace Azuriom\Http\Resources;
 
-use Azuriom\Http\Resources\User as UserResource;
 use Azuriom\Http\Resources\Comment as CommentResource;
+use Azuriom\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Post extends JsonResource
@@ -26,7 +26,7 @@ class Post extends JsonResource
             'author' => new UserResource($this->author),
             'published_at' => $this->published_at->toIso8601String(),
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
-            'image' => $this->imageUrl()
+            'image' => $this->imageUrl(),
         ];
     }
 }

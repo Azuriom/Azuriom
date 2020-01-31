@@ -6,13 +6,12 @@ use Throwable;
 
 trait MinecraftPinger
 {
-
     public function ping(string $address, int $port = 25565, bool $resolveSrv = true)
     {
         try {
             return $this->makePing($address, $port, $resolveSrv);
         } catch (Throwable $t) {
-            return null;
+            return;
         }
     }
 
@@ -25,7 +24,7 @@ trait MinecraftPinger
 
             return [
                 'players' => $ping->players->online,
-                'max' => $ping->players->max
+                'max' => $ping->players->max,
             ];
         } finally {
             $pinger->close();

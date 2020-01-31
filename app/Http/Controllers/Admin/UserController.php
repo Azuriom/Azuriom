@@ -67,7 +67,7 @@ class UserController extends Controller
     {
         return view('admin.users.edit', [
             'user' => $user->refreshActiveBan(),
-            'roles' => Role::all()
+            'roles' => Role::all(),
         ]);
     }
 

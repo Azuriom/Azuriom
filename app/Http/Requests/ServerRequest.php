@@ -40,7 +40,7 @@ class ServerRequest extends FormRequest
         if ($type === 'mc-rcon') {
             $validated['data'] = [
                 'rcon-port' => $this->input('rcon-port'),
-                'rcon-password' => encrypt($this->input('rcon-password'), false)
+                'rcon-password' => encrypt($this->input('rcon-password'), false),
             ];
         } elseif ($type === 'mc-azlink' && $this->filled('azlink-custom-port')) {
             $validated['data'] = [

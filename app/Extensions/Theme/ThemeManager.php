@@ -63,7 +63,7 @@ class ThemeManager extends ExtensionManager
         view()->getFinder()->prependLocation($viewsPath);
 
         config([
-            'view.paths' => array_merge([$viewsPath], config('view.paths', []))
+            'view.paths' => array_merge([$viewsPath], config('view.paths', [])),
         ]);
 
         $this->loadConfig($theme);
@@ -85,7 +85,7 @@ class ThemeManager extends ExtensionManager
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {
-                return null;
+                return;
             }
 
             $theme = $this->currentTheme;
@@ -105,7 +105,7 @@ class ThemeManager extends ExtensionManager
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {
-                return null;
+                return;
             }
 
             $theme = $this->currentTheme;
@@ -169,7 +169,7 @@ class ThemeManager extends ExtensionManager
         $path = $this->path('/theme.json', $theme);
 
         if ($path === null) {
-            return null;
+            return;
         }
 
         return $this->getJson($path);

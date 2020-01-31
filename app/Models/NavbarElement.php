@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 class NavbarElement extends Model
 {
     /**
-     * The navbar elements types
+     * The navbar elements types.
      *
      * @var array
      */

@@ -25,7 +25,7 @@ abstract class ExtensionManager
     }
 
     /**
-     * Read the content of a json
+     * Read the content of a json.
      *
      * @param  string  $path
      * @param  bool  $asoc
@@ -34,13 +34,13 @@ abstract class ExtensionManager
     protected function getJson(string $path, bool $asoc = false)
     {
         if (! $this->files->isFile($path)) {
-            return null;
+            return;
         }
 
         try {
             return json_decode($this->files->get($path), $asoc);
         } catch (FileNotFoundException $e) {
-            return null;
+            return;
         }
     }
 }

@@ -84,7 +84,7 @@ return [
         'info' => [
             'role' => 'Role: :role',
             'register' => 'Création du compte: :date',
-            '2fa' => 'Authentification à deux facteurs (A2F): :2fa'
+            '2fa' => 'Authentification à deux facteurs (A2F): :2fa',
         ],
 
         '2fa' => [
