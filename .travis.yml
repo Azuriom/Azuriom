@@ -1,0 +1,24 @@
+language: php
+
+dist: trusty
+
+php:
+  - '7.2'
+  - '7.4'
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - cp .env.travis .env
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS azuriom;'
+
+install:
+  - composer install --ansi --prefer-dist --no-interaction --no-suggest --no-progress
+
+script:
+  - vendor/bin/phpunit
