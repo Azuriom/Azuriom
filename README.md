@@ -30,3 +30,7 @@ If you discover any security related issues within Azuriom, please send an e-mai
 ## Support us
 
 You can support Azuriom on [DonorBox](https://donorbox.org/Azuriom).
+
+## License
+
+Azuriom is licensed under the [GNU General Public License v3.0](LICENSE).

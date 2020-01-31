@@ -7,7 +7,7 @@
         "azuriom",
         "laravel"
     ],
-    "license": "proprietary",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^7.2",
         "ext-json": "*",
