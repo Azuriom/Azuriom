@@ -58,7 +58,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create', ['permissions' => Permission::permissions()]);
+        return view('admin.roles.create', ['permissions' => Permission::permissionsWithName()]);
     }
 
     /**

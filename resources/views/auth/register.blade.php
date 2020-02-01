@@ -66,10 +66,10 @@
                         @if($conditions !== null)
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" {{ old('conditions') ? 'checked' : '' }}>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" {{ old('conditions') ? 'checked' : '' }}>
 
-                                        <label class="form-check-label" for="conditions">
+                                        <label class="custom-control-label" for="conditions">
                                             @lang('auth.conditions', ['url' => $conditions])
                                         </label>
 
