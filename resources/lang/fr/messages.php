@@ -116,7 +116,6 @@ return [
         'guest' => 'Vous devez être connecté pour laisser un commentaire.',
         'author' => '<strong>:user</strong> a commenté le :date',
         'your-comment' => 'Votre commentaire',
-        'post-comment' => 'Poster',
         'delete-title' => 'Supprimer ?',
         'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],
