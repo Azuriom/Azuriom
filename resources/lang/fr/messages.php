@@ -4,7 +4,7 @@ return [
 
     'lang' => 'Français',
 
-    'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
+    'copyright' => '<a href="https://azuriom.com" target="_blank" rel="noopener noreferrer"> target="_blank" rel="noreferrer">Azuriom</a>.',
 
     'date' => 'j F Y',
     'date-full' => 'j F Y \à G:i',
@@ -32,7 +32,7 @@ return [
         'enable' => 'Activer',
         'disable' => 'Désactiver',
         'copy' => 'Copier',
-        'comment' => 'Commenter',
+        'comment' => 'Commentaire',
     ],
 
     'fields' => [
@@ -114,9 +114,8 @@ return [
     'comments' => [
         'create' => 'Laisser un commentaire',
         'guest' => 'Vous devez être connecté pour laisser un commentaire.',
-        'author' => '<strong>:user</strong> a commenté le :date',
+        'author' => '<strong>:user</strong> à commenté le :date',
         'your-comment' => 'Votre commentaire',
-        'post-comment' => 'Poster',
         'delete-title' => 'Supprimer ?',
         'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],

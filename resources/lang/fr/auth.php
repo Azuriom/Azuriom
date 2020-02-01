@@ -32,10 +32,10 @@ return [
     'confirm-password' => 'Confirmation du mot de passe',
     'current-password' => 'Mot de passe actuel',
 
+    'conditions' => 'J\'accepte les <a href=":conditions" target="_blank">conditions</a>.',
+
     '2fa-code' => 'Code d\'authentification à deux facteurs',
     '2fa-invalid' => 'Code invalide',
-
-    'conditions' => 'J\'accepte les <a href=":conditions" target="_blank">conditions</a>.',
 
     'maintenance' => 'Le site est actuellement en maintenance.',
 
@@ -43,7 +43,7 @@ return [
     'forgot-password' => 'Mot de passe oublié ?',
 
     'verify-sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
-    'verify-check' => 'Avant de continuer, veuillez vérifier si vous n\'avez pas reçu de lien de vérification dans votre adresse e-mail.',
+    'verify-check' => 'Avant de continuer, veuillez vérifier si vous n\'avez pas reçu de lien de vérification par e-mail.',
     'verify-request' => 'Si vous n\'avez pas reçu le mail vous pouvez en demander un autre.',
     'verify-resend' => 'Renvoyer',
 
