@@ -26,6 +26,7 @@ return [
         'continue' => 'Continuer',
         'browse' => 'Parcourir',
         'choose-file' => 'Choisir le fichier',
+        'download' => 'Télécharger',
         'upload' => 'Uploader',
         'cancel' => 'Annuler',
         'enable' => 'Activer',
@@ -50,7 +51,7 @@ return [
         'description' => 'Description',
         'short-description' => 'Description courte',
         'content' => 'Contenu',
-        'role' => 'Role',
+        'role' => 'Rôle',
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
@@ -82,7 +83,7 @@ return [
         'updated' => 'Profil mis à jour',
 
         'info' => [
-            'role' => 'Role: :role',
+            'role' => 'Rôle: :role',
             'register' => 'Création du compte: :date',
             '2fa' => 'Authentification à deux facteurs (A2F): :2fa',
         ],
@@ -120,5 +121,5 @@ return [
         'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],
 
-    'likes' => 'Likes: :likes',
+    'likes' => 'J\'aimes: :count',
 ];

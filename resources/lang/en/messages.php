@@ -120,5 +120,5 @@ return [
         'delete-description' => 'Are you sure you want to delete this comment ?',
     ],
 
-    'likes' => 'Likes: :likes',
+    'likes' => 'Likes: :count',
 ];

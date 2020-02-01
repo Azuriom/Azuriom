@@ -4,7 +4,7 @@
 
 [![Build Status](https://img.shields.io/travis/Azuriom/Azuriom/master?style=flat-square)](https://travis-ci.org/Azuriom/Azuriom)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
-[![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)
+[![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square&include_prereleases)](http://github.com/Azuriom/Azuriom/releases)
 [![Chat](https://img.shields.io/discord/625774284823986183?color=7289da&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
 
 **Azuriom** is the next generation game CMS, it's free and open-source, and is a modern, reliable, fast and secure alternative to existing CMS so you can have the best web experience possible.
