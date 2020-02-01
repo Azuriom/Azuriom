@@ -276,12 +276,12 @@
                     </button>
 
                     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
-                        <a href="https://azuriom.com/discord" class="btn btn-outline-primary mx-1" target="_blank" rel="noopener">
+                        <a href="https://azuriom.com/discord" class="btn btn-outline-primary mx-1" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-question-circle"></i>
                             {{ trans('admin.nav.support') }}
                         </a>
 
-                        <a href="https://azuriom.com/docs" class="btn btn-outline-secondary mx-1" target="_blank" rel="noopener">
+                        <a href="https://azuriom.com/docs" class="btn btn-outline-secondary mx-1" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-book"></i>
                             {{ trans('admin.nav.documentation') }}
                         </a>
@@ -367,8 +367,8 @@
                         <span>
                             @lang('admin.footer', [
                                 'year' => '2019-'.now()->year,
-                                'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>',
-                                'startbootstrap' => '<a href="https://startbootstrap.com" target="_blank">Start Bootstrap</a>'
+                                'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>',
+                                'startbootstrap' => '<a href="https://startbootstrap.com" target="_blank" rel="noopener noreferrer">Start Bootstrap</a>'
                             ])
                         </span>
                     </div>
