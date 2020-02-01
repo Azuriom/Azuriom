@@ -19,7 +19,7 @@ class GameAuth implements Rule
         try {
             $id = game()->getUserUniqueId($value);
 
-            return $id !== null && $id !== false;
+            return $id !== false;
         } catch (Throwable $t) {
             //
         }
@@ -34,6 +34,6 @@ class GameAuth implements Rule
      */
     public function message()
     {
-        return trans('validation.game-auth');
+        return trans('validation.game-auth', ['game' => game()->name()]);
     }
 }

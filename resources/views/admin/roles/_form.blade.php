@@ -2,7 +2,6 @@
 
 @csrf
 
-
 @push('footer-scripts')
     <script>
         document.querySelectorAll('[data-role-permission]').forEach(function (el) {

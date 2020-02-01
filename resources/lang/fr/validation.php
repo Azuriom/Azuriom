@@ -122,6 +122,7 @@ return [
     'slug' => 'Le champ :attribute doit être un lien avec seulement des lettres minuscules, des chiffres et des tirets.',
     'color' => 'Le champ :attribute doit être un code couleur hexadécimal.',
     'current-password' => 'Votre mot de passe actuel est incorrect.',
+    'game-auth' => 'Le champ :attribute doit être un pseudo :game valide.',
 
     /*
     |--------------------------------------------------------------------------

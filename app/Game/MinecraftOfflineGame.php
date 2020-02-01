@@ -18,7 +18,7 @@ class MinecraftOfflineGame implements Game
 
     public function getUserUniqueId(string $name)
     {
-        return false;
+        return null;
     }
 
     public function getUserName(User $user)
