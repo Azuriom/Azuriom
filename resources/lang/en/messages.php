@@ -4,7 +4,7 @@ return [
 
     'lang' => 'English',
 
-    'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noreferrer">Azuriom</a>.',
+    'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
     'date' => 'F j, Y',
     'date-full' => 'F j, Y \a\t g:i A',

@@ -113,7 +113,7 @@ return [
             'enable-user-registration' => 'Enable user registration',
             'enable-user-registration-label' => 'It can still be possible to register through plugins.',
             'auth-api' => 'Enable Auth API',
-            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> for an easy and quick integration.',
+            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
             'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
         ],
 
@@ -130,7 +130,7 @@ return [
             'recaptcha' => 'Enable Google reCaptcha protection',
             'recaptcha-site-key' => 'Site key',
             'recaptcha-secret-key' => 'Secret key',
-            'recaptcha-info' => '<small>You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank"> Google reCaptcha website</a>.</small> <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>',
+            'recaptcha-info' => '<small>You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>.</small> <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>',
 
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
@@ -186,7 +186,7 @@ return [
             'title' => 'SEO settings',
 
             'google-analytics' => 'Google Analytics site id',
-            'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank"> Google Analytics website</a>.',
+            'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer"> Google Analytics website</a>.',
             'meta' => 'Meta keywords',
             'meta-info' => 'The keywords must be separated with a comma.',
         ],
@@ -197,7 +197,7 @@ return [
             'from-address' => 'E-Mail address used to send e-mails.',
             'encryption' => 'E-Mail Encryption Protocol',
             'driver' => 'E-Mail type',
-            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener">documentation</a>.',
+            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
             'host' => 'SMTP Host Address',
             'port' => 'SMTP Host Port',
             'username' => 'SMTP Server Username',
