@@ -6,6 +6,4 @@ resources/js/app.js         linguist-generated
 resources/js/bootstrap.js   linguist-generated
 resources/sass              linguist-generated
 
-public/assets/vendor                        linguist-vendored
-public/assets/admin/css/sb-admin-2.css      linguist-vendored
-public/assets/admin/css/sb-admin-2.min.css  linguist-vendored
+public/assets/vendor linguist-vendored

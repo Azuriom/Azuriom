@@ -17,7 +17,7 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}" defer></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('vendor/axios/axios.min.js') }}" defer></script>
-    <script src="{{ asset('admin/js/sb-admin-2.min.js') }}" defer></script>
+    <script src="{{ asset('vendor/sb-admin-2/js/sb-admin-2.min.js') }}" defer></script>
     <script src="{{ asset('admin/js/admin.js') }}" defer></script>
 
     <!-- Page level scripts -->
@@ -29,7 +29,7 @@
     <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/sb-admin-2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/admin.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
