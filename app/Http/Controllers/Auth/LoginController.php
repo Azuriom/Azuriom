@@ -130,10 +130,6 @@ class LoginController extends Controller
         $user->last_login_at = now();
         $user->save();
 
-        if ($user->game_id === null) {
-            return;
-        }
-
         try {
             $name = game()->getUserName($user);
 

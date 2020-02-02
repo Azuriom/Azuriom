@@ -26,7 +26,10 @@ class MinecraftOnlineGame implements Game
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
-        return "https://crafatar.com/avatars/{$user->game_id}?size={$size}&overlay";
+        // Fallback to MHF_Steve if the user don't have an uuid
+        $id = $user->game_id ?? 'c06f8906-4c8a-4911-9c29-ea1dbd1aab82';
+
+        return "https://crafatar.com/avatars/{$id}?size={$size}&overlay&default=MHF_Steve";
     }
 
     public function getUserUniqueId(string $name)
@@ -42,6 +45,10 @@ class MinecraftOnlineGame implements Game
 
     public function getUserName(User $user)
     {
+        if ($user->game_id === null) {
+            return $user->name;
+        }
+
         $cacheKey = 'minecraft-profile-cache.'.$user->game_id;
 
         return Cache::remember($cacheKey, now()->addMinutes(15), function () use ($user) {
