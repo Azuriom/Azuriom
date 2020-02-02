@@ -66,44 +66,47 @@
         </div>
     </div>
 
-    <div class="card shadow mb-4">
-        <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.available') }}</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">{{ trans('messages.fields.name') }}</th>
-                        <th scope="col">{{ trans('messages.fields.author') }}</th>
-                        <th scope="col">{{ trans('messages.fields.version') }}</th>
-                        <th scope="col">{{ trans('messages.fields.action') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    @foreach($availablePlugins as $plugin)
+    @if(! $availablePlugins->isEmpty())
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.available') }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <th scope="row">{{ $plugin['name'] }}</th>
-                            <td>{{ $plugin['author']['name'] }}</td>
-                            <td>{{ $plugin['version'] }}</td>
-                            <td>
-                                <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
-                                    @csrf
-
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
-                                    </button>
-                                </form>
-                            </td>
+                            <th scope="col">{{ trans('messages.fields.name') }}</th>
+                            <th scope="col">{{ trans('messages.fields.author') }}</th>
+                            <th scope="col">{{ trans('messages.fields.version') }}</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
-                    @endforeach
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        @foreach($availablePlugins as $plugin)
+                            <tr>
+                                <th scope="row">{{ $plugin['name'] }}</th>
+                                <td>{{ $plugin['author']['name'] }}</td>
+                                <td>{{ $plugin['version'] }}</td>
+                                <td>
+                                    <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
+                                        @csrf
 
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
-    </div>
+    @endif
+
 @endsection

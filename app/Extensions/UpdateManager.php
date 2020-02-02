@@ -62,46 +62,22 @@ class UpdateManager
 
     public function getLastVersion(bool $force = false)
     {
-        $updates = $this->getUpdate($force);
-
-        if (empty($updates)) {
-            return null;
-        }
-
-        return $updates['version'] ?? null;
+        return $this->getUpdate($force)['version'] ?? null;
     }
 
     public function getUpdate(bool $force = false)
     {
-        $updates = $this->fetch($force);
-
-        if (empty($updates)) {
-            return null;
-        }
-
-        return $updates['update'] ?? null;
+        return $this->fetch($force)['update'] ?? null;
     }
 
     public function getPlugins(bool $force = false)
     {
-        $updates = $this->fetch($force);
-
-        if (empty($updates)) {
-            return null;
-        }
-
-        return $updates['plugins'] ?? [];
+        return  $this->fetch($force)['plugins'] ?? [];
     }
 
     public function getThemes(bool $force = false)
     {
-        $updates = $this->fetch($force);
-
-        if (empty($updates)) {
-            return null;
-        }
-
-        return $updates['themes'] ?? [];
+        return $this->fetch($force)['themes'] ?? [];
     }
 
     public function fetch(bool $force = false)

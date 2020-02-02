@@ -89,7 +89,7 @@ class Post extends Model
             return false;
         }
 
-        return $this->likes->where('author_id', $user ? $user->id : auth()->id())->isNotEmpty();
+        return ! $this->likes->where('author_id', $user ? $user->id : auth()->id())->isEmpty();
     }
 
     public function isPublished()
