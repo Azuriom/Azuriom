@@ -32,7 +32,7 @@ class ActionLog extends Model
         'updates.installed' => [
             'icon' => 'sync',
             'color' => 'warning',
-            'message' => 'admin.logs.updates.updated',
+            'message' => 'admin.logs.updates.installed',
         ],
         'plugins.enabled' => [
             'icon' => 'plus',
