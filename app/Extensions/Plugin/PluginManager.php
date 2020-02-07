@@ -4,12 +4,12 @@ namespace Azuriom\Extensions\Plugin;
 
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
+use Azuriom\Support\Optimizer;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use RuntimeException;
 use Throwable;
 
@@ -59,8 +59,8 @@ class PluginManager extends ExtensionManager
     {
         parent::__construct($files);
 
-        $this->pluginsPath = base_path('plugins');
-        $this->pluginsPublicPath = public_path('assets/plugins');
+        $this->pluginsPath = base_path('plugins/');
+        $this->pluginsPublicPath = public_path('assets/plugins/');
         $this->routeDescriptions = new Collection();
         $this->adminNavItems = new Collection();
     }
@@ -104,7 +104,7 @@ class PluginManager extends ExtensionManager
      */
     public function pluginsPath(string $path = '')
     {
-        return $this->pluginsPath.'/'.$path;
+        return $this->pluginsPath.$path;
     }
 
     /**
@@ -127,12 +127,12 @@ class PluginManager extends ExtensionManager
      */
     public function path(string $plugin, string $path = '')
     {
-        return $this->pluginsPath("/{$plugin}/{$path}");
+        return $this->pluginsPath("{$plugin}/{$path}");
     }
 
     public function publicPath(string $plugin, string $path = '')
     {
-        return $this->pluginsPublicPath("/{$plugin}/{$path}");
+        return $this->pluginsPublicPath("{$plugin}/{$path}");
     }
 
     /**
@@ -142,7 +142,7 @@ class PluginManager extends ExtensionManager
      */
     public function getCachedPluginsPath()
     {
-        return storage_path('app/plugins');
+        return base_path('bootstrap/cache/plugins.php');
     }
 
     /**
@@ -307,22 +307,16 @@ class PluginManager extends ExtensionManager
             return [];
         }
 
-        $this->files->put($this->getCachedPluginsPath(), serialize($plugins));
+        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($plugins, true).';');
+
+        app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
 
         return $plugins;
     }
 
     public function refreshRoutesCache()
     {
-        if (! app()->routesAreCached()) {
-            return;
-        }
-
-        Artisan::call('route:cache');
-
-        if (function_exists('opcache_invalidate')) {
-            opcache_invalidate(app()->getCachedRoutesPath());
-        }
+        app(Optimizer::class)->reloadRoutesCache();
     }
 
     public function getOnlinePlugins(bool $force = false)
@@ -381,21 +375,19 @@ class PluginManager extends ExtensionManager
 
     protected function getPlugins()
     {
-        if ($this->files->isFile($this->getCachedPluginsPath())) {
-            try {
-                $this->plugins = array_map(function ($array) {
-                    return (object) $array;
-                }, unserialize($this->files->get($this->getCachedPluginsPath())));
+        try {
+            $plugins = $this->files->getRequire($this->getCachedPluginsPath());
 
-                return $this->plugins;
-            } catch (FileNotFoundException $e) {
-                //
-            }
+            $this->plugins = array_map(function ($array) {
+                return (object) $array;
+            }, $plugins);
+
+            return $this->plugins;
+        } catch (FileNotFoundException $e) {
+            $this->plugins = $this->cachePlugins();
+
+            return $this->plugins;
         }
-
-        $this->plugins = $this->cachePlugins();
-
-        return $this->plugins;
     }
 
     protected function setPluginEnabled(string $plugin, bool $enabled)

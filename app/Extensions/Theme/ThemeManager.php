@@ -39,8 +39,8 @@ class ThemeManager extends ExtensionManager
     {
         parent::__construct($files);
 
-        $this->themesPath = resource_path('themes');
-        $this->themesPublicPath = public_path('assets/themes');
+        $this->themesPath = resource_path('themes/');
+        $this->themesPublicPath = public_path('assets/themes/');
     }
 
     /**
@@ -166,7 +166,7 @@ class ThemeManager extends ExtensionManager
      */
     public function findDescription(string $theme = null)
     {
-        $path = $this->path('/theme.json', $theme);
+        $path = $this->path('theme.json', $theme);
 
         if ($path === null) {
             return null;
@@ -306,7 +306,7 @@ class ThemeManager extends ExtensionManager
         $themeAssetsPath = $this->path('assets', $theme);
 
         if ($this->files->exists($themeAssetsPath)) {
-            $this->files->link($themeAssetsPath, $this->themesPublicPath('/'.$theme));
+            $this->files->link($themeAssetsPath, $this->themesPublicPath($theme));
         }
     }
 }

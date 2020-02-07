@@ -13,6 +13,14 @@
     </script>
 @endpush @endif
 
+@if($htmlScriptsHead = setting('html-head')) @push('scripts')
+    {!! $htmlScriptsHead !!}
+@endpush @endif
+
+@if($htmlScriptsBody = setting('html-body')) @push('footer-scripts')
+    {!! $htmlScriptsBody !!}
+@endpush @endif
+
 @if($keywords = setting('keywords')) @push('meta')
     <meta name="keywords" content="{{ $keywords }}">
 @endpush @endif

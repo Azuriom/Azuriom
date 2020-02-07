@@ -171,7 +171,6 @@ return [
                     'reloaded' => 'RocketBooster a été rechargé.',
 
                     'enable-error' => 'Une erreur est survenue en activant RocketBooster.',
-                    'disable-error' => 'Une erreur est survenue en désactivant RocketBooster.',
                 ],
 
                 'actions' => [
@@ -189,6 +188,11 @@ return [
             'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer">Google Analytics</a>.',
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
+
+            'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages',
+            'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages',
+
+            'html-code-info' => 'Exemple: Bannière cookies, etc',
         ],
 
         'mail' => [

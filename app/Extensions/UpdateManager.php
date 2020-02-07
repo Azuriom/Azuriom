@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions;
 
 use Azuriom\Azuriom;
+use Azuriom\Support\Optimizer;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -72,7 +73,7 @@ class UpdateManager
 
     public function getPlugins(bool $force = false)
     {
-        return  $this->fetch($force)['plugins'] ?? [];
+        return $this->fetch($force)['plugins'] ?? [];
     }
 
     public function getThemes(bool $force = false)
@@ -125,11 +126,6 @@ class UpdateManager
         $response = $this->getHttpClient()->get('https://azuriom.com/api/updates');
 
         return json_decode($response->getBody()->getContents(), true);
-    }
-
-    public function installExtension(array $info)
-    {
-        $dir = storage_path('');
     }
 
     public function download(array $info, string $tempDir = '')
@@ -185,6 +181,8 @@ class UpdateManager
         $zip->close();
 
         $this->files->delete($file);
+
+        app(Optimizer::class)->clear();
 
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }

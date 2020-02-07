@@ -171,7 +171,6 @@ return [
                     'reloaded' => 'RocketBooster was reloaded.',
 
                     'enable-error' => 'Error while enabling RocketBooster.',
-                    'disable-error' => 'Error while disabling RocketBooster.',
                 ],
 
                 'actions' => [
@@ -189,6 +188,11 @@ return [
             'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer"> Google Analytics website</a>.',
             'meta' => 'Meta keywords',
             'meta-info' => 'The keywords must be separated with a comma.',
+
+            'html-head-code' => 'HTML code to include in the <head> of all pages',
+            'html-body-code' => 'HTML code to include in the <body> of all pages',
+
+            'html-code-info' => 'E.g: Cookie banner, etc',
         ],
 
         'mail' => [

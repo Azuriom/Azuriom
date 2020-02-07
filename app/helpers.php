@@ -137,7 +137,7 @@ if (! function_exists('themes')) {
 if (! function_exists('plugin_path')) {
     function plugin_path(string $path = '')
     {
-        return base_path('plugins/'.$path);
+        return plugins()->pluginsPath($path);
     }
 }
 
