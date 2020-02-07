@@ -18,7 +18,8 @@ class UpdateController extends Controller
     protected $updates;
 
     /**
-     * UpdateController constructor.
+     * Create a new controller instance.
+     *
      * @param  \Azuriom\Extensions\UpdateManager  $updates
      */
     public function __construct(UpdateManager $updates)

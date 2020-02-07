@@ -29,7 +29,7 @@ class ThemeController extends Controller
     private $files;
 
     /**
-     * Create a new ThemeController instance.
+     * Create a new controller instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes

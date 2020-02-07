@@ -14,21 +14,21 @@ class ThemeManager extends ExtensionManager
      *
      * @var string|null
      */
-    private $currentTheme;
+    protected $currentTheme;
 
     /**
      * The themes/ directory.
      *
      * @var string
      */
-    private $themesPath;
+    protected $themesPath;
 
     /**
      * The themes/ public directory for assets.
      *
      * @var string
      */
-    private $themesPublicPath;
+    protected $themesPublicPath;
 
     /**
      * Create a new ThemeManager instance.

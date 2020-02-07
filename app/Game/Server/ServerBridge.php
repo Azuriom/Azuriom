@@ -14,8 +14,9 @@ abstract class ServerBridge
     protected $server;
 
     /**
-     * ServerBridge constructor.
-     * @param  Server  $server
+     * Create a new ServerBridge instance.
+     *
+     * @param  \Azuriom\Models\Server  $server
      */
     public function __construct(Server $server)
     {

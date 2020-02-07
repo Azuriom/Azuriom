@@ -117,6 +117,12 @@ class NavbarElement extends Model
         return $this->parent_id !== null;
     }
 
+    /**
+     * Scope a query to only include elements without parent.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeParent(Builder $query)
     {
         return $query->where('parent_id', null);

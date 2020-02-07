@@ -71,7 +71,8 @@ class ThemeCreateCommand extends Command
             $this->createConfigJson($path);
         }
 
-        $this->createAssetsFolder($path);
+        $this->files->makeDirectory($path.'/assets');
+        $this->files->makeDirectory($path.'/views');
 
         $this->info('Theme created successfully.');
     }
@@ -92,10 +93,5 @@ class ThemeCreateCommand extends Command
     private function createConfigJson(string $path)
     {
         $this->files->put($path.'/config.json', '{}');
-    }
-
-    private function createAssetsFolder(string $path)
-    {
-        $this->files->makeDirectory($path.'/assets');
     }
 }

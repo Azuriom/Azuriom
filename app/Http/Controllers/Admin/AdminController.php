@@ -21,7 +21,7 @@ class AdminController extends Controller
     private $app;
 
     /**
-     * AdminController constructor.
+     * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      */

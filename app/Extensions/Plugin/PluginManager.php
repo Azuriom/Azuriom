@@ -20,38 +20,38 @@ class PluginManager extends ExtensionManager
      *
      * @var array
      */
-    private $plugins = [];
+    protected $plugins = [];
 
     /**
      * The plugins/ directory.
      *
      * @var string
      */
-    private $pluginsPath;
+    protected $pluginsPath;
 
     /**
      * The plugins/ public directory for assets.
      *
      * @var string
      */
-    private $pluginsPublicPath;
+    protected $pluginsPublicPath;
 
     /**
      * The plugins route descriptions.
      *
      * @var \Illuminate\Support\Collection
      */
-    private $routeDescriptions;
+    protected $routeDescriptions;
 
     /**
      * The admin panel navigation.
      *
      * @var \Illuminate\Support\Collection
      */
-    private $adminNavItems;
+    protected $adminNavItems;
 
     /**
-     * Create a new pluginManager instance.
+     * Create a new PluginManager instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
      */

@@ -15,7 +15,8 @@ class AdminLayoutComposer
     protected $updates;
 
     /**
-     * AdminComposer constructor.
+     * Create a new composer instance.
+     *
      * @param  \Azuriom\Extensions\UpdateManager  $updates
      */
     public function __construct(UpdateManager $updates)

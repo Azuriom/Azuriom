@@ -25,7 +25,7 @@ class PluginController extends Controller
     private $files;
 
     /**
-     * Create a new PluginController instance.
+     * Create a new controller instance.
      *
      * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
      * @param  \Illuminate\Filesystem\Filesystem  $files

@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
+     * Create a new controller instance.
      */
     public function __construct()
     {

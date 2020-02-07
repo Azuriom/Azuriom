@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class ServerController extends Controller
 {
     /**
-     * Create a new ServerController instance.
+     * Create a new controller instance.
      */
     public function __construct()
     {
