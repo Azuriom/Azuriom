@@ -154,6 +154,20 @@ return [
 
     'attributes' => [
         'email' => 'E-Mail Address',
+        'name' => 'name',
+        'title' => 'title',
+        'slug' => 'slug',
+        'description' => 'description',
+        'content' => 'content',
+        'image' => 'image',
+        'file' => 'file',
+        'password' => 'password',
+        'role' => 'role',
+        'color' => 'color',
+        'reason' => 'reason',
+        'type' => 'type',
+        'address' => 'address',
+        'money' => 'money',
     ],
 
 ];

@@ -157,12 +157,17 @@ return [
         'name' => 'nom',
         'title' => 'titre',
         'slug' => 'lien',
+        'description' => 'description',
         'content' => 'contenu',
-        'image' => 'fichier',
+        'image' => 'image',
+        'file' => 'fichier',
         'password' => 'mot de passe',
         'role' => 'grade',
         'color' => 'couleur',
         'reason' => 'raison',
+        'type' => 'type',
+        'address' => 'adresse',
+        'money' => 'argent',
     ],
 
 ];

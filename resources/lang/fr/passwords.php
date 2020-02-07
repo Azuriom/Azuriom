@@ -17,5 +17,5 @@ return [
     'sent' => 'Nous vous avons envoyé le lien de réinitialisation de votre mot de passe par e-mail !',
     'throttled' => 'Veuillez attendre avant de réessayer.',
     'token' => 'Cette clé de réinitialisation de mot de passe n\'est pas valide.',
-    'user' => "Nous ne trouvons pas d'utilisateur avec cette adresse e-mail.",
+    'user' => "Aucun utilisateur n'a été trouvé avec cette adresse e-mail.",
 ];
