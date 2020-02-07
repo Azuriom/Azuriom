@@ -17,18 +17,21 @@ class ServerController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $header = $request->header('Authorization', '');
+            $token = $request->bearerToken();
 
-            if (! Str::startsWith($header, 'Basic ')) {
-                abort(401, 'No server key provided.');
+            if ($token === null) {
+                $header = $request->header('Authorization', '');
+
+                if (Str::startsWith($header, 'Basic ')) {
+                    $token = base64_decode(Str::substr($header, 6));
+                }
             }
 
-            $token = base64_decode(Str::substr($header, 6));
+            abort_if($token === null, 401, 'No server key provided.');
+
             $server = Server::where('token', $token)->first();
 
-            if ($server === null) {
-                abort(403, 'Invalid server key.');
-            }
+            abort_if($server === null, 403, 'Invalid server key.');
 
             $request->merge(['server-id' => $server->id]);
 
