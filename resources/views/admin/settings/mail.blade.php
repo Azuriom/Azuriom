@@ -22,7 +22,11 @@
                     <div class="form-group col-md-8">
                         <label for="driverSelect">{{ trans('admin.settings.mail.driver') }}</label>
 
-&
+                        <select class="custom-select" id="driverSelect" name="driver" data-toggle-select="mail-type">	&
+                            @foreach($drivers as $driver => $driverName)
+                                <option value="{{ $driver }}" @if(config('mail.driver') === $driver) selected @endif>{{ $driverName }}</option>
+                            @endforeach
+                        </select>
 
                         <small>@lang('admin.settings.mail.driver-info')</small>
                     </div>

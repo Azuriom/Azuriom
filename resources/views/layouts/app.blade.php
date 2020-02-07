@@ -44,7 +44,9 @@
 
 <body>
 <div id="app">
-    @include('elements.navbar')
+    <header>
+        @include('elements.navbar')
+    </header>
 
     <main>
         <div class="container">
