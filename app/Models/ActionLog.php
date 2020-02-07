@@ -103,7 +103,7 @@ class ActionLog extends Model
         return self::$actions[$this->action] ?? [
             'icon' => 'question',
             'color' => 'muted',
-            'message' => '?',
+            'message' => $this->action,
         ];
     }
 
