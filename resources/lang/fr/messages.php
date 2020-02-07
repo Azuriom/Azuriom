@@ -32,7 +32,7 @@ return [
         'enable' => 'Activer',
         'disable' => 'Désactiver',
         'copy' => 'Copier',
-        'comment' => 'Commentaire',
+        'comment' => 'Commenter',
     ],
 
     'fields' => [
@@ -120,5 +120,5 @@ return [
         'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],
 
-    'likes' => 'J\'aimes: :count',
+    'likes' => 'J\'aimes : :count',
 ];

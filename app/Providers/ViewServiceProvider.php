@@ -28,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::if('module', function ($expression) {
+        Blade::if('plugin', function ($expression) {
             return plugins()->isEnabled($expression);
         });
 

@@ -69,6 +69,7 @@ class ActionLog extends Model
             Page::class,
             Role::class,
             Server::class,
+            Image::class,
             User::class,
         ], 'admin.logs');
     }
