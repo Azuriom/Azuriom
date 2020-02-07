@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasColor;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use Loggable;
+    use HasColor;
 
     /**
      * The attributes that are mass assignable.
@@ -41,16 +43,6 @@ class Role extends Model
     protected $casts = [
         'is_admin' => 'boolean',
     ];
-
-    protected function getColorAttribute($value)
-    {
-        return '#'.$value;
-    }
-
-    protected function setColorAttribute($value)
-    {
-        $this->attributes['color'] = (strlen($value) === 7) ? substr($value, 1) : $value;
-    }
 
     /**
      * Get the users in this group.
