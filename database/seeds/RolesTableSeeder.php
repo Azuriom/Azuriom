@@ -12,12 +12,16 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::firstOrCreate(['id' => 1], [
+        if (Role::count() > 0) {
+            return;
+        }
+
+        Role::create([
             'name' => trans('seed.roles.member'),
             'color' => 'a5a5a5',
         ]);
 
-        Role::firstOrCreate(['is_admin' => true], [
+        Role::create([
             'name' => trans('seed.roles.admin'),
             'color' => 'e10d11',
             'is_admin' => true,
