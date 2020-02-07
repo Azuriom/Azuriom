@@ -125,22 +125,22 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         Setting::updateSettings($this->validate($request, [
-                'name' => ['required', 'string', 'max:50'],
-                'description' => ['nullable', 'string', 'max:255'],
-                'url' => ['required', 'url'],
-                'timezone' => ['required', 'timezone'],
-                'copyright' => ['nullable', 'string', 'max:150'],
-                'conditions' => ['nullable', 'url', 'max:150'],
-                'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
-                'icon' => ['nullable', 'exists:images,file'],
-                'logo' => ['nullable', 'exists:images,file'],
-                'background' => ['nullable', 'exists:images,file'],
-                'money' => ['required', 'string', 'max:15'],
-            ]) + [
-                'register' => $request->has('register'),
-                'auth-api' => $request->has('auth-api'),
-                'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
-            ]);
+            'name' => ['required', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'url' => ['required', 'url'],
+            'timezone' => ['required', 'timezone'],
+            'copyright' => ['nullable', 'string', 'max:150'],
+            'conditions' => ['nullable', 'url', 'max:150'],
+            'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
+            'icon' => ['nullable', 'exists:images,file'],
+            'logo' => ['nullable', 'exists:images,file'],
+            'background' => ['nullable', 'exists:images,file'],
+            'money' => ['required', 'string', 'max:15'],
+        ]) + [
+            'register' => $request->has('register'),
+            'auth-api' => $request->has('auth-api'),
+            'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
+        ]);
 
         ActionLog::log('settings.updated');
 
