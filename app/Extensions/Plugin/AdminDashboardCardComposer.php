@@ -13,7 +13,7 @@ abstract class AdminDashboardCardComposer
      * - 'color' : A Bootstrap color (e.g: success)
      * - 'icon' : A FontAwesome 5 icon (e.g: fas fa-rocket)
      * - 'name' : The name of the card
-     * - 'value' : The value of the card
+     * - 'value' : The value of the card.
      *
      * @return array
      */
