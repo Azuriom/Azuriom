@@ -591,4 +591,10 @@ return [
             'changed' => 'Changement de theme',
         ],
     ],
+
+    'errors' => [
+        'back' => 'Retour',
+        '404' => 'Page Non Trouvée',
+        'info' => 'Il semblerait que vous avez trouvé un bug dans la matrice...',
+    ],
 ];

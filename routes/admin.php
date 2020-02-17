@@ -91,3 +91,5 @@ Route::post('/servers/{server}/verify/azlink', 'ServerController@verifyAzLink')-
 
 Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', 'ActionLogController')->only(['index'])->middleware('can:admin.logs');
+
+Route::fallback('AdminController@fallback');

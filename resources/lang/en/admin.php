@@ -591,4 +591,10 @@ return [
             'changed' => 'Changed theme',
         ],
     ],
+
+    'errors' => [
+        'back' => 'Back to Dashboard',
+        '404' => 'Page Not Found',
+        'info' => 'It looks like you found a glitch in the matrix...',
+    ],
 ];

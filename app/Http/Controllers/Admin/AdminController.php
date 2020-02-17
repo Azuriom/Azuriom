@@ -49,6 +49,11 @@ class AdminController extends Controller
         ]);
     }
 
+    public function fallback()
+    {
+        return response()->view('admin.errors.404', [], 404);
+    }
+
     protected function getRecentUsers()
     {
         $date = now()->subMonths(6);
