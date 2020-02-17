@@ -130,7 +130,7 @@ return [
             'recaptcha' => 'Enable Google reCaptcha protection',
             'recaptcha-site-key' => 'Site key',
             'recaptcha-secret-key' => 'Secret key',
-            'recaptcha-info' => '<small>You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>.</small> <small>You need to use reCaptcha <strong>v2 invisible</strong> keys.</small>',
+            'recaptcha-info' => 'You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>. You need to use reCaptcha <strong>v2 invisible</strong> keys.',
 
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
@@ -189,8 +189,8 @@ return [
             'meta' => 'Meta keywords',
             'meta-info' => 'The keywords must be separated with a comma.',
 
-            'html-head-code' => 'HTML code to include in the <head> of all pages',
-            'html-body-code' => 'HTML code to include in the <body> of all pages',
+            'html-head-code' => 'HTML code to include in the <head> of all pages.',
+            'html-body-code' => 'HTML code to include in the <body> of all pages.',
 
             'html-code-info' => 'E.g: Cookie banner, etc',
         ],

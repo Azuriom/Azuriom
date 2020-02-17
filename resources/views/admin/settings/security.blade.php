@@ -32,7 +32,7 @@
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
 
-                            @lang('admin.settings.security.recaptcha-info')
+                            <small>@lang('admin.settings.security.recaptcha-info')</small>
                         </div>
                     </div>
                 </div>

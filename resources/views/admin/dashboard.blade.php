@@ -4,7 +4,7 @@
 
 @section('content')
     @if(! $secure)
-        <div class="alert alert-warning shadow-sm" role="alert">
+        <div id="notHttpsAlert" class="alert alert-warning shadow-sm" role="alert">
             <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.https-warning') }}
         </div>
     @endif
@@ -267,4 +267,15 @@
             },
         });
     </script>
+    @if(! $secure)
+        <script>
+            // When using a proxy, if the traffic is encrypted only between the
+            // proxy and proxy, the warn can be show even if the user use https
+            // (like with Cloudflare flexible encryption). In this case we just
+            // hide the warning.
+            if (window.location.protocol === 'https:') {
+                document.getElementById('notHttpsAlert').classList.add('d-none');
+            }
+        </script>
+    @endif
 @endpush

@@ -35,7 +35,7 @@ class ServerController extends Controller
             ->orWhere('need_online', false)
             ->get();
 
-        ServerCommand::whereIn('id', $commands->pluck('id'))->delete();
+        ServerCommand::whereIn('id', $commands->modelKeys())->delete();
 
         $commands = $commands->groupBy('player_name')
             ->map(function ($serverCommands) {
