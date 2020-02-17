@@ -7,38 +7,9 @@ use Azuriom\Models\Server;
 use Azuriom\Models\ServerCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class ServerController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            $token = $request->bearerToken();
-
-            if ($token === null) {
-                $header = $request->header('Authorization', '');
-
-                if (Str::startsWith($header, 'Basic ')) {
-                    $token = base64_decode(Str::substr($header, 6));
-                }
-            }
-
-            abort_if($token === null, 401, 'No server key provided.');
-
-            $server = Server::where('token', $token)->first();
-
-            abort_if($server === null, 403, 'Invalid server key.');
-
-            $request->merge(['server-id' => $server->id]);
-
-            return $next($request);
-        });
-    }
-
     public function status()
     {
         return response()->json(['status' => 'ok']);

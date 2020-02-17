@@ -38,7 +38,7 @@
                                         <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
                                     </a>
                                 @endif
-                                @if($pluginsUpdates->offsetExists($path))
+                                @if($pluginsUpdates->has($path))
                                     <form method="POST" action="{{ route('admin.plugins.update', $path) }}" class="d-inline-block">
                                         @csrf
 

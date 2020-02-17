@@ -146,7 +146,7 @@ class NavbarController extends Controller
      */
     public function destroy(NavbarElement $navbarElement)
     {
-        if ($navbarElement->isDropDown() && $navbarElement->elements->count() > 0) {
+        if ($navbarElement->isDropDown() && ! $navbarElement->elements->isEmpty()) {
             return redirect()->route('admin.navbar-elements.index')
                 ->with('error', 'You cannot delete dropdown with elements');
         }

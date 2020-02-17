@@ -30,6 +30,6 @@ class VerifyCaptcha
             return $next($request);
         }
 
-        return redirect()->back()->with('error', 'reCaptcha verification failed')->withInput();
+        return redirect()->back()->with('error', trans('messages.catpcha-failed'))->withInput();
     }
 }

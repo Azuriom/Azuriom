@@ -19,8 +19,8 @@ class NavbarComposer
             ->scopes('parent')
             ->orderBy('position')
             ->get()
-            ->filter(function ($element) {
-                return ! $element->isDropdown() || $element->elements->count() > 0;
+            ->filter(function (NavbarElement $element) {
+                return ! $element->isDropdown() || ! $element->elements->isEmpty();
             });
 
         $view->with('navbar', $navbar);

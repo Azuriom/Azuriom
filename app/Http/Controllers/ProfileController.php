@@ -48,7 +48,7 @@ class ProfileController extends Controller
         }
 
         $google2fa = new Google2FA();
-        $secretKey = old('2fa_key', $google2fa->generateSecretKey());
+        $secretKey = $request->old('2fa_key', $google2fa->generateSecretKey());
         $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secretKey);
 
         $qrCode = new QRCode(new QROptions([

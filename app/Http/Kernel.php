@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'auth' => \Azuriom\Http\Middleware\Authenticate::class,
         'admin' => \Azuriom\Http\Middleware\AdminAuthenticate::class,
         'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,
+        'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

@@ -26,13 +26,13 @@ class PluginClearCommand extends Command
      * Execute the console command.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Azuriom\Extensions\Plugin\PluginManager  $extensions
+     * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
      * @return mixed
      */
-    public function handle(Filesystem $files, PluginManager $extensions)
+    public function handle(Filesystem $files, PluginManager $plugins)
     {
-        if ($files->exists($extensions->getCachedPluginsPath())) {
-            $files->delete($extensions->getCachedPluginsPath());
+        if ($files->exists($plugins->getCachedPluginsPath())) {
+            $files->delete($plugins->getCachedPluginsPath());
         }
 
         $this->info('Cached plugins files removed');

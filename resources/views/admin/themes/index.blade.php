@@ -43,7 +43,7 @@
                         <i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}
                     </button>
                 </form>
-                @if($themesUpdates->offsetExists($currentPath))
+                @if($themesUpdates->has($currentPath))
                     <form method="POST" action="{{ route('admin.themes.update', $currentPath) }}" class="d-inline-block">
                         @csrf
 
@@ -87,7 +87,7 @@
                                 <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger" data-confirm="delete">
                                     <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
                                 </a>
-                                @if($themesUpdates->offsetExists($path))
+                                @if($themesUpdates->has($path))
                                     <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
                                         @csrf
 

@@ -73,6 +73,8 @@ return [
 
     'status-error' => 'Une erreur est survenue: :error',
 
+    'catpcha-failed' => 'La vérification du captcha a échouée, merci de rééssayer.',
+
     'profile' => [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',

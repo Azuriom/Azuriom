@@ -9,7 +9,6 @@ use Composer\Autoload\ClassLoader;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Collection;
 use RuntimeException;
 use Throwable;
 
@@ -61,8 +60,8 @@ class PluginManager extends ExtensionManager
 
         $this->pluginsPath = base_path('plugins/');
         $this->pluginsPublicPath = public_path('assets/plugins/');
-        $this->routeDescriptions = new Collection();
-        $this->adminNavItems = new Collection();
+        $this->routeDescriptions = collect();
+        $this->adminNavItems = collect();
     }
 
     public function loadPlugins(Application $app)
