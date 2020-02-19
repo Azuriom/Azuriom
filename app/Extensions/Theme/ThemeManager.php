@@ -80,6 +80,14 @@ class ThemeManager extends ExtensionManager
         $this->createAssetsLink($theme);
     }
 
+    public function updateConfig(string $theme, array $config) {
+        $json = json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        $this->files->put($this->path('config.json', $theme), $json);
+
+        Cache::put('theme.config', $config, now()->addDay());
+    }
+
     /**
      * Get the path of the specified theme.
      * If no theme is specified the current theme is used.
@@ -285,7 +293,7 @@ class ThemeManager extends ExtensionManager
 
         $themeInfo = $themes[$themeId];
 
-        $theme = $themeInfo['themeId'];
+        $theme = $themeInfo['extensionId'];
 
         $themeDir = $this->path('', $theme);
 

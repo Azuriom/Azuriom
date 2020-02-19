@@ -378,7 +378,7 @@ class PluginManager extends ExtensionManager
 
         $pluginInfo = $plugins[$pluginId];
 
-        $plugin = $pluginInfo['pluginId'];
+        $plugin = $pluginInfo['extensionId'];
 
         $pluginDir = $this->path($plugin);
 

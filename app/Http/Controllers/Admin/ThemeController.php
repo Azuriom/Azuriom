@@ -5,11 +5,9 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
-use Azuriom\Models\Setting;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Throwable;
 
 class ThemeController extends Controller
@@ -140,11 +138,7 @@ class ThemeController extends Controller
         try {
             $validated = $this->validate($request, $this->files->getRequire($rulesPath));
 
-            $json = json_encode($validated, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-
-            $this->files->put($this->themes->path('config.json', $theme), $json);
-
-            Cache::put('theme.config', $validated, now()->addDay());
+            $this->themes->updateConfig($theme, $validated);
 
             return redirect()->route('admin.themes.index')->with('success',
                 trans('admin.themes.status.config-updated'));
