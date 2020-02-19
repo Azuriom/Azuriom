@@ -80,7 +80,8 @@ class ThemeManager extends ExtensionManager
         $this->createAssetsLink($theme);
     }
 
-    public function updateConfig(string $theme, array $config) {
+    public function updateConfig(string $theme, array $config)
+    {
         $json = json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         $this->files->put($this->path('config.json', $theme), $json);
