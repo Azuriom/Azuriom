@@ -27,6 +27,7 @@ class PostController extends Controller
      *
      * @param  $slug
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($slug)

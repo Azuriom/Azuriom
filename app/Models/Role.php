@@ -121,7 +121,7 @@ class Role extends Model
     /**
      * Get the default role.
      *
-     * @return Role
+     * @return \Azuriom\Models\Role
      */
     public static function defaultRole()
     {

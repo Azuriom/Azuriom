@@ -84,6 +84,7 @@ class PostController extends Controller
      *
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(Post $post)

@@ -11,7 +11,7 @@ class CommentPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine if the given user can create posts.
+     * Determine whether the user can create posts.
      *
      * @param  \Azuriom\Models\User  $user
      * @return bool
@@ -22,7 +22,7 @@ class CommentPolicy
     }
 
     /**
-     * Determine if the given comment can be deleted by the user.
+     * Determine whether the user can delete the comment.
      *
      * @param  \Azuriom\Models\User  $user
      * @param  \Azuriom\Models\Comment  $comment

@@ -31,6 +31,7 @@ class NavbarController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateOrder(Request $request)
@@ -142,6 +143,7 @@ class NavbarController extends Controller
      *
      * @param  \Azuriom\Models\NavbarElement  $navbarElement
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(NavbarElement $navbarElement)

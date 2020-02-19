@@ -43,6 +43,7 @@ class ImageController extends Controller
      *
      * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(ImageRequest $request)
@@ -84,6 +85,7 @@ class ImageController extends Controller
      * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(ImageRequest $request, Image $image)
@@ -111,6 +113,7 @@ class ImageController extends Controller
      *
      * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(Image $image)

@@ -23,6 +23,7 @@ class ActionLogController extends Controller
      * Clear old records.
      *
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function clear()

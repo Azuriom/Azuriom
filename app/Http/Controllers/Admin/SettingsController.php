@@ -118,8 +118,9 @@ class SettingsController extends Controller
     /**
      * Update the application settings.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
@@ -172,8 +173,9 @@ class SettingsController extends Controller
     /**
      * Update the application security settings.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Exception
      */
@@ -278,6 +280,7 @@ class SettingsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateSeo(Request $request)
@@ -310,8 +313,9 @@ class SettingsController extends Controller
     /**
      * Update the application mail settings.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateMail(Request $request)
@@ -351,8 +355,9 @@ class SettingsController extends Controller
     /**
      * Update the application maintenance settings.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateMaintenance(Request $request)

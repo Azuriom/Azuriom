@@ -34,7 +34,8 @@ class MinecraftPing
      *
      * @param  int  $timeout
      * @return mixed
-     * @throws Exception
+     *
+     * @throws \Exception
      */
     public function ping(int $timeout = 3)
     {
@@ -62,7 +63,7 @@ class MinecraftPing
             throw new Exception('Invalid length: '.$length);
         }
 
-        fgetc($this->socket); // packet type
+        $this->readVarInt(); // packet type
 
         $length = $this->readVarInt(); // string length
 
@@ -100,7 +101,8 @@ class MinecraftPing
      * Read a var int.
      *
      * @return int
-     * @throws Exception
+     *
+     * @throws \Exception
      */
     private function readVarInt()
     {
@@ -134,7 +136,8 @@ class MinecraftPing
      * Connect to the server.
      *
      * @param  int  $timeout
-     * @throws Exception
+     *
+     * @throws \Exception
      */
     public function connect(int $timeout = 3)
     {
@@ -144,7 +147,7 @@ class MinecraftPing
         if (! $this->socket) {
             $this->socket = null;
 
-            throw new Exception("Failed to connect or create a socket: $errno ($errstr)");
+            throw new Exception("Failed to connect or create a socket: {$errno} ({$errstr})");
         }
 
         stream_set_timeout($this->socket, $timeout);

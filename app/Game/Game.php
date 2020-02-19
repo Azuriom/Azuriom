@@ -11,7 +11,7 @@ interface Game
     /**
      * Get the avatar URL of the user.
      *
-     * @param  User  $user
+     * @param  \Azuriom\Models\User  $user
      * @param  int  $size
      */
     public function getAvatarUrl(User $user, int $size = 64);
@@ -26,7 +26,7 @@ interface Game
     /**
      * Get the game user name.
      *
-     * @param  User  $user
+     * @param  \Azuriom\Models\User  $user
      * @return mixed
      */
     public function getUserName(User $user);

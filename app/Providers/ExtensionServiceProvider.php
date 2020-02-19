@@ -12,6 +12,7 @@ class ExtensionServiceProvider extends ServiceProvider
      * Register services.
      *
      * @return void
+     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function register()

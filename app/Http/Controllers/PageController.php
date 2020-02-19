@@ -9,8 +9,10 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $slug
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($slug)

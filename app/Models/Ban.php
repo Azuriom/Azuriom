@@ -77,7 +77,8 @@ class Ban extends Model
     /**
      * Remove this ban.
      *
-     * @param  User|null  $remover
+     * @param  \Azuriom\Models\User|null  $remover
+     *
      * @throws \Exception
      */
     public function removeBan(User $remover = null)

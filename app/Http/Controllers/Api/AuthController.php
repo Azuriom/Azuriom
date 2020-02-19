@@ -30,6 +30,7 @@ class AuthController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function authenticate(Request $request)
@@ -63,6 +64,7 @@ class AuthController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function verify(Request $request)
@@ -87,6 +89,7 @@ class AuthController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function logout(Request $request)

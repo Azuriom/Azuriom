@@ -10,7 +10,7 @@ class PostLikeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +29,7 @@ class PostLikeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      */

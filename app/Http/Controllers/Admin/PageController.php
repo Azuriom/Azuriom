@@ -71,6 +71,7 @@ class PageController extends Controller
      *
      * @param  \Azuriom\Models\Page  $page
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(Page $page)

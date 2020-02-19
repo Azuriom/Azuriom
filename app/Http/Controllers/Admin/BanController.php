@@ -46,6 +46,7 @@ class BanController extends Controller
      * @param  \Azuriom\Models\User  $user
      * @param  \Azuriom\Models\Ban  $ban
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(User $user, Ban $ban)

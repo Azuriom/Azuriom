@@ -130,6 +130,7 @@ class ThemeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $theme
      * @return \Illuminate\Http\Response
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function config(Request $request, string $theme)

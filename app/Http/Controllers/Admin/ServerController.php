@@ -141,6 +141,7 @@ class ServerController extends Controller
      *
      * @param  \Azuriom\Models\Server  $server
      * @return \Illuminate\Http\Response
+     *
      * @throws \Exception
      */
     public function destroy(Server $server)

@@ -42,6 +42,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -121,7 +129,9 @@ class LoginController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Azuriom\Models\User  $user
      */
     protected function authenticated(Request $request, $user)
