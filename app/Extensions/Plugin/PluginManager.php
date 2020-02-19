@@ -74,21 +74,28 @@ class PluginManager extends ExtensionManager
 
         $composer = $this->files->getRequire(base_path('vendor/autoload.php'));
 
-        foreach ($plugins as $name => $plugin) {
+        foreach ($plugins as $pluginId => $plugin) {
             try {
-                $this->autoloadPlugin($name, $composer, $plugin->composer);
+                if (! isset($plugin->composer)) {
+                    continue;
+                }
+
+                // TODO 1.0: remove support for legacy extensions without id
+                if (! isset($plugin->id)) {
+                    $plugin->id = $pluginId;
+                }
+
+                $this->autoloadPlugin($pluginId, $composer, $plugin->composer);
 
                 foreach ($plugin->providers ?? [] as $pluginProvider) {
                     $provider = new $pluginProvider($app);
 
-                    if (method_exists($provider, 'bindName')) {
-                        $provider->bindName($name);
+                    if (method_exists($provider, 'bindPlugin')) {
+                        $provider->bindPlugin($plugin);
                     }
 
                     $app->register($provider);
                 }
-
-                $this->createAssetsLink($name);
             } catch (Throwable $t) {
                 report($t);
             }
@@ -174,7 +181,7 @@ class PluginManager extends ExtensionManager
      * @param  string|null  $plugin
      * @return mixed|null
      */
-    public function findDescription(string $plugin = null)
+    public function findDescription(string $plugin)
     {
         $path = $this->path($plugin, 'plugin.json');
 
@@ -185,6 +192,16 @@ class PluginManager extends ExtensionManager
         $json = $this->getJson($path);
 
         if ($json === null) {
+            return null;
+        }
+
+        // TODO 1.0: remove support for legacy extensions without id
+        if (! isset($json->id)) {
+            $json->id = $plugin;
+        }
+
+        // The plugin folder must be the plugin id
+        if ($plugin !== $json->id) {
             return null;
         }
 
@@ -296,17 +313,17 @@ class PluginManager extends ExtensionManager
             return in_array($plugin, $enabledPlugins, true);
         }, ARRAY_FILTER_USE_KEY);
 
-        $plugins = array_map(function ($plugin) {
-            return (array) $plugin;
-        }, $plugins);
-
         if (empty($enabledPlugins)) {
             $this->files->delete($this->getCachedPluginsPath());
 
             return [];
         }
 
-        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($plugins, true).';');
+        $pluginsCache = array_map(function ($plugin) {
+            return (array) $plugin;
+        }, $plugins);
+
+        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
         app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
 
@@ -361,7 +378,9 @@ class PluginManager extends ExtensionManager
 
         $pluginInfo = $plugins[$pluginId];
 
-        $pluginDir = $this->path(strtolower($pluginInfo['name']));
+        $plugin = $pluginInfo['pluginId'];
+
+        $pluginDir = $this->path($plugin);
 
         if (! $this->files->isDirectory($pluginDir)) {
             $this->files->makeDirectory($pluginDir);
@@ -370,6 +389,8 @@ class PluginManager extends ExtensionManager
         $updateManager->download($pluginInfo, 'plugins/');
 
         $updateManager->install($pluginInfo, $pluginDir, 'plugins/');
+
+        $this->createAssetsLink($plugin);
     }
 
     protected function getPlugins()

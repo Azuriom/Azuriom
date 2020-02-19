@@ -4,7 +4,9 @@ namespace Azuriom\Extensions\Theme;
 
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
+use Azuriom\Models\Setting;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Cache;
 use RuntimeException;
 
 class ThemeManager extends ExtensionManager
@@ -67,6 +69,13 @@ class ThemeManager extends ExtensionManager
         ]);
 
         $this->loadConfig($theme);
+    }
+
+    public function changeTheme(string $theme)
+    {
+        Setting::updateSettings('theme', $theme);
+
+        Cache::forget('theme.config');
 
         $this->createAssetsLink($theme);
     }
@@ -164,7 +173,7 @@ class ThemeManager extends ExtensionManager
      * @param  string|null  $theme
      * @return mixed|null
      */
-    public function findDescription(string $theme = null)
+    public function findDescription(string $theme)
     {
         $path = $this->path('theme.json', $theme);
 
@@ -172,7 +181,15 @@ class ThemeManager extends ExtensionManager
             return null;
         }
 
-        return $this->getJson($path);
+        $json = $this->getJson($path);
+
+        // TODO 1.0: remove support for legacy extensions without id
+        if (! isset($json->id)) {
+            $json->id = $theme;
+        }
+
+        // The theme folder must be the theme id
+        return $theme === $json->id ? $json : null;
     }
 
     /**
@@ -268,7 +285,9 @@ class ThemeManager extends ExtensionManager
 
         $themeInfo = $themes[$themeId];
 
-        $themeDir = $this->path('', strtolower($themeInfo['name']));
+        $theme = $themeInfo['themeId'];
+
+        $themeDir = $this->path('', $theme);
 
         if (! $this->files->isDirectory($themeDir)) {
             $this->files->makeDirectory($themeDir);
@@ -276,11 +295,13 @@ class ThemeManager extends ExtensionManager
 
         $updateManager->download($themeInfo, 'themes/');
         $updateManager->install($themeInfo, $themeDir, 'themes/');
+
+        $this->createAssetsLink($theme);
     }
 
     protected function loadConfig(string $theme)
     {
-        $themeConfig = app('cache')->remember('theme.config', now()->addDay(),
+        $themeConfig = Cache::remember('theme.config', now()->addDay(),
             function () use ($theme) {
                 return $this->getConfig($theme);
             });

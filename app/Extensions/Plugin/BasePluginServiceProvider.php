@@ -65,14 +65,14 @@ abstract class BasePluginServiceProvider extends ServiceProvider
     {
         $viewsPath = $this->pluginResourcePath('views');
 
-        $this->loadViewsFrom($viewsPath, $this->pluginName);
+        $this->loadViewsFrom($viewsPath, $this->plugin->id);
     }
 
     protected function loadTranslations()
     {
         $langPath = $this->pluginResourcePath('lang');
 
-        $this->loadTranslationsFrom($langPath, $this->pluginName);
+        $this->loadTranslationsFrom($langPath, $this->plugin->id);
     }
 
     protected function loadMigrations()
@@ -144,7 +144,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function pluginPath($path = '')
     {
-        return $this->app['plugins']->path($this->pluginName, $path);
+        return $this->app['plugins']->path($this->plugin->id, $path);
     }
 
     protected function pluginResourcePath($path = '')

@@ -5,16 +5,24 @@ namespace Azuriom\Extensions\Plugin;
 trait HasPlugin
 {
     /**
-     * The associated module name.
+     * The associated plugin.
+     *
+     * @var mixed
+     */
+    protected $plugin;
+
+    /**
+     * The associated plugin name.
      *
      * @var string
+     * @deprecated Use $plugin->id instead. Will be removed in Azuriom 1.0
      */
+    // TODO 1.0: Remove deprecated variable
     protected $pluginName;
 
-    public function bindName(string $name)
+    public function bindPlugin($plugin)
     {
-        if ($this->pluginName === null) {
-            $this->pluginName = $name;
-        }
+        $this->plugin = $plugin;
+        $this->pluginName = $plugin->id;
     }
 }

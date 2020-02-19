@@ -159,11 +159,9 @@ class ThemeController extends Controller
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.invalid'));
         }
 
-        Setting::updateSettings('theme', $theme);
+        $this->themes->changeTheme($theme);
 
         ActionLog::log('themes.changed');
-
-        Cache::forget('theme.config');
 
         return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.updated'));
     }
