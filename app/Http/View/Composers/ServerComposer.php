@@ -21,6 +21,7 @@ class ServerComposer
     {
         if (Route::is('admin.*')) {
             $view->with('server', Arr::get($view, 'server'));
+
             return;
         }
 
