@@ -88,6 +88,7 @@ Route::resource('images', 'ImageController')->except('show')->middleware('can:ad
 
 Route::resource('servers', 'ServerController')->except('show');
 Route::post('/servers/{server}/verify/azlink', 'ServerController@verifyAzLink')->name('servers.verify-azlink');
+Route::post('/servers/default', 'ServerController@changeDefault')->name('servers.change-default');
 
 Route::post('logs/clear', 'ActionLogController@clear')->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', 'ActionLogController')->only(['index'])->middleware('can:admin.logs');

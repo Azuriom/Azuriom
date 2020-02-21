@@ -4,6 +4,7 @@ namespace Azuriom\Providers;
 
 use Azuriom\Http\View\Composers\AdminLayoutComposer;
 use Azuriom\Http\View\Composers\NavbarComposer;
+use Azuriom\Http\View\Composers\ServerComposer;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -36,6 +37,7 @@ class ViewServiceProvider extends ServiceProvider
             return Route::currentRouteNamed($expression);
         });
 
+        View::composer('*', ServerComposer::class);
         View::composer('elements.navbar', NavbarComposer::class);
         View::composer('admin.layouts.admin', AdminLayoutComposer::class);
     }

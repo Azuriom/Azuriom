@@ -5,10 +5,13 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\ServerRequest;
 use Azuriom\Models\Server;
+use Azuriom\Models\Setting;
 use Exception;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Throwable;
 
 class ServerController extends Controller
@@ -20,7 +23,29 @@ class ServerController extends Controller
      */
     public function index()
     {
-        return view('admin.servers.index', ['servers' => Server::with('stat')->get()]);
+        return view('admin.servers.index', [
+            'servers' => Server::with('stat')->get(),
+            'defaultServerId' => setting('default-server'),
+        ]);
+    }
+
+    /**
+     * Change the default server.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function changeDefault(Request $request)
+    {
+        $this->validate($request, [
+            'server' => ['nullable', Rule::exists('servers', 'id')],
+        ]);
+
+        Setting::updateSettings('default-server', $request->input('server'));
+
+        return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
     }
 
     /**

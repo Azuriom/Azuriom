@@ -91,7 +91,7 @@ class Server extends Model
 
     public function getPlayers()
     {
-        return Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
+        return Cache::remember('servers.'.$this->id, now()->addMinutes(5), function () {
             return $this->bridge()->getServerData();
         });
     }
@@ -108,7 +108,7 @@ class Server extends Model
 
     public function updateData(array $data, bool $full = false)
     {
-        Cache::put('servers.'.$this->id, $data, now()->addMinute());
+        Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
         if ($full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
             $this->stats()->create($data);
