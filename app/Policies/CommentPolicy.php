@@ -11,7 +11,7 @@ class CommentPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can create posts.
+     * Determine whether the user can create comments.
      *
      * @param  \Azuriom\Models\User  $user
      * @return bool

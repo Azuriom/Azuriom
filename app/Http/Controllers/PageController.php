@@ -9,7 +9,6 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      *

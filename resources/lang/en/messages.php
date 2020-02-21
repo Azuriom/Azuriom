@@ -82,7 +82,7 @@ return [
 
         'not-verified' => 'Your email is not verified, please check your email for a verification link.',
 
-        'updated' => 'Profile updated',
+        'updated' => 'Your profile has been updated.',
 
         'info' => [
             'role' => 'Role: :role',
@@ -109,7 +109,7 @@ return [
     'posts' => [
         'posts' => 'Posts',
         'posted' => 'Posted on :date by :user',
-        'not-published' => 'This post is not published yet',
+        'not-published' => 'This post is not published yet.',
         'read' => 'Read more',
     ],
 
