@@ -4,6 +4,7 @@ namespace Azuriom\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class PluginCreateCommand extends Command
 {
@@ -14,7 +15,7 @@ class PluginCreateCommand extends Command
      */
     protected $signature = 'plugin:create
                         {name : The name of the plugin}
-                        {path? : The path of the plugin}
+                        {id? : The id of the plugin}
                         {--author=Azuriom : The author of the plugin}
                         {--description=Plugin for Azuriom : The description of the plugin}
                         {--url=https://azuriom.com : The url of the plugin}';
@@ -54,9 +55,10 @@ class PluginCreateCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        $slug = $this->argument('path') ?? strtolower($name);
-        $path = plugin_path($slug);
-        $namespace = 'Azuriom\Plugin\\'.$name;
+        $id = $this->argument('id') ?? Str::slug($name);
+        $studlyName = Str::studly($name);
+        $path = plugin_path($id);
+        $namespace = 'Azuriom\Plugin\\'.$studlyName;
 
         if ($this->files->exists($path)) {
             $this->error('The plugin '.$path.' already exists!');
@@ -66,15 +68,15 @@ class PluginCreateCommand extends Command
 
         $this->files->makeDirectory($path);
 
-        $this->createPluginJson($path, $name, $namespace);
+        $this->createPluginJson($path, $id, $studlyName, $namespace);
 
         $this->createComposerJson($path, $name, $namespace);
 
         $sourcePath = __DIR__.'/stubs/plugin';
 
         foreach ($this->files->allFiles($sourcePath, true) as $file) {
-            $fileContent = $this->replace($file->getContents(), $name, $slug, $namespace);
-            $filePath = $this->replace($file->getRelativePathname(), $name, $slug, $namespace);
+            $fileContent = $this->replace($file->getContents(), $name, $id, $namespace);
+            $filePath = $this->replace($file->getRelativePathname(), $name, $id, $namespace);
             $filePath = $path.'/'.str_replace('.stub', '.php', $filePath);
 
             $dir = dirname($filePath);
@@ -89,9 +91,10 @@ class PluginCreateCommand extends Command
         $this->info('Plugin created successfully.');
     }
 
-    private function createPluginJson(string $path, string $name, string $namespace)
+    private function createPluginJson(string $path, string $id, string $name, string $namespace)
     {
         $this->files->put($path.'/plugin.json', json_encode([
+            'id' => $id,
             'name' => $name,
             'description' => $this->option('description'),
             'version' => '1.0.0',
@@ -123,8 +126,8 @@ class PluginCreateCommand extends Command
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    private function replace(string $stub, string $name, string $path, string $namespace)
+    private function replace(string $stub, string $name, string $id, string $namespace)
     {
-        return str_replace(['DummyPlugin', 'DummyNamespace', 'DummySlug'], [$name, $namespace, $path], $stub);
+        return str_replace(['DummyPlugin', 'DummyNamespace', 'DummyId'], [$name, $namespace, $id], $stub);
     }
 }

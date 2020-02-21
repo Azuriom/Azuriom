@@ -4,6 +4,7 @@ namespace Azuriom\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class ThemeCreateCommand extends Command
 {
@@ -21,7 +22,7 @@ class ThemeCreateCommand extends Command
      */
     protected $signature = 'theme:create
                         {name : The name of the theme}
-                        {path? : The path of the theme}
+                        {id? : The id of the theme}
                         {--no-config : Disable config creation}
                         {--author=Azuriom : The author of the theme}
                         {--description=Theme for Azuriom : The description of the theme}
@@ -55,7 +56,8 @@ class ThemeCreateCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        $path = themes_path($this->argument('path') ?? strtolower($name));
+        $id = $this->argument('id') ?? Str::slug($name);
+        $path = themes_path($id);
 
         if ($this->files->exists($path)) {
             $this->error('The theme '.$path.' already exists!');
@@ -65,7 +67,7 @@ class ThemeCreateCommand extends Command
 
         $this->files->makeDirectory($path);
 
-        $this->createThemeJson($path);
+        $this->createThemeJson($path, $id, $name);
 
         if (! $this->hasArgument('no-config')) {
             $this->createConfigJson($path);
@@ -77,10 +79,11 @@ class ThemeCreateCommand extends Command
         $this->info('Theme created successfully.');
     }
 
-    private function createThemeJson(string $path)
+    private function createThemeJson(string $path, string $id, string $name)
     {
         $this->files->put($path.'/theme.json', json_encode([
-            'name' => $this->argument('name'),
+            'id' => $id,
+            'name' => $name,
             'description' => $this->option('description'),
             'version' => '1.0.0',
             'url' => $this->option('url'),

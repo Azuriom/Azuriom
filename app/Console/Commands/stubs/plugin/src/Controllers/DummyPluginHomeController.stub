@@ -13,6 +13,6 @@ class DummyPluginHomeController extends Controller
      */
     public function index()
     {
-        return view('DummySlug::index');
+        return view('DummyId::index');
     }
 }

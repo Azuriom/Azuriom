@@ -294,7 +294,7 @@ class ThemeManager extends ExtensionManager
 
         $themeInfo = $themes[$themeId];
 
-        $theme = $themeInfo['extensionId'];
+        $theme = $themeInfo['extension_id'];
 
         $themeDir = $this->path('', $theme);
 

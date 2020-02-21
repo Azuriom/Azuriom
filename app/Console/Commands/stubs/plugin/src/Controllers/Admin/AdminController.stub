@@ -13,6 +13,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('DummySlug::admin.index');
+        return view('DummyId::admin.index');
     }
 }
