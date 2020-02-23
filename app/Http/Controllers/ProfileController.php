@@ -75,13 +75,13 @@ class ProfileController extends Controller
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.enabled'));
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.enabled'));
     }
 
     public function disable2fa(Request $request)
     {
         $request->user()->update(['google_2fa_secret' => null]);
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.disabled'));
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
     }
 }

@@ -350,7 +350,7 @@
                         <h1 class="h3 mb-0 text-gray-800">@yield('title', 'Admin')</h1>
                     </div>
 
-                    @include('elements.session-alerts')
+                    @include('admin.elements.session-alerts')
 
                     @yield('content')
 
