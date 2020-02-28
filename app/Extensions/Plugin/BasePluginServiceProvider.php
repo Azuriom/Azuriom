@@ -111,7 +111,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         foreach ($middlewares as $middleware) {
             if ($before) {
                 $kernel->prependMiddleware($middleware);
-            }  else {
+            } else {
                 $kernel->pushMiddleware($middleware);
             }
         }
