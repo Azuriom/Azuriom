@@ -2,6 +2,7 @@
 
 namespace Azuriom\Extensions\Plugin;
 
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,15 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewareGroups = [];
+
+    /**
+     * The plugin's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [];
 
     /**
      * The policy mappings for this plugin.
@@ -52,6 +62,8 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->middleware($this->middleware);
 
         $this->middlewareGroup($this->middlewareGroups);
+
+        $this->routeMiddleware($this->routeMiddleware);
     }
 
     protected function registerPolicies()
@@ -90,25 +102,36 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->app['plugins']->addAdminNavItem($this->adminNavigation());
     }
 
-    protected function middlewareGroup($name, $middleware = null)
+    protected function middleware($middleware, bool $before = false)
     {
-        if (is_array($name)) {
-            foreach ($name as $key => $value) {
-                $this->router->middlewareGroup($key, $value);
+        $middlewares = is_array($middleware) ? $middleware : [$middleware];
+
+        $kernel = $this->app->make(Kernel::class);
+
+        foreach ($middlewares as $middleware) {
+            if ($before) {
+                $kernel->prependMiddleware($middleware);
+            }  else {
+                $kernel->pushMiddleware($middleware);
             }
-        } else {
-            $this->router->middlewareGroup($name, $middleware);
         }
     }
 
-    protected function middleware($name, $middleware = null)
+    protected function middlewareGroup($name, $middleware = null)
     {
-        if (is_array($name)) {
-            foreach ($name as $key => $value) {
-                $this->router->aliasMiddleware($key, $value);
-            }
-        } else {
-            $this->router->aliasMiddleware($name, $middleware);
+        $middlewares = is_array($name) ? $name : [$name => $middleware];
+
+        foreach ($middlewares as $key => $middleware) {
+            $this->router->middlewareGroup($key, $middleware);
+        }
+    }
+
+    protected function routeMiddleware($name, $middleware = null)
+    {
+        $middlewares = is_array($name) ? $name : [$name => $middleware];
+
+        foreach ($middlewares as $key => $middleware) {
+            $this->router->aliasMiddleware($key, $middleware);
         }
     }
 

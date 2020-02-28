@@ -20,7 +20,14 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $middlewareGroups = [
+    protected $middlewareGroups = [];
+
+    /**
+     * The plugin's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
         // 'example' => \DummyNamespace\Middleware\ExampleRouteMiddleware::class,
     ];
 
