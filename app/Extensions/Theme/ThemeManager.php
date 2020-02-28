@@ -71,13 +71,15 @@ class ThemeManager extends ExtensionManager
         $this->loadConfig($theme);
     }
 
-    public function changeTheme(string $theme)
+    public function changeTheme($theme)
     {
         Setting::updateSettings('theme', $theme);
 
         Cache::forget('theme.config');
 
-        $this->createAssetsLink($theme);
+        if ($theme) {
+            $this->createAssetsLink($theme);
+        }
     }
 
     public function updateConfig(string $theme, array $config)

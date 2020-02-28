@@ -21,7 +21,7 @@ return [
     ],
 
     'settings' => [
-        'copyright' => 'Copyright © 2019 Azuriom - Tous droits réservés.',
+        'copyright' => 'Copyright © :year Azuriom - Tous droits réservés.',
         'money' => 'points',
     ],
 ];

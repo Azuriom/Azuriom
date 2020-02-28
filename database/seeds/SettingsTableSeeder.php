@@ -13,7 +13,7 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
         $defaultSettings = [
-            'copyright' => trans('seed.settings.copyright'),
+            'copyright' => trans('seed.settings.copyright', ['year' => now()->year]),
             'money' => trans('seed.settings.money'),
         ];
 
