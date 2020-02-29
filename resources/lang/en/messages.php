@@ -97,8 +97,8 @@ return [
             'secret' => 'Secret key: :secret',
             'title' => 'Enable Two Factor Authentication',
             'code' => 'Code',
-            'enabled' => 'Two Factor Authentication enabled',
-            'disabled' => 'Two Factor Authentication disabled',
+            'enabled' => 'Two Factor Authentication enabled.',
+            'disabled' => 'Two Factor Authentication disabled.',
         ],
 
         'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',

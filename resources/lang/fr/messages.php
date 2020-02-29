@@ -97,8 +97,8 @@ return [
             'secret' => 'Clé secrète: :secret',
             'title' => 'Activer l\'A2F',
             'code' => 'Code',
-            'enabled' => 'Authentification à deux facteurs activée',
-            'disabled' => 'Authentification à deux facteurs désactivée',
+            'enabled' => 'Authentification à deux facteurs activée.',
+            'disabled' => 'Authentification à deux facteurs désactivée.',
         ],
 
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
