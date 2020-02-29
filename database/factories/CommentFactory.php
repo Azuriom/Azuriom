@@ -15,6 +15,6 @@ $factory->define(Comment::class, function (Faker $faker) {
         },
         'post_id' => function () {
             return factory(Post::class)->create()->id;
-        }
+        },
     ];
 });

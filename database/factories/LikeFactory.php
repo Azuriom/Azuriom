@@ -14,6 +14,6 @@ $factory->define(Like::class, function (Faker $faker) {
         },
         'author_id' => function () {
             return factory(User::class)->create()->id;
-        }
+        },
     ];
 });
