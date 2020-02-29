@@ -5,6 +5,7 @@ namespace Azuriom\Providers;
 use Azuriom\Http\View\Composers\AdminLayoutComposer;
 use Azuriom\Http\View\Composers\NavbarComposer;
 use Azuriom\Http\View\Composers\ServerComposer;
+use Azuriom\View\ThemeViewFinder;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -29,6 +30,10 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->bind('view.finder', function ($app) {
+            return new ThemeViewFinder($app['files'], $app['config']['view.paths']);
+        });
+
         Blade::if('plugin', function ($expression) {
             return plugins()->isEnabled($expression);
         });

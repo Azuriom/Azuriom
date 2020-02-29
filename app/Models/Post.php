@@ -89,7 +89,7 @@ class Post extends Model
             return false;
         }
 
-        return ! $this->likes->where('author_id', $user ? $user->id : auth()->id())->isEmpty();
+        return $this->likes()->where('author_id', $user ? $user->id : auth()->id())->exists();
     }
 
     public function isPublished()
@@ -105,6 +105,6 @@ class Post extends Model
      */
     public function scopePublished(Builder $query)
     {
-        return $query->whereDate('published_at', '<=', now());
+        return $query->where('published_at', '<=', now());
     }
 }
