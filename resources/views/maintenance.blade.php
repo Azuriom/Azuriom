@@ -13,10 +13,10 @@
                     
                         @if(setting('maintenance-message'))
                                 <h1>{!! setting('maintenance-message')!!}</h1>
-                        @endif  
+                        
                         @else
                                 <h1>@lang('messages.maintenance-message')</h1>
-                        
+                         @endif 
                     </div>
                 </div>
             </div>
