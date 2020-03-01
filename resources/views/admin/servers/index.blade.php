@@ -5,14 +5,14 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">Default server</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.servers.default-server') }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('admin.servers.change-default') }}">
                 @csrf
 
                 <div class="form-group">
-                    <label for="serverSelect">Default server</label>
+                    <label for="serverSelect">{{ trans('admin.servers.default-server') }}</label>
                     <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server" required>
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)

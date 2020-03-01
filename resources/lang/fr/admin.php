@@ -87,6 +87,7 @@ return [
 
         'new-update' => 'Une nouvelle version d\'Azuriom est disponible : :version',
         'https-warning' => 'Votre site n\'utilise pas le protocole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
+        'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
 
@@ -247,6 +248,8 @@ return [
         'title' => 'Serveurs',
         'title-edit' => 'Édition du serveur :server',
         'title-create' => 'Ajout d\'un serveur',
+
+        'default-server' => 'Serveur par défaut',
 
         'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
 

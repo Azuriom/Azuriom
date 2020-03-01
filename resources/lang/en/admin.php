@@ -87,6 +87,7 @@ return [
 
         'new-update' => 'A new version of Azuriom is available: :version',
         'https-warning' => 'Your website is not using https, you should enable and force it for your security and the one of the users.',
+        'proxy-warning' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
 
@@ -247,6 +248,8 @@ return [
         'title' => 'Servers',
         'title-edit' => 'Edit server :server',
         'title-create' => 'Add server',
+
+        'default-server' => 'Default server',
 
         'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
 
