@@ -10,7 +10,7 @@
                     <div class="card-header">{{ trans('messages.maintenance') }}</div>
 
                     <div class="card-body">
-                        <h1>{!! setting('maintenance-message', 'The website is under maintenance') !!}</h1>
+                    <h1>{!! setting('maintenance-message')!!} @lang('messages.maintenance-message')</h1>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ return [
     'lang' => 'English',
 
     'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
+    'maintenance-message' => 'The site is under maintenance',
 
     'date' => 'F j, Y',
     'date-full' => 'F j, Y \a\t g:i A',
