@@ -5,7 +5,6 @@ return [
     'lang' => 'Français',
 
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
-    'maintenance-message' => 'Le site est en maintenance',
 
     'date' => 'j F Y',
     'date-full' => 'j F Y \à G:i',
@@ -71,6 +70,7 @@ return [
     'home' => 'Accueil',
 
     'maintenance' => 'Maintenance',
+    'maintenance-message' => 'Le site est actuellement en maintenance.',
 
     'status-error' => 'Une erreur est survenue: :error',
 

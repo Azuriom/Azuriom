@@ -10,13 +10,7 @@
                     <div class="card-header">{{ trans('messages.maintenance') }}</div>
 
                     <div class="card-body">
-                    
-                        @if(setting('maintenance-message'))
-                                <h1>{!! setting('maintenance-message')!!}</h1>
-                        
-                        @else
-                                <h1>@lang('messages.maintenance-message')</h1>
-                         @endif 
+                        <h1>{!! setting('maintenance-message', trans('messages.maintenance-message')) !!}</h1>
                     </div>
                 </div>
             </div>
