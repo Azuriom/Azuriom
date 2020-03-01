@@ -70,6 +70,7 @@ return [
     'home' => 'Accueil',
 
     'maintenance' => 'Maintenance',
+    'maintenance-message' => 'Le site est actuellement en maintenance.',
 
     'status-error' => 'Une erreur est survenue: :error',
 
