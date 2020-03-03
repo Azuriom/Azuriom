@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Azuriom\Http\Middleware\TrustProxies::class,
+        \Fruitcake\Cors\HandleCors::class,
         \Azuriom\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Azuriom\Http\Middleware\TrimStrings::class,
@@ -60,16 +61,16 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Azuriom\Http\Middleware\Authenticate::class,
         'admin' => \Azuriom\Http\Middleware\AdminAuthenticate::class,
-        'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,
-        'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
+        'auth' => \Azuriom\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,
         'guest' => \Azuriom\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
