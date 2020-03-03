@@ -3,7 +3,6 @@
 namespace Azuriom\Exceptions;
 
 use Azuriom\Azuriom;
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -33,12 +32,12 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      * @return void
      *
      * @throws \Exception
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         parent::report($exception);
 
@@ -49,12 +48,12 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws Exception
+     * @throws \Throwable
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
     }
@@ -112,11 +111,11 @@ class Handler extends ExceptionHandler
 
     /**
      * Report the exception to Azuriom to provide quick fix of errors.
-     * @param  Exception  $e
+     * @param  \Throwable  $exception
      */
-    protected function reportException(Exception $e)
+    protected function reportException(Throwable $exception)
     {
-        if ($this->shouldntReport($e)) {
+        if ($this->shouldntReport($exception)) {
             return;
         }
 
@@ -127,7 +126,7 @@ class Handler extends ExceptionHandler
         try {
             $exceptions = collect([]);
 
-            $ex = $e;
+            $ex = $exception;
 
             do {
                 $exceptions->push([

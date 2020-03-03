@@ -43,7 +43,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
 Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
-    Route::get('/{slug}', 'PostController@show')->name('show');
+    Route::get('/{post:slug}', 'PostController@show')->name('show');
 
     Route::middleware('auth')->group(function () {
         Route::post('/{post}/like', 'PostLikeController@addLike')->name('like');
@@ -53,4 +53,4 @@ Route::prefix('news')->name('posts.')->group(function () {
 
 Route::resource('posts.comments', 'PostCommentController')->middleware(['auth', 'verified'])->only('store', 'destroy');
 
-Route::get('/{slug}', 'PageController@show')->name('pages.show');
+Route::get('/{page:slug}', 'PageController@show')->name('pages.show');

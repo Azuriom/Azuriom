@@ -2,8 +2,8 @@
 
 namespace Azuriom\Game\Server;
 
+use Exception;
 use GuzzleHttp\Client;
-use Throwable;
 
 class MinecraftAzLinkBridge extends ServerBridge
 {
@@ -36,7 +36,7 @@ class MinecraftAzLinkBridge extends ServerBridge
 
         try {
             $this->sendServerRequest();
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             // ignore, commands will be dispatched few minutes later
         }
     }

@@ -25,14 +25,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $slug
+     * @param  \Azuriom\Models\Post  $post
      * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = Post::with(['author', 'comments.author', 'likes.author'])->where('slug', $slug)->firstOrFail();
+        $post->load(['author', 'comments.author', 'likes.author']);
 
         $this->authorize('view', $post);
 

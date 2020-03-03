@@ -15,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return PostResource::collection(Post::with('author')->get());
+        return PostResource::collection(Post::with('author')
+            ->scopes('published')
+            ->latest('published_at')
+            ->get());
     }
 
     /**
@@ -26,6 +29,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        abort_if(! $post->isPublished(), 404);
+
         return new PostResource($post->load(['comments', 'author']));
     }
 }

@@ -200,16 +200,15 @@ return [
             'title' => 'Mail settings',
 
             'from-address' => 'E-Mail address used to send e-mails.',
-            'encryption' => 'E-Mail Encryption Protocol',
             'driver' => 'E-Mail type',
             'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
-            'host' => 'SMTP Host Address',
-            'port' => 'SMTP Host Port',
-            'username' => 'SMTP Server Username',
-            'password' => 'SMTP Server Password',
-
-            'sendmail-path' => 'Sendmail System Path',
-            'sendmail-path-info' => 'The path to sendmail on the server, you shouldn\'t change this unless specific reason.',
+            'smtp' => [
+                'host' => 'SMTP Host Address',
+                'port' => 'SMTP Host Port',
+                'encryption' => 'Encryption Protocol',
+                'username' => 'SMTP Server Username',
+                'password' => 'SMTP Server Password',
+            ],
         ],
 
         'status' => [

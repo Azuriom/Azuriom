@@ -30,7 +30,7 @@ class VerifyServerToken
 
         abort_if($token === null, 401, 'No server key provided.');
 
-        $server = Server::where('token', $token)->first();
+        $server = Server::firstWhere('token', $token);
 
         abort_if($server === null, 403, 'Invalid server key.');
 

@@ -9,15 +9,13 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $slug
+     * @param  \Azuriom\Models\Page  $page
      * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show($slug)
+    public function show(Page $page)
     {
-        $page = Page::enabled()->where('slug', $slug)->firstOrFail();
-
         $this->authorize('view', $page);
 
         return view('pages.show', ['page' => $page]);

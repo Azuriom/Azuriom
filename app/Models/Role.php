@@ -2,7 +2,7 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Models\Traits\HasColor;
+use Azuriom\Casts\Color;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use Loggable;
-    use HasColor;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +40,7 @@ class Role extends Model
      * @var array
      */
     protected $casts = [
+        'color' => Color::class,
         'is_admin' => 'boolean',
     ];
 

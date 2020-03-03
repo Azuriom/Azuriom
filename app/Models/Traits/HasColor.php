@@ -2,6 +2,10 @@
 
 namespace Azuriom\Models\Traits;
 
+/**
+ * @deprecated Use Color cast.
+ */
+// TODO 1.0: Remove this deprecated class
 trait HasColor
 {
     protected function getColorAttribute($value)

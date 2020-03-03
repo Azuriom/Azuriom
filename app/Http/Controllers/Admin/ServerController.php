@@ -12,7 +12,6 @@ use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Throwable;
 
 class ServerController extends Controller
 {
@@ -72,7 +71,7 @@ class ServerController extends Controller
             if (! $server->bridge()->verifyLink()) {
                 throw new Exception('Unable to connect to the server');
             }
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
                 'error' => utf8_encode($t->getMessage()),
             ]));
@@ -116,7 +115,7 @@ class ServerController extends Controller
             if (! $server->bridge()->verifyLink()) {
                 throw new Exception('Unable to connect to the server');
             }
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
                 'error' => utf8_encode($t->getMessage()),
             ]));
@@ -140,7 +139,7 @@ class ServerController extends Controller
             return response()->json([
                 'status' => 'success', 'message' => trans('admin.servers.status.connect-success'),
             ]);
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             if ($t instanceof ConnectException) {
                 return response()->json([
                     'status' => 'error',

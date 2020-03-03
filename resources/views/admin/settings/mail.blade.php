@@ -9,102 +9,89 @@
             <form action="{{ route('admin.settings.update-mail') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="fromAddressInput">{{ trans('admin.settings.mail.from-address') }}</label>
-                    <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}">
-
-                    @error('from-address')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
                 <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label for="driverSelect">{{ trans('admin.settings.mail.driver') }}</label>
+                    <div class="form-group col-md-4">
+                        <label for="mailerSelect">{{ trans('admin.settings.mail.driver') }}</label>
 
-                        <select class="custom-select" id="driverSelect" name="driver" data-toggle-select="mail-type">	&
-                            @foreach($drivers as $driver => $driverName)
-                                <option value="{{ $driver }}" @if(config('mail.driver') === $driver) selected @endif>{{ $driverName }}</option>
+                        <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type">
+                            <option value="">{{ trans('messages.none') }}</option>
+                            @foreach($mailers as $mailer => $mailerName)
+                                <option value="{{ $mailer }}" @if(config('mail.mailer') === $mailer) selected @endif>{{ $mailerName }}</option>
                             @endforeach
                         </select>
 
                         <small>@lang('admin.settings.mail.driver-info')</small>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="encryptionSelect">{{ trans('admin.settings.mail.encryption') }}</label>
+                    <div class="form-group col-md-8">
+                        <label for="fromAddressInput">{{ trans('admin.settings.mail.from-address') }}</label>
+                        <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}">
 
-                        <select class="custom-select" id="encryptionSelect" name="encryption">
-                            <option value="" @if(config('mail.encryption') === null) selected @endif>{{ trans('messages.none') }}</option>
-
-                            @foreach($encryptionTypes as $encryption => $encryptionName)
-                                <option value="{{ $encryption }}" @if(config('mail.encryption') === $encryption) selected @endif>{{ $encryptionName }}</option>
-                            @endforeach
-                        </select>
+                        @error('from-address')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
                     </div>
-
                 </div>
 
                 <div data-mail-type="smtp">
                     <div class="form-row">
-                        <div class="form-group col-md-9">
-                            <label for="hostInput">{{ trans('admin.settings.mail.host') }}</label>
-                            <input type="text" class="form-control @error('host') is-invalid @enderror" id="hostInput" name="host" value="{{ old('host', config('mail.host')) }}" required>
+                        <div class="form-group col-md-6">
+                            <label for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
+                            <input type="text" class="form-control @error('smtp-host') is-invalid @enderror" id="smtpHostInput" name="smtp-host" value="{{ old('smtp-host', $smtpConfig['host']) }}" required>
 
-                            @error('host')
+                            @error('smtp-host')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="portInput">{{ trans('admin.settings.mail.port') }}</label>
-                            <input type="number" min="1" max="65535" class="form-control @error('port') is-invalid @enderror" id="portInput" name="port" value="{{ old('port', config('mail.port', 2525)) }}" required>
+                            <label for="smtpPortInput">{{ trans('admin.settings.mail.smtp.port') }}</label>
+                            <input type="number" min="1" max="65535" class="form-control @error('smtp-port') is-invalid @enderror" id="smtpPortInput" name="port" value="{{ old('smtp-port', $smtpConfig['port']) }}" required>
 
-                            @error('port')
+                            @error('smtp-port')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
+
+                            <select class="custom-select" id="smtpEncryptionSelect" name="smtp-encryption">
+                                <option value="" @if(config('mail.encryption') === null) selected @endif>{{ trans('messages.none') }}</option>
+
+                                @foreach($encryptionTypes as $encryption => $encryptionName)
+                                    <option value="{{ $encryption }}" @if($smtpConfig['encryption'] === $encryption) selected @endif>{{ $encryptionName }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="usernameInput">{{ trans('admin.settings.mail.username') }}</label>
-                            <input type="text" class="form-control @error('username') is-invalid @enderror" id="usernameInput" name="username" value="{{ old('username', config('mail.username')) }}">
+                            <label for="smtpUsernameInput">{{ trans('admin.settings.mail.smtp.username') }}</label>
+                            <input type="text" class="form-control @error('smtp-username') is-invalid @enderror" id="smtpUsernameInput" name="smtp-username" value="{{ old('smtp-username', $smtpConfig['username']) }}">
 
-                            @error('username')
+                            @error('smtp-username')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="passwordInput">{{ trans('admin.settings.mail.password') }}</label>
+                            <label for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
 
                             <div class="input-group">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" value="{{ old('password', config('mail.password')) }}">
+                                <input type="password" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password', $smtpConfig['password']) }}">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-primary" data-password-toggle="passwordInput">
+                                    <button type="button" class="btn btn-outline-primary" data-password-toggle="smtpPasswordInput">
                                         <i class="fas fa-eye-slash"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            @error('password')
+                            @error('smtp-password')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
-                    </div>
-                </div>
-
-                <div data-mail-type="sendmail">
-                    <div class="form-group">
-                        <label for="sendmailPathInput">{{ trans('admin.settings.mail.sendmail-path') }}</label>
-                        <input type="text" class="form-control @error('sendmail') is-invalid @enderror" id="sendmailPathInput" name="sendmail" value="{{ old('sendmail', config('mail.sendmail', '/usr/sbin/sendmail -bs')) }}" required>
-
-                        @error('sendmail')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-
-                        <small>{{ trans('admin.settings.mail.sendmail-path-info') }}</small>
                     </div>
                 </div>
 

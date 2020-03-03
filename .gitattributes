@@ -1,9 +1,2 @@
 * text=auto
-CHANGELOG.md export-ignore
-
-public/index.php            linguist-generated
-resources/js/app.js         linguist-generated
-resources/js/bootstrap.js   linguist-generated
-resources/sass              linguist-generated
-
 public/assets/vendor linguist-vendored

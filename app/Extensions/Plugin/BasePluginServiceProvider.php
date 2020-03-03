@@ -92,6 +92,11 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom($this->pluginPath('database/migrations'));
     }
 
+    protected function loadFactories()
+    {
+        $this->loadFactoriesFrom($this->pluginPath('database/factories'));
+    }
+
     protected function registerRouteDescriptions()
     {
         $this->app['plugins']->addRouteDescription($this->routeDescriptions());

@@ -17,7 +17,7 @@ class SettingServiceProvider extends ServiceProvider
      * @var array
      */
     protected $encrypted = [
-        'mail.password',
+        'mail.smtp.password',
     ];
 
     /**
@@ -49,10 +49,6 @@ class SettingServiceProvider extends ServiceProvider
                         $config->set('app.'.$name, $value);
                         break;
                     case 'hash':
-                        if ($value === 'argon2id' && ! defined('PASSWORD_ARGON2ID')) {
-                            $value = 'argon';
-                        }
-
                         if ($config->get('hashing.driver') !== $value) {
                             $config->set('hashing.driver', $value);
                         }
@@ -64,7 +60,9 @@ class SettingServiceProvider extends ServiceProvider
                 }
 
                 if (Str::startsWith($name, 'mail.')) {
-                    $config->set($name, $value);
+                    $key = str_replace('mail.smtp', 'mail.mailers.smtp', $name);
+
+                    $config->set($key, $value);
                 }
 
                 $config->set('setting.'.$name, $value);

@@ -30,7 +30,7 @@ class SettingsController extends Controller
      *
      * @var array
      */
-    private $mailDrivers = [
+    private $mailMailers = [
         'smtp' => 'SMTP',
         'sendmail' => 'Sendmail',
     ];
@@ -305,8 +305,9 @@ class SettingsController extends Controller
     public function mail()
     {
         return view('admin.settings.mail', [
-            'drivers' => $this->mailDrivers,
+            'mailers' => $this->mailMailers,
             'encryptionTypes' => $this->mailEncryptionTypes,
+            'smtpConfig' => config('mail.mailers.smtp', optional([])),
         ]);
     }
 
@@ -322,19 +323,18 @@ class SettingsController extends Controller
     {
         $mailSettings = $this->validate($request, [
             'from-address' => ['required', 'string', 'email'],
-            'encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
-            'driver' => ['required', Rule::in(array_keys($this->mailDrivers))],
-            'host' => ['required_if:driver,smtp', 'nullable', 'string'],
-            'port' => ['required_if:driver,smtp', 'nullable', 'integer', 'min:1', 'max:65535'],
-            'username' => ['nullable', 'string'],
-            'password' => ['nullable', 'string'],
-            'sendmail' => ['required_if:driver,sendmail', 'nullable', 'string'],
+            'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
+            'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
+            'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
+            'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'min:1', 'max:65535'],
+            'smtp-username' => ['nullable', 'string'],
+            'smtp-password' => ['nullable', 'string'],
         ]);
 
-        $mailSettings['password'] = encrypt($mailSettings['password'], false);
+        $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
         foreach ($mailSettings as $key => $value) {
-            Setting::updateSettings('mail.'.str_replace('-', '.', $key), empty($value) ? null : $value);
+            Setting::updateSettings('mail.'.str_replace('-', '.', $key), $value);
         }
 
         ActionLog::log('settings.updated');

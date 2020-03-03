@@ -2,7 +2,7 @@
 
 namespace Azuriom\Game\Server;
 
-use Throwable;
+use Exception;
 
 trait MinecraftPinger
 {
@@ -10,7 +10,7 @@ trait MinecraftPinger
     {
         try {
             return $this->makePing($address, $port, $resolveSrv);
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             return null;
         }
     }

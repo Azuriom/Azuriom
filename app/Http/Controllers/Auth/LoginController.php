@@ -5,10 +5,10 @@ namespace Azuriom\Http\Controllers\Auth;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use PragmaRX\Google2FA\Google2FA;
-use Throwable;
 
 class LoginController extends Controller
 {
@@ -146,7 +146,7 @@ class LoginController extends Controller
             if ($name && $name !== $user->name && ! User::where('name', $name)->exists()) {
                 $user->update(['name' => $name]);
             }
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             report($t);
         }
     }

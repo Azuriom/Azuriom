@@ -2,8 +2,8 @@
 
 namespace Azuriom\Rules;
 
+use Exception;
 use Illuminate\Contracts\Validation\Rule;
-use Throwable;
 
 class GameAuth implements Rule
 {
@@ -20,7 +20,7 @@ class GameAuth implements Rule
             $id = game()->getUserUniqueId($value);
 
             return $id !== false;
-        } catch (Throwable $t) {
+        } catch (Exception $t) {
             //
         }
 
