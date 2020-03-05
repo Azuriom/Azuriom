@@ -18,6 +18,7 @@ Route::get('/', 'AdminController@index')->name('dashboard');
 Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->group(function () {
     Route::get('/', 'SettingsController@index')->name('index');
     Route::post('/update', 'SettingsController@update')->name('update');
+    Route::get('/test', 'DiscordController@testWebhook')->name('test');
 
     Route::get('/security', 'SettingsController@security')->name('security');
     Route::post('/security/update', 'SettingsController@updateSecurity')->name('update-security');
