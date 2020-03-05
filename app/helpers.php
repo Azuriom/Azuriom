@@ -3,14 +3,14 @@
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-if (! function_exists('add_active')) {
+if (!function_exists('add_active')) {
     function add_active(string ...$patterns)
     {
         return Route::currentRouteNamed(...$patterns) ? 'active' : '';
     }
 }
 
-if (! function_exists('color_contrast')) {
+if (!function_exists('color_contrast')) {
     function color_contrast(string $hex)
     {
         $r = hexdec(substr($hex, 1, 2));
@@ -26,28 +26,28 @@ if (! function_exists('color_contrast')) {
  * Translation related helpers
  */
 
-if (! function_exists('format_date')) {
+if (!function_exists('format_date')) {
     function format_date(Carbon $date, bool $fullTime = false)
     {
-        return $date->translatedFormat(trans('messages.date'.($fullTime ? '-full' : '')));
+        return $date->translatedFormat(trans('messages.date' . ($fullTime ? '-full' : '')));
     }
 }
 
-if (! function_exists('format_date_compact')) {
+if (!function_exists('format_date_compact')) {
     function format_date_compact(Carbon $date)
     {
         return $date->format(trans('messages.date-compact'));
     }
 }
 
-if (! function_exists('trans_bool')) {
+if (!function_exists('trans_bool')) {
     function trans_bool(bool $bool)
     {
-        return trans('messages.'.($bool ? 'yes' : 'no'));
+        return trans('messages.' . ($bool ? 'yes' : 'no'));
     }
 }
 
-if (! function_exists('money_name')) {
+if (!function_exists('money_name')) {
     function money_name($money = 2)
     {
         $moneyName = setting('money', 'points');
@@ -56,10 +56,10 @@ if (! function_exists('money_name')) {
     }
 }
 
-if (! function_exists('format_money')) {
+if (!function_exists('format_money')) {
     function format_money(float $money)
     {
-        return $money.' '.money_name($money);
+        return $money . ' ' . money_name($money);
     }
 }
 
@@ -67,14 +67,14 @@ if (! function_exists('format_money')) {
  * Settings/Config helpers
  */
 
-if (! function_exists('setting')) {
+if (!function_exists('setting')) {
     function setting(string $name, $default = null)
     {
-        return config('setting.'.$name, $default);
+        return config('setting.' . $name, $default);
     }
 }
 
-if (! function_exists('favicon')) {
+if (!function_exists('favicon')) {
     function favicon()
     {
         $icon = setting('icon');
@@ -83,7 +83,7 @@ if (! function_exists('favicon')) {
     }
 }
 
-if (! function_exists('site_logo')) {
+if (!function_exists('site_logo')) {
     function site_logo()
     {
         $logo = setting('logo');
@@ -92,17 +92,17 @@ if (! function_exists('site_logo')) {
     }
 }
 
-if (! function_exists('site_name')) {
+if (!function_exists('site_name')) {
     function site_name()
     {
         return setting('name', config('app.name'));
     }
 }
 
-if (! function_exists('image_url')) {
+if (!function_exists('image_url')) {
     function image_url(string $name = '/')
     {
-        return url(Storage::url('img/'.$name));
+        return url(Storage::url('img/' . $name));
     }
 }
 
@@ -110,7 +110,7 @@ if (! function_exists('image_url')) {
  * Extensions helpers
  */
 
-if (! function_exists('plugins')) {
+if (!function_exists('plugins')) {
     /**
      * Get the plugins manager.
      *
@@ -122,7 +122,7 @@ if (! function_exists('plugins')) {
     }
 }
 
-if (! function_exists('themes')) {
+if (!function_exists('themes')) {
     /**
      * Get the themes manager.
      *
@@ -134,18 +134,18 @@ if (! function_exists('themes')) {
     }
 }
 
-if (! function_exists('plugin_path')) {
+if (!function_exists('plugin_path')) {
     function plugin_path(string $path = '')
     {
         return plugins()->pluginsPath($path);
     }
 }
 
-if (! function_exists('themes_path')) {
+if (!function_exists('themes_path')) {
     /**
      * Get the path of the themes directory.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function themes_path(string $path = '')
@@ -154,13 +154,13 @@ if (! function_exists('themes_path')) {
     }
 }
 
-if (! function_exists('theme_path')) {
+if (!function_exists('theme_path')) {
     /**
      * Get the path of a theme. If no theme is specified the current theme
      * is used.
      *
-     * @param  string  $path
-     * @param  string|null  $theme
+     * @param string $path
+     * @param string|null $theme
      * @return string
      */
     function theme_path(string $path = '', string $theme = null)
@@ -169,16 +169,16 @@ if (! function_exists('theme_path')) {
     }
 }
 
-if (! function_exists('theme_asset')) {
+if (!function_exists('theme_asset')) {
     /**
      * Generate an asset path for the current theme.
      *
-     * @param  string  $path
+     * @param string $path
      * @return string
      */
     function theme_asset(string $path)
     {
-        return asset('themes/'.themes()->currentTheme().'/'.$path);
+        return asset('themes/' . themes()->currentTheme() . '/' . $path);
     }
 }
 
@@ -186,7 +186,7 @@ if (! function_exists('theme_asset')) {
  * Other helpers
  */
 
-if (! function_exists('game')) {
+if (!function_exists('game')) {
     /**
      * Get the current game bridge implementation.
      *
@@ -195,5 +195,20 @@ if (! function_exists('game')) {
     function game()
     {
         return app('game');
+    }
+}
+
+/**
+ * Discord webhook helper
+ */
+if (!function_exists('sendWebhook')) {
+    /**
+     * Send discord webhook
+     *
+     * @param \Azuriom\Discord\DiscordMessage $message
+     */
+    function sendWebhook(\Azuriom\Discord\DiscordMessage $message)
+    {
+        \Azuriom\Http\Controllers\Admin\DiscordController::send($message);
     }
 }
