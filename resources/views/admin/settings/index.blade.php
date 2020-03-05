@@ -180,6 +180,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="moneyNameInput">WebHook (discord)</label>
+                    <input type="text" class="form-control @error('webhook') is-invalid @enderror" id="webhookInput" name="webhook" value="{{ old('webhook', $webhook) }}">
+
+                    @error('webhook')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif>
                         <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.index.enable-user-registration') }}</label>

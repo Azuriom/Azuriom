@@ -111,6 +111,7 @@ class SettingsController extends Controller
             'money' => setting('money'),
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
+            'webhook' => setting('webhook'),
             'minecraftVerification' => setting('game-type') === 'mc-online',
         ]);
     }
@@ -131,6 +132,7 @@ class SettingsController extends Controller
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
             'copyright' => ['nullable', 'string', 'max:150'],
+            'webhook' => ['nullable', 'string'],
             'conditions' => ['nullable', 'url', 'max:150'],
             'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
             'icon' => ['nullable', 'exists:images,file'],

@@ -12,6 +12,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/plugins
+/resources/themes
 .env
 .env.backup
 .phpunit.result.cache
