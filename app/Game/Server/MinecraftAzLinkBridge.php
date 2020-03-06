@@ -2,8 +2,7 @@
 
 namespace Azuriom\Game\Server;
 
-use Exception;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class MinecraftAzLinkBridge extends ServerBridge
 {
@@ -34,11 +33,7 @@ class MinecraftAzLinkBridge extends ServerBridge
             ]);
         }
 
-        try {
-            $this->sendServerRequest();
-        } catch (Exception $t) {
-            // ignore, commands will be dispatched few minutes later
-        }
+        $this->sendServerRequest();
     }
 
     public function canExecuteCommand()
@@ -46,16 +41,16 @@ class MinecraftAzLinkBridge extends ServerBridge
         return true;
     }
 
+    /**
+     * Send a "ping" request to the server.
+     *
+     * @return \Illuminate\Http\Client\Response
+     */
     public function sendServerRequest()
     {
-        $client = new Client(['timeout' => 5]);
-
         $port = $this->server->data['azlink-port'] ?? self::DEFAULT_PORT;
-        $client->post("http://{$this->server->address}:{$port}", [
-            'headers' => [
-                'Authorization' => hash('sha256', $this->server->token),
-                'Content-Type' => 'application/json',
-            ],
-        ]);
+        $token = hash('sha256', $this->server->token);
+
+        return Http::withToken($token, '')->post("http://{$this->server->address}:{$port}");
     }
 }

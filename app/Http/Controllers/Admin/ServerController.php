@@ -7,8 +7,7 @@ use Azuriom\Http\Requests\ServerRequest;
 use Azuriom\Models\Server;
 use Azuriom\Models\Setting;
 use Exception;
-use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ConnectException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -134,29 +133,27 @@ class ServerController extends Controller
         $server->fill($request->validated());
 
         try {
-            $server->bridge()->sendServerRequest();
+            $response = $server->bridge()->sendServerRequest();
 
-            return response()->json([
-                'status' => 'success', 'message' => trans('admin.servers.status.connect-success'),
-            ]);
-        } catch (Exception $t) {
-            if ($t instanceof ConnectException) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => trans('admin.servers.status.azlink-connect'),
-                ], 422);
-            }
-
-            if ($t instanceof BadResponseException) {
+            if (! $response->successful()) {
                 return response()->json([
                     'status' => 'error',
                     'message' => trans('admin.servers.status.azlink-badresponse', [
-                        'code' => $t->getResponse()->getStatusCode(),
+                        'code' => $response->status(),
                     ]),
                 ], 422);
             }
 
-            return response()->json(['status' => 'error', 'message' => $t->getMessage()], 422);
+            return response()->json([
+                'status' => 'success', 'message' => trans('admin.servers.status.connect-success'),
+            ]);
+        } catch (ConnectionException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => trans('admin.servers.status.azlink-connect'),
+            ], 422);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
         }
     }
 
