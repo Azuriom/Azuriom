@@ -131,7 +131,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->isAdmin() || $user->is_deleted) {
+        if ($user->is_deleted || $user->isAdmin()) {
             return redirect()->back();
         }
 

@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
-use Illuminate\Filesystem\Filesystem;
 use Throwable;
 
 class PluginController extends Controller
@@ -18,22 +17,13 @@ class PluginController extends Controller
     private $plugins;
 
     /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    private $files;
-
-    /**
      * Create a new controller instance.
      *
      * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      */
-    public function __construct(PluginManager $plugins, Filesystem $files)
+    public function __construct(PluginManager $plugins)
     {
         $this->plugins = $plugins;
-        $this->files = $files;
     }
 
     /**

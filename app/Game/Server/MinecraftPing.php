@@ -124,7 +124,7 @@ class MinecraftPing
                 throw new Exception('VarInt too big: '.$j);
             }
 
-            if (($k & 0x80) != 128) {
+            if (($k & 0x80) !== 128) {
                 break;
             }
         }

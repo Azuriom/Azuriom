@@ -107,7 +107,7 @@ class NavbarElement extends Model
         return $this->type === $type ? $this->value : '';
     }
 
-    public function isDropDown()
+    public function isDropdown()
     {
         return $this->type === 'dropdown';
     }

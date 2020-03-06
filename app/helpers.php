@@ -52,7 +52,7 @@ if (! function_exists('money_name')) {
     {
         $moneyName = setting('money', 'points');
 
-        return trans()->getSelector()->choose($moneyName, $money, trans()->getLocale());
+        return trans()->getSelector()->choose($moneyName, $money, app()->getLocale());
     }
 }
 

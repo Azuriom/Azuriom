@@ -125,7 +125,7 @@ class NavbarController extends Controller
      */
     public function update(NavbarElementRequest $request, NavbarElement $navbarElement)
     {
-        if ($navbarElement->isDropDown() && $request->input('type') !== 'dropdown') {
+        if ($navbarElement->isDropdown() && $request->input('type') !== 'dropdown') {
             foreach ($navbarElement->elements as $element) {
                 $element->parent()->dissociate();
                 $element->save();
@@ -148,7 +148,7 @@ class NavbarController extends Controller
      */
     public function destroy(NavbarElement $navbarElement)
     {
-        if ($navbarElement->isDropDown() && ! $navbarElement->elements->isEmpty()) {
+        if ($navbarElement->isDropdown() && ! $navbarElement->elements->isEmpty()) {
             return redirect()->route('admin.navbar-elements.index')
                 ->with('error', 'You cannot delete dropdown with elements');
         }

@@ -13,7 +13,7 @@ class PostCommentController extends Controller
      */
     public function __construct()
     {
-        $this->authorizeResource(Post::class);
+        $this->authorizeResource(Comment::class);
     }
 
     /**

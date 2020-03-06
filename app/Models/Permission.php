@@ -63,6 +63,6 @@ class Permission extends Model
 
     public static function registerPermissions(array $permissions)
     {
-        self::$permissions = self::$permissions + $permissions;
+        self::$permissions = array_merge(self::$permissions, $permissions);
     }
 }
