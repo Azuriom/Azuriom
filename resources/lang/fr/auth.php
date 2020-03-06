@@ -49,4 +49,20 @@ return [
 
     'need-confirm' => 'Merci de vérifier votre mot de passe avant de continuer.',
 
+    'mail' => [
+        'reset' => [
+            'subject' => 'Notification de réinitialisation du mot de passe',
+            'line-1' => 'Vous recevez cet email parce que nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.',
+            'action' => 'Réinitialiser le mot de passe',
+            'line-2' => 'Ce lien expirera dans :count minutes.',
+            'line-3' => 'Si vous n\'avez pas demandé une réinitialisation de mot de passe, vous pouvez ignorer cet email.',
+        ],
+
+        'verify' => [
+            'subject' => 'Vérification de l\'adresse email',
+            'line-1' => 'Veuillez cliquer sur le bouton ci-dessous pour vérifier votre adresse email.',
+            'action' => 'Verifier l\'addresse email',
+            'line-2' => 'Si vous n\'avez pas créé de compte, vous pouvez ignorer cet email.',
+        ],
+    ],
 ];
