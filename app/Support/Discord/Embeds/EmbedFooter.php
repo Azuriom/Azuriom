@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class EmbedFooter implements Arrayable
 {
     /**
-     * Footer text
+     * Footer text.
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class EmbedFooter implements Arrayable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {

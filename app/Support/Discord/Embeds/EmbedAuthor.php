@@ -42,7 +42,7 @@ class EmbedAuthor implements Arrayable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {

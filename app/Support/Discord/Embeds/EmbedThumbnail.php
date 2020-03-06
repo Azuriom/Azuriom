@@ -24,7 +24,7 @@ class EmbedThumbnail implements Arrayable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {

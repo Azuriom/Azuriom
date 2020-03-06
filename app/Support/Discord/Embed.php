@@ -69,7 +69,7 @@ class Embed implements Arrayable
     protected $author;
 
     /**
-     * Fields information
+     * Fields information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter[]|null
      */
@@ -212,7 +212,7 @@ class Embed implements Arrayable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {
