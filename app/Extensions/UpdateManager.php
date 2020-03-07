@@ -155,7 +155,8 @@ class UpdateManager
         }
     }
 
-    public function installUpdate(array $info) {
+    public function installUpdate(array $info)
+    {
         $this->extract($info, base_path());
 
         app(Optimizer::class)->clear();
