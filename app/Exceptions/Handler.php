@@ -4,6 +4,7 @@ namespace Azuriom\Exceptions;
 
 use Azuriom\Azuriom;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -145,9 +146,7 @@ class Handler extends ExceptionHandler
                 'exceptions' => $exceptions,
             ];
 
-            $client = new \GuzzleHttp\Client(['timeout' => 5]);
-
-            $client->post('https://azuriom.com/api/errors/report', ['json' => $data]);
+            Http::post('https://azuriom.com/api/errors/report', $data);
         } catch (Throwable $t) {
             //
         }

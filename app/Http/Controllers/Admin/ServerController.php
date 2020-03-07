@@ -145,7 +145,8 @@ class ServerController extends Controller
             }
 
             return response()->json([
-                'status' => 'success', 'message' => trans('admin.servers.status.connect-success'),
+                'status' => 'success',
+                'message' => trans('admin.servers.status.connect-success'),
             ]);
         } catch (ConnectionException $e) {
             return response()->json([

@@ -5,8 +5,8 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
+use Exception;
 use Illuminate\Http\Request;
-use Throwable;
 
 class UpdateController extends Controller
 {
@@ -44,11 +44,9 @@ class UpdateController extends Controller
 
         try {
             $this->updates->forceFetchUpdatesOrFail();
-        } catch (Throwable $t) {
-            report($t);
-
+        } catch (Exception $e) {
             return $response->with('error', trans('admin.update.status.error-fetch', [
-                'error' => $t->getMessage(),
+                'error' => $e->getMessage(),
             ]));
         }
 
@@ -72,13 +70,11 @@ class UpdateController extends Controller
 
         try {
             $this->updates->download($update);
-        } catch (Throwable $t) {
-            report($t);
-
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-download', [
-                    'error' => $t->getMessage(),
+                    'error' => $e->getMessage(),
                 ]),
             ], 422);
         }
@@ -100,14 +96,12 @@ class UpdateController extends Controller
         }
 
         try {
-            $this->updates->install($update, base_path());
-        } catch (Throwable $t) {
-            report($t);
-
+            $this->updates->installUpdate($update);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
                 'message' => trans('admin.update.status.error-install', [
-                    'error' => $t->getMessage(),
+                    'error' => $e->getMessage(),
                 ]),
             ], 422);
         }

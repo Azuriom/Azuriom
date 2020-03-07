@@ -5,12 +5,11 @@ namespace Azuriom\Extensions;
 use Azuriom\Azuriom;
 use Azuriom\Support\Optimizer;
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
-use Throwable;
+use Illuminate\Support\Facades\Http;
 use ZipArchive;
 
 class UpdateManager
@@ -105,17 +104,17 @@ class UpdateManager
     public function forceFetchUpdates()
     {
         try {
-            $response = $this->getHttpClient()->get('https://azuriom.com/api/updates');
+            $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
 
-            $updates = json_decode($response->getBody()->getContents(), true);
+            $updates = $response->throw()->json();
 
             if ($updates !== null) {
                 $this->updates = $updates;
             }
 
             return $updates;
-        } catch (Throwable $t) {
-            logger()->warning('Unable to check updates '.$t->getMessage());
+        } catch (Exception $e) {
+            logger()->warning('Unable to check updates '.$e->getMessage());
 
             return [];
         }
@@ -123,9 +122,9 @@ class UpdateManager
 
     public function forceFetchUpdatesOrFail()
     {
-        $response = $this->getHttpClient()->get('https://azuriom.com/api/updates');
+        $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $response->throw()->json();
     }
 
     public function download(array $info, string $tempDir = '')
@@ -147,7 +146,7 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $this->getHttpClient()->get($info['url'], ['sink' => $path]);
+        $this->prepareHttpRequest()->withOptions(['sink' => $path])->get($info['url']);
 
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
@@ -156,7 +155,15 @@ class UpdateManager
         }
     }
 
-    public function install(array $info, string $targetDir, string $tempDir = '')
+    public function installUpdate(array $info) {
+        $this->extract($info, base_path());
+
+        app(Optimizer::class)->clear();
+
+        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+    }
+
+    public function extract(array $info, string $targetDir, string $tempDir = '')
     {
         $file = storage_path('app/updates/'.$tempDir.$info['file']);
 
@@ -181,20 +188,12 @@ class UpdateManager
         $zip->close();
 
         $this->files->delete($file);
-
-        app(Optimizer::class)->clear();
-
-        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
 
-    private function getHttpClient()
+    private function prepareHttpRequest()
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        return new Client([
-            'headers' => [
-                'User-Agent' => $userAgent,
-            ],
-        ]);
+        return Http::withHeaders(['User-Agent' => $userAgent]);
     }
 }

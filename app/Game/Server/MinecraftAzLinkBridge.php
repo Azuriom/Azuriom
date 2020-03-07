@@ -2,6 +2,7 @@
 
 namespace Azuriom\Game\Server;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 
 class MinecraftAzLinkBridge extends ServerBridge
@@ -33,7 +34,11 @@ class MinecraftAzLinkBridge extends ServerBridge
             ]);
         }
 
-        $this->sendServerRequest();
+        try {
+            $this->sendServerRequest();
+        } catch (Exception $t) {
+            // ignore, commands will be dispatched few minutes later
+        }
     }
 
     public function canExecuteCommand()

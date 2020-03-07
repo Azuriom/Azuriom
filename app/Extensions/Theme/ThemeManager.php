@@ -131,7 +131,7 @@ class ThemeManager extends ExtensionManager
             $theme = $this->currentTheme;
         }
 
-        return $this->themesPublicPath("/{$theme}/{$path}");
+        return $this->themesPublicPath("{$theme}/{$path}");
     }
 
     /**
@@ -305,7 +305,7 @@ class ThemeManager extends ExtensionManager
         }
 
         $updateManager->download($themeInfo, 'themes/');
-        $updateManager->install($themeInfo, $themeDir, 'themes/');
+        $updateManager->extract($themeInfo, $themeDir, 'themes/');
 
         $this->createAssetsLink($theme);
     }

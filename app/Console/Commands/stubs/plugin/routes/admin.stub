@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'DummyPluginHomeController@index');
+Route::get('/', 'AdminController@index');

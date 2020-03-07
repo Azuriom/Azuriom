@@ -86,8 +86,6 @@ class PluginController extends Controller
                 $this->plugins->install($description->apiId);
             }
         } catch (Throwable $t) {
-            report($t);
-
             return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
                 'error' => $t->getMessage(),
             ]));

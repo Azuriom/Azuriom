@@ -266,6 +266,8 @@ class PluginManager extends ExtensionManager
         $this->setPluginEnabled($plugin, true);
 
         app('migrator')->run([$this->path($plugin, 'database/migrations')]);
+
+        $this->createAssetsLink($plugin);
     }
 
     public function disable(string $plugin)
@@ -388,7 +390,7 @@ class PluginManager extends ExtensionManager
 
         $updateManager->download($pluginInfo, 'plugins/');
 
-        $updateManager->install($pluginInfo, $pluginDir, 'plugins/');
+        $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);
     }
@@ -459,7 +461,7 @@ class PluginManager extends ExtensionManager
         $pluginAssetsPath = $this->path($plugin, 'assets');
 
         if ($this->files->exists($pluginAssetsPath)) {
-            $this->files->link($pluginAssetsPath, $this->pluginsPublicPath("/{$plugin}"));
+            $this->files->link($pluginAssetsPath, $this->pluginsPublicPath($plugin));
         }
     }
 }
