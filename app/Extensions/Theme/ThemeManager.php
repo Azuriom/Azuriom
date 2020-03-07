@@ -111,7 +111,7 @@ class ThemeManager extends ExtensionManager
             $theme = $this->currentTheme;
         }
 
-        return $this->themesPath("/{$theme}/{$path}");
+        return $this->themesPath("{$theme}/{$path}");
     }
 
     /**
