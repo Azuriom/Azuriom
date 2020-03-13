@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Cache;
  * @property int $id
  * @property string $name
  * @property string $address
- * @property int $port
+ * @property int|null $port
  * @property string $type
- * @property string $token
+ * @property string|null $token
  * @property array $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at

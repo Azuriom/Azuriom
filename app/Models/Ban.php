@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
  * @property int $id
  * @property int $user_id
  * @property int $author_id
- * @property int $remover_id
+ * @property int|null $remover_id
  * @property string $reason
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property \Carbon\Carbon $removed_at
+ * @property \Carbon\Carbon|null $removed_at
  *
  * @property \Azuriom\Models\User $user
  * @property \Azuriom\Models\User $author

@@ -17,7 +17,7 @@ class CreateBansTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('author_id');
-            $table->string('reason')->nullable();
+            $table->string('reason');
             $table->softDeletes('removed_at');
             $table->unsignedInteger('remover_id')->nullable();
             $table->timestamps();

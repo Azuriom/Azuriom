@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $server_id
  * @property int $players
- * @property int $ram
- * @property int $cpu
- * @property int $tps
- * @property float $loaded_chunks
- * @property int $entities
+ * @property int|null $ram
+ * @property int|null $cpu
+ * @property int|null $tps
+ * @property float|null $loaded_chunks
+ * @property int|null $entities
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *

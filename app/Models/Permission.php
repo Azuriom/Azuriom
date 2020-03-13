@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property string $name
+ * @property string $permission
  * @property int $role_id
  *
  * @property \Azuriom\Models\Role $role

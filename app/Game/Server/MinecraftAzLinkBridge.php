@@ -31,6 +31,7 @@ class MinecraftAzLinkBridge extends ServerBridge
             $this->server->commands()->create([
                 'command' => $command,
                 'player_name' => $playerName ?? '?',
+                'need_online' => $needConnected,
             ]);
         }
 

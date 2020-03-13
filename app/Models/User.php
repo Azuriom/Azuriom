@@ -17,14 +17,14 @@ use Illuminate\Notifications\Notifiable;
  * @property string $password
  * @property int $role_id
  * @property float $money
- * @property string $game_id
- * @property string $access_token
+ * @property string|null $game_id
+ * @property string|null $access_token
  * @property string|null $last_login_ip
  * @property \Carbon\Carbon|null $last_login_at
  * @property string|null $google_2fa_secret
  * @property bool $is_banned
  * @property bool $is_deleted
- * @property string $remember_token
+ * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $server_id
  * @property string $player_name
+ * @property bool $need_online
  * @property string $command
  *
  * @property \Azuriom\Models\Server $server
