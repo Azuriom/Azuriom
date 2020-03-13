@@ -452,6 +452,10 @@ return [
         'title' => 'Images',
         'title-edit' => 'Édition de l\'image :image',
         'title-create' => 'Upload une image',
+
+        'created' => 'L\'image a été créée.',
+        'updated' => 'L\'image a été mise à jour.',
+        'deleted' => 'L\'image a été supprimée.',
     ],
 
     'plugins' => [

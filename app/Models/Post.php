@@ -7,6 +7,7 @@ use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -85,11 +86,11 @@ class Post extends Model
 
     public function isLiked(User $user = null)
     {
-        if ($user === null && auth()->guest()) {
+        if ($user === null && Auth::guest()) {
             return false;
         }
 
-        return $this->likes()->where('author_id', $user ? $user->id : auth()->id())->exists();
+        return $this->likes()->where('author_id', $user ? $user->id : Auth::id())->exists();
     }
 
     public function isPublished()

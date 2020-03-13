@@ -16,7 +16,9 @@ class LogoutIfSuspended
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && ($request->user()->is_banned || $request->user()->is_deleted)) {
+        $user = $request->user();
+
+        if ($user !== null && ($user->is_banned || $user->is_deleted)) {
             Auth::logout();
         }
 

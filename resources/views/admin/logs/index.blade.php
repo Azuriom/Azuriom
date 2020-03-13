@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Logs')
+@section('title', trans('admin.logs.title'))
 
 @section('content')
     <div class="card shadow mb-4">

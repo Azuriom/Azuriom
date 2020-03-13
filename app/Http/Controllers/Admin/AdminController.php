@@ -59,7 +59,8 @@ class AdminController extends Controller
         $date = now()->subMonths(6);
         $recentUsers = [];
 
-        $queryUsers = User::whereDate('created_at', '>=', $date)
+        $queryUsers = User::where('created_at', '>=', $date)
+            ->without('role')
             ->get(['id', 'created_at'])
             ->countBy(function ($user) {
                 return $user->created_at->translatedFormat('M Y');
@@ -85,7 +86,8 @@ class AdminController extends Controller
             31 => 0,
         ]);
 
-        User::whereDate('last_login_at', '>=', now()->subMonth())
+        User::where('last_login_at', '>=', now()->subMonth())
+            ->without('role')
             ->get(['id', 'last_login_at'])
             ->each(function ($user) use ($days, $users) {
                 $diff = $user->last_login_at->diffInDays();

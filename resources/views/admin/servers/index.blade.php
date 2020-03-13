@@ -54,7 +54,12 @@
 
                     @foreach($servers as $server)
                         <tr>
-                            <th scope="row">{{ $server->id }}</th>
+                            <th scope="row">
+                                {{ $server->id }}
+                                @if($server->id == setting('default-server'))
+                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default-server') }}" data-toggle="tooltip"></i>
+                                @endif
+                            </th>
                             <td>{{ $server->name }}</td>
                             <td>{{ $server->fullAddress() }}</td>
                             <td>

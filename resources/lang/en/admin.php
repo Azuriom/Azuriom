@@ -452,6 +452,12 @@ return [
         'title' => 'Images',
         'title-edit' => 'Edit image :image',
         'title-create' => 'Upload image',
+
+        'status' => [
+            'created' => 'The image has been created.',
+            'updated' => 'This image has been updated.',
+            'deleted' => 'This image has been deleted.',
+        ],
     ],
 
     'plugins' => [

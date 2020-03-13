@@ -16,7 +16,9 @@ class AdminAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guest() || ! Auth::user()->isAdmin()) {
+        $user = $request->user();
+
+        if ($user === null || ! $user->isAdmin()) {
             abort(403);
         }
 

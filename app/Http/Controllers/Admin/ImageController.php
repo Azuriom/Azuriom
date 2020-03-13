@@ -65,7 +65,7 @@ class ImageController extends Controller
             'type' => $mimeType,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', 'Image uploaded');
+        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.created'));
     }
 
     /**
@@ -105,7 +105,7 @@ class ImageController extends Controller
             'file' => $fileName,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', 'Image updated');
+        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.updated'));
     }
 
     /**
@@ -122,7 +122,7 @@ class ImageController extends Controller
 
         $image->delete();
 
-        return redirect()->route('admin.images.index')->with('success', 'Image deleted');
+        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.deleted'));
     }
 
     protected function getImagePath(string $fileName)

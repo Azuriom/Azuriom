@@ -27,7 +27,6 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::post('/cache/advanced/clear', 'SettingsController@disableAdvancedCache')->name('cache.advanced.clear');
 
     Route::get('/performance', 'SettingsController@performance')->name('performance');
-    Route::post('/performance/update', 'SettingsController@updatePerformance')->name('update-performance');
     Route::get('/storage/link', 'SettingsController@linkStorage')->name('link-storage');
 
     Route::get('/seo', 'SettingsController@seo')->name('seo');

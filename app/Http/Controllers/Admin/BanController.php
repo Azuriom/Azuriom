@@ -17,7 +17,7 @@ class BanController extends Controller
     public function index()
     {
         return view('admin.bans.index', [
-            'bans' => Ban::withTrashed()->with(['user', 'author'])->paginate(),
+            'bans' => Ban::withTrashed()->with(['user', 'author', 'remover'])->paginate(),
         ]);
     }
 

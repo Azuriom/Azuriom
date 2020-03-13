@@ -104,7 +104,7 @@ class SettingsController extends Controller
             'logo' => setting('logo'),
             'background' => setting('background'),
             'locales' => $this->getAvailableLocales(),
-            'timezones' => array_values(timezone_identifiers_list()),
+            'timezones' => timezone_identifiers_list(),
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
             'conditions' => setting('conditions'),
