@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticate
 {
