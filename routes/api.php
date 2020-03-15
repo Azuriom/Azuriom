@@ -21,7 +21,7 @@ Route::prefix('/auth')->name('auth.')->group(function () {
     Route::post('/logout', 'AuthController@logout')->name('logout');
 });
 
-Route::prefix('/azlink')->middleware('server.token')->group(function () {
-    Route::get('/', 'ServerController@status')->name('azlink');
+Route::prefix('/azlink')->name('azlink')->middleware('server.token')->group(function () {
+    Route::get('/', 'ServerController@status');
     Route::post('/', 'ServerController@fetch');
 });

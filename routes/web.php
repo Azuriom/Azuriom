@@ -23,8 +23,8 @@ Route::prefix('user')->group(function () {
         'register' => setting('register', true),
     ]);
 
-    Route::prefix('/2fa')->group(function () {
-        Route::get('/', 'Auth\LoginController@show2fa')->name('login.2fa');
+    Route::prefix('/2fa')->name('login.2fa')->group(function () {
+        Route::get('/', 'Auth\LoginController@show2fa');
         Route::post('/', 'Auth\LoginController@login2fa');
     });
 });
