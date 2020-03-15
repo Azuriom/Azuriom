@@ -23,8 +23,10 @@ Route::prefix('user')->group(function () {
         'register' => setting('register', true),
     ]);
 
-    Route::get('/2fa', 'Auth\LoginController@show2fa')->name('login.2fa');
-    Route::post('/2fa', 'Auth\LoginController@login2fa');
+    Route::prefix('/2fa')->group(function () {
+        Route::get('/', 'Auth\LoginController@show2fa')->name('login.2fa');
+        Route::post('/', 'Auth\LoginController@login2fa');
+    });
 });
 
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
@@ -46,8 +48,10 @@ Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/{post:slug}', 'PostController@show')->name('show');
 
     Route::middleware('auth')->group(function () {
-        Route::post('/{post}/like', 'PostLikeController@addLike')->name('like');
-        Route::delete('/{post}/like', 'PostLikeController@removeLike')->name('dislike');
+        Route::prefix('/{post}/like')->group(function () {
+            Route::post('/', 'PostLikeController@addLike')->name('like');
+            Route::delete('/', 'PostLikeController@removeLike')->name('dislike');
+        });
     });
 });
 

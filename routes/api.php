@@ -22,6 +22,8 @@ Route::prefix('/auth')->name('auth.')->group(function () {
 });
 
 Route::middleware('server.token')->group(function () {
-    Route::get('/azlink', 'ServerController@status')->name('azlink');
-    Route::post('/azlink', 'ServerController@fetch');
+    Route::prefix('/azlink')->group(function () {
+        Route::get('/', 'ServerController@status')->name('azlink');
+        Route::post('/', 'ServerController@fetch');
+    });
 });
