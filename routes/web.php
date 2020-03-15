@@ -47,11 +47,9 @@ Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/{post:slug}', 'PostController@show')->name('show');
 
-    Route::middleware('auth')->group(function () {
-        Route::prefix('/{post}/like')->group(function () {
-            Route::post('/', 'PostLikeController@addLike')->name('like');
-            Route::delete('/', 'PostLikeController@removeLike')->name('dislike');
-        });
+    Route::prefix('/{post}/like')->middleware('auth')->group(function () {
+        Route::post('/', 'PostLikeController@addLike')->name('like');
+        Route::delete('/', 'PostLikeController@removeLike')->name('dislike');
     });
 });
 
