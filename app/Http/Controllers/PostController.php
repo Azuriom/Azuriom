@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load(['author', 'comments.author', 'likes.author' => function($query) {
+        $post->load(['author', 'comments.author', 'likes.author' => function ($query) {
             $query->without('role');
         }]);
 

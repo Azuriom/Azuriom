@@ -324,9 +324,9 @@ class SettingsController extends Controller
         $mailSettings = $this->validate($request, [
             'from-address' => ['required', 'string', 'email'],
             'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
-            'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
             'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
             'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'min:1', 'max:65535'],
+            'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
             'smtp-username' => ['nullable', 'string'],
             'smtp-password' => ['nullable', 'string'],
         ]);

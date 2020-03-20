@@ -46,7 +46,7 @@
 
                         <div class="form-group col-md-3">
                             <label for="smtpPortInput">{{ trans('admin.settings.mail.smtp.port') }}</label>
-                            <input type="number" min="1" max="65535" class="form-control @error('smtp-port') is-invalid @enderror" id="smtpPortInput" name="port" value="{{ old('smtp-port', $smtpConfig['port']) }}" required>
+                            <input type="number" min="1" max="65535" class="form-control @error('smtp-port') is-invalid @enderror" id="smtpPortInput" name="smtp-port" value="{{ old('smtp-port', $smtpConfig['port']) }}" required>
 
                             @error('smtp-port')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

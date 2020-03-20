@@ -34,6 +34,22 @@ class SettingServiceProvider extends ServiceProvider
                 return Setting::all()->pluck('value', 'name')->all();
             });
 
+            // TODO 1.0: remove migration for old mail configuration
+            if (array_key_exists('mail.driver', $settings)) {
+                $mailSettings = [
+                    'mail.mailer' => $settings['mail.driver'] ?? 'sendmail',
+                    'mail.driver' => null,
+                    'mail.sendmail' => null,
+                ];
+
+                foreach (['host', 'port', 'encryption', 'username', 'password'] as $setting) {
+                    $mailSettings["mail.{$setting}"] = null;
+                    $mailSettings["mail.smtp.{$setting}"] = $settings["mail.{$setting}"] ?? null;
+                }
+
+                Setting::updateSettings($mailSettings);
+            }
+
             foreach ($settings as $name => $value) {
                 switch ($name) {
                     case 'name':
@@ -52,6 +68,9 @@ class SettingServiceProvider extends ServiceProvider
                         if ($config->get('hashing.driver') !== $value) {
                             $config->set('hashing.driver', $value);
                         }
+                        break;
+                    case 'mail.mailer':
+                        $config->set('mail.default', $value);
                         break;
                 }
 
