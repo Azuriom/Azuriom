@@ -190,8 +190,8 @@ return [
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
 
-            'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages',
-            'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages',
+            'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
+            'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
             'html-code-info' => 'Exemple: Bannière cookies, etc',
         ],

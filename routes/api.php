@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('posts', 'PostController')->only(['index', 'show']);
+Route::apiResource('posts', 'PostController')->names('api.')->only(['index', 'show']);
 
 Route::prefix('/auth')->name('auth.')->group(function () {
     Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');

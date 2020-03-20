@@ -74,7 +74,7 @@ return [
 
     'status-error' => 'Une erreur est survenue: :error',
 
-    'catpcha-failed' => 'La vérification du captcha a échouée, merci de rééssayer.',
+    'catpcha-failed' => 'La vérification du captcha a échouée, merci de réessayer.',
 
     'profile' => [
         'title' => 'Mon Profil',

@@ -2,21 +2,6 @@
 
 @section('title', trans('admin.themes.title'))
 
-@push('footer-scripts')
-    <script>
-        document.querySelectorAll('[data-route]').forEach(function (el) {
-            el.addEventListener('click', function (ev) {
-                ev.preventDefault();
-
-                const themeForm = document.getElementById('themeForm');
-
-                themeForm.setAttribute('action', el.dataset['route']);
-                themeForm.submit();
-            });
-        });
-    </script>
-@endpush
-
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
@@ -130,9 +115,13 @@
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-route="{{ route('admin.themes.download', $theme['id']) }}">
-                                        <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
-                                    </button>
+                                    <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
+                                        @csrf
+
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -143,8 +132,4 @@
             </div>
         </div>
     @endif
-
-    <form id="themeForm" method="POST" class="d-none">
-        @csrf
-    </form>
 @endsection

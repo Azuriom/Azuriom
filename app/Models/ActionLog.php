@@ -139,28 +139,28 @@ class ActionLog extends Model
         }
     }
 
-    public static function registerLogModel(string $class, string $transNamespacePrefix)
+    public static function registerLogModel(string $class, string $transPrefix)
     {
         $table = str_replace('_', '-', (new $class())->getTable());
 
         self::$actions[$table.'.created'] = [
             'icon' => 'plus',
             'color' => 'success',
-            'message' => "{$transNamespacePrefix}.{$table}.created",
+            'message' => "{$transPrefix}.{$table}.created",
             'model' => $class,
         ];
 
         self::$actions[$table.'.updated'] = [
             'icon' => 'sync',
             'color' => 'warning',
-            'message' => "{$transNamespacePrefix}.{$table}.updated",
+            'message' => "{$transPrefix}.{$table}.updated",
             'model' => $class,
         ];
 
         self::$actions[$table.'.deleted'] = [
             'icon' => 'minus',
             'color' => 'danger',
-            'message' => "{$transNamespacePrefix}.{$table}.deleted",
+            'message' => "{$transPrefix}.{$table}.deleted",
             'model' => $class,
         ];
     }

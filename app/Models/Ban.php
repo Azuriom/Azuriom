@@ -30,6 +30,11 @@ class Ban extends Model
 
     protected const DELETED_AT = 'removed_at';
 
+    /**
+     * The actions to automatically log.
+     *
+     * @var array
+     */
     protected static $logEvents = [
         'created', 'deleted',
     ];

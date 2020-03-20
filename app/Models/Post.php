@@ -90,7 +90,13 @@ class Post extends Model
             return false;
         }
 
-        return $this->likes()->where('author_id', $user ? $user->id : Auth::id())->exists();
+        $userId = $user ? $user->id : Auth::id();
+
+        if ($this->relationLoaded('likes')) {
+            return ! $this->likes->where('author_id', $userId)->isEmpty();
+        }
+
+        return $this->likes()->where('author_id', $userId)->exists();
     }
 
     public function isPublished()

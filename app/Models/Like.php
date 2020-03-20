@@ -26,15 +26,6 @@ class Like extends Model
     public $timestamps = false;
 
     /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    protected $with = [
-        'author',
-    ];
-
-    /**
      * The user key associated with this model.
      *
      * @var string
