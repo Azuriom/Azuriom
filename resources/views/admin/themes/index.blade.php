@@ -115,7 +115,7 @@
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
-                                    <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
+                                    <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
                                         @csrf
 
                                         <button type="submit" class="btn btn-primary">

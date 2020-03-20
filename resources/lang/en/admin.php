@@ -565,6 +565,12 @@ return [
             'deleted' => 'Deleted post #:id',
         ],
 
+        'images' => [
+            'created' => 'Created image #:id',
+            'updated' => 'Updated image #:id',
+            'deleted' => 'Deleted image #:id',
+        ],
+
         'roles' => [
             'created' => 'Created role #:id',
             'updated' => 'Updated role #:id',

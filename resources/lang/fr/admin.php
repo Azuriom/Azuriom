@@ -563,6 +563,12 @@ return [
             'deleted' => 'Suppression de l\'article #:id',
         ],
 
+        'images' => [
+            'created' => 'Création de l\'image #:id',
+            'updated' => 'Mise à jour de l\'image #:id',
+            'deleted' => 'Suppression de l\'image #:id',
+        ],
+
         'roles' => [
             'created' => 'Création du grade #:id',
             'updated' => 'Mise à jour du grade #:id',
