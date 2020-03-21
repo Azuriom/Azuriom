@@ -66,9 +66,13 @@
                             <td>{{ join(', ', $theme->authors) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
-                                <button type="button" class="btn btn-primary" data-route="{{ route('admin.themes.change', $path) }}">
-                                    <i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}
-                                </button>
+                                <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
+                                    @csrf
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}
+                                    </button>
+                                </form>
                                 <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger" data-confirm="delete">
                                     <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
                                 </a>
