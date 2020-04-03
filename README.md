@@ -33,4 +33,4 @@ You can support Azuriom on [DonorBox](https://donorbox.org/Azuriom).
 
 ## License
 
-Azuriom is licensed under the [GNU General Public License v3.0](LICENSE).
+Azuriom is licensed under the [GNU General Public License v3.0 or later](LICENSE).
