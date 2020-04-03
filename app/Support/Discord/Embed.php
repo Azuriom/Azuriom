@@ -206,7 +206,7 @@ class Embed implements Arrayable
      */
     public function addField(string $name, string $value, bool $inline = false)
     {
-        $this->fields = new EmbedField($name, $value, $inline);
+        $this->fields[] = new EmbedField($name, $value, $inline);
 
         return $this;
     }
