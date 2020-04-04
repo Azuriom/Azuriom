@@ -51,7 +51,7 @@ class DiscordTest extends TestCase
                         [
                             'name' => 'A field',
                             'value' => 'Wow',
-                            'inline' => true
+                            'inline' => true,
                         ],
                     ],
                 ],
