@@ -6,8 +6,10 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends Controller
@@ -63,16 +65,16 @@ class LoginController extends Controller
         if ($this->guard()->once($this->credentials($request))) {
             $user = $this->guard()->user();
 
-            if ($user->is_deleted) {
+            if ($user === null || $user->is_deleted) {
                 return $this->sendFailedLoginResponse($request);
             }
 
             if ($user->refreshActiveBan()->is_banned) {
-                return redirect()->back()->with('error', trans('messages.profile.suspended'));
+                return $this->sendResponseWithMessage($request, trans('messages.profile.suspended'), 403);
             }
 
-            if (setting('maintenance-status', false) && ! $request->user()->can('maintenance.access')) {
-                return redirect()->back()->with('error', trans('auth.maintenance'));
+            if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
+                return $this->sendResponseWithMessage($request, trans('auth.maintenance'), 503);
             }
 
             if (! $user->hasTwoFactorAuth()) {
@@ -84,6 +86,10 @@ class LoginController extends Controller
             $request->session()->flash('2fa_id', $user->id);
             $request->session()->flash('2fa_remember', $request->filled('remember'));
 
+            if ($request->expectsJson()) {
+                return response()->json(['2fa' => true]);
+            }
+
             return redirect()->route('login.2fa');
         }
 
@@ -92,6 +98,12 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    /**
+     * Show the application's 2fa form.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function show2fa(Request $request)
     {
         if (! $request->session()->has('2fa_id')) {
@@ -103,6 +115,16 @@ class LoginController extends Controller
         return view('auth.2fa');
     }
 
+    /**
+     * Handle a 2fa request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Auth\AuthenticationException
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
+     */
     public function login2fa(Request $request)
     {
         $userId = $request->session()->get('2fa_id');
@@ -110,7 +132,7 @@ class LoginController extends Controller
         $user = $userId ? User::find($userId) : null;
 
         if ($user === null) {
-            return redirect()->route('login');
+            throw new AuthenticationException('Unauthenticated.', [$this->guard()], route('login'));
         }
 
         $request->session()->keep(['2fa_id', '2fa_remember']);
@@ -120,7 +142,7 @@ class LoginController extends Controller
         $code = str_replace(' ', '', $request->input('code'));
 
         if (! (new Google2FA())->verifyKey($user->google_2fa_secret, $code)) {
-            return redirect()->route('login.2fa')->withErrors(['code' => trans('auth.2fa-invalid')]);
+            throw ValidationException::withMessages(['code' => [trans('auth.2fa-invalid')]]);
         }
 
         $this->guard()->login($user, $request->session()->get('2fa_remember'));
@@ -146,8 +168,8 @@ class LoginController extends Controller
             if ($name && $name !== $user->name && ! User::where('name', $name)->exists()) {
                 $user->update(['name' => $name]);
             }
-        } catch (Exception $t) {
-            report($t);
+        } catch (Exception $e) {
+            report($e);
         }
     }
 
@@ -165,5 +187,14 @@ class LoginController extends Controller
         $field = $validMail ? $this->username() : 'name';
 
         return [$field => $username] + $request->only('password');
+    }
+
+    protected function sendResponseWithMessage(Request $request, string $message, int $code)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['message' => $message], $code);
+        }
+
+        return back()->with('error', $message);
     }
 }
