@@ -62,8 +62,16 @@
 
                     @foreach($themes as $path => $theme)
                         <tr>
-                            <th scope="row">{{ $theme->name }}</th>
-                            <td>{{ join(', ', $theme->authors) }}</td>
+                            <th scope="row">
+                                @isset($theme->url)
+                                    <a href="{{ $theme->url }}" target="_blank" rel="noopener noreferrer">
+                                        {{ $theme->name }}
+                                    </a>
+                                @else
+                                    {{ $theme->name }}
+                                @endif
+                            </th>
+                            <td>{{ join(', ', $theme->authors ?? []) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
                                 <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
@@ -115,17 +123,28 @@
 
                         @foreach($availableThemes as $theme)
                             <tr>
-                                <th scope="row">{{ $theme['name'] }}</th>
+                                <th scope="row">
+                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer">
+                                        {{ $theme['name'] }}
+                                    </a>
+                                </th>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
-                                    <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
-                                        @csrf
+                                    @if($theme['premium'] && ! $theme['purchased'])
+                                        <a href="{{ $theme['info_url'] }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                                            <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
+                                        </a>
+                                    @else
 
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
-                                        </button>
-                                    </form>
+                                        <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
+                                            @csrf
+
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

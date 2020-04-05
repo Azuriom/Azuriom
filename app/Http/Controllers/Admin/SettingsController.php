@@ -109,6 +109,7 @@ class SettingsController extends Controller
             'copyright' => setting('copyright'),
             'conditions' => setting('conditions'),
             'money' => setting('money'),
+            'siteKey' => setting('site-key'),
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
             'minecraftVerification' => setting('game-type') === 'mc-online',
@@ -137,6 +138,7 @@ class SettingsController extends Controller
             'logo' => ['nullable', 'exists:images,file'],
             'background' => ['nullable', 'exists:images,file'],
             'money' => ['required', 'string', 'max:15'],
+            'site-key' => ['nullable', 'string', 'size:50'],
         ]) + [
             'register' => $request->has('register'),
             'auth-api' => $request->has('auth-api'),

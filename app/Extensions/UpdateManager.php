@@ -195,6 +195,17 @@ class UpdateManager
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        return Http::withHeaders(['User-Agent' => $userAgent]);
+        $request = Http::withHeaders([
+            'User-Agent' => $userAgent,
+            'Azuriom-Version' => Azuriom::version(),
+        ]);
+
+        $siteKey = setting('site-key');
+
+        if ($siteKey !== null) {
+            return $request->withHeaders(['Azuriom-Site-Key' => $siteKey]);
+        }
+
+        return $request;
     }
 }

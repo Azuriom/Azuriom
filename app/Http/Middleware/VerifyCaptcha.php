@@ -4,6 +4,7 @@ namespace Azuriom\Http\Middleware;
 
 use Closure;
 use ReCaptcha\ReCaptcha;
+use ReCaptcha\RequestMethod\CurlPost;
 
 class VerifyCaptcha
 {
@@ -22,7 +23,7 @@ class VerifyCaptcha
             return $next($request);
         }
 
-        $reCaptcha = new ReCaptcha($secretKey);
+        $reCaptcha = new ReCaptcha($secretKey, new CurlPost());
 
         $response = $reCaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 

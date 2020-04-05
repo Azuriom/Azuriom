@@ -180,6 +180,17 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="siteKeyInput">{{ trans('admin.settings.index.site-key') }}</label>
+                    <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}">
+
+                    @error('site-key')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+
+                    <small>@lang('admin.settings.index.site-key-label')</small>
+                </div>
+
+                <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif>
                         <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.index.enable-user-registration') }}</label>

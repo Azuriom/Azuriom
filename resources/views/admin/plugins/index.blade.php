@@ -22,8 +22,16 @@
 
                     @foreach($plugins as $path => $plugin)
                         <tr>
-                            <th scope="row">{{ $plugin->name }}</th>
-                            <td>{{ join(', ', $plugin->authors) }}</td>
+                            <th scope="row">
+                                @isset($plugin->url)
+                                    <a href="{{ $plugin->url }}" target="_blank" rel="noopener noreferrer">
+                                        {{ $plugin->name }}
+                                    </a>
+                                @else
+                                    {{ $plugin->name }}
+                                @endif
+                            </th>
+                            <td>{{ join(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
                                 <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
@@ -86,17 +94,27 @@
 
                         @foreach($availablePlugins as $plugin)
                             <tr>
-                                <th scope="row">{{ $plugin['name'] }}</th>
+                                <th scope="row">
+                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer">
+                                        {{ $plugin['name'] }}
+                                    </a>
+                                </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
                                 <td>
-                                    <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
-                                        @csrf
+                                    @if($plugin['premium'] && ! $plugin['purchased'])
+                                        <a href="{{ $plugin['info_url'] }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                                            <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
+                                        </a>
+                                    @else
+                                        <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
+                                            @csrf
 
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
-                                        </button>
-                                    </form>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
