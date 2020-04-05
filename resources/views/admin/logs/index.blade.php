@@ -38,7 +38,9 @@
             <form action="{{ route('admin.logs.clear') }}" method="POST">
                 @csrf
 
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> {{ trans('admin.logs.actions.clear') }}</button>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> {{ trans('admin.logs.actions.clear') }}
+                </button>
             </form>
         </div>
     </div>

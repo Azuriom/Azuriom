@@ -20,7 +20,7 @@
 
         body {
             color: #fff;
-            background: linear-gradient(-75deg,#58c3ff,#004de6 55%,#003bb1);
+            background: linear-gradient(-75deg, #58c3ff, #004de6 55%, #003bb1);
         }
 
         .azuriom-logo {

@@ -42,9 +42,13 @@
                         <img src="{{ $image->url() }}" class="img-fluid rounded img-preview" alt="{{ $image->name }}">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
 
-                <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}</a>
+                <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete">
+                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                </a>
             </form>
         </div>
     </div>

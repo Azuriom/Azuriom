@@ -48,7 +48,9 @@
                     <img src="#" class="mt-2 img-fluid rounded img-preview d-none" alt="Image" id="filePreview">
                 </div>
 
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
             </form>
         </div>
     </div>

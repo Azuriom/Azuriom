@@ -46,11 +46,11 @@
                     .then(function (json) {
                         createAlert('success', json.data.message, true);
                     }).catch(function (error) {
-                        createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
-                    }).finally(function () {
-                        verifyButton.removeAttribute('disabled');
-                        verifyButtonIcon.classList.add('d-none');
-                    });
+                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                }).finally(function () {
+                    verifyButton.removeAttribute('disabled');
+                    verifyButtonIcon.classList.add('d-none');
+                });
             });
         </script>
     @endisset

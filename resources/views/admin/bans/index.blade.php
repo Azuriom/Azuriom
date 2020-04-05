@@ -22,8 +22,11 @@
                     @foreach($bans as $ban)
                         <tr>
                             <th scope="row">{{ $ban->id }}</th>
-                            <td @if($ban->trashed()) class="text-strikethrough" @endif><a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a></td>
-                            <td><a href="{{ route('admin.users.edit', $ban->author) }}">{{ $ban->author->name }}</a></td>
+                            <td @if($ban->trashed()) class="text-strikethrough" @endif>
+                                <a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a></td>
+                            <td>
+                                <a href="{{ route('admin.users.edit', $ban->author) }}">{{ $ban->author->name }}</a>
+                            </td>
                             <td @if($ban->trashed()) class="text-strikethrough" @endif>{{ $ban->reason }}</td>
                             <td>{{ format_date_compact($ban->created_at) }}</td>
                             <td>

@@ -71,17 +71,21 @@
     html, body {
         height: 100%;
     }
+
     body {
         display: flex;
         flex-direction: column;
     }
+
     #app {
         flex-shrink: 0;
     }
+
     .content {
         margin-top: 3rem;
         margin-bottom: 3rem;
     }
+
     footer {
         margin-top: auto;
         background: #232323;

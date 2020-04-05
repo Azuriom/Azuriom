@@ -7,7 +7,7 @@
         document.querySelectorAll('[data-role-permission]').forEach(function (el) {
             const perm = el.dataset['rolePermission'];
 
-            if (! perm.includes('admin.') || perm === 'admin.access') {
+            if (!perm.includes('admin.') || perm === 'admin.access') {
                 return;
             }
 

@@ -10,8 +10,12 @@
 
                 @include('admin.posts._form')
 
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
-                <a href="{{ route('admin.posts.destroy', $post) }}" class="btn btn-danger" data-confirm="delete"><i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+                <a href="{{ route('admin.posts.destroy', $post) }}" class="btn btn-danger" data-confirm="delete">
+                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                </a>
             </form>
         </div>
     </div>

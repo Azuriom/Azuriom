@@ -39,7 +39,9 @@
 
             {{ $images->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.images.create') }}"><i class="fas fa-upload"></i> {{ trans('messages.actions.add') }}</a>
+            <a class="btn btn-primary" href="{{ route('admin.images.create') }}">
+                <i class="fas fa-upload"></i> {{ trans('messages.actions.add') }}
+            </a>
         </div>
     </div>
 @endsection
