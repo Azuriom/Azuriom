@@ -198,5 +198,5 @@
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
             <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
         </button>
-    @endempty
+    @endisset
 </div>

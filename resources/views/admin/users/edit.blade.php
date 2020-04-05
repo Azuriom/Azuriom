@@ -20,7 +20,9 @@
                 @method('DELETE')
                 @csrf
 
-                <button type="submit" class="btn btn-warning"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.unban') }}</button>
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-ban"></i> {{ trans('admin.users.actions.unban') }}
+                </button>
             </form>
         </div>
     @endif
@@ -91,13 +93,21 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif><i class="fas fa-save"></i> {{ trans('messages.actions.save') }}</button>
-                        @unless($user->is_banned || $user->is_deleted)
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
-                        @endunless
-                        @unless($user->is_deleted)
-                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" @endif><i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}</a>
-                        @endunless
+                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif>
+                            <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                        </button>
+
+                        @if (! $user->is_deleted)
+                            @if(! $user->is_banned)
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal">
+                                    <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
+                                </button>
+                            @endif
+
+                            <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" @endif>
+                                <i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}
+                            </a>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -193,7 +203,9 @@
 
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
 
-                            <button class="btn btn-danger" type="submit"><i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}</button>
+                            <button class="btn btn-danger" type="submit">
+                                <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
+                            </button>
                         </form>
                     </div>
                 </div>

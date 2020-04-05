@@ -29,7 +29,7 @@
                                     </a>
                                 @else
                                     {{ $plugin->name }}
-                                @endif
+                                @endisset
                             </th>
                             <td>{{ join(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>

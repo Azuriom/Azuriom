@@ -69,7 +69,7 @@
                                     </a>
                                 @else
                                     {{ $theme->name }}
-                                @endif
+                                @endisset
                             </th>
                             <td>{{ join(', ', $theme->authors ?? []) }}</td>
                             <td>{{ $theme->version }}</td>

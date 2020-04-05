@@ -202,10 +202,10 @@ class UpdateManager
 
         $siteKey = setting('site-key');
 
-        if ($siteKey !== null) {
-            return $request->withHeaders(['Azuriom-Site-Key' => $siteKey]);
+        if ($siteKey === null) {
+            return $request;
         }
 
-        return $request;
+        return $request->withHeaders(['Azuriom-Site-Key' => $siteKey]);
     }
 }
