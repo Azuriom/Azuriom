@@ -15,7 +15,7 @@ class UserCreateCommand extends Command
      * @var string
      */
     protected $signature = 'user:create
-                        {--admin= : If the user is admin}
+                        {--admin : If the user is admin}
                         {--name= : The name of the user}
                         {--password= : The password of the user}
                         {--email= : The email of the user}';
@@ -38,7 +38,7 @@ class UserCreateCommand extends Command
             'role_id' => 1,
         ];
 
-        $admin = $this->option('admin') ?? $this->confirm('Is the user should be admin ?');
+        $admin = $this->option('admin');
 
         $data['name'] = $this->option('name') ?? $this->ask('The username of the user');
         $data['email'] = $this->option('email') ?? $this->ask('The Email address of the user');

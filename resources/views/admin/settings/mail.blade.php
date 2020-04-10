@@ -16,7 +16,7 @@
                         <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type">
                             <option value="">{{ trans('messages.none') }}</option>
                             @foreach($mailers as $mailer => $mailerName)
-                                <option value="{{ $mailer }}" @if(config('mail.mailer') === $mailer) selected @endif>{{ $mailerName }}</option>
+                                <option value="{{ $mailer }}" @if(config('mail.default') === $mailer) selected @endif>{{ $mailerName }}</option>
                             @endforeach
                         </select>
 

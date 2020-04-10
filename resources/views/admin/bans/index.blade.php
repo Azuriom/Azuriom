@@ -33,7 +33,7 @@
                                 @if(! $ban->trashed())
                                     <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                                 @else
-                                    <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => format_date_compact($ban->removed_at, true)]) }}</i>
+                                    <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => format_date_compact($ban->removed_at)]) }}</i>
                                 @endif
                             </td>
                         </tr>

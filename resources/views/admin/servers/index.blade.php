@@ -16,7 +16,7 @@
                     <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server" required>
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)
-                            <option value="{{ $server->id }}" @if($defaultServerId == $server->id) selected @endif>{{ $server->name }}</option>
+                            <option value="{{ $server->id }}" @if($defaultServerId === $server->id) selected @endif>{{ $server->name }}</option>
                         @endforeach
                     </select>
 
@@ -56,7 +56,7 @@
                         <tr>
                             <th scope="row">
                                 {{ $server->id }}
-                                @if($server->id == setting('default-server'))
+                                @if($server->id === $defaultServerId)
                                     <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default-server') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>

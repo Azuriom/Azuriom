@@ -23,7 +23,7 @@ class ServerController extends Controller
     {
         return view('admin.servers.index', [
             'servers' => Server::with('stat')->get(),
-            'defaultServerId' => setting('default-server'),
+            'defaultServerId' => (int) setting('default-server'),
         ]);
     }
 
