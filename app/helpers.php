@@ -169,6 +169,20 @@ if (! function_exists('theme_path')) {
     }
 }
 
+if (! function_exists('plugin_asset')) {
+    /**
+     * Generate an asset path for the current theme.
+     *
+     * @param  string  $plugin
+     * @param  string  $path
+     * @return string
+     */
+    function plugin_asset(string $plugin, string $path)
+    {
+        return asset("plugins/{$plugin}/{$path}");
+    }
+}
+
 if (! function_exists('theme_asset')) {
     /**
      * Generate an asset path for the current theme.
@@ -179,6 +193,19 @@ if (! function_exists('theme_asset')) {
     function theme_asset(string $path)
     {
         return asset('themes/'.themes()->currentTheme().'/'.$path);
+    }
+}
+
+if (! function_exists('theme_config')) {
+    /**
+     * Generate an asset path for the current theme.
+     *
+     * @param  string  $key
+     * @return string
+     */
+    function theme_config(string $key)
+    {
+        return config('theme.'.$key);
     }
 }
 

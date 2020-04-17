@@ -265,7 +265,7 @@ class PluginManager extends ExtensionManager
     {
         $this->setPluginEnabled($plugin, true);
 
-        app('migrator')->run([$this->path($plugin, 'database/migrations')]);
+        $this->runMigrations($plugin);
 
         $this->createAssetsLink($plugin);
     }
@@ -393,6 +393,11 @@ class PluginManager extends ExtensionManager
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);
+
+        // Run the migrations if the plugin was updated
+        if ($this->isEnabled($pluginId)) {
+            $this->runMigrations($pluginId);
+        }
     }
 
     protected function getPlugins()
@@ -450,6 +455,11 @@ class PluginManager extends ExtensionManager
         foreach ($autoload['files'] ?? [] as $file) {
             $this->files->getRequire($this->path($plugin, $file));
         }
+    }
+
+    protected function runMigrations(string $plugin)
+    {
+        app('migrator')->run([$this->path($plugin, 'database/migrations')]);
     }
 
     protected function createAssetsLink(string $plugin)
