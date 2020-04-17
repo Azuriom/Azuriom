@@ -74,7 +74,7 @@ return [
 
     'status-error' => 'An error occurred: :error',
 
-    'catpcha-failed' => 'The captcha verification failed, please try again.',
+    'captcha' => 'The captcha verification failed, please try again.',
 
     'profile' => [
         'title' => 'My Profile',
@@ -88,6 +88,7 @@ return [
         'info' => [
             'role' => 'Role: :role',
             'register' => 'Register: :date',
+            'money' => 'Money: :money',
             '2fa' => 'Two-Factor Authentication (2FA): :2fa',
         ],
 

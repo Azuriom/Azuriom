@@ -57,4 +57,15 @@ class LikeTest extends TestCase
 
         $this->assertTrue($post->isLiked());
     }
+
+    public function testIsNotLikedWithLoadedRelations()
+    {
+        $post = factory(Post::class)->create();
+
+        $this->actingAs(factory(User::class)->create());
+
+        $post->load('likes.author');
+
+        $this->assertFalse($post->isLiked());
+    }
 }

@@ -265,7 +265,7 @@ class ThemeManager extends ExtensionManager
             ->all();
 
         return array_filter($themes, function ($theme) use ($installedThemes) {
-            return ! in_array($theme['id'], $installedThemes);
+            return ! in_array($theme['id'], $installedThemes, true);
         });
     }
 
@@ -312,10 +312,9 @@ class ThemeManager extends ExtensionManager
 
     protected function loadConfig(string $theme)
     {
-        $themeConfig = Cache::remember('theme.config', now()->addDay(),
-            function () use ($theme) {
-                return $this->getConfig($theme);
-            });
+        $themeConfig = Cache::remember('theme.config', now()->addDay(), function () use ($theme) {
+            return $this->getConfig($theme);
+        });
 
         if ($themeConfig !== null) {
             foreach ($themeConfig as $key => $value) {

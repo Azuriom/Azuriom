@@ -93,7 +93,7 @@ class Post extends Model
         $userId = $user ? $user->id : Auth::id();
 
         if ($this->relationLoaded('likes')) {
-            return ! $this->likes->where('author_id', $userId)->isEmpty();
+            return $this->likes->contains('author_id', $userId);
         }
 
         return $this->likes()->where('author_id', $userId)->exists();

@@ -349,7 +349,7 @@ class PluginManager extends ExtensionManager
             ->all();
 
         return array_filter($plugins, function ($plugin) use ($installedPlugins) {
-            return ! in_array($plugin['id'], $installedPlugins);
+            return ! in_array($plugin['id'], $installedPlugins, true);
         });
     }
 

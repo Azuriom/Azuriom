@@ -92,7 +92,7 @@ class Server extends Model
     public function getPlayers()
     {
         return Cache::remember('servers.'.$this->id, now()->addMinutes(5), function () {
-            return $this->bridge()->getServerData();
+            return $this->bridge()->getServerData() ?? [];
         });
     }
 

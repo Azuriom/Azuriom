@@ -11,6 +11,7 @@
                 <ul>
                     <li>{{ trans('messages.profile.info.role', ['role' => $user->role->name]) }}</li>
                     <li>{{ trans('messages.profile.info.register', ['date' => format_date($user->created_at, true)]) }}</li>
+                    <li>{{ trans('messages.profile.info.money', ['money' => format_money($user->money)]) }}</li>
                     <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans_bool($user->hasTwoFactorAuth())]) }}</li>
                 </ul>
 

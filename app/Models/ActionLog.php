@@ -112,7 +112,7 @@ class ActionLog extends Model
      * Create a new log entry.
      *
      * @param  string  $action
-     * @param $target \Illuminate\Database\Eloquent\Model|string
+     * @param  \Illuminate\Database\Eloquent\Model  $target
      */
     public static function log(string $action, Model $target = null)
     {

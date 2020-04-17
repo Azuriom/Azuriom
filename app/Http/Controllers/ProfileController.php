@@ -70,7 +70,7 @@ class ProfileController extends Controller
         ]);
 
         if (! (new Google2FA())->verifyKey($request->input('2fa_key'), str_replace(' ', '', $request->input('code')))) {
-            return redirect()->route('profile.2fa.index')->with('error', trans('auth.invalid-2fa'));
+            return redirect()->route('profile.2fa.index')->with('error', trans('auth.2fa-invalid'));
         }
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);

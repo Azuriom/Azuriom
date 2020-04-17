@@ -12,7 +12,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      * @var array
      */
     protected $middleware = [
-        // \DummyNamespace\Middlewares\ExampleMiddleware::class,
+        // \DummyNamespace\Middleware\ExampleMiddleware::class,
     ];
 
     /**

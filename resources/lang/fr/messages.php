@@ -74,7 +74,7 @@ return [
 
     'status-error' => 'Une erreur est survenue: :error',
 
-    'catpcha-failed' => 'La vérification du captcha a échouée, merci de réessayer.',
+    'captcha' => 'La vérification du captcha a échouée, merci de réessayer.',
 
     'profile' => [
         'title' => 'Mon Profil',
@@ -88,6 +88,7 @@ return [
         'info' => [
             'role' => 'Rôle: :role',
             'register' => 'Création du compte: :date',
+            'money' => 'Argent: :money',
             '2fa' => 'Authentification à deux facteurs (A2F): :2fa',
         ],
 
