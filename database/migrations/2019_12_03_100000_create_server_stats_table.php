@@ -19,7 +19,7 @@ class CreateServerStatsTable extends Migration
             $table->unsignedInteger('players');
             $table->unsignedInteger('ram')->nullable();
             $table->unsignedDecimal('cpu')->nullable();
-            $table->unsignedTinyInteger('tps')->nullable();
+            $table->unsignedDecimal('tps')->nullable();
             $table->unsignedInteger('loaded_chunks')->nullable();
             $table->unsignedInteger('entities')->nullable();
             $table->timestamps();

@@ -395,8 +395,8 @@ class PluginManager extends ExtensionManager
         $this->createAssetsLink($plugin);
 
         // Run the migrations if the plugin was updated
-        if ($this->isEnabled($pluginId)) {
-            $this->runMigrations($pluginId);
+        if ($this->isEnabled($plugin)) {
+            $this->runMigrations($plugin);
         }
     }
 
