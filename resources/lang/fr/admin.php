@@ -223,7 +223,7 @@ return [
         'title-edit' => 'Édition l\'élément de la navbar :element',
         'title-create' => 'Ajout d\'un élément dans la navbar',
 
-        'dropdown-info' => 'Vous pourrez ajouter des élements une fois que l\'élément sera sauvegardé.',
+        'dropdown-info' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
 
         'fields' => [
             'home' => 'Page d\'accueil',
@@ -289,7 +289,7 @@ return [
             'updated' => 'Le serveur a été mis à jour.',
             'deleted' => 'Le serveur a été supprimé.',
 
-            'connect-success' => 'La connexion au serveur a été éffectuée avec succès !',
+            'connect-success' => 'La connexion au serveur a été effectuée avec succès !',
             'connect-error' => 'La connexion au serveur a échouée: :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
@@ -326,7 +326,7 @@ return [
             'ban' => 'Bannir',
             'unban' => 'Débannir',
             'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'addresse E-Mail',
+            'verify-email' => 'Vérifier l\'adresse E-Mail',
             'disable-2fa' => 'Désactiver l\'A2F',
         ],
 
@@ -417,7 +417,7 @@ return [
         'title-edit' => 'Édition de l\'article :post',
         'title-create' => 'Création d\'un article',
 
-        'published-info' => 'Cet article sera visible de facon publique qu\'à partir de cette date.',
+        'published-info' => 'Cet article sera visible de façon publique qu\'à partir de cette date.',
 
         'fields' => [
             'published-at' => 'Publié le',
@@ -496,7 +496,7 @@ return [
         ],
         'installed' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
-        'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par defaut est automatiquement mis en place.',
+        'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
 
         'actions' => [
             'edit-config' => 'Configurer',

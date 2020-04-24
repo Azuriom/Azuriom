@@ -16,7 +16,7 @@ return [
     'accepted' => 'Le champ :attribute doit être accepté.',
     'active_url' => 'Le champ :attribute n\'est pas une URL valide.',
     'after' => 'Le champ :attribute doit être une date après le :date.',
-    'after_or_equal' => 'Le champ :attribute doit être une date aprés ou égale au :date.',
+    'after_or_equal' => 'Le champ :attribute doit être une date après ou égale au :date.',
     'alpha' => 'Le champ :attribute doit contenir uniquement des lettres.',
     'alpha_dash' => 'Le champ :attribute doit contenir uniquement des lettres, des chiffres et des tirets.',
     'alpha_num' => 'Le champ :attribute doit contenir uniquement des lettres et des chiffres.',

@@ -310,10 +310,15 @@ class ThemeManager extends ExtensionManager
         $this->createAssetsLink($theme);
     }
 
+    public function readConfig(string $theme)
+    {
+        return $this->getJson($this->path('config.json', $theme), true);
+    }
+
     protected function loadConfig(string $theme)
     {
         $themeConfig = Cache::remember('theme.config', now()->addDay(), function () use ($theme) {
-            return $this->getConfig($theme);
+            return $this->readConfig($theme);
         });
 
         if ($themeConfig !== null) {
@@ -321,11 +326,6 @@ class ThemeManager extends ExtensionManager
                 config(['theme.'.$key => $value]);
             }
         }
-    }
-
-    protected function getConfig(string $theme)
-    {
-        return $this->getJson($this->path('config.json', $theme), true);
     }
 
     protected function createAssetsLink(string $theme)
