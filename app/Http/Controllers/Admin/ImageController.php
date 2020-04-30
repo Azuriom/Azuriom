@@ -16,7 +16,7 @@ class ImageController extends Controller
      *
      * @var string
      */
-    protected $imagePath = 'public/img/';
+    protected $imagesPath = 'img';
 
     /**
      * Display a listing of the resource.
@@ -43,8 +43,6 @@ class ImageController extends Controller
      *
      * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @return \Illuminate\Http\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(ImageRequest $request)
     {
@@ -57,7 +55,7 @@ class ImageController extends Controller
             'slug' => [Rule::unique('images', 'file')],
         ])->validate();
 
-        $file->storeAs($this->imagePath, $fileName);
+        $file->storeAs($this->imagesPath, $fileName, 'public');
 
         Image::create([
             'name' => $request->input('name'),
@@ -85,8 +83,6 @@ class ImageController extends Controller
      * @param  \Azuriom\Http\Requests\ImageRequest  $request
      * @param  \Azuriom\Models\Image  $image
      * @return \Illuminate\Http\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(ImageRequest $request, Image $image)
     {
@@ -97,7 +93,7 @@ class ImageController extends Controller
         ])->validate();
 
         if ($image->file !== $fileName) {
-            Storage::move($this->getImagePath($image->file), $this->getImagePath($fileName));
+            Storage::disk('public')->move($this->getImagesPath($image->file), $this->getImagesPath($fileName));
         }
 
         $image->update([
@@ -118,16 +114,16 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        Storage::delete($this->getImagePath($image->file));
+        Storage::disk('public')->delete($this->getImagesPath($image->file));
 
         $image->delete();
 
         return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.deleted'));
     }
 
-    protected function getImagePath(string $fileName)
+    protected function getImagesPath(string $fileName)
     {
-        return $this->imagePath.$fileName;
+        return "{$this->imagesPath}/{$fileName}";
     }
 
     protected function normalizeExtensions(string $name)

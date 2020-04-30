@@ -53,15 +53,19 @@ class PluginController extends Controller
 
     public function enable(string $plugin)
     {
-        $response = null;
         try {
             $this->plugins->enable($plugin);
-            $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
-            $this->plugins->refreshRoutesCache();
-            ActionLog::log('plugins.enabled');
-        } catch (\Throwable $th) {
-            $response = redirect()->route('admin.plugins.index')->with('error', $th->getMessage());
+        } catch (Throwable $t) {
+            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
+                'error' => $t->getMessage(),
+            ]));
         }
+
+        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.enabled'));
+
+        $this->plugins->refreshRoutesCache();
+
+        ActionLog::log('plugins.enabled');
 
         return $response;
     }

@@ -102,7 +102,7 @@ if (! function_exists('site_name')) {
 if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {
-        return url(Storage::url('img/'.$name));
+        return url(Storage::disk('public')->url('img/'.$name));
     }
 }
 

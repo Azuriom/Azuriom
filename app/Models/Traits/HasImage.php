@@ -32,7 +32,7 @@ trait HasImage
     {
         $this->deleteImage();
 
-        $path = basename($file->storePublicly($this->getImagePath()));
+        $path = basename($file->storePublicly($this->getImagePath(), 'public'));
 
         $this->setAttribute($this->getImageKey(), $path);
     }
@@ -48,7 +48,7 @@ trait HasImage
         $image = $this->getAttribute($key);
 
         if ($image !== null) {
-            Storage::delete($this->getImagePath().$image);
+            Storage::disk('public')->delete($this->getImagePath($image));
 
             $this->setAttribute($key, null);
         }
@@ -67,7 +67,7 @@ trait HasImage
             return null;
         }
 
-        return url(Storage::url($this->getImagePath().$image));
+        return Storage::disk()->url($this->getImagePath($image));
     }
 
     /**
@@ -85,8 +85,8 @@ trait HasImage
         return $this->imageKey ?? 'image';
     }
 
-    protected function getImagePath()
+    protected function getImagePath(string $path = '')
     {
-        return ($this->imagePath ?? 'public/'.Str::snake(Str::pluralStudly(class_basename($this)))).'/';
+        return ($this->imagePath ?? Str::snake(Str::pluralStudly(class_basename($this)))).'/'.$path;
     }
 }
