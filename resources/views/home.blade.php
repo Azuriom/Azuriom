@@ -3,8 +3,7 @@
 @section('title', trans('messages.home'))
 
 @section('content')
-    <div class="home-background mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') no-repeat center">
-
+    <div class="home-background mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat">
     </div>
 
     <div class="container">
@@ -34,7 +33,6 @@
 @push('styles')
     <style>
         .home-background {
-            background-size: cover;
             height: 500px;
         }
 
