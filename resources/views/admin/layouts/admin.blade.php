@@ -303,11 +303,30 @@
                             <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- Counter - Notifications -->
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- <span class="badge badge-danger badge-counter">1</span> -->
+                                <span class="badge badge-danger badge-counter">{{ count(Auth::user()->unreadNotifications) }}</span>
                             </a>
                             <!-- Dropdown - Notifications -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationsDropdown">
                                 <h6 class="dropdown-header">{{ trans('admin.notifications.notifications') }}</h6>
+                                
+                                @foreach (Auth::user()->notifications as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href="{{ $notification->data['href'] }}">
+                                    <div class="mr-3">
+                                        <div class="{{ $notification->data['background'] }}">
+                                            @if ($notification->read_at)
+                                                <i class="{{ $notification->data['icon_read'] }}"></i>
+                                            @else
+                                                <i class="{{ $notification->data['icon_not_read'] }}"></i>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">{{ $notification->created_at }}</div>
+                                        <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
+                                    </div>
+                                </a>
+                                @endforeach
+                                
                                 <a class="dropdown-item text-center small text-gray-500" href="#">{{ trans('admin.notifications.mark-as-read') }}</a>
                             </div>
                         </li>

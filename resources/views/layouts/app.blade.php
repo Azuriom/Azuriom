@@ -36,7 +36,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    
     <!-- Styles -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     @stack('styles')

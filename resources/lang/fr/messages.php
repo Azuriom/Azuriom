@@ -125,4 +125,9 @@ return [
     ],
 
     'likes' => 'J\'aimes : :count',
+
+    'notifications' => [
+        'notifications' => 'Notifications',
+        'mark-as-read' => 'Marquer comme lues',
+    ],
 ];
