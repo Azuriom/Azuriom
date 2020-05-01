@@ -16,8 +16,8 @@ class SimpleNotification extends Notification
      *
      * @return void
      */
-    public function __construct(string $message="test notification", string $icon_read="far fa-envelope-open", 
-    string $icon_not_read="fa fa-envelope", string $href="#", string $background="")
+    public function __construct(string $message='test notification', string $icon_read='far fa-envelope-open', 
+    string $icon_not_read='fa fa-envelope', string $href='#', string $background='')
     {
         $this->message = $message;
         $this->icon_read = $icon_read;
@@ -50,7 +50,7 @@ class SimpleNotification extends Notification
             'icon_read' => $this->icon_read,
             'icon_not_read' => $this->icon_not_read,
             'href' => $this->href,
-            'background' => $this->background
+            'background' => $this->background,
         ];
     }
 }
