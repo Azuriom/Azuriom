@@ -11,6 +11,7 @@ class SimpleNotification extends Notification
     private $icon_not_read;
     private $href;
     private $background;
+    
     /**
      * Create a new notification instance.
      *
