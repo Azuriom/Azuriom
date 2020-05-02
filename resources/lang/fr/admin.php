@@ -196,6 +196,12 @@ return [
             'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
             'html-code-info' => 'Exemple: Bannière cookies, etc',
+
+            'welcome-popup' => [
+                'enable' => 'Activer le popup de bienvenue ?',
+                'message' => 'Message du popup de bienvenue',
+                'info' => 'Ce popup sera affiché lors de la première visite d\'un utilisateur sur le site.',
+            ],
         ],
 
         'mail' => [

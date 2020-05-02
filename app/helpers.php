@@ -102,7 +102,7 @@ if (! function_exists('site_name')) {
 if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {
-        return url(Storage::disk('public')->url('img/'.$name));
+        return url(Storage::url('img/'.$name));
     }
 }
 
@@ -201,11 +201,12 @@ if (! function_exists('theme_config')) {
      * Generate an asset path for the current theme.
      *
      * @param  string  $key
+     * @param  mixed  $default
      * @return string
      */
-    function theme_config(string $key)
+    function theme_config(string $key, $default = null)
     {
-        return config('theme.'.$key);
+        return config('theme.'.$key, $default);
     }
 }
 

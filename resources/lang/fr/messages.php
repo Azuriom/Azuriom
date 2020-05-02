@@ -19,6 +19,7 @@ return [
         'add' => 'Ajouter',
         'show' => 'Voir',
         'create' => 'Créer',
+        'close' => 'Fermer',
         'edit' => 'Éditer',
         'update' => 'Mettre à jour',
         'delete' => 'Supprimer',

@@ -196,6 +196,12 @@ return [
             'html-body-code' => 'HTML code to include in the <body> of all pages.',
 
             'html-code-info' => 'E.g: Cookie banner, etc',
+
+            'welcome-popup' => [
+                'enable' => 'Enable welcome popup ?',
+                'message' => 'Welcome Popup Message',
+                'info' => 'This popup will be displayed the first time a user visits the site.',
+            ],
         ],
 
         'mail' => [

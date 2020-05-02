@@ -140,16 +140,16 @@ class SettingsController extends Controller
             'money' => ['required', 'string', 'max:15'],
             'site-key' => ['nullable', 'string', 'size:50'],
         ]) + [
-            'register' => $request->has('register'),
-            'auth-api' => $request->has('auth-api'),
-            'game-type' => $request->has('minecraft-verification') ? 'mc-online' : 'mc-offline',
+            'register' => $request->filled('register'),
+            'auth-api' => $request->filled('auth-api'),
+            'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
         ]);
 
         ActionLog::log('settings.updated');
 
         $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
 
-        if (setting('register', false) !== $request->has('register')) {
+        if (setting('register', false) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();
         }
 
@@ -183,7 +183,6 @@ class SettingsController extends Controller
      */
     public function updateSecurity(Request $request)
     {
-        $enableReCaptcha = $request->has('recaptcha');
         $hash = array_keys($this->hashAlgorithms);
 
         $settings = $this->validate($request, [
@@ -202,7 +201,7 @@ class SettingsController extends Controller
             ],
         ]);
 
-        if ($enableReCaptcha) {
+        if ($request->filled('recaptcha')) {
             Setting::updateSettings($settings);
         } else {
             Setting::updateSettings($request->only(['hash']));
@@ -274,6 +273,7 @@ class SettingsController extends Controller
             'enableAnalytics' => setting('g-analytics-id') || old('enable-g-analytics'),
             'htmlHead' => setting('html-head'),
             'htmlBody' => setting('html-body'),
+            'welcomePopup' => setting('welcome-popup'),
         ]);
     }
 
@@ -287,12 +287,19 @@ class SettingsController extends Controller
      */
     public function updateSeo(Request $request)
     {
-        Setting::updateSettings($this->validate($request, [
+        $settings = $this->validate($request, [
             'keywords' => ['nullable', 'string', 'max:150'],
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
             'html-head' => ['nullable', 'string'],
             'html-body' => ['nullable', 'string'],
-        ]));
+            'welcome-popup' => ['required_with:enable_welcome_popup', 'string'],
+        ]);
+
+        if (! $request->filled('enable_welcome_popup')) {
+            $settings['welcome-popup'] = null;
+        }
+
+        Setting::updateSettings($settings);
 
         ActionLog::log('settings.updated');
 
@@ -368,7 +375,7 @@ class SettingsController extends Controller
             'maintenance-message' => ['nullable', 'string'],
         ]));
 
-        Setting::updateSettings('maintenance-status', $request->has('maintenance-status'));
+        Setting::updateSettings('maintenance-status', $request->filled('maintenance-status'));
 
         return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
     }
