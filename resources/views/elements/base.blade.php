@@ -48,9 +48,7 @@
             window.addEventListener('load', function () {
                 setTimeout(function () {
                     $('#welcomePopupModal').modal('show');
-
-                    console.log('load');
-                }, 1000);
+                }, 500);
             });
         </script>
     @endpush

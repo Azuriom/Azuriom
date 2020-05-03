@@ -264,7 +264,8 @@ class SettingsController extends Controller
 
         File::link(storage_path('app/public'), $storagePublicPath);
 
-        return redirect()->route('admin.settings.performance')->with('success', 'Success');
+        return redirect()->route('admin.settings.performance')
+            ->with('success', trans('messages.status-success'));
     }
 
     public function seo()
