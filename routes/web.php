@@ -57,7 +57,7 @@ Route::resource('posts.comments', 'PostCommentController')->middleware(['auth', 
 
 Route::get('/{page:slug}', 'PageController@show')->name('pages.show');
 
-Route::prefix('notifications')->name('notifications.')->group(function (){
+Route::prefix('notifications')->name('notifications.')->group(function () {
     Route::get('/read_all', 'NotificationController@read_all')->name('read_all');
     Route::get('/read_one/{notification}', 'NotificationController@read_one')->name('read_one');
 });
