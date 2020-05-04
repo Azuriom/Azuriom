@@ -306,11 +306,12 @@
                                 <span class="badge badge-danger badge-counter">{{ count(Auth::user()->unreadNotifications) }}</span>
                             </a>
                             <!-- Dropdown - Notifications -->
+                            @if (count(Auth::user()->notifications) != 0)
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationsDropdown">
                                 <h6 class="dropdown-header">{{ trans('admin.notifications.notifications') }}</h6>
                                 
-                                @foreach (Auth::user()->notifications as $notification)
-                                <a class="dropdown-item d-flex align-items-center" href="{{ $notification->data['href'] }}">
+                                @foreach (Auth::user()->notifications()->take(5)->get() as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('notifications.read_one', ['notification' => $notification->id]) }}">
                                     <div class="mr-3">
                                         <div class="{{ $notification->data['background'] }}">
                                             @if ($notification->read_at)
@@ -327,8 +328,9 @@
                                 </a>
                                 @endforeach
                                 
-                                <a class="dropdown-item text-center small text-gray-500" href="#">{{ trans('admin.notifications.mark-as-read') }}</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications.read_all') }}">{{ trans('admin.notifications.mark-as-read') }}</a>
                             </div>
+                            @endif
                         </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
