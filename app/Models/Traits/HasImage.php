@@ -67,7 +67,7 @@ trait HasImage
             return null;
         }
 
-        return url(Storage::url($this->getImagePath($image)));
+        return url(Storage::disk('public')->url($this->getImagePath($image)));
     }
 
     /**

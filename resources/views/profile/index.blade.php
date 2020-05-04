@@ -19,7 +19,9 @@
                     <form action="{{ route('profile.2fa.disable') }}" method="POST">
                         @csrf
 
-                        <button type="submit" class="btn btn-danger">{{ trans('messages.profile.2fa.disable') }}</button>
+                        <button type="submit" class="btn btn-danger">
+                            {{ trans('messages.profile.2fa.disable') }}
+                        </button>
                     </form>
                 @else
                     <a class="btn btn-success" href="{{ route('profile.2fa.index') }}">{{ trans('messages.profile.2fa.enable') }}</a>
@@ -40,7 +42,9 @@
 
                 <form method="POST" action="{{ route('verification.resend') }}">
                     @csrf
-                    <button type="submit" class="btn btn-primary">{{ trans('auth.verify-resend') }}</button>
+                    <button type="submit" class="btn btn-primary">
+                        {{ trans('auth.verify-resend') }}
+                    </button>
                 </form>
             </div>
         @endif
@@ -76,7 +80,9 @@
                                 <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ trans('messages.actions.update') }}</button>
+                            <button type="submit" class="btn btn-primary">
+                                {{ trans('messages.actions.update') }}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -107,7 +113,9 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ trans('messages.actions.update') }}</button>
+                            <button type="submit" class="btn btn-primary">
+                                {{ trans('messages.actions.update') }}
+                            </button>
                         </form>
                     </div>
                 </div>

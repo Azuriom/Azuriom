@@ -102,7 +102,7 @@ if (! function_exists('site_name')) {
 if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {
-        return url(Storage::url('img/'.$name));
+        return url(Storage::disk('public')->url('img/'.$name));
     }
 }
 
@@ -202,7 +202,7 @@ if (! function_exists('theme_config')) {
      *
      * @param  string  $key
      * @param  mixed  $default
-     * @return string
+     * @return mixed
      */
     function theme_config(string $key, $default = null)
     {
