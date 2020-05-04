@@ -194,6 +194,10 @@ class ThemeManager extends ExtensionManager
 
         $json = $this->getJson($path);
 
+        if ($json === null) {
+            return null;
+        }
+
         // TODO 1.0: remove support for legacy extensions without id
         if (! isset($json->id)) {
             $json->id = $theme;

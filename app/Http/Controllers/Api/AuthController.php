@@ -73,12 +73,12 @@ class AuthController extends Controller
 
         $user = User::firstWhere('access_token', $request->input('access_token'));
 
-        if ($user->is_banned) {
-            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
-        }
-
         if ($user === null) {
             return response()->json(['status' => 'error', 'message' => 'Invalid token'], 422);
+        }
+
+        if ($user->is_banned) {
+            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
         }
 
         return new AuthenticatedUserResource($user);
@@ -96,7 +96,7 @@ class AuthController extends Controller
     {
         $this->validate($request, ['access_token' => 'required|string']);
 
-        User::where('access_token', $request->input('access_token'))->update(['access_token', null]);
+        User::where('access_token', $request->input('access_token'))->update(['access_token' => null]);
 
         return response()->json(['status' => 'success']);
     }
