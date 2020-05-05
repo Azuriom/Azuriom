@@ -54,7 +54,28 @@
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 {{ trans('messages.nav.profile') }}
                             </a>
-
+                            @foreach(plugins()->getUserNavItems() as $navId => $navItem)
+                                @if($navItem['type'] ?? '' === 'dropdown')
+                                    <div class="dropdown-item dropdown-submenu" >
+                                        <a style="padding-left:0;" href="#" class="dropdown-item dropdown-toggle" data-toggle="dropdown" >
+                                            <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                            <span>{{ trans($navItem['name']) }}</span>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            
+                                            @foreach($navItem['items'] ?? [] as $route => $name)
+                                                <a class="dropdown-item {{ add_active(str_replace('index', '*', $route)) }}" href="{{ route($route) }}">{{ trans($name) }}</a>
+                                            @endforeach
+                                        
+                                        </div>
+                                    </div>
+                                @else
+                                    <a class="dropdown-item" href="{{ route($navItem['route']) }}">
+                                        <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                        <span>{{ trans($navItem['name']) }}</span>
+                                    </a>
+                                @endif
+                            @endforeach
                             @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     {{ trans('messages.nav.admin') }}

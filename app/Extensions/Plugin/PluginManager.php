@@ -50,6 +50,13 @@ class PluginManager extends ExtensionManager
     protected $adminNavItems;
 
     /**
+     * The user navigation.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    protected $userNavItems;
+
+    /**
      * Create a new PluginManager instance.
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
@@ -62,6 +69,7 @@ class PluginManager extends ExtensionManager
         $this->pluginsPublicPath = public_path('assets/plugins/');
         $this->routeDescriptions = collect();
         $this->adminNavItems = collect();
+        $this->userNavItems = collect();
     }
 
     public function loadPlugins(Application $app)
@@ -289,6 +297,13 @@ class PluginManager extends ExtensionManager
         }
     }
 
+    public function addUserNavItem(array $items)
+    {
+        foreach ($items as $key => $value) {
+            $this->userNavItems->put($key, $value);
+        }
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -303,6 +318,14 @@ class PluginManager extends ExtensionManager
     public function getAdminNavItems()
     {
         return $this->adminNavItems;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function getUserNavItems()
+    {
+        return $this->userNavItems;
     }
 
     public function cachePlugins(array $enabledPlugins = null)
