@@ -7,6 +7,8 @@ use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -16,17 +18,31 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('ban')->paginate();
+        $search = $request->input('search');
+
+        $users = User::with('ban')
+            ->when($search, function (Builder $query, string $search) {
+                $query->where('email', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%");
+
+                if (is_numeric($search)) {
+                    $query->orWhere('id', $search);
+                }
+            })->paginate();
 
         foreach ($users as $user) {
             $user->refreshActiveBan();
         }
 
-        return view('admin.users.index', ['users' => $users]);
+        return view('admin.users.index', [
+            'users' => $users,
+            'search' => $search,
+        ]);
     }
 
     /**

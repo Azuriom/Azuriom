@@ -33,7 +33,7 @@
                                     <img src="{{ $post->imageUrl() }}" class="img-small rounded" alt="{{ $post->title  }}">
                                 @endif
                             </td>
-                            <td><a href="{{ route('posts.show', $post->slug) }}">{{ $post->slug }}</a></td>
+                            <td><a href="{{ route('posts.show', $post) }}">{{ $post->slug }}</a></td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $post->author ) }}">{{ $post->author->name }}</a>
                             </td>

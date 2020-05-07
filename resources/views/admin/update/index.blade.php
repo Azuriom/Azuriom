@@ -12,7 +12,7 @@
                 saveButtonIcon.classList.remove('d-none');
 
                 axios.post(el.dataset['updateRoute'])
-                    .then(function (json) {
+                    .then(function () {
                         window.location.reload();
                     })
                     .catch(function (error) {

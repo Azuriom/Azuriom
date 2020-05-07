@@ -27,7 +27,7 @@ class PostCommentController extends Controller
     {
         $post->comments()->create($request->validated());
 
-        return redirect()->route('posts.show', $post->slug);
+        return redirect()->route('posts.show', $post);
     }
 
     /**
@@ -43,6 +43,6 @@ class PostCommentController extends Controller
     {
         $comment->delete();
 
-        return redirect()->route('posts.show', $post->slug);
+        return redirect()->route('posts.show', $post);
     }
 }

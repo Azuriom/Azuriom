@@ -63,7 +63,6 @@ class UpdateController extends Controller
 
         if (! $this->updates->hasUpdate()) {
             return response()->json([
-                'status' => 'success',
                 'message' => trans('admin.update.status.up-to-date'),
             ]);
         }
@@ -72,7 +71,6 @@ class UpdateController extends Controller
             $this->updates->download($update);
         } catch (Exception $e) {
             return response()->json([
-                'status' => 'error',
                 'message' => trans('admin.update.status.error-download', [
                     'error' => $e->getMessage(),
                 ]),
@@ -81,7 +79,7 @@ class UpdateController extends Controller
 
         $request->session()->flash('success', trans('admin.update.status.download-success'));
 
-        return response()->json(['status' => 'success']);
+        return response()->noContent();
     }
 
     public function install(Request $request)
@@ -90,7 +88,6 @@ class UpdateController extends Controller
 
         if (! $this->updates->hasUpdate()) {
             return response()->json([
-                'status' => 'success',
                 'message' => trans('admin.update.status.up-to-date'),
             ]);
         }
@@ -99,7 +96,6 @@ class UpdateController extends Controller
             $this->updates->installUpdate($update);
         } catch (Exception $e) {
             return response()->json([
-                'status' => 'error',
                 'message' => trans('admin.update.status.error-install', [
                     'error' => $e->getMessage(),
                 ]),
@@ -110,6 +106,6 @@ class UpdateController extends Controller
 
         ActionLog::log('updates.installed');
 
-        return response()->json(['status' => 'success']);
+        return response()->noContent();
     }
 }

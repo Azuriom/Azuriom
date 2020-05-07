@@ -34,6 +34,7 @@ return [
         'disable' => 'Disable',
         'copy' => 'Copy',
         'comment' => 'Comment',
+        'search' => 'Search',
     ],
 
     'fields' => [

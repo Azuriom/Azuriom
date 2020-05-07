@@ -14,7 +14,7 @@
                         <label for="mailerSelect">{{ trans('admin.settings.mail.driver') }}</label>
 
                         <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type">
-                            <option value="">{{ trans('messages.none') }}</option>
+                            <option value="" @if(config('mail.default') === 'array') selected @endif>{{ trans('messages.none') }}</option>
                             @foreach($mailers as $mailer => $mailerName)
                                 <option value="{{ $mailer }}" @if(config('mail.default') === $mailer) selected @endif>{{ $mailerName }}</option>
                             @endforeach
@@ -86,11 +86,11 @@
                                         <i class="fas fa-eye-slash"></i>
                                     </button>
                                 </div>
-                            </div>
 
-                            @error('smtp-password')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                @error('smtp-password')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

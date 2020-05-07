@@ -46,10 +46,9 @@ class RoleController extends Controller
             Role::whereKey($roleId)->update(['power' => $position++]);
         }
 
-        return $request->expectsJson() ? response()->json([
-            'status' => 'success',
+        return response()->json([
             'message' => trans('admin.roles.status.power-updated'),
-        ]) : redirect()->route('admin.roles.index');
+        ]);
     }
 
     /**

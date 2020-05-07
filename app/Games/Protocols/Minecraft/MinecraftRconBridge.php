@@ -2,7 +2,7 @@
 
 namespace Azuriom\Games\Protocols\Minecraft;
 
-use Exception;
+use RuntimeException;
 use Thedudeguy\Rcon;
 
 class MinecraftRconBridge extends MinecraftPingBridge
@@ -17,15 +17,15 @@ class MinecraftRconBridge extends MinecraftPingBridge
 
         $rcon = $this->createRcon();
 
-        return $rcon->sendCommand('list');
+        return $rcon !== null && $rcon->sendCommand('list');
     }
 
     public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
     {
         $rcon = $this->createRcon();
 
-        if (! $rcon) {
-            throw new Exception('Unable to connect to rcon.');
+        if ($rcon === null) {
+            throw new RuntimeException('Unable to connect to rcon.');
         }
 
         foreach ($commands as $command) {
@@ -44,6 +44,6 @@ class MinecraftRconBridge extends MinecraftPingBridge
 
         $rcon = new Rcon($this->server->address, $this->server->data['rcon-port'] ?? 25575, $password, 3);
 
-        return $rcon->connect() ? $rcon : false;
+        return $rcon->connect() ? $rcon : null;
     }
 }
