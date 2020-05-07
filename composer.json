@@ -23,7 +23,8 @@
         "laravel/ui": "^2.0",
         "pragmarx/google2fa": "^8.0",
         "symfony/filesystem": "^5.0",
-        "thedudeguy/rcon": "^1.0"
+        "thedudeguy/rcon": "^1.0",
+        "xpaw/php-source-query-class": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

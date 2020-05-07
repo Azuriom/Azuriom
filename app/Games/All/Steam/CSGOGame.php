@@ -1,14 +1,14 @@
 <?php
 
-namespace Azuriom\Game;
+namespace Azuriom\Game\Steam;
 
 use Azuriom\Models\User;
 
-class MinecraftOfflineGame implements Game
+class SteamGame implements Game
 {
     public function name()
     {
-        return 'Minecraft';
+        return 'Counter-Strike: Global Offensive';
     }
 
     public function getAvatarUrl(User $user, int $size = 64)

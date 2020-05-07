@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Game;
+namespace Azuriom\Games;
 
 use Azuriom\Models\User;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Game\Server;
+namespace Azuriom\Games\Protocols\Minecraft;
 
 use Exception;
 use Thedudeguy\Rcon;

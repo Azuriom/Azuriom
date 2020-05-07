@@ -2,9 +2,11 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Game\Server\MinecraftAzLinkBridge;
-use Azuriom\Game\Server\MinecraftPingBridge;
-use Azuriom\Game\Server\MinecraftRconBridge;
+use Azuriom\Games\Protocols\AzLink;
+use Azuriom\Games\Protocols\Query;
+use Azuriom\Games\Protocols\Rcon;
+use Azuriom\Games\Protocols\Minecraft\MinecraftPingBridge;
+use Azuriom\Games\Protocols\Minecraft\MinecraftRconBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +40,10 @@ class Server extends Model
     private const TYPES = [
         'mc-ping' => MinecraftPingBridge::class,
         'mc-rcon' => MinecraftRconBridge::class,
-        'mc-azlink' => MinecraftAzLinkBridge::class,
+        'mc-azlink' => Azlink::class,
+        'source-query' => Query::class,
+        'source-rcon' => Rcon::class,
+        'source-rcon-and-query' => '',
     ];
 
     /**
@@ -136,6 +141,6 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink']);
+        return $query->whereIn('type', ['mc-rcon', 'mc-azlink','source-rcon']);
     }
 }

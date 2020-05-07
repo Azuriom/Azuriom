@@ -1,8 +1,9 @@
 <?php
 
-namespace Azuriom\Game\Server;
+namespace Azuriom\Games\Protocols\Minecraft;
 
 use RuntimeException;
+use Azuriom\Games\ServerBridge;
 
 class MinecraftPingBridge extends ServerBridge
 {

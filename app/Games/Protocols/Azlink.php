@@ -1,16 +1,20 @@
 <?php
 
-namespace Azuriom\Game\Server;
+namespace Azuriom\Games\Protocols;
 
-use Exception;
+use Azuriom\Games\ServerBridge;
 use Illuminate\Support\Facades\Http;
+use Exception;
 
-class MinecraftAzLinkBridge extends ServerBridge
-{
-    use MinecraftPinger;
+class Azlink extends ServerBridge{
 
     private const DEFAULT_PORT = 25588;
 
+    public function __construct(Server $server)
+    {
+        parent::__construct($server);
+    }
+    
     public function getServerData()
     {
         // Data are sent by the plugins every minute,
@@ -59,4 +63,5 @@ class MinecraftAzLinkBridge extends ServerBridge
 
         return Http::withToken($token, '')->post("http://{$this->server->address}:{$port}");
     }
+
 }
