@@ -43,7 +43,6 @@ class Server extends Model
         'mc-azlink' => Azlink::class,
         'source-query' => Query::class,
         'source-rcon' => Rcon::class,
-        'source-rcon-and-query' => '',
     ];
 
     /**

@@ -17,14 +17,17 @@ class Query extends ServerBridge {
     {
         parent::__construct($server);
         $this->query = new SourceQuery();
-        $this->query->Connect($this->server->address, $this->server->port, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE );
+        $this->query->Connect($this->server->address, $this->server->data['query-port'], self::DEFAULT_TIMEOUT, SourceQuery::SOURCE );
     }
     
     public function getServerData()
     {
         $infos = $this->query->GetInfo();
-        //$infos['players_f'] = $this->query->GetPlayers( );
-        dd($infos);
+        if($infos !== false){
+            $infos['players'] = $infos['Players'];
+            $infos['max'] = $infos['MaxPlayers'];
+        }else $infos = null;
+        
         return $infos;
     }
 
