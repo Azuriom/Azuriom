@@ -34,6 +34,7 @@ class UserController extends Controller
                     $query->orWhere('id', $search);
                 }
             })->paginate();
+
         foreach ($users as $user) {
             $user->refreshActiveBan();
         }

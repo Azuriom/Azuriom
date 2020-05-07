@@ -38,7 +38,6 @@ class ServerController extends Controller
         if (! $commands->isEmpty()) {
             ServerCommand::whereIn('id', $commands->modelKeys())->delete();
 
-
             $commands = $commands->groupBy('player_name')
                 ->map(function ($serverCommands) {
                     return $serverCommands->pluck('command');

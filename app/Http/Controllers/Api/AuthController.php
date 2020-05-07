@@ -43,7 +43,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (! Auth::validate($credentials)) {
+        if (! Auth::validate($this->credentials($credentials))) {
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid credentials',
@@ -105,5 +105,14 @@ class AuthController extends Controller
         User::where('access_token', $request->input('access_token'))->update(['access_token' => null]);
 
         return response()->json(['status' => true]);
+    }
+
+    protected function credentials(array $credentials)
+    {
+        $email = $credentials['email'];
+
+        $isMail = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+
+        return [($isMail ? 'email' : 'name') => $email] + $credentials['password'];
     }
 }
