@@ -343,6 +343,10 @@ class SettingsController extends Controller
 
         $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
+        if ($mailSettings['mailer'] === null) {
+            $mailSettings['mailer'] = 'array';
+        }
+
         foreach ($mailSettings as $key => $value) {
             Setting::updateSettings('mail.'.str_replace('-', '.', $key), $value);
         }

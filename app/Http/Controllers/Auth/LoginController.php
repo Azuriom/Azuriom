@@ -62,40 +62,40 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->guard()->once($this->credentials($request))) {
-            $user = $this->guard()->user();
+        if (! $this->guard()->once($this->credentials($request))) {
+            $this->incrementLoginAttempts($request);
 
-            if ($user === null || $user->is_deleted) {
-                return $this->sendFailedLoginResponse($request);
-            }
-
-            if ($user->refreshActiveBan()->is_banned) {
-                return $this->sendResponseWithMessage($request, trans('messages.profile.suspended'), 403);
-            }
-
-            if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
-                return $this->sendResponseWithMessage($request, trans('auth.maintenance'), 503);
-            }
-
-            if (! $user->hasTwoFactorAuth()) {
-                $this->guard()->login($user, $request->filled('remember'));
-
-                return $this->sendLoginResponse($request);
-            }
-
-            $request->session()->flash('2fa_id', $user->id);
-            $request->session()->flash('2fa_remember', $request->filled('remember'));
-
-            if ($request->expectsJson()) {
-                return response()->json(['2fa' => true]);
-            }
-
-            return redirect()->route('login.2fa');
+            return $this->sendFailedLoginResponse($request);
         }
 
-        $this->incrementLoginAttempts($request);
+        $user = $this->guard()->user();
 
-        return $this->sendFailedLoginResponse($request);
+        if ($user === null || $user->is_deleted) {
+            return $this->sendFailedLoginResponse($request);
+        }
+
+        if ($user->refreshActiveBan()->is_banned) {
+            return $this->sendResponseWithMessage($request, trans('messages.profile.suspended'), 403);
+        }
+
+        if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
+            return $this->sendResponseWithMessage($request, trans('auth.maintenance'), 503);
+        }
+
+        if (! $user->hasTwoFactorAuth()) {
+            $this->guard()->login($user, $request->filled('remember'));
+
+            return $this->sendLoginResponse($request);
+        }
+
+        $request->session()->flash('2fa_id', $user->id);
+        $request->session()->flash('2fa_remember', $request->filled('remember'));
+
+        if ($request->expectsJson()) {
+            return response()->json(['2fa' => true]);
+        }
+
+        return redirect()->route('login.2fa');
     }
 
     /**
