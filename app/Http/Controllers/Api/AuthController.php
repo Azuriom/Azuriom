@@ -18,7 +18,10 @@ class AuthController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (! setting('auth-api', false)) {
-                return response()->json(['status' => 'error', 'message' => 'Auth API is not enabled'], 422);
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Auth API is not enabled',
+                ], 422);
             }
 
             return $next($request);
@@ -41,13 +44,16 @@ class AuthController extends Controller
         ]);
 
         if (! Auth::validate($credentials)) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid credentials'], 422);
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid credentials',
+            ], 422);
         }
 
         $user = Auth::getLastAttempted();
 
         if ($user->is_banned) {
-            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
+            return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 
         if ($user->game_id === null) {
@@ -74,11 +80,11 @@ class AuthController extends Controller
         $user = User::firstWhere('access_token', $request->input('access_token'));
 
         if ($user === null) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid token'], 422);
+            return response()->json(['status' => false, 'message' => 'Invalid token'], 422);
         }
 
         if ($user->is_banned) {
-            return response()->json(['status' => 'error', 'message' => 'User banned'], 422);
+            return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 
         return new AuthenticatedUserResource($user);
@@ -98,6 +104,6 @@ class AuthController extends Controller
 
         User::where('access_token', $request->input('access_token'))->update(['access_token' => null]);
 
-        return response()->json(['status' => 'success']);
+        return response()->json(['status' => true]);
     }
 }

@@ -64,10 +64,9 @@ class NavbarController extends Controller
             }
         }
 
-        return $request->expectsJson() ? response()->json([
-            'status' => 'success',
+        return response()->json([
             'message' => trans('admin.navbar-elements.status.nav-updated'),
-        ]) : redirect()->route('admin.navbar-elements.index');
+        ]);
     }
 
     /**
