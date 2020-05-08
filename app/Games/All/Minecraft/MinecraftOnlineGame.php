@@ -2,12 +2,12 @@
 
 namespace Azuriom\Game\All\Minecraft;
 
+use Azuriom\Games\Game;
 use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Ramsey\Uuid\Uuid;
-use Azuriom\Games\Game;
 
 class MinecraftOnlineGame implements Game
 {

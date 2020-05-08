@@ -3,10 +3,11 @@
 namespace Azuriom\Games\Protocols;
 
 use Azuriom\Games\ServerBridge;
-use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Support\Facades\Http;
 
-class Azlink extends ServerBridge{
+class Azlink extends ServerBridge
+{
 
     private const DEFAULT_PORT = 25588;
 
@@ -14,7 +15,7 @@ class Azlink extends ServerBridge{
     {
         parent::__construct($server);
     }
-    
+
     public function getServerData()
     {
         // Data are sent by the plugins every minute,

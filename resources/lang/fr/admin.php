@@ -310,7 +310,6 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
-            'source-rcon-and-query' => 'Source RCON et Query'
         ],
     ],
 

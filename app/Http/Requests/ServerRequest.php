@@ -20,7 +20,7 @@ class ServerRequest extends FormRequest
             'type' => ['required', 'string', Rule::in(Server::types())],
             'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
-            'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'min:1', 'max:65535'], // 
+            'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-port-source' => ['required_if:type,source-rcon', 'nullable', 'integer', 'min:1', 'max:65535'],
             'query-port' => ['required_if:type,source-query', 'nullable', 'integer', 'min:1', 'max:65535'],
             'rcon-password' => ['required_if:type,mc-rcon', 'nullable', 'string'],
@@ -42,26 +42,26 @@ class ServerRequest extends FormRequest
 
         if ($type === 'mc-rcon' || $type === 'source-rcon') {
 
-            if($type === 'source-rcon'){
+            if ($type === 'source-rcon') {
                 $validated['data'] = [
                     'rcon-port' => $this->input('rcon-port-source'),
-                    'rcon-password' => encrypt( $this->input('rcon-password-source'), false),
+                    'rcon-password' => encrypt($this->input('rcon-password-source'), false),
                 ];
-            }else{
+            } else {
                 $validated['data'] = [
                     'rcon-port' => $this->input('rcon-port'),
-                    'rcon-password' => encrypt( $this->input('rcon-password'), false),
+                    'rcon-password' => encrypt($this->input('rcon-password'), false),
                 ];
             }
         } elseif ($type === 'mc-azlink' && $this->filled('azlink-custom-port')) {
             $validated['data'] = [
                 'azlink-port' => $this->input('azlink-port'),
             ];
-        } elseif ($type === 'source-query'){
+        } elseif ($type === 'source-query') {
             $validated['data'] = [
                 'query-port' => $this->input('query-port'),
             ];
-        }else {
+        } else {
             $validated['data'] = null;
         }
 

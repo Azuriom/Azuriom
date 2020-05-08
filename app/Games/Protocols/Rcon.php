@@ -2,11 +2,12 @@
 
 namespace Azuriom\Games\Protocols;
 
-use xPaw\SourceQuery\SourceQuery;
-use Azuriom\Models\Server;
 use Azuriom\Games\ServerBridge;
+use Azuriom\Models\Server;
+use xPaw\SourceQuery\SourceQuery;
 
-class Rcon extends ServerBridge {
+class Rcon extends ServerBridge
+{
 
     private const DEFAULT_PORT = 25575;
     private const DEFAULT_TIMEOUT = 1;
@@ -17,18 +18,19 @@ class Rcon extends ServerBridge {
     {
         parent::__construct($server);
         $this->query = new SourceQuery();
-        $this->query->Connect($this->server->address, $this->server->data['rcon-port'] ?? self::DEFAULT_PORT, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE );
+        $this->query->Connect($this->server->address, $this->server->data['rcon-port'] ?? self::DEFAULT_PORT, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
         $password = decrypt($this->server->data['rcon-password'], false);
 
         $this->query->SetRconPassword($password);
     }
-    
+
     public function getServerData()
     {
         $infos = $this->query->GetInfo();
 
         $infos['players'] = $infos['Players'];
         $infos['max'] = $infos['MaxPlayers'];
+
         return $infos;
     }
 
@@ -39,7 +41,7 @@ class Rcon extends ServerBridge {
 
     public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
     {
-        if (! $this->verifyLink() ) {
+        if (! $this->verifyLink()) {
             throw new Exception('Unable to connect to rcon.');
         }
 
@@ -52,4 +54,5 @@ class Rcon extends ServerBridge {
     {
         return true;
     }
+
 }

@@ -2,8 +2,8 @@
 
 namespace Azuriom\Games\All\Minecraft;
 
-use Azuriom\Models\User;
 use Azuriom\Games\Game;
+use Azuriom\Models\User;
 
 class MinecraftOfflineGame implements Game
 {

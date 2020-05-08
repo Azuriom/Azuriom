@@ -4,7 +4,7 @@ namespace Azuriom\Game\Steam;
 
 use Azuriom\Models\User;
 
-class SteamGame implements Game
+class CSGOGame implements Game
 {
     public function name()
     {

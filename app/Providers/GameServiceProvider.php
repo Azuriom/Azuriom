@@ -12,7 +12,7 @@ class GameServiceProvider extends ServiceProvider
     public const GAMES = [
         'mc-online' => MinecraftOnlineGame::class,
         'mc-offline' => MinecraftOfflineGame::class,
-        'csgo' => CSGOGame::class
+        'csgo' => CSGOGame::class,
     ];
 
     /**

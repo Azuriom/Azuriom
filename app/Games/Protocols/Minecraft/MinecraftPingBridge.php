@@ -2,8 +2,8 @@
 
 namespace Azuriom\Games\Protocols\Minecraft;
 
-use RuntimeException;
 use Azuriom\Games\ServerBridge;
+use RuntimeException;
 
 class MinecraftPingBridge extends ServerBridge
 {
