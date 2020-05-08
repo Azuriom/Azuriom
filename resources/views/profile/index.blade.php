@@ -230,7 +230,7 @@
                     templates: {
                         empty: '<strong>{{ trans("errors.404.title") }}</strong>',
                         suggestion: function(data) {
-                            return '<div><strong>'+data.name+'</strong><img class="float-right" src="https://minotar.net/helm/'+data.name+'/32.png"></div>'
+                            return '<div>'+data.name+'</div>'
                         }
                     }
                 });
