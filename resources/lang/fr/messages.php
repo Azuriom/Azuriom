@@ -64,6 +64,7 @@ return [
 
     'yes' => 'Oui',
     'no' => 'Non',
+    'not-authorized' => 'Action non autorisé.',
     'unknown' => 'Inconnu(e)',
     'none' => 'Aucun(e)',
 

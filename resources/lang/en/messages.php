@@ -66,7 +66,7 @@ return [
     'no' => 'No',
     'unknown' => 'Unknown',
     'none' => 'None',
-
+    'not-authorized' => 'Not Authorized.',
     'copied' => 'Copied',
 
     'home' => 'Home',

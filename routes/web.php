@@ -41,6 +41,10 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
         Route::post('/', 'ProfileController@enable2fa')->name('enable');
         Route::post('/disable', 'ProfileController@disable2fa')->name('disable');
     });
+
+    Route::post('/transfer_money', 'ProfileController@transferMoney')->name('transfer_money');
+    Route::get('/find', 'ProfileController@searchUsers')->name('search_users');
+
 });
 
 Route::prefix('news')->name('posts.')->group(function () {

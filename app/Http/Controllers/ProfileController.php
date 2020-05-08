@@ -2,13 +2,14 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Rules\CurrentPassword;
+use Azuriom\Models\User;
+use Illuminate\Http\Request;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
-use Illuminate\Http\Request;
+use PragmaRX\Google2FA\Google2FA;
+use Azuriom\Rules\CurrentPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
@@ -83,5 +84,33 @@ class ProfileController extends Controller
         $request->user()->update(['google_2fa_secret' => null]);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
+    }
+
+    public function searchUsers(Request $request)
+    {
+        return User::select('id','name')->where('name', 'LIKE', '%'.$request->q.'%')->get();
+    }
+
+    public function transferMoney(Request $request)
+    {
+        $receiver = User::where('name', $request->input('name'))->first();
+        if(!$receiver){
+            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        }
+
+        $user = $request->user();
+        if($receiver->id === $user->id)
+            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        $this->validate($request, [
+            'money' => ['numeric', 'min:0.01'],
+        ]);
+        $money_sent = $request->input('money');
+
+        $receiver->money += $money_sent;
+        $user->money -= $money_sent;
+        $receiver->save();
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 }
