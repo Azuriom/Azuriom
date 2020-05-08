@@ -107,6 +107,10 @@ class ProfileController extends Controller
         ]);
         $money_sent = $request->input('money');
 
+        if ($user->money - $money_sent < 0) {
+            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        }
+
         $receiver->money += $money_sent;
         $user->money -= $money_sent;
         $receiver->save();
