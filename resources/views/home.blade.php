@@ -16,9 +16,9 @@
                         @endif
                         <div class="card-body">
                             <h3 class="card-title">
-                                <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a></h3>
+                                <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
-                            <a class="btn btn-primary" href="{{ route('posts.show', $post->slug) }}">{{ trans('messages.posts.read') }}</a>
+                            <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
                         </div>
                         <div class="card-footer text-muted">
                             {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}

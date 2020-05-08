@@ -34,6 +34,7 @@ return [
         'disable' => 'Désactiver',
         'copy' => 'Copier',
         'comment' => 'Commenter',
+        'search' => 'Rechercher',
     ],
 
     'fields' => [
