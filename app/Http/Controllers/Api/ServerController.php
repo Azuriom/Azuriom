@@ -12,7 +12,7 @@ class ServerController extends Controller
 {
     public function status()
     {
-        return response()->json(['status' => 'ok']);
+        return response()->noContent();
     }
 
     public function fetch(Request $request)
@@ -35,16 +35,15 @@ class ServerController extends Controller
             ->orWhere('need_online', false)
             ->get();
 
-        ServerCommand::whereIn('id', $commands->modelKeys())->delete();
+        if (! $commands->isEmpty()) {
+            ServerCommand::whereIn('id', $commands->modelKeys())->delete();
 
-        $commands = $commands->groupBy('player_name')
-            ->map(function ($serverCommands) {
-                return $serverCommands->pluck('command');
-            });
+            $commands = $commands->groupBy('player_name')
+                ->map(function ($serverCommands) {
+                    return $serverCommands->pluck('command');
+                });
+        }
 
-        return response()->json([
-            'status' => 'ok',
-            'commands' => $commands,
-        ]);
+        return response()->json(['commands' => $commands]);
     }
 }

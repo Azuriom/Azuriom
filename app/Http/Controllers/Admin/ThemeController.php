@@ -59,7 +59,7 @@ class ThemeController extends Controller
         return view('admin.themes.index', [
             'themes' => $themes,
             'current' => $current,
-            'currentPath' => setting('theme', 'default'),
+            'currentPath' => $this->themes->currentTheme() ?? 'default',
             'currentHasConfig' => $this->files->isFile($currentThemeConfig),
             'availableThemes' => $availableThemes,
             'themesUpdates' => collect($this->themes->getThemesToUpdate()),
@@ -125,7 +125,7 @@ class ThemeController extends Controller
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.no-config'));
         }
 
-        return view()->file($viewPath, ['theme' => setting('theme')]);
+        return view()->file($viewPath, ['theme' => $theme]);
     }
 
     /**

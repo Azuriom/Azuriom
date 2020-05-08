@@ -127,7 +127,9 @@ class ServerController extends Controller
     public function verifyAzLink(ServerRequest $request, Server $server)
     {
         if ($server->type !== 'mc-azlink') {
-            return response()->json(['status' => 'error', 'message' => trans('admin.servers.status.not-azlink')], 422);
+            return response()->json([
+                'message' => trans('admin.servers.status.not-azlink'),
+            ], 422);
         }
 
         $server->fill($request->validated());
@@ -137,7 +139,6 @@ class ServerController extends Controller
 
             if (! $response->successful()) {
                 return response()->json([
-                    'status' => 'error',
                     'message' => trans('admin.servers.status.azlink-badresponse', [
                         'code' => $response->status(),
                     ]),
@@ -145,16 +146,16 @@ class ServerController extends Controller
             }
 
             return response()->json([
-                'status' => 'success',
                 'message' => trans('admin.servers.status.connect-success'),
             ]);
         } catch (ConnectionException $e) {
             return response()->json([
-                'status' => 'error',
                 'message' => trans('admin.servers.status.azlink-connect'),
             ], 422);
         } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 422);
+            return response()->json([
+                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+            ], 422);
         }
     }
 

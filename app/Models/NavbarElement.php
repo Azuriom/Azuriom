@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -88,15 +89,21 @@ class NavbarElement extends Model
 
     public function isCurrent()
     {
+        $request = request();
+
         switch ($this->type) {
             case 'home':
-                return request()->routeIs('home');
+                return $request->routeIs('home');
+            case 'link':
+                return $request->is($this->value);
             case 'page':
-                return request()->routeIs('pages.show') && request()->route('slug') === $this->value;
+                return $request->routeIs('pages.show') && $request->route('page.slug') === $this->value;
             case 'post':
-                return request()->routeIs('posts.show') && request()->route('slug') === $this->value;
+                return $request->routeIs('posts.show') && $request->route('post.slug') === $this->value;
             case 'posts':
-                return request()->routeIs('posts.*');
+                return $request->routeIs('posts.*');
+            case 'plugin':
+                return $request->routeIs(Str::beforeLast($this->value, '.').'.*');
             default:
                 return false;
         }

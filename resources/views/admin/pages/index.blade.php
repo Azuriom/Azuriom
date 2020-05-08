@@ -22,7 +22,7 @@
                         <tr>
                             <th scope="row">{{ $page->id }}</th>
                             <td>{{ $page->title }}</td>
-                            <td><a href="{{ route('pages.show', $page->slug) }}" target="_blank">{{ $page->slug }}</a></td>
+                            <td><a href="{{ route('pages.show', $page) }}" target="_blank">{{ $page->slug }}</a></td>
                             <td>{{ trans_bool($page->is_enabled) }}</td>
                             <td>
                                 <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>

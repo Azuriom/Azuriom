@@ -19,6 +19,7 @@ return [
         'add' => 'Add',
         'show' => 'Show',
         'create' => 'Create',
+        'close' => 'Close',
         'edit' => 'Edit',
         'update' => 'Update',
         'delete' => 'Delete',
@@ -33,6 +34,7 @@ return [
         'disable' => 'Disable',
         'copy' => 'Copy',
         'comment' => 'Comment',
+        'search' => 'Search',
     ],
 
     'fields' => [
@@ -72,6 +74,7 @@ return [
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'The website is currently under maintenance.',
 
+    'status-success' => 'The action was successfully completed!',
     'status-error' => 'An error occurred: :error',
 
     'captcha' => 'The captcha verification failed, please try again.',

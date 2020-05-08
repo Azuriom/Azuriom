@@ -30,8 +30,13 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">{{ trans('messages.actions.enable') }}</button>
-                    <a class="btn btn-secondary float-md-right" href="{{ route('profile.index') }}">{{ trans('messages.actions.cancel') }}</a>
+                    <button type="submit" class="btn btn-primary">
+                        {{ trans('messages.actions.enable') }}
+                    </button>
+
+                    <a class="btn btn-secondary float-md-right" href="{{ route('profile.index') }}">
+                        {{ trans('messages.actions.cancel') }}
+                    </a>
                 </form>
             </div>
         </div>

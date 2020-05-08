@@ -196,6 +196,12 @@ return [
             'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
             'html-code-info' => 'Exemple: Bannière cookies, etc',
+
+            'welcome-popup' => [
+                'enable' => 'Activer le popup de bienvenue ?',
+                'message' => 'Message du popup de bienvenue',
+                'info' => 'Ce popup sera affiché lors de la première visite d\'un utilisateur sur le site.',
+            ],
         ],
 
         'mail' => [
@@ -293,7 +299,7 @@ return [
             'connect-error' => 'La connexion au serveur a échouée: :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
-            'azlink-connect' => 'La connexion au serveur a échouée, l\'address et/ou le port sont incorrects, ou le port est fermé.',
+            'azlink-connect' => 'La connexion au serveur a échouée, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
             'azlink-badresponse' => 'La connexion au serveur a échouée (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
         ],
 

@@ -19,6 +19,7 @@ return [
         'add' => 'Ajouter',
         'show' => 'Voir',
         'create' => 'Créer',
+        'close' => 'Fermer',
         'edit' => 'Éditer',
         'update' => 'Mettre à jour',
         'delete' => 'Supprimer',
@@ -33,6 +34,7 @@ return [
         'disable' => 'Désactiver',
         'copy' => 'Copier',
         'comment' => 'Commenter',
+        'search' => 'Rechercher',
     ],
 
     'fields' => [
@@ -72,6 +74,7 @@ return [
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'Le site est actuellement en maintenance.',
 
+    'status-success' => 'L\'action a été effectuée avec succès !',
     'status-error' => 'Une erreur est survenue: :error',
 
     'captcha' => 'La vérification du captcha a échouée, merci de réessayer.',

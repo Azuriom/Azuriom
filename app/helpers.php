@@ -201,11 +201,12 @@ if (! function_exists('theme_config')) {
      * Generate an asset path for the current theme.
      *
      * @param  string  $key
-     * @return string
+     * @param  mixed  $default
+     * @return mixed
      */
-    function theme_config(string $key)
+    function theme_config(string $key, $default = null)
     {
-        return config('theme.'.$key);
+        return config('theme.'.$key, $default);
     }
 }
 
