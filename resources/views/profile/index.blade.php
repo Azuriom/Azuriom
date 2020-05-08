@@ -131,7 +131,7 @@
                             <div class="form-group">
                                 <label for="user_name_money_Input">{{ trans('auth.name') }}</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="user_name_money_Input" name="name" required>
-
+                                
                                 @error('name')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
@@ -139,7 +139,7 @@
 
                             <div class="form-group">
                                 <label for="number_name_money_Input">Money</label>
-                                <input type="number" pattern="^\d+(?:\.\d{1,2})?$" placeholder="0.00" min="0" value="0" step="0.01" onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'" class="form-control @error('money') is-invalid @enderror" id="number_name_money_Input" name="money" required>
+                                <input type="number" pattern="^\d+(?:\.\d{1,2})?$" placeholder="0.00" min="0" value="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="number_name_money_Input" name="money" required>
 
                                 @error('money')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -159,82 +159,3 @@
     </div>
 @endsection
 
-@if(setting('shop.use-site-money'))
-    @push('styles')
-        <style>
-            .tt-query {
-            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-            }
-
-            .tt-hint {
-            color: #999
-            }
-
-            .tt-menu {    /* used to be tt-dropdown-menu in older versions */
-            width: 422px;
-            margin-top: 4px;
-            padding: 4px 0;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            -webkit-border-radius: 4px;
-                -moz-border-radius: 4px;
-                    border-radius: 4px;
-            -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-                -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-                    box-shadow: 0 5px 10px rgba(0,0,0,.2);
-            }
-
-            .tt-suggestion {
-            padding: 3px 20px;
-            line-height: 32px;
-            }
-
-            .tt-suggestion.tt-cursor,.tt-suggestion:hover {
-            color: #fff;
-            background-color: #0097cf;
-
-            }
-
-            .tt-suggestion p {
-            margin: 0;
-            }
-        </style>
-    @endpush
-    @push('footer-scripts')
-        <script defer src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
-        <script defer>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                var bloodhound = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.whitespace,
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    remote: {
-                        url: '{{ route("profile.search_users")}}?q=%QUERY%',
-                        wildcard: '%QUERY%'
-                    },
-                });
-                
-                $('#user_name_money_Input').typeahead({
-                    hint: true,
-                    highlight: true,
-                    minLength: 1
-                }, {
-                    name: 'users',
-                    source: bloodhound,
-                    display: function(data) {
-                        return data.name  //Input value to be set when you select a suggestion. 
-                    },
-
-                    templates: {
-                        empty: '<strong>{{ trans("errors.404.title") }}</strong>',
-                        suggestion: function(data) {
-                            return '<div>'+data.name+'</div>'
-                        }
-                    }
-                });
-            })
-        </script>
-    @endpush
-@endif

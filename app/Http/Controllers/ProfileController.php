@@ -93,18 +93,18 @@ class ProfileController extends Controller
 
     public function transferMoney(Request $request)
     {
+        $this->validate($request, [
+            'name' => ['required', 'exists:users,name'],
+            'money' => ['numeric', 'min:0.01'],
+        ]);
+
         $receiver = User::where('name', $request->input('name'))->first();
-        if (! $receiver) {
-            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
-        }
 
         $user = $request->user();
         if ($receiver->id === $user->id) {
             return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
         }
-        $this->validate($request, [
-            'money' => ['numeric', 'min:0.01'],
-        ]);
+
         $money_sent = $request->input('money');
 
         if ($user->money - $money_sent < 0) {
