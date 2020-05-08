@@ -44,7 +44,6 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
     Route::post('/transfer_money', 'ProfileController@transferMoney')->name('transfer_money');
     Route::get('/find', 'ProfileController@searchUsers')->name('search_users');
-
 });
 
 Route::prefix('news')->name('posts.')->group(function () {

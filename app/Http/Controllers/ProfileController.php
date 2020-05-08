@@ -3,13 +3,13 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\User;
-use Illuminate\Http\Request;
+use Azuriom\Rules\CurrentPassword;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
-use PragmaRX\Google2FA\Google2FA;
-use Azuriom\Rules\CurrentPassword;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
@@ -88,19 +88,21 @@ class ProfileController extends Controller
 
     public function searchUsers(Request $request)
     {
-        return User::select('id','name')->where('name', 'LIKE', '%'.$request->q.'%')->get();
+
+        return User::select('id', 'name')->where('name', 'LIKE', '%'.$request->q.'%')->get();
     }
 
     public function transferMoney(Request $request)
     {
         $receiver = User::where('name', $request->input('name'))->first();
-        if(!$receiver){
+        if(! $receiver) {
             return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
         }
 
         $user = $request->user();
-        if($receiver->id === $user->id)
+        if($receiver->id === $user->id) {
             return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        }
         $this->validate($request, [
             'money' => ['numeric', 'min:0.01'],
         ]);
