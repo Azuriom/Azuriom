@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Http;
 
 class Azlink extends ServerBridge
 {
-
     private const DEFAULT_PORT = 25588;
 
     public function __construct(Server $server)
@@ -64,5 +63,4 @@ class Azlink extends ServerBridge
 
         return Http::withToken($token, '')->post("http://{$this->server->address}:{$port}");
     }
-
 }

@@ -56,7 +56,7 @@ abstract class ServerBridge
      * @param  string|null  $playerName
      * @param  bool  $needConnected
      */
-    abstract function executeCommands(array $commands, ?string $playerName, bool $needConnected = false); 
+    abstract function executeCommands(array $commands, ?string $playerName, bool $needConnected = false);
 
     /**
      * Return if the server can execute commands.

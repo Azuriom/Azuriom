@@ -9,7 +9,6 @@ use xPaw\SourceQuery\SourceQuery;
 
 class Query extends ServerBridge
 {
-
     private const DEFAULT_TIMEOUT = 1;
 
     private $query;
@@ -27,10 +26,10 @@ class Query extends ServerBridge
         if ($infos !== false) {
             $infos['players'] = $infos['Players'];
             $infos['max'] = $infos['MaxPlayers'];
-        }else {
+        } else {
             $infos = null;
         }
-        
+
         return $infos;
     }
 
@@ -48,5 +47,4 @@ class Query extends ServerBridge
     {
         return false;
     }
-
 }

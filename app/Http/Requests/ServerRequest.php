@@ -41,7 +41,6 @@ class ServerRequest extends FormRequest
         $type = $this->input('type');
 
         if ($type === 'mc-rcon' || $type === 'source-rcon') {
-
             if ($type === 'source-rcon') {
                 $validated['data'] = [
                     'rcon-port' => $this->input('rcon-port-source'),

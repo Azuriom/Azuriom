@@ -8,7 +8,6 @@ use xPaw\SourceQuery\SourceQuery;
 
 class Rcon extends ServerBridge
 {
-
     private const DEFAULT_PORT = 25575;
     private const DEFAULT_TIMEOUT = 1;
 
@@ -54,5 +53,4 @@ class Rcon extends ServerBridge
     {
         return true;
     }
-
 }
