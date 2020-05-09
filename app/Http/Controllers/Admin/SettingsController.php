@@ -113,7 +113,7 @@ class SettingsController extends Controller
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
             'minecraftVerification' => setting('game-type') === 'mc-online',
-            'allow_users_money_transfer' => setting('allow_users_money_transfer')
+            'allow_users_money_transfer' => setting('allow_users_money_transfer'),
         ]);
     }
 
