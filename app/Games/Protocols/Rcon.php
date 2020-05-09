@@ -16,7 +16,7 @@ class Rcon extends ServerBridge
     public function __construct(Server $server)
     {
         parent::__construct($server);
-        
+
         try {
             $this->query = new SourceQuery();
             $this->query->Connect($this->server->address, $this->server->data['rcon-port'] ?? self::DEFAULT_PORT, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
