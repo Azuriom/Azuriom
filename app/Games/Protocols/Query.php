@@ -16,19 +16,20 @@ class Query extends ServerBridge
     public function __construct(Server $server)
     {
         parent::__construct($server);
-        $this->query = new SourceQuery();
-        $this->query->Connect($this->server->address, $this->server->data['query-port'], self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
+        try {
+            $this->query = new SourceQuery();
+            $this->query->Connect($this->server->address, $this->server->data['query-port'], self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
+        } catch (\Throwable $th) {
+            //The server is offline
+        }
     }
 
     public function getServerData()
     {
         $infos = $this->query->GetInfo();
-        if ($infos !== false) {
-            $infos['players'] = $infos['Players'];
-            $infos['max'] = $infos['MaxPlayers'];
-        } else {
-            $infos = null;
-        }
+
+        $infos['players'] = $infos['Players'] ?? -1;
+        $infos['max'] = $infos['MaxPlayers'] ?? -1;
 
         return $infos;
     }

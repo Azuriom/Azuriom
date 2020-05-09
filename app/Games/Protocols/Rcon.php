@@ -16,19 +16,24 @@ class Rcon extends ServerBridge
     public function __construct(Server $server)
     {
         parent::__construct($server);
-        $this->query = new SourceQuery();
-        $this->query->Connect($this->server->address, $this->server->data['rcon-port'] ?? self::DEFAULT_PORT, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
-        $password = decrypt($this->server->data['rcon-password'], false);
+        
+        try {
+            $this->query = new SourceQuery();
+            $this->query->Connect($this->server->address, $this->server->data['rcon-port'] ?? self::DEFAULT_PORT, self::DEFAULT_TIMEOUT, SourceQuery::SOURCE);
+            $password = decrypt($this->server->data['rcon-password'], false);
 
-        $this->query->SetRconPassword($password);
+            $this->query->SetRconPassword($password);
+        } catch (\Throwable $th) {
+            //The server is offline
+        }
     }
 
     public function getServerData()
     {
         $infos = $this->query->GetInfo();
 
-        $infos['players'] = $infos['Players'];
-        $infos['max'] = $infos['MaxPlayers'];
+        $infos['players'] = $infos['Players'] ?? -1;
+        $infos['max'] = $infos['MaxPlayers'] ?? -1;
 
         return $infos;
     }

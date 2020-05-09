@@ -207,7 +207,7 @@
             <label for="rconSourcePasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
 
             <div class="input-group">
-                <input type="password" class="form-control @error('rcon-password-source') is-invalid @enderror" id="rconSourcePasswordInput" name="rcon-password-source" value="{{ old('rcon-password-source', ! empty($server->data['rcon-password-source']) ? decrypt($server->data['rcon-password-source'], false) : '') }}">
+                <input type="password" class="form-control @error('rcon-password-source') is-invalid @enderror" id="rconSourcePasswordInput" name="rcon-password-source" value="{{ old('rcon-password-source', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <div class="input-group-append">
                     <button type="button" class="btn btn-outline-primary" data-password-toggle="rconSourcePasswordInput">
                         <i class="fas fa-eye-slash"></i>
@@ -222,7 +222,7 @@
 
         <div class="form-group col-md-4">
             <label for="rconSourcePortInput">{{ trans('admin.servers.fields.rcon-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('rcon-port-source') is-invalid @enderror" id="rconSourcePortInput" name="rcon-port-source" value="{{ old('rcon-port-source', $server->data['rcon-port-source'] ?? '25575') }}">
+            <input type="number" min="1" max="65535" class="form-control @error('rcon-port-source') is-invalid @enderror" id="rconSourcePortInput" name="rcon-port-source" value="{{ old('rcon-port-source', $server->data['rcon-port'] ?? '25575') }}">
 
             @error('rcon-port-source')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
