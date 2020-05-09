@@ -30,10 +30,15 @@ class Rcon extends ServerBridge
 
     public function getServerData()
     {
-        $infos = $this->query->GetInfo();
+        if ($this->query === null) {
+            $infos['players'] = -1;
+            $infos['max'] = -1;
+        } else {
+            $infos = $this->query->GetInfo();
 
-        $infos['players'] = $infos['Players'] ?? -1;
-        $infos['max'] = $infos['MaxPlayers'] ?? -1;
+            $infos['players'] = $infos['Players'] ?? -1;
+            $infos['max'] = $infos['MaxPlayers'] ?? -1;
+        }
 
         return $infos;
     }
