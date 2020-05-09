@@ -43,6 +43,11 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     });
 });
 
+Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {
+    Route::post('/{notification}/read', 'NotificationController@markAsRead')->name('read');
+    Route::post('/read', 'NotificationController@markAllAsRead')->name('read.all');
+});
+
 Route::prefix('news')->name('posts.')->group(function () {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/{post:slug}', 'PostController@show')->name('show');

@@ -12,7 +12,7 @@
                 <div class="col-md-6">
                     <div class="post-preview card mb-3 shadow-sm">
                         @if($post->hasImage())
-                            <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="bd-placeholder-img card-img-top">
+                            <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="card-img-top">
                         @endif
                         <div class="card-body">
                             <h3 class="card-title">

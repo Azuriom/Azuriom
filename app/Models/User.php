@@ -32,6 +32,9 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Ban[] $bans
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $notifications
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $readNotifications
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $unreadNotifications
  * @property \Azuriom\Models\Role $role
  * @property \Azuriom\Models\Ban $ban
  */
@@ -125,6 +128,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bans()
     {
         return $this->hasMany(Ban::class)->withTrashed();
+    }
+
+    /**
+     * Get the user's notifications.
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class)->latest();
     }
 
     public function refreshActiveBan()

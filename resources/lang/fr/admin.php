@@ -64,11 +64,6 @@ return [
         'documentation' => 'Documentation',
     ],
 
-    'notifications' => [
-        'notifications' => 'Notifications',
-        'mark-as-read' => 'Marquer comme lues',
-    ],
-
     'confirm-delete' => [
         'title' => 'Supprimer ?',
         'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',

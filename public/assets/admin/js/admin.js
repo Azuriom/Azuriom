@@ -111,4 +111,38 @@ $('[data-toggle-select]').each(function () {
     });
 });
 
+let readingNotifications = false;
+
+$('#readNotifications').on('click', function (e) {
+    e.preventDefault();
+
+    if (readingNotifications) {
+        return;
+    }
+
+    const $this = $(this);
+
+    readingNotifications = true;
+
+    $this.find('.loader').removeClass('d-none');
+
+    axios.post($(this).attr('href'))
+        .then(function () {
+            $('#notifications').remove();
+            $('#notificationsCounter').fadeOut();
+            $('#noNotificationsLabel').removeClass('d-none');
+        })
+        .catch(function () {
+            $this.find('.loader').addClass('d-none');
+
+            readingNotifications = false;
+        });
+});
+
+// SB Admin 2 uses jQuery easing, but Azuriom don't include it
+// so just fallback to swing if it's not defined.
+if (!$.easing.easeInOutExpo) {
+    $.easing.easeInOutExpo = $.easing.swing;
+}
+
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

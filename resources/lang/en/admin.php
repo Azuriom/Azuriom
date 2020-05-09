@@ -64,11 +64,6 @@ return [
         'documentation' => 'Documentation',
     ],
 
-    'notifications' => [
-        'notifications' => 'Notifications',
-        'mark-as-read' => 'Mark as read',
-    ],
-
     'confirm-delete' => [
         'title' => 'Delete ?',
         'description' => 'Are you sure you want to delete this ? It can\'t be undo !',
