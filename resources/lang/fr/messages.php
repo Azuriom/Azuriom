@@ -79,6 +79,12 @@ return [
 
     'captcha' => 'La vérification du captcha a échouée, merci de réessayer.',
 
+    'notifications' => [
+        'notifications' => 'Notifications',
+        'read' => 'Marquer comme lues',
+        'empty' => 'Vous n\'avez pas de notifications non lues.',
+    ],
+
     'profile' => [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',

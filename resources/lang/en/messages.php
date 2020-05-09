@@ -79,6 +79,12 @@ return [
 
     'captcha' => 'The captcha verification failed, please try again.',
 
+    'notifications' => [
+        'notifications' => 'Notifications',
+        'read' => 'Mark as read',
+        'empty' => 'You have no unread notifications.',
+    ],
+
     'profile' => [
         'title' => 'My Profile',
         'change-email' => 'Change E-Mail Address',
