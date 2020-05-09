@@ -126,7 +126,7 @@ $('#readNotifications').on('click', function (e) {
 
     $this.find('.loader').removeClass('d-none');
 
-    axios.post($(this).attr('href'))
+    axios.post($this.attr('href'))
         .then(function () {
             $('#notifications').remove();
             $('#notificationsCounter').fadeOut();

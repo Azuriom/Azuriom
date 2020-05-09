@@ -29,6 +29,10 @@ Route::prefix('user')->group(function () {
     });
 });
 
+Route::prefix('users')->name('users.')->middleware('auth')->group(function () {
+    Route::get('/search', 'UserController@search')->name('search');
+});
+
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
     Route::get('/', 'ProfileController@index')->name('index');
 
@@ -41,6 +45,8 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
         Route::post('/', 'ProfileController@enable2fa')->name('enable');
         Route::post('/disable', 'ProfileController@disable2fa')->name('disable');
     });
+
+    Route::post('/money/transfer', 'ProfileController@transferMoney')->name('transfer-money');
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {

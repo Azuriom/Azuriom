@@ -29,7 +29,7 @@ class AlertNotification implements Arrayable
     protected $link;
 
     /**
-     * The notification's from
+     * The notification's from user.
      *
      * @var \Azuriom\Models\User|null
      */
