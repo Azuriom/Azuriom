@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            @if(setting('shop.use-site-money'))
+            @if(setting('allow_users_money_transfer'))
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header">Money transfer</div>
@@ -131,7 +131,7 @@
                             <div class="form-group">
                                 <label for="user_name_money_Input">{{ trans('auth.name') }}</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="user_name_money_Input" name="name" required>
-                                
+
                                 @error('name')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror

@@ -101,7 +101,7 @@ class ProfileController extends Controller
         $receiver = User::where('name', $request->input('name'))->first();
 
         $user = $request->user();
-        if ($receiver->id === $user->id) {
+        if ($receiver->id === $user->id || !setting('allow_users_money_transfer')) {
             return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
         }
 
