@@ -35,6 +35,7 @@ return [
         'copy' => 'Copier',
         'comment' => 'Commenter',
         'search' => 'Rechercher',
+        'send' => 'Envoyer',
     ],
 
     'fields' => [
@@ -64,7 +65,6 @@ return [
 
     'yes' => 'Oui',
     'no' => 'Non',
-    'not-authorized' => 'Action non autorisé.',
     'unknown' => 'Inconnu(e)',
     'none' => 'Aucun(e)',
 
@@ -110,6 +110,12 @@ return [
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
 
         'suspended' => 'Ce compte est actuellement banni.',
+
+        'money-transfer' => [
+            'title' => 'Transfert d\'argent',
+            'self' => 'Vous ne pouvez pas vous envoyer d\'argent à vous même.',
+            'not-enough' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
+        ],
     ],
 
     'posts' => [

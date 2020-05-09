@@ -116,7 +116,7 @@ return [
             'auth-api' => 'Enable Auth API',
             'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
             'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
-            'allow_users_money_transfer' => 'Allow the money transfer between users',
+            'user-money-transfer' => 'Allow money transfer between users',
             'site-key' => 'Site key for azuriom.com',
             'site-key-label' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
         ],

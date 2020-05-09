@@ -35,6 +35,7 @@ return [
         'copy' => 'Copy',
         'comment' => 'Comment',
         'search' => 'Search',
+        'send' => 'Send',
     ],
 
     'fields' => [
@@ -66,7 +67,6 @@ return [
     'no' => 'No',
     'unknown' => 'Unknown',
     'none' => 'None',
-    'not-authorized' => 'Not Authorized.',
     'copied' => 'Copied',
 
     'home' => 'Home',
@@ -109,6 +109,12 @@ return [
         'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',
 
         'suspended' => 'This account is suspended.',
+
+        'money-transfer' => [
+            'title' => 'Money transfer',
+            'self' => 'You can\'t send money to yourself.',
+            'not-enough' => 'You don\'t have enough money to make this transfer.',
+        ],
     ],
 
     'posts' => [

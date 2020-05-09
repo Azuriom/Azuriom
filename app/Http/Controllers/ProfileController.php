@@ -7,15 +7,14 @@ use Azuriom\Rules\CurrentPassword;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('profile.index', ['user' => Auth::user()]);
+        return view('profile.index', ['user' => $request->user()]);
     }
 
     public function updateEmail(Request $request)
@@ -86,33 +85,32 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
     }
 
-    public function searchUsers(Request $request)
-    {
-        return User::select('id', 'name')->where('name', 'LIKE', '%'.$request->q.'%')->get();
-    }
-
     public function transferMoney(Request $request)
     {
+        abort_if(! setting('user_money_transfer'), 403);
+
         $this->validate($request, [
             'name' => ['required', 'exists:users,name'],
-            'money' => ['numeric', 'min:0.01'],
+            'money' => ['required', 'numeric', 'min:0.01'],
         ]);
 
-        $receiver = User::where('name', $request->input('name'))->first();
-
         $user = $request->user();
-        if ($receiver->id === $user->id || ! setting('allow_users_money_transfer')) {
-            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        $money = $request->input('money');
+
+        $receiver = User::firstWhere('name', $request->input('name'));
+
+        if ($user->is($receiver)) {
+            return redirect()->route('profile.index')
+                ->with('error', trans('messages.profile.money-transfer.self'));
         }
 
-        $money_sent = $request->input('money');
-
-        if ($user->money - $money_sent < 0) {
-            return redirect()->route('profile.index')->with('error', trans('messages.not-authorized'));
+        if ($user->money < $money) {
+            return redirect()->route('profile.index')
+                ->with('error', trans('messages.profile.money-transfer.not-enough'));
         }
 
-        $receiver->money += $money_sent;
-        $user->money -= $money_sent;
+        $receiver->money += $money;
+        $user->money -= $money;
         $receiver->save();
         $user->save();
 

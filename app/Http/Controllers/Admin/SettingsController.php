@@ -113,7 +113,7 @@ class SettingsController extends Controller
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
             'minecraftVerification' => setting('game-type') === 'mc-online',
-            'allow_users_money_transfer' => setting('allow_users_money_transfer'),
+            'userMoneyTransfer' => setting('user_money_transfer'),
         ]);
     }
 
@@ -144,7 +144,7 @@ class SettingsController extends Controller
             'register' => $request->filled('register'),
             'auth-api' => $request->filled('auth-api'),
             'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
-            'allow_users_money_transfer' => $request->filled('allow_users_money_transfer'),
+            'user_money_transfer' => $request->filled('user_money_transfer'),
         ]);
 
         ActionLog::log('settings.updated');

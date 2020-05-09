@@ -120,41 +120,42 @@
                     </div>
                 </div>
             </div>
-            @if(setting('allow_users_money_transfer'))
-            <div class="col-md-6">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header">Money transfer</div>
-                    <div class="card-body">
-                        <form action="{{ route('profile.transfer_money') }}" method="POST">
-                            @csrf
 
-                            <div class="form-group">
-                                <label for="user_name_money_Input">{{ trans('auth.name') }}</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="user_name_money_Input" name="name" required>
+            @if(setting('user_money_transfer'))
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header">{{ trans('messages.profile.money-transfer.title') }}</div>
+                        <div class="card-body">
+                            <form action="{{ route('profile.transfer-money') }}" method="POST">
+                                @csrf
 
-                                @error('name')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
+                                <div class="form-group">
+                                    <label for="nameInput">{{ trans('auth.name') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" required>
 
-                            <div class="form-group">
-                                <label for="number_name_money_Input">Money</label>
-                                <input type="number" pattern="^\d+(?:\.\d{1,2})?$" placeholder="0.00" min="0" value="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="number_name_money_Input" name="money" required>
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
 
-                                @error('money')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
+                                <div class="form-group">
+                                    <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
+                                    <input type="number" placeholder="0.00" min="0" value="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" required>
 
-                            <button type="submit" class="btn btn-primary">
-                                {{ trans('messages.actions.update') }}
-                            </button>
-                            
-                        </form>
+                                    @error('money')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    {{ trans('messages.actions.send') }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
+
         </div>
     </div>
 @endsection
