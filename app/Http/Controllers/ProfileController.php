@@ -2,19 +2,19 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Models\User;
 use Azuriom\Rules\CurrentPassword;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('profile.index', ['user' => Auth::user()]);
+        return view('profile.index', ['user' => $request->user()]);
     }
 
     public function updateEmail(Request $request)
@@ -83,5 +83,37 @@ class ProfileController extends Controller
         $request->user()->update(['google_2fa_secret' => null]);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
+    }
+
+    public function transferMoney(Request $request)
+    {
+        abort_if(! setting('user_money_transfer'), 403);
+
+        $this->validate($request, [
+            'name' => ['required', 'exists:users,name'],
+            'money' => ['required', 'numeric', 'min:0.01'],
+        ]);
+
+        $user = $request->user();
+        $money = $request->input('money');
+
+        $receiver = User::firstWhere('name', $request->input('name'));
+
+        if ($user->is($receiver)) {
+            return redirect()->route('profile.index')
+                ->with('error', trans('messages.profile.money-transfer.self'));
+        }
+
+        if ($user->money < $money) {
+            return redirect()->route('profile.index')
+                ->with('error', trans('messages.profile.money-transfer.not-enough'));
+        }
+
+        $receiver->money += $money;
+        $user->money -= $money;
+        $receiver->save();
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 }
