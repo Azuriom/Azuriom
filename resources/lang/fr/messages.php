@@ -86,6 +86,11 @@ return [
         'empty' => 'Vous n\'avez pas de notifications non lues.',
     ],
 
+    'clipboard' => [
+        'copied' => 'Copié !',
+        'error' => 'CTRL + C pour copier',
+    ],
+
     'profile' => [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',
@@ -121,6 +126,7 @@ return [
             'title' => 'Transfert d\'argent',
             'self' => 'Vous ne pouvez pas vous envoyer d\'argent à vous même.',
             'not-enough' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
+            'success' => 'L\'argent a été envoyé avec succès.',
         ],
     ],
 

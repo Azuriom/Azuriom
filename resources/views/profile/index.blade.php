@@ -131,7 +131,7 @@
 
                                 <div class="form-group">
                                     <label for="nameInput">{{ trans('auth.name') }}</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" required>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -140,7 +140,7 @@
 
                                 <div class="form-group">
                                     <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
-                                    <input type="number" placeholder="0.00" min="0" value="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" required>
+                                    <input type="number" placeholder="0.00" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money') }}" required>
 
                                     @error('money')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

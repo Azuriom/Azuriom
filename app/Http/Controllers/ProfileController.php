@@ -8,6 +8,7 @@ use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
@@ -100,13 +101,15 @@ class ProfileController extends Controller
         $receiver = User::firstWhere('name', $request->input('name'));
 
         if ($user->is($receiver)) {
-            return redirect()->route('profile.index')
-                ->with('error', trans('messages.profile.money-transfer.self'));
+            throw ValidationException::withMessages([
+                'name' => trans('messages.profile.money-transfer.self'),
+            ]);
         }
 
         if ($user->money < $money) {
-            return redirect()->route('profile.index')
-                ->with('error', trans('messages.profile.money-transfer.not-enough'));
+            throw ValidationException::withMessages([
+                'money' => trans('messages.profile.money-transfer.not-enough'),
+            ]);
         }
 
         $receiver->money += $money;
@@ -114,6 +117,7 @@ class ProfileController extends Controller
         $receiver->save();
         $user->save();
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.money-transfer.success'));
     }
 }
