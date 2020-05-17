@@ -12,7 +12,7 @@
             <ul class="navbar-nav mr-auto">
                 @foreach($navbar as $element)
                     @if(!$element->isDropdown())
-                        <li class="nav-item">
+                        <li class="nav-item @if($element->isCurrent()) active @endif">
                             <a class="nav-link" href="{{ $element->getLink() }}" @if($element->new_tab) target="_blank" rel="noopener" @endif>{{ $element->name }}</a>
                         </li>
                     @else
@@ -22,7 +22,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach($element->elements as $childElement)
-                                    <a class="dropdown-item" href="{{ $childElement->getLink() }}" @if($childElement->new_tab) target="_blank" rel="noopener" @endif>{{ $childElement->name }}</a>
+                                    <a class="dropdown-item @if($childElement->isCurrent()) active @endif" href="{{ $childElement->getLink() }}" @if($childElement->new_tab) target="_blank" rel="noopener" @endif>{{ $childElement->name }}</a>
                                 @endforeach
                             </div>
                         </li>
@@ -56,6 +56,12 @@
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 {{ trans('messages.nav.profile') }}
                             </a>
+
+                            @foreach(plugins()->getUserNavItems() ?? [] as $navId => $navItem)
+                                <a class="dropdown-item" href="{{ route($navItem['route']) }}">
+                                    {{ trans($navItem['name']) }}
+                                </a>
+                            @endforeach
 
                             @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">

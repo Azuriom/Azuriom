@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        if (Permission::count() > 0) {
+            return;
+        }
+
         $defaultPermissions = [
             'comments.create',
         ];

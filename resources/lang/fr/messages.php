@@ -71,6 +71,7 @@ return [
     'copied' => 'Copié',
 
     'home' => 'Accueil',
+    'welcome' => 'Bienvenue sur :name',
 
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'Le site est actuellement en maintenance.',
@@ -89,6 +90,11 @@ return [
     'clipboard' => [
         'copied' => 'Copié !',
         'error' => 'CTRL + C pour copier',
+    ],
+
+    'server' => [
+        'online' => ':count joueur en ligne|:count joueurs en ligne',
+        'offline' => 'Le serveur est actuellement hors-ligne.',
     ],
 
     'profile' => [

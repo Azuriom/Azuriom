@@ -13,7 +13,7 @@
 
                 <div class="form-group">
                     <label for="serverSelect">{{ trans('admin.servers.default-server') }}</label>
-                    <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server" required>
+                    <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server">
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)
                             <option value="{{ $server->id }}" @if($defaultServerId === $server->id) selected @endif>{{ $server->name }}</option>

@@ -70,6 +70,7 @@ return [
     'copied' => 'Copied',
 
     'home' => 'Home',
+    'welcome' => 'Welcome on :name',
 
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'The website is currently under maintenance.',
@@ -88,6 +89,11 @@ return [
     'clipboard' => [
         'copied' => 'Copied!',
         'error' => 'CTRL + C to copy',
+    ],
+
+    'server' => [
+        'online' => ':count online player|:count online players',
+        'offline' => 'The server is currently offline.',
     ],
 
     'profile' => [

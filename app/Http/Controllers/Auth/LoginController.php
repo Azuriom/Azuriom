@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -183,8 +184,7 @@ class LoginController extends Controller
     {
         $username = $request->input($this->username());
 
-        $validMail = filter_var($username, FILTER_VALIDATE_EMAIL) !== false;
-        $field = $validMail ? $this->username() : 'name';
+        $field = Str::contains($username, '@') ? $this->username() : 'name';
 
         return [$field => $username] + $request->only('password');
     }
