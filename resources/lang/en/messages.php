@@ -85,6 +85,11 @@ return [
         'empty' => 'You have no unread notifications.',
     ],
 
+    'clipboard' => [
+        'copied' => 'Copied!',
+        'error' => 'CTRL + C to copy',
+    ],
+
     'profile' => [
         'title' => 'My Profile',
         'change-email' => 'Change E-Mail Address',
@@ -120,6 +125,7 @@ return [
             'title' => 'Money transfer',
             'self' => 'You can\'t send money to yourself.',
             'not-enough' => 'You don\'t have enough money to make this transfer.',
+            'success' => 'The money was successfully sent.',
         ],
     ],
 

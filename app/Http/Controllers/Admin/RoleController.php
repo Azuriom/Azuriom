@@ -71,7 +71,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->validated());
 
-        $role->syncPermissions($request->input('permissions', []));
+        $role->syncPermissions(array_keys($request->input('permissions', [])));
 
         return redirect()->route('admin.roles.index')->with('success', trans('admin.roles.status.created'));
     }
