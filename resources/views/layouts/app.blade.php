@@ -65,23 +65,6 @@
         </div>
     </div>
 </footer>
-<script>
-    //script for multi submenus in the user navigation
-    document.addEventListener("DOMContentLoaded", function(){
-        $('.dropdown-submenu > a').on("click", function(e) {
-            var submenu = $(this);
-            $('.dropdown-submenu .dropdown-menu').removeClass('show');
-            submenu.next('.dropdown-menu').addClass('show');
-            e.stopPropagation();
-        });
-
-        $('.dropdown').on("hidden.bs.dropdown", function() {
-            // hide any open menus when parent closes
-            $('.dropdown-menu.show').removeClass('show');
-        });
-    });
-   
-</script>
 @stack('footer-scripts')
 
 <style>
@@ -105,17 +88,6 @@
 
     footer {
         background: #232323;
-    }
-
-    .dropdown-submenu {
-        position: relative;
-    }
-
-    .dropdown-submenu .dropdown-menu {
-        top: 0;
-        right: 100%;
-        margin-top: -1px;
-        left: -100%;
     }
 </style>
 
