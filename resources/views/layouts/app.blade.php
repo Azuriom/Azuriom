@@ -65,6 +65,7 @@
         </div>
     </div>
 </footer>
+
 @stack('footer-scripts')
 
 <style>

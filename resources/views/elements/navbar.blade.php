@@ -56,6 +56,7 @@
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 {{ trans('messages.nav.profile') }}
                             </a>
+                            
                             @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     {{ trans('messages.nav.admin') }}
