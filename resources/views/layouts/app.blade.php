@@ -36,6 +36,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -57,7 +58,7 @@
     </main>
 </div>
 
-<footer class="text-white py-4 text-center">
+<footer class="text-white mt-auto py-4 text-center">
     <div class="copyright">
         <div class="container">
             {{ setting('copyright') }} | @lang('messages.copyright')
@@ -103,7 +104,6 @@
     }
 
     footer {
-        margin-top: auto;
         background: #232323;
     }
 

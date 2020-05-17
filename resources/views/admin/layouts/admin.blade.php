@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-@stack('meta')
+    @stack('meta')
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -289,26 +289,55 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        @can('admin.update')
-                            @if($hasUpdate)
+                        @if($hasUpdate)
+                            @can('admin.update')
                                 <li class="nav-item mx-1">
                                     <a class="nav-link text-info" href="{{ route('admin.update.index') }}">
                                         <i class="fas fa-cloud-download-alt"></i>
                                     </a>
                                 </li>
-                            @endif
-                        @endcan
+                            @endcan
+                        @endif
 
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- Counter - Notifications -->
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- <span class="badge badge-danger badge-counter">1</span> -->
+                                @if(! $notifications->isEmpty())
+                                    <span class="badge badge-danger badge-counter" id="notificationsCounter">{{ $notifications->count() }}</span>
+                                @endif
                             </a>
+
                             <!-- Dropdown - Notifications -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationsDropdown">
-                                <h6 class="dropdown-header">{{ trans('admin.notifications.notifications') }}</h6>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">{{ trans('admin.notifications.mark-as-read') }}</a>
+                                <h6 class="dropdown-header">{{ trans('messages.notifications.notifications') }}</h6>
+
+                                @if(! $notifications->isEmpty())
+                                    <div id="notifications">
+                                        @foreach($notifications as $notification)
+                                            <a href="{{ $notification->link ? url($notification->link) : '#' }}" class="dropdown-item d-flex align-items-center">
+                                                <div class="mr-3">
+                                                    <div class="icon-circle text-white bg-{{ $notification->level }}">
+                                                        <i class="fas fa-{{ $notification->icon() }} fa-fw"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="small text-gray-500">{{ format_date($notification->created_at, true) }}</div>
+                                                    {{ $notification->content }}
+                                                </div>
+                                            </a>
+                                        @endforeach
+
+                                        <a href="{{ route('notifications.read.all') }}" id="readNotifications" class="dropdown-item text-center small text-gray-500">
+                                            <span class="d-none spinner-border spinner-border-sm loader" role="status"></span>
+                                            {{ trans('messages.notifications.read') }}
+                                        </a>
+                                    </div>
+                                @endif
+
+                                <div id="noNotificationsLabel" class="dropdown-item text-center small text-success @if(! $notifications->isEmpty()) d-none @endif">
+                                    <i class="fas fa-check"></i> {{ trans('messages.notifications.empty') }}
+                                </div>
                             </div>
                         </li>
 

@@ -35,6 +35,7 @@ return [
         'copy' => 'Copier',
         'comment' => 'Commenter',
         'search' => 'Rechercher',
+        'send' => 'Envoyer',
     ],
 
     'fields' => [
@@ -79,6 +80,17 @@ return [
 
     'captcha' => 'La vérification du captcha a échouée, merci de réessayer.',
 
+    'notifications' => [
+        'notifications' => 'Notifications',
+        'read' => 'Marquer comme lues',
+        'empty' => 'Vous n\'avez pas de notifications non lues.',
+    ],
+
+    'clipboard' => [
+        'copied' => 'Copié !',
+        'error' => 'CTRL + C pour copier',
+    ],
+
     'profile' => [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',
@@ -109,6 +121,13 @@ return [
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
 
         'suspended' => 'Ce compte est actuellement banni.',
+
+        'money-transfer' => [
+            'title' => 'Transfert d\'argent',
+            'self' => 'Vous ne pouvez pas vous envoyer d\'argent à vous même.',
+            'not-enough' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
+            'success' => 'L\'argent a été envoyé avec succès.',
+        ],
     ],
 
     'posts' => [

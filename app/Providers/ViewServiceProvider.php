@@ -4,6 +4,7 @@ namespace Azuriom\Providers;
 
 use Azuriom\Http\View\Composers\AdminLayoutComposer;
 use Azuriom\Http\View\Composers\NavbarComposer;
+use Azuriom\Http\View\Composers\NotificationComposer;
 use Azuriom\Http\View\Composers\ServerComposer;
 use Azuriom\View\ThemeViewFinder;
 use Illuminate\Support\Facades\Blade;
@@ -43,6 +44,7 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         View::composer('*', ServerComposer::class);
+        View::composer('*', NotificationComposer::class);
         View::composer('elements.navbar', NavbarComposer::class);
         View::composer('admin.layouts.admin', AdminLayoutComposer::class);
     }

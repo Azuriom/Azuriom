@@ -7,6 +7,7 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
 use Azuriom\Support\Optimizer;
+use DateTimeZone;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
@@ -104,7 +105,7 @@ class SettingsController extends Controller
             'logo' => setting('logo'),
             'background' => setting('background'),
             'locales' => $this->getAvailableLocales(),
-            'timezones' => timezone_identifiers_list(),
+            'timezones' => DateTimeZone::listIdentifiers(),
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
             'conditions' => setting('conditions'),
@@ -113,6 +114,7 @@ class SettingsController extends Controller
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
             'minecraftVerification' => setting('game-type') === 'mc-online',
+            'userMoneyTransfer' => setting('user_money_transfer'),
         ]);
     }
 
@@ -143,6 +145,7 @@ class SettingsController extends Controller
             'register' => $request->filled('register'),
             'auth-api' => $request->filled('auth-api'),
             'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
+            'user_money_transfer' => $request->filled('user_money_transfer'),
         ]);
 
         ActionLog::log('settings.updated');

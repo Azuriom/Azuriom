@@ -3,6 +3,10 @@
 *.iml
 *.iws
 
+# Visual Studio Code
+.vscode/
+.history
+
 # Mac
 .DS_Store
 

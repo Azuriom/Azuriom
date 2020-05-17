@@ -120,6 +120,43 @@
                     </div>
                 </div>
             </div>
+
+            @if(setting('user_money_transfer'))
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header">{{ trans('messages.profile.money-transfer.title') }}</div>
+                        <div class="card-body">
+                            <form action="{{ route('profile.transfer-money') }}" method="POST">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="nameInput">{{ trans('auth.name') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
+
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
+                                    <input type="number" placeholder="0.00" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money') }}" required>
+
+                                    @error('money')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    {{ trans('messages.actions.send') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection
+

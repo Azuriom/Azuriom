@@ -213,6 +213,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="userMoneySwitch" name="user_money_transfer" @if($userMoneyTransfer) checked @endif>
+                        <label class="custom-control-label" for="userMoneySwitch">{{ trans('admin.settings.index.user-money-transfer') }}</label>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 </button>

@@ -9,6 +9,22 @@ $('[data-confirm="delete"]').on('click', function (e) {
     $('#confirmDeleteModal').modal('show');
 });
 
+/*
+ * Logout
+ */
+const logoutLink = document.getElementById('logoutLink');
+
+if (logoutLink) {
+    logoutLink.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.getElementById('logout-form').submit();
+    });
+}
+
+/*
+ * Post likes
+ */
 let likeLoading = false;
 
 document.querySelectorAll('[data-like-url]').forEach(function (el) {
@@ -48,3 +64,41 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
         });
     });
 });
+
+/*
+ * Notifications
+ */
+const readNotificationsBtn = document.getElementById('readNotifications');
+let readingNotifications = false;
+
+if (readNotificationsBtn) {
+    readNotificationsBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        if (readingNotifications) {
+            return;
+        }
+
+        readingNotifications = true;
+
+        const notificationsSpinner = readNotificationsBtn.querySelector('.load-spinner');
+
+        if (notificationsSpinner) {
+            notificationsSpinner.classList.remove('d-none');
+        }
+
+        notificationsSpinner.classList.remove('d-none');
+
+        axios.post(readNotificationsBtn.href)
+            .then(function () {
+                $('#notifications').remove();
+                $('#notificationsCounter').remove();
+                $('#noNotificationsLabel').removeClass('d-none');
+            })
+            .catch(function () {
+                notificationsSpinner.classList.add('d-none');
+
+                readingNotifications = false;
+            });
+    });
+}

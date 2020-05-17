@@ -64,11 +64,6 @@ return [
         'documentation' => 'Documentation',
     ],
 
-    'notifications' => [
-        'notifications' => 'Notifications',
-        'mark-as-read' => 'Marquer comme lues',
-    ],
-
     'confirm-delete' => [
         'title' => 'Supprimer ?',
         'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
@@ -116,6 +111,7 @@ return [
             'auth-api' => 'Activer l\'API auth',
             'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
             'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
+            'user-money-transfer' => 'Autoriser le transfert de d\'argent entre les utilisateurs',
             'site-key' => 'Clé de site pour azuriom.com',
             'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
         ],

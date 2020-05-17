@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Resources\AuthenticatedUser as AuthenticatedUserResource;
 use Azuriom\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -113,6 +114,6 @@ class AuthController extends Controller
 
         $isMail = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 
-        return [($isMail ? 'email' : 'name') => $email] + $credentials['password'];
+        return [($isMail ? 'email' : 'name') => $email] + Arr::only($credentials, 'password');
     }
 }

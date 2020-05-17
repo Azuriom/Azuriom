@@ -35,6 +35,7 @@ return [
         'copy' => 'Copy',
         'comment' => 'Comment',
         'search' => 'Search',
+        'send' => 'Send',
     ],
 
     'fields' => [
@@ -66,7 +67,6 @@ return [
     'no' => 'No',
     'unknown' => 'Unknown',
     'none' => 'None',
-
     'copied' => 'Copied',
 
     'home' => 'Home',
@@ -78,6 +78,17 @@ return [
     'status-error' => 'An error occurred: :error',
 
     'captcha' => 'The captcha verification failed, please try again.',
+
+    'notifications' => [
+        'notifications' => 'Notifications',
+        'read' => 'Mark as read',
+        'empty' => 'You have no unread notifications.',
+    ],
+
+    'clipboard' => [
+        'copied' => 'Copied!',
+        'error' => 'CTRL + C to copy',
+    ],
 
     'profile' => [
         'title' => 'My Profile',
@@ -109,6 +120,13 @@ return [
         'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',
 
         'suspended' => 'This account is suspended.',
+
+        'money-transfer' => [
+            'title' => 'Money transfer',
+            'self' => 'You can\'t send money to yourself.',
+            'not-enough' => 'You don\'t have enough money to make this transfer.',
+            'success' => 'The money was successfully sent.',
+        ],
     ],
 
     'posts' => [

@@ -11,8 +11,8 @@
                 <input type="text" class="form-control" id="searchInput" name="search" value="{{ $search ?? '' }}" placeholder="{{ trans('messages.actions.search') }}">
 
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-outline-secondary">
-                        <i class="fas fa-search"></i>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search fa-sm"></i>
                     </button>
                 </div>
             </div>
