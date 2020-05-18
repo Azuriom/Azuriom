@@ -121,7 +121,6 @@ return [
     'username' => 'The :attribute must be a valid username.',
     'slug' => 'The :attribute must be a slug with only lowercase letters, numbers and dashes.',
     'color' => 'The :attribute must be a hex color code.',
-    'current-password' => 'Your current password is incorrect.',
     'game-auth' => 'The :attribute must be a valid :game username.',
 
     /*

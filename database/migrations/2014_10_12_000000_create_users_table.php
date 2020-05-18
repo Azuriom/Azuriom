@@ -23,9 +23,9 @@ class CreateUsersTable extends Migration
             $table->unsignedDecimal('money', 14)->default(0);
             $table->string('game_id')->nullable();
             $table->string('access_token')->nullable();
+            $table->string('google_2fa_secret', 16)->nullable();
             $table->string('last_login_ip', 45)->nullable();
             $table->timestamp('last_login_at')->nullable();
-            $table->string('google_2fa_secret', 16)->nullable();
             $table->boolean('is_banned')->default(false);
             $table->boolean('is_deleted')->default(false);
             $table->rememberToken();

@@ -149,7 +149,7 @@ class NavbarController extends Controller
     {
         if ($navbarElement->isDropdown() && ! $navbarElement->elements->isEmpty()) {
             return redirect()->route('admin.navbar-elements.index')
-                ->with('error', 'You cannot delete dropdown with elements');
+                ->with('error', trans('admin.navbar-elements.status.not-empty'));
         }
 
         $navbarElement->delete();

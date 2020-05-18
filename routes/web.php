@@ -24,8 +24,8 @@ Route::prefix('user')->group(function () {
     ]);
 
     Route::prefix('/2fa')->name('login.')->group(function () {
-        Route::get('/', 'Auth\LoginController@show2fa')->name('2fa');
-        Route::post('/', 'Auth\LoginController@login2fa')->name('2fa-verify');
+        Route::get('/', 'Auth\LoginController@showCodeForm')->name('2fa');
+        Route::post('/', 'Auth\LoginController@verifyCode')->name('2fa-verify');
     });
 });
 
@@ -50,6 +50,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {
+    Route::get('/', 'NotificationController@index')->name('index');
     Route::post('/{notification}/read', 'NotificationController@markAsRead')->name('read');
     Route::post('/read', 'NotificationController@markAllAsRead')->name('read.all');
 });

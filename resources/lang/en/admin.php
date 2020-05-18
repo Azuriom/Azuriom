@@ -244,6 +244,8 @@ return [
             'created' => 'The navbar element has been created.',
             'updated' => 'This navbar element has been updated.',
             'deleted' => 'This navbar element has been deleted.',
+
+            'not-empty' => 'You cannot delete dropdown with elements.',
         ],
     ],
 

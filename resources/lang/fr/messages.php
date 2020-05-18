@@ -59,6 +59,7 @@ return [
         'color' => 'Couleur',
         'url' => 'URL',
         'status' => 'Status',
+        'category' => 'Catégorie',
         'version' => 'Version',
         'game' => 'Jeu',
     ],
@@ -116,7 +117,7 @@ return [
         '2fa' => [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
-            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Google Authenticator.',
+            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Authy ou Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
             'title' => 'Activer l\'A2F',
             'code' => 'Code',
@@ -125,8 +126,6 @@ return [
         ],
 
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
-
-        'suspended' => 'Ce compte est actuellement banni.',
 
         'money-transfer' => [
             'title' => 'Transfert d\'argent',

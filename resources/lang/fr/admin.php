@@ -244,6 +244,8 @@ return [
             'created' => 'Élément de la navbar créé.',
             'updated' => 'Élément de le navbar mis à jour.',
             'deleted' => 'Élément de la navbar supprimé.',
+
+            'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant avec des éléments.',
         ],
     ],
 

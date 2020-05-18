@@ -6,6 +6,11 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Verify the current password.
+ *
+ * @deprecated Use the 'password' rule added in Laravel 6.
+ */
 class CurrentPassword implements Rule
 {
     /**
@@ -17,7 +22,7 @@ class CurrentPassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Auth::check() && Hash::check($value, Auth::user()->password);
+        return Auth::check() && Hash::check($value, Auth::user()->getAuthPassword());
     }
 
     /**
@@ -27,6 +32,6 @@ class CurrentPassword implements Rule
      */
     public function message()
     {
-        return trans('validation.current-password');
+        return trans('validation.password');
     }
 }

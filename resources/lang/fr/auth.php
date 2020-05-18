@@ -37,6 +37,7 @@ return [
     '2fa-code' => 'Code d\'authentification à deux facteurs',
     '2fa-invalid' => 'Code invalide',
 
+    'suspended' => 'Ce compte est actuellement banni.',
     'maintenance' => 'Le site est actuellement en maintenance.',
 
     'remember-me' => 'Se souvenir de moi',

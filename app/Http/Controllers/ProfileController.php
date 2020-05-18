@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\User;
-use Azuriom\Rules\CurrentPassword;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
@@ -13,15 +12,29 @@ use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
+    /**
+     * Show the user profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
         return view('profile.index', ['user' => $request->user()]);
     }
 
+    /**
+     * Update the user e-mail address.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateEmail(Request $request)
     {
         $this->validate($request, [
-            'email_confirm_pass' => ['required', 'string', new CurrentPassword()],
+            'email_confirm_pass' => ['required', 'password'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
@@ -33,15 +46,25 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password_confirm_pass' => ['required', 'string', new CurrentPassword()],
+            'password_confirm_pass' => ['required', 'password'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $request->user()->update(['password' => Hash::make($request->input('password'))]);
+        $password = Hash::make($request->input('password'));
+
+        $request->user()->update(['password' => $password]);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 
+    /**
+     * Show the form to enable two-factor authentification.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
+     */
     public function show2fa(Request $request)
     {
         if ($request->user()->hasTwoFactorAuth()) {
@@ -49,20 +72,28 @@ class ProfileController extends Controller
         }
 
         $google2fa = new Google2FA();
-        $secretKey = $request->old('2fa_key', $google2fa->generateSecretKey());
-        $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secretKey);
+        $secret = $request->old('2fa_key', $google2fa->generateSecretKey());
+        $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
 
-        $qrCode = new QRCode(new QROptions([
+        $qrCodeUrl = (new QRCode(new QROptions([
             'imageTransparent' => false,
-        ]));
-        $qrCodeUrl = $qrCode->render($otpUrl);
+        ])))->render($otpUrl);
 
         return view('profile.2fa', [
-            'secretKey' => $secretKey,
+            'secretKey' => $secret,
             'qrCodeUrl' => $qrCodeUrl,
         ]);
     }
 
+    /**
+     * Enable two-factor authentification for this user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
+     */
     public function enable2fa(Request $request)
     {
         $this->validate($request, [
@@ -70,8 +101,10 @@ class ProfileController extends Controller
             'code' => ['required', 'string'],
         ]);
 
-        if (! (new Google2FA())->verifyKey($request->input('2fa_key'), str_replace(' ', '', $request->input('code')))) {
-            return redirect()->route('profile.2fa.index')->with('error', trans('auth.2fa-invalid'));
+        $code = str_replace(' ', '', $request->input('code'));
+
+        if (! (new Google2FA())->verifyKey($request->input('2fa_key'), $code)) {
+            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
         }
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
@@ -79,6 +112,12 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.enabled'));
     }
 
+    /**
+     * Disable two-factor authentification for this user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function disable2fa(Request $request)
     {
         $request->user()->update(['google_2fa_secret' => null]);

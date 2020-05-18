@@ -11,7 +11,7 @@
                 <p>{{ trans('messages.profile.2fa.info') }}</p>
 
                 <div class="text-center">
-                    <img src="{{ $qrCodeUrl }}" alt="Qr code">
+                    <img src="{{ $qrCodeUrl }}" alt="QR Code">
                 </div>
 
                 <p>{{ trans('messages.profile.2fa.secret', ['secret' => $secretKey]) }}</p>
