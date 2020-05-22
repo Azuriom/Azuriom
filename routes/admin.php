@@ -46,6 +46,7 @@ Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(fun
 
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
     Route::get('/', 'ThemeController@index')->name('index');
+    Route::post('/reload', 'ThemeController@reload')->name('reload');
     Route::post('/change/{theme?}', 'ThemeController@changeTheme')->name('change');
     Route::prefix('/{theme}/config')->group(function () {
         Route::get('/', 'ThemeController@edit')->name('edit');

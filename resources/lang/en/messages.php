@@ -11,6 +11,7 @@ return [
     'date-compact' => 'm/d/Y \a\t g:i A',
 
     'nav' => [
+        'toggle' => 'Toggle navigation',
         'profile' => 'Profile',
         'admin' => 'Admin dashboard',
     ],
@@ -36,6 +37,8 @@ return [
         'comment' => 'Comment',
         'search' => 'Search',
         'send' => 'Send',
+        'reload' => 'Reload',
+        'refresh' => 'Refresh',
     ],
 
     'fields' => [

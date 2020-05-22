@@ -11,6 +11,7 @@ return [
     'date-compact' => 'd/m/Y \à G:i',
 
     'nav' => [
+        'toggle' => 'Afficher/Masquer la navbar',
         'profile' => 'Profil',
         'admin' => 'Panel administrateur',
     ],
@@ -36,6 +37,8 @@ return [
         'comment' => 'Commenter',
         'search' => 'Rechercher',
         'send' => 'Envoyer',
+        'reload' => 'Recharger',
+        'refresh' => 'Rafraîchir',
     ],
 
     'fields' => [
