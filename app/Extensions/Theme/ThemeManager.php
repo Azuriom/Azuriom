@@ -5,6 +5,7 @@ namespace Azuriom\Extensions\Theme;
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
+use Azuriom\Support\Files;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
 use RuntimeException;
@@ -327,7 +328,7 @@ class ThemeManager extends ExtensionManager
 
         if ($themeConfig !== null) {
             foreach ($themeConfig as $key => $value) {
-                config(['theme.'.$key => $value]);
+                setting()->set('theme.'.$key, $value);
             }
         }
     }
@@ -341,7 +342,7 @@ class ThemeManager extends ExtensionManager
         $themeAssetsPath = $this->path('assets', $theme);
 
         if ($this->files->exists($themeAssetsPath)) {
-            $this->files->link($themeAssetsPath, $this->themesPublicPath($theme));
+            Files::relativeLink($themeAssetsPath, $this->themesPublicPath($theme));
         }
     }
 }
