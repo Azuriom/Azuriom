@@ -42,7 +42,7 @@
         <h1>{{ trans('errors.whoops') }}</h1>
         <h2 class="mb-3">{{ trans('errors.fallback.message', ['code' => $code ?? 500]) }}</h2>
 
-        <a href="{{ route('home') }}" class="btn btn-success">{{ trans('messages.home') }}</a>
+        <a href="{{ route('home') }}" class="btn btn-secondary">{{ trans('messages.home') }}</a>
     </main>
 </div>
 

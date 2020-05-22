@@ -15,6 +15,7 @@
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
+                        <th scope="col">{{ trans('messages.fields.enabled') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
@@ -33,6 +34,11 @@
                             </th>
                             <td>{{ join(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
+                            <td>
+                                <span class="badge badge-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">
+                                    {{ trans_bool(plugins()->isEnabled($path)) }}
+                                </span>
+                            </td>
                             <td>
                                 <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
                                     @csrf

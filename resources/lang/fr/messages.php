@@ -122,7 +122,7 @@ return [
             'disable' => 'Désactiver l\'A2F',
             'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Authy ou Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
-            'title' => 'Activer l\'A2F',
+            'title' => 'Activation de l\'authentification à deux facteurs',
             'code' => 'Code',
             'enabled' => 'Authentification à deux facteurs activée.',
             'disabled' => 'Authentification à deux facteurs désactivée.',

@@ -14,7 +14,7 @@
                     <img src="{{ $qrCodeUrl }}" alt="QR Code">
                 </div>
 
-                <p>{{ trans('messages.profile.2fa.secret', ['secret' => $secretKey]) }}</p>
+                <p>@lang('messages.profile.2fa.secret', ['secret' => $secretKey])</p>
 
                 <form method="POST">
                     @csrf
