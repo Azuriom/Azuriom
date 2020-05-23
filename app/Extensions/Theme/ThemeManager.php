@@ -328,7 +328,7 @@ class ThemeManager extends ExtensionManager
 
         if ($themeConfig !== null) {
             foreach ($themeConfig as $key => $value) {
-                setting()->set('theme.'.$key, $value);
+                config()->set('theme.'.$key, $value);
             }
         }
     }

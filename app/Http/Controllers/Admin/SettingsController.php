@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
+use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use DateTimeZone;
 use Illuminate\Cache\Repository as Cache;
@@ -263,9 +264,7 @@ class SettingsController extends Controller
     {
         $storagePublicPath = public_path('storage');
 
-        File::delete($storagePublicPath);
-
-        File::link(storage_path('app/public'), $storagePublicPath);
+        Files::relativeLink(storage_path('app/public'), $storagePublicPath, true);
 
         return redirect()->route('admin.settings.performance')
             ->with('success', trans('messages.status-success'));
@@ -296,7 +295,7 @@ class SettingsController extends Controller
             'g-analytics-id' => ['nullable', 'string', 'max:50'],
             'html-head' => ['nullable', 'string'],
             'html-body' => ['nullable', 'string'],
-            'welcome-popup' => ['required_with:enable_welcome_popup', 'string'],
+            'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
         ]);
 
         if (! $request->filled('enable_welcome_popup')) {

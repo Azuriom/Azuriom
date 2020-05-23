@@ -61,7 +61,7 @@ return [
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
-        'status' => 'Status',
+        'status' => 'Statut',
         'category' => 'Catégorie',
         'version' => 'Version',
         'game' => 'Jeu',

@@ -46,7 +46,7 @@ class Setting extends Model
                 self::where('name', $key)->delete();
             }
 
-            config()->set('setting.'.$key, $value);
+            setting()->set($key, $value);
         }
 
         Cache::forget('settings');
