@@ -11,6 +11,7 @@ return [
     'date-compact' => 'm/d/Y \a\t g:i A',
 
     'nav' => [
+        'toggle' => 'Toggle navigation',
         'profile' => 'Profile',
         'admin' => 'Admin dashboard',
     ],
@@ -36,6 +37,8 @@ return [
         'comment' => 'Comment',
         'search' => 'Search',
         'send' => 'Send',
+        'reload' => 'Reload',
+        'refresh' => 'Refresh',
     ],
 
     'fields' => [
@@ -59,6 +62,7 @@ return [
         'color' => 'Color',
         'url' => 'URL',
         'status' => 'Status',
+        'category' => 'Category',
         'version' => 'Version',
         'game' => 'Game',
     ],
@@ -70,6 +74,7 @@ return [
     'copied' => 'Copied',
 
     'home' => 'Home',
+    'welcome' => 'Welcome on :name',
 
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'The website is currently under maintenance.',
@@ -88,6 +93,11 @@ return [
     'clipboard' => [
         'copied' => 'Copied!',
         'error' => 'CTRL + C to copy',
+    ],
+
+    'server' => [
+        'online' => ':count online player|:count online players',
+        'offline' => 'The server is currently offline.',
     ],
 
     'profile' => [
@@ -109,17 +119,15 @@ return [
         '2fa' => [
             'enable' => 'Enable 2FA',
             'disable' => 'Disable 2FA',
-            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Google Authenticator.',
+            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy or Google Authenticator.',
             'secret' => 'Secret key: :secret',
-            'title' => 'Enable Two Factor Authentication',
+            'title' => 'Enable Two-Factor Authentication',
             'code' => 'Code',
-            'enabled' => 'Two Factor Authentication enabled.',
-            'disabled' => 'Two Factor Authentication disabled.',
+            'enabled' => 'Two-Factor Authentication enabled.',
+            'disabled' => 'Two-Factor Authentication disabled.',
         ],
 
         'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',
-
-        'suspended' => 'This account is suspended.',
 
         'money-transfer' => [
             'title' => 'Money transfer',

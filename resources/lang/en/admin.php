@@ -244,6 +244,8 @@ return [
             'created' => 'The navbar element has been created.',
             'updated' => 'This navbar element has been updated.',
             'deleted' => 'This navbar element has been deleted.',
+
+            'not-empty' => 'You cannot delete dropdown with elements.',
         ],
     ],
 
@@ -477,10 +479,6 @@ return [
         'installed' => 'Installed plugins',
         'available' => 'Available plugins',
 
-        'actions' => [
-            'reload' => 'Reload plugins',
-        ],
-
         'status' => [
             'reloaded' => 'The plugins have been reloaded.',
             'enabled' => 'The plugin has been enabled.',
@@ -511,6 +509,7 @@ return [
         ],
 
         'status' => [
+            'reloaded' => 'The themes have been reloaded.',
             'no-config' => 'This theme don\'t have config.',
             'config-updated' => 'The theme config has been updated.',
             'invalid' => 'This theme is invalid.',

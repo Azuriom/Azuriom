@@ -3,8 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
+use Exception;
 use Throwable;
 
 class PluginController extends Controller
@@ -46,9 +48,17 @@ class PluginController extends Controller
 
     public function reload()
     {
-        $this->plugins->cachePlugins();
+        $response = redirect()->route('admin.plugins.index');
 
-        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.status.reloaded'));
+        try {
+            app(UpdateManager::class)->forceFetchUpdatesOrFail();
+        } catch (Exception $e) {
+            return $response->with('error', trans('messages.status-error', [
+                'error' => $e->getMessage(),
+            ]));
+        }
+
+        return $response->with('success', trans('admin.plugins.status.reloaded'));
     }
 
     public function enable(string $plugin)

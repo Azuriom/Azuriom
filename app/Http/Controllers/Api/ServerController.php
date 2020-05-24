@@ -21,10 +21,13 @@ class ServerController extends Controller
 
         $players = Arr::pluck($request->json('players'), 'name', 'uuid');
 
+        $cpuUsage = $request->json('system.cpu');
+        $ramUsage = $request->json('system.ram');
+
         $server->updateData([
             'players' => count($players),
-            'cpu' => $request->json('system.cpu'),
-            'ram' => $request->json('system.ram'),
+            'cpu' => $cpuUsage >= 0 ? $cpuUsage : null,
+            'ram' => $ramUsage >= 0 ? $ramUsage : null,
             'tps' => $request->json('worlds.tps'),
             'loaded_chunks' => $request->json('worlds.chunks'),
             'entities' => $request->json('worlds.entities'),

@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -68,6 +69,7 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
 
+        /** @var \Azuriom\Models\User $user */
         $user = $this->guard()->user();
 
         if ($user === null || $user->is_deleted) {
@@ -75,24 +77,33 @@ class LoginController extends Controller
         }
 
         if ($user->refreshActiveBan()->is_banned) {
-            return $this->sendResponseWithMessage($request, trans('messages.profile.suspended'), 403);
+            throw ValidationException::withMessages([
+                $this->username() => trans('auth.suspended'),
+            ]);
         }
 
         if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
-            return $this->sendResponseWithMessage($request, trans('auth.maintenance'), 503);
+            return $this->sendMaintenanceResponse($request);
         }
 
-        if (! $user->hasTwoFactorAuth()) {
-            $this->guard()->login($user, $request->filled('remember'));
-
-            return $this->sendLoginResponse($request);
+        if ($user->hasTwoFactorAuth()) {
+            return $this->redirectTo2fa($request, $user);
         }
 
-        $request->session()->flash('2fa_id', $user->id);
-        $request->session()->flash('2fa_remember', $request->filled('remember'));
+        $this->guard()->login($user, $request->filled('remember'));
+
+        return $this->sendLoginResponse($request);
+    }
+
+    protected function redirectTo2fa(Request $request, User $user)
+    {
+        $request->session()->flash('login.2fa', [
+            'id' => $user->id,
+            'remember' => $request->filled('remember'),
+        ]);
 
         if ($request->expectsJson()) {
-            return response()->json(['2fa' => true]);
+            return response()->json(['2fa' => true], 423);
         }
 
         return redirect()->route('login.2fa');
@@ -104,13 +115,13 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show2fa(Request $request)
+    public function showCodeForm(Request $request)
     {
-        if (! $request->session()->has('2fa_id')) {
+        if (! $request->session()->has('login.2fa.id')) {
             return redirect()->route('login');
         }
 
-        $request->session()->keep(['2fa_id', '2fa_remember']);
+        $request->session()->keep('login.2fa');
 
         return view('auth.2fa');
     }
@@ -125,27 +136,27 @@ class LoginController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
      */
-    public function login2fa(Request $request)
+    public function verifyCode(Request $request)
     {
-        $userId = $request->session()->get('2fa_id');
+        $this->validate($request, ['code' => 'required']);
 
-        $user = $userId ? User::find($userId) : null;
-
-        if ($user === null) {
+        if (! $request->session()->has('login.2fa.id')) {
             throw new AuthenticationException('Unauthenticated.', [$this->guard()], route('login'));
         }
 
-        $request->session()->keep(['2fa_id', '2fa_remember']);
-
-        $this->validate($request, ['code' => 'required|string']);
-
+        /** @var \Azuriom\Models\User $user */
+        $user = User::findOrFail($request->session()->get('login.2fa.id'));
         $code = str_replace(' ', '', $request->input('code'));
 
         if (! (new Google2FA())->verifyKey($user->google_2fa_secret, $code)) {
-            throw ValidationException::withMessages(['code' => [trans('auth.2fa-invalid')]]);
+            $request->session()->keep('login.2fa');
+
+            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
         }
 
-        $this->guard()->login($user, $request->session()->get('2fa_remember'));
+        $this->guard()->login($user, $request->session()->get('login.2fa.remember'));
+
+        $request->session()->remove('login.2fa');
 
         return $this->sendLoginResponse($request);
     }
@@ -158,9 +169,10 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        $user->last_login_ip = $request->ip();
-        $user->last_login_at = now();
-        $user->save();
+        $user->forceFill([
+            'last_login_ip' => $request->ip(),
+            'last_login_at' => now(),
+        ])->save();
 
         try {
             $name = game()->getUserName($user);
@@ -183,18 +195,23 @@ class LoginController extends Controller
     {
         $username = $request->input($this->username());
 
-        $validMail = filter_var($username, FILTER_VALIDATE_EMAIL) !== false;
-        $field = $validMail ? $this->username() : 'name';
+        $field = Str::contains($username, '@') ? $this->username() : 'name';
 
         return [$field => $username] + $request->only('password');
     }
 
-    protected function sendResponseWithMessage(Request $request, string $message, int $code)
+    /**
+     * Get the maintenance response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendMaintenanceResponse(Request $request)
     {
         if ($request->expectsJson()) {
-            return response()->json(['message' => $message], $code);
+            return response()->json(['message' => trans('auth.maintenance')], 503);
         }
 
-        return back()->with('error', $message);
+        return redirect()->back()->with('error', trans('auth.maintenance'));
     }
 }

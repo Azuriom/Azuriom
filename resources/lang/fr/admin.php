@@ -244,6 +244,8 @@ return [
             'created' => 'Élément de la navbar créé.',
             'updated' => 'Élément de le navbar mis à jour.',
             'deleted' => 'Élément de la navbar supprimé.',
+
+            'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant avec des éléments.',
         ],
     ],
 
@@ -475,10 +477,6 @@ return [
         'installed' => 'Plugins installés',
         'available' => 'Plugins disponibles',
 
-        'actions' => [
-            'reload' => 'Recharger les plugins',
-        ],
-
         'status' => [
             'reloaded' => 'Les plugins ont été rechargés.',
             'enabled' => 'Le plugin a été activé.',
@@ -509,6 +507,7 @@ return [
         ],
 
         'status' => [
+            'reloaded' => 'Les thèmes ont été rechargés.',
             'no-config' => 'Ce thème n\'a pas de configuration.',
             'config-updated' => 'La configuration du thème a été mise à jour..',
             'invalid' => 'Ce thème n\'est pas valide.',

@@ -107,6 +107,11 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->app['plugins']->addAdminNavItem($this->adminNavigation());
     }
 
+    protected function registerUserNavigation()
+    {
+        $this->app['plugins']->addUserNavItem($this->userNavigation());
+    }
+
     protected function middleware($middleware, bool $before = false)
     {
         $middlewares = is_array($middleware) ? $middleware : [$middleware];
@@ -156,6 +161,16 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      * @return array
      */
     protected function adminNavigation()
+    {
+        return [];
+    }
+
+    /**
+     * Return the user navigations routes to register in user menu.
+     *
+     * @return array
+     */
+    protected function userNavigation()
     {
         return [];
     }

@@ -3,7 +3,16 @@
 @section('title', trans('messages.home'))
 
 @section('content')
-    <div class="home-background mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat">
+    <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat">
+        <h1 class="mb-4">{{ trans('messages.welcome', ['name' => site_name()]) }}</h1>
+
+        @if($server && $server->isOnline())
+            <h2 class="mb-4">{{ trans_choice('messages.server.online', $server->getOnlinePlayers()) }}</h2>
+
+            <h3>{{ $server->fullAddress() }}</h3>
+        @else
+            <h2>{{ trans('messages.server.offline') }}</h2>
+        @endif
     </div>
 
     <div class="container">

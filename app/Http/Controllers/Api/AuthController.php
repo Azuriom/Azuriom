@@ -112,8 +112,8 @@ class AuthController extends Controller
     {
         $email = $credentials['email'];
 
-        $isMail = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+        $field = Str::contains($email, '@') ? 'email' : 'name';
 
-        return [($isMail ? 'email' : 'name') => $email] + Arr::only($credentials, 'password');
+        return [$field => $email] + Arr::only($credentials, 'password');
     }
 }

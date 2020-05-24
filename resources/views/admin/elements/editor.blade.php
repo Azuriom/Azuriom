@@ -3,11 +3,11 @@
     <script>
         tinymce.init({
             selector: '.html-editor',
-            height: 350,
+            height: 400,
             min_height: 200,
             entity_encoding: 'raw',
-            plugins: 'preview searchreplace autolink code image link media hr anchor advlist lists',
-            toolbar: 'undo redo | formatselect | bold italic underline strikethrough forecolor | link image media | alignleft aligncenter alignright alignjustify | numlist bullist | removeformat code'
+            plugins: 'preview searchreplace autolink code image link hr anchor lists',
+            toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo'
         });
     </script>
 @endpush

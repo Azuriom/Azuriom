@@ -71,6 +71,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
         $this->registerAdminNavigation();
 
+        $this->registerUserNavigation();
+
         //
     }
 
@@ -92,6 +94,18 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      * @return array
      */
     protected function adminNavigation()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Return the user navigations routes to register in the user menu.
+     *
+     * @return array
+     */
+    protected function userNavigation()
     {
         return [
             //

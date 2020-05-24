@@ -32,11 +32,12 @@ return [
     'confirm-password' => 'Confirmation du mot de passe',
     'current-password' => 'Mot de passe actuel',
 
-    'conditions' => 'J\'accepte les <a href=":conditions" target="_blank">conditions</a>.',
+    'conditions' => 'J\'accepte les <a href=":url" target="_blank">conditions</a>.',
 
     '2fa-code' => 'Code d\'authentification à deux facteurs',
     '2fa-invalid' => 'Code invalide',
 
+    'suspended' => 'Ce compte est actuellement banni.',
     'maintenance' => 'Le site est actuellement en maintenance.',
 
     'remember-me' => 'Se souvenir de moi',

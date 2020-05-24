@@ -11,6 +11,7 @@ return [
     'date-compact' => 'd/m/Y \à G:i',
 
     'nav' => [
+        'toggle' => 'Afficher/Masquer la navbar',
         'profile' => 'Profil',
         'admin' => 'Panel administrateur',
     ],
@@ -36,6 +37,8 @@ return [
         'comment' => 'Commenter',
         'search' => 'Rechercher',
         'send' => 'Envoyer',
+        'reload' => 'Recharger',
+        'refresh' => 'Rafraîchir',
     ],
 
     'fields' => [
@@ -58,7 +61,8 @@ return [
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
-        'status' => 'Status',
+        'status' => 'Statut',
+        'category' => 'Catégorie',
         'version' => 'Version',
         'game' => 'Jeu',
     ],
@@ -71,6 +75,7 @@ return [
     'copied' => 'Copié',
 
     'home' => 'Accueil',
+    'welcome' => 'Bienvenue sur :name',
 
     'maintenance' => 'Maintenance',
     'maintenance-message' => 'Le site est actuellement en maintenance.',
@@ -89,6 +94,11 @@ return [
     'clipboard' => [
         'copied' => 'Copié !',
         'error' => 'CTRL + C pour copier',
+    ],
+
+    'server' => [
+        'online' => ':count joueur en ligne|:count joueurs en ligne',
+        'offline' => 'Le serveur est actuellement hors-ligne.',
     ],
 
     'profile' => [
@@ -110,17 +120,15 @@ return [
         '2fa' => [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
-            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Google Authenticator.',
+            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Authy ou Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
-            'title' => 'Activer l\'A2F',
+            'title' => 'Activation de l\'authentification à deux facteurs',
             'code' => 'Code',
             'enabled' => 'Authentification à deux facteurs activée.',
             'disabled' => 'Authentification à deux facteurs désactivée.',
         ],
 
         'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
-
-        'suspended' => 'Ce compte est actuellement banni.',
 
         'money-transfer' => [
             'title' => 'Transfert d\'argent',

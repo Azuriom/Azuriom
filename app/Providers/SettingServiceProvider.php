@@ -3,6 +3,7 @@
 namespace Azuriom\Providers;
 
 use Azuriom\Models\Setting;
+use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
@@ -21,14 +22,30 @@ class SettingServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->singleton(SettingsRepository::class, function () {
+            return new SettingsRepository();
+        });
+    }
+
+    /**
      * Bootstrap services.
      *
      * @param  \Illuminate\Cache\Repository  $cache
      * @param  \Illuminate\Config\Repository  $config
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function boot(Cache $cache, Config $config)
     {
+        $repo = $this->app->make(SettingsRepository::class);
+
         try {
             $settings = $cache->remember('settings', now()->addDay(), function () {
                 return Setting::all()->pluck('value', 'name')->all();
@@ -83,9 +100,9 @@ class SettingServiceProvider extends ServiceProvider
 
                     $config->set($key, $value);
                 }
-
-                $config->set('setting.'.$name, $value);
             }
+
+            $repo->set($settings);
         } catch (Exception $e) {
             //
         }

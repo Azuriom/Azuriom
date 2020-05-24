@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,11 +67,16 @@ if (! function_exists('format_money')) {
 /*
  * Settings/Config helpers
  */
-
 if (! function_exists('setting')) {
-    function setting(string $name, $default = null)
+    function setting(string $name = null, $default = null)
     {
-        return config('setting.'.$name, $default);
+        $settings = app(SettingsRepository::class);
+
+        if ($name === null) {
+            return $settings;
+        }
+
+        return $settings->get($name, $default);
     }
 }
 

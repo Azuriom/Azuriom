@@ -100,6 +100,11 @@ class Server extends Model
         });
     }
 
+    public function isOnline()
+    {
+        return $this->getOnlinePlayers() >= 0;
+    }
+
     public function getOnlinePlayers()
     {
         return $this->getPlayers()['players'] ?? -1;

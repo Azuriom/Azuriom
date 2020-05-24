@@ -7,7 +7,7 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 class Color implements CastsAttributes
 {
     /**
-     * Transform the attribute from the underlying model values.
+     * Cast the given value.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
@@ -21,7 +21,7 @@ class Color implements CastsAttributes
     }
 
     /**
-     * Transform the attribute to its underlying model values.
+     * Prepare the given value for storage.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key

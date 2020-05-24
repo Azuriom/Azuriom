@@ -3,8 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Extensions\Theme\ThemeManager;
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
+use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
@@ -64,6 +66,21 @@ class ThemeController extends Controller
             'availableThemes' => $availableThemes,
             'themesUpdates' => collect($this->themes->getThemesToUpdate()),
         ]);
+    }
+
+    public function reload()
+    {
+        $response = redirect()->route('admin.themes.index');
+
+        try {
+            app(UpdateManager::class)->forceFetchUpdatesOrFail();
+        } catch (Exception $e) {
+            return $response->with('error', trans('messages.status-error', [
+                'error' => $e->getMessage(),
+            ]));
+        }
+
+        return $response->with('success', trans('admin.themes.status.reloaded'));
     }
 
     public function update(string $theme)
