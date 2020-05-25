@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace\Controllers\Api;
+
+use Azuriom\Http\Controllers\Controller;
+
+class ApiController extends Controller
+{
+    public function helloWorld()
+    {
+        return 'Hello World!';
+    }
+}
