@@ -21,6 +21,8 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     public function loadRoutes()
     {
+        $this->mapApiRoutes();
+
         $this->mapPluginsRoutes();
 
         $this->mapAdminRoutes();
@@ -44,5 +46,14 @@ class RouteServiceProvider extends BaseRouteServiceProvider
             ->namespace($this->namespace.'\Admin')
             ->name($this->pluginName.'.admin.')
             ->group(plugin_path($this->pluginName.'/routes/admin.php'));
+    }
+
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace.'\Api')
+            ->name($this->pluginName.'.api.')
+            ->group(plugin_path($this->pluginName.'/routes/api.php'));
     }
 }
