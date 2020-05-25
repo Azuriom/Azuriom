@@ -1,17 +1,12 @@
 <?php
 
-namespace DummyNamespace\Controllers\Admin\Api;
+namespace DummyNamespace\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
 
-class AdminController extends Controller
+class ApiController extends Controller
 {
-    /**
-     * Show the home admin page of the plugin.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function hello_world()
+    public function helloWorld()
     {
         return 'Hello World!';
     }
