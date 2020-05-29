@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
  * @property int $user_id
  * @property string $action
  * @property int|null $target_id
+ * @property array $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -19,6 +20,11 @@ use Illuminate\Support\Facades\Auth;
 class ActionLog extends Model
 {
     private static $actions = [
+        'users.transfer' => [
+            'icon' => 'exchange-alt',
+            'color' => 'info',
+            'message' => 'admin.logs.users.transfer',
+        ],
         'settings.updated' => [
             'icon' => 'sync',
             'color' => 'warning',
@@ -57,7 +63,16 @@ class ActionLog extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'type', 'target_id', 'action',
+        'user_id', 'type', 'target_id', 'action', 'data',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'data' => 'array',
     ];
 
     public static function boot()
@@ -102,10 +117,17 @@ class ActionLog extends Model
     public function getActionFormat()
     {
         return self::$actions[$this->action] ?? [
-            'icon' => 'question',
-            'color' => 'muted',
-            'message' => $this->action,
-        ];
+                'icon' => 'question',
+                'color' => 'muted',
+                'message' => $this->action,
+            ];
+    }
+
+    public function getActionMessage()
+    {
+        $data = ['id' => $this->target_id] + ($this->data ?? []);
+
+        return trans($this->getActionFormat()['message'], $data);
     }
 
     /**
@@ -113,8 +135,9 @@ class ActionLog extends Model
      *
      * @param  string  $action
      * @param  \Illuminate\Database\Eloquent\Model  $target
+     * @param  array  $data
      */
-    public static function log(string $action, Model $target = null)
+    public static function log(string $action, Model $target = null, array $data = [])
     {
         if (Auth::guest()) {
             return;
@@ -127,6 +150,10 @@ class ActionLog extends Model
 
         if ($target !== null) {
             $log->fill(['target_id' => $target->getKey()]);
+        }
+
+        if ($data) {
+            $log->fill(['data' => $data]);
         }
 
         $log->save();

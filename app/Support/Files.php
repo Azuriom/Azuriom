@@ -24,7 +24,7 @@ class Files
     public static function removeLink(string $link)
     {
         // Symlink can be treated as directories on Windows...
-        if (is_dir($link)) {
+        if (! is_link($link) && is_dir($link)) {
             rmdir($link);
 
             return;

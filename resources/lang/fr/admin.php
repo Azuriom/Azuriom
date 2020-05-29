@@ -594,6 +594,7 @@ return [
         'users' => [
             'updated' => 'Mise à jour de l\'utilisateur #:id',
             'deleted' => 'Suppression de l\'utilisateur #:id',
+            'transfer' => 'Envoie d\'argent de :money à l\'utilisateur #:id',
         ],
 
         'settings' => [

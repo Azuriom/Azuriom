@@ -2,4 +2,4 @@
 
 @section('title', trans('errors.403.title'))
 @section('code', '403')
-@section('message', $exception->getMessage() ?? trans('errors.403.message'))
+@section('message', $exception->getMessage() ?: trans('errors.403.message'))

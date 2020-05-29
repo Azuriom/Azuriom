@@ -23,7 +23,7 @@
                             <td>{{ $log->user->name }}</td>
                             <td>
                                 <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
-                                {{ trans($log->getActionFormat()['message'], ['id' => $log->target_id]) }}
+                                {{ $log->getActionMessage() }}
                             </td>
                             <td>{{ format_date_compact($log->created_at) }}</td>
                         </tr>

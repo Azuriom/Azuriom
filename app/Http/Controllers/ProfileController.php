@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
@@ -155,6 +156,8 @@ class ProfileController extends Controller
         $user->money -= $money;
         $receiver->save();
         $user->save();
+
+        ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.money-transfer.success'));
