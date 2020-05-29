@@ -6,8 +6,13 @@ use Azuriom\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
-    public function helloWorld()
+    /**
+     * Show the plugin API default page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return 'Hello World!';
+        return response()->json('Hello World!');
     }
 }

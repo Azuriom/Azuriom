@@ -17,7 +17,7 @@
                     put: function (to, sortable, drag) {
                         return !drag.classList.contains('sortable-parent');
                     },
-                }
+                },
             });
         });
 
@@ -29,7 +29,7 @@
 
                 serialized.push({
                     id: child.dataset['id'],
-                    children: nested ? serialize(nested) : []
+                    children: nested ? serialize(nested) : [],
                 });
             });
 
