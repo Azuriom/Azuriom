@@ -13,6 +13,8 @@ interface Game
      *
      * @param  \Azuriom\Models\User  $user
      * @param  int  $size
+     *
+     * @deprecated Will be removed in 1.0, use User::getAvatar()
      */
     public function getAvatarUrl(User $user, int $size = 64);
 

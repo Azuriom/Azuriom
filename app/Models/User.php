@@ -138,6 +138,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Notification::class)->latest();
     }
 
+    /**
+     * Get the user's avatar url.
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        /** @noinspection PhpDeprecationInspection */
+        return game()->getAvatarUrl($this);
+    }
+
     public function refreshActiveBan()
     {
         $isBanned = $this->ban !== null;
