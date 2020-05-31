@@ -38,6 +38,12 @@ class SocialController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($request, $user, $provider);
+
+        if ($authUser->refreshActiveBan()->is_banned || $authUser->is_deleted) {
+            throw ValidationException::withMessages([
+                $authUser->name => trans('auth.suspended'),
+            ]);
+        }
         Auth::login($authUser, true);
 
         return redirect('/profile');
@@ -50,6 +56,10 @@ class SocialController extends Controller
                     ->first();
 
         if ($account) {
+            $account->data = [
+                'avatar' => $providerUser->getAvatar(),
+            ];
+            $account->save();
             return $account->user;
         } else {
             $user = null;
@@ -71,14 +81,12 @@ class SocialController extends Controller
             $user->identities()->create([
                 'provider_id'   => $providerUser->getId(),
                 'provider_name' => $provider,
+                'data' => [
+                    'avatar' => $providerUser->getAvatar(),
+                ]
             ]);
         }
 
-        if ($user->refreshActiveBan()->is_banned || $user->is_deleted) {
-            throw ValidationException::withMessages([
-                $user->name => trans('auth.suspended'),
-            ]);
-        }
 
         return $user;
     }
