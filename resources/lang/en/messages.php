@@ -39,6 +39,7 @@ return [
         'send' => 'Send',
         'reload' => 'Reload',
         'refresh' => 'Refresh',
+        'duplicate' => 'Duplicate',
     ],
 
     'fields' => [
@@ -58,6 +59,7 @@ return [
         'short-description' => 'Short Description',
         'content' => 'Content',
         'role' => 'Role',
+        'quantity' => 'Quantity',
         'money' => 'Money',
         'color' => 'Color',
         'url' => 'URL',

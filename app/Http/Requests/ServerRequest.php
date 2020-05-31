@@ -16,13 +16,13 @@ class ServerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:50'],
             'type' => ['required', 'string', Rule::in(Server::types())],
             'address' => ['required', 'string', 'max:255'],
-            'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
-            'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'min:1', 'max:65535'],
+            'port' => ['nullable', 'integer', 'between:1,65535'],
+            'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'between:1,65535'],
             'rcon-password' => ['required_if:type,mc-rcon', 'nullable', 'string'],
-            'azlink-port' => ['sometimes', 'nullable', 'integer', 'min:1', 'max:65535'],
+            'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
         ];
     }
 

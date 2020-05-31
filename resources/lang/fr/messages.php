@@ -39,6 +39,7 @@ return [
         'send' => 'Envoyer',
         'reload' => 'Recharger',
         'refresh' => 'Rafraîchir',
+        'duplicate' => 'Dupliquer',
     ],
 
     'fields' => [
@@ -58,6 +59,7 @@ return [
         'short-description' => 'Description courte',
         'content' => 'Contenu',
         'role' => 'Rôle',
+        'quantity' => 'Quantité',
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
