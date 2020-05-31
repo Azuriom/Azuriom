@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Socialite;
 
 class SocialController extends Controller
@@ -40,9 +39,7 @@ class SocialController extends Controller
         $authUser = $this->findOrCreateUser($request, $user, $provider);
 
         if ($authUser->refreshActiveBan()->is_banned || $authUser->is_deleted) {
-            throw ValidationException::withMessages([
-                $authUser->name => trans('auth.suspended'),
-            ]);
+            return redirect('/')->with('error', trans('auth.suspended'));
         }
         Auth::login($authUser, true);
 
