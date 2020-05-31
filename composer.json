@@ -19,11 +19,14 @@
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "pragmarx/google2fa": "^8.0",
+        "revolution/socialite-discord": "^1.2",
         "symfony/filesystem": "^5.0",
-        "thedudeguy/rcon": "^1.0"
+        "thedudeguy/rcon": "^1.0",
+        "truckersmp/steam-socialite": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

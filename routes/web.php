@@ -67,3 +67,6 @@ Route::prefix('news')->name('posts.')->group(function () {
 Route::resource('posts.comments', 'PostCommentController')->middleware(['auth', 'verified'])->only('store', 'destroy');
 
 Route::get('/{page:slug}', 'PageController@show')->name('pages.show');
+
+Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialController@handleProviderCallback');

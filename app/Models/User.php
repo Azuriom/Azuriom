@@ -2,12 +2,13 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\SocialIdentity;
+use Illuminate\Notifications\Notifiable;
 use Azuriom\Models\Traits\InteractsWithMoney;
-use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
-use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
+use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 
 /**
  * @property int $id
@@ -188,5 +189,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
+    }
+
+    public function identities()
+    {
+        return $this->hasMany(SocialIdentity::class);
     }
 }
