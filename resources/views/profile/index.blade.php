@@ -27,11 +27,46 @@
                     <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">{{ trans('messages.profile.2fa.enable') }}</a>
                 @endif
                 <h4>  Socials</h4>
-                
-                    <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/facebook') }}"><i class="fab fa-facebook-square"></i> Sign-in with FaceBook</a>
-                    <a style="background-color: #00acee;border-color: #00acee;" class="btn btn-primary" href="{{ url('/login/twitter') }}"><i class="fab fa-twitter-square"></i> Sign-in with Twitter</a>
-                    <a style="background-color: #34aa57;border-color: #34aa57;" class="btn btn-primary" href="{{ url('/login/steam') }}"><i class="fab fa-steam-square"></i> Sign-in with Steam</a>
-                    <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/discord') }}"><i class="fab fa-discord"></i> Sign-in with Discord</a>
+                @php
+                    $connected_to = $user->identities->pluck('provider_name')->toArray();
+                    $connected_to[] = 'default';
+                    $auth_methods = array_diff($auth_methods, $connected_to);
+                @endphp
+                    @foreach ($auth_methods as $item)
+                        @switch($item)
+                            @case('facebook')
+                                <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/facebook') }}"><i class="fab fa-facebook-square"></i> Sign-in with FaceBook</a>
+                                @break
+                            @case('twitter')
+                                <a style="background-color: #00acee;border-color: #00acee;" class="btn btn-primary" href="{{ url('/login/twitter') }}"><i class="fab fa-twitter-square"></i> Sign-in with Twitter</a>
+                                @break
+                            @case('steam')
+                                <a style="background-color: #34aa57;border-color: #34aa57;" class="btn btn-primary" href="{{ url('/login/steam') }}"><i class="fab fa-steam-square"></i> Sign-in with Steam</a>
+                                @break
+                            @case('discord')
+                                <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/discord') }}"><i class="fab fa-discord"></i> Sign-in with Discord</a>
+                                @break
+                            @default
+                        @endswitch
+                    @endforeach
+
+                    @if (count($connected_to) > 1)
+                        <h4>Avatar choice <small>(can be overwritten by admins)</small></h4>
+                        <form action="{{ route('profile.avatar_from_provider') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <select class="form-control" name="avatar_from_provider">
+                                    @foreach ($connected_to as $item)
+                                        <option value="{{$item}}" @if ($item === ($user->settings['avatar_from_provider'] ?? 'default') ) selected @endif >{{$item}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                {{ trans('messages.actions.update') }}
+                            </button>
+                        </form>
+                    @endif
+                    
                 
             </div>
         </div>

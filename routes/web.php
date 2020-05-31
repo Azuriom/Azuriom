@@ -38,6 +38,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
     Route::post('/email', 'ProfileController@updateEmail')->name('email');
     Route::post('/password', 'ProfileController@updatePassword')->name('password');
+    Route::post('/update_avatar', 'ProfileController@updateAvatar')->name('avatar_from_provider');
 
     Route::prefix('2fa')->name('2fa.')->group(function () {
         Route::get('/', 'ProfileController@show2fa')->name('index');

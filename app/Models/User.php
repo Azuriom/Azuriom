@@ -71,6 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login_at' => 'datetime',
         'is_banned' => 'boolean',
         'is_deleted' => 'boolean',
+        'settings' => 'array'
     ];
 
     /**

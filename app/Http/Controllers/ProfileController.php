@@ -2,14 +2,15 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
-use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
+use Azuriom\Models\ActionLog;
+use chillerlan\QRCode\QRCode;
+use Illuminate\Validation\Rule;
+use chillerlan\QRCode\QROptions;
+use PragmaRX\Google2FA\Google2FA;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,7 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return view('profile.index', ['user' => $request->user()]);
+        return view('profile.index', ['user' => $request->user(), 'auth_methods' => ['twitter', 'steam']]);
     }
 
     /**
@@ -40,6 +41,28 @@ class ProfileController extends Controller
         ]);
 
         $request->user()->update($request->only('email'));
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+    }
+
+    /**
+     * Update the user avatar preference.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateAvatar(Request $request)
+    {
+        $this->validate($request, [
+            'avatar_from_provider' => ['required', Rule::in(array_merge(['twitter', 'steam'], ['default'])) ],
+        ]);
+        $user = $request->user();
+        $settings = $user->settings;
+        $settings['avatar_from_provider'] = $request->input('avatar_from_provider');
+        $user->settings = $settings;
+        $user->save();
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
