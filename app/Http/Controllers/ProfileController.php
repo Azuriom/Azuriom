@@ -2,15 +2,15 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Models\User;
-use Illuminate\Http\Request;
 use Azuriom\Models\ActionLog;
+use Azuriom\Models\User;
 use chillerlan\QRCode\QRCode;
-use Illuminate\Validation\Rule;
 use chillerlan\QRCode\QROptions;
-use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
@@ -56,7 +56,7 @@ class ProfileController extends Controller
     public function updateAvatar(Request $request)
     {
         $this->validate($request, [
-            'avatar_from_provider' => ['required', Rule::in(array_merge(['twitter', 'steam'], ['default'])) ],
+            'avatar_from_provider' => ['required', Rule::in(array_merge(['twitter', 'steam'], ['default']))],
         ]);
         $user = $request->user();
         $settings = $user->settings;
