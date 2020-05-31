@@ -2,15 +2,15 @@
 
 namespace Azuriom\Http\Controllers\Auth;
 
-use Socialite;
-use Azuriom\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\SocialIdentity;
+use Azuriom\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Azuriom\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Socialite;
 
 class SocialController extends Controller
 {
@@ -52,7 +52,7 @@ class SocialController extends Controller
             return $account->user;
         } else {
             $user = null;
-            if($request->user()) {
+            if ($request->user()) {
                 $user = $request->user();
             } else {
                 $user = User::whereEmail($providerUser->getEmail())->first();
@@ -71,8 +71,6 @@ class SocialController extends Controller
                 'provider_id'   => $providerUser->getId(),
                 'provider_name' => $provider,
             ]);
-
-            
         }
 
         if ($user->refreshActiveBan()->is_banned || $user->is_deleted) {
