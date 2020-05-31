@@ -57,6 +57,7 @@ class SocialController extends Controller
                 'avatar' => $providerUser->getAvatar(),
             ];
             $account->save();
+
             return $account->user;
         } else {
             $user = null;
@@ -80,10 +81,9 @@ class SocialController extends Controller
                 'provider_name' => $provider,
                 'data' => [
                     'avatar' => $providerUser->getAvatar(),
-                ]
+                ],
             ]);
         }
-
 
         return $user;
     }
