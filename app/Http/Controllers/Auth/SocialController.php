@@ -39,6 +39,7 @@ class SocialController extends Controller
 
         $authUser = $this->findOrCreateUser($request, $user, $provider);
         Auth::login($authUser, true);
+
         return redirect('/profile');
     }
 
@@ -81,6 +82,4 @@ class SocialController extends Controller
 
         return $user;
     }
-
-
 }

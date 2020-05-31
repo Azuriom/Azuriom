@@ -19,7 +19,7 @@ class CreateSocialIdentitiesTable extends Migration
             $table->string('provider_name')->nullable();
             $table->string('provider_id')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['provider_name', 'provider_id']);
         });
     }
