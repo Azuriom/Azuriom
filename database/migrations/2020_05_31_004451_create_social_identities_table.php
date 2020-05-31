@@ -15,9 +15,9 @@ class CreateSocialIdentitiesTable extends Migration
     {
         Schema::create('social_identities', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id');           
+            $table->bigInteger('user_id');
             $table->string('provider_name')->nullable();
-            $table->string('provider_id')->unique()->nullable();          
+            $table->string('provider_id')->unique()->nullable();
             $table->timestamps();
         });
     }
