@@ -3,7 +3,6 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Azuriom\Models\User;
 
 class SocialIdentity extends Model
 {
