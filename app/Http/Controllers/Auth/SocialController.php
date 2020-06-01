@@ -20,8 +20,10 @@ class SocialController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        if(setting("enable_{$provider}_login"))
+        if (setting("enable_{$provider}_login")) {
             return Socialite::driver($provider)->redirect();
+        }
+
         return redirect()->back()->with('error', "$provider is not enabled for login.");
     }
 

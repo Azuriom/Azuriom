@@ -2,19 +2,19 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
-use DateTimeZone;
-use Azuriom\Models\Image;
-use Azuriom\Support\Files;
-use Azuriom\Models\Setting;
-use Azuriom\Rules\EnvCheck;
-use Illuminate\Http\Request;
-use Azuriom\Models\ActionLog;
-use Azuriom\Support\Optimizer;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\File;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
+use Azuriom\Models\Image;
+use Azuriom\Models\Setting;
+use Azuriom\Support\Files;
+use Azuriom\Support\Optimizer;
+use DateTimeZone;
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
+
 
 class SettingsController extends Controller
 {
@@ -346,7 +346,7 @@ class SettingsController extends Controller
             'enable_discord_login' => $request->filled('enable_discord_login'),
             'enable_google_login' => $request->filled('enable_google_login'),
         ]);
-        
+
         ActionLog::log('settings.updated');
 
         return  redirect()->route('admin.settings.socials')->with('success', trans('admin.settings.status.updated'));

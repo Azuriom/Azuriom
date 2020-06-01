@@ -100,11 +100,11 @@ class SettingServiceProvider extends ServiceProvider
 
                     $config->set($key, $value);
                 }
-                if(Str::startsWith($name, 'services.')) {
+                if (Str::startsWith($name, 'services.')) {
                     $config->set($name, $value);
                 }
             }
-            
+
 
             $repo->set($settings);
         } catch (Exception $e) {
