@@ -148,23 +148,23 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $user_preference = $this->settings['avatar_from_provider'];
         $admin_choice = setting('overwrite_avatar');
-        if ( $admin_choice === 'default') {
-            $identity = SocialIdentity::where([ 
+        if ($admin_choice === 'default') {
+            $identity = SocialIdentity::where([
                 ['provider_name', $user_preference],
                 ['user_id', $this->id],
             ])->first();
-            if($identity) {
+            if ($identity) {
                 return $identity->data['avatar'];
             } else {
                 /** @noinspection PhpDeprecationInspection */
                 return game()->getAvatarUrl($this);
             }
         } else {
-            $identity = SocialIdentity::where([ 
+            $identity = SocialIdentity::where([
                 ['provider_name', $admin_choice],
                 ['user_id', $this->id],
             ])->first();
-            if($identity) {
+            if ($identity) {
                 return $identity->data['avatar'];
             } else {
                 /** @noinspection PhpDeprecationInspection */

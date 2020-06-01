@@ -334,7 +334,7 @@ class SettingsController extends Controller
             'services-discord-client_secret' => ['required_with:enable_discord_login', 'nullable', 'string'],
             'services-google-client_id' => ['required_with:enable_google_login', 'nullable', 'string'],
             'services-google-client_secret' => ['required_with:enable_google_login', 'nullable', 'string'],
-            'overwrite_avatar' => ['required', 'in:default,minecraft,facebook,twitter,steam,discord,google']
+            'overwrite_avatar' => ['required', 'in:default,minecraft,facebook,twitter,steam,discord,google'],
         ]);
         foreach ($data as $key => $value) {
             Setting::updateSettings(str_replace('-', '.', $key), $value);
