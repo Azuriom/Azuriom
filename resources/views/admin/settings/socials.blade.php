@@ -216,7 +216,26 @@
                         </div>
                     </div>
                 </div>
-                
+                <br>
+                <div class="form-group">
+                    <label class="control-label" for="overwrite_avatar">Force user's avatar</label>
+                    <select class="custom-select" id="overwrite_avatar" name="overwrite_avatar">
+                        @php
+                            $providers = ['default','minecraft'];
+                            if(setting('enable_facebook_login')) $providers[] = 'facebook';
+                            if(setting('enable_twitter_login')) $providers[] = 'twitter';
+                            if(setting('enable_steam_login')) $providers[] = 'steam';
+                            if(setting('enable_discord_login')) $providers[] = 'discord';
+                            if(setting('enable_google_login')) $providers[] = 'google';
+                        @endphp
+                        @foreach($providers as $item)
+                            <option value="{{ $item }}" @if($item === setting('overwrite_avatar')) selected @endif>{{ $item }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
             </form>
         </div>
     </div>
