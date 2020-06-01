@@ -54,7 +54,7 @@ class ProfileController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateAvatar(Request $request)
-    { 
+    {
         $this->validate($request, [
             'avatar_from_provider' => ['required', Rule::in($this->getProviders())],
         ]);
@@ -70,11 +70,21 @@ class ProfileController extends Controller
     private function getProviders()
     {
         $providers = ['default'];
-        if(setting('enable_facebook_login')) $providers[] = 'facebook';
-        if(setting('enable_twitter_login')) $providers[] = 'twitter';
-        if(setting('enable_steam_login')) $providers[] = 'steam';
-        if(setting('enable_discord_login')) $providers[] = 'discord';
-        if(setting('enable_google_login')) $providers[] = 'google';
+        if (setting('enable_facebook_login')) {
+            $providers[] = 'facebook';
+        }
+        if (setting('enable_twitter_login')) {
+            $providers[] = 'twitter';
+        }
+        if (setting('enable_steam_login')) {
+            $providers[] = 'steam';
+        }
+        if (setting('enable_discord_login')) {
+            $providers[] = 'discord';
+        }
+        if (setting('enable_google_login')) {
+            $providers[] = 'google';
+        }
 
         return $providers;
     }
