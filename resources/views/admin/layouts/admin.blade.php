@@ -81,6 +81,7 @@
                             <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">{{ trans('admin.nav.settings.settings.seo') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.socials') }}" href="{{ route('admin.settings.socials') }}">{{ trans('admin.nav.settings.settings.socials') }}</a>
                         </div>
                     </div>
                 </div>

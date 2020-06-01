@@ -32,6 +32,9 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::get('/seo', 'SettingsController@seo')->name('seo');
     Route::post('/seo/update', 'SettingsController@updateSeo')->name('update-seo');
 
+    Route::get('/socials', 'SettingsController@socials')->name('socials');
+    Route::post('/socials/update', 'SettingsController@socialsUpdate')->name('socials-update');
+
     Route::get('/mail', 'SettingsController@mail')->name('mail');
     Route::post('/mail/update', 'SettingsController@updateMail')->name('update-mail');
 
