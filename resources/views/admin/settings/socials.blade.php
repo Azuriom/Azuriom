@@ -22,6 +22,8 @@
                                 <div class="alert alert-info">
                                     Have a developper account :<code>https://developers.facebook.com/</code><br>
                                     Create an app : <code>https://developers.facebook.com/apps/</code><br>
+                                    Base URI : <code>{{ secure_url('') }}</code><br>
+                                    Redirect URI : <code>{{ secure_url('/login/facebook/callback') }}</code><br>
 
                                     <div class="form-group col-md-8">
                                         <label for="services-facebook-client_id">CLIENT ID</label>
@@ -63,8 +65,10 @@
                         <div id="collapseTwo" class="collapse @if ($errors->has('services-twitter-client_id') ||  $errors->has('services-twitter-client_secret')) show @else  @endif" aria-labelledby="headingTwo" >
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    Have a developper account :<code>https://developers.facebook.com/</code><br>
-                                    Create an app : <code>https://developers.facebook.com/apps/</code><br>
+                                    Have a developper account :<code>https://developer.twitter.com/</code><br>
+                                    Create an app : <code>https://developer.twitter.com/apps</code><br>
+                                    Base URI : <code>{{ secure_url('') }}</code><br>
+                                    Redirect URI : <code>{{ secure_url('/login/twitter/callback') }}</code><br>
 
                                     <div class="form-group col-md-8">
                                         <label for="services-twitter-client_id">CLIENT ID</label>
@@ -106,8 +110,9 @@
                         <div id="collapseThree" class="collapse @if($errors->has('services-steam-client_secret')) show @endif" aria-labelledby="headingThree" >
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    Have a developper account :<code>https://developers.facebook.com/</code><br>
-                                    Create an app : <code>https://developers.facebook.com/apps/</code><br>
+                                    Have a developper account :<code>https://steamcommunity.com/dev</code><br>
+                                    Create an app : <code>https://steamcommunity.com/dev/apikey</code><br>
+                                    Base URI : <code>{{ secure_url('') }}</code><br>
 
                                     <div class="form-group col-md-8">
                                         <label for="services-steam-client_secret">CLIENT SECRET</label>
@@ -140,8 +145,9 @@
                             <div id="collapseFour" class="collapse @if ($errors->has('services-discord-client_id') ||  $errors->has('services-discord-client_secret')) show @else  @endif" aria-labelledby="headingFour" >
                                 <div class="card-body">
                                     <div class="alert alert-info">
-                                        Have a developper account :<code>https://developers.facebook.com/</code><br>
-                                        Create an app : <code>https://developers.facebook.com/apps/</code><br>
+                                        Create an app : <code>https://discord.com/developers/applications</code><br>
+                                        Base URI : <code>{{ secure_url('') }}</code><br>
+                                        Redirect URI : <code>{{ secure_url('/login/discord/callback') }}</code><br>
     
                                         <div class="form-group col-md-8">
                                             <label for="services-discord-client_id">CLIENT ID</label>
@@ -183,8 +189,10 @@
                             <div id="collapseFifth" class="collapse @if ($errors->has('services-google-client_id') ||  $errors->has('services-google-client_secret')) show @else  @endif" aria-labelledby="headingFifth" >
                                 <div class="card-body">
                                     <div class="alert alert-info">
-                                        Have a developper account :<code>https://developers.facebook.com/</code><br>
-                                        Create an app : <code>https://developers.facebook.com/apps/</code><br>
+                                        Have a developper account :<code>https://developers.google.com/</code><br>
+                                        Create an app : <code>https://console.developers.google.com/</code><br>
+                                        Base URI : <code>{{ secure_url('') }}</code><br>
+                                        Redirect URI : <code>{{ secure_url('/login/google/callback') }}</code><br>
     
                                         <div class="form-group col-md-8">
                                             <label for="services-google-client_id">CLIENT ID</label>
