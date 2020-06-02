@@ -79,7 +79,7 @@ class SocialController extends Controller
                     'game_id' => null,
                     'settings' => [
                         'new_user' => true,
-                    ]
+                    ],
                 ]);
             }
 

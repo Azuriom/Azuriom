@@ -79,7 +79,7 @@ class ProfileController extends Controller
     {
         $data = $this->validate($request, [
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'name' => ['required', 'string', 'max:25', 'unique:users']
+            'name' => ['required', 'string', 'max:25', 'unique:users'],
         ]);
         $user = $request->user();
         $user->password = Hash::make($data['password']);
