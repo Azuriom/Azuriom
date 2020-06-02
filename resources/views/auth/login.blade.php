@@ -67,6 +67,8 @@
                             </div>
                         </div>
                     </form>
+                    <hr>
+                    @include('auth.socials')
                 </div>
             </div>
         </div>
