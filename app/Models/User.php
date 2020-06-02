@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'game_id', 'access_token', 'google_2fa_secret', 'is_banned',
+        'name', 'email', 'password', 'money', 'game_id', 'access_token', 'google_2fa_secret', 'is_banned', 'settings',
     ];
 
     /**
@@ -171,6 +171,11 @@ class User extends Authenticatable implements MustVerifyEmail
                 return game()->getAvatarUrl($this);
             }
         }
+    }
+
+    public function isNewUser()
+    {
+        return $this->settings['new_user'] ?? false;
     }
 
     public function refreshActiveBan()

@@ -90,7 +90,42 @@
                 </form>
             </div>
         @endif
+        @if($user->isNewUser())
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">{{ trans('messages.profile.change-password') }} & {{ trans('auth.name') }} <span class="bg-danger text-white">Please update ASAP</span></div>
+            <div class="card-body">
+                <form action="{{ route('profile.password-username-newuser') }}" method="POST">
+                    @csrf
 
+                    <div class="form-group">
+                        <label for="name">{{ trans('auth.name') }}</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordInput">{{ trans('auth.password') }}</label>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPasswordInput">{{ trans('auth.confirm-password') }}</label>
+                        <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        {{ trans('messages.actions.update') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+        @else
         <div class="row">
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
@@ -199,6 +234,7 @@
             @endif
 
         </div>
+        @endif
     </div>
 @endsection
 

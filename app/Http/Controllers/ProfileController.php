@@ -67,6 +67,31 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 
+    /**
+     * Update the user's name and password on new user by social connection.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateNewUser(Request $request)
+    {
+        $data = $this->validate($request, [
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['required', 'string', 'max:25', 'unique:users']
+        ]);
+        $user = $request->user();
+        $user->password = Hash::make($data['password']);
+        $user->name = $data['name'];
+        $settings = $user->settings;
+        $settings['new_user'] = false;
+        $user->settings = $settings;
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+    }
+
     private function getProviders()
     {
         $providers = ['default'];

@@ -77,6 +77,9 @@ class SocialController extends Controller
                     'name'  => $providerUser->getName(),
                     'password' => Hash::make(Str::random(8)),
                     'game_id' => null,
+                    'settings' => [
+                        'new_user' => true,
+                    ]
                 ]);
             }
 
