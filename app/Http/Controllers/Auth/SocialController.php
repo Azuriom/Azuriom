@@ -20,12 +20,12 @@ class SocialController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        if ( ! setting("enable_{$provider}_login")) {
+        if (! setting("enable_{$provider}_login")) {
             return redirect()->back()->with('error', "$provider is not enabled for login.");
         }
 
         if ($provider === 'sign-in-with-apple') {
-            return Socialite::driver($provider)->scopes(["name", "email"])->redirect();
+            return Socialite::driver($provider)->scopes(['name', 'email'])->redirect();
         }
 
         return Socialite::driver($provider)->redirect();

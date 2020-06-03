@@ -23,6 +23,7 @@ return [
                 'seo' => 'SEO',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
+                'socials' => 'Socials Sign-in',
             ],
             'navbar' => 'Navigation',
             'servers' => 'Serveurs',
@@ -227,12 +228,12 @@ return [
             'callback-url' => 'Le callback/redirect URL',
             'detailed-instructions' => 'Suivez ces instructions détaillées si vous avez besoin d\'aide',
             'facebook' => [
-                
+
             ],
             'twitter' => [
                 'terms' => 'Configurer un lien "Terms of Service", Vous pouvez en créer un ici',
                 'privacy' => 'Configurer un lien "Privacy policy", Vous pouvez en créer un ici',
-                'request-email' => 'Les perimissions de votre application doivent être "read-only" et avoir la case "request email address from users" cochée'
+                'request-email' => 'Les perimissions de votre application doivent être "read-only" et avoir la case "request email address from users" cochée',
             ],
             'steam' => [
 
