@@ -247,7 +247,7 @@ return [
             'sign-in-with-apple' => [
 
             ],
-        ]
+        ],
     ],
 
     'navbar-elements' => [

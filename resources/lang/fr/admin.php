@@ -218,6 +218,35 @@ return [
         'status' => [
             'updated' => 'Les paramètres ont été mis à jour.',
         ],
+
+        'socials' => [
+            'title' => 'Socials Sign-in',
+            'dev-account' => 'Créer un compte développeur',
+            'create-app' => 'créer une application',
+            'base-url' => 'l\'URL de votre site',
+            'callback-url' => 'Le callback/redirect URL',
+            'detailed-instructions' => 'Suivez ces instructions détaillées si vous avez besoin d\'aide',
+            'facebook' => [
+                
+            ],
+            'twitter' => [
+                'terms' => 'Configurer un lien "Terms of Service", Vous pouvez en créer un ici',
+                'privacy' => 'Configurer un lien "Privacy policy", Vous pouvez en créer un ici',
+                'request-email' => 'Les perimissions de votre application doivent être "read-only" et avoir la case "request email address from users" cochée'
+            ],
+            'steam' => [
+
+            ],
+            'discord' => [
+
+            ],
+            'google' => [
+
+            ],
+            'sign-in-with-apple' => [
+
+            ],
+        ],
     ],
 
     'navbar-elements' => [
