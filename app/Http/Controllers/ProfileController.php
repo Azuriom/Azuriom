@@ -24,6 +24,7 @@ class ProfileController extends Controller
     {
         $providers = socials_getProviders();
         $providers[] = 'default';
+
         return view('profile.index', ['user' => $request->user(), 'auth_methods' => $providers]);
     }
 
