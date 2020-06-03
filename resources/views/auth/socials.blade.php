@@ -16,6 +16,9 @@
         @case('google')
             <a style="background-color: #992c1d;border-color: #992c1d;" class="btn btn-primary" href="{{ url('/login/google') }}"><i class="fab fa-google"></i> Sign-in with Google</a>
             @break
+        @case('sign-in-with-apple')
+            @signInWithApple('black', false, 'sign-in', 0)
+            @break
         @default
     @endswitch
 @endforeach

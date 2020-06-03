@@ -334,10 +334,19 @@ class SettingsController extends Controller
             'services-discord-client_secret' => ['required_with:enable_discord_login', 'nullable', 'string'],
             'services-google-client_id' => ['required_with:enable_google_login', 'nullable', 'string'],
             'services-google-client_secret' => ['required_with:enable_google_login', 'nullable', 'string'],
+            'services-sign-in-with-apple-client_id' => ['required_with:enable_sign-in-with-apple_login', 'nullable', 'string'],
+            'services-sign-in-with-apple-client_secret' => ['required_with:enable_sign-in-with-apple_login', 'nullable', 'string'],
             'overwrite_avatar' => ['required', 'in:default,minecraft,facebook,twitter,steam,discord,google'],
         ]);
         foreach ($data as $key => $value) {
-            Setting::updateSettings(str_replace('-', '.', $key), $value);
+            if ($key === 'services-sign-in-with-apple-client_id') {
+                $key = 'services.sign-in-with-apple.client_id';
+            } elseif ($key === 'services-sign-in-with-apple-client_secret') {
+                $key = 'services.sign-in-with-apple.client_secret';
+            } else {
+                $key = str_replace('-', '.', $key);
+            }
+            Setting::updateSettings($key, $value);
         }
         Setting::updateSettings([
             'enable_facebook_login' => $request->filled('enable_facebook_login'),
@@ -345,6 +354,7 @@ class SettingsController extends Controller
             'enable_steam_login' => $request->filled('enable_steam_login'),
             'enable_discord_login' => $request->filled('enable_discord_login'),
             'enable_google_login' => $request->filled('enable_google_login'),
+            'enanle_sign-in-with-apple_login' => $request->filled('enanle_sign-in-with-apple_login'),
         ]);
 
         ActionLog::log('settings.updated');

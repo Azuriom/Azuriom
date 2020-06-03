@@ -67,9 +67,12 @@
                                 <div class="alert alert-info">
                                     Have a developper account :<code>https://developer.twitter.com/</code><br>
                                     Create an app : <code>https://developer.twitter.com/apps</code><br>
-                                    Base URI : <code>{{ secure_url('') }}</code><br>
-                                    Redirect URI : <code>{{ secure_url('/login/twitter/callback') }}</code><br>
-
+                                    Website URL : <code>{{ secure_url('') }}</code><br>
+                                    You need to check "Enable Sign in with Twitter" <br>
+                                    Callback URL : <code>{{ secure_url('/login/twitter/callback') }}</code><br>
+                                    You need to provide a Terms of Service URL which can be created here : <code>{{url('/admin/pages')}}</code><br>
+                                    You need to provide a Privacy policy URL which can be created here : <code>{{url('/admin/pages')}}</code><br>
+                                    Go to permissions click edit then check "read-only" and in the additional permissions check "request email address from users"
                                     <div class="form-group col-md-8">
                                         <label for="services-twitter-client_id">CLIENT ID</label>
                                         <input type="text" class="form-control @error('services-twitter-client_id') is-invalid @enderror" id="services-twitter-client_id" name="services-twitter-client_id" value="{{ old('services-twitter-client_id', setting('services.twitter.client_id')) }}">
@@ -223,20 +226,56 @@
                                 </div>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFifth">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseSixth" aria-expanded="@if ($errors->has('services-sign-in-with-apple-client_id') ||  $errors->has('services-sign-in-with-apple-client_secret')) true @else false @endif" aria-controls="collapseSixth">
+                                    Apple ID is @if(setting('enable_sign-in-with-apple_login'))<span class="bg-success text-white"> ON </span> @else <span class="bg-danger text-white"> OFF </span> @endif
+                                </button>
+                            </h2>
+                            </div>
+                            <div id="collapseSixth" class="collapse @if ($errors->has('services-sign-in-with-apple-client_id') ||  $errors->has('services-sign-in-with-apple-client_secret')) show @else  @endif" aria-labelledby="headingFifth" >
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        Follow the instructions here : <code>https://github.com/GeneaLabs/laravel-sign-in-with-apple</code><br>
+                                        Base URI : <code>{{ secure_url('') }}</code><br>
+                                        Redirect URI : <code>{{ secure_url('/login/sign-in-with-apple/callback') }}</code><br>
+    
+                                        <div class="form-group col-md-8">
+                                            <label for="services-sign-in-with-apple-client_id">CLIENT ID</label>
+                                            <input type="text" class="form-control @error('services-sign-in-with-apple-client_id') is-invalid @enderror" id="services-sign-in-with-apple-client_id" name="services-sign-in-with-apple-client_id" value="{{ old('services-sign-in-with-apple-client_id', setting('services.sign-in-with-apple.client_id')) }}">
+                    
+                                            @error('services-sign-in-with-apple-client_id')
+                                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label for="services-sign-in-with-apple-client_secret">CLIENT SECRET</label>
+                                            <input type="text" class="form-control @error('services-sign-in-with-apple-client_secret') is-invalid @enderror" id="services-sign-in-with-apple-client_secret" name="services-sign-in-with-apple-client_secret" value="{{ old('services-sign-in-with-apple-client_secret', setting('services.sign-in-with-apple.client_secret')) }}">
+                    
+                                            @error('services-sign-in-with-apple-client_secret')
+                                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        
+                                        </div>
+                                        <div class="form-group custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="enable_sign-in-with-apple_login" name="enable_sign-in-with-apple_login" @if(setting('enable_sign-in-with-apple_login', false)) checked @endif>
+                                            <label class="custom-control-label" for="enable_sign-in-with-apple_login">{{ trans('messages.fields.enabled') }}</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                                        </button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="form-group">
                     <label class="control-label" for="overwrite_avatar">Force user's avatar</label>
                     <select class="custom-select" id="overwrite_avatar" name="overwrite_avatar">
-                        @php
-                            $providers = ['default','minecraft'];
-                            if(setting('enable_facebook_login')) $providers[] = 'facebook';
-                            if(setting('enable_twitter_login')) $providers[] = 'twitter';
-                            if(setting('enable_steam_login')) $providers[] = 'steam';
-                            if(setting('enable_discord_login')) $providers[] = 'discord';
-                            if(setting('enable_google_login')) $providers[] = 'google';
-                        @endphp
-                        @foreach($providers as $item)
+                        @foreach(array_merge(socials_getProviders(), ['default','minecraft']) as $item)
                             <option value="{{ $item }}" @if($item === setting('overwrite_avatar')) selected @endif>{{ $item }}</option>
                         @endforeach
                     </select>

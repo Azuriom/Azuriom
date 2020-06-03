@@ -108,6 +108,9 @@ if (! function_exists('socials_getProviders')) {
         if (setting('enable_google_login')) {
             $providers[] = 'google';
         }
+        if (setting('enable_sign-in-with-apple_login')) {
+            $providers[] = 'sign-in-with-apple';
+        }
 
         return $providers;
     }

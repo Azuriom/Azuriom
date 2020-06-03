@@ -20,11 +20,15 @@ class SocialController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        if (setting("enable_{$provider}_login")) {
-            return Socialite::driver($provider)->redirect();
+        if ( ! setting("enable_{$provider}_login")) {
+            return redirect()->back()->with('error', "$provider is not enabled for login.");
         }
 
-        return redirect()->back()->with('error', "$provider is not enabled for login.");
+        if ($provider === 'sign-in-with-apple') {
+            return Socialite::driver($provider)->scopes(["name", "email"])->redirect();
+        }
+
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -41,7 +45,9 @@ class SocialController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($request, $user, $provider);
-
+        if ($authUser === false) {
+            redirect('/')->with('error', "The user email is not given by $provider, please change your app permisions");
+        }
         if ($authUser->refreshActiveBan()->is_banned || $authUser->is_deleted) {
             return redirect('/')->with('error', trans('auth.suspended'));
         }
@@ -72,6 +78,9 @@ class SocialController extends Controller
             }
 
             if (! $user) {
+                if (empty($providerUser->getEmail())) {
+                    return false;
+                }
                 $user = User::create([
                     'email' => $providerUser->getEmail(),
                     'name'  => $providerUser->getName(),
