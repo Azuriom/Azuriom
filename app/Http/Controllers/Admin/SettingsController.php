@@ -354,7 +354,7 @@ class SettingsController extends Controller
             'enable_steam_login' => $request->filled('enable_steam_login'),
             'enable_discord_login' => $request->filled('enable_discord_login'),
             'enable_google_login' => $request->filled('enable_google_login'),
-            'enanle_sign-in-with-apple_login' => $request->filled('enanle_sign-in-with-apple_login'),
+            'enable_sign-in-with-apple_login' => $request->filled('enable_sign-in-with-apple_login'),
         ]);
 
         ActionLog::log('settings.updated');

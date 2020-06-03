@@ -17,7 +17,7 @@
             <a style="background-color: #992c1d;border-color: #992c1d;" class="btn btn-primary" href="{{ url('/login/google') }}"><i class="fab fa-google"></i> Sign-in with Google</a>
             @break
         @case('sign-in-with-apple')
-            @signInWithApple('black', false, 'sign-in', 0)
+            <a style="background-color: #000000;border-color: #000000;" class="btn btn-primary" href="{{ url('/login/sign-in-with-apple') }}"><i class="fab fa-apple"></i> Sign-in with Apple</a>
             @break
         @default
     @endswitch

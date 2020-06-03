@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.settings.maintenance.title'))
+@section('title', trans('admin.settings.socials.title'))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -20,10 +20,10 @@
                         <div id="collapseOne" class="collapse @if ($errors->has('services-facebook-client_id') ||  $errors->has('services-facebook-client_secret')) show @else  @endif" aria-labelledby="headingOne" >
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    Have a developper account :<code>https://developers.facebook.com/</code><br>
-                                    Create an app : <code>https://developers.facebook.com/apps/</code><br>
-                                    Base URI : <code>{{ secure_url('') }}</code><br>
-                                    Redirect URI : <code>{{ secure_url('/login/facebook/callback') }}</code><br>
+                                    {{trans('admin.settings.socials.dev-account')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://developers.facebook.com/">https://developers.facebook.com/</a></code><br>
+                                    {{trans('admin.settings.socials.create-app')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://developers.facebook.com/apps/">https://developers.facebook.com/apps/</a></code><br>
+                                    {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
+                                    {{trans('admin.settings.socials.callback-url')}} : <code>{{ secure_url('/login/facebook/callback') }}</code><br>
 
                                     <div class="form-group col-md-8">
                                         <label for="services-facebook-client_id">CLIENT ID</label>
@@ -65,14 +65,13 @@
                         <div id="collapseTwo" class="collapse @if ($errors->has('services-twitter-client_id') ||  $errors->has('services-twitter-client_secret')) show @else  @endif" aria-labelledby="headingTwo" >
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    Have a developper account :<code>https://developer.twitter.com/</code><br>
-                                    Create an app : <code>https://developer.twitter.com/apps</code><br>
-                                    Website URL : <code>{{ secure_url('') }}</code><br>
-                                    You need to check "Enable Sign in with Twitter" <br>
-                                    Callback URL : <code>{{ secure_url('/login/twitter/callback') }}</code><br>
-                                    You need to provide a Terms of Service URL which can be created here : <code>{{url('/admin/pages')}}</code><br>
-                                    You need to provide a Privacy policy URL which can be created here : <code>{{url('/admin/pages')}}</code><br>
-                                    Go to permissions click edit then check "read-only" and in the additional permissions check "request email address from users"
+                                    {{trans('admin.settings.socials.dev-account')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://developer.twitter.com/">https://developer.twitter.com/</a></code><br>
+                                    {{trans('admin.settings.socials.create-app')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://developer.twitter.com/apps">https://developer.twitter.com/apps</a></code><br>
+                                    {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
+                                    {{trans('admin.settings.socials.callback-url')}} : <code>{{ secure_url('/login/twitter/callback') }}</code><br>
+                                    {{trans('admin.settings.socials.twitter.terms')}} : <code><a target="_blank" href="{{url('/admin/pages')}}">{{url('/admin/pages')}}</a></code><br>
+                                    {{trans('admin.settings.socials.twitter.privacy')}} : <code><a target="_blank" href="{{url('/admin/pages')}}">{{url('/admin/pages')}}</a></code><br>
+                                    {{trans('admin.settings.socials.twitter.request-email')}}
                                     <div class="form-group col-md-8">
                                         <label for="services-twitter-client_id">CLIENT ID</label>
                                         <input type="text" class="form-control @error('services-twitter-client_id') is-invalid @enderror" id="services-twitter-client_id" name="services-twitter-client_id" value="{{ old('services-twitter-client_id', setting('services.twitter.client_id')) }}">
@@ -113,9 +112,9 @@
                         <div id="collapseThree" class="collapse @if($errors->has('services-steam-client_secret')) show @endif" aria-labelledby="headingThree" >
                             <div class="card-body">
                                 <div class="alert alert-info">
-                                    Have a developper account :<code>https://steamcommunity.com/dev</code><br>
-                                    Create an app : <code>https://steamcommunity.com/dev/apikey</code><br>
-                                    Base URI : <code>{{ secure_url('') }}</code><br>
+                                    {{trans('admin.settings.socials.dev-account')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://steamcommunity.com/dev">https://steamcommunity.com/dev</a></code><br>
+                                    {{trans('admin.settings.socials.create-app')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://steamcommunity.com/dev/apikey">https://steamcommunity.com/dev/apikey</a></code><br>
+                                    {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
 
                                     <div class="form-group col-md-8">
                                         <label for="services-steam-client_secret">CLIENT SECRET</label>
@@ -148,9 +147,9 @@
                             <div id="collapseFour" class="collapse @if ($errors->has('services-discord-client_id') ||  $errors->has('services-discord-client_secret')) show @else  @endif" aria-labelledby="headingFour" >
                                 <div class="card-body">
                                     <div class="alert alert-info">
-                                        Create an app : <code>https://discord.com/developers/applications</code><br>
-                                        Base URI : <code>{{ secure_url('') }}</code><br>
-                                        Redirect URI : <code>{{ secure_url('/login/discord/callback') }}</code><br>
+                                        {{trans('admin.settings.socials.create-app')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://discord.com/developers/applications">https://discord.com/developers/applications</a></code><br>
+                                        {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
+                                        {{trans('admin.settings.socials.callback-url')}} : <code>{{ secure_url('/login/discord/callback') }}</code><br>
     
                                         <div class="form-group col-md-8">
                                             <label for="services-discord-client_id">CLIENT ID</label>
@@ -192,10 +191,10 @@
                             <div id="collapseFifth" class="collapse @if ($errors->has('services-google-client_id') ||  $errors->has('services-google-client_secret')) show @else  @endif" aria-labelledby="headingFifth" >
                                 <div class="card-body">
                                     <div class="alert alert-info">
-                                        Have a developper account :<code>https://developers.google.com/</code><br>
-                                        Create an app : <code>https://console.developers.google.com/</code><br>
-                                        Base URI : <code>{{ secure_url('') }}</code><br>
-                                        Redirect URI : <code>{{ secure_url('/login/google/callback') }}</code><br>
+                                        {{trans('admin.settings.socials.dev-account')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://developers.google.com">https://developers.google.com</a></code><br>
+                                        {{trans('admin.settings.socials.create-app')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://console.developers.google.com">https://console.developers.google.com</a></code><br>
+                                        {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
+                                        {{trans('admin.settings.socials.callback-url')}} : <code>{{ secure_url('/login/google/callback') }}</code><br>
     
                                         <div class="form-group col-md-8">
                                             <label for="services-google-client_id">CLIENT ID</label>
@@ -237,9 +236,9 @@
                             <div id="collapseSixth" class="collapse @if ($errors->has('services-sign-in-with-apple-client_id') ||  $errors->has('services-sign-in-with-apple-client_secret')) show @else  @endif" aria-labelledby="headingFifth" >
                                 <div class="card-body">
                                     <div class="alert alert-info">
-                                        Follow the instructions here : <code>https://github.com/GeneaLabs/laravel-sign-in-with-apple</code><br>
-                                        Base URI : <code>{{ secure_url('') }}</code><br>
-                                        Redirect URI : <code>{{ secure_url('/login/sign-in-with-apple/callback') }}</code><br>
+                                        {{trans('admin.settings.socials.detailed-instructions')}} : <code><a target="_blank" rel="nofollow noreferrer noopener" href="https://github.com/GeneaLabs/laravel-sign-in-with-apple">https://github.com/GeneaLabs/laravel-sign-in-with-apple</a></code><br>
+                                        {{trans('admin.settings.socials.base-url')}} : <code>{{ secure_url('') }}</code><br>
+                                        {{trans('admin.settings.socials.callback-url')}} : <code>{{ secure_url('/login/sign-in-with-apple/callback') }}</code><br>
     
                                         <div class="form-group col-md-8">
                                             <label for="services-sign-in-with-apple-client_id">CLIENT ID</label>
