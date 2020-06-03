@@ -1,23 +1,5 @@
-@php
-        $providers = [];
-        if (setting('enable_facebook_login')) {
-            $providers[] = 'facebook';
-        }
-        if (setting('enable_twitter_login')) {
-            $providers[] = 'twitter';
-        }
-        if (setting('enable_steam_login')) {
-            $providers[] = 'steam';
-        }
-        if (setting('enable_discord_login')) {
-            $providers[] = 'discord';
-        }
-        if (setting('enable_google_login')) {
-            $providers[] = 'google';
-        }
-@endphp
 
-@foreach ($providers as $item)
+@foreach (socials_getProviders() as $item)
     @switch($item)
         @case('facebook')
             <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/facebook') }}"><i class="fab fa-facebook-square"></i> Sign-in with FaceBook</a>

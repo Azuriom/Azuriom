@@ -22,7 +22,9 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return view('profile.index', ['user' => $request->user(), 'auth_methods' => $this->getProviders()]);
+        $providers = socials_getProviders();
+        $providers[] = 'default';
+        return view('profile.index', ['user' => $request->user(), 'auth_methods' => $providers]);
     }
 
     /**
@@ -55,8 +57,10 @@ class ProfileController extends Controller
      */
     public function updateAvatar(Request $request)
     {
+        $providers = socials_getProviders();
+        $providers[] = 'default';
         $this->validate($request, [
-            'avatar_from_provider' => ['required', Rule::in($this->getProviders())],
+            'avatar_from_provider' => ['required', Rule::in($providers)],
         ]);
         $user = $request->user();
         $settings = $user->settings;
@@ -90,28 +94,6 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
-    }
-
-    private function getProviders()
-    {
-        $providers = ['default'];
-        if (setting('enable_facebook_login')) {
-            $providers[] = 'facebook';
-        }
-        if (setting('enable_twitter_login')) {
-            $providers[] = 'twitter';
-        }
-        if (setting('enable_steam_login')) {
-            $providers[] = 'steam';
-        }
-        if (setting('enable_discord_login')) {
-            $providers[] = 'discord';
-        }
-        if (setting('enable_google_login')) {
-            $providers[] = 'google';
-        }
-
-        return $providers;
     }
 
     public function updatePassword(Request $request)
