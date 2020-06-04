@@ -146,7 +146,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar()
     {
-        $user_preference = $this->settings['avatar_from_provider'];
+        $user_preference = $this->settings['avatar_from_provider'] ?? null;
         $admin_choice = setting('overwrite_avatar');
         if ($admin_choice === 'default') {
             $identity = SocialIdentity::where([
