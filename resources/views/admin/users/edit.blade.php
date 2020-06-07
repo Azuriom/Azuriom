@@ -136,11 +136,11 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
 
-                                    @unless($user->is_deleted)
+                                    @if(! $user->is_deleted)
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
                                         </div>
-                                    @endunless
+                                    @endif
                                 </div>
                             @endif
                         </div>
@@ -176,7 +176,7 @@
         </div>
     </div>
 
-    @unless($user->is_banned)
+    @if(! $user->is_banned)
         <div class="modal fade show" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-modal="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -211,5 +211,5 @@
                 </div>
             </div>
         </div>
-    @endunless
+    @endif
 @endsection

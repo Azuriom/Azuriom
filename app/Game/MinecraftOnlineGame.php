@@ -32,7 +32,7 @@ class MinecraftOnlineGame implements Game
             $uuid = $response->throw()->json()['id'];
 
             if ($uuid === null) {
-                throw new RuntimeException("No UUID for ${$name}");
+                throw new RuntimeException("No UUID for {$name}");
             }
 
             return Uuid::fromString($uuid)->toString();

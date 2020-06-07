@@ -60,13 +60,13 @@
 
 <div class="form-group">
     <label for="publishedInput">{{ trans('admin.posts.fields.published-at') }}</label>
-    <input type="text" class="form-control date-picker @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', $post->published_at ?? now()) }}" required>
+    <input type="text" class="form-control date-picker @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', $post->published_at ?? now()) }}" required aria-describedby="publishedInfo">
 
     @error('published_at')
     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
     @enderror
 
-    <small class="text-info">{{ trans('admin.posts.published-info') }}</small>
+    <small id="publishedInfo" class="form-text">{{ trans('admin.posts.published-info') }}</small>
 </div>
 
 <div class="form-group custom-control custom-switch">

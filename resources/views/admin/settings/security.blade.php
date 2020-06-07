@@ -24,30 +24,32 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-0">
                             <label for="secretKeyInput">{{ trans('admin.settings.security.recaptcha-secret-key') }}</label>
-                            <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="secretKeyInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}">
+                            <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="secretKeyInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}" aria-describedby="secretKeyInfo">
 
                             @error('recaptcha-secret-key')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
 
-                            <small>@lang('admin.settings.security.recaptcha-info')</small>
+                            <small id="secretKeyInfo" class="form-text">@lang('admin.settings.security.recaptcha-info')</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="hashSelect">{{ trans('admin.settings.security.hash') }}</label>
-                    <select class="custom-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required>
+                    <select class="custom-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required aria-describedby="hashInfo">
                         @foreach($hashAlgorithms as $hash => $hashName)
                             <option value="{{ $hash }}" @if($currentHash === $hash) selected @endif>{{ $hashName }}</option>
                         @endforeach
                     </select>
+
                     @error('hash')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
-                    <small>{{ trans('admin.settings.security.hash-info') }}</small>
+
+                    <small id="hashInfo" class="form-text">{{ trans('admin.settings.security.hash-info') }}</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">
