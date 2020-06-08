@@ -117,10 +117,10 @@ class ActionLog extends Model
     public function getActionFormat()
     {
         return self::$actions[$this->action] ?? [
-                'icon' => 'question',
-                'color' => 'muted',
-                'message' => $this->action,
-            ];
+            'icon' => 'question',
+            'color' => 'muted',
+            'message' => $this->action,
+        ];
     }
 
     public function getActionMessage()

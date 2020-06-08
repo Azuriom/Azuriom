@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Ramsey\Uuid\Uuid;
+use RuntimeException;
 
 class MinecraftOnlineGame implements Game
 {
@@ -30,6 +31,10 @@ class MinecraftOnlineGame implements Game
             $response = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}");
 
             $uuid = $response->throw()->json()['id'];
+
+            if ($uuid === null) {
+                throw new RuntimeException("No UUID for {$name}");
+            }
 
             return Uuid::fromString($uuid)->toString();
         });

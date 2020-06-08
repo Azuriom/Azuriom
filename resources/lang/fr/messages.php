@@ -39,6 +39,7 @@ return [
         'send' => 'Envoyer',
         'reload' => 'Recharger',
         'refresh' => 'Rafraîchir',
+        'duplicate' => 'Dupliquer',
     ],
 
     'fields' => [
@@ -58,6 +59,7 @@ return [
         'short-description' => 'Description courte',
         'content' => 'Contenu',
         'role' => 'Rôle',
+        'quantity' => 'Quantité',
         'money' => 'Argent',
         'color' => 'Couleur',
         'url' => 'URL',
@@ -71,7 +73,6 @@ return [
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',
     'none' => 'Aucun(e)',
-
     'copied' => 'Copié',
 
     'home' => 'Accueil',
@@ -98,7 +99,7 @@ return [
 
     'server' => [
         'online' => ':count joueur en ligne|:count joueurs en ligne',
-        'offline' => 'Le serveur est actuellement hors-ligne.',
+        'offline' => 'Le serveur est actuellement éteint.',
     ],
 
     'profile' => [

@@ -13,14 +13,14 @@
                     <div class="form-group col-md-4">
                         <label for="mailerSelect">{{ trans('admin.settings.mail.driver') }}</label>
 
-                        <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type">
+                        <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type" aria-describedby="mailerInfo">
                             <option value="" @if(config('mail.default') === 'array') selected @endif>{{ trans('messages.none') }}</option>
                             @foreach($mailers as $mailer => $mailerName)
                                 <option value="{{ $mailer }}" @if(config('mail.default') === $mailer) selected @endif>{{ $mailerName }}</option>
                             @endforeach
                         </select>
 
-                        <small>@lang('admin.settings.mail.driver-info')</small>
+                        <small id="mailerInfo" class="form-text">@lang('admin.settings.mail.driver-info')</small>
                     </div>
 
                     <div class="form-group col-md-8">

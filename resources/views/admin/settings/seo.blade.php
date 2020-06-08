@@ -8,25 +8,26 @@
             <form action="{{ route('admin.settings.update-seo') }}" method="POST">
                 @csrf
 
-                <div class="form-group mb-0">
+                <div class="form-group">
                     <label for="keyInput">{{ trans('admin.settings.seo.google-analytics') }}</label>
-                    <input type="text" class="form-control @error('g-analytics-id') is-invalid @enderror" id="keyInput" name="g-analytics-id" placeholder="UA-XXXXXXXX-1" value="{{ old('g-analytics-id', setting('g-analytics-id', '')) }}">
+                    <input type="text" class="form-control @error('g-analytics-id') is-invalid @enderror" id="keyInput" name="g-analytics-id" placeholder="UA-XXXXXXXX-1" value="{{ old('g-analytics-id', setting('g-analytics-id', '')) }}" aria-describedby="keyInfo">
 
                     @error('g-analytics-id')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small>@lang('admin.settings.seo.google-analytics-info')</small>
+                    <small id="keyInfo" class="form-text">@lang('admin.settings.seo.google-analytics-info')</small>
                 </div>
 
                 <div class="form-group">
                     <label for="keywordsInput">{{ trans('admin.settings.seo.meta') }}</label>
-                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}">
-                    <small>{{ trans('admin.settings.seo.meta-info') }}</small>
+                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}" aria-describedby="keywordsInfo">
 
                     @error('keywords')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
+
+                    <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.seo.meta-info') }}</small>
                 </div>
 
                 <div class="form-group">
@@ -40,13 +41,13 @@
 
                 <div class="form-group">
                     <label for="htmlBodyArea">{{ trans('admin.settings.seo.html-body-code') }}</label>
-                    <textarea class="form-control @error('html-body') is-invalid @enderror" id="htmlBodyArea" name="html-body" rows="4">{{ old('html-body', $htmlBody) }}</textarea>
+                    <textarea class="form-control @error('html-body') is-invalid @enderror" id="htmlBodyArea" name="html-body" aria-describedby="htmlBodyInfo" rows="4">{{ old('html-body', $htmlBody) }}</textarea>
 
                     @error('html-body')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small>{{ trans('admin.settings.seo.html-code-info') }}</small>
+                    <small id="htmlBodyInfo" class="form-text">{{ trans('admin.settings.seo.html-code-info') }}</small>
                 </div>
 
                 <div class="form-group custom-control custom-switch">
@@ -58,13 +59,13 @@
                     <div class="card card-body mb-3">
                         <div class="form-group mb-0">
                             <label for="welcomePopupArea">{{ trans('admin.settings.seo.welcome-popup.message') }}</label>
-                            <textarea class="form-control @error('welcome-popup') is-invalid @enderror" id="welcomePopupArea" name="welcome-popup" rows="5">{{ old('welcome-popup', $welcomePopup) }}</textarea>
+                            <textarea class="form-control @error('welcome-popup') is-invalid @enderror" id="welcomePopupArea" name="welcome-popup" aria-describedby="welcomePopupInfo" rows="5">{{ old('welcome-popup', $welcomePopup) }}</textarea>
 
                             @error('welcome-popup')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
 
-                            <small>{{ trans('admin.settings.seo.welcome-popup.info') }}</small>
+                            <small id="welcomePopupInfo" class="form-text">{{ trans('admin.settings.seo.welcome-popup.info') }}</small>
                         </div>
                     </div>
                 </div>

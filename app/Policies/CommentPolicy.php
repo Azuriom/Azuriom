@@ -30,6 +30,6 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment)
     {
-        return $user->id === $comment->author_id || $user->can('comments.delete.other');
+        return $user->is($comment->author) || $user->can('comments.delete.other');
     }
 }

@@ -16,7 +16,7 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:150'],
+            'name' => ['required', 'string', 'max:50'],
             'slug' => ['required', 'string', 'max:100', new Slug()],
             'image' => [Rule::requiredIf(! $this->image), 'nullable', 'image'],
         ];

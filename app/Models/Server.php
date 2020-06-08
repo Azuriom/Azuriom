@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Cache;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerCommand[] $commands
  *
  * @method static \Illuminate\Database\Eloquent\Builder executable()
+ * @method static \Illuminate\Database\Eloquent\Builder pingable()
  */
 class Server extends Model
 {
@@ -95,7 +96,7 @@ class Server extends Model
 
     public function getPlayers()
     {
-        return Cache::remember('servers.'.$this->id, now()->addMinutes(5), function () {
+        return Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
             return $this->bridge()->getServerData() ?? [];
         });
     }
@@ -138,7 +139,7 @@ class Server extends Model
     }
 
     /**
-     * Scope a query to only include enabled pages.
+     * Scope a query to only include servers which can execute commands.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -146,5 +147,16 @@ class Server extends Model
     public function scopeExecutable(Builder $query)
     {
         return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon']);
+    }
+
+    /**
+     * Scope a query to only include servers which can be pinged.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePingable(Builder $query)
+    {
+        return $query->whereIn('type', ['mc-ping', 'mc-rcon']);
     }
 }

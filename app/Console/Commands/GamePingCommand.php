@@ -28,7 +28,7 @@ class GamePingCommand extends Command
      */
     public function handle()
     {
-        $servers = Server::executable()->get();
+        $servers = Server::pingable()->get();
 
         foreach ($servers as $server) {
             $data = $server->bridge()->getServerData();
