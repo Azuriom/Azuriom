@@ -10,12 +10,12 @@ use Illuminate\Support\Str;
  * @property string $id
  * @property int $user_id
  * @property int|null $author_id
- * @property string|null $level
+ * @property string $level
  * @property string $content
  * @property string|null $link
  * @property \Carbon\Carbon|null $read_at
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  *
  * @property \Azuriom\Models\User $user
  * @property \Azuriom\Models\User|null $author

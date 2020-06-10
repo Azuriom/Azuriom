@@ -9,7 +9,7 @@
             const sortable = Sortable.create(document.getElementById('roles'), {
                 animation: 150,
                 group: 'role',
-                handle: '.sortable-handle'
+                handle: '.sortable-handle',
             });
 
             function serialize(sortable) {
@@ -23,7 +23,7 @@
             }
 
             const saveButton = document.getElementById('save');
-            const saveButtonIcon = saveButton.querySelector('.btn-animation');
+            const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
             saveButton.addEventListener('click', function () {
                 saveButton.setAttribute('disabled', '');
@@ -84,7 +84,7 @@
             @if(Auth::user()->isAdmin())
                 <button type="button" class="btn btn-success" id="save">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                    <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                 </button>
             @endif
 

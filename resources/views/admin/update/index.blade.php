@@ -6,7 +6,7 @@
     <script>
         document.querySelectorAll('[data-update-route]').forEach(function (el) {
             el.addEventListener('click', function () {
-                const saveButtonIcon = el.querySelector('.btn-animation');
+                const saveButtonIcon = el.querySelector('.btn-spinner');
 
                 el.setAttribute('disabled', '');
                 saveButtonIcon.classList.remove('d-none');
@@ -48,7 +48,7 @@
                     <button type="button" class="btn btn-success" data-update-route="{{ route('admin.update.install') }}">
                         <i class="fas fa-download"></i>
                         {{ trans('admin.update.actions.install') }}
-                        <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                        <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
                 @else
                     <p>{{ trans('admin.update.download') }}</p>
@@ -56,7 +56,7 @@
                     <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
                         <i class="fas fa-cloud-download-alt"></i>
                         {{ trans('admin.update.actions.download') }}
-                        <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                        <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
                 @endif
 

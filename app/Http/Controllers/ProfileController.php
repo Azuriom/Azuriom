@@ -152,10 +152,8 @@ class ProfileController extends Controller
             ]);
         }
 
-        $receiver->money += $money;
-        $user->money -= $money;
-        $receiver->save();
-        $user->save();
+        $user->removeMoney($money);
+        $receiver->addMoney($money);
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 

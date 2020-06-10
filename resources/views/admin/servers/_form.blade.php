@@ -33,7 +33,7 @@
     @isset($server)
         <script>
             const verifyButton = document.getElementById('verifyAzLink');
-            const verifyButtonIcon = verifyButton.querySelector('.btn-animation');
+            const verifyButtonIcon = verifyButton.querySelector('.btn-spinner');
 
             verifyButton.addEventListener('click', function () {
                 verifyButton.setAttribute('disabled', '');
@@ -192,7 +192,7 @@
 
         <button type="button" class="btn btn-success mb-2" id="verifyAzLink">
             <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
-            <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
         </button>
     @else
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
