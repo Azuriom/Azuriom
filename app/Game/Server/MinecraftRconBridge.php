@@ -7,6 +7,8 @@ use Thedudeguy\Rcon;
 
 class MinecraftRconBridge extends MinecraftPingBridge
 {
+    use MinecraftPinger;
+
     public function verifyLink()
     {
         if (! parent::verifyLink()) {
