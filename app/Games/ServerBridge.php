@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Game\Server;
+namespace Azuriom\Games;
 
 use Azuriom\Models\Server;
 
@@ -31,18 +31,6 @@ abstract class ServerBridge
     abstract public function getServerData();
 
     /**
-     * Get the online players on the server.
-     *
-     * @return int|null
-     */
-    public function getOnlinePlayers()
-    {
-        $data = $this->getServerData();
-
-        return $data ? $data['players'] : null;
-    }
-
-    /**
      * Test the connection to the server.
      *
      * @return bool
@@ -56,10 +44,7 @@ abstract class ServerBridge
      * @param  string|null  $playerName
      * @param  bool  $needConnected
      */
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
-    {
-        //
-    }
+    abstract public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false);
 
     /**
      * Return if the server can execute commands.
@@ -67,4 +52,9 @@ abstract class ServerBridge
      * @return bool
      */
     abstract public function canExecuteCommand();
+
+    public function getDefaultPort()
+    {
+        return 0;
+    }
 }

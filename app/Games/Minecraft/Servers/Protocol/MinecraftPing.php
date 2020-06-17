@@ -1,14 +1,14 @@
 <?php
 
-namespace Azuriom\Game\Server;
+namespace Azuriom\Games\Minecraft\Servers\Protocol;
 
-use Exception;
+use RuntimeException;
 
 /**
  * PHP Minecraft Pinger.
  *
  * This class is based on https://github.com/xPaw/PHP-Minecraft-Query, under MIT license.
- * Adapted to Azuriom to follow PSR 12 and prevent exceptions thrown in the constructor.
+ * Adapted to Azuriom to follow PSR 1 and prevent RuntimeExceptions thrown in the constructor.
  *
  * @author xPaw
  */
@@ -19,13 +19,13 @@ class MinecraftPing
     private $address;
     private $port;
 
-    public function __construct(string $address, int $port = 25565, $resolveSrv = true)
+    public function __construct(string $address, int $port = 25565, bool $resolveSrv = true)
     {
         $this->address = $address;
         $this->port = $port;
 
         if ($resolveSrv) {
-            $this->resolveSRV();
+            $this->resolveSrv();
         }
     }
 
@@ -35,7 +35,7 @@ class MinecraftPing
      * @param  int  $timeout
      * @return mixed
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public function ping(int $timeout = 3)
     {
@@ -60,7 +60,7 @@ class MinecraftPing
         $length = $this->readVarInt(); // packet length
 
         if ($length < 10) {
-            throw new Exception('Invalid length: '.$length);
+            throw new RuntimeException('Invalid length: '.$length);
         }
 
         $this->readVarInt(); // packet type
@@ -71,65 +71,30 @@ class MinecraftPing
 
         while (strlen($data) < $length) {
             if (microtime(true) - $startTime > $timeout) {
-                throw new Exception('Server read timed out');
+                throw new RuntimeException('Server read timed out');
             }
 
             $remainder = $length - strlen($data);
             $block = fread($this->socket, $remainder); // and finally the json string
             // abort if there is no progress
             if (! $block) {
-                throw new Exception('Server returned too few data');
+                throw new RuntimeException('Server returned too few data');
             }
 
             $data .= $block;
         }
 
         if (empty($data)) {
-            throw new Exception('Server didn\'t return any data');
+            throw new RuntimeException('Server didn\'t return any data');
         }
 
         $response = json_decode($data);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception(json_last_error_msg());
+            throw new RuntimeException('Invalid JSON response: '.json_last_error_msg());
         }
 
         return $response;
-    }
-
-    /**
-     * Read a var int.
-     *
-     * @return int
-     *
-     * @throws \Exception
-     */
-    private function readVarInt()
-    {
-        $i = 0;
-        $j = 0;
-
-        while (true) {
-            $k = @fgetc($this->socket);
-
-            if ($k === false) {
-                return 0;
-            }
-
-            $k = ord($k);
-
-            $i |= ($k & 0x7F) << $j++ * 7;
-
-            if ($j > 5) {
-                throw new Exception('VarInt too big: '.$j);
-            }
-
-            if (($k & 0x80) !== 128) {
-                break;
-            }
-        }
-
-        return $i;
     }
 
     /**
@@ -137,7 +102,7 @@ class MinecraftPing
      *
      * @param  int  $timeout
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public function connect(int $timeout = 3)
     {
@@ -147,7 +112,7 @@ class MinecraftPing
         if (! $this->socket) {
             $this->socket = null;
 
-            throw new Exception("Failed to connect or create a socket: {$errno} ({$errstr})");
+            throw new RuntimeException("Failed to connect or create a socket: {$errno} ({$errstr})");
         }
 
         stream_set_timeout($this->socket, $timeout);
@@ -172,7 +137,39 @@ class MinecraftPing
         $this->close();
     }
 
-    protected function resolveSRV()
+    /**
+     * Read a var int.
+     *
+     * @return int
+     *
+     * @throws \RuntimeException
+     */
+    protected function readVarInt()
+    {
+        $result = 0;
+        $numRead = 0;
+
+        do {
+            $read = fread($this->socket, 1);
+
+            if ($read === false) {
+                return 0;
+            }
+
+            $read = ord($read);
+
+            $value = $read & 0x7F;
+            $result |= $value << 7 * $numRead;
+
+            if (++$numRead > 5) {
+                throw new RuntimeException('VarInt too big: '.$numRead);
+            }
+        } while (($read & 0x80) !== 0);
+
+        return $result;
+    }
+
+    protected function resolveSrv()
     {
         if (ip2long($this->address) !== false) {
             return;

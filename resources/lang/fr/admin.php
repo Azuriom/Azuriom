@@ -265,6 +265,7 @@ return [
 
             'rcon-password' => 'Mot de passe Rcon',
             'rcon-port' => 'Port Rcon',
+            'query-port' => 'Port Source Query',
 
             'azlink-port' => 'Port AzLink',
         ],
@@ -302,9 +303,11 @@ return [
         ],
 
         'type' => [
-            'mc-ping' => 'Ping',
-            'mc-rcon' => 'Rcon',
+            'mc-ping' => 'Minecraft Ping',
+            'mc-rcon' => 'Minecraft RCON',
             'mc-azlink' => 'AzLink',
+            'source-query' => 'Source Query',
+            'source-rcon' => 'Source RCON',
         ],
     ],
 

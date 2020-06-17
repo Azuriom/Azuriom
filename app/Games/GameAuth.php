@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Game;
+namespace Azuriom\Games;
 
 use Azuriom\Models\User;
 
-interface Game
+interface GameAuth
 {
     public function name();
 
