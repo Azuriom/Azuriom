@@ -31,18 +31,6 @@ abstract class ServerBridge
     abstract public function getServerData();
 
     /**
-     * Get the online players on the server.
-     *
-     * @return int|null
-     */
-    public function getOnlinePlayers()
-    {
-        $data = $this->getServerData();
-
-        return $data ? $data['players'] : null;
-    }
-
-    /**
      * Test the connection to the server.
      *
      * @return bool
@@ -64,4 +52,9 @@ abstract class ServerBridge
      * @return bool
      */
     abstract public function canExecuteCommand();
+
+    public function getDefaultPort()
+    {
+        return 0;
+    }
 }

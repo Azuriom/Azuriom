@@ -1,8 +1,8 @@
 <?php
 
-namespace Azuriom\Game\All\Minecraft;
+namespace Azuriom\Games\Minecraft\Auth;
 
-use Azuriom\Games\Game;
+use Azuriom\Games\GameAuth;
 use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 
-class MinecraftOnlineGame implements Game
+class MinecraftOnlineGameAuth implements GameAuth
 {
     public function name()
     {

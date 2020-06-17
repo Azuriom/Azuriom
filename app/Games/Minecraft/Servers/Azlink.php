@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Games\Protocols;
+namespace Azuriom\Games\Minecraft\Servers;
 
 use Azuriom\Games\ServerBridge;
 use Exception;
@@ -8,12 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class Azlink extends ServerBridge
 {
-    private const DEFAULT_PORT = 25588;
-
-    public function __construct(Server $server)
-    {
-        parent::__construct($server);
-    }
+    private const DEFAULT_LINK_PORT = 25588;
 
     public function getServerData()
     {
@@ -41,7 +36,7 @@ class Azlink extends ServerBridge
 
         try {
             $this->sendServerRequest();
-        } catch (Exception $t) {
+        } catch (Exception $e) {
             // ignore, commands will be dispatched few minutes later
         }
     }
@@ -51,14 +46,14 @@ class Azlink extends ServerBridge
         return true;
     }
 
-    /**
-     * Send a "ping" request to the server.
-     *
-     * @return \Illuminate\Http\Client\Response
-     */
+    public function getDefaultPort()
+    {
+        return 25565;
+    }
+
     public function sendServerRequest()
     {
-        $port = $this->server->data['azlink-port'] ?? self::DEFAULT_PORT;
+        $port = $this->server->data['azlink-port'] ?? self::DEFAULT_LINK_PORT;
         $token = hash('sha256', $this->server->token);
 
         return Http::withToken($token, '')->post("http://{$this->server->address}:{$port}");

@@ -1,11 +1,11 @@
 <?php
 
-namespace Azuriom\Games\All\Minecraft;
+namespace Azuriom\Games\Minecraft\Auth;
 
-use Azuriom\Games\Game;
+use Azuriom\Games\GameAuth;
 use Azuriom\Models\User;
 
-class MinecraftOfflineGame implements Game
+class MinecraftOfflineGameAuth implements GameAuth
 {
     public function name()
     {

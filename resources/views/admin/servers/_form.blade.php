@@ -28,7 +28,6 @@
                 document.getElementById('azLinkPortDisplay').innerText = port;
             });
         }
-
     </script>
     @isset($server)
         <script>
@@ -109,7 +108,7 @@
     </div>
 </div>
 
-<div data-server-type="mc-rcon" class="form-group d-none">
+<div data-server-type="mc-rcon source-rcon" class="form-group d-none">
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
@@ -133,6 +132,19 @@
             <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '25575') }}">
 
             @error('rcon-port')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<div data-server-type="source-query" class="form-group d-none">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="querySourcePortInput">{{ trans('admin.servers.fields.query-port') }}</label>
+            <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '27015') }}">
+
+            @error('query-port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -200,47 +212,3 @@
         </button>
     @endisset
 </div>
-
-<div data-server-type="source-rcon" class="form-group d-none">
-    <div class="form-row">
-        <div class="form-group col-md-8">
-            <label for="rconSourcePasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
-
-            <div class="input-group">
-                <input type="password" class="form-control @error('rcon-password-source') is-invalid @enderror" id="rconSourcePasswordInput" name="rcon-password-source" value="{{ old('rcon-password-source', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-primary" data-password-toggle="rconSourcePasswordInput">
-                        <i class="fas fa-eye-slash"></i>
-                    </button>
-                </div>
-
-                @error('rcon-password-source')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="rconSourcePortInput">{{ trans('admin.servers.fields.rcon-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('rcon-port-source') is-invalid @enderror" id="rconSourcePortInput" name="rcon-port-source" value="{{ old('rcon-port-source', $server->data['rcon-port'] ?? '25575') }}">
-
-            @error('rcon-port-source')
-            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
-    </div>
-</div>
-
-<div data-server-type="source-query" class="form-group d-none">
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="querySourcePortInput">{{ trans('admin.servers.fields.query-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '25575') }}">
-
-            @error('query-port')
-            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
-    </div>
-</div>
-

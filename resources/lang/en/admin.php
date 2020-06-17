@@ -304,7 +304,7 @@ return [
 
         'type' => [
             'mc-ping' => 'Minecraft Ping',
-            'mc-rcon' => 'Minecraft Rcon',
+            'mc-rcon' => 'Minecraft RCON',
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',

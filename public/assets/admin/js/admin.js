@@ -96,7 +96,7 @@ $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
 
 function updateToggleSelect(selector, el) {
     $('[' + selector + ']').addClass('d-none');
-    $('[' + selector + '="' + el.val() + '"]').removeClass('d-none');
+    $('[' + selector + '~="' + el.val() + '"]').removeClass('d-none');
 }
 
 $('[data-toggle-select]').each(function () {
