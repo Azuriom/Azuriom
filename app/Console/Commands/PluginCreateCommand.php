@@ -61,22 +61,22 @@ class PluginCreateCommand extends Command
         $namespace = 'Azuriom\Plugin\\'.$studlyName;
 
         if ($this->files->exists($path)) {
-            $this->error('The plugin '.$path.' already exists!');
+            $this->error("The plugin '{$path}' already exists!");
 
             return false;
         }
 
         $this->files->makeDirectory($path);
 
-        $this->createPluginJson($path, $id, $studlyName, $namespace);
+        $this->createPluginJson($path, $id, $name, $studlyName, $namespace);
 
-        $this->createComposerJson($path, $name, $namespace);
+        $this->createComposerJson($path, $id, $namespace);
 
         $sourcePath = __DIR__.'/stubs/plugin';
 
         foreach ($this->files->allFiles($sourcePath, true) as $file) {
-            $fileContent = $this->replace($file->getContents(), $name, $id, $namespace);
-            $filePath = $this->replace($file->getRelativePathname(), $name, $id, $namespace);
+            $fileContent = $this->replace($file->getContents(), $studlyName, $id, $namespace);
+            $filePath = $this->replace($file->getRelativePathname(), $studlyName, $id, $namespace);
             $filePath = $path.'/'.str_replace('.stub', '.php', $filePath);
 
             $dir = dirname($filePath);
@@ -91,7 +91,7 @@ class PluginCreateCommand extends Command
         $this->info('Plugin created successfully.');
     }
 
-    private function createPluginJson(string $path, string $id, string $name, string $namespace)
+    private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace)
     {
         $this->files->put($path.'/plugin.json', json_encode([
             'id' => $id,
@@ -103,16 +103,16 @@ class PluginCreateCommand extends Command
                 $this->option('author'),
             ],
             'providers' => [
-                "\\{$namespace}\\Providers\\{$name}ServiceProvider",
+                "\\{$namespace}\\Providers\\{$className}ServiceProvider",
                 "\\{$namespace}\\Providers\\RouteServiceProvider",
             ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    private function createComposerJson(string $path, string $name, string $namespace)
+    private function createComposerJson(string $path, string $id, string $namespace)
     {
         $this->files->put($path.'/composer.json', json_encode([
-            'name' => 'azuriom/'.strtolower($name),
+            'name' => 'azuriom/'.$id,
             'type' => 'azuriom-plugin',
             'description' => $this->option('description'),
             'autoload' => [

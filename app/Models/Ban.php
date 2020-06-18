@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
  *
  * @property \Azuriom\Models\User $user
  * @property \Azuriom\Models\User $author
- * @property \Azuriom\Models\User $remover
+ * @property \Azuriom\Models\User|null $remover
  */
 class Ban extends Model
 {

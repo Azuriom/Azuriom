@@ -2,15 +2,15 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Game\MinecraftOfflineGame;
-use Azuriom\Game\MinecraftOnlineGame;
+use Azuriom\Games\Minecraft\Auth\MinecraftOfflineGameAuth;
+use Azuriom\Games\Minecraft\Auth\MinecraftOnlineGameAuth;
 use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider
 {
     public const GAMES = [
-        'mc-online' => MinecraftOnlineGame::class,
-        'mc-offline' => MinecraftOfflineGame::class,
+        'mc-online' => MinecraftOnlineGameAuth::class,
+        'mc-offline' => MinecraftOfflineGameAuth::class,
     ];
 
     /**

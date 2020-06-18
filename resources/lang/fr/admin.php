@@ -275,7 +275,7 @@ return [
             'updated' => 'Élément de le navbar mis à jour.',
             'deleted' => 'Élément de la navbar supprimé.',
 
-            'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant avec des éléments.',
+            'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant contenant des éléments.',
         ],
     ],
 
@@ -295,6 +295,7 @@ return [
 
             'rcon-password' => 'Mot de passe Rcon',
             'rcon-port' => 'Port Rcon',
+            'query-port' => 'Port Source Query',
 
             'azlink-port' => 'Port AzLink',
         ],
@@ -332,9 +333,11 @@ return [
         ],
 
         'type' => [
-            'mc-ping' => 'Ping',
-            'mc-rcon' => 'Rcon',
+            'mc-ping' => 'Minecraft Ping',
+            'mc-rcon' => 'Minecraft RCON',
             'mc-azlink' => 'AzLink',
+            'source-query' => 'Source Query',
+            'source-rcon' => 'Source RCON',
         ],
     ],
 
@@ -360,7 +363,7 @@ return [
             'ban' => 'Bannir',
             'unban' => 'Débannir',
             'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'adresse E-Mail',
+            'verify-email' => 'Vérifier l\'adresse e-mail',
             'disable-2fa' => 'Désactiver l\'A2F',
         ],
 
@@ -489,9 +492,11 @@ return [
         'title-edit' => 'Édition de l\'image :image',
         'title-create' => 'Upload une image',
 
-        'created' => 'L\'image a été créée.',
-        'updated' => 'L\'image a été mise à jour.',
-        'deleted' => 'L\'image a été supprimée.',
+        'status' => [
+            'created' => 'L\'image a été créée.',
+            'updated' => 'L\'image a été mise à jour.',
+            'deleted' => 'L\'image a été supprimée.',
+        ],
     ],
 
     'extensions' => [

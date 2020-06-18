@@ -9,7 +9,7 @@
             const sortable = Sortable.create(document.getElementById('roles'), {
                 animation: 150,
                 group: 'role',
-                handle: '.sortable-handle'
+                handle: '.sortable-handle',
             });
 
             function serialize(sortable) {
@@ -23,7 +23,7 @@
             }
 
             const saveButton = document.getElementById('save');
-            const saveButtonIcon = saveButton.querySelector('.btn-animation');
+            const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
             saveButton.addEventListener('click', function () {
                 saveButton.setAttribute('disabled', '');
@@ -72,7 +72,7 @@
                                         <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                     @endcan
                                     @can('delete', $role)
-                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isDefault()) disabled @endif" @if(!$role->isDefault()) title="{{ trans('messages.actions.delete') }}" disabled data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
+                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="m-1 @if($role->isDefault()) disabled @endif" @if(!$role->isDefault()) title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete" @endif><i class="fas fa-trash"></i></a>
                                     @endcan
                                 </span>
                             </div>
@@ -84,7 +84,7 @@
             @if(Auth::user()->isAdmin())
                 <button type="button" class="btn btn-success" id="save">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                    <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                 </button>
             @endif
 

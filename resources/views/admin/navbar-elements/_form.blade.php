@@ -72,8 +72,8 @@
     @enderror
 </div>
 
-<div data-nav-element="dropdown" class="form-group d-none">
-    <small>{{ trans('admin.navbar-elements.dropdown-info') }}</small>
+<div data-nav-element="dropdown" class="d-none">
+    <small class="form-text text-info mb-3">{{ trans('admin.navbar-elements.dropdown-info') }}</small>
 </div>
 
 <div class="form-group custom-control custom-switch">

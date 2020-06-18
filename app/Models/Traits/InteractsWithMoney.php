@@ -6,12 +6,12 @@ trait InteractsWithMoney
 {
     public function addMoney(float $amount)
     {
-        $this->money += $amount;
+        $this->increment('money', $amount);
     }
 
     public function removeMoney(float $amount)
     {
-        $this->money -= $amount;
+        $this->decrement('money', $amount);
     }
 
     public function hasMoney(float $amount)

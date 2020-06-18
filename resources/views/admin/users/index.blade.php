@@ -63,7 +63,7 @@
                 </table>
             </div>
 
-            {{ $users->links() }}
+            {{ $users->withQueryString()->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.users.create') }}">
                 <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}

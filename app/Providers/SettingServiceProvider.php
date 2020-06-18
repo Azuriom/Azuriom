@@ -5,8 +5,8 @@ namespace Azuriom\Providers;
 use Azuriom\Models\Setting;
 use Azuriom\Support\SettingsRepository;
 use Exception;
-use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -36,20 +36,17 @@ class SettingServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      *
-     * @param  \Illuminate\Cache\Repository  $cache
      * @param  \Illuminate\Config\Repository  $config
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function boot(Cache $cache, Config $config)
+    public function boot(Config $config)
     {
         $repo = $this->app->make(SettingsRepository::class);
 
         try {
-            $settings = $cache->remember('settings', now()->addDay(), function () {
-                return Setting::all()->pluck('value', 'name')->all();
-            });
+            $settings = $this->loadSettings();
 
             // TODO 1.0: remove migration for old mail configuration
             if (array_key_exists('mail.driver', $settings)) {
@@ -109,5 +106,16 @@ class SettingServiceProvider extends ServiceProvider
         } catch (Exception $e) {
             //
         }
+    }
+
+    protected function loadSettings()
+    {
+        if ($this->app->runningInConsole()) {
+            return Setting::all()->pluck('value', 'name')->all();
+        }
+
+        return Cache::remember('settings', now()->addDay(), function () {
+            return Setting::all()->pluck('value', 'name')->all();
+        });
     }
 }

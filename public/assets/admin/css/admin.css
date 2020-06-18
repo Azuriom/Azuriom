@@ -67,6 +67,10 @@ a.disabled,
     font-weight: inherit;
 }
 
+.btn .spinner-border {
+    vertical-align: middle;
+}
+
 /*
  * SortableJS
  */

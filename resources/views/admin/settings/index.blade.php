@@ -181,29 +181,31 @@
 
                 <div class="form-group">
                     <label for="siteKeyInput">{{ trans('admin.settings.index.site-key') }}</label>
-                    <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}">
+                    <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">
 
                     @error('site-key')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small>@lang('admin.settings.index.site-key-label')</small>
+                    <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site-key-label')</small>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif>
+                        <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif aria-describedby="registerInput">
                         <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.index.enable-user-registration') }}</label>
                     </div>
-                    <small>{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
+
+                    <small id="registerInput" class="form-text">{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif>
+                        <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif aria-describedby="authApiInfo">
                         <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.index.auth-api') }}</label>
                     </div>
-                    <small>@lang('admin.settings.index.auth-api-label')</small>
+
+                    <small id="authApiInfo" class="form-text">@lang('admin.settings.index.auth-api-label')</small>
                 </div>
 
                 <div class="form-group">

@@ -36,7 +36,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $readNotifications
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $unreadNotifications
  * @property \Azuriom\Models\Role $role
- * @property \Azuriom\Models\Ban $ban
+ * @property \Azuriom\Models\Ban|null $ban
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

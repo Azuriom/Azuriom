@@ -73,7 +73,6 @@ return [
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',
     'none' => 'Aucun(e)',
-
     'copied' => 'Copié',
 
     'home' => 'Accueil',
@@ -100,7 +99,7 @@ return [
 
     'server' => [
         'online' => ':count joueur en ligne|:count joueurs en ligne',
-        'offline' => 'Le serveur est actuellement hors-ligne.',
+        'offline' => 'Le serveur est actuellement éteint.',
     ],
 
     'profile' => [

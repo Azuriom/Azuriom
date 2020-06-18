@@ -9,7 +9,7 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use DateTimeZone;
-use Illuminate\Cache\Repository as Cache;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -83,7 +83,7 @@ class SettingsController extends Controller
      * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
-     * @param  \Illuminate\Cache\Repository  $cache
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @param  \Azuriom\Support\Optimizer  $optimizer
      */
     public function __construct(Application $app, Cache $cache, Optimizer $optimizer)

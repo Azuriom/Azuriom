@@ -2,9 +2,11 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Game\Server\MinecraftAzLinkBridge;
-use Azuriom\Game\Server\MinecraftPingBridge;
-use Azuriom\Game\Server\MinecraftRconBridge;
+use Azuriom\Games\Minecraft\Servers\Azlink as MinecraftAzLink;
+use Azuriom\Games\Minecraft\Servers\Ping as MinecraftPing;
+use Azuriom\Games\Minecraft\Servers\Rcon as MinecraftRcon;
+use Azuriom\Games\Steam\Servers\Query as SourceQuery;
+use Azuriom\Games\Steam\Servers\Rcon as SourceRcon;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -32,14 +34,16 @@ class Server extends Model
     use Loggable;
 
     /**
-     * The servers types.
+     * The servers link types.
      *
      * @var array
      */
     private const TYPES = [
-        'mc-ping' => MinecraftPingBridge::class,
-        'mc-rcon' => MinecraftRconBridge::class,
-        'mc-azlink' => MinecraftAzLinkBridge::class,
+        'mc-ping' => MinecraftPing::class,
+        'mc-rcon' => MinecraftRcon::class,
+        'mc-azlink' => MinecraftAzLink::class,
+        'source-query' => SourceQuery::class,
+        'source-rcon' => SourceRcon::class,
     ];
 
     /**
@@ -82,34 +86,26 @@ class Server extends Model
 
     public function fullAddress()
     {
-        return $this->address.($this->port ? ':'.$this->port : '');
-    }
+        if ($this->port === $this->bridge()->getDefaultPort()) {
+            return $this->address;
+        }
 
-    public static function types()
-    {
-        return array_keys(self::TYPES);
-    }
-
-    public function getPlayers()
-    {
-        return Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
-            return $this->bridge()->getServerData() ?? [];
-        });
+        return $this->address.':'.$this->port;
     }
 
     public function isOnline()
     {
-        return $this->getOnlinePlayers() >= 0;
+        return $this->getData() !== null;
     }
 
     public function getOnlinePlayers()
     {
-        return $this->getPlayers()['players'] ?? -1;
+        return $this->getData('players');
     }
 
     public function getMaxPlayers()
     {
-        return $this->getPlayers()['max'] ?? -1;
+        return $this->getData('max_players');
     }
 
     public function updateData($data, bool $full = false)
@@ -121,8 +117,17 @@ class Server extends Model
         }
     }
 
+    public function getData(string $key = null)
+    {
+        $data = Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
+            return $this->bridge()->getServerData();
+        });
+
+        return $key === null ? $data : ($data[$key] ?? null);
+    }
+
     /**
-     * @return \Azuriom\Game\Server\ServerBridge
+     * @return \Azuriom\Games\ServerBridge
      */
     public function bridge()
     {
@@ -134,6 +139,11 @@ class Server extends Model
         return '/azlink setup '.url('/').' '.$this->token;
     }
 
+    public static function types()
+    {
+        return array_keys(self::TYPES);
+    }
+
     /**
      * Scope a query to only include servers which can execute commands.
      *
@@ -142,7 +152,7 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink']);
+        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon']);
     }
 
     /**
@@ -153,6 +163,6 @@ class Server extends Model
      */
     public function scopePingable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-ping', 'mc-rcon']);
+        return $query->where('type', '!=', 'mc-azlink');
     }
 }

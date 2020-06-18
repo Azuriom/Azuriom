@@ -37,7 +37,7 @@
         }
 
         const saveButton = document.getElementById('save');
-        const saveButtonIcon = saveButton.querySelector('.btn-animation');
+        const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
         saveButton.addEventListener('click', function () {
             saveButton.setAttribute('disabled', '');
@@ -106,7 +106,7 @@
 
             <button type="button" class="btn btn-success" id="save">
                 <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+                <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
             </button>
             <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}">
                 <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}

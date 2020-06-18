@@ -28,12 +28,11 @@
                 document.getElementById('azLinkPortDisplay').innerText = port;
             });
         }
-
     </script>
     @isset($server)
         <script>
             const verifyButton = document.getElementById('verifyAzLink');
-            const verifyButtonIcon = verifyButton.querySelector('.btn-animation');
+            const verifyButtonIcon = verifyButton.querySelector('.btn-spinner');
 
             verifyButton.addEventListener('click', function () {
                 verifyButton.setAttribute('disabled', '');
@@ -109,7 +108,7 @@
     </div>
 </div>
 
-<div data-server-type="mc-rcon" class="form-group d-none">
+<div data-server-type="mc-rcon source-rcon" class="form-group d-none">
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
@@ -133,6 +132,19 @@
             <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '25575') }}">
 
             @error('rcon-port')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+    </div>
+</div>
+
+<div data-server-type="source-query" class="form-group d-none">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="querySourcePortInput">{{ trans('admin.servers.fields.query-port') }}</label>
+            <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '27015') }}">
+
+            @error('query-port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
@@ -192,7 +204,7 @@
 
         <button type="button" class="btn btn-success mb-2" id="verifyAzLink">
             <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
-            <i class="fas fa-sync fa-spin d-none btn-animation"></i>
+            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
         </button>
     @else
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
