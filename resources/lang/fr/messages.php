@@ -106,6 +106,7 @@ return [
         'title' => 'Mon Profil',
         'change-email' => 'Changer l\'adresse e-mail',
         'change-password' => 'Changer le mot de passe',
+        'set-password-first' => 'Veuillez enregistrer un mot de passe avant de changer l\'addresse e-mail',
 
         'not-verified' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
 

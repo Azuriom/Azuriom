@@ -46,7 +46,7 @@ class SocialController extends Controller
 
         $authUser = $this->findOrCreateUser($request, $user, $provider);
         if ($authUser === false) {
-            redirect('/')->with('error', "The user email is not given by $provider, please change your app permisions");
+            return redirect('/')->with('error', "The user email is not given by $provider, please change your app permisions");
         }
         if ($authUser->refreshActiveBan()->is_banned || $authUser->is_deleted) {
             return redirect('/')->with('error', trans('auth.suspended'));
@@ -78,17 +78,18 @@ class SocialController extends Controller
             }
 
             if (! $user) {
-                if (empty($providerUser->getEmail())) {
-                    return false;
+                $user_name = $providerUser->getName();
+                $look_for_duplicate_user = User::where('name', $user_name)->first();
+                
+                if($look_for_duplicate_user) {
+                    $user_name .= ' (Duplicate-'.Str::random(3).')';
                 }
+
                 $user = User::create([
                     'email' => $providerUser->getEmail(),
-                    'name'  => $providerUser->getName(),
-                    'password' => Hash::make(Str::random(8)),
+                    'name'  => $user_name,
+                    'password' => null,
                     'game_id' => null,
-                    'settings' => [
-                        'new_user' => true,
-                    ],
                 ]);
             }
 

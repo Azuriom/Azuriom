@@ -106,6 +106,7 @@ return [
         'title' => 'My Profile',
         'change-email' => 'Change E-Mail Address',
         'change-password' => 'Change Password',
+        'set-password-first' => 'Please set a password before changing the email address.',
 
         'not-verified' => 'Your email is not verified, please check your email for a verification link.',
 

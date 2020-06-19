@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        @if(! $user->hasVerifiedEmail())
+        @if(! $user->hasVerifiedEmail() && $user->email !== null)
             @if (session('resent'))
                 <div class="alert alert-success mb-4" role="alert">
                     {{ trans('auth.verify-sent') }}
@@ -90,65 +90,28 @@
                 </form>
             </div>
         @endif
-        @if($user->isNewUser())
-        <div class="card shadow-sm mb-4">
-            <div class="card-header">{{ trans('messages.profile.change-password') }} & {{ trans('auth.name') }} <span class="bg-danger text-white">Please update ASAP</span></div>
-            <div class="card-body">
-                <form action="{{ route('profile.password-username-newuser') }}" method="POST">
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="name">{{ trans('auth.name') }}</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
-                        @error('name')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="passwordInput">{{ trans('auth.password') }}</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
-
-                        @error('password')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmPasswordInput">{{ trans('auth.confirm-password') }}</label>
-                        <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        {{ trans('messages.actions.update') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-        @else
         <div class="row">
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
                     <div class="card-body">
-                        <form action="{{ route('profile.password') }}" method="POST">
+                        <form action="@if ($user->password === null) {{ route('profile.set-password') }}  @else {{ route('profile.password') }} @endif" method="POST">
                             @csrf
-
-                            <div class="form-group">
-                                <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
-                                <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
-
-                                @error('password_confirm_pass')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
+                            @if ($user->password !== null)
+                                <div class="form-group">
+                                    <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
+                                    <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
+                                    @error('password_confirm_pass')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label for="passwordInput">{{ trans('auth.password') }}</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
-
                                 @error('password')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
 
@@ -169,31 +132,35 @@
                 <div class="card shadow-sm mb-4">
                     <div class="card-header">{{ trans('messages.profile.change-email') }}</div>
                     <div class="card-body">
-                        <form action="{{ route('profile.email') }}" method="POST">
-                            @csrf
+                        @if ($user->password === null)
+                            <h2>{{ trans('messages.profile.set-password-first') }}</h2>
+                        @else
+                            <form action="{{ route('profile.email') }}" method="POST">
+                                @csrf
 
-                            <div class="form-group">
-                                <label for="emailInput">{{ trans('auth.email') }}</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required>
+                                <div class="form-group">
+                                    <label for="emailInput">{{ trans('auth.email') }}</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required>
 
-                                @error('email')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
 
-                            <div class="form-group">
-                                <label for="emailConfirmPassInput">{{ trans('auth.current-password') }}</label>
-                                <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
+                                <div class="form-group">
+                                    <label for="emailConfirmPassInput">{{ trans('auth.current-password') }}</label>
+                                    <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
 
-                                @error('email_confirm_pass')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
+                                    @error('email_confirm_pass')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
 
-                            <button type="submit" class="btn btn-primary">
-                                {{ trans('messages.actions.update') }}
-                            </button>
-                        </form>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ trans('messages.actions.update') }}
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -232,9 +199,7 @@
                     </div>
                 </div>
             @endif
-
         </div>
-        @endif
     </div>
 @endsection
 
