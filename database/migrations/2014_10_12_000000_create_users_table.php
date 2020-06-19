@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->unsignedDecimal('money', 14)->default(0);
             $table->string('game_id')->nullable();
             $table->string('access_token')->nullable();
-            $table->string('google_2fa_secret', 16)->nullable();
+            $table->string('google_2fa_secret')->nullable();
             $table->string('last_login_ip', 45)->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->boolean('is_banned')->default(false);

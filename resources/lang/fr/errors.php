@@ -2,6 +2,7 @@
 
 return [
     'error' => 'Erreur',
+    'code' => 'Erreur :code',
     'home' => 'Accueil',
     'whoops' => 'Oups !',
 
@@ -35,6 +36,6 @@ return [
     ],
 
     'fallback' => [
-        'message' => 'Une erreur s\'est produite. Code HTTP : :code',
+        'message' => 'Une erreur s\'est produite. Veuillez réessayer.',
     ],
 ];

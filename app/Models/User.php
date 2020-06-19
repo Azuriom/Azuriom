@@ -58,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'access_token', 'google_2fa_secret',
+        'password', 'remember_token', 'access_token', 'last_login_ip', 'google_2fa_secret',
     ];
 
     /**
@@ -141,10 +141,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the user's avatar url.
+     * The size may not correspond depending on the provider.
      *
+     * @param  int  $size
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar(int $size = 64)
     {
         $user_preference = $this->settings['avatar_from_provider'] ?? null;
         $admin_choice = setting('overwrite_avatar');
@@ -157,7 +159,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 return $identity->data['avatar'];
             } else {
                 /** @noinspection PhpDeprecationInspection */
-                return game()->getAvatarUrl($this);
+                return game()->getAvatarUrl($this, $size);
             }
         } else {
             $identity = SocialIdentity::where([
@@ -168,7 +170,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 return $identity->data['avatar'];
             } else {
                 /** @noinspection PhpDeprecationInspection */
-                return game()->getAvatarUrl($this);
+                return game()->getAvatarUrl($this, $size);
             }
         }
     }

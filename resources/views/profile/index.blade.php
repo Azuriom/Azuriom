@@ -7,25 +7,40 @@
         <div class="card mb-4 shadow-sm">
             <div class="card-header">{{ trans('messages.profile.title') }}</div>
             <div class="card-body">
-                <h4 class="card-title">{{ $user->name }}</h4>
-                <ul>
-                    <li>{{ trans('messages.profile.info.role', ['role' => $user->role->name]) }}</li>
-                    <li>{{ trans('messages.profile.info.register', ['date' => format_date($user->created_at, true)]) }}</li>
-                    <li>{{ trans('messages.profile.info.money', ['money' => format_money($user->money)]) }}</li>
-                    <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans_bool($user->hasTwoFactorAuth())]) }}</li>
-                </ul>
+                <div class="media">
+                    <div class="mr-3 text-center">
+                        <img src="{{ $user->getAvatar(150) }}" class="rounded mb-3 mr-3" alt="{{ $user->name }}" style="max-width: 150px">
 
-                @if($user->hasTwoFactorAuth())
-                    <form action="{{ route('profile.2fa.disable') }}" method="POST">
-                        @csrf
+                        <h2 class="h4 mb-0">
+                            <span class="badge" style="{{ $user->role->getBadgeStyle() }}; vertical-align: middle">{{ $user->role->name }}</span>
+                        </h2>
+                    </div>
 
-                        <button type="submit" class="btn btn-danger">
-                            {{ trans('messages.profile.2fa.disable') }}
-                        </button>
-                    </form>
-                @else
-                    <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">{{ trans('messages.profile.2fa.enable') }}</a>
-                @endif
+                    <div class="media-body">
+                        <h1>{{ $user->name }}</h1>
+
+                        <ul>
+                            <li>{{ trans('messages.profile.info.register', ['date' => format_date($user->created_at, true)]) }}</li>
+                            <li>{{ trans('messages.profile.info.money', ['money' => format_money($user->money)]) }}</li>
+                            @if($user->game_id)
+                                <li>UUID: {{ $user->game_id }}</li>
+                            @endif
+                            <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans_bool($user->hasTwoFactorAuth())]) }}</li>
+                        </ul>
+
+                        @if($user->hasTwoFactorAuth())
+                            <form action="{{ route('profile.2fa.disable') }}" method="POST">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger">
+                                    {{ trans('messages.profile.2fa.disable') }}
+                                </button>
+                            </form>
+                        @else
+                            <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">{{ trans('messages.profile.2fa.enable') }}</a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
 

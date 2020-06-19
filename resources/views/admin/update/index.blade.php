@@ -69,8 +69,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sync-alt"></i>
-                        {{ trans('admin.update.actions.check') }}
+                        <i class="fas fa-sync"></i> {{ trans('admin.update.actions.check') }}
                     </button>
                 </form>
             @endif
