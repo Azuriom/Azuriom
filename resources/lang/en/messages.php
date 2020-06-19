@@ -113,7 +113,7 @@ return [
 
         'info' => [
             'role' => 'Role: :role',
-            'register' => 'Register: :date',
+            'register' => 'Registered: :date',
             'money' => 'Money: :money',
             '2fa' => 'Two-Factor Authentication (2FA): :2fa',
         ],

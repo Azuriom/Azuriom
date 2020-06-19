@@ -224,7 +224,7 @@ if (! function_exists('game')) {
     /**
      * Get the current game bridge implementation.
      *
-     * @return \Azuriom\Game\Game
+     * @return \Azuriom\Games\Game
      */
     function game()
     {

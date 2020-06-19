@@ -26,7 +26,7 @@ class AddDataToActionLogsTable extends Migration
     public function down()
     {
         Schema::table('action_logs', function (Blueprint $table) {
-            $table->removeColumn('data');
+            $table->dropColumn('data');
         });
     }
 }

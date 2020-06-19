@@ -17,10 +17,10 @@
                         </li>
                     @else
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ $element->id }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ $element->name }}
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown{{ $element->id }}">
                                 @foreach($element->elements as $childElement)
                                     <a class="dropdown-item @if($childElement->isCurrent()) active @endif" href="{{ $childElement->getLink() }}" @if($childElement->new_tab) target="_blank" rel="noopener" @endif>{{ $childElement->name }}</a>
                                 @endforeach
@@ -48,11 +48,11 @@
                     @include('elements.notifications')
 
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="userDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 {{ trans('messages.nav.profile') }}
                             </a>

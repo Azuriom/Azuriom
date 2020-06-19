@@ -25,22 +25,17 @@
 
         .azuriom-logo {
             width: 100%;
-            max-width: 500px;
-            margin-bottom: 2rem;
-        }
-
-        .error-code {
-            font-size: 5rem;
+            max-width: 300px;
         }
     </style>
 </head>
 
 <div id="app" class="d-flex align-items-center justify-content-center">
     <main class="text-center">
-        <img src="https://azuriom.com/assets/svg/logo-text-white.svg" class="azuriom-logo" alt="Azuriom logo">
+        <img src="{{ asset('svg/azuriom-text-white.svg') }}" class="azuriom-logo mb-3" alt="Azuriom">
 
-        <h1>{{ trans('errors.whoops') }}</h1>
-        <h2 class="mb-3">{{ trans('errors.fallback.message', ['code' => $code ?? 500]) }}</h2>
+        <h1 class="display-2">{{ trans('errors.code', ['code' => $code ?? 500]) }}</h1>
+        <h2 class="mb-4">{{ trans('errors.fallback.message') }}</h2>
 
         <a href="{{ route('home') }}" class="btn btn-secondary">{{ trans('messages.home') }}</a>
     </main>

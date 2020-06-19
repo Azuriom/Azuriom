@@ -2,6 +2,7 @@
 
 return [
     'error' => 'Error',
+    'code' => 'Error :code',
     'home' => 'Back to home',
     'whoops' => 'Whoops !',
 
@@ -35,6 +36,6 @@ return [
     ],
 
     'fallback' => [
-        'message' => 'An error occurred. HTTP code: :code',
+        'message' => 'An error occurred. Please try again.',
     ],
 ];

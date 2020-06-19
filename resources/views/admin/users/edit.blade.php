@@ -171,6 +171,12 @@
                         <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
                     </div>
 
+                    @if($user->game_id)
+                        <div class="form-group">
+                            <label for="idInput">UUID</label>
+                            <input type="text" class="form-control" id="idInput" value="{{ $user->game_id }}" disabled>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'access_token', 'google_2fa_secret',
+        'password', 'remember_token', 'access_token', 'last_login_ip', 'google_2fa_secret',
     ];
 
     /**
@@ -140,13 +140,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get the user's avatar url.
+     * The size may not correspond depending on the provider.
      *
+     * @param  int  $size
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar(int $size = 64)
     {
         /** @noinspection PhpDeprecationInspection */
-        return game()->getAvatarUrl($this);
+        return game()->getAvatarUrl($this, $size);
     }
 
     public function refreshActiveBan()

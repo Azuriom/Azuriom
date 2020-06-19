@@ -28,7 +28,8 @@ class UserController extends Controller
         $users = User::with('ban')
             ->when($search, function (Builder $query, string $search) {
                 $query->where('email', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%");
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('game_id', 'LIKE', "%{$search}%");
 
                 if (is_numeric($search)) {
                     $query->orWhere('id', $search);
