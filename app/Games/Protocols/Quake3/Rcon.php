@@ -2,10 +2,9 @@
 
 namespace Azuriom\Games\Protocols\Quake3;
 
-use Exception;
-use RuntimeException;
-use Azuriom\Games\ServerBridge;
 use Azuriom\Games\ProtocolAdapters\Quake3Protocol;
+use Azuriom\Games\ServerBridge;
+use Exception;
 
 class Rcon extends ServerBridge
 {
@@ -32,6 +31,7 @@ class Rcon extends ServerBridge
     public function verifyLink()
     {
         $this->connect();
+
         return $this->isConnected;
     }
 

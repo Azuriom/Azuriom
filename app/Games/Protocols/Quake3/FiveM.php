@@ -2,9 +2,9 @@
 
 namespace Azuriom\Games\Protocols\Quake3;
 
-use Throwable;
 use Illuminate\Support\Facades\Http;
 use Azuriom\Games\Protocols\Quake3\Rcon;
+use Throwable;
 
 class FiveM extends Rcon
 {
@@ -24,4 +24,5 @@ class FiveM extends Rcon
             return null;
         }
     }
+
 }

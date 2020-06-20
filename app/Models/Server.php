@@ -5,10 +5,10 @@ namespace Azuriom\Models;
 use Azuriom\Games\Minecraft\Servers\AzLink as MinecraftAzLink;
 use Azuriom\Games\Minecraft\Servers\Ping as MinecraftPing;
 use Azuriom\Games\Minecraft\Servers\Rcon as MinecraftRcon;
+use Azuriom\Games\Protocols\Quake3\FiveM as FiveMRcon;
+use Azuriom\Games\Protocols\Quake3\Rcon as Quake3Rcon;
 use Azuriom\Games\Protocols\Source\Query as SourceQuery;
 use Azuriom\Games\Protocols\Source\Rcon as SourceRcon;
-use Azuriom\Games\Protocols\Quake3\Rcon as Quake3Rcon;
-use Azuriom\Games\Protocols\Quake3\FiveM as FiveMRcon;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -156,7 +156,7 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon','quake3-rcon','fivem-rcon']);
+        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon','quake3-rcon', 'fivem-rcon']);
     }
 
     /**

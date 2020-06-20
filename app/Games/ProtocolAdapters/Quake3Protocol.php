@@ -1,6 +1,7 @@
 <?php
 
 namespace Azuriom\Games\ProtocolAdapters;
+
 /* q3query.class.php - Quake 3 query class
  *
  * Copyright (C) 2009 Manuel Kress
@@ -20,37 +21,46 @@ namespace Azuriom\Games\ProtocolAdapters;
  * this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
-class Quake3Protocol {
+class Quake3Protocol
+{
 	private $address;
 	private $port;
     private $rconpassword = false;
     private $fp;
-    private $lastPing = false;
-    public function __construct($address, $port, &$success = NULL, &$errno = NULL, &$errstr = NULL) {
+	private $lastPing = false;
+
+	public function __construct($address, $port, &$success = NULL, &$errno = NULL, &$errstr = NULL)
+	{
     	$this->address = $address;
     	$this->port = $port;
         $this->fp = fsockopen("udp://$address", $port, $errno, $errstr, 5);
-        if (!$this->fp) {
+        if (! $this->fp) {
         	$success = false;
-        }
-        else {
+        } else {
         	$success = true;
         }
     }
-    public function setRconassword($pw) {
+	public function setRconassword($pw)
+	{
         $this->rconpassword = $pw;
-    }
-    public function rcon($str) {
-    	if (!$this->rconpassword) {
+	}
+
+	public function rcon($str)
+	{
+    	if (! $this->rconpassword) {
     		return false;
     	}
     	$this->send("rcon " . $this->rconpassword . " $str");
 		return $this->getResponse();
-    }
-    private function send($str) {
+	}
+
+	private function send($str)
+	{
         fwrite($this->fp, "\xFF\xFF\xFF\xFF$str\x00");
-    }
-    private function getResponse() {
+	}
+
+	private function getResponse()
+	{
     	stream_set_timeout($this->fp, 0, 7e5);
         $s = '';
 	    $start = microtime(true);
@@ -66,19 +76,25 @@ class Quake3Protocol {
 		$this->lastPing = round(($end - $start) * 1000);
 
         return $s;
-    }
-    public function quit() {
+	}
+
+	public function quit()
+	{
     	if (is_resource($this->fp)) {
 			fclose($this->fp);
 			return true;
     	}
     	return false;
-    }
-    public function reconnect() {
+	}
+
+	public function reconnect()
+	{
     	$this->quit();
     	$this->__construct($this->address, $this->port);
-    }
-    public function getGameStatus() {
+	}
+
+	public function getGameStatus()
+	{
         $this->send("getstatus");
         $response = $this->getResponse();
         list($dvarslist, $playerlist) = explode("\n", $response, 2);
@@ -99,8 +115,10 @@ class Quake3Protocol {
 			);
 		}
 		return array($dvars, $players);
-    }
-    public function getGameInfo() {
+	}
+
+	public function getGameInfo()
+	{
         $this->send("getinfo");
         $response = $this->getResponse();
         $dvarslist = explode("\\", $response);
@@ -109,8 +127,10 @@ class Quake3Protocol {
 			$dvars[$dvarslist[$i]] = $dvarslist[$i + 1];
 		}
 		return $dvars;
-    }
-    public function getLastPing() {
+	}
+
+	public function getLastPing()
+	{
         return $this->lastPing;
     }
 }
