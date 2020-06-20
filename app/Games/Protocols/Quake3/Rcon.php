@@ -6,6 +6,7 @@ use Azuriom\Games\ProtocolAdapters\Quake3Protocol;
 use Azuriom\Games\ServerBridge;
 use Azuriom\Models\User;
 use Exception;
+
 class Rcon extends ServerBridge
 {
     protected const DEFAULT_PORT = 30120; // FiveM default
