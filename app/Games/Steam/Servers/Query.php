@@ -14,10 +14,16 @@ class Query extends ServerBridge
 
     protected const TIMEOUT = 1;
 
+    protected $engine = SourceQuery::SOURCE;
+
     public function getServerData()
     {
         try {
             $info = $this->connect()->GetInfo();
+
+            if (! $info) {
+                return null;
+            }
 
             return [
                 'players' => $info['Players'],
@@ -56,7 +62,7 @@ class Query extends ServerBridge
 
         $query = new SourceQuery();
 
-        $query->Connect($address, $port, self::TIMEOUT);
+        $query->Connect($address, $port, self::TIMEOUT, $this->engine);
 
         if ($rcon) {
             $password = decrypt($this->server->data['rcon-password'], false);

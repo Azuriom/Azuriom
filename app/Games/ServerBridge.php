@@ -55,7 +55,8 @@ abstract class ServerBridge
      * @param  bool  $needConnected
      * @deprecated Use sendCommands() instead.
      */
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false) {
+    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    {
         $this->sendCommands($commands, User::firstWhere('name', $playerName), $needConnected);
     }
 
