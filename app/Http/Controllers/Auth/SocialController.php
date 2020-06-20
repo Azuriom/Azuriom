@@ -68,17 +68,16 @@ class SocialController extends Controller
             ];
             $user_name = $providerUser->getName();
 
-            if($account->user->name !== $user_name) {
-                
+            if ($account->user->name !== $user_name) {
                 $look_for_duplicate_user = User::where('name', $user_name)->first();
-                
-                if($look_for_duplicate_user) {
+
+                if ($look_for_duplicate_user) {
                     $user_name .= ' (Duplicate-'.Str::random(3).')';
                 }
                 $account->user->name = $user_name;
                 $account->user->save();
             }
-            
+
             $account->save();
 
             return $account->user;
