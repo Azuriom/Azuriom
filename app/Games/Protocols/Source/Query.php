@@ -56,7 +56,7 @@ class Query extends ServerBridge
 
         $query = new SourceQuery();
 
-        $query->Connect($address, $port, self::TIMEOUT, SourceQuery::SOURCE);
+        $query->Connect($address, $port, self::TIMEOUT);
 
         if ($rcon) {
             $password = decrypt($this->server->data['rcon-password'], false);
