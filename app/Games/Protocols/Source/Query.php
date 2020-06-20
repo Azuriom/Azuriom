@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Games\Steam\Servers;
+namespace Azuriom\Games\Protocols\Source;
 
 use Azuriom\Games\ServerBridge;
 use Exception;
@@ -55,7 +55,7 @@ class Query extends ServerBridge
 
         $query = new SourceQuery();
 
-        $query->Connect($address, $port, self::TIMEOUT);
+        $query->Connect($address, $port, self::TIMEOUT, SourceQuery::SOURCE);
 
         if ($rcon) {
             $password = decrypt($this->server->data['rcon-password'], false);

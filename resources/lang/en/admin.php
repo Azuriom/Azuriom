@@ -308,6 +308,8 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'quake3-rcon' => 'Quake3 RCON',
+            'fivem-rcon' => 'FiveM RCON',
         ],
     ],
 

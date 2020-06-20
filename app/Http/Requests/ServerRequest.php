@@ -20,8 +20,8 @@ class ServerRequest extends FormRequest
             'type' => ['required', 'string', Rule::in(Server::types())],
             'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'between:1,65535'],
-            'rcon-port' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'integer', 'between:1,65535'],
-            'rcon-password' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'string'],
+            'rcon-port' => ['required_if:type,mc-rcon,source-rcon,quake3-rcon,fivem-rcon', 'nullable', 'integer', 'between:1,65535'],
+            'rcon-password' => ['required_if:type,mc-rcon,source-rcon,quake3-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['required_if:type,source-rcon', 'nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
         ];
@@ -38,7 +38,7 @@ class ServerRequest extends FormRequest
 
         $type = $this->input('type');
 
-        if ($type === 'mc-rcon' || $type === 'source-rcon') {
+        if ($type === 'mc-rcon' || $type === 'source-rcon' || $type === 'quake3-rcon' || $type === 'fivem-rcon') {
             $validated['data'] = [
                 'rcon-port' => $this->input('rcon-port'),
                 'rcon-password' => encrypt($this->input('rcon-password'), false),

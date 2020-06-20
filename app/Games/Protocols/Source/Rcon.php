@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Games\Steam\Servers;
+namespace Azuriom\Games\Protocols\Source;
 
 class Rcon extends Query
 {
