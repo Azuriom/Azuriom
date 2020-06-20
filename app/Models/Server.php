@@ -156,7 +156,7 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon','quake3-rcon', 'fivem-rcon']);
+        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon', 'quake3-rcon', 'fivem-rcon']);
     }
 
     /**

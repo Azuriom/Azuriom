@@ -52,7 +52,7 @@ class Quake3Protocol
         if (! $this->rconpassword) {
             return false;
         }
-        $this->send("rcon " . $this->rconpassword . " $str");
+        $this->send('rcon '.$this->rconpassword." $str");
         return $this->getResponse();
     }
 
@@ -69,12 +69,11 @@ class Quake3Protocol
         do {
             $read = fread($this->fp, 9999);
             $s .= substr($read, strpos($read, "\n") + 1);
-            if (!isset($end)) {
+            if (! isset($end)) {
                 $end = microtime(true);
             }
             $info = stream_get_meta_data($this->fp);
-        }
-        while (!$info["timed_out"]);
+        } while (! $info['timed_out']);
         $this->lastPing = round(($end - $start) * 1000);
 
         return $s;
@@ -83,9 +82,11 @@ class Quake3Protocol
     public function quit()
     {
         if (is_resource($this->fp)) {
-            fclose($this->fp);
+			fclose($this->fp);
+
             return true;
-        }
+		}
+
         return false;
     }
 
@@ -97,34 +98,34 @@ class Quake3Protocol
 
     public function getGameStatus()
     {
-        $this->send("getstatus");
+        $this->send('getstatus');
         $response = $this->getResponse();
-        list($dvarslist, $playerlist) = explode("\n", $response, 2);
-        $dvarslist = explode("\\", $dvarslist);
-        $dvars = array();
+        [$dvarslist, $playerlist] = explode("\n", $response, 2);
+        $dvarslist = explode('\\', $dvarslist);
+        $dvars = [];
         for ($i = 1; $i < count($dvarslist); $i += 2) {
             $dvars[$dvarslist[$i]] = $dvarslist[$i + 1];
         }
         $playerlist = explode("\n", $playerlist);
         array_pop($playerlist);
-        $players = array();
+        $players = [];
         foreach ($playerlist as $value) {
-            list($score, $ping, $name) = explode(" ", $value, 3);
-            $players[] = array(
-                "name" =>substr($name, 1, -1),
-                "score" => $score,
-                "ping" => $ping
-            );
+            [$score, $ping, $name] = explode(' ', $value, 3);
+            $players[] = [
+                'name' =>substr($name, 1, -1),
+                'score' => $score,
+                'ping' => $ping,
+            ];
         }
-        return array($dvars, $players);
+        return [$dvars, $players];
     }
 
     public function getGameInfo()
     {
-        $this->send("getinfo");
+        $this->send('getinfo');
         $response = $this->getResponse();
-        $dvarslist = explode("\\", $response);
-        $dvars = array();
+        $dvarslist = explode('\\', $response);
+        $dvars = [];
         for ($i = 1; $i < count($dvarslist); $i += 2) {
             $dvars[$dvarslist[$i]] = $dvarslist[$i + 1];
         }
@@ -136,4 +137,4 @@ class Quake3Protocol
         return $this->lastPing;
     }
 }
-?>
+
