@@ -139,4 +139,3 @@ class Quake3Protocol
         return $this->lastPing;
     }
 }
-
