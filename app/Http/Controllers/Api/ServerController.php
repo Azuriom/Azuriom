@@ -26,6 +26,7 @@ class ServerController extends Controller
 
         $server->updateData([
             'players' => count($players),
+            'max_players' => $request->json('maxPlayers'),
             'cpu' => $cpuUsage >= 0 ? $cpuUsage : null,
             'ram' => $ramUsage >= 0 ? $ramUsage : null,
             'tps' => $request->json('worlds.tps'),

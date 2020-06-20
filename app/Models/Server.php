@@ -12,6 +12,7 @@ use Azuriom\Games\Protocols\Source\Rcon as SourceRcon;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -70,7 +71,9 @@ class Server extends Model
 
     public function stat()
     {
-        return $this->hasOne(ServerStat::class)->latest()->where('created_at', '>', now()->subSeconds(65));
+        return $this->hasOne(ServerStat::class)
+            ->latest()
+            ->where('created_at', '>', now()->subSeconds(65));
     }
 
     public function stats()
@@ -90,7 +93,7 @@ class Server extends Model
 
     public function fullAddress()
     {
-        if ($this->port === $this->bridge()->getDefaultPort()) {
+        if ($this->port === null || $this->port === $this->bridge()->getDefaultPort()) {
             return $this->address;
         }
 
@@ -117,7 +120,7 @@ class Server extends Model
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
         if (is_array($data) && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
-            $this->stats()->create($data);
+            $this->stats()->create(Arr::except($data, 'max_players'));
         }
     }
 
