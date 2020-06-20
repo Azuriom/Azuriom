@@ -23,5 +23,4 @@ class FiveM extends Rcon
             return null;
         }
     }
-
 }

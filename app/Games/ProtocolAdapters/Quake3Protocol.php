@@ -23,7 +23,6 @@ namespace Azuriom\Games\ProtocolAdapters;
  */
 class Quake3Protocol
 {
-
     private $address;
     private $port;
     private $rconpassword = false;
@@ -53,6 +52,7 @@ class Quake3Protocol
             return false;
         }
         $this->send('rcon '.$this->rconpassword." $str");
+
         return $this->getResponse();
     }
 
@@ -82,10 +82,10 @@ class Quake3Protocol
     public function quit()
     {
         if (is_resource($this->fp)) {
-			fclose($this->fp);
+            fclose($this->fp);
 
             return true;
-		}
+        }
 
         return false;
     }
@@ -117,6 +117,7 @@ class Quake3Protocol
                 'ping' => $ping,
             ];
         }
+
         return [$dvars, $players];
     }
 
@@ -129,6 +130,7 @@ class Quake3Protocol
         for ($i = 1; $i < count($dvarslist); $i += 2) {
             $dvars[$dvarslist[$i]] = $dvarslist[$i + 1];
         }
+
         return $dvars;
     }
 
