@@ -2,6 +2,8 @@
 
 namespace Azuriom\Games\Protocols\Source;
 
+use Azuriom\Models\User;
+
 class Rcon extends Query
 {
     public function verifyLink()
@@ -9,12 +11,12 @@ class Rcon extends Query
         return $this->connect(true)->GetInfo() !== null;
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
         $query = $this->connect(true);
 
         foreach ($commands as $command) {
-            $query->Rcon(str_replace('{player}', $playerName ?? '?', $command));
+            $query->Rcon(str_replace('{player}', $user->name ?? '?', $command));
         }
     }
 

@@ -3,10 +3,11 @@
 namespace Azuriom\Games\Minecraft\Servers;
 
 use Azuriom\Games\ServerBridge;
+use Azuriom\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
-class Azlink extends ServerBridge
+class AzLink extends ServerBridge
 {
     private const DEFAULT_LINK_PORT = 25588;
 
@@ -24,12 +25,12 @@ class Azlink extends ServerBridge
         return true;
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
         foreach ($commands as $command) {
             $this->server->commands()->create([
                 'command' => $command,
-                'player_name' => $playerName ?? '?',
+                'player_name' => $user->name ?? '?',
                 'need_online' => $needConnected,
             ]);
         }

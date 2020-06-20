@@ -4,8 +4,13 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\User;
 
-interface GameAuth
+interface Game
 {
+    /**
+     * Get the name of this game.
+     *
+     * @return string
+     */
     public function name();
 
     /**

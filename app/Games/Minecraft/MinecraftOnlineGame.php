@@ -1,8 +1,7 @@
 <?php
 
-namespace Azuriom\Games\Minecraft\Auth;
+namespace Azuriom\Games\Minecraft;
 
-use Azuriom\Games\GameAuth;
 use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -10,19 +9,14 @@ use Illuminate\Support\Facades\Http;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 
-class MinecraftOnlineGameAuth implements GameAuth
+class MinecraftOnlineGame extends AbstractMinecraftGame
 {
-    public function name()
-    {
-        return 'Minecraft';
-    }
-
     public function getAvatarUrl(User $user, int $size = 64)
     {
         // Fallback to MHF_Steve if the user don't have an uuid
-        $id = $user->game_id ?? 'c06f8906-4c8a-4911-9c29-ea1dbd1aab82';
+        $uuid = $user->game_id ?? 'c06f8906-4c8a-4911-9c29-ea1dbd1aab82';
 
-        return "https://crafatar.com/avatars/{$id}?size={$size}&overlay&default=MHF_Steve";
+        return "https://crafatar.com/avatars/{$uuid}?size={$size}&overlay&default=MHF_Steve";
     }
 
     public function getUserUniqueId(string $name)

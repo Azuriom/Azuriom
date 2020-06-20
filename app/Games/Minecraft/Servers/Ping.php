@@ -4,6 +4,7 @@ namespace Azuriom\Games\Minecraft\Servers;
 
 use Azuriom\Games\Minecraft\Servers\Protocol\MinecraftPing;
 use Azuriom\Games\ServerBridge;
+use Azuriom\Models\User;
 use Exception;
 use RuntimeException;
 
@@ -26,7 +27,7 @@ class Ping extends ServerBridge
         return $this->ping($this->server->address, $this->server->port);
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
         report(new RuntimeException('Command cannot be executed with ping link.'));
     }

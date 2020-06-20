@@ -2,7 +2,7 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Games\Minecraft\Servers\Azlink as MinecraftAzLink;
+use Azuriom\Games\Minecraft\Servers\AzLink as MinecraftAzLink;
 use Azuriom\Games\Minecraft\Servers\Ping as MinecraftPing;
 use Azuriom\Games\Minecraft\Servers\Rcon as MinecraftRcon;
 use Azuriom\Games\Protocols\Source\Query as SourceQuery;

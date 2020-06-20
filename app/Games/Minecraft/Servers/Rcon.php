@@ -2,6 +2,7 @@
 
 namespace Azuriom\Games\Minecraft\Servers;
 
+use Azuriom\Models\User;
 use RuntimeException;
 use Thedudeguy\Rcon as MinecraftRcon;
 
@@ -16,12 +17,12 @@ class Rcon extends Ping
         return $this->connectRcon()->sendCommand('list');
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
         $rcon = $this->connectRcon();
 
         foreach ($commands as $command) {
-            $rcon->sendCommand(str_replace('{player}', $playerName ?? '?', $command));
+            $rcon->sendCommand(str_replace('{player}', $user->name ?? '?', $command));
         }
     }
 
