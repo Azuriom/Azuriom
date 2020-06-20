@@ -6,7 +6,7 @@ use Azuriom\Games\ServerBridge;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
-class Azlink extends ServerBridge
+class AzLink extends ServerBridge
 {
     private const DEFAULT_LINK_PORT = 25588;
 

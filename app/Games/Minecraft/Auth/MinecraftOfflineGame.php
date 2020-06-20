@@ -2,10 +2,10 @@
 
 namespace Azuriom\Games\Minecraft\Auth;
 
-use Azuriom\Games\GameAuth;
+use Azuriom\Games\Game;
 use Azuriom\Models\User;
 
-class MinecraftOfflineGameAuth implements GameAuth
+class MinecraftOfflineGame implements Game
 {
     public function name()
     {

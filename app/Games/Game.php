@@ -4,7 +4,7 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\User;
 
-interface GameAuth
+interface Game
 {
     public function name();
 
