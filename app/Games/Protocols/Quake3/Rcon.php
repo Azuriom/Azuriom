@@ -2,9 +2,10 @@
 
 namespace Azuriom\Games\Protocols\Quake3;
 
-use Azuriom\Games\ProtocolAdapters\Quake3Protocol;
-use Azuriom\Games\ServerBridge;
 use Exception;
+use Azuriom\Models\User;
+use Azuriom\Games\ServerBridge;
+use Azuriom\Games\ProtocolAdapters\Quake3Protocol;
 
 class Rcon extends ServerBridge
 {
@@ -35,12 +36,12 @@ class Rcon extends ServerBridge
         return $this->isConnected;
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
-        $query = $this->connect();
+        $query = $this->connect(true);
 
         foreach ($commands as $command) {
-            $query->rcon(str_replace('{player}', $playerName ?? '?', $command));
+            $query->Rcon(str_replace('{player}', $user->name ?? '?', $command));
         }
     }
 
