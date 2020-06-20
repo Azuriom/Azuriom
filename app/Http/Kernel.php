@@ -49,7 +49,6 @@ class Kernel extends HttpKernel
             'web',
             'auth',
             'can:admin.access',
-            'verified',
         ],
     ];
 
