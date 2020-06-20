@@ -6,6 +6,11 @@ use Azuriom\Models\User;
 
 interface Game
 {
+    /**
+     * Get the name of this game.
+     *
+     * @return string
+     */
     public function name();
 
     /**

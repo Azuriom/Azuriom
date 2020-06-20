@@ -1,17 +1,11 @@
 <?php
 
-namespace Azuriom\Games\Minecraft\Auth;
+namespace Azuriom\Games\Minecraft;
 
-use Azuriom\Games\Game;
 use Azuriom\Models\User;
 
-class MinecraftOfflineGame implements Game
+class MinecraftOfflineGame extends AbstractMinecraftGame
 {
-    public function name()
-    {
-        return 'Minecraft';
-    }
-
     public function getAvatarUrl(User $user, int $size = 64)
     {
         return "https://minotar.net/helm/{$user->name}/{$size}.png";

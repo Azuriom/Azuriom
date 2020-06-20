@@ -3,6 +3,7 @@
 namespace Azuriom\Games\Steam\Servers;
 
 use Azuriom\Games\ServerBridge;
+use Azuriom\Models\User;
 use Exception;
 use RuntimeException;
 use xPaw\SourceQuery\SourceQuery;
@@ -32,7 +33,7 @@ class Query extends ServerBridge
         return $this->connect()->GetInfo() !== false;
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
         report(new RuntimeException('Command cannot be executed with ping link.'));
     }

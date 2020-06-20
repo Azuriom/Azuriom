@@ -2,8 +2,8 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Games\Minecraft\Auth\MinecraftOfflineGame;
-use Azuriom\Games\Minecraft\Auth\MinecraftOnlineGame;
+use Azuriom\Games\Minecraft\MinecraftOfflineGame;
+use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider

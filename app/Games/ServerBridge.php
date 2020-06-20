@@ -3,6 +3,7 @@
 namespace Azuriom\Games;
 
 use Azuriom\Models\Server;
+use Azuriom\Models\User;
 
 abstract class ServerBridge
 {
@@ -38,13 +39,25 @@ abstract class ServerBridge
     abstract public function verifyLink();
 
     /**
+     * Send commands on the given server.
+     *
+     * @param  array  $commands
+     * @param  \Azuriom\Models\User|null  $user
+     * @param  bool  $needConnected
+     */
+    abstract public function sendCommands(array $commands, User $user = null, bool $needConnected = false);
+
+    /**
      * Execute a command on the given server.
      *
      * @param  array  $commands
      * @param  string|null  $playerName
      * @param  bool  $needConnected
+     * @deprecated Use sendCommands() instead.
      */
-    abstract public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false);
+    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false) {
+        $this->sendCommands($commands, User::firstWhere('name', $playerName), $needConnected);
+    }
 
     /**
      * Return if the server can execute commands.
