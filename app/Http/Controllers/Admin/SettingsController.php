@@ -2,18 +2,19 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
-use Azuriom\Http\Controllers\Controller;
-use Azuriom\Models\ActionLog;
-use Azuriom\Models\Image;
-use Azuriom\Models\Setting;
-use Azuriom\Support\Files;
-use Azuriom\Support\Optimizer;
 use DateTimeZone;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Foundation\Application;
+use Azuriom\Models\Image;
+use Azuriom\Support\Files;
+use Azuriom\Models\Setting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Azuriom\Models\ActionLog;
+use Azuriom\Support\Optimizer;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
+use Azuriom\Http\Controllers\Controller;
+use Azuriom\Notifications\ActivateMails;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class SettingsController extends Controller
 {
@@ -341,7 +342,9 @@ class SettingsController extends Controller
             'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
             'smtp-username' => ['nullable', 'string'],
             'smtp-password' => ['nullable', 'string'],
-        ]);
+        ])+ [
+            'verif_user_emails' => $request->filled('verif_user_emails'),
+        ];
 
         $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
@@ -351,6 +354,15 @@ class SettingsController extends Controller
 
         foreach ($mailSettings as $key => $value) {
             Setting::updateSettings('mail.'.str_replace('-', '.', $key), $value);
+        }
+
+        if ($request->filled('verif_user_emails')) {
+            try {
+                $request->user()->notify(new ActivateMails);
+            } catch (\Throwable $th) {
+                Setting::updateSettings('mail.verif_user_emails', false);
+                return redirect()->route('admin.settings.mail')->with('error', 'Mails not activated : ' .$th->getMessage());
+            }
         }
 
         ActionLog::log('settings.updated');

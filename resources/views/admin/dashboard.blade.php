@@ -12,6 +12,12 @@
         </div>
     @endif
 
+    @if(! setting('mail.verif_user_emails'))
+        <div id="mailAlert" class="alert alert-warning shadow-sm" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.enable-verif-mails') }} <a href="{{ route('admin.settings.mail') }}">{{trans('admin.settings.mail.title')}}</a>
+        </div>
+    @endif
+
     @if($newVersion !== null)
         <div class="alert alert-info shadow-sm" role="alert">
             <i class="fas fa-plus"></i> {{ trans('admin.dashboard.new-update', ['version' => $newVersion]) }}.

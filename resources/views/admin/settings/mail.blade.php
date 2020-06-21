@@ -9,6 +9,11 @@
             <form action="{{ route('admin.settings.update-mail') }}" method="POST">
                 @csrf
 
+                <div class="form-group custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="verif_user_emails" @if(setting('mail.verif_user_emails')) checked @endif>
+                    <label class="custom-control-label" for="enableSwitch">{{ trans('admin.settings.mail.enable-verif-mails') }}</label>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="mailerSelect">{{ trans('admin.settings.mail.driver') }}</label>

@@ -49,6 +49,7 @@ class Kernel extends HttpKernel
             'web',
             'auth',
             'can:admin.access',
+            'verified'
         ],
     ];
 
@@ -72,7 +73,7 @@ class Kernel extends HttpKernel
         'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified' => \Azuriom\Http\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**
