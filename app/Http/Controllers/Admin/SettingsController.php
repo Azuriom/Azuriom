@@ -361,6 +361,7 @@ class SettingsController extends Controller
                 $request->user()->notify(new ActivateMails);
             } catch (\Throwable $th) {
                 Setting::updateSettings('mail.verif_user_emails', false);
+
                 return redirect()->route('admin.settings.mail')->with('error', 'Mails not activated : '.$th->getMessage());
             }
         }
