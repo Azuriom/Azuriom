@@ -18,7 +18,7 @@ class EnsureEmailIsVerified
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if( setting('mail.verif_user_emails')) {
+        if (setting('mail.verif_user_emails')) {
             if (! $request->user() ||
                 ($request->user() instanceof MustVerifyEmail &&
                 ! $request->user()->hasVerifiedEmail())) {
