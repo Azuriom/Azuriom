@@ -30,5 +30,4 @@ class ActivateMails extends Notification
     {
         return ['mail'];
     }
-
 }
