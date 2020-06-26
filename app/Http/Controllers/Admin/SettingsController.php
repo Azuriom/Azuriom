@@ -336,16 +336,16 @@ class SettingsController extends Controller
     public function updateMail(Request $request)
     {
         $mailSettings = $this->validate($request, [
-                'from-address' => ['required', 'string', 'email'],
-                'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
-                'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
-                'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'between:1,65535'],
-                'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
-                'smtp-username' => ['nullable', 'string'],
-                'smtp-password' => ['nullable', 'string'],
-            ]) + [
-                'users_email_verification' => $request->filled('users_email_verification'),
-            ];
+            'from-address' => ['required', 'string', 'email'],
+            'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
+            'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
+            'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'between:1,65535'],
+            'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
+            'smtp-username' => ['nullable', 'string'],
+            'smtp-password' => ['nullable', 'string'],
+        ]) + [
+            'users_email_verification' => $request->filled('users_email_verification'),
+        ];
 
         $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
