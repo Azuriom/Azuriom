@@ -12,6 +12,12 @@
         </div>
     @endif
 
+    @if(config('mail.default') === 'array')
+        <div class="alert alert-warning shadow-sm" role="alert">
+            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])">
+        </div>
+    @endif
+
     @if($newVersion !== null)
         <div class="alert alert-info shadow-sm" role="alert">
             <i class="fas fa-plus"></i> {{ trans('admin.dashboard.new-update', ['version' => $newVersion]) }}.

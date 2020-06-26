@@ -202,4 +202,19 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmailNotification());
     }
+
+    /**
+     * Determine if the user has verified their email address.
+     * If email verification is disabled, this return true to emulates the verification.
+     *
+     * @return bool
+     */
+    public function hasVerifiedEmail()
+    {
+        if (! setting('mail.users_email_verification')) {
+            return true;
+        }
+
+        return parent::hasVerifiedEmail();
+    }
 }

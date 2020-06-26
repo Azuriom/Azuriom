@@ -6,9 +6,11 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
+use Azuriom\Notifications\TestMail;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
@@ -341,12 +343,15 @@ class SettingsController extends Controller
             'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
             'smtp-username' => ['nullable', 'string'],
             'smtp-password' => ['nullable', 'string'],
-        ]);
+        ]) + [
+            'users_email_verification' => $request->filled('users_email_verification'),
+        ];
 
         $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
+            $mailSettings['users_email_verification'] = false;
         }
 
         foreach ($mailSettings as $key => $value) {
@@ -356,6 +361,19 @@ class SettingsController extends Controller
         ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
+    }
+
+    public function sendTestMail(Request $request)
+    {
+        try {
+            $request->user()->notify(new TestMail());
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+            ], 500);
+        }
+
+        return response()->json(['message' => trans('admin.settings.mail.sent')]);
     }
 
     /**
