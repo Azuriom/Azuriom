@@ -214,7 +214,7 @@ return [
                 'password' => 'Mot de passe du serveur SMTP',
             ],
             'enable-users-verification' => 'Activer la vérification de l\'adresse e-mail des utilisateurs',
-            'send' => 'Envoyer un mail de test.',
+            'send' => 'Envoyer un mail de test',
             'sent' => 'Le mail de test a bien été envoyé.',
         ],
 

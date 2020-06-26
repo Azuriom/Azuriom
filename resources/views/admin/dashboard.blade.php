@@ -14,7 +14,7 @@
 
     @if(config('mail.default') === 'array')
         <div class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])">
+            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])
         </div>
     @endif
 

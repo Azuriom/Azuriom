@@ -214,7 +214,7 @@ return [
                 'password' => 'SMTP Server Password',
             ],
             'enable-users-verification' => 'Enable user e-mail address verification',
-            'send' => 'Send a test e-mail.',
+            'send' => 'Send a test e-mail',
             'sent' => 'The test mail has been successfully sent.',
         ],
 

@@ -12,7 +12,7 @@
             sendTestMailButton.setAttribute('disabled', '');
             saveButtonIcon.classList.remove('d-none');
 
-            axios.post({{ route('admin.settings.send-test-mail') }})
+            axios.post('{{ route('admin.settings.send-test-mail') }}')
                 .then(function (response) {
                     createAlert('success', response.data.message, true)
                 })
@@ -120,19 +120,25 @@
                     </div>
                 </div>
 
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
-                    <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.enable-users-verification') }}</label>
+                <div class="alert alert-warning" role="alert" data-mail-type="undefined">
+                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled-warn') }}
                 </div>
 
-                <button type="button" class="btn btn-success" id="sendTestMail">
-                    <i class="fas fa-paper-plane"></i>
-                    {{ trans('admin.settings.mail.send') }}
-                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-                </button>
+                <div class="form-group" data-mail-type="smtp sendmail">
+                    <div class="form-group custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
+                        <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.enable-users-verification') }}</label>
+                    </div>
+                </div>
 
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+
+                <button type="button" class="btn btn-success" id="sendTestMail" data-mail-type="smtp sendmail">
+                    <i class="fas fa-paper-plane"></i>
+                    {{ trans('admin.settings.mail.send') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                 </button>
             </form>
         </div>

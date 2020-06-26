@@ -95,8 +95,10 @@ $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
 });
 
 function updateToggleSelect(selector, el) {
+    const value = el.val() !== '' ? el.val() : 'undefined';
+
     $('[' + selector + ']').addClass('d-none');
-    $('[' + selector + '~="' + el.val() + '"]').removeClass('d-none');
+    $('[' + selector + '~="' + value + '"]').removeClass('d-none');
 }
 
 $('[data-toggle-select]').each(function () {

@@ -25,7 +25,11 @@
                                 <img src="{{ $image->url() }}" class="img-small rounded" alt="{{ $image->name }}">
                             </td>
                             <td>{{ $image->name }}</td>
-                            <td><a href="{{ $image->url() }}" target="_blank">{{ $image->file }}</a></td>
+                            <td>
+                                <a href="{{ $image->url() }}" target="_blank" rel="noopener noreferrer">
+                                    {{ $image->file }}
+                                </a>
+                            </td>
                             <td>
                                 <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>

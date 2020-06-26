@@ -56,7 +56,7 @@
                         <label for="imageSelect">{{ trans('admin.settings.index.favicon') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-upload"></i></a>
                             </div>
                             <select class="custom-select @error('icon') is-invalid @enderror" id="imageSelect" data-image-select="faviconPreview" name="icon">
                                 <option value="" @if(!$icon) selected @endif>{{ trans('messages.none') }}</option>
@@ -79,7 +79,7 @@
                         <label for="logoSelect">{{ trans('admin.settings.index.logo') }}</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                                <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-upload"></i></a>
                             </div>
                             <select class="custom-select @error('logo') is-invalid @enderror" id="logoSelect" data-image-select="logoPreview" name="logo">
                                 <option value="" @if(!$logo) selected @endif>{{ trans('messages.none') }}</option>
@@ -103,7 +103,7 @@
                     <label for="imageSelect">{{ trans('admin.settings.index.background') }}</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank"><i class="fas fa-upload"></i></a>
+                            <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-upload"></i></a>
                         </div>
                         <select class="custom-select @error('background') is-invalid @enderror" id="imageSelect" data-image-select="backgroundPreview" name="background">
                             <option value="" @if(!$background) selected @endif>{{ trans('messages.none') }}</option>

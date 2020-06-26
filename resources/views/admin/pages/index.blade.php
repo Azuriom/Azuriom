@@ -22,7 +22,11 @@
                         <tr>
                             <th scope="row">{{ $page->id }}</th>
                             <td>{{ $page->title }}</td>
-                            <td><a href="{{ route('pages.show', $page) }}" target="_blank">{{ $page->slug }}</a></td>
+                            <td>
+                                <a href="{{ route('pages.show', $page) }}" target="_blank" rel="noopener noreferrer">
+                                    {{ $page->slug }}
+                                </a>
+                            </td>
                             <td>
                                 <span class="badge badge-{{ $page->is_enabled ? 'success' : 'danger' }}">
                                     {{ trans_bool($page->is_enabled) }}
