@@ -12,9 +12,9 @@
         </div>
     @endif
 
-    @if(! setting('mail.verif_user_emails'))
-        <div id="mailAlert" class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.enable-verif-mails') }} <a href="{{ route('admin.settings.mail') }}">{{trans('admin.settings.mail.title')}}</a>
+    @if(config('mail.default') === 'array')
+        <div class="alert alert-warning shadow-sm" role="alert">
+            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])">
         </div>
     @endif
 

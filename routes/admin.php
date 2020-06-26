@@ -34,6 +34,7 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
 
     Route::get('/mail', 'SettingsController@mail')->name('mail');
     Route::post('/mail/update', 'SettingsController@updateMail')->name('update-mail');
+    Route::post('/mail/test', 'SettingsController@sendTestMail')->name('send-test-mail');
 
     Route::get('/maintenance', 'SettingsController@maintenance')->name('maintenance');
     Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('update-maintenance');

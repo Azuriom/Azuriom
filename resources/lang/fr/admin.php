@@ -85,7 +85,7 @@ return [
         'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
-        'enable-verif-mails' => 'La vérification d\'e-mails n\'est pas activé par défaut. Si vos utilisateurs perdent leur mot de passe, ils n\'auront aucun moyen de le changer, vous pouvez changer vos paramètres ici : ',
+        'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
         'posts' => 'Articles',
         'pages' => 'Pages',
@@ -202,10 +202,10 @@ return [
 
         'mail' => [
             'title' => 'Paramètres Mail',
-            'enable-verif-mails' => 'Activer la vérification d\'e-mails',
             'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
             'driver' => 'Type Mail',
             'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'Lorsque l\'envoie des e-mails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
@@ -213,6 +213,9 @@ return [
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
+            'enable-users-verification' => 'Activer la vérification de l\'adresse e-mail des utilisateurs',
+            'send' => 'Envoyer un mail de test.',
+            'sent' => 'Le mail de test a bien été envoyé.',
         ],
 
         'status' => [

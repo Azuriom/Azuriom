@@ -85,7 +85,7 @@ return [
         'proxy-warning' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
-        'enable-verif-mails' => 'The email verification is not enabled by default, which means if an user lose his password, he will not be able to change it, please activate it here : ',
+        'emails-disabled' => 'E-Mails are disabled. If a user forgets his password he will not be able to reset it. You can enable e-mails in the <a href=":url">mail settings</a>.',
         'users' => 'Users',
         'posts' => 'Posts',
         'pages' => 'Pages',
@@ -202,10 +202,10 @@ return [
 
         'mail' => [
             'title' => 'Mail settings',
-            'enable-verif-mails' => 'Activate emails verification',
             'from-address' => 'E-Mail address used to send e-mails.',
             'driver' => 'E-Mail type',
             'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'When e-mails are disabled, users will not be able to reset their password if they forget it.',
             'smtp' => [
                 'host' => 'SMTP Host Address',
                 'port' => 'SMTP Host Port',
@@ -213,6 +213,9 @@ return [
                 'username' => 'SMTP Server Username',
                 'password' => 'SMTP Server Password',
             ],
+            'enable-users-verification' => 'Enable user e-mail address verification',
+            'send' => 'Send a test e-mail.',
+            'sent' => 'The test mail has been successfully sent.',
         ],
 
         'status' => [

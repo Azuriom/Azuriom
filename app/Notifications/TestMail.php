@@ -5,7 +5,7 @@ namespace Azuriom\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ActivateMails extends Notification
+class TestMail extends Notification
 {
     /**
      * Build the mail representation of the notification.
@@ -16,8 +16,8 @@ class ActivateMails extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage())
-                ->subject('Hello!')
-                ->line('Emails are working!');
+            ->subject(trans('mail.test.subject', ['name' => site_name()]))
+            ->line(trans('mail.test.content', ['name' => site_name()]));
     }
 
     /**

@@ -2,17 +2,37 @@
 
 @section('title', trans('admin.settings.mail.title'))
 
+@push('footer-scripts')
+    <script>
+        const sendTestMailButton = document.getElementById('sendTestMail');
+
+        sendTestMailButton.addEventListener('click', function () {
+            const saveButtonIcon = sendTestMailButton.querySelector('.btn-spinner');
+
+            sendTestMailButton.setAttribute('disabled', '');
+            saveButtonIcon.classList.remove('d-none');
+
+            axios.post({{ route('admin.settings.send-test-mail') }})
+                .then(function (response) {
+                    createAlert('success', response.data.message, true)
+                })
+                .catch(function (error) {
+                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                })
+                .finally(function () {
+                    sendTestMailButton.removeAttribute('disabled');
+                    saveButtonIcon.classList.add('d-none');
+                });
+        });
+    </script>
+@endpush
+
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
 
             <form action="{{ route('admin.settings.update-mail') }}" method="POST">
                 @csrf
-
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="verif_user_emails" @if(setting('mail.verif_user_emails')) checked @endif>
-                    <label class="custom-control-label" for="enableSwitch">{{ trans('admin.settings.mail.enable-verif-mails') }}</label>
-                </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -99,6 +119,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
+                    <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.enable-users-verification') }}</label>
+                </div>
+
+                <button type="button" class="btn btn-success" id="sendTestMail">
+                    <i class="fas fa-paper-plane"></i>
+                    {{ trans('admin.settings.mail.send') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                </button>
 
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}

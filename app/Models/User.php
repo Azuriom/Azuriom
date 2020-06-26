@@ -190,9 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendPasswordResetNotification($token)
     {
-        if (setting('mail.verif_user_emails')) {
-            $this->notify(new ResetPasswordNotification($token));
-        }
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     /**
@@ -202,19 +200,21 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sendEmailVerificationNotification()
     {
-        if (setting('mail.verif_user_emails')) {
-            $this->notify(new VerifyEmailNotification());
-        }
+        $this->notify(new VerifyEmailNotification());
     }
 
     /**
      * Determine if the user has verified their email address.
-     * If mail.verif_user_emails == 0 return true to emulates the verification.
+     * If email verification is disabled, this return true to emulates the verification.
      *
      * @return bool
      */
     public function hasVerifiedEmail()
     {
-        return setting('mail.verif_user_emails') ? ! is_null($this->email_verified_at) : true;
+        if (! setting('mail.users_email_verification')) {
+            return true;
+        }
+
+        return parent::hasVerifiedEmail();
     }
 }

@@ -3,10 +3,9 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified as Middleware;
 
-class EnsureEmailIsVerified
+class EnsureEmailIsVerified extends Middleware
 {
     /**
      * Handle an incoming request.
@@ -14,20 +13,14 @@ class EnsureEmailIsVerified
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @param  string|null  $redirectToRoute
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (setting('mail.verif_user_emails')) {
-            if (! $request->user() ||
-                ($request->user() instanceof MustVerifyEmail &&
-                ! $request->user()->hasVerifiedEmail())) {
-                return $request->expectsJson()
-                        ? abort(403, 'Your email address is not verified.')
-                        : Redirect::route($redirectToRoute ?: 'verification.notice');
-            }
+        if (! setting('mail.users_email_verification')) {
+            return $next($request);
         }
 
-        return $next($request);
+        return parent::handle($request, $next, $redirectToRoute);
     }
 }
