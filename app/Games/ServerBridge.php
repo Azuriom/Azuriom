@@ -7,6 +7,9 @@ use Azuriom\Models\User;
 
 abstract class ServerBridge
 {
+    protected const TIMEOUT = 1;
+    protected const COMMANDS_TIMEOUT = 3;
+
     /**
      * The associated server.
      *

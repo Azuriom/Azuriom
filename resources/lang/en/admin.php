@@ -286,6 +286,7 @@ return [
             'link-info' => 'You can link your Minecraft server to your website with the command: ',
             'port-info' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
 
+            'enable-ping' => 'Enable instant commands (require an open port on the server)',
             'custom-port' => 'Use a custom AzLink port',
         ],
 

@@ -47,10 +47,12 @@ class ServerRequest extends FormRequest
             $validated['data'] = [
                 'query-port' => $this->input('query-port'),
             ];
-        } elseif ($type === 'mc-azlink' && $this->filled('azlink-custom-port')) {
-            $validated['data'] = [
-                'azlink-port' => $this->input('azlink-port'),
-            ];
+        } elseif ($type === 'mc-azlink') {
+            $validated['data'] = ['azlink-ping' => $this->filled('azlink-ping')];
+
+            if ($this->filled('azlink-custom-port')) {
+                $validated['data']['azlink-port'] = $this->input('azlink-port');
+            }
         } else {
             $validated['data'] = null;
         }

@@ -35,6 +35,10 @@ class AzLink extends ServerBridge
             ]);
         }
 
+        if (! ($this->server->data['azlink-ping'] ?? true)) {
+            return;
+        }
+
         try {
             $this->sendServerRequest();
         } catch (Exception $e) {
@@ -57,6 +61,8 @@ class AzLink extends ServerBridge
         $port = $this->server->data['azlink-port'] ?? self::DEFAULT_LINK_PORT;
         $token = hash('sha256', $this->server->token);
 
-        return Http::withToken($token, '')->post("http://{$this->server->address}:{$port}");
+        return Http::withToken($token, '')
+            ->timeout(self::COMMANDS_TIMEOUT)
+            ->post("http://{$this->server->address}:{$port}");
     }
 }

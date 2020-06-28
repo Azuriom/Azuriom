@@ -153,33 +153,52 @@
 
 <div data-server-type="mc-azlink" class="d-none">
     <div class="form-group custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
-        <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>
+        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && $server->data['azlink-ping'] ?? true) checked @endisset>
+        <label class="custom-control-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.enable-ping') }}</label>
     </div>
 
-    <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
-        <div class="card card-body mb-3">
-            <div class="form-group">
-                <label for="azlinkPortInput">{{ trans('admin.servers.fields.azlink-port') }}</label>
-                <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
+    <div id="hasPingGroup" class="@if(isset($server) && $server->data['azlink-ping'] ?? true) show @else collapse @endisset">
+        <div class="form-group custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
+            <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>
+        </div>
 
-                @error('azlink-port')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                @enderror
-            </div>
+        <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
+            <div class="card card-body mb-3">
+                <div class="form-group">
+                    <label for="azlinkPortInput">{{ trans('admin.servers.fields.azlink-port') }}</label>
+                    <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
 
-            <div class="alert alert-info mb-0" role="alert">
-                <i class="fas fa-info-circle"></i>
-                {{ trans('admin.servers.azlink.port-info') }}
-                <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
-                    <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+                    @error('azlink-port')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="alert alert-info mb-0" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ trans('admin.servers.azlink.port-info') }}
+                    <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
+                        <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+                </div>
             </div>
         </div>
+
+        <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
+            <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
+            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+        </button>
     </div>
 
     @isset($server)
         <div class="form-group">
-            @if($server->getOnlinePlayers() < 0)
+            @if($server->isOnline())
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ trans('admin.servers.azlink.link-info') }}
+                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                    .
+                </div>
+            @else
                 <div class="alert alert-primary" role="alert">
                     {{ trans('admin.servers.azlink.link') }}
                     <ol class="mb-0">
@@ -192,20 +211,8 @@
                         </li>
                     </ol>
                 </div>
-            @else
-                <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle"></i>
-                    {{ trans('admin.servers.azlink.link-info') }}
-                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
-                    .
-                </div>
             @endif
         </div>
-
-        <button type="button" class="btn btn-success mb-2" id="verifyAzLink">
-            <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
-            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-        </button>
     @else
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
             <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}

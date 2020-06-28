@@ -12,8 +12,6 @@ class Query extends ServerBridge
 {
     protected const DEFAULT_PORT = 27015;
 
-    protected const TIMEOUT = 1;
-
     protected $engine = SourceQuery::SOURCE;
 
     public function getServerData()
@@ -62,7 +60,9 @@ class Query extends ServerBridge
 
         $query = new SourceQuery();
 
-        $query->Connect($address, $port, self::TIMEOUT, $this->engine);
+        $timeout = $rcon ? self::COMMANDS_TIMEOUT : self::TIMEOUT;
+
+        $query->Connect($address, $port, $timeout, $this->engine);
 
         if ($rcon) {
             $password = decrypt($this->server->data['rcon-password'], false);

@@ -10,7 +10,6 @@ use RuntimeException;
 
 class Ping extends ServerBridge
 {
-    protected const TIMEOUT = 1;
     protected const DEFAULT_PORT = 25565;
 
     public function getServerData()

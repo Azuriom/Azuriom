@@ -35,8 +35,9 @@ class Rcon extends Ping
     {
         $port = $this->server->data['rcon-port'] ?? 27015;
         $password = decrypt($this->server->data['rcon-password'], false);
+        $timeout = self::COMMANDS_TIMEOUT;
 
-        $rcon = new MinecraftRcon($this->server->address, $port, $password, 3);
+        $rcon = new MinecraftRcon($this->server->address, $port, $password, $timeout);
 
         if (! $rcon->connect()) {
             throw new RuntimeException('Unable to connect to rcon.');
