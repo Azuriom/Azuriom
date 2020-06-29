@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="1000000000000" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->is_deleted) disabled @endif>
+                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->is_deleted) disabled @endif>
 
                                 <div class="input-group-append">
                                     <span class="input-group-text">{{ money_name() }}</span>

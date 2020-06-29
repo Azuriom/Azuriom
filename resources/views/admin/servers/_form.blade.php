@@ -153,11 +153,11 @@
 
 <div data-server-type="mc-azlink" class="d-none">
     <div class="form-group custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && $server->data['azlink-ping'] ?? true) checked @endisset>
+        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? true)) checked @endisset>
         <label class="custom-control-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.enable-ping') }}</label>
     </div>
 
-    <div id="hasPingGroup" class="@if(isset($server) && $server->data['azlink-ping'] ?? true) show @else collapse @endisset">
+    <div id="hasPingGroup" class="@if(isset($server) && ($server->data['azlink-ping'] ?? true)) show @else collapse @endisset">
         <div class="form-group custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
             <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>

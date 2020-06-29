@@ -38,4 +38,10 @@ return [
     'fallback' => [
         'message' => 'An error occurred. Please try again.',
     ],
+
+    'install' => [
+        'welcome' => 'Welcome',
+        'title' => 'Azuriom is not installed',
+        'message' => 'You can follow the steps in our documentation to install it.',
+    ],
 ];

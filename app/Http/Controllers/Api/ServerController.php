@@ -19,7 +19,7 @@ class ServerController extends Controller
     {
         $server = Server::find($request->input('server-id'));
 
-        $players = Arr::pluck($request->json('players'), 'name', 'uuid');
+        $players = Arr::pluck($request->json('players', []), 'name', 'uuid');
 
         $cpuUsage = $request->json('system.cpu');
         $ramUsage = $request->json('system.ram');

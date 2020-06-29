@@ -14,6 +14,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \Azuriom\Http\Middleware\EnsureInstalled::class,
         \Azuriom\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
         \Azuriom\Http\Middleware\CheckForMaintenanceMode::class,
