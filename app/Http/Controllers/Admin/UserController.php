@@ -172,7 +172,7 @@ class UserController extends Controller
         $user->setRememberToken(null);
         $user->save();
 
-        ActionLog::log('user.deleted', $user);
+        ActionLog::log('users.deleted', $user);
 
         return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
     }

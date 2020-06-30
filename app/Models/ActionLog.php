@@ -80,6 +80,7 @@ class ActionLog extends Model
         parent::boot();
 
         self::registerLogModels([
+            Ban::class,
             Post::class,
             Page::class,
             Role::class,
