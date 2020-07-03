@@ -43,6 +43,7 @@ class AdminController extends Controller
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),
             'recentUsers' => $this->getRecentUsers(),
+            'recentUsersWeek' => $this->getRecentUsersWeek(),
             'activeUsers' => $this->getActiveUsers(),
             'newVersion' => $newVersion,
             'apiAlerts' => $apiAlerts,
@@ -69,6 +70,28 @@ class AdminController extends Controller
         for ($i = 0; $i < 6; $i++) {
             $date->addMonth();
             $time = $date->translatedFormat('M Y');
+
+            $recentUsers[$time] = $queryUsers->get($time, 0);
+        }
+
+        return collect($recentUsers);
+    }
+
+    protected function getRecentUsersWeek()
+    {
+        $date = now()->subDays(6);
+        $recentUsers = [];
+
+        $queryUsers = User::where('created_at', '>=', $date)
+            ->without('role')
+            ->get(['id', 'created_at'])
+            ->countBy(function ($user) {
+                return $user->created_at->translatedFormat('D M');
+            });
+
+        for ($i = 0; $i < 6; $i++) {
+            $date->addDay();
+            $time = $date->translatedFormat('D M');
 
             $recentUsers[$time] = $queryUsers->get($time, 0);
         }
