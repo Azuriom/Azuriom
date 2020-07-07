@@ -45,6 +45,14 @@ a.disabled,
     background-color: #fff !important;
 }
 
+input[type=color].form-control {
+    padding: .375rem .6rem;
+}
+
+input[type=color].color-picker::-webkit-color-swatch {
+    border-radius: .25rem;
+}
+
 .img-small {
     height: 2.5em;
 }

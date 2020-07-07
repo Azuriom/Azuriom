@@ -218,4 +218,41 @@
             </div>
         </div>
     @endif
+
+    @if(! $logs->isEmpty())
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.logs.title') }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            <th scope="col">{{ trans('messages.fields.date') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @foreach($logs as $log)
+                            <tr>
+                                <th scope="row">{{ $log->id }}</th>
+                                <td>
+                                    <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                    {{ $log->getActionMessage() }}
+                                </td>
+                                <td>{{ format_date_compact($log->created_at) }}</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {{ $logs->links() }}
+            </div>
+        </div>
+    @endif
 @endsection

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-@include('elements.base')
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">

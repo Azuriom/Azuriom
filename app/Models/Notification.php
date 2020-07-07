@@ -2,9 +2,9 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasUuidKey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Support\Str;
 
 /**
  * @property string $id
@@ -22,19 +22,7 @@ use Illuminate\Support\Str;
  */
 class Notification extends Model
 {
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+    use HasUuidKey;
 
     /**
      * The attributes that are mass assignable.
@@ -65,16 +53,6 @@ class Notification extends Model
         'danger' => 'exclamation-triangle',
         'success' => 'check',
     ];
-
-    /**
-     * The "booted" method of the model.
-     */
-    public static function booted()
-    {
-        static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Str::uuid());
-        });
-    }
 
     /**
      * Get the user that the notification belongs to.

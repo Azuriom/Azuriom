@@ -27,13 +27,7 @@ class UserController extends Controller
 
         $users = User::with('ban')
             ->when($search, function (Builder $query, string $search) {
-                $query->where('email', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%")
-                    ->orWhere('game_id', 'LIKE', "%{$search}%");
-
-                if (is_numeric($search)) {
-                    $query->orWhere('id', $search);
-                }
+                $query->scopes(['search' => $search]);
             })->paginate();
 
         foreach ($users as $user) {
@@ -82,9 +76,15 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $logs = ActionLog::with('target')
+            ->where('user_id', $user->id)
+            ->latest()
+            ->paginate();
+
         return view('admin.users.edit', [
             'user' => $user->refreshActiveBan(),
             'roles' => Role::all(),
+            'logs' => $logs,
         ]);
     }
 

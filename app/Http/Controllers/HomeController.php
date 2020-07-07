@@ -17,7 +17,7 @@ class HomeController extends Controller
         $posts = Post::with('author')
             ->scopes('published')
             ->latest('published_at')
-            ->take(3)
+            ->take(5)
             ->get();
 
         return view('home', ['posts' => $posts]);

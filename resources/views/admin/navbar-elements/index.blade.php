@@ -104,10 +104,13 @@
                 @endforeach
             </ol>
 
-            <button type="button" class="btn btn-success" id="save">
-                <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-            </button>
+            @if(! $navbarElements->isEmpty())
+                <button type="button" class="btn btn-success" id="save">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                </button>
+            @endif
+
             <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}">
                 <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
             </a>

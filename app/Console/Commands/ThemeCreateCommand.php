@@ -51,7 +51,7 @@ class ThemeCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -77,6 +77,8 @@ class ThemeCreateCommand extends Command
         $this->files->makeDirectory($path.'/views');
 
         $this->info('Theme created successfully.');
+
+        return 0;
     }
 
     private function createThemeJson(string $path, string $id, string $name)

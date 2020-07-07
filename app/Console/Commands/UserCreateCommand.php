@@ -30,7 +30,7 @@ class UserCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -56,5 +56,7 @@ class UserCreateCommand extends Command
         }
 
         $this->info('User created !');
+
+        return 0;
     }
 }

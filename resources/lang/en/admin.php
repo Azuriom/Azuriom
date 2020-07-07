@@ -257,7 +257,8 @@ return [
         'title-edit' => 'Edit server :server',
         'title-create' => 'Add server',
 
-        'default-server' => 'Default server',
+        'default' => 'Default server',
+        'default-info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
         'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
 

@@ -43,12 +43,12 @@
                                 <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
                                     @csrf
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fas fa-{{ plugins()->isEnabled($path)  ? 'times' : 'check' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
                                     </button>
                                 </form>
                                 @if(! plugins()->isEnabled($path))
-                                    <a href="{{ route('admin.plugins.delete', $path) }}" class="btn btn-danger" data-confirm="delete">
+                                    <a href="{{ route('admin.plugins.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
                                         <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
                                     </a>
                                 @endif
@@ -56,7 +56,7 @@
                                     <form method="POST" action="{{ route('admin.plugins.update', $path) }}" class="d-inline-block">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-info">
+                                        <button type="submit" class="btn btn-info btn-sm">
                                             <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
                                         </button>
                                     </form>
@@ -101,14 +101,14 @@
                                 <td>{{ $plugin['version'] }}</td>
                                 <td>
                                     @if($plugin['premium'] && ! $plugin['purchased'])
-                                        <a href="{{ $plugin['info_url'] }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
                                             <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
                                         </a>
                                     @else
                                         <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
                                             @csrf
 
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary btn-sm">
                                                 <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
                                             </button>
                                         </form>

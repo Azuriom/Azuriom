@@ -77,18 +77,18 @@
                                 <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
                                     @csrf
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}
                                     </button>
                                 </form>
-                                <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger" data-confirm="delete">
+                                <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
                                     <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
                                 </a>
                                 @if($themesUpdates->has($path))
                                     <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-info">
+                                        <button type="submit" class="btn btn-info btn-sm">
                                             <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
                                         </button>
                                     </form>
@@ -132,15 +132,14 @@
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
                                     @if($theme['premium'] && ! $theme['purchased'])
-                                        <a href="{{ $theme['info_url'] }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
                                             <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
                                         </a>
                                     @else
-
                                         <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
                                             @csrf
 
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary btn-sm">
                                                 <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
                                             </button>
                                         </form>

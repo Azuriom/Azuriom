@@ -25,7 +25,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user e-mail address.
+     * Update the user email address.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

@@ -12,9 +12,11 @@ use Illuminate\Support\Str;
  */
 trait HasImage
 {
+    protected $imageDisk = 'public';
+
     protected static function bootHasImage()
     {
-        static::deleting(function (Model $model) {
+        static::deleted(function (Model $model) {
             if (! ($model->forceDeleting ?? true)) {
                 return;
             }
@@ -27,31 +29,54 @@ trait HasImage
      * Store the image and associate it with this model.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
+     * @param  bool  $save
      */
-    public function storeImage(UploadedFile $file)
+    public function storeImage(UploadedFile $file, bool $save = false)
     {
         $this->deleteImage();
 
-        $path = basename($file->storePublicly($this->getImagePath(), 'public'));
+        $path = basename($file->storePublicly($this->getImagePath(), $this->imageDisk));
 
         $this->setAttribute($this->getImageKey(), $path);
+
+        if ($save) {
+            $this->save();
+        }
+
+        return $this->imageUrl();
     }
 
     /**
      * Delete the image associated with this model.
      *
-     * @return void
+     * @return bool
      */
     public function deleteImage()
     {
         $key = $this->getImageKey();
         $image = $this->getAttribute($key);
 
-        if ($image !== null) {
-            Storage::disk('public')->delete($this->getImagePath($image));
-
-            $this->setAttribute($key, null);
+        if ($image === null) {
+            return false;
         }
+
+        if (! Storage::disk($this->imageDisk)->delete($this->getImagePath($image))) {
+            return false;
+        }
+
+        $this->setAttribute($key, null);
+
+        return true;
+    }
+
+    /**
+     * Return true if this this model has an image.
+     *
+     * @return bool
+     */
+    public function hasImage()
+    {
+        return $this->getAttribute($this->getImageKey()) !== null;
     }
 
     /**
@@ -67,17 +92,7 @@ trait HasImage
             return null;
         }
 
-        return url(Storage::disk('public')->url($this->getImagePath($image)));
-    }
-
-    /**
-     * Return true if this this model has an image.
-     *
-     * @return bool
-     */
-    public function hasImage()
-    {
-        return $this->image !== null;
+        return url(Storage::disk($this->imageDisk)->url($this->getImagePath($image)));
     }
 
     protected function getImageKey()

@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\InteractsWithMoney;
+use Azuriom\Models\Traits\Searchable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -42,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use InteractsWithMoney;
     use Notifiable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -80,6 +82,15 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $with = [
         'role',
+    ];
+
+    /**
+     * The attributes that can be search for.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'email', 'name', 'game_id',
     ];
 
     /**
@@ -201,20 +212,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
-    }
-
-    /**
-     * Determine if the user has verified their email address.
-     * If email verification is disabled, this return true to emulates the verification.
-     *
-     * @return bool
-     */
-    public function hasVerifiedEmail()
-    {
-        if (! setting('mail.users_email_verification')) {
-            return true;
-        }
-
-        return parent::hasVerifiedEmail();
     }
 }

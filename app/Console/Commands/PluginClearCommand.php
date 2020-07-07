@@ -27,7 +27,7 @@ class PluginClearCommand extends Command
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
-     * @return mixed
+     * @return int
      */
     public function handle(Filesystem $files, PluginManager $plugins)
     {
@@ -36,5 +36,7 @@ class PluginClearCommand extends Command
         }
 
         $this->info('Cached plugins files removed');
+
+        return 0;
     }
 }

@@ -257,7 +257,8 @@ return [
         'title-edit' => 'Édition du serveur :server',
         'title-create' => 'Ajout d\'un serveur',
 
-        'default-server' => 'Serveur par défaut',
+        'default' => 'Serveur par défaut',
+        'default-info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
 
         'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
 

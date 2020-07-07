@@ -40,6 +40,7 @@ return [
         'reload' => 'Recharger',
         'refresh' => 'Rafraîchir',
         'duplicate' => 'Dupliquer',
+        'remove' => 'Retirer',
     ],
 
     'fields' => [
@@ -67,6 +68,8 @@ return [
         'category' => 'Catégorie',
         'version' => 'Version',
         'game' => 'Jeu',
+        'price' => 'Prix',
+        'icon' => 'Icône',
     ],
 
     'yes' => 'Oui',
