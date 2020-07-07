@@ -23,6 +23,6 @@ return [
 
     'test' => [
         'subject' => 'Test mail on :name',
-        'content' => 'As you can see this e-mail, this means that sending e-mails from :name works!',
+        'content' => 'As you can see this email, this means that sending emails from :name works!',
     ],
 ];

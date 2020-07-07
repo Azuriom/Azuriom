@@ -21,6 +21,7 @@ return [
                 'security' => 'Security',
                 'performances' => 'Performances',
                 'seo' => 'SEO',
+                'auth' => 'Authentication',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
             ],
@@ -85,7 +86,7 @@ return [
         'proxy-warning' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
-        'emails-disabled' => 'E-Mails are disabled. If a user forgets his password he will not be able to reset it. You can enable e-mails in the <a href=":url">mail settings</a>.',
+        'emails-disabled' => 'Emails are disabled. If a user forgets his password he will not be able to reset it. You can enable emails in the <a href=":url">mail settings</a>.',
         'users' => 'Users',
         'posts' => 'Posts',
         'pages' => 'Pages',
@@ -99,28 +100,18 @@ return [
             'site-name' => 'Site Name',
             'site-url' => 'Site URL',
             'site-description' => 'Site Description',
+            'meta' => 'Meta keywords',
+            'meta-info' => 'The keywords must be separated with a comma.',
             'favicon' => 'Favicon',
             'background' => 'Background',
             'logo' => 'Logo',
             'timezone' => 'Timezone',
             'locale' => 'Locale',
+            'money' => 'Name of the site currency',
             'copyright' => 'Copyright',
-            'conditions-url' => 'Conditions URL',
-            'enable-user-registration' => 'Enable user registration',
-            'enable-user-registration-label' => 'It can still be possible to register through plugins.',
-            'auth-api' => 'Enable Auth API',
-            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
-            'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
-            'user-money-transfer' => 'Allow money transfer between users',
+            'user-money-transfer' => 'Enable money transfer between users',
             'site-key' => 'Site key for azuriom.com',
             'site-key-label' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
-        ],
-
-        'maintenance' => [
-            'title' => 'Maintenance settings',
-
-            'enable' => 'Enable maintenance',
-            'message' => 'Maintenance message',
         ],
 
         'security' => [
@@ -154,28 +145,28 @@ return [
             ],
 
             'boost' => [
-                'title' => 'RocketBooster',
-                'description' => 'RocketBooster improves your website performances by adding one more exclusive cache layer.',
+                'title' => 'AzBoost',
+                'description' => 'AzBoost improves your website performances by adding one more exclusive cache layer.',
                 'info' => 'If you have some issues after enabling an extension you should reload the cache.',
 
                 'current' => [
-                    'status' => 'RocketBooster is currently :status.',
+                    'status' => 'AzBoost is currently :status.',
                     'enabled' => '<span class="text-success">enabled</span>',
                     'disabled' => '<span class="text-danger">disabled</span>',
                 ],
 
                 'status' => [
-                    'enabled' => 'RocketBooster is now enabled.',
-                    'disabled' => 'RocketBooster is now disabled.',
-                    'reloaded' => 'RocketBooster was reloaded.',
+                    'enabled' => 'AzBoost is now enabled.',
+                    'disabled' => 'AzBoost is now disabled.',
+                    'reloaded' => 'AzBoost was reloaded.',
 
-                    'enable-error' => 'Error while enabling RocketBooster.',
+                    'enable-error' => 'Error while enabling AzBoost.',
                 ],
 
                 'actions' => [
-                    'enable' => 'Enable RocketBooster',
-                    'disable' => 'Disable RocketBooster',
-                    'reload' => 'Reload RocketBooster',
+                    'enable' => 'Enable AzBoost',
+                    'disable' => 'Disable AzBoost',
+                    'reload' => 'Reload AzBoost',
                 ],
             ],
         ],
@@ -183,15 +174,10 @@ return [
         'seo' => [
             'title' => 'SEO settings',
 
-            'google-analytics' => 'Google Analytics site id',
-            'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer"> Google Analytics website</a>.',
-            'meta' => 'Meta keywords',
-            'meta-info' => 'The keywords must be separated with a comma.',
-
             'html-head-code' => 'HTML code to include in the <head> of all pages.',
             'html-body-code' => 'HTML code to include in the <body> of all pages.',
 
-            'html-code-info' => 'E.g: Cookie banner, etc',
+            'html-code-info' => 'E.g: Cookie banner, Google Analytics, etc',
 
             'welcome-popup' => [
                 'enable' => 'Enable welcome popup ?',
@@ -200,12 +186,23 @@ return [
             ],
         ],
 
+        'auth' => [
+            'title' => 'Authentication',
+
+            'conditions-url' => 'Conditions URL',
+            'enable-user-registration' => 'Enable user registration',
+            'enable-user-registration-label' => 'It can still be possible to register through plugins.',
+            'auth-api' => 'Enable Auth API',
+            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
+            'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
+        ],
+
         'mail' => [
             'title' => 'Mail settings',
-            'from-address' => 'E-Mail address used to send e-mails.',
-            'driver' => 'E-Mail type',
-            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
-            'disabled-warn' => 'When e-mails are disabled, users will not be able to reset their password if they forget it.',
+            'from-address' => 'Email address used to send emails.',
+            'driver' => 'Email type',
+            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending emails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'When emails are disabled, users will not be able to reset their password if they forget it.',
             'smtp' => [
                 'host' => 'SMTP Host Address',
                 'port' => 'SMTP Host Port',
@@ -213,9 +210,16 @@ return [
                 'username' => 'SMTP Server Username',
                 'password' => 'SMTP Server Password',
             ],
-            'enable-users-verification' => 'Enable user e-mail address verification',
-            'send' => 'Send a test e-mail',
+            'enable-users-verification' => 'Enable user email address verification',
+            'send' => 'Send a test email',
             'sent' => 'The test mail has been successfully sent.',
+        ],
+
+        'maintenance' => [
+            'title' => 'Maintenance settings',
+
+            'enable' => 'Enable maintenance',
+            'message' => 'Maintenance message',
         ],
 
         'status' => [
@@ -323,7 +327,7 @@ return [
 
         'fields' => [
             'register-date' => 'Register at',
-            'email-verified' => 'E-Mail Address verified',
+            'email-verified' => 'Email Address verified',
             '2fa' => 'Two Factor Authentication',
             'ip' => 'IP Address',
         ],
@@ -362,7 +366,7 @@ return [
             'updated' => 'This user has been updated.',
             'deleted' => 'This user has been deleted.',
 
-            'email-verified' => 'The E-Mail Address has been verified.',
+            'email-verified' => 'The Email Address has been verified.',
             '2fa-disabled' => 'The Two Factor Authentication has been disabled.',
 
             'banned' => 'This user is now banned.',

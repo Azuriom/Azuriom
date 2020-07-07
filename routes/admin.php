@@ -19,9 +19,6 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::get('/', 'SettingsController@index')->name('index');
     Route::post('/update', 'SettingsController@update')->name('update');
 
-    Route::get('/security', 'SettingsController@security')->name('security');
-    Route::post('/security/update', 'SettingsController@updateSecurity')->name('update-security');
-
     Route::post('/cache/clear', 'SettingsController@clearCache')->name('cache.clear');
     Route::post('/cache/advanced/enable', 'SettingsController@enableAdvancedCache')->name('cache.advanced.enable');
     Route::post('/cache/advanced/clear', 'SettingsController@disableAdvancedCache')->name('cache.advanced.clear');
@@ -30,14 +27,18 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::get('/storage/link', 'SettingsController@linkStorage')->name('link-storage');
 
     Route::get('/seo', 'SettingsController@seo')->name('seo');
-    Route::post('/seo/update', 'SettingsController@updateSeo')->name('update-seo');
+    Route::post('/seo/update', 'SettingsController@updateSeo')->name('seo.update');
+
+    Route::get('/auth', 'SettingsController@auth')->name('auth');
+    Route::post('/auth/update', 'SettingsController@updateauth')->name('auth.update');
+    Route::post('/security/update', 'SettingsController@updateSecurity')->name('security.update');
 
     Route::get('/mail', 'SettingsController@mail')->name('mail');
-    Route::post('/mail/update', 'SettingsController@updateMail')->name('update-mail');
-    Route::post('/mail/test', 'SettingsController@sendTestMail')->name('send-test-mail');
+    Route::post('/mail/update', 'SettingsController@updateMail')->name('mail.update');
+    Route::post('/mail/test', 'SettingsController@sendTestMail')->name('mail.send');
 
     Route::get('/maintenance', 'SettingsController@maintenance')->name('maintenance');
-    Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('update-maintenance');
+    Route::post('/maintenance/update', 'SettingsController@updateMaintenance')->name('maintenance.update');
 });
 
 Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(function () {
@@ -88,6 +89,11 @@ Route::resource('users.bans', 'BanController')->only(['store', 'destroy'])->midd
 Route::resource('pages', 'PageController')->except('show')->middleware('can:admin.pages');
 Route::resource('posts', 'PostController')->except('show')->middleware('can:admin.posts');
 Route::resource('images', 'ImageController')->except('show')->middleware('can:admin.images');
+
+Route::resource('pages.attachments', 'PageAttachmentController')->only('store');
+Route::resource('posts.attachments', 'PostAttachmentController')->only('store');
+Route::post('pages/attachments/{pendingId}', 'PageAttachmentController@pending')->name('pages.attachments.pending');
+Route::post('posts/attachments/{pendingId}', 'PostAttachmentController@pending')->name('posts.attachments.pending');
 
 Route::resource('servers', 'ServerController')->except('show');
 Route::post('/servers/{server}/verify/azlink', 'ServerController@verifyAzLink')->name('servers.verify-azlink');

@@ -107,7 +107,7 @@ return [
 
     'profile' => [
         'title' => 'My Profile',
-        'change-email' => 'Change E-Mail Address',
+        'change-email' => 'Change Email Address',
         'change-password' => 'Change Password',
 
         'not-verified' => 'Your email is not verified, please check your email for a verification link.',

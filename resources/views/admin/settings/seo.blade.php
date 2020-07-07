@@ -5,30 +5,8 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.settings.update-seo') }}" method="POST">
+            <form action="{{ route('admin.settings.seo.update') }}" method="POST">
                 @csrf
-
-                <div class="form-group">
-                    <label for="keyInput">{{ trans('admin.settings.seo.google-analytics') }}</label>
-                    <input type="text" class="form-control @error('g-analytics-id') is-invalid @enderror" id="keyInput" name="g-analytics-id" placeholder="UA-XXXXXXXX-1" value="{{ old('g-analytics-id', setting('g-analytics-id', '')) }}" aria-describedby="keyInfo">
-
-                    @error('g-analytics-id')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-
-                    <small id="keyInfo" class="form-text">@lang('admin.settings.seo.google-analytics-info')</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="keywordsInput">{{ trans('admin.settings.seo.meta') }}</label>
-                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}" aria-describedby="keywordsInfo">
-
-                    @error('keywords')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-
-                    <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.seo.meta-info') }}</small>
-                </div>
 
                 <div class="form-group">
                     <label for="htmlHeadArea">{{ trans('admin.settings.seo.html-head-code') }}</label>

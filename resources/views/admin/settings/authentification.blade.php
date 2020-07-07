@@ -1,11 +1,63 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.settings.security.title'))
+@section('title', trans('admin.settings.auth.title'))
 
 @section('content')
     <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.settings.auth.title') }}</h6>
+        </div>
         <div class="card-body">
-            <form action="{{ route('admin.settings.update-security') }}" method="POST">
+            <form action="{{ route('admin.settings.auth.update') }}" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label for="conditionsInput">{{ trans('admin.settings.auth.conditions-url') }}</label>
+                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+
+                    @error('conditions')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif aria-describedby="registerInput">
+                        <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.auth.enable-user-registration') }}</label>
+                    </div>
+
+                    <small id="registerInput" class="form-text">{{ trans('admin.settings.auth.enable-user-registration-label') }}</small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif aria-describedby="authApiInfo">
+                        <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.auth.auth-api') }}</label>
+                    </div>
+
+                    <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.auth-api-label')</small>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="minecraftVerifInput" name="minecraft-verification" @if($minecraftVerification) checked @endif>
+                        <label class="custom-control-label" for="minecraftVerifInput">{{ trans('admin.settings.auth.minecraft-verification') }}</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.settings.security.title') }}</h6>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('admin.settings.security.update') }}" method="POST">
                 @csrf
 
                 <div class="form-group custom-control custom-switch">

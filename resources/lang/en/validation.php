@@ -152,7 +152,7 @@ return [
     */
 
     'attributes' => [
-        'email' => 'E-Mail Address',
+        'email' => 'Email Address',
         'name' => 'name',
         'title' => 'title',
         'slug' => 'slug',

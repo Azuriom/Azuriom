@@ -27,7 +27,7 @@ return [
     ],
 
     'name' => 'Username',
-    'email' => 'E-Mail Address',
+    'email' => 'Email Address',
     'password' => 'Password',
     'confirm-password' => 'Confirm Password',
     'current-password' => 'Current password',

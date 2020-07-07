@@ -99,28 +99,18 @@ return [
             'site-name' => 'Nom du site',
             'site-url' => 'URL du site',
             'site-description' => 'Description du site',
+            'meta' => 'Mots-clés du site',
+            'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
             'favicon' => 'Favicon',
             'background' => 'Background',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
             'copyright' => 'Copyright',
-            'conditions-url' => 'Liens des CGU',
-            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
-            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
-            'auth-api' => 'Activer l\'API auth',
-            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
-            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
-            'user-money-transfer' => 'Autoriser le transfert de d\'argent entre les utilisateurs',
+            'money' => 'Nom de la monnaie du site',
+            'user-money-transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
             'site-key' => 'Clé de site pour azuriom.com',
             'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
-        ],
-
-        'maintenance' => [
-            'title' => 'Maintenance',
-
-            'enable' => 'Activer la maintenance',
-            'message' => 'Message de maintenance',
         ],
 
         'security' => [
@@ -132,7 +122,7 @@ return [
             'recaptcha-info' => 'Vous pouvez obtenir les clés Google reCaptcha sur la page de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
 
             'hash' => 'Algorithme de hachage',
-            'hash-info' => 'Argon2id est l\'algorithme le plus sûr mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
+            'hash-info' => 'Argon2id est l\'algorithme le plus sécurisé mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
             'hash-error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
         ],
 
@@ -154,28 +144,28 @@ return [
             ],
 
             'boost' => [
-                'title' => 'RocketBooster',
-                'description' => 'RocketBooster permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
-                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger RocketBooster.',
+                'title' => 'AzBoost',
+                'description' => 'AzBoost permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
+                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger AzBoost.',
 
                 'current' => [
-                    'status' => 'RocketBooster est actuellement :status.',
+                    'status' => 'AzBoost est actuellement :status.',
                     'enabled' => '<span class="text-success">activé</span>',
                     'disabled' => '<span class="text-danger">désactivé</span>',
                 ],
 
                 'status' => [
-                    'enabled' => 'RocketBooster a été activé.',
-                    'disabled' => 'RocketBooster a été désactivé.',
-                    'reloaded' => 'RocketBooster a été rechargé.',
+                    'enabled' => 'AzBoost a été activé.',
+                    'disabled' => 'AzBoost a été désactivé.',
+                    'reloaded' => 'AzBoost a été rechargé.',
 
-                    'enable-error' => 'Une erreur est survenue en activant RocketBooster.',
+                    'enable-error' => 'Une erreur est survenue en activant AzBoost.',
                 ],
 
                 'actions' => [
-                    'enable' => 'Activer RocketBooster',
-                    'disable' => 'Désactiver RocketBooster',
-                    'reload' => 'Recharger RocketBooster',
+                    'enable' => 'Activer AzBoost',
+                    'disable' => 'Désactiver AzBoost',
+                    'reload' => 'Recharger AzBoost',
                 ],
             ],
         ],
@@ -183,15 +173,10 @@ return [
         'seo' => [
             'title' => 'Paramètres SEO',
 
-            'google-analytics' => 'Identifiant du site Google Analytics',
-            'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer">Google Analytics</a>.',
-            'meta' => 'Mots-clés du site',
-            'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
-
             'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
             'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
-            'html-code-info' => 'Exemple: Bannière cookies, etc',
+            'html-code-info' => 'Exemple: Bannière cookies, Google Analytics, etc',
 
             'welcome-popup' => [
                 'enable' => 'Activer le popup de bienvenue ?',
@@ -200,12 +185,23 @@ return [
             ],
         ],
 
+        'auth' => [
+          'title' => 'Authentification',
+
+            'conditions-url' => 'Liens des CGU',
+            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
+            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
+            'auth-api' => 'Activer l\'API auth',
+            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
+            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
+        ],
+
         'mail' => [
             'title' => 'Paramètres Mail',
-            'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
+            'from-address' => 'Adresse Email utilisée pour envoyer les emails.',
             'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
-            'disabled-warn' => 'Lorsque l\'envoie des e-mails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des emails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'Lorsque l\'envoie des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
@@ -213,9 +209,16 @@ return [
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
-            'enable-users-verification' => 'Activer la vérification de l\'adresse e-mail des utilisateurs',
+            'enable-users-verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
             'send' => 'Envoyer un mail de test',
             'sent' => 'Le mail de test a bien été envoyé.',
+        ],
+
+        'maintenance' => [
+            'title' => 'Maintenance',
+
+            'enable' => 'Activer la maintenance',
+            'message' => 'Message de maintenance',
         ],
 
         'status' => [
@@ -323,7 +326,7 @@ return [
 
         'fields' => [
             'register-date' => 'Inscrit le',
-            'email-verified' => 'Adresse E-Mail vérifiée',
+            'email-verified' => 'Adresse Email vérifiée',
             '2fa' => 'Authentification à deux facteurs',
             'ip' => 'Adresse IP',
         ],
@@ -338,7 +341,7 @@ return [
             'ban' => 'Bannir',
             'unban' => 'Débannir',
             'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'adresse e-mail',
+            'verify-email' => 'Vérifier l\'adresse email',
             'disable-2fa' => 'Désactiver l\'A2F',
         ],
 
@@ -362,7 +365,7 @@ return [
             'updated' => 'L\'utilisateur a été mis à jour.',
             'deleted' => 'L\'utilisateur a été supprimé.',
 
-            'email-verified' => 'L\'adresse E-Mail a été vérifiée',
+            'email-verified' => 'L\'adresse Email a été vérifiée',
             '2fa-disabled' => 'L\'authentification à deux facteurs a été désactivée',
 
             'banned' => 'Utilisateur banni',

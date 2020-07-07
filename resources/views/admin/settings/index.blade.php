@@ -24,22 +24,24 @@
             <form action="{{ route('admin.settings.update') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="nameInput">{{ trans('admin.settings.index.site-name') }}</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', site_name()) }}" required>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="nameInput">{{ trans('admin.settings.index.site-name') }}</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', site_name()) }}" required>
 
-                    @error('name')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
 
-                <div class="form-group">
-                    <label for="urlInput">{{ trans('admin.settings.index.site-url') }}</label>
-                    <input type="url" class="form-control @error('url') is-invalid @enderror" id="urlInput" name="url" value="{{ old('url', config('app.url')) }}" required>
+                    <div class="form-group col-md-7">
+                        <label for="urlInput">{{ trans('admin.settings.index.site-url') }}</label>
+                        <input type="url" class="form-control @error('url') is-invalid @enderror" id="urlInput" name="url" value="{{ old('url', config('app.url')) }}" required>
 
-                    @error('url')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
+                        @error('url')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -49,6 +51,17 @@
                     @error('description')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="keywordsInput">{{ trans('admin.settings.index.meta') }}</label>
+                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywordsInput" name="keywords" placeholder="word1, word2" value="{{ old('keywords', setting('keywords', '')) }}" aria-describedby="keywordsInfo">
+
+                    @error('keywords')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+
+                    <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.index.meta-info') }}</small>
                 </div>
 
                 <div class="form-row">
@@ -151,7 +164,7 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-md-8">
                         <label for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
                         <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
 
@@ -160,23 +173,14 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-lg-6">
-                        <label for="conditionsInput">{{ trans('admin.settings.index.conditions-url') }}</label>
-                        <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+                    <div class="form-group col-md-4">
+                        <label for="moneyNameInput">{{ trans('admin.settings.index.money') }}</label>
+                        <input type="text" class="form-control @error('money') is-invalid @enderror" id="copyrightInput" name="money" value="{{ old('money', $money) }}">
 
-                        @error('conditions')
+                        @error('money')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="moneyNameInput">Money</label>
-                    <input type="text" class="form-control @error('money') is-invalid @enderror" id="copyrightInput" name="money" value="{{ old('money', $money) }}">
-
-                    @error('money')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -188,31 +192,6 @@
                     @enderror
 
                     <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site-key-label')</small>
-                </div>
-
-                <div class="form-group">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif aria-describedby="registerInput">
-                        <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.index.enable-user-registration') }}</label>
-                    </div>
-
-                    <small id="registerInput" class="form-text">{{ trans('admin.settings.index.enable-user-registration-label') }}</small>
-                </div>
-
-                <div class="form-group">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif aria-describedby="authApiInfo">
-                        <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.index.auth-api') }}</label>
-                    </div>
-
-                    <small id="authApiInfo" class="form-text">@lang('admin.settings.index.auth-api-label')</small>
-                </div>
-
-                <div class="form-group">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="minecraftVerifInput" name="minecraft-verification" @if($minecraftVerification) checked @endif>
-                        <label class="custom-control-label" for="minecraftVerifInput">{{ trans('admin.settings.index.minecraft-verification') }}</label>
-                    </div>
                 </div>
 
                 <div class="form-group">

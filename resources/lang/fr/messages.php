@@ -107,7 +107,7 @@ return [
 
     'profile' => [
         'title' => 'Mon Profil',
-        'change-email' => 'Changer l\'adresse e-mail',
+        'change-email' => 'Changer l\'adresse email',
         'change-password' => 'Changer le mot de passe',
 
         'not-verified' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
@@ -132,7 +132,7 @@ return [
             'disabled' => 'Authentification à deux facteurs désactivée.',
         ],
 
-        'email-not-verified' => 'Votre adresse e-mail n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
+        'email-not-verified' => 'Votre adresse email n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
 
         'money-transfer' => [
             'title' => 'Transfert d\'argent',

@@ -114,9 +114,6 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'money' => setting('money'),
             'siteKey' => setting('site-key'),
-            'register' => setting('register', true),
-            'authApi' => setting('auth-api', false),
-            'minecraftVerification' => setting('game-type') === 'mc-online',
             'userMoneyTransfer' => setting('user_money_transfer'),
         ]);
     }
@@ -137,7 +134,7 @@ class SettingsController extends Controller
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
             'copyright' => ['nullable', 'string', 'max:150'],
-            'conditions' => ['nullable', 'url', 'max:150'],
+            'keywords' => ['nullable', 'string', 'max:150'],
             'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
             'icon' => ['nullable', 'exists:images,file'],
             'logo' => ['nullable', 'exists:images,file'],
@@ -145,9 +142,6 @@ class SettingsController extends Controller
             'money' => ['required', 'string', 'max:15'],
             'site-key' => ['nullable', 'string', 'size:50'],
         ]) + [
-            'register' => $request->filled('register'),
-            'auth-api' => $request->filled('auth-api'),
-            'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
             'user_money_transfer' => $request->filled('user_money_transfer'),
         ]);
 
@@ -160,22 +154,6 @@ class SettingsController extends Controller
         }
 
         return $response;
-    }
-
-    /**
-     * Show the application security settings.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function security()
-    {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
-
-        return view('admin.settings.security', [
-            'hashAlgorithms' => $this->hashAlgorithms,
-            'currentHash' => config('hashing.driver'),
-            'showReCaptcha' => $show,
-        ]);
     }
 
     /**
@@ -217,7 +195,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.security')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
     }
 
     public function performance()
@@ -275,7 +253,6 @@ class SettingsController extends Controller
     public function seo()
     {
         return view('admin.settings.seo', [
-            'enableAnalytics' => setting('g-analytics-id') || old('enable-g-analytics'),
             'htmlHead' => setting('html-head'),
             'htmlBody' => setting('html-body'),
             'welcomePopup' => setting('welcome-popup'),
@@ -293,8 +270,6 @@ class SettingsController extends Controller
     public function updateSeo(Request $request)
     {
         $settings = $this->validate($request, [
-            'keywords' => ['nullable', 'string', 'max:150'],
-            'g-analytics-id' => ['nullable', 'string', 'max:50'],
             'html-head' => ['nullable', 'string'],
             'html-body' => ['nullable', 'string'],
             'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
@@ -309,6 +284,38 @@ class SettingsController extends Controller
         ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
+    }
+
+    public function auth()
+    {
+        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
+
+        return view('admin.settings.authentification', [
+            'conditions' => setting('conditions'),
+            'register' => setting('register', true),
+            'authApi' => setting('auth-api', false),
+            'minecraftVerification' => setting('game-type') === 'mc-online',
+            'hashAlgorithms' => $this->hashAlgorithms,
+            'currentHash' => config('hashing.driver'),
+            'showReCaptcha' => $show,
+        ]);
+    }
+
+    public function updateAuth(Request $request)
+    {
+        $settings = $this->validate($request, [
+            'conditions' => ['nullable', 'url', 'max:150'],
+        ]) + [
+            'register' => $request->filled('register'),
+            'auth-api' => $request->filled('auth-api'),
+            'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
+        ];
+
+        Setting::updateSettings($settings);
+
+        ActionLog::log('settings.updated');
+
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
     }
 
     /**

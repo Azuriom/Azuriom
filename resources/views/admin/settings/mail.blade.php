@@ -12,7 +12,7 @@
             sendTestMailButton.setAttribute('disabled', '');
             saveButtonIcon.classList.remove('d-none');
 
-            axios.post('{{ route('admin.settings.send-test-mail') }}')
+            axios.post('{{ route('admin.settings.mail.send') }}')
                 .then(function (response) {
                     createAlert('success', response.data.message, true)
                 })
@@ -31,7 +31,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
 
-            <form action="{{ route('admin.settings.update-mail') }}" method="POST">
+            <form action="{{ route('admin.settings.mail.update') }}" method="POST">
                 @csrf
 
                 <div class="form-row">
