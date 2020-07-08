@@ -89,6 +89,11 @@ return [
     'status-success' => 'The action was successfully completed!',
     'status-error' => 'An error occurred: :error',
 
+    'theme' => [
+        'light' => 'Light theme',
+        'dark' => 'Dark theme',
+    ],
+
     'captcha' => 'The captcha verification failed, please try again.',
 
     'notifications' => [

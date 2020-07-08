@@ -36,6 +36,8 @@ Route::prefix('users')->name('users.')->middleware('auth')->group(function () {
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
     Route::get('/', 'ProfileController@index')->name('index');
 
+    Route::post('/theme', 'ProfileController@theme')->name('theme');
+
     Route::post('/email', 'ProfileController@updateEmail')->name('email');
     Route::post('/password', 'ProfileController@updatePassword')->name('password');
 

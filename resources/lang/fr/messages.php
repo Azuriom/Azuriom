@@ -89,6 +89,11 @@ return [
     'status-success' => 'L\'action a été effectuée avec succès !',
     'status-error' => 'Une erreur est survenue: :error',
 
+    'theme' => [
+        'light' => 'Thème clair',
+        'dark' => 'Thème sombre',
+    ],
+
     'captcha' => 'La vérification du captcha a échouée, merci de réessayer.',
 
     'notifications' => [

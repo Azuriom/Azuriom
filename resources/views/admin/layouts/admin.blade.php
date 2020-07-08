@@ -31,6 +31,9 @@
     <!-- Styles -->
     <link href="{{ asset('vendor/sb-admin-2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/admin.css') }}" rel="stylesheet">
+    @if(dark_theme())
+        <link href="{{ asset('admin/css/dark.css') }}" rel="stylesheet">
+    @endif
     @stack('styles')
 </head>
 <body>
@@ -354,6 +357,10 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.profile.profile') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ route('profile.theme') }}" data-route="theme">
+                                    <i class="fas fa-{{ dark_theme() ? 'sun' : 'moon' }} fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    {{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('home') }}">
                                     <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.back-website') }}
@@ -445,6 +452,12 @@
 
 <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
+</form>
+
+<form id="themeForm" action="{{ route('profile.theme') }}" method="POST" class="d-none">
+    @csrf
+
+    <input type="hidden" name="theme" value="{{ dark_theme() ? 'light' : 'dark' }}">
 </form>
 
 @stack('footer-scripts')

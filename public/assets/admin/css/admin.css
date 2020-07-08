@@ -45,11 +45,11 @@ a.disabled,
     background-color: #fff !important;
 }
 
-input[type=color].form-control {
+.form-control[type=color] {
     padding: .375rem .6rem;
 }
 
-input[type=color].color-picker::-webkit-color-swatch {
+.form-control[type=color]::-webkit-color-swatch {
     border-radius: .25rem;
 }
 

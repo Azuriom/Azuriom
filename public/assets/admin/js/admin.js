@@ -63,6 +63,12 @@ $('[data-confirm="delete"]').on('click', function (e) {
     confirmDelete($(this).attr('href'));
 });
 
+$('[data-route="theme"]').on('click', function (e) {
+    e.preventDefault();
+
+    $('#themeForm').submit();
+});
+
 $('[data-route="logout"]').on('click', function (e) {
     e.preventDefault();
 

@@ -126,6 +126,17 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
     }
 
+    public function theme(Request $request)
+    {
+        $theme = $this->validate($request, [
+            'theme' => ['required', 'in:light,dark'],
+        ]);
+
+        $request->session()->put($theme);
+
+        return redirect()->back();
+    }
+
     public function transferMoney(Request $request)
     {
         abort_if(! setting('user_money_transfer'), 403);

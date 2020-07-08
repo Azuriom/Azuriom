@@ -231,3 +231,10 @@ if (! function_exists('game')) {
         return app('game');
     }
 }
+
+if (! function_exists('dark_theme')) {
+    function dark_theme()
+    {
+        return session('theme') === 'dark';
+    }
+}
