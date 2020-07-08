@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Post;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        return view('admin.posts.create', ['pendingId' => old('pending_id', Str::uuid())]);
     }
 
     /**
@@ -46,6 +47,8 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        $post->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.created'));
     }

@@ -186,7 +186,7 @@ return [
         ],
 
         'auth' => [
-          'title' => 'Authentification',
+            'title' => 'Authentification',
 
             'conditions-url' => 'Liens des CGU',
             'enable-user-registration' => 'Activer l\'inscription des utilisateurs',

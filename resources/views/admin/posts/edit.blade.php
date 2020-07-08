@@ -8,6 +8,8 @@
             <form action="{{ route('admin.posts.update', $post) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
 
+                @include('admin.elements.editor', ['imagesUploadUrl' => route('admin.posts.attachments.store', $post)])
+
                 @include('admin.posts._form')
 
                 <button type="submit" class="btn btn-primary">

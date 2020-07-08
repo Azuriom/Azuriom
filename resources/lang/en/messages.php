@@ -72,6 +72,8 @@ return [
         'icon' => 'Icon',
     ],
 
+    'loading' => 'Loading...',
+
     'yes' => 'Yes',
     'no' => 'No',
     'unknown' => 'Unknown',

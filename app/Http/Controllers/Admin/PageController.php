@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -25,7 +26,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.create');
+        return view('admin.pages.create', ['pendingId' => old('pending_id', Str::uuid())]);
     }
 
     /**
@@ -36,7 +37,9 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        Page::create($request->validated());
+        $page = Page::create($request->validated());
+
+        $page->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));
     }

@@ -30,7 +30,7 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'level', 'content', 'link', 'read_at',
+        'author_id', 'level', 'content', 'link', 'read_at',
     ];
 
     /**

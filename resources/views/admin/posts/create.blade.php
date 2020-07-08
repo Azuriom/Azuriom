@@ -6,6 +6,9 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="pending_id" value="{{ $pendingId }}">
+
+                @include('admin.elements.editor', ['imagesUploadUrl' => route('admin.posts.attachments.pending', $pendingId)])
 
                 @include('admin.posts._form')
 

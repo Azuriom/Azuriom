@@ -72,6 +72,8 @@ return [
         'icon' => 'Icône',
     ],
 
+    'loading' => 'Chargement...',
+
     'yes' => 'Oui',
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',

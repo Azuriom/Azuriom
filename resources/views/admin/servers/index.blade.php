@@ -58,7 +58,7 @@
                             <th scope="row">
                                 {{ $server->id }}
                                 @if($server->id === $defaultServerId)
-                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default-server') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>{{ $server->name }}</td>

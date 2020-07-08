@@ -12,7 +12,7 @@ trait HasUuidKey
     {
         static::creating(function (Model $model) {
             if ($model->getKey() === null) {
-                $model->setAttribute($model->getKey(), Str::uuid());
+                $model->setAttribute($model->getKeyName(), Str::uuid());
             }
         });
     }
