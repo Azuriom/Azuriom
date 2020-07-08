@@ -56,8 +56,9 @@
                     <div class="media-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="content-body">
-                                {{ $comment->content }}
+                                {{ $comment->parseContent() }}
                             </div>
+
                             @can('delete', $comment)
                                 <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
                             @endif

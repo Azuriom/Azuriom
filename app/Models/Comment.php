@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasMarkdown;
 use Azuriom\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasUser;
+    use HasMarkdown;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +52,10 @@ class Comment extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function parseContent()
+    {
+        return $this->parseMarkdown('content', true);
     }
 }

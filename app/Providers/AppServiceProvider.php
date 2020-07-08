@@ -41,8 +41,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Relation::morphMap([
-           'posts' => Post::class,
-           'pages' => Page::class,
+            'posts' => Post::class,
+            'pages' => Page::class,
         ]);
     }
 }
