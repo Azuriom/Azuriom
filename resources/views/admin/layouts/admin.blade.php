@@ -18,7 +18,7 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('vendor/axios/axios.min.js') }}" defer></script>
     <script src="{{ asset('vendor/sb-admin-2/js/sb-admin-2.min.js') }}" defer></script>
-    <script src="{{ asset('admin/js/admin.js') }}?v000206" defer></script>
+    <script src="{{ asset('admin/js/admin.js') }}?v000208" defer></script>
 
     <!-- Page level scripts -->
     @stack('scripts')

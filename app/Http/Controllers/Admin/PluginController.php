@@ -51,7 +51,7 @@ class PluginController extends Controller
         $response = redirect()->route('admin.plugins.index');
 
         try {
-            app(UpdateManager::class)->forceFetchUpdatesOrFail();
+            app(UpdateManager::class)->forceFetchUpdates();
         } catch (Exception $e) {
             return $response->with('error', trans('messages.status-error', [
                 'error' => $e->getMessage(),

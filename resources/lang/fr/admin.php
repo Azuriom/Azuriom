@@ -189,6 +189,7 @@ return [
             'title' => 'Authentification',
 
             'conditions-url' => 'Liens des CGU',
+            'conditions-info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
             'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
             'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
             'auth-api' => 'Activer l\'API auth',

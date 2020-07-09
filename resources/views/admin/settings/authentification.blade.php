@@ -13,11 +13,13 @@
 
                 <div class="form-group">
                     <label for="conditionsInput">{{ trans('admin.settings.auth.conditions-url') }}</label>
-                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}">
+                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}" aria-describedby="conditionsLabel">
 
                     @error('conditions')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
+
+                    <small id="conditionsLabel" class="form-text">{{ trans('admin.settings.auth.conditions-info') }}</small>
                 </div>
 
                 <div class="form-group">

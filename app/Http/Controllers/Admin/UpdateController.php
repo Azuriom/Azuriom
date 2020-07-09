@@ -43,7 +43,7 @@ class UpdateController extends Controller
         $response = redirect()->route('admin.update.index');
 
         try {
-            $this->updates->forceFetchUpdatesOrFail();
+            $this->updates->forceFetchUpdates();
         } catch (Exception $e) {
             return $response->with('error', trans('admin.update.status.error-fetch', [
                 'error' => $e->getMessage(),

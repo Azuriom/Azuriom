@@ -28,8 +28,10 @@ trait HasMarkdown
             return new HtmlString(Markdown::parse($text, $inlineOnly));
         }
 
-        return new HtmlString(Cache::remember($this->getDescriptionCacheKey(), now()->addMinutes(5), function () {
-            return Markdown::parse($text);
+        $cacheKey = $this->getDescriptionCacheKey();
+
+        return new HtmlString(Cache::remember($cacheKey, now()->addMinutes(5), function () use ($text, $inlineOnly) {
+            return Markdown::parse($text, $inlineOnly);
         }));
     }
 

@@ -73,7 +73,7 @@ class ThemeController extends Controller
         $response = redirect()->route('admin.themes.index');
 
         try {
-            app(UpdateManager::class)->forceFetchUpdatesOrFail();
+            app(UpdateManager::class)->forceFetchUpdates();
         } catch (Exception $e) {
             return $response->with('error', trans('messages.status-error', [
                 'error' => $e->getMessage(),

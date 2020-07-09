@@ -190,6 +190,7 @@ return [
             'title' => 'Authentication',
 
             'conditions-url' => 'Conditions URL',
+            'conditions-info' => 'Users will have to accept these conditions when registering.',
             'enable-user-registration' => 'Enable user registration',
             'enable-user-registration-label' => 'It can still be possible to register through plugins.',
             'auth-api' => 'Enable Auth API',
