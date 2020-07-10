@@ -29,7 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create', ['pendingId' => old('pending_id', Str::uuid())]);
+        return view('admin.posts.create', [
+            'pendingId' => old('pending_id', Str::uuid()),
+        ]);
     }
 
     /**

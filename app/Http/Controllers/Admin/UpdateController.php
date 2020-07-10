@@ -29,10 +29,8 @@ class UpdateController extends Controller
 
     public function index()
     {
-        $version = $this->updates->getLastVersion();
-
         return view('admin.update.index', [
-            'lastVersion' => $version,
+            'lastVersion' => $this->updates->getLastVersion(),
             'hasUpdate' => $this->updates->hasUpdate(),
             'isDownloaded' => $this->updates->isLastVersionDownloaded(),
         ]);

@@ -34,7 +34,6 @@ class AdminController extends Controller
     {
         $updates = $this->app->make(UpdateManager::class);
         $newVersion = $updates->hasUpdate() ? $updates->getLastVersion() : null;
-        $apiAlerts = $updates->getApiAlerts();
 
         return view('admin.dashboard', [
             'secure' => $request->secure() || ! $this->app->isProduction(),
@@ -45,7 +44,7 @@ class AdminController extends Controller
             'recentUsers' => $this->getRecentUsers(),
             'activeUsers' => $this->getActiveUsers(),
             'newVersion' => $newVersion,
-            'apiAlerts' => $apiAlerts,
+            'apiAlerts' => $updates->getApiAlerts(),
         ]);
     }
 

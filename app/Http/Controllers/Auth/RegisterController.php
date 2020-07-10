@@ -53,9 +53,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.register', [
-            'conditions' => setting('conditions'),
-        ]);
+        return view('auth.register', ['conditions' => setting('conditions')]);
     }
 
     /**

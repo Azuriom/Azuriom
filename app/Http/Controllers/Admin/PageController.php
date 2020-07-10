@@ -26,7 +26,9 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.create', ['pendingId' => old('pending_id', Str::uuid())]);
+        return view('admin.pages.create', [
+            'pendingId' => old('pending_id', Str::uuid()),
+        ]);
     }
 
     /**

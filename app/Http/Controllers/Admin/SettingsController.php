@@ -200,7 +200,9 @@ class SettingsController extends Controller
 
     public function performance()
     {
-        return view('admin.settings.performance', ['cacheStatus' => $this->optimizer->isEnabled()]);
+        return view('admin.settings.performance', [
+            'cacheStatus' => $this->optimizer->isEnabled(),
+        ]);
     }
 
     /**
