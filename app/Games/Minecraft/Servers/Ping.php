@@ -6,6 +6,7 @@ use Azuriom\Games\Minecraft\Servers\Protocol\MinecraftPing;
 use Azuriom\Games\ServerBridge;
 use Azuriom\Models\User;
 use Exception;
+use Illuminate\Support\Arr;
 use RuntimeException;
 
 class Ping extends ServerBridge
@@ -49,8 +50,8 @@ class Ping extends ServerBridge
             $response = $pinger->ping(self::TIMEOUT);
 
             return [
-                'players' => $response->players->online,
-                'max_players' => $response->players->max,
+                'players' => Arr::get($response, 'players.online', 0),
+                'max_players' => Arr::get($response, 'players.max', 0),
             ];
         } finally {
             $pinger->close();

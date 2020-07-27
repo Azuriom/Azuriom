@@ -69,6 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
+        'money' => 'float',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'is_banned' => 'boolean',

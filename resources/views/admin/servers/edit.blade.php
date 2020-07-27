@@ -5,7 +5,13 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <h5>Status: <i class="fas fa-circle text-{{ $server->isOnline() ? 'success' : 'danger' }}"> </i></h5>
+            <h5>{{ trans('messages.fields.status') }}:
+                @if($server->isOnline())
+                    <span class="badge badge-success">{{ trans_choice('admin.servers.players', $server->getOnlinePlayers()) }}</span>
+                @else
+                    <span class="badge badge-danger">{{ trans('admin.servers.offline') }}</span>
+                @endif
+            </h5>
 
             <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm">
                 @method('PUT')

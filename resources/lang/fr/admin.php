@@ -269,7 +269,6 @@ return [
         'fields' => [
             'address' => 'Adresse',
             'port' => 'Port',
-            'status' => 'Status',
 
             'rcon-password' => 'Mot de passe Rcon',
             'rcon-port' => 'Port Rcon',

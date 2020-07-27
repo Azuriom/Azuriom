@@ -28,9 +28,7 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(SettingsRepository::class, function () {
-            return new SettingsRepository();
-        });
+        $this->app->singleton(SettingsRepository::class);
     }
 
     /**

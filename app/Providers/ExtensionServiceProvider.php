@@ -2,8 +2,8 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Extensions\Plugin\PluginManager;
-use Azuriom\Extensions\Theme\ThemeManager;
+use Azuriom\Extensions\Plugin\PluginManager as Plugins;
+use Azuriom\Extensions\Theme\ThemeManager as Themes;
 use Illuminate\Support\ServiceProvider;
 
 class ExtensionServiceProvider extends ServiceProvider
@@ -17,15 +17,13 @@ class ExtensionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $plugins = $this->app->make(PluginManager::class);
+        $this->app->singleton(Plugins::class);
+        $this->app->alias(Plugins::class, 'plugins');
 
-        $this->app->instance('plugins', $plugins);
-        $this->app->alias('plugins', PluginManager::class);
+        $this->app->singleton(Themes::class);
+        $this->app->alias(Themes::class,'themes');
 
-        $this->app->instance('themes', $this->app->make(ThemeManager::class));
-        $this->app->alias('themes', ThemeManager::class);
-
-        $plugins->loadPlugins($this->app);
+        $this->app->make(Plugins::class)->loadPlugins($this->app);
     }
 
     /**
@@ -34,7 +32,7 @@ class ExtensionServiceProvider extends ServiceProvider
      * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes
      * @return void
      */
-    public function boot(ThemeManager $themes)
+    public function boot(Themes $themes)
     {
         $theme = setting('theme');
 

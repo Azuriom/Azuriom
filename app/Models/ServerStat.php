@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $server_id
  * @property int $players
  * @property int|null $ram
- * @property int|null $cpu
- * @property int|null $tps
- * @property float|null $loaded_chunks
+ * @property float|null $cpu
+ * @property float|null $tps
+ * @property int|null $loaded_chunks
  * @property int|null $entities
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -27,6 +27,16 @@ class ServerStat extends Model
      */
     protected $fillable = [
         'name', 'players', 'ram', 'cpu', 'tps', 'loaded_chunks', 'entities',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'tps' => 'float',
+        'cpu' => 'float',
     ];
 
     public function server()

@@ -270,7 +270,6 @@ return [
         'fields' => [
             'address' => 'Address',
             'port' => 'Port',
-            'status' => 'Status',
 
             'rcon-password' => 'Rcon Password',
             'rcon-port' => 'Rcon Port',
