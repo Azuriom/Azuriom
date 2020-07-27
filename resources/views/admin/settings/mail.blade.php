@@ -120,7 +120,12 @@
                     </div>
                 </div>
 
-                <div class="alert alert-warning" role="alert" data-mail-type="undefined">
+
+                <div class="alert alert-warning d-none" role="alert" data-mail-type="sendmail">
+                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail-warn') }}
+                </div>
+
+                <div class="alert alert-warning d-none" role="alert" data-mail-type="undefined">
                     <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled-warn') }}
                 </div>
 

@@ -203,6 +203,7 @@ return [
             'driver' => 'Type Mail',
             'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des emails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
             'disabled-warn' => 'Lorsque l\'envoie des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
+            'sendmail-warn' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',

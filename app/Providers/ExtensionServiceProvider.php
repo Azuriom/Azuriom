@@ -21,7 +21,7 @@ class ExtensionServiceProvider extends ServiceProvider
         $this->app->alias(Plugins::class, 'plugins');
 
         $this->app->singleton(Themes::class);
-        $this->app->alias(Themes::class,'themes');
+        $this->app->alias(Themes::class, 'themes');
 
         $this->app->make(Plugins::class)->loadPlugins($this->app);
     }
