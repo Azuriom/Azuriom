@@ -155,22 +155,20 @@ class UserController extends Controller
         $user->comments()->delete();
         $user->likes()->delete();
 
-        $user->fill([
+        $user->setRememberToken(null);
+
+        $user->forceFill([
             'name' => 'Deleted #'.$user->id,
             'email' => 'deleted'.$user->id.'@deleted.ltd',
             'password' => Hash::make(Str::random()),
-            'role_id' => 1,
+            'role_id' => Role::defaultRoleId(),
             'game_id' => null,
             'access_token' => null,
             'google_2fa_secret' => null,
-        ]);
-
-        $user->email_verified_at = null;
-        $user->last_login_ip = null;
-        $user->is_deleted = true;
-
-        $user->setRememberToken(null);
-        $user->save();
+            'email_verified_at' => null,
+            'last_login_ip' => null,
+            'is_deleted' => true,
+        ])->save();
 
         ActionLog::log('users.deleted', $user);
 

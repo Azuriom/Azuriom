@@ -1,6 +1,7 @@
 <?php
 
 use Azuriom\Models\Role;
+use Azuriom\Models\Setting;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -16,10 +17,14 @@ class RolesTableSeeder extends Seeder
             return;
         }
 
-        Role::create([
+        $defaultRole = Role::create([
             'name' => trans('seed.roles.member'),
             'color' => 'a5a5a5',
         ]);
+
+        if ($defaultRole->id !== 1) {
+            Setting::updateSettings('role.default', $defaultRole->id);
+        }
 
         Role::create([
             'name' => trans('seed.roles.admin'),

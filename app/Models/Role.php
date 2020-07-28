@@ -115,7 +115,7 @@ class Role extends Model
      */
     public function isDefault()
     {
-        return $this->id === 1;
+        return $this->id === self::defaultRoleId();
     }
 
     /**
@@ -125,7 +125,17 @@ class Role extends Model
      */
     public static function defaultRole()
     {
-        return self::find(1);
+        return self::find(self::defaultRoleId());
+    }
+
+    /**
+     * Get the default role id.
+     *
+     * @return int
+     */
+    public static function defaultRoleId()
+    {
+        return (int) setting('role.default', 1);
     }
 
     /**

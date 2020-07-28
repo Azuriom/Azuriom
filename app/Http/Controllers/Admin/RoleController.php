@@ -148,7 +148,7 @@ class RoleController extends Controller
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.own-role'));
         }
 
-        $role->users()->update(['role_id' => 1]);
+        $role->users()->update(['role_id' => Role::defaultRoleId()]);
 
         $role->delete();
 
