@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
 
+/**
+ * Render and cache Markdown from attributes.
+ */
 trait HasMarkdown
 {
     protected static function bootHasMarkdownContent()

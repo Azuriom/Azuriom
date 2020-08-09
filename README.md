@@ -23,6 +23,10 @@ You can find system requirements and installation guide on our [documentation](h
 
 You can ask for support and talk on our [Discord server](https://azuriom.com/discord).
 
+## Translations
+
+You can contribute to translating Azuriom on our [Crowdin](https://translate.azuriom.com/).
+
 ## Security
 
 If you discover any security related issues within Azuriom, please send an e-mail to [security@azuriom.com](mailto:security@azuriom.com) instead of using the issue tracker. All security vulnerabilities will be promptly addressed.

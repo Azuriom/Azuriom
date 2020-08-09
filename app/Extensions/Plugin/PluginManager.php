@@ -163,7 +163,7 @@ class PluginManager extends ExtensionManager
     /**
      * Get an array containing the descriptions of the installed plugins.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function findPluginsDescriptions()
     {
@@ -181,7 +181,7 @@ class PluginManager extends ExtensionManager
             }
         }
 
-        return $plugins;
+        return collect($plugins);
     }
 
     /**
@@ -335,19 +335,13 @@ class PluginManager extends ExtensionManager
             $enabledPlugins = $this->getJson($this->pluginsPath('plugins.json'), true) ?? [];
         }
 
-        $plugins = array_filter($this->findPluginsDescriptions(), function ($plugin) use ($enabledPlugins) {
+        $plugins = $this->findPluginsDescriptions()->filter(function ($desc, $plugin) use ($enabledPlugins) {
             return in_array($plugin, $enabledPlugins, true);
-        }, ARRAY_FILTER_USE_KEY);
+        });
 
-        if (empty($enabledPlugins)) {
-            $this->files->delete($this->getCachedPluginsPath());
-
-            return [];
-        }
-
-        $pluginsCache = array_map(function ($plugin) {
+        $pluginsCache = $plugins->map(function ($plugin) {
             return (array) $plugin;
-        }, $plugins);
+        })->all();
 
         $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
@@ -365,7 +359,7 @@ class PluginManager extends ExtensionManager
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
-        $installedPlugins = collect($this->findPluginsDescriptions())
+        $installedPlugins = $this->findPluginsDescriptions()
             ->filter(function ($plugin) {
                 return isset($plugin->apiId);
             })
@@ -381,7 +375,7 @@ class PluginManager extends ExtensionManager
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
-        return array_filter($this->findPluginsDescriptions(), function ($plugin) use ($plugins) {
+        return $this->findPluginsDescriptions()->filter(function ($plugin) use ($plugins) {
             $id = $plugin->apiId ?? 0;
 
             if (! array_key_exists($id, $plugins)) {

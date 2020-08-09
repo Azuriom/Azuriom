@@ -60,10 +60,7 @@ trait Attachable
 
         foreach ($attachments as $attachment) {
             if (Str::contains($content, $attachment->file)) {
-                $this->attachments()
-                    ->make()
-                    ->forceFill(['file' => $attachment->file])
-                    ->save();
+                $this->attachments()->forceCreate(['file' => $attachment->file]);
 
                 // We don't want to delete the file since now a permanent attachment use it
                 $attachment->forceFill(['file' => null]);

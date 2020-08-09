@@ -160,7 +160,7 @@ class ThemeManager extends ExtensionManager
     /**
      * Get an array containing the descriptions of the installed themes.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function findThemesDescriptions()
     {
@@ -176,7 +176,7 @@ class ThemeManager extends ExtensionManager
             }
         }
 
-        return $themes;
+        return collect($themes);
     }
 
     /**
@@ -262,7 +262,7 @@ class ThemeManager extends ExtensionManager
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
-        $installedThemes = collect($this->findThemesDescriptions())
+        $installedThemes = $this->findThemesDescriptions()
             ->filter(function ($theme) {
                 return isset($theme->apiId);
             })
@@ -278,7 +278,7 @@ class ThemeManager extends ExtensionManager
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
-        return array_filter($this->findThemesDescriptions(), function ($theme) use ($themes) {
+        return $this->findThemesDescriptions()->filter(function ($theme) use ($themes) {
             $id = $theme->apiId ?? 0;
 
             if (! array_key_exists($id, $themes)) {

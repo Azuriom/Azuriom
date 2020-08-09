@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use RuntimeException;
 
+/**
+ * Automatically generate an UUID for the model if it's doesn't have one.
+ */
 trait HasUuidKey
 {
     public static function bootHasUuidKey()

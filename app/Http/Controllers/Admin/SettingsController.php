@@ -188,9 +188,10 @@ class SettingsController extends Controller
         if ($request->filled('recaptcha')) {
             Setting::updateSettings($settings);
         } else {
-            Setting::updateSettings($request->only(['hash']));
-
-            Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
+            Setting::updateSettings([
+                'recaptcha-site-key' => null,
+                'recaptcha-secret-key' => null,
+            ] + $request->only('hash'));
         }
 
         ActionLog::log('settings.updated');

@@ -47,7 +47,7 @@ class ThemeController extends Controller
      */
     public function index()
     {
-        $themes = collect($this->themes->findThemesDescriptions());
+        $themes = $this->themes->findThemesDescriptions();
         $availableThemes = collect($this->themes->getOnlineThemes());
 
         $current = null;
