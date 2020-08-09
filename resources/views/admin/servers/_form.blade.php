@@ -153,8 +153,10 @@
 
 <div data-server-type="mc-azlink" class="d-none">
     <div class="form-group custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? true)) checked @endisset>
+        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? true)) checked @endisset aria-describedby="pingInfo">
         <label class="custom-control-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.enable-ping') }}</label>
+
+        <small class="form-text" id="pingInfo">{{ trans('admin.servers.azlink.ping-info') }}</small>
     </div>
 
     <div id="hasPingGroup" class="@if(isset($server) && ($server->data['azlink-ping'] ?? true)) show @else collapse @endisset">

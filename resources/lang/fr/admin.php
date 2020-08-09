@@ -292,6 +292,7 @@ return [
             'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
 
             'enable-ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
+            'ping-info' => 'Lorsque les commandes instantanées ne sont pas activées, les commandes seront exécutées avec un délai de 30 secondes à 1 minute.',
             'custom-port' => 'Utiliser un port AzLink personnalisé',
         ],
 

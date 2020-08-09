@@ -293,6 +293,7 @@ return [
             'port-info' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
 
             'enable-ping' => 'Enable instant commands (require an open port on the server)',
+            'ping-info' => 'When instant commands are not enabled, commands will be executed with a delay of 30 seconds to 1 minute.',
             'custom-port' => 'Use a custom AzLink port',
         ],
 
