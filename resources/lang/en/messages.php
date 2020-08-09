@@ -146,7 +146,7 @@ return [
             'self' => 'You can\'t send money to yourself.',
             'not-enough' => 'You don\'t have enough money to make this transfer.',
             'success' => 'The money was successfully sent.',
-            'notification' => ':user sent you :money.'
+            'notification' => ':user sent you :money.',
         ],
     ],
 
