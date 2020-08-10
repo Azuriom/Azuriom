@@ -62,6 +62,8 @@ class PluginController extends Controller
         try {
             $this->plugins->enable($plugin);
         } catch (Throwable $t) {
+            report($t);
+
             return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
                 'error' => $t->getMessage(),
             ]));

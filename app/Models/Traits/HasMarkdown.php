@@ -12,7 +12,7 @@ use Illuminate\Support\HtmlString;
  */
 trait HasMarkdown
 {
-    protected static function bootHasMarkdownContent()
+    protected static function bootHasMarkdown()
     {
         static::updated(function (Model $model) {
             Cache::forget($model->getDescriptionCacheKey());

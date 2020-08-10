@@ -66,6 +66,11 @@ class AlertNotification implements Arrayable
         return $this;
     }
 
+    public function send(User $user)
+    {
+        $user->notifications()->create($this->toArray());
+    }
+
     public function toArray()
     {
         return [

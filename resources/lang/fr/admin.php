@@ -521,7 +521,7 @@ return [
         'status' => [
             'reloaded' => 'Les thèmes ont été rechargés.',
             'no-config' => 'Ce thème n\'a pas de configuration.',
-            'config-updated' => 'La configuration du thème a été mise à jour..',
+            'config-updated' => 'La configuration du thème a été mise à jour.',
             'invalid' => 'Ce thème n\'est pas valide.',
             'updated' => 'Le thème a été mis à jour.',
             'installed' => 'Le thème a été installé.',
