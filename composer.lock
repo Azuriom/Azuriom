@@ -6161,8 +6161,10 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2.5",
+        "ext-gd": "*",
         "ext-json": "*",
         "ext-zip": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
