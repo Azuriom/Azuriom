@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label for="imageInput">{{ trans('messages.fields.image') }}</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
+                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
                         <label class="custom-file-label" for="customFile" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
 
                         @error('image')

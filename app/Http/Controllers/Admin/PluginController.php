@@ -36,9 +36,9 @@ class PluginController extends Controller
     public function index()
     {
         return view('admin.plugins.index', [
-            'plugins' => collect($this->plugins->findPluginsDescriptions()),
-            'availablePlugins' => collect($this->plugins->getOnlinePlugins()),
-            'pluginsUpdates' => collect($this->plugins->getPluginToUpdate()),
+            'plugins' => $this->plugins->findPluginsDescriptions(),
+            'availablePlugins' => $this->plugins->getOnlinePlugins(),
+            'pluginsUpdates' => $this->plugins->getPluginToUpdate(),
         ]);
     }
 

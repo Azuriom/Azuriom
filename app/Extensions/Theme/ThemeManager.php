@@ -265,12 +265,10 @@ class ThemeManager extends ExtensionManager
         $installedThemes = $this->findThemesDescriptions()
             ->filter(function ($theme) {
                 return isset($theme->apiId);
-            })
-            ->pluck('apiId')
-            ->all();
+            });
 
-        return array_filter($themes, function ($theme) use ($installedThemes) {
-            return ! in_array($theme['id'], $installedThemes, true);
+        return collect($themes)->filter(function ($theme) use ($installedThemes) {
+            return ! $installedThemes->contains('apiId', $theme['id']);
         });
     }
 

@@ -48,7 +48,6 @@ class ThemeController extends Controller
     public function index()
     {
         $themes = $this->themes->findThemesDescriptions();
-        $availableThemes = collect($this->themes->getOnlineThemes());
 
         $current = null;
 
@@ -63,8 +62,8 @@ class ThemeController extends Controller
             'current' => $current,
             'currentPath' => $this->themes->currentTheme() ?? 'default',
             'currentHasConfig' => $this->files->isFile($currentThemeConfig),
-            'availableThemes' => $availableThemes,
-            'themesUpdates' => collect($this->themes->getThemesToUpdate()),
+            'availableThemes' => $this->themes->getOnlineThemes(),
+            'themesUpdates' => $this->themes->getThemesToUpdate(),
         ]);
     }
 

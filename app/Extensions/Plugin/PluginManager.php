@@ -362,12 +362,10 @@ class PluginManager extends ExtensionManager
         $installedPlugins = $this->findPluginsDescriptions()
             ->filter(function ($plugin) {
                 return isset($plugin->apiId);
-            })
-            ->pluck('apiId')
-            ->all();
+            });
 
-        return array_filter($plugins, function ($plugin) use ($installedPlugins) {
-            return ! in_array($plugin['id'], $installedPlugins, true);
+        return collect($plugins)->filter(function ($plugin) use ($installedPlugins) {
+            return ! $installedPlugins->contains('apiId', $plugin['id']);
         });
     }
 
@@ -451,6 +449,8 @@ class PluginManager extends ExtensionManager
             foreach (array_keys($plugins, $plugin, true) as $key) {
                 unset($plugins[$key]);
             }
+
+            $plugins = array_values($plugins);
         }
 
         $this->files->put($this->pluginsPath('plugins.json'), json_encode($plugins));
