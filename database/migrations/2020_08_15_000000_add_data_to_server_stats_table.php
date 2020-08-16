@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddDataToServerStatsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('server_stats', function (Blueprint $table) {
+            $table->text('data')->nullable()->after('cpu');
+        });
+
+        if (! Schema::hasColumn('server_stats', 'tps')) {
+            return;
+        }
+
+        try {
+            Schema::table('server_stats', function (Blueprint $table) {
+                $table->dropColumn(['tps', 'loaded_chunks', 'entities']);
+            });
+        } catch (Exception $e) {
+            // ignore, SQLite doesn't support dropping columns without DBAL.
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('server_stats', function (Blueprint $table) {
+            $table->dropColumn('data');
+        });
+    }
+}

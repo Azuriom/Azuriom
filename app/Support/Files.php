@@ -7,12 +7,8 @@ use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
 class Files
 {
-    public static function relativeLink(string $target, string $link, bool $delete = false)
+    public static function relativeLink(string $target, string $link)
     {
-        if ($delete && File::exists($link)) {
-            static::removeLink($link);
-        }
-
         // Relative symlink seems broken on Windows
         if (! windows_os()) {
             $target = (new SymfonyFilesystem())->makePathRelative($target, dirname($link));

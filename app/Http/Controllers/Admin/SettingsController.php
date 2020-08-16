@@ -245,9 +245,12 @@ class SettingsController extends Controller
 
     public function linkStorage()
     {
-        $storagePublicPath = public_path('storage');
+        $target = storage_path('app/public');
+        $link = public_path('storage');
 
-        Files::relativeLink(storage_path('app/public'), $storagePublicPath, true);
+        Files::removeLink($link);
+
+        Files::relativeLink($target, $link);
 
         return redirect()->route('admin.settings.performance')
             ->with('success', trans('messages.status-success'));

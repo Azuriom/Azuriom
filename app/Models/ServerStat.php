@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $players
  * @property int|null $ram
  * @property float|null $cpu
- * @property float|null $tps
- * @property int|null $loaded_chunks
- * @property int|null $entities
+ * @property array|null $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -26,7 +24,7 @@ class ServerStat extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'players', 'ram', 'cpu', 'tps', 'loaded_chunks', 'entities',
+        'players', 'ram', 'cpu', 'data',
     ];
 
     /**
@@ -35,8 +33,8 @@ class ServerStat extends Model
      * @var array
      */
     protected $casts = [
-        'tps' => 'float',
         'cpu' => 'float',
+        'data' => 'array',
     ];
 
     public function server()

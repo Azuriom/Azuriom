@@ -114,7 +114,10 @@ class Server extends Model
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
         if (is_array($data) && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
-            $this->stats()->create(Arr::except($data, 'max_players'));
+            $stats = Arr::except($data, 'max_players');
+            $statsData = ['data' => Arr::except($stats, ['players', 'cpu', 'ram'])];
+
+            $this->stats()->create(array_merge(Arr::only($stats, ['players', 'cpu', 'ram']), $statsData));
         }
     }
 
