@@ -85,7 +85,6 @@ return [
         'https-warning' => 'Your website is not using https, you should enable and force it for your security and the one of the users.',
         'proxy-warning' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent-users' => 'Recent users',
-        'recent-users-week' => 'Recent users this weeek',
         'active-users' => 'Active users',
         'emails-disabled' => 'Emails are disabled. If a user forgets his password he will not be able to reset it. You can enable emails in the <a href=":url">mail settings</a>.',
         'users' => 'Users',

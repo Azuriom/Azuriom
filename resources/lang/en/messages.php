@@ -72,6 +72,11 @@ return [
         'icon' => 'Icon',
     ],
 
+    'range' => [
+      'days' => 'By days',
+      'months' => 'By months',
+    ],
+
     'loading' => 'Loading...',
 
     'yes' => 'Yes',

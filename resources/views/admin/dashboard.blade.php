@@ -126,12 +126,34 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users-week') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="newUsersPerDaysChart"></canvas>
+                    <div class="tab-content mb-3">
+                        <div class="tab-pane fade show active" id="monthlyChart" role="tabpanel" aria-labelledby="monthlyChartTab">
+                            <div class="chart-area">
+                                <canvas id="newUsersPerMonthsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="dailyChart" role="tabpanel" aria-labelledby="dailyChartTab">
+                            <div class="chart-area">
+                                <canvas id="newUsersPerDaysChart"></canvas>
+                            </div>
+                        </div>
                     </div>
+
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="monthlyChartTab" data-toggle="pill" href="#monthlyChart" role="tab" aria-controls="monthlyChart" aria-selected="true">
+                                {{ trans('messages.range.months') }}
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="dailyChartTab" data-toggle="pill" href="#dailyChart" role="tab" aria-controls="dailyChart" aria-selected="false">
+                                {{ trans('messages.range.days') }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -159,19 +181,6 @@
                         <span class="mr-1">
                             <i class="fas fa-circle text-warning"></i> + {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
                         </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="newUsersPerMonthsChart"></canvas>
                     </div>
                 </div>
             </div>

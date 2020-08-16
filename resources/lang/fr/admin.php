@@ -84,7 +84,6 @@ return [
         'https-warning' => 'Votre site n\'utilise pas le protocole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
         'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
-        'recent-users-week' => 'Utilisateurs récents cette semaine',
         'active-users' => 'Utilisateurs actifs',
         'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
