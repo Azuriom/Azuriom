@@ -126,11 +126,11 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users-week') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="newUsersChart"></canvas>
+                        <canvas id="newUsersChartWeek"></canvas>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="mr-1">
-                            <i class="fas fa-circle text-primary"></i> {{ now()->subDay()->longAbsoluteDiffForHumans() }}
+                            <i class="fas fa-circle text-primary"></i> {{ now()->subDay() }}
                         </span>
                         <span class="mr-1">
                             <i class="fas fa-circle text-success"></i> {{ now()->subWeek()->longAbsoluteDiffForHumans() }}
@@ -163,6 +163,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="newUsersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -172,9 +186,81 @@
         Chart.defaults.global.defaultFontColor = '#858796';
 
         const recentUsersKeys = @json($recentUsers->keys());
+        const recentUsersKeysWeek = @json($recentUsersWeek->keys());
         const recentUsersValues = @json($recentUsers->values());
+        const recentUsersValuesWeek = @json($recentUsersWeek->values());
         const activeUsersKeys = @json($activeUsers->keys());
         const activeUsersValues = @json($activeUsers->values());
+
+        new Chart(document.getElementById('newUsersChartWeek'), {
+            type: 'line',
+            data: {
+                labels: recentUsersKeysWeek,
+                datasets: [{
+                    label: 'New users',
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: recentUsersValuesWeek,
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        /*time: {
+                            unit: 'date'
+                        },*/
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        /*ticks: {
+                            maxTicksLimit: 7
+                        }*/
+                    }],
+                    yAxes: [{
+                        /*ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                        },*/
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                }
+            }
+        });
 
         new Chart(document.getElementById('newUsersChart'), {
             type: 'line',
