@@ -81,18 +81,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = new User([
+        return User::forceCreate([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => Role::defaultRoleId(),
             'game_id' => game()->getUserUniqueId($data['name']),
+            'last_login_ip' => Request::ip(),
+            'last_login_at' => now(),
         ]);
-        $user->last_login_ip = Request::ip();
-        $user->last_login_at = now();
-
-        $user->save();
-
-        return $user;
     }
 }

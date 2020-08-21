@@ -27,22 +27,22 @@ class Charts
             ->pluck('aggregate', $group);
     }
 
-    public static function countByDays(Builder $query, string $column = 'created_at', int $days = 7)
+    public static function countByDays(Builder $query, string $column = null, int $days = 7)
     {
-        return static::aggregateByDays($query, 'count', $column, $days);
+        return static::aggregateByDays($query, 'count', '*', $column, $days);
     }
 
-    public static function sumByDays(Builder $query, string $column = 'created_at', int $days = 7)
+    public static function sumByDays(Builder $query, string $group, string $column = null, int $days = 7)
     {
-        return static::aggregateByDays($query, 'sum', $column, $days);
+        return static::aggregateByDays($query, 'sum', $group, $column, $days);
     }
 
-    public static function aggregateByDays(Builder $query, string $function, string $column = null, int $days = 7)
+    public static function aggregateByDays(Builder $query, string $function, string $group, string $column = null, int $days = 7)
     {
         $start = today()->subDays($days);
         $date = $start->clone();
         $dates = collect();
-        $column = $column ?? 'created_at';
+        $column = $column ?? $query->getModel()->getCreatedAtColumn();
 
         while ($date->isPast() || $date->isToday()) {
             $dates->put(format_date($date), 0);
@@ -50,7 +50,10 @@ class Charts
             $date = $date->addDay();
         }
 
-        $results = $query->select(DB::raw("date({$query->getGrammar()->wrap($column)}) as date, {$function}(*) as aggregate"))
+        $sqlColumn = $query->getGrammar()->wrap($column);
+        $sqlGroupColumn = $query->getGrammar()->wrap($group);
+
+        $results = $query->select(DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
             ->groupBy('date')
             ->orderBy('date')
@@ -66,20 +69,20 @@ class Charts
 
     public static function countByMonths(Builder $query, string $column = null, int $months = 12)
     {
-        return static::aggregateByMonths($query, 'count', $column, $months);
+        return static::aggregateByMonths($query, 'count', '*', $column, $months);
     }
 
-    public static function sumByMonths(Builder $query, string $column = null, int $months = 12)
+    public static function sumByMonths(Builder $query, string $group, string $column = null, int $months = 12)
     {
-        return static::aggregateByMonths($query, 'sum', $column, $months);
+        return static::aggregateByMonths($query, 'sum', $group, $column, $months);
     }
 
-    public static function aggregateByMonths(Builder $query, string $function, string $column = null, int $months = 12)
+    public static function aggregateByMonths(Builder $query, string $function, string $group,  string $column = null, int $months = 12)
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
         $date = $start->clone();
         $dates = collect();
-        $column = $column ?? 'created_at';
+        $column = $column ?? $query->getModel()->getCreatedAtColumn();
 
         while ($date->isPast()) {
             $dates->put($date->translatedFormat('F Y'), 0);
@@ -88,8 +91,9 @@ class Charts
         }
 
         $rawQuery = static::getDatabaseRawQuery($query, $query->getGrammar()->wrap($column));
+        $sqlGroupColumn = $query->getGrammar()->wrap($group);
 
-        $results = $query->select(DB::raw("{$rawQuery} as date, {$function}(*) as aggregate"))
+        $results = $query->select(DB::raw("{$rawQuery} as date, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
             ->groupBy('date')
             ->orderBy('date')
