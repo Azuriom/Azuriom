@@ -33,7 +33,7 @@ DB_PASSWORD=[database password (can't be empty)]
 
 Start the containers
 ```
-make start
+make run
 ```
 
 Generate the secret key
