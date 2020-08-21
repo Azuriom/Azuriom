@@ -73,8 +73,8 @@ return [
     ],
 
     'range' => [
-      'days' => 'By days',
-      'months' => 'By months',
+        'days' => 'By days',
+        'months' => 'By months',
     ],
 
     'loading' => 'Loading...',
