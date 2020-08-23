@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
             \Azuriom\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Azuriom\Http\Middleware\VerifyCsrfToken::class,
             \Azuriom\Http\Middleware\CheckForMaintenanceSettings::class,

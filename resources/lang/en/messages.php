@@ -41,6 +41,7 @@ return [
         'refresh' => 'Refresh',
         'duplicate' => 'Duplicate',
         'remove' => 'Remove',
+        'back' => 'Back',
     ],
 
     'fields' => [

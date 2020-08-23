@@ -23,7 +23,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{ $welcomePopup }}
+                        {!! $welcomePopup !!}
                     </div>
                 </div>
             </div>

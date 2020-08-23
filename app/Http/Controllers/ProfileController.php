@@ -8,7 +8,7 @@ use Azuriom\Notifications\AlertNotification;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -52,9 +52,7 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $password = Hash::make($request->input('password'));
-
-        $request->user()->update(['password' => $password]);
+        Auth::logoutOtherDevices($request->input('password'));
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
