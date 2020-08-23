@@ -68,6 +68,7 @@ class DatabaseConfigCommand extends Command
 
         if (! array_key_exists($driver, $drivers)) {
             $this->error('Invalid database driver: '.$driver);
+
             return 1;
         }
 
@@ -76,7 +77,7 @@ class DatabaseConfigCommand extends Command
         $env = [
             'DB_CONNECTION' => $driver,
             'DB_HOST' => $this->option('host') ?? $this->ask('The address of the database server'),
-            'DB_PORT' => $this->option('host') ?? $this->ask('The port of the database server', $defaultPort),
+            'DB_PORT' => $this->option('port') ?? $this->ask('The port of the database server', $defaultPort),
             'DB_DATABASE' => $this->option('database') ?? $this->ask('The database name'),
             'DB_USERNAME' => $this->option('username') ?? $this->ask('The username of the user'),
             'DB_PASSWORD' => $this->option('password') ?? $this->secret('The password of the user'),

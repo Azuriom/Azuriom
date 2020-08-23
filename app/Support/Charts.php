@@ -77,7 +77,7 @@ class Charts
         return static::aggregateByMonths($query, 'sum', $group, $column, $months);
     }
 
-    public static function aggregateByMonths(Builder $query, string $function, string $group,  string $column = null, int $months = 12)
+    public static function aggregateByMonths(Builder $query, string $function, string $group, string $column = null, int $months = 12)
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
         $date = $start->clone();

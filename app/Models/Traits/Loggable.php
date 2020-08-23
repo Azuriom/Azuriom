@@ -18,8 +18,13 @@ trait Loggable
             static::$event(function (Model $model) use ($event) {
                 $action = str_replace('_', '-', $model->getTable()).'.'.$event;
 
-                ActionLog::log($action, $model);
+                ActionLog::log($action, $model, $model->getLogData($event));
             });
         }
+    }
+
+    protected function getLogData(string $event)
+    {
+        return [];
     }
 }
