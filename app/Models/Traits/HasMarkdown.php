@@ -15,7 +15,11 @@ trait HasMarkdown
     protected static function bootHasMarkdown()
     {
         static::updated(function (Model $model) {
-            Cache::forget($model->getDescriptionCacheKey());
+            Cache::forget($model->getMarkdownCacheKey());
+        });
+
+        static::deleted(function (Model $model) {
+            Cache::forget($model->getMarkdownCacheKey());
         });
     }
 
@@ -31,15 +35,15 @@ trait HasMarkdown
             return new HtmlString(Markdown::parse($text, $inlineOnly));
         }
 
-        $cacheKey = $this->getDescriptionCacheKey();
+        $cacheKey = $this->getMarkdownCacheKey().'.'.$attribute;
 
         return new HtmlString(Cache::remember($cacheKey, now()->addMinutes(5), function () use ($text, $inlineOnly) {
             return Markdown::parse($text, $inlineOnly);
         }));
     }
 
-    protected function getDescriptionCacheKey()
+    protected function getMarkdownCacheKey()
     {
-        return "{$this->getTable()}.markdown.{$this->getKey()}";
+        return "markdown.{$this->getTable()}.{$this->getKey()}";
     }
 }

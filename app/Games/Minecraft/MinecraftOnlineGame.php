@@ -21,7 +21,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
 
     public function getUserUniqueId(string $name)
     {
-        return Cache::remember('minecraft-uuid-cache.'.$name, now()->addMinutes(30), function () use ($name) {
+        return Cache::remember('games.minecraft.uuid.'.$name, now()->addMinutes(30), function () use ($name) {
             $response = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}");
 
             $uuid = Arr::get($response->throw()->json(), 'id');
@@ -40,7 +40,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
             return $user->name;
         }
 
-        $cacheKey = 'minecraft-profile-cache.'.$user->game_id;
+        $cacheKey = 'games.minecraft.profile.'.$user->game_id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
             $uuid = str_replace('-', '', $user->game_id);

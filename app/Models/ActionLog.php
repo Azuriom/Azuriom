@@ -75,10 +75,8 @@ class ActionLog extends Model
         'data' => 'array',
     ];
 
-    public static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         self::registerLogModels([
             Ban::class,
             Post::class,
@@ -135,7 +133,7 @@ class ActionLog extends Model
      * Create a new log entry.
      *
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $target
+     * @param  \Illuminate\Database\Eloquent\Model|null  $target
      * @param  array  $data
      */
     public static function log(string $action, Model $target = null, array $data = [])
