@@ -29,7 +29,7 @@
                     <img class="img-fluid rounded mx-auto mb-2" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
                 @endif
 
-                <div class="card-text">
+                <div class="card-text user-html-content">
                     {!! $post->content !!}
                 </div>
 

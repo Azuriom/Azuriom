@@ -71,6 +71,7 @@ return [
         'game' => 'Game',
         'price' => 'Price',
         'icon' => 'Icon',
+        'server' => 'Server',
     ],
 
     'range' => [

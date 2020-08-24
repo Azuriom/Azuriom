@@ -41,6 +41,34 @@
     <!-- Styles -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     @stack('styles')
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #app {
+            flex-shrink: 0;
+        }
+
+        .content {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .user-html-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        footer {
+            background: #232323;
+        }
+    </style>
 </head>
 
 <body>
@@ -67,30 +95,6 @@
 </footer>
 
 @stack('footer-scripts')
-
-<style>
-    html, body {
-        height: 100%;
-    }
-
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #app {
-        flex-shrink: 0;
-    }
-
-    .content {
-        margin-top: 3rem;
-        margin-bottom: 3rem;
-    }
-
-    footer {
-        background: #232323;
-    }
-</style>
 
 </body>
 </html>
