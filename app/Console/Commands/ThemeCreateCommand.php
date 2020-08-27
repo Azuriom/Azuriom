@@ -62,7 +62,7 @@ class ThemeCreateCommand extends Command
         if ($this->files->exists($path)) {
             $this->error('The theme '.$path.' already exists!');
 
-            return false;
+            return 1;
         }
 
         $this->files->makeDirectory($path);

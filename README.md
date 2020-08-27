@@ -3,6 +3,7 @@
 # Azuriom
 
 [![Build Status](https://img.shields.io/travis/Azuriom/Azuriom/master?style=flat-square)](https://travis-ci.org/Azuriom/Azuriom)
+[![Code Quality](https://img.shields.io/scrutinizer/quality/g/Azuriom/Azuriom?style=flat-square)](https://scrutinizer-ci.com/g/Azuriom/Azuriom/)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square&include_prereleases)](http://github.com/Azuriom/Azuriom/releases)
 [![Chat](https://img.shields.io/discord/625774284823986183?color=7289da&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)

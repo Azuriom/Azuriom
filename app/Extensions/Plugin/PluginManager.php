@@ -96,9 +96,11 @@ class PluginManager extends ExtensionManager
 
                 $this->autoloadPlugin($pluginId, $composer, $plugin->composer);
 
-                foreach ($plugin->providers ?? [] as $pluginProvider) {
-                    $provider = new $pluginProvider($app);
+                $providers = array_map(function ($provider) use ($app) {
+                    return new $provider($app);
+                }, $plugin->providers ?? []);
 
+                foreach ($providers as $provider) {
                     if (method_exists($provider, 'bindPlugin')) {
                         $provider->bindPlugin($plugin);
                     }
@@ -106,7 +108,13 @@ class PluginManager extends ExtensionManager
                     $app->register($provider);
                 }
             } catch (Throwable $t) {
+                if (! $app->isProduction()) {
+                    throw $t;
+                }
+
                 report($t);
+
+                $this->disable($pluginId);
             }
         }
     }
@@ -137,8 +145,8 @@ class PluginManager extends ExtensionManager
      * Get the path of the specified plugin.
      *
      * @param  string  $path
-     * @param  string|null  $plugin
-     * @return string|null
+     * @param  string  $plugin
+     * @return string
      */
     public function path(string $plugin, string $path = '')
     {
@@ -193,10 +201,6 @@ class PluginManager extends ExtensionManager
     public function findDescription(string $plugin)
     {
         $path = $this->path($plugin, 'plugin.json');
-
-        if ($path === null) {
-            return null;
-        }
 
         $json = $this->getJson($path);
 
@@ -427,7 +431,7 @@ class PluginManager extends ExtensionManager
 
             return $this->plugins;
         } catch (FileNotFoundException $e) {
-            $this->plugins = $this->cachePlugins();
+            $this->plugins = $this->cachePlugins()->all();
 
             return $this->plugins;
         }

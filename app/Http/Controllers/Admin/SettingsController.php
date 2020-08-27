@@ -70,7 +70,7 @@ class SettingsController extends Controller
     /**
      * The application cache.
      *
-     * @var \Illuminate\Cache\Repository
+     * @var \Illuminate\Contracts\Cache\Repository
      */
     private $cache;
 

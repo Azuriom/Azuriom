@@ -329,6 +329,7 @@ return [
 
         'fields' => [
             'register-date' => 'Register at',
+            'last-login' => 'Last login at',
             'email-verified' => 'Email Address verified',
             '2fa' => 'Two Factor Authentication',
             'ip' => 'IP Address',

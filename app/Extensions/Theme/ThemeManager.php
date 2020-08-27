@@ -189,10 +189,6 @@ class ThemeManager extends ExtensionManager
     {
         $path = $this->path('theme.json', $theme);
 
-        if ($path === null) {
-            return null;
-        }
-
         $json = $this->getJson($path);
 
         if ($json === null) {

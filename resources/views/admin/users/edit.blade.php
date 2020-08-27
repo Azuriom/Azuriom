@@ -124,6 +124,13 @@
                         <input type="text" class="form-control" id="registerInput" value="{{ format_date_compact($user->created_at) }}" disabled>
                     </div>
 
+                    @if($user->last_login_at)
+                        <div class="form-group">
+                            <label for="lastLoginInput">{{ trans('admin.users.fields.last-login') }}</label>
+                            <input type="text" class="form-control" id="lastLoginInput" value="{{ format_date_compact($user->last_login_at) }}" disabled>
+                        </div>
+                    @endif
+
                     <form action="{{ route('admin.users.verify', $user) }}" method="POST">
                         @csrf
 

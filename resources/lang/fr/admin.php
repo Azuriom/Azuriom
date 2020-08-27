@@ -329,6 +329,7 @@ return [
         'fields' => [
             'register-date' => 'Inscrit le',
             'email-verified' => 'Adresse Email vérifiée',
+            'last-login' => 'Dernière connexion',
             '2fa' => 'Authentification à deux facteurs',
             'ip' => 'Adresse IP',
         ],
