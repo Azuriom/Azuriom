@@ -146,7 +146,7 @@ class Embed implements Arrayable
     public function color($color)
     {
         if (is_string($color) && Str::startsWith($color, '#')) {
-            $color = (int) hexdec($color);
+            $color = (int) hexdec(Str::substr($color, 1));
         }
 
         $this->color = $color;
