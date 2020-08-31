@@ -39,7 +39,7 @@ abstract class Game
     abstract public function getUserName(User $user);
 
     /**
-     * Get
+     * Get the translation for a given key.
      *
      * @param  string  $key
      * @param  array  $placeholders

@@ -80,6 +80,7 @@ class LoginController extends Controller
         if ($user === null || $user->is_deleted) {
             return $this->sendFailedLoginResponse($request);
         }
+
         return $this->loginUser($request, $user);
     }
 
