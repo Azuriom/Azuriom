@@ -16,7 +16,7 @@ class Rcon extends Query
         $query = $this->connect(true);
 
         foreach ($commands as $command) {
-            $query->Rcon(str_replace('{player}', $user->name ?? '?', $command));
+            $query->Rcon($this->replacePlaceholders($command, $user));
         }
     }
 

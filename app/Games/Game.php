@@ -4,14 +4,14 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\User;
 
-interface Game
+abstract class Game
 {
     /**
      * Get the name of this game.
      *
      * @return string
      */
-    public function name();
+    abstract public function name();
 
     /**
      * Get the avatar URL of the user.
@@ -21,14 +21,14 @@ interface Game
      *
      * @deprecated Will be removed in 1.0, use User::getAvatar()
      */
-    public function getAvatarUrl(User $user, int $size = 64);
+    abstract public function getAvatarUrl(User $user, int $size = 64);
 
     /**
      * Get the game id of the user.
      *
      * @param  string  $name
      */
-    public function getUserUniqueId(string $name);
+    abstract public function getUserUniqueId(string $name);
 
     /**
      * Get the game user name.
@@ -36,5 +36,44 @@ interface Game
      * @param  \Azuriom\Models\User  $user
      * @return mixed
      */
-    public function getUserName(User $user);
+    abstract public function getUserName(User $user);
+
+    /**
+     * Get
+     *
+     * @param  string  $key
+     * @param  array  $placeholders
+     * @return string
+     */
+    public function trans(string $key, array $placeholders = [])
+    {
+        return $key;
+    }
+
+    /**
+     * Return if the user must login with a third party provider.
+     *
+     * @return bool
+     */
+    public function loginWithOAuth()
+    {
+        return $this->getSocialiteDriverName() !== null;
+    }
+
+    /**
+     * Get the socialite driver name, if loginWithSocialite return true.
+     *
+     * @return string|null
+     */
+    public function getSocialiteDriverName()
+    {
+        return null;
+    }
+
+    /**
+     * Get the supported server bridge types.
+     *
+     * @return \Azuriom\Games\ServerBridge[]
+     */
+    abstract public function getSupportedServers();
 }

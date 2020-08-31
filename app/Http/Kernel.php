@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,
         'guest' => \Azuriom\Http\Middleware\RedirectIfAuthenticated::class,
+        'login.socialite' => \Azuriom\Http\Middleware\SocialiteLogin::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,

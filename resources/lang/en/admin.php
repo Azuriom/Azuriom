@@ -268,6 +268,8 @@ return [
 
         'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
 
+        'query-port-info' => 'Can be empty if it\'s the same as the game port.',
+
         'fields' => [
             'address' => 'Address',
             'port' => 'Port',
@@ -319,6 +321,7 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'rust-rcon' => 'Rust RCON',
         ],
     ],
 

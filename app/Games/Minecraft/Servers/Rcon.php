@@ -22,7 +22,7 @@ class Rcon extends Ping
         $rcon = $this->connectRcon();
 
         foreach ($commands as $command) {
-            $rcon->sendCommand(str_replace('{player}', $user->name ?? '?', $command));
+            $rcon->sendCommand($this->replacePlaceholders($command, $user));
         }
     }
 
@@ -44,5 +44,15 @@ class Rcon extends Ping
         }
 
         return $rcon;
+    }
+
+    public function replacePlaceholders(string $command, User $user = null)
+    {
+        if ($user === null) {
+            return parent::replacePlaceholders($command, $user);
+        }
+
+        return parent::replacePlaceholders($command, $user)
+            ->replace('{uuid}', $user->game_id);
     }
 }

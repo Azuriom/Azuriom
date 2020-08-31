@@ -27,8 +27,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ trans('auth.name') }}</th>
-                        <th scope="col">{{ trans('auth.email') }}</th>
+                        <th scope="col">{{ oauth_login() ? game()->trans('id') : trans('auth.email') }}</th>
                         <th scope="col">{{ trans('messages.fields.role') }}</th>
+                        <th scope="col">{{ trans('admin.users.fields.register-date') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
@@ -48,10 +49,19 @@
                                     <i class="fas fa-ban text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
-                            <td @if($user->is_deleted) class="text-strikethrough" @endif>{{ $user->name }}</td>
-                            <td @if($user->is_deleted) class="text-strikethrough" @endif>{{ $user->email }}</td>
+                            <td @if($user->is_deleted) class="text-strikethrough" @endif>
+                                {{ $user->name }}
+                            </td>
+                            <td @if($user->is_deleted) class="text-strikethrough" @endif>
+                                {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
+                            </td>
                             <td>
-                                <span class="badge badge-label" style="{{ $user->role->getBadgeStyle() }}">{{ $user->role->name }}</span>
+                                <span class="badge badge-label" style="{{ $user->role->getBadgeStyle() }}">
+                                    {{ $user->role->name }}
+                                </span>
+                            </td>
+                            <td>
+                                {{ format_date($user->created_at) }}
                             </td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>

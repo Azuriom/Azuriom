@@ -49,7 +49,11 @@
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('svg/azuriom-white.svg') }}" alt="Azuriom">
                 </div>
-                <div class="sidebar-brand-text mx-3"><img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup>
+                <div class="sidebar-brand-text mx-3">
+                    <img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom">
+                    <sup>{{ Azuriom::version() }}</sup>
+
+                    <small class="font-weight-bold">{{ game()->name() }}</small>
                 </div>
             </a>
 
@@ -80,8 +84,10 @@
                             <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
                             <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">{{ trans('admin.nav.settings.settings.global') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">{{ trans('admin.nav.settings.settings.seo') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">{{ trans('admin.nav.settings.settings.auth') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
+                            @if(! oauth_login())
+                                <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">{{ trans('admin.nav.settings.settings.auth') }}</a>
+                                <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
+                            @endif
                             <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
                         </div>

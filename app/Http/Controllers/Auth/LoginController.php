@@ -9,8 +9,11 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Contracts\User as SocialUser;
+use Laravel\Socialite\Facades\Socialite;
 use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends Controller
@@ -43,6 +46,8 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+        $this->middleware('login.socialite')->only(['showLoginForm', 'login']);
     }
 
     /**
@@ -75,7 +80,11 @@ class LoginController extends Controller
         if ($user === null || $user->is_deleted) {
             return $this->sendFailedLoginResponse($request);
         }
+        return $this->loginUser($request, $user);
+    }
 
+    protected function loginUser(Request $request, User $user)
+    {
         if ($user->refreshActiveBan()->is_banned) {
             throw ValidationException::withMessages([
                 $this->username() => trans('auth.suspended'),
@@ -93,6 +102,46 @@ class LoginController extends Controller
         $this->guard()->login($user, $request->filled('remember'));
 
         return $this->sendLoginResponse($request);
+    }
+
+    /**
+     * Obtain the user information from the provider.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function handleProviderCallback(Request $request)
+    {
+        abort_if(! game()->loginWithOAuth(), 404);
+
+        $userProfile = Socialite::driver(game()->getSocialiteDriverName())->user();
+        $user = User::firstWhere('game_id', $userProfile->getId());
+
+        if ($user === null) {
+            $user = $this->registerUser($request, $userProfile);
+
+            $this->guard()->login($user);
+
+            return $request->expectsJson() ? response()->noContent() : redirect($this->redirectPath());
+        }
+
+        return $this->loginUser($request, $user);
+    }
+
+    protected function registerUser(Request $request, SocialUser $userProfile)
+    {
+        $socialiteDriver = game()->getSocialiteDriverName();
+
+        return User::forceCreate([
+            'name' => $userProfile->getNickname() ?? $userProfile->getName(),
+            'email' => "{$userProfile->getId()}@{$socialiteDriver}.oauth",
+            'password' => Hash::make(Str::random(32)),
+            'game_id' => $userProfile->getId(),
+            'last_login_ip' => $request->ip(),
+            'last_login_at' => now(),
+        ]);
     }
 
     protected function redirectTo2fa(Request $request, User $user)
@@ -177,7 +226,7 @@ class LoginController extends Controller
         try {
             $name = game()->getUserName($user);
 
-            if ($name && $name !== $user->name && ! User::where('name', $name)->exists()) {
+            if ($name !== null && $name !== $user->name) {
                 $user->update(['name' => $name]);
             }
         } catch (Exception $e) {

@@ -2,9 +2,7 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Games\Minecraft\Servers\AzLink as MinecraftAzLink;
-use Azuriom\Games\Minecraft\Servers\Ping as MinecraftPing;
-use Azuriom\Games\Minecraft\Servers\Rcon as MinecraftRcon;
+use Azuriom\Games\FallbackServerBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -31,19 +29,6 @@ use Illuminate\Support\Facades\Cache;
 class Server extends Model
 {
     use Loggable;
-
-    /**
-     * The servers link types.
-     *
-     * @var array
-     */
-    private const TYPES = [
-        'mc-ping' => MinecraftPing::class,
-        'mc-rcon' => MinecraftRcon::class,
-        'mc-azlink' => MinecraftAzLink::class,
-        // 'source-query' => SourceQuery::class,
-        // 'source-rcon' => SourceRcon::class,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -135,7 +120,13 @@ class Server extends Model
      */
     public function bridge()
     {
-        return app(self::TYPES[$this->type], ['server' => $this]);
+        $games = game()->getSupportedServers();
+
+        if (! array_key_exists($this->type, $games)) {
+            return new FallbackServerBridge($this);
+        }
+
+        return app($games[$this->type], ['server' => $this]);
     }
 
     public function getLinkCommand()
@@ -145,7 +136,7 @@ class Server extends Model
 
     public static function types()
     {
-        return array_keys(self::TYPES);
+        return array_keys(game()->getSupportedServers());
     }
 
     /**

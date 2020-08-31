@@ -44,6 +44,8 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
 
+        $this->middleware('login.socialite');
+
         $this->middleware('captcha')->only('register');
     }
 

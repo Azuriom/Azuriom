@@ -20,11 +20,14 @@
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
+        "laravel/socialite": "^4.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "pragmarx/google2fa": "^8.0",
         "symfony/filesystem": "^5.0",
+        "textalk/websocket": "^1.4",
         "thedudeguy/rcon": "^1.0",
+        "truckersmp/steam-socialite": "^1.0",
         "xpaw/php-source-query-class": "^1.0"
     },
     "require-dev": {

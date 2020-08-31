@@ -267,6 +267,8 @@ return [
 
         'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
 
+        'query-port-info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
+
         'fields' => [
             'address' => 'Adresse',
             'port' => 'Port',
@@ -318,6 +320,7 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'rust-rcon' => 'Rust RCON',
         ],
     ],
 

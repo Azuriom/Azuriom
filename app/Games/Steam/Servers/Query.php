@@ -3,6 +3,7 @@
 namespace Azuriom\Games\Steam\Servers;
 
 use Azuriom\Games\ServerBridge;
+use Azuriom\Games\Steam\SteamID;
 use Azuriom\Models\User;
 use Exception;
 use RuntimeException;
@@ -71,5 +72,16 @@ class Query extends ServerBridge
         }
 
         return $query;
+    }
+
+    public function replacePlaceholders(string $command, User $user = null)
+    {
+        if ($user === null) {
+            return parent::replacePlaceholders($command, $user);
+        }
+
+        return parent::replacePlaceholders($command, $user)
+            ->replace('{steam_id}', $user->game_id)
+            ->replace('{steam_id_32}', SteamID::convertTo32($user->game_id));
     }
 }

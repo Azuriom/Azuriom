@@ -4,6 +4,7 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
+use Illuminate\Support\Str;
 
 abstract class ServerBridge
 {
@@ -73,5 +74,16 @@ abstract class ServerBridge
     public function getDefaultPort()
     {
         return 0;
+    }
+
+    public function replacePlaceholders(string $command, User $user = null)
+    {
+        if ($user === null) {
+            return Str::of($command);
+        }
+
+        return Str::of($command)
+            ->replace('{player}', $user->name)
+            ->replace('{name}', $user->name);
     }
 }

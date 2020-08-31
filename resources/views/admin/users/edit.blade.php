@@ -47,7 +47,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if(oauth_login()) d-none @endif">
                             <label for="emailInput">{{ trans('auth.email') }}</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
 
@@ -56,14 +56,16 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="passwordInput">{{ trans('auth.password') }}</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
+                        @if(! oauth_login())
+                            <div class="form-group">
+                                <label for="passwordInput">{{ trans('auth.password') }}</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
 
-                            @error('password')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
@@ -131,27 +133,29 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('admin.users.verify', $user) }}" method="POST">
-                        @csrf
+                    @if(! oauth_login())
+                        <form action="{{ route('admin.users.verify', $user) }}" method="POST">
+                            @csrf
 
-                        <div class="form-group">
-                            <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
+                            <div class="form-group">
+                                <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
 
-                            @if($user->hasVerifiedEmail())
-                                <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
-                            @else
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
+                                @if($user->hasVerifiedEmail())
+                                    <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
+                                @else
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
 
-                                    @if(! $user->is_deleted)
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </div>
-                    </form>
+                                        @if(! $user->is_deleted)
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                        </form>
+                    @endif
 
                     <form action="{{ route('admin.users.2fa', $user) }}" method="POST">
                         @csrf
@@ -180,7 +184,7 @@
 
                     @if($user->game_id)
                         <div class="form-group">
-                            <label for="idInput">UUID</label>
+                            <label for="idInput">{{ game()->trans('id') }}</label>
                             <input type="text" class="form-control" id="idInput" value="{{ $user->game_id }}" disabled>
                         </div>
                     @endif

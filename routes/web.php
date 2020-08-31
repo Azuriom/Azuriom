@@ -23,6 +23,8 @@ Route::prefix('user')->group(function () {
         'register' => setting('register', true),
     ]);
 
+    Route::get('/login/callback', 'Auth\LoginController@handleProviderCallback')->name('login.callback');
+
     Route::prefix('/2fa')->name('login.')->group(function () {
         Route::get('/', 'Auth\LoginController@showCodeForm')->name('2fa');
         Route::post('/', 'Auth\LoginController@verifyCode')->name('2fa-verify');
