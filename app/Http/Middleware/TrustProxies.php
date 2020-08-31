@@ -23,7 +23,7 @@ class TrustProxies extends Middleware
     protected $headers = Request::HEADER_X_FORWARDED_ALL;
 
     /**
-     * Sets the trusted proxies on the request to the value of trustedproxy.proxies
+     * Sets the trusted proxies on the request to the value of 'trustedproxy.proxies'.
      *
      * @param \Illuminate\Http\Request $request
      */

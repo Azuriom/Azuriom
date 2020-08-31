@@ -23,7 +23,7 @@ class ServerController extends Controller
 
         $cpuUsage = $request->json('system.cpu');
         $ramUsage = $request->json('system.ram');
-        $tps = $request->json('system.ram');
+        $tps = $request->json('worlds.tps');
 
         $server->updateData([
             'players' => count($players),
