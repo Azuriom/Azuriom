@@ -25,7 +25,7 @@ class AddDataToServerStatsTable extends Migration
             Schema::table('server_stats', function (Blueprint $table) {
                 $table->dropColumn(['tps', 'loaded_chunks', 'entities']);
             });
-        } catch (Exception $e) {
+        } catch (Throwable $t) {
             // ignore, SQLite doesn't support dropping columns without DBAL.
         }
     }

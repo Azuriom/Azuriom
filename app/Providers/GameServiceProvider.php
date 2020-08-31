@@ -29,7 +29,7 @@ class GameServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $gameType = config('azuriom.game', setting('game-type', 'mc-offline'));
+        $gameType = config('azuriom.game') ?? setting('game-type', 'mc-offline');
         $game = Arr::get($this->getAvailableGames(), $gameType, FallbackGame::class);
 
         if (is_string($game)) {
