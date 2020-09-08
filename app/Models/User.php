@@ -7,6 +7,7 @@ use Azuriom\Models\Traits\Searchable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -41,6 +42,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use HasFactory;
     use InteractsWithMoney;
     use Notifiable;
     use Searchable;

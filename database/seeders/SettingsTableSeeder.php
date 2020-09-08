@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Azuriom\Models\Setting;
 use Illuminate\Database\Seeder;
 

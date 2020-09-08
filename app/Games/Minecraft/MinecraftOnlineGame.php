@@ -24,7 +24,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         return Cache::remember('games.minecraft.uuid.'.$name, now()->addMinutes(30), function () use ($name) {
             $response = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}");
 
-            $uuid = Arr::get($response->throw()->json(), 'id');
+            $uuid = $response->throw()->json('id');
 
             if ($uuid === null) {
                 throw new RuntimeException("No UUID for {$name}");

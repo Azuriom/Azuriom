@@ -15,9 +15,10 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Azuriom\Http\Middleware\EnsureInstalled::class,
+        // \Azuriom\Http\Middleware\TrustHosts::class,
         \Azuriom\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
-        \Azuriom\Http\Middleware\CheckForMaintenanceMode::class,
+        \Azuriom\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Azuriom\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
@@ -42,7 +43,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -65,7 +66,6 @@ class Kernel extends HttpKernel
         'admin' => \Azuriom\Http\Middleware\AdminAuthenticate::class,
         'auth' => \Azuriom\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,

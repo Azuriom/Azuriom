@@ -5,7 +5,6 @@ namespace Azuriom\Extensions\Theme;
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
-use Azuriom\Support\Files;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
 use RuntimeException;
@@ -336,7 +335,7 @@ class ThemeManager extends ExtensionManager
         $themeAssetsPath = $this->path('assets', $theme);
 
         if ($this->files->exists($themeAssetsPath)) {
-            Files::relativeLink($themeAssetsPath, $this->themesPublicPath($theme));
+           $this->files->relativeLink($themeAssetsPath, $this->themesPublicPath($theme));
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Azuriom\Casts\Color;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+    use HasFactory;
     use Loggable;
 
     /**

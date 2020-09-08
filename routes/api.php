@@ -1,5 +1,8 @@
 <?php
 
+use Azuriom\Http\Controllers\Api\AuthController;
+use Azuriom\Http\Controllers\Api\PostController;
+use Azuriom\Http\Controllers\Api\ServerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('posts', 'PostController')->names('api.')->only(['index', 'show']);
+Route::apiResource('posts', PostController::class)->names('api.')->only(['index', 'show']);
 
 Route::prefix('/auth')->name('auth.')->group(function () {
-    Route::post('/authenticate', 'AuthController@authenticate')->name('authenticate');
-    Route::post('/verify', 'AuthController@verify')->name('verify');
-    Route::post('/logout', 'AuthController@logout')->name('logout');
+    Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+    Route::post('/verify', [AuthController::class, 'verify'])->name('verify');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::prefix('/azlink')->middleware('server.token')->group(function () {
-    Route::get('/', 'ServerController@status')->name('azlink');
-    Route::post('/', 'ServerController@fetch');
+    Route::get('/', [ServerController::class, 'status'])->name('azlink');
+    Route::post('/', [ServerController::class, 'fetch']);
 });

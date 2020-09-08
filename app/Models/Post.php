@@ -7,6 +7,7 @@ use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,7 @@ use Illuminate\Support\Facades\Auth;
 class Post extends Model
 {
     use Attachable;
+    use HasFactory;
     use HasImage;
     use HasUser;
     use Loggable;

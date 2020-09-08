@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\HasMarkdown;
 use Azuriom\Models\Traits\HasUser;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,8 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
-    use HasUser;
+    use HasFactory;
     use HasMarkdown;
+    use HasUser;
 
     /**
      * The attributes that are mass assignable.

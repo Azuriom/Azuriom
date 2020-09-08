@@ -4,7 +4,6 @@ namespace Azuriom\Extensions\Plugin;
 
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
-use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -493,7 +492,7 @@ class PluginManager extends ExtensionManager
         $pluginAssetsPath = $this->path($plugin, 'assets');
 
         if ($this->files->exists($pluginAssetsPath)) {
-            Files::relativeLink($pluginAssetsPath, $this->pluginsPublicPath($plugin));
+            $this->files->relativeLink($pluginAssetsPath, $this->pluginsPublicPath($plugin));
         }
     }
 }

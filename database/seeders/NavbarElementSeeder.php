@@ -1,9 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use Azuriom\Models\NavbarElement;
 use Illuminate\Database\Seeder;
 
-class NavbarElementsTableSeeder extends Seeder
+class NavbarElementSeeder extends Seeder
 {
     /**
      * Run the database seeds.

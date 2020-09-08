@@ -1,10 +1,12 @@
 <?php
 
+namespace Database\Seeders;
+
 use Azuriom\Models\Role;
 use Azuriom\Models\Setting;
 use Illuminate\Database\Seeder;
 
-class RolesTableSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.

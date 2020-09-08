@@ -1,17 +1,41 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use Azuriom\Models\Role;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Role::class, function (Faker $faker) {
-    return [
-        'name' => $faker->word,
-        'color' => $faker->hexColor,
-    ];
-});
+class RoleFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Role::class;
 
-$factory->state(Role::class, 'admin', [
-    'is_admin' => true,
-]);
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'color' => $this->faker->hexColor,
+        ];
+    }
+
+    /**
+     * Indicate that the role is admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state([
+            'is_admin' => true,
+        ]);
+    }
+}

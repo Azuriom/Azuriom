@@ -1,20 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use Azuriom\Models\Comment;
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Comment::class, function (Faker $faker) {
-    return [
-        'content' => $faker->paragraph,
-        'author_id' => function () {
-            return factory(User::class)->create()->id;
-        },
-        'post_id' => function () {
-            return factory(Post::class)->create()->id;
-        },
-    ];
-});
+class CommentFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Comment::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'content' => $this->faker->paragraph,
+            'author_id' => User::factory(),
+            'post_id' => Post::factory(),
+        ];
+    }
+}

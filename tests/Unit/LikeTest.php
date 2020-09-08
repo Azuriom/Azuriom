@@ -13,9 +13,9 @@ class LikeTest extends TestCase
 
     public function testIsLiked()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $this->actingAs(factory(User::class)->create());
+        $this->actingAs(User::factory()->create());
 
         $post->likes()->create();
 
@@ -24,18 +24,18 @@ class LikeTest extends TestCase
 
     public function testIsNotLiked()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $this->actingAs(factory(User::class)->create());
+        $this->actingAs(User::factory()->create());
 
         $this->assertFalse($post->isLiked());
     }
 
     public function testIsLikedWithExplicitUser()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         /** @var \Azuriom\Models\Like */
         $like = $post->likes()->make();
@@ -47,9 +47,9 @@ class LikeTest extends TestCase
 
     public function testIsLikedWithLoadedRelations()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $this->actingAs(factory(User::class)->create());
+        $this->actingAs(User::factory()->create());
 
         $post->likes()->create();
 
@@ -60,9 +60,9 @@ class LikeTest extends TestCase
 
     public function testIsNotLikedWithLoadedRelations()
     {
-        $post = factory(Post::class)->create();
+        $post = Post::factory()->create();
 
-        $this->actingAs(factory(User::class)->create());
+        $this->actingAs(User::factory()->create());
 
         $post->load('likes.author');
 
