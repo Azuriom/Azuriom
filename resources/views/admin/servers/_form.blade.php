@@ -103,8 +103,7 @@
 
 <div data-server-type="mc-ping" class="form-group d-none">
     <div class="alert alert-info" role="alert">
-        <i class="fas fa-info-circle"></i>
-        {{ trans('admin.servers.ping-no-commands') }}
+        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.ping-no-commands') }}
     </div>
 </div>
 
@@ -120,6 +119,12 @@
 
             <small id="queryPortInfo" class="form-text">{{ trans('admin.servers.query-port-info') }}</small>
         </div>
+    </div>
+</div>
+
+<div data-server-type="source-query" class="form-group d-none">
+    <div class="alert alert-info" role="alert">
+        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.query-no-commands') }}
     </div>
 </div>
 

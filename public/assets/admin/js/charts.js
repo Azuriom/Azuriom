@@ -77,7 +77,7 @@ function createPieChart(elementId, data) {
     Chart.defaults.global.defaultFontFamily = 'Nunito';
     Chart.defaults.global.defaultFontColor = '#858796';
 
-    new Chart(document.getElementById('activeUsersChart'), {
+    new Chart(document.getElementById(elementId), {
         type: 'doughnut',
         data: {
             labels: Object.keys(data),

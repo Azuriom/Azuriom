@@ -267,6 +267,7 @@ return [
         'default-info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
         'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
+        'query-no-commands' => 'With query link, it\'s not possible to execute commands on the server.',
 
         'query-port-info' => 'Can be empty if it\'s the same as the game port.',
 

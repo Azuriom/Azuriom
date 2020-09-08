@@ -33,7 +33,7 @@ class ServerController extends Controller
             'tps' => $tps >= 0 ? round($tps, 2) : null,
             'loaded_chunks' => $request->json('worlds.chunks'),
             'entities' => $request->json('worlds.entities'),
-        ], $request->json('full'));
+        ], $request->json('full', false));
 
         $commands = $server->commands()
             ->whereIn('player_name', $players)

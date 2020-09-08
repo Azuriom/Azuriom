@@ -42,13 +42,11 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = new Post(Arr::except($request->validated(), 'image'));
+        $post = Post::create(Arr::except($request->validated(), 'image'));
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'));
         }
-
-        $post->save();
 
         $post->persistPendingAttachments($request->input('pending_id'));
 

@@ -49,6 +49,7 @@ class GameServiceProvider extends ServiceProvider
             'gmod' => SteamGame::forName('Garry\'s Mod'),
             'ark' => SteamGame::forName('ARK'),
             'rust' => RustGame::class,
+            'csgo' => SteamGame::forName('CS:GO'),
             'tf2' => SteamGame::forName('Team Fortress 2'),
         ];
     }

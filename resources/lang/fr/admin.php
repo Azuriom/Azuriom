@@ -266,6 +266,7 @@ return [
         'default-info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
 
         'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
+        'query-no-commands' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
 
         'query-port-info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 

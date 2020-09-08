@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('game:ping')->everyMinute();
+        $schedule->command('attachments:purge')->daily();
     }
 
     /**
