@@ -14,6 +14,7 @@
         "ext-json": "*",
         "ext-zip": "*",
         "chillerlan/php-qrcode": "^3.2",
+        "composer/semver": "^3.2",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "funkjedi/composer-include-files": "^1.0",

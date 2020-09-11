@@ -495,6 +495,9 @@ return [
         'installed' => 'Installed plugins',
         'available' => 'Available plugins',
 
+        'azuriom-requirement' => 'This plugin is not compatible with your Azuriom version.',
+        'plugin-requirement' => 'The plugin ":plugin" is missing or its version is not compatible with this plugin.',
+
         'status' => [
             'reloaded' => 'The plugins have been reloaded.',
             'enabled' => 'The plugin has been enabled.',

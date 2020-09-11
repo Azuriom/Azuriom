@@ -2,13 +2,16 @@
 
 namespace Azuriom\Extensions\Plugin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Support\Optimizer;
 use Composer\Autoload\ClassLoader;
+use Composer\Semver\Semver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
 
@@ -287,6 +290,44 @@ class PluginManager extends ExtensionManager
         $this->setPluginEnabled($plugin, false);
     }
 
+    public function hasRequirements(string $plugin)
+    {
+        return $this->getMissingRequirements($plugin) === null;
+    }
+
+    public function getMissingRequirements(string $plugin)
+    {
+        $description = $this->findDescription($plugin);
+
+        if (! isset($description->dependencies)) {
+            return null;
+        }
+
+        foreach ($description->dependencies as $dependency => $minVersion) {
+            $optional = Str::endsWith($dependency, '?');
+
+            if ($optional) {
+                $dependency = Str::substr($dependency, 0, -1);
+            }
+
+            if ($dependency === 'azuriom') {
+                $version = Azuriom::version();
+            } elseif ($this->isEnabled($dependency)) {
+                $version = $this->plugins[$dependency]->version;
+            } elseif ($optional) {
+                continue; // Dependency is missing but is optional
+            } else {
+                return $dependency;
+            }
+
+            if (! Semver::satisfies($version, $minVersion)) {
+                return $dependency;
+            }
+        }
+
+        return null;
+    }
+
     public function addRouteDescription(array $items)
     {
         foreach ($items as $key => $value) {
@@ -412,6 +453,12 @@ class PluginManager extends ExtensionManager
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);
+
+        if (! $this->hasRequirements($plugin)) {
+            $this->disable($plugin);
+
+            return;
+        }
 
         // Run the migrations if the plugin was updated
         if ($this->isEnabled($plugin)) {

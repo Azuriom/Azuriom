@@ -60,6 +60,20 @@ class PluginController extends Controller
     public function enable(string $plugin)
     {
         try {
+            $requirements = $this->plugins->getMissingRequirements($plugin);
+
+            if ($requirements === 'azuriom') {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.azuriom-requirement'));
+            }
+
+            if ($requirements !== null) {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.plugin-requirement', [
+                        'plugin' => $requirements,
+                    ]));
+            }
+
             $this->plugins->enable($plugin);
         } catch (Throwable $t) {
             report($t);

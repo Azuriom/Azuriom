@@ -20,7 +20,7 @@ class RustRcon extends Query
                 'players' => Arr::get($info, 'Players'),
                 'max_players' => Arr::get($info, 'MaxPlayers'),
                 'entities' => Arr::get($info, 'EntityCount'),
-                'framerate' => Arr::get($info, 'Framerate')
+                'framerate' => Arr::get($info, 'Framerate'),
             ];
         } catch (Exception $e) {
             return parent::getServerData();
