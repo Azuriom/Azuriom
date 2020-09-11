@@ -38,22 +38,30 @@
                         @method('PATCH')
                         @csrf
 
-                        <div class="form-group">
-                            <label for="nameInput">{{ trans('auth.name') }}</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="nameInput">{{ trans('auth.name') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
 
-                            @error('name')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
 
-                        <div class="form-group @if(oauth_login()) d-none @endif">
-                            <label for="emailInput">{{ trans('auth.email') }}</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
+                                <div class="form-group @if(oauth_login()) d-none @endif">
+                                    <label for="emailInput">{{ trans('auth.email') }}</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
 
-                            @error('email')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 text-center">
+                                <img src="{{ $user->getAvatar(256) }}" alt="{{ $user->name }}" class="rounded mb-3" height="150">
+                            </div>
                         </div>
 
                         @if(! oauth_login())

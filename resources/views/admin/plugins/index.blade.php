@@ -119,16 +119,15 @@
 
                         </tbody>
                     </table>
-
-                    <form method="POST" action="{{ route('admin.plugins.reload') }}">
-                        @csrf
-
-                        <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-sync"></i> {{ trans('messages.actions.reload') }}
-                        </button>
-                    </form>
-
                 </div>
+
+                <form method="POST" action="{{ route('admin.plugins.reload') }}">
+                    @csrf
+
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-sync"></i> {{ trans('messages.actions.reload') }}
+                    </button>
+                </form>
             </div>
         </div>
     @endif

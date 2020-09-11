@@ -121,9 +121,6 @@ class PluginCreateCommand extends Command
                 'psr-4' => [
                     "{$namespace}\\" => 'src/',
                 ],
-                'files' => [
-                    'src/helpers.php',
-                ],
             ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }

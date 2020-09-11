@@ -26,12 +26,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/maintenance', [HomeController::class, 'maintenance'])->name('maintenance');
 
-Route::prefix('user')->group(function () {
+Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function () {
     Auth::routes([
         'verify' => true,
         'register' => setting('register', true),
     ]);
+});
 
+Route::prefix('user')->group(function () {
     Route::get('/login/callback', [LoginController::class, 'handleProviderCallback'])->name('login.callback');
 
     Route::prefix('/2fa')->name('login.')->group(function () {

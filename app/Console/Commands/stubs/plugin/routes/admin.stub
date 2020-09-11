@@ -1,5 +1,6 @@
 <?php
 
+use DummyNamespace\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AdminController@index');
+Route::get('/', [AdminController::class, 'index']);

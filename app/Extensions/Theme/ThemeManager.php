@@ -335,7 +335,7 @@ class ThemeManager extends ExtensionManager
         $themeAssetsPath = $this->path('assets', $theme);
 
         if ($this->files->exists($themeAssetsPath)) {
-           $this->files->relativeLink($themeAssetsPath, $this->themesPublicPath($theme));
+            $this->files->relativeLink($themeAssetsPath, $this->themesPublicPath($theme));
         }
     }
 }

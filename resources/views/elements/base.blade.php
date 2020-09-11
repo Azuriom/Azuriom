@@ -38,7 +38,5 @@
         </script>
     @endpush
 
-    @php
-        session()->put('welcome_popup', true);
-    @endphp
+    @php(session()->put('welcome_popup', true))
 @endif
