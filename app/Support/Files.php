@@ -2,7 +2,6 @@
 
 namespace Azuriom\Support;
 
-use Illuminate\Support\Facades\File;
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
 class Files

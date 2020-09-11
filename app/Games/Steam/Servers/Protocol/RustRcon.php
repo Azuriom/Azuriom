@@ -52,6 +52,20 @@ class RustRcon
     }
 
     /**
+     * Get the server information.
+     *
+     * @return array
+     *
+     * @throws \WebSocket\BadOpcodeException
+     */
+    public function getServerInfo()
+    {
+        $response = $this->sendCommand('serverinfo');
+
+        return json_decode($response['Message'], true);
+    }
+
+    /**
      * Disconnect from the server.
      *
      * @return void

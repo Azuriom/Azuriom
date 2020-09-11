@@ -4,10 +4,28 @@ namespace Azuriom\Games\Steam\Servers;
 
 use Azuriom\Games\Steam\Servers\Protocol\RustRcon as RustRconProtocol;
 use Azuriom\Models\User;
+use Exception;
+use Illuminate\Support\Arr;
 
 class RustRcon extends Query
 {
     private const DEFAULT_RCON_PORT = 28016;
+
+    public function getServerData()
+    {
+        try {
+            $info = $this->connectWebRcon()->getServerInfo();
+
+            return [
+                'players' => Arr::get($info, 'Players'),
+                'max_players' => Arr::get($info, 'MaxPlayers'),
+                'entities' => Arr::get($info, 'EntityCount'),
+                'framerate' => Arr::get($info, 'Framerate')
+            ];
+        } catch (Exception $e) {
+            return parent::getServerData();
+        }
+    }
 
     public function verifyLink()
     {
@@ -16,16 +34,31 @@ class RustRcon extends Query
         return true;
     }
 
+    public function getDefaultPort()
+    {
+        return self::DEFAULT_RCON_PORT;
+    }
+
+    public function canExecuteCommand()
+    {
+        return true;
+    }
+
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    {
+        $rcon = $this->connectWebRcon();
+
+        foreach ($commands as $command) {
+            $rcon->sendCommand($this->replacePlaceholders($command, $user));
+        }
+    }
+
+    protected function connectWebRcon()
     {
         $address = $this->server->address;
         $port = $this->server->data['rcon-port'] ?? ($this->server->port ?? self::DEFAULT_RCON_PORT);
         $password = decrypt($this->server->data['rcon-password'], false);
 
-        $rcon = new RustRconProtocol($address, $port, $password);
-
-        foreach ($commands as $command) {
-            $rcon->sendCommand($this->replacePlaceholders($command, $user));
-        }
+        return new RustRconProtocol($address, $port, $password);
     }
 }
