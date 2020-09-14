@@ -5,8 +5,8 @@ namespace Azuriom\Support;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use RuntimeException;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class Charts
 {
@@ -55,7 +55,7 @@ class Charts
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
         $driver = $query->getConnection()->getDriverName();
         $dbRaw = null;
-        if($driver === 'sqlsrv') {
+        if ($driver === 'sqlsrv') {
             $dbRaw = DB::raw("CAST($sqlColumn as date) as date, {$function}({$sqlGroupColumn}) as aggregate");
         } else {
             DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
@@ -128,7 +128,7 @@ class Charts
                 return "to_char({$column}, 'YYYY-MM')";
             case 'sqlsrv':
                 return "FORMAT($column, 'yyyy-MM')";
-            default: 
+            default:
                 throw new RuntimeException('Unsupported database driver: '.$driver);
         }
     }
