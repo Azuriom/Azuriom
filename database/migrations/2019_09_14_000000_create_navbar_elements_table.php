@@ -22,7 +22,7 @@ class CreateNavbarElementsTable extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('new_tab')->default(false);
 
-            $table->foreign('parent_id')->references('id')->on('navbar_elements')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('navbar_elements');
         });
     }
 
