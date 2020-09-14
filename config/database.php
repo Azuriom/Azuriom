@@ -91,6 +91,16 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'odbc' => [
+            'driver' => 'sqlsrv',
+            'odbc' => true,
+            'odbc_datasource_name' => env('DB_DATABASE', 'forge'),
+            'host' => env('DB_HOST', 'localhost'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'grammar' => 'SqlServerGrammar',
+        ],
+
     ],
 
     /*

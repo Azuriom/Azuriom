@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
+use Illuminate\Support\Str;
 
 class Charts
 {
@@ -52,11 +53,18 @@ class Charts
 
         $sqlColumn = $query->getGrammar()->wrap($column);
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
-
-        $results = $query->select(DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate"))
+        $driver = $query->getConnection()->getDriverName();
+        $dbRaw = null;
+        if($driver === 'sqlsrv') {
+            $dbRaw = DB::raw("CAST($sqlColumn as date) as date, {$function}({$sqlGroupColumn}) as aggregate");
+        } else {
+            DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
+        }
+        $escapedColumnName = Str::between($column, '[', ']');
+        $results = $query->select($dbRaw)
             ->where($column, '>', $start)
-            ->groupBy('date')
-            ->orderBy('date')
+            ->groupBy($escapedColumnName)
+            ->orderBy($escapedColumnName)
             ->get()
             ->mapWithKeys(function ($value) {
                 $date = Carbon::createFromFormat('Y-m-d', $value->date);
@@ -92,11 +100,11 @@ class Charts
 
         $rawQuery = static::getDatabaseRawQuery($query, $query->getGrammar()->wrap($column));
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
-
+        $escapedColumnName = Str::between($column, '[', ']');
         $results = $query->select(DB::raw("{$rawQuery} as date, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
-            ->groupBy('date')
-            ->orderBy('date')
+            ->groupBy($escapedColumnName)
+            ->orderBy($escapedColumnName)
             ->get()
             ->mapWithKeys(function ($result) {
                 $date = Carbon::createFromFormat('Y-m', $result->date);
@@ -118,7 +126,9 @@ class Charts
                 return "strftime('%Y-%m', {$column})";
             case 'pgsql':
                 return "to_char({$column}, 'YYYY-MM')";
-            default:
+            case 'sqlsrv':
+                return "FORMAT($column, 'yyyy-MM')";
+            default: 
                 throw new RuntimeException('Unsupported database driver: '.$driver);
         }
     }
