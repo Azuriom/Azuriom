@@ -7,7 +7,6 @@ use Azuriom\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-
 class FlyffServerBridge extends ServerBridge
 {
     public function getServerData()
@@ -72,7 +71,7 @@ class FlyffServerBridge extends ServerBridge
 
             $character = null;
 
-            if(empty($player_name_if_website)) { // if user didn't add username fallback to first character
+            if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
                 config(['database.odbc.odbc_datasource_name' => config('ACCOUNT_DBF', 'login')]);
                 $account = DB::table('ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
@@ -93,7 +92,7 @@ class FlyffServerBridge extends ServerBridge
             }
 
             if (! $character) {
-                abort(403,'Character not found');
+                abort(403, 'Character not found');
             }
 
             if ($character->MultiServer != '0') {
@@ -110,19 +109,17 @@ class FlyffServerBridge extends ServerBridge
         $socket = null;
         if ($is_connected) {
             $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-            if (! socket_connect($socket, "127.0.0.1", 29000)) {
+            if (! socket_connect($socket, '127.0.0.1', 29000)) {
                 socket_close($socket);
                 throw new Exception('Worldserver unreachable, verify the port');
             }
-
         }
         foreach ($commands as $command) {
             $name_and_id = explode(',', $command); // name, id, quantity
 
             if ($is_connected) {
-                $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])) . str_pad('8b8d0c753894b018ce454b2e', 21, ' ') . pack('V', 1);
+                $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])).str_pad('8b8d0c753894b018ce454b2e', 21, ' ').pack('V', 1);
                 socket_write($socket, $packet, strlen($packet));
-
             } else {
                 config(['database.odbc.odbc_datasource_name' => config('CHARACTER_01_DBF', 'character01')]);
                 $res = DB::table('ITEM_SEND_TBL')
@@ -140,12 +137,10 @@ class FlyffServerBridge extends ServerBridge
         if ($socket) {
             socket_close($socket);
         }
-
     }
 
     public function canExecuteCommand()
     {
         return true;
     }
-
 }

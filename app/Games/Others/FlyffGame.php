@@ -34,5 +34,4 @@ class FlyffGame extends Game
             'flyff-server' => FlyffServerBridge::class,
         ];
     }
-
 }
