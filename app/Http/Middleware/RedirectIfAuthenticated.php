@@ -2,9 +2,9 @@
 
 namespace Azuriom\Http\Middleware;
 
+use Azuriom\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Azuriom\Providers\RouteServiceProvider;
 
 class RedirectIfAuthenticated
 {

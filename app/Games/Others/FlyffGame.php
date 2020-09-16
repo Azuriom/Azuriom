@@ -3,8 +3,8 @@
 namespace Azuriom\Games\Others;
 
 use Azuriom\Games\Game;
-use Azuriom\Models\User;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
+use Azuriom\Models\User;
 
 class FlyffGame extends Game
 {
@@ -31,7 +31,8 @@ class FlyffGame extends Game
     public function getSupportedServers()
     {
         return [
-            'flyff-server' => FlyffServerBridge::class
+            'flyff-server' => FlyffServerBridge::class,
         ];
     }
+
 }
