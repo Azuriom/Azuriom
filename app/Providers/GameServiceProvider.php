@@ -8,6 +8,7 @@ use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
 use Illuminate\Support\Arr;
+use Azuriom\Games\Others\FlyffGame;
 use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider
@@ -51,6 +52,7 @@ class GameServiceProvider extends ServiceProvider
             'rust' => RustGame::class,
             'csgo' => SteamGame::forName('CS:GO'),
             'tf2' => SteamGame::forName('Team Fortress 2'),
+            'flyff' => FlyffGame::class,
         ];
     }
 }
