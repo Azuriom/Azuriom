@@ -30,7 +30,7 @@ class FlyffServerBridge extends ServerBridge
     }
 
     /**
-     * We check if the database contains the table CHARACTER_TBL, it's all we need to send items
+     * We check if the database contains the table CHARACTER_TBL, it's all we need to send items.
      */
     public function verifyLink()
     {
