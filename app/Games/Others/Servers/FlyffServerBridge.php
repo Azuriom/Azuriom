@@ -121,7 +121,6 @@ class FlyffServerBridge extends ServerBridge
                 $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
                 socket_write($socket, $packet, strlen($packet));
             } else {
-                
                 $this->setOdbcDatasource('CHARACTER_01_DBF');
                 $res = DB::table('ITEM_SEND_TBL')
                 ->insert([
@@ -145,7 +144,8 @@ class FlyffServerBridge extends ServerBridge
         return true;
     }
 
-    public static function setOdbcDatasource($name){
+    public static function setOdbcDatasource($name)
+    {
         switch ($name) {
             case 'CHARACTER_01_DBF':
                 config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
@@ -157,7 +157,7 @@ class FlyffServerBridge extends ServerBridge
                 config(['database.connections.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
                 break;
             default:
-                # code...
+                // code...
                 break;
         }
         DB::purge('odbc');
