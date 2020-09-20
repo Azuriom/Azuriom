@@ -12,12 +12,10 @@ class FlyffServerBridge extends ServerBridge
     public function getServerData()
     {
         try {
-            config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-            DB::purge('odbc');
+            $this->setOdbcDatasource('CHARACTER_01_DBF');
             $connected = DB::table('CHARACTER_TBL')->where('MultiServer', '1')->count();
 
-            config(['database.connections.odbc.odbc_datasource_name' => env('LOGGING_01_DBF', 'log01')]);
-            DB::purge('odbc');
+            $this->setOdbcDatasource('LOGGING_01_DBF');
             $users_max = DB::table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
 
             return [
@@ -34,8 +32,7 @@ class FlyffServerBridge extends ServerBridge
      */
     public function verifyLink()
     {
-        config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-        DB::purge('odbc');
+        $this->setOdbcDatasource('CHARACTER_01_DBF');
         return DB::getSchemaBuilder()->hasTable('CHARACTER_TBL');
     }
 
@@ -75,21 +72,18 @@ class FlyffServerBridge extends ServerBridge
             $character = null;
 
             if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
-                config(['database.connections.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
-                DB::purge('odbc');
+                $this->setOdbcDatasource('ACCOUNT_DBF');
                 $account = DB::table('ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
 
-                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-                DB::purge('odbc');
+                $this->setOdbcDatasource('CHARACTER_01_DBF');
                 $character = DB::table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['account', $account->account],
                     ['isblock', 'F'],
                 ])->first();
             } else {
-                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-                DB::purge('odbc');
+                $this->setOdbcDatasource('CHARACTER_01_DBF');
                 $character = DB::table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['m_szName', $player_name_if_website],
@@ -127,8 +121,8 @@ class FlyffServerBridge extends ServerBridge
                 $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
                 socket_write($socket, $packet, strlen($packet));
             } else {
-                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-                DB::purge('odbc');
+                
+                $this->setOdbcDatasource('CHARACTER_01_DBF');
                 $res = DB::table('ITEM_SEND_TBL')
                 ->insert([
                     'm_idPlayer' => $id_Player,
@@ -149,5 +143,23 @@ class FlyffServerBridge extends ServerBridge
     public function canExecuteCommand()
     {
         return true;
+    }
+
+    public static function setOdbcDatasource($name){
+        switch ($name) {
+            case 'CHARACTER_01_DBF':
+                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                break;
+            case 'LOGGING_01_DBF':
+                config(['database.connections.odbc.odbc_datasource_name' => env('LOGGING_01_DBF', 'log01')]);
+                break;
+            case 'ACCOUNT_DBF':
+                config(['database.connections.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
+                break;
+            default:
+                # code...
+                break;
+        }
+        DB::purge('odbc');
     }
 }
