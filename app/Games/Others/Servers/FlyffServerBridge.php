@@ -33,6 +33,7 @@ class FlyffServerBridge extends ServerBridge
     public function verifyLink()
     {
         $this->setOdbcDatasource('CHARACTER_01_DBF');
+
         return DB::getSchemaBuilder()->hasTable('CHARACTER_TBL');
     }
 
