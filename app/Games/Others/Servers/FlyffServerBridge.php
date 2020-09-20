@@ -12,12 +12,13 @@ class FlyffServerBridge extends ServerBridge
     public function getServerData()
     {
         try {
-            config(['database.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+            config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+            DB::purge('odbc');
             $connected = DB::table('CHARACTER_TBL')->where('MultiServer', '1')->count();
 
-            config(['database.odbc.odbc_datasource_name' => env('LOGGING_01_DBF', 'log01')]);
-            $users_max = DB::table('LOGGING_01_DBF')
-                ->table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
+            config(['database.connections.odbc.odbc_datasource_name' => env('LOGGING_01_DBF', 'log01')]);
+            DB::purge('odbc');
+            $users_max = DB::table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
 
             return [
                 'players' => $connected,
@@ -29,11 +30,13 @@ class FlyffServerBridge extends ServerBridge
     }
 
     /**
-     * If we can navigate on the site, DB is enough to send items.
+     * We check if the database contains the table CHARACTER_TBL, it's all we need to send items
      */
     public function verifyLink()
     {
-        return true;
+        config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+        DB::purge('odbc');
+        return DB::getSchemaBuilder()->hasTable('CHARACTER_TBL');
     }
 
     /**
@@ -72,18 +75,21 @@ class FlyffServerBridge extends ServerBridge
             $character = null;
 
             if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
-                config(['database.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
+                config(['database.connections.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
+                DB::purge('odbc');
                 $account = DB::table('ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
 
-                config(['database.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                DB::purge('odbc');
                 $character = DB::table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['account', $account->account],
                     ['isblock', 'F'],
                 ])->first();
             } else {
-                config(['database.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                DB::purge('odbc');
                 $character = DB::table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['m_szName', $player_name_if_website],
@@ -121,7 +127,8 @@ class FlyffServerBridge extends ServerBridge
                 $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
                 socket_write($socket, $packet, strlen($packet));
             } else {
-                config(['database.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
+                DB::purge('odbc');
                 $res = DB::table('ITEM_SEND_TBL')
                 ->insert([
                     'm_idPlayer' => $id_Player,
