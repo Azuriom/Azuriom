@@ -13,10 +13,10 @@ class FlyffServerBridge extends ServerBridge
     {
         try {
             $this->setOdbcDatasource('CHARACTER_01_DBF');
-            $connected = DB::table('CHARACTER_TBL')->where('MultiServer', '1')->count();
+            $connected = DB::connection('flyff')->table('CHARACTER_TBL')->where('MultiServer', '1')->count();
 
             $this->setOdbcDatasource('LOGGING_01_DBF');
-            $users_max = DB::table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
+            $users_max = DB::connection('flyff')->table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
 
             return [
                 'players' => $connected,
@@ -34,7 +34,7 @@ class FlyffServerBridge extends ServerBridge
     {
         $this->setOdbcDatasource('CHARACTER_01_DBF');
 
-        return DB::getSchemaBuilder()->hasTable('CHARACTER_TBL');
+        return DB::connection('flyff')->getSchemaBuilder()->hasTable('CHARACTER_TBL');
     }
 
     /**
@@ -74,18 +74,18 @@ class FlyffServerBridge extends ServerBridge
 
             if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
                 $this->setOdbcDatasource('ACCOUNT_DBF');
-                $account = DB::table('ACCOUNT_TBL')
+                $account = DB::connection('flyff')->table('ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
 
                 $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $character = DB::table('CHARACTER_TBL')
+                $character = DB::connection('flyff')->table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['account', $account->account],
                     ['isblock', 'F'],
                 ])->first();
             } else {
                 $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $character = DB::table('CHARACTER_TBL')
+                $character = DB::connection('flyff')->table('CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
                     ['m_szName', $player_name_if_website],
                     ['isblock', 'F'],
@@ -123,7 +123,7 @@ class FlyffServerBridge extends ServerBridge
                 socket_write($socket, $packet, strlen($packet));
             } else {
                 $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $res = DB::table('ITEM_SEND_TBL')
+                $res = DB::connection('flyff')->table('ITEM_SEND_TBL')
                 ->insert([
                     'm_idPlayer' => $id_Player,
                     'serverindex' => $id_Server,
@@ -161,6 +161,7 @@ class FlyffServerBridge extends ServerBridge
                 // code...
                 break;
         }
-        DB::purge('odbc');
+        config(['database.connections.flyff' => config('database.connections.odbc')]);
+        DB::purge('flyff');
     }
 }
