@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class FlyffServerBridge extends ServerBridge
 {
+    protected const DEFAULT_PORT = 29000;
+
     public function getServerData()
     {
         try {
@@ -110,7 +112,7 @@ class FlyffServerBridge extends ServerBridge
         $socket = null;
         if ($is_connected) {
             $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-            if (! socket_connect($socket, '127.0.0.1', 29000)) {
+            if (! socket_connect($socket, $this->server->address, $this->server->port)) {
                 socket_close($socket);
                 throw new Exception('Worldserver unreachable, verify the port');
             }
@@ -163,5 +165,10 @@ class FlyffServerBridge extends ServerBridge
         }
         config(['database.connections.flyff' => config('database.connections.odbc')]);
         DB::purge('flyff');
+    }
+
+    public function getDefaultPort()
+    {
+        return self::DEFAULT_PORT;
     }
 }
