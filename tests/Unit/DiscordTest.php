@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Azuriom\Support\Discord\DiscordWebhook;
 use Azuriom\Support\Discord\Embed;
+use InvalidArgumentException;
 use Tests\TestCase;
 
 class DiscordTest extends TestCase
@@ -11,7 +12,7 @@ class DiscordTest extends TestCase
     public function testDiscordWebhook()
     {
         $embed = Embed::create()
-            ->color('#7289DA')
+            ->color(7506394)
             ->title('Hello')
             ->description('This is the description')
             ->addField('A field', 'Wow', true)
@@ -57,5 +58,18 @@ class DiscordTest extends TestCase
                 ],
             ],
         ], $webhook->toArray());
+    }
+
+    public function testEmbedColorConversion()
+    {
+        $embed = Embed::create();
+
+        foreach (['#7289DA', '#7289da', '7506394', 7506394] as $color) {
+            $this->assertSame(7506394, $embed->color($color)->toArray()['color']);
+        }
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $embed->color('7289DA');
     }
 }

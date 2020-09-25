@@ -26,6 +26,7 @@ class UserController extends Controller
         $search = $request->input('search');
 
         $users = User::with('ban')
+            ->where('is_deleted', false)
             ->when($search, function (Builder $query, string $search) {
                 $query->scopes(['search' => $search]);
             })->paginate();

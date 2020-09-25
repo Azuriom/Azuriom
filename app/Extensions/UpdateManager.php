@@ -192,6 +192,8 @@ class UpdateManager
         $request = Http::withHeaders([
             'User-Agent' => $userAgent,
             'Azuriom-Version' => Azuriom::version(),
+            'Azuriom-PHP-Version' => PHP_VERSION,
+            'Azuriom-Locale' => app()->getLocale(),
         ]);
 
         $siteKey = setting('site-key');

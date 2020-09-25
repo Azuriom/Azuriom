@@ -9,6 +9,7 @@ use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 class Embed implements Arrayable
 {
@@ -146,10 +147,16 @@ class Embed implements Arrayable
     public function color($color)
     {
         if (is_string($color) && Str::startsWith($color, '#')) {
-            $color = (int) hexdec(Str::substr($color, 1));
+            $this->color = (int) hexdec(Str::substr($color, 1));
+
+            return $this;
         }
 
-        $this->color = $color;
+        if (! is_numeric($color)) {
+            throw new InvalidArgumentException('Color format must be hex or decimal.');
+        }
+
+        $this->color = (int) $color;
 
         return $this;
     }
