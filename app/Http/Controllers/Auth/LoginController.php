@@ -118,7 +118,7 @@ class LoginController extends Controller
         abort_if(! game()->loginWithOAuth(), 404);
 
         $userProfile = Socialite::driver(game()->getSocialiteDriverName())->user();
-        $user = User::firstWhere('game_id', $userProfile->getId());
+        $user = User::firstWhere('game_id', (string) $userProfile->getId());
 
         if ($user === null) {
             $user = $this->registerUser($request, $userProfile);
@@ -139,7 +139,7 @@ class LoginController extends Controller
             'name' => $userProfile->getNickname() ?? $userProfile->getName(),
             'email' => "{$userProfile->getId()}@{$socialiteDriver}.oauth",
             'password' => Hash::make(Str::random(32)),
-            'game_id' => $userProfile->getId(),
+            'game_id' => (string) $userProfile->getId(),
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
         ]);

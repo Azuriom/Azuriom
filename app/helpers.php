@@ -242,6 +242,6 @@ if (! function_exists('oauth_login')) {
 if (! function_exists('dark_theme')) {
     function dark_theme()
     {
-        return session('theme') === 'dark';
+        return request()->cookie('theme') === 'dark';
     }
 }

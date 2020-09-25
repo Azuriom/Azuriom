@@ -127,13 +127,13 @@ class ProfileController extends Controller
 
     public function theme(Request $request)
     {
-        $theme = $this->validate($request, [
+        $this->validate($request, [
             'theme' => ['required', 'in:light,dark'],
         ]);
 
-        $request->session()->put($theme);
+        $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
-        return redirect()->back();
+        return redirect()->back()->withCookie($cookie);
     }
 
     public function transferMoney(Request $request)
