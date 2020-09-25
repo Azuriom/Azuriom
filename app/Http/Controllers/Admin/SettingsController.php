@@ -250,7 +250,7 @@ class SettingsController extends Controller
 
         Files::removeLink($link);
 
-        File::relativeLink($target, $link);
+        Files::relativeLink($target, $link);
 
         return redirect()->route('admin.settings.performance')
             ->with('success', trans('messages.status-success'));

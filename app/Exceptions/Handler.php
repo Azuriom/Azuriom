@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Exception $e) {
-            //
+            $this->reportException($e);
         });
     }
 
