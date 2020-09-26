@@ -4,8 +4,8 @@ namespace Azuriom\Games\Others\Servers;
 
 use Azuriom\Games\ServerBridge;
 use Azuriom\Models\User;
-use Throwable;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class FlyffServerBridge extends ServerBridge
 {
