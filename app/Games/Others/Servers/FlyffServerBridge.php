@@ -4,7 +4,7 @@ namespace Azuriom\Games\Others\Servers;
 
 use Azuriom\Games\ServerBridge;
 use Azuriom\Models\User;
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\DB;
 
 class FlyffServerBridge extends ServerBridge
@@ -24,7 +24,7 @@ class FlyffServerBridge extends ServerBridge
                 'players' => $connected,
                 'max_players' => $users_max,
             ];
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return null;
         }
     }
@@ -126,14 +126,14 @@ class FlyffServerBridge extends ServerBridge
             } else {
                 $this->setOdbcDatasource('CHARACTER_01_DBF');
                 $res = DB::connection('flyff')->table('ITEM_SEND_TBL')
-                ->insert([
-                    'm_idPlayer' => $id_Player,
-                    'serverindex' => $id_Server,
-                    'Item_Name' => trim($name_and_id[0]),
-                    'Item_count' => trim($name_and_id[2]),
-                    'idSender' => '0000000',
-                    'adwItemId0' => trim($name_and_id[1]),
-                ]);
+                    ->insert([
+                        'm_idPlayer' => $id_Player,
+                        'serverindex' => $id_Server,
+                        'Item_Name' => trim($name_and_id[0]),
+                        'Item_count' => trim($name_and_id[2]),
+                        'idSender' => '0000000',
+                        'adwItemId0' => trim($name_and_id[1]),
+                    ]);
             }
         }
 
