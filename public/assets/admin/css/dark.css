@@ -393,7 +393,7 @@ select.form-control:focus::-ms-value {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: var(--background-elements);
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 

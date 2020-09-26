@@ -314,7 +314,6 @@ class SettingsController extends Controller
         ]) + [
             'register' => $request->filled('register'),
             'auth-api' => $request->filled('auth-api'),
-            'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
         ];
 
         Setting::updateSettings($settings);

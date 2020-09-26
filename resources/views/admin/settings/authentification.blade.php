@@ -40,13 +40,6 @@
                     <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.auth-api-label')</small>
                 </div>
 
-                <div class="form-group">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="minecraftVerifInput" name="minecraft-verification" @if($minecraftVerification) checked @endif>
-                        <label class="custom-control-label" for="minecraftVerifInput">{{ trans('admin.settings.auth.minecraft-verification') }}</label>
-                    </div>
-                </div>
-
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 </button>
