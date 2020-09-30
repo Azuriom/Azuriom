@@ -1,6 +1,6 @@
 <?php
 
-Azuriom\Http\Controllers\Api;
+namespace Azuriom\Http\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Post;
@@ -8,7 +8,7 @@ use Azuriom\Models\Post;
 class RSSController extends Controller
 {
     /**
-     * Show the plugin API default page.
+     * Show the RSS feed for the posts.
      *
      * @return \Illuminate\Http\Response
      */
