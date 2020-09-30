@@ -5,7 +5,7 @@ Azuriom\Http\Controllers\Api;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Post;
 
-class NewsRSSController extends Controller
+class RSSController extends Controller
 {
     /**
      * Show the plugin API default page.
@@ -28,36 +28,37 @@ class NewsRSSController extends Controller
 
         $xml .= '<title>'.site_name().'</title>';
         $xml .= '<link>'.route('home').'</link>';
-        $xml .= '<language>'.setting('locale').'</language>';
+        $xml .= '<language>'.app()->getLocale().'</language>';
         $xml .= '<description>'.setting('description', '').'</description>';
-        $xml .= '<webMaster>'.setting('mail.from.address').'</webMaster>';
 
-        $xml .= '<image>';
-        $xml .= ' <title>'.site_name().'</title>';
-        $xml .= '<url>'.image_url(setting('logo')).'</url>';
-        $xml .= '<link>'.route('home').'</link>';
-        $xml .= '</image>';
+        if ($logo = site_logo()) {
+            $xml .= '<image>';
+            $xml .= '<title>'.site_name().'</title>';
+            $xml .= '<url>'.$logo.'</url>';
+            $xml .= '<link>'.route('home').'</link>';
+            $xml .= '</image>';
+        }
 
         foreach ($posts as $post) {
             $xml .= '<item>';
             $xml .= '<title>'.$post->title.'</title>';
+
             if ($post->hasImage()) {
-                $xml .= '<content:encoded>'.e("<img src=\"{$post->imageUrl()}\"></img><br></br>{$post->content}").'</content:encoded>';
+                $xml .= '<content:encoded>'.e("<img src=\"{$post->imageUrl()}\" alt=\"{$post->title}\"><br>{$post->content}").'</content:encoded>';
             } else {
                 $xml .= '<content:encoded>'.e($post->content).'</content:encoded>';
             }
 
             $xml .= '<link>'.route('posts.show', $post).'</link>';
-            $xml .= '<pubDate>'.$post->published_at.'</pubDate>';
+            $xml .= '<pubDate>'.$post->published_at->toRssString().'</pubDate>';
             $xml .= '<dc:creator>'.$post->author->name.'</dc:creator>';
-            $xml .= '<slash:comments>'.count($post->comments).'</slash:comments>';
+            $xml .= '<slash:comments>'.$post->comments()->count().'</slash:comments>';
             $xml .= '</item>';
         }
 
         $xml .= '</channel>';
         $xml .= '</rss>';
 
-        return response($xml, 200)
-            ->header('Content-Type', 'application/xml');
+        return response($xml)->header('Content-Type', 'application/xml');
     }
 }
