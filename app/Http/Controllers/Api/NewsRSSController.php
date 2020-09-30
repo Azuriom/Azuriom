@@ -58,7 +58,6 @@ class NewsRSSController extends Controller
         $xml = $xml.'</channel>';
         $xml = $xml.'</rss>';
 
-
         return response($xml, 200)
             ->header('Content-Type', 'application/xml');
     }
