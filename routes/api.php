@@ -4,7 +4,6 @@ use Azuriom\Http\Controllers\Api\AuthController;
 use Azuriom\Http\Controllers\Api\NewsRSSController;
 use Azuriom\Http\Controllers\Api\PostController;
 use Azuriom\Http\Controllers\Api\ServerController;
-
 use Illuminate\Support\Facades\Route;
 
 /*
