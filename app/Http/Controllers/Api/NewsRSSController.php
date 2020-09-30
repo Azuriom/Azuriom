@@ -22,7 +22,7 @@ class NewsRSSController extends Controller
 
         $xml = '<?xml version="1.0" encoding="utf-8"?>';
 
-        $xml .= '<rss version="2.0">';
+        $xml .= '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">';
 
         $xml .= '<channel>';
 
@@ -42,17 +42,15 @@ class NewsRSSController extends Controller
             $xml .= '<item>';
             $xml .= '<title>'.$post->title.'</title>';
             if ($post->hasImage()) {
-                $xml .= '<image>'.$post->imageUrl().'</image>';
-            } else {
-                $xml .= '<image></image>';
+			$xml .= '<content:encoded>'.e("<img src=\"{$post->imageUrl()}\"></img><br></br>{$post->content}").'</content:encoded>';
+			} else {
+				$xml .= '<content:encoded>'.e($post->content).'</content:encoded>';
             }
 
             $xml .= '<link>'.route('posts.show', $post).'</link>';
-            $xml .= '<description>'.substr(strip_tags($post->content), 0, 250).'</description>';
-            $xml .= '<content>'.$post->content.'</content>';
             $xml .= '<pubDate>'.$post->published_at.'</pubDate>';
-            $xml .= '<author>'.$post->author->name.'</author>';
-            $xml .= '<comments>'.count($post->comments).'</comments>';
+            $xml .= '<dc:creator>'.$post->author->name.'</dc:creator>';
+            $xml .= '<slash:comments>'.count($post->comments).'</slash:comments>';
             $xml .= '</item>';
         }
 
