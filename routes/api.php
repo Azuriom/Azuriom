@@ -3,6 +3,8 @@
 use Azuriom\Http\Controllers\Api\AuthController;
 use Azuriom\Http\Controllers\Api\PostController;
 use Azuriom\Http\Controllers\Api\ServerController;
+use Azuriom\Http\Controllers\Api\NewsRSSController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +29,8 @@ Route::prefix('/auth')->name('auth.')->group(function () {
 Route::prefix('/azlink')->middleware('server.token')->group(function () {
     Route::get('/', [ServerController::class, 'status'])->name('azlink');
     Route::post('/', [ServerController::class, 'fetch']);
+});
+
+Route::prefix('/newsrss')->middleware('api')->name('newsrss.api.')->group(function () {
+    Route::get('/', [NewsRSSController::class, 'index']);
 });
