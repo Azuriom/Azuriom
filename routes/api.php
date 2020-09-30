@@ -1,8 +1,8 @@
 <?php
 
 use Azuriom\Http\Controllers\Api\AuthController;
-use Azuriom\Http\Controllers\Api\NewsRSSController;
 use Azuriom\Http\Controllers\Api\PostController;
+use Azuriom\Http\Controllers\Api\RSSController;
 use Azuriom\Http\Controllers\Api\ServerController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +30,4 @@ Route::prefix('/azlink')->middleware('server.token')->group(function () {
     Route::post('/', [ServerController::class, 'fetch']);
 });
 
-Route::prefix('/newsrss')->middleware('api')->name('newsrss.api.')->group(function () {
-    Route::get('/', [NewsRSSController::class, 'index']);
-});
+Route::get('/rss', [RSSController::class, 'index']);
