@@ -42,7 +42,7 @@ class NewsRSSController extends Controller
             $xml .= '<item>';
             $xml .= '<title>'.$post->title.'</title>';
             if ($post->hasImage()) {
-			    $xml .= '<content:encoded>'.e("<img src=\"{$post->imageUrl()}\"></img><br></br>{$post->content}").'</content:encoded>';
+                $xml .= '<content:encoded>'.e("<img src=\"{$post->imageUrl()}\"></img><br></br>{$post->content}").'</content:encoded>';
             } else {
                 $xml .= '<content:encoded>'.e($post->content).'</content:encoded>';
             }
