@@ -26,16 +26,16 @@ class NewsRSSController extends Controller
 
         $xml .= '<channel>';
 
-        $xml .= '<title>{site_name()}</title>';
-        $xml .= '<link>{route('home')}</link>';
-        $xml .= '<language>{setting('locale')}</language>';
-        $xml .= '<description>{setting('description', '')}</description>';
-        $xml .= '<webMaster>{setting('mail.from.address')}</webMaster>';
+        $xml .= '<title>'.site_name().'</title>';
+        $xml .= '<link>'.route('home').'</link>';
+        $xml .= '<language>'.setting('locale').'</language>';
+        $xml .= '<description>'.setting('description', '').'</description>';
+        $xml .= '<webMaster>'.setting('mail.from.address').'</webMaster>';
 
         $xml .= '<image>';
-        $xml .= ' <title>{site_name()}</title>';
-        $xml .= .'<url>{image_url(setting('logo'))}</url>';
-        $xml .= '<link>{route('home')}</link>';
+        $xml .= ' <title>'.site_name().'</title>';
+        $xml .= .'<url>'.image_url(setting('logo')).'</url>';
+        $xml .= '<link>'.route('home').'</link>';
         $xml .= '</image>';
 
         foreach ($posts as $post) {
@@ -47,11 +47,11 @@ class NewsRSSController extends Controller
                 $xml .= '<image></image>';
             }
 
-            $xml .= '<link>{route('posts.show', $post)}</link>';
+            $xml .= '<link>'.route('posts.show', $post).'</link>';
             $xml .= '<content>{$post->content}</content>';
             $xml .= '<pubDate>{$post->published_at}</pubDate>';
             $xml .= '<author>{$post->author->name}</author>';
-            $xml .= '<comments>{count($post->comments)}</comments>';
+            $xml .= '<comments>'.count($post->comments).'</comments>';
             $xml .= '</item>';
         }
 
