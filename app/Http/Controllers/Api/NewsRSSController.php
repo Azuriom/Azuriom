@@ -34,7 +34,7 @@ class NewsRSSController extends Controller
 
         $xml .= '<image>';
         $xml .= ' <title>'.site_name().'</title>';
-        $xml .= .'<url>'.image_url(setting('logo')).'</url>';
+        $xml .= '<url>'.image_url(setting('logo')).'</url>';
         $xml .= '<link>'.route('home').'</link>';
         $xml .= '</image>';
 
