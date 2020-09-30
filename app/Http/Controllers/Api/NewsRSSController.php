@@ -40,17 +40,17 @@ class NewsRSSController extends Controller
 
         foreach ($posts as $post) {
             $xml .= '<item>';
-            $xml .= '<title>{$post->title}</title>';
+            $xml .= '<title>'.$post->title.'</title>';
             if ($post->hasImage()) {
-                $xml .= '<image>{$post->imageUrl()}</image>';
+                $xml .= '<image>'.$post->imageUrl().'</image>';
             } else {
                 $xml .= '<image></image>';
             }
 
             $xml .= '<link>'.route('posts.show', $post).'</link>';
-            $xml .= '<content>{$post->content}</content>';
-            $xml .= '<pubDate>{$post->published_at}</pubDate>';
-            $xml .= '<author>{$post->author->name}</author>';
+            $xml .= '<content>'.$post->content.'</content>';
+            $xml .= '<pubDate>'.$post->published_at.'</pubDate>';
+            $xml .= '<author>'.$post->author->name.'</author>';
             $xml .= '<comments>'.count($post->comments).'</comments>';
             $xml .= '</item>';
         }
