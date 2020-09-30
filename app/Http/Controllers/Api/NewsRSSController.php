@@ -48,6 +48,7 @@ class NewsRSSController extends Controller
             }
 
             $xml .= '<link>'.route('posts.show', $post).'</link>';
+            $xml .= '<description>'.substr(strip_tags($post->content), 0, 250).'</description>';
             $xml .= '<content>'.$post->content.'</content>';
             $xml .= '<pubDate>'.$post->published_at.'</pubDate>';
             $xml .= '<author>'.$post->author->name.'</author>';
