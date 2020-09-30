@@ -45,7 +45,8 @@ class NewsRSSController extends Controller
                 $xml = $xml.'<image>'.$post->imageUrl().'</image>';
             } else {
                 $xml = $xml.'<image></image>';
-
+            }
+            
             $xml = $xml.'<link>'.route('posts.show', $post).'</link>';
             $xml = $xml.'<content>'.$post->content.'</content>';
             $xml = $xml.'<pubDate>'.$post->published_at.'</pubDate>';
