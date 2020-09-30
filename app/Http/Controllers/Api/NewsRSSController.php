@@ -27,10 +27,10 @@ class NewsRSSController extends Controller
         $xml .= '<channel>';
 
         $xml .= '<title>{site_name()}</title>';
-        $xml .= '<link>'.route('home')}</link>';
-        $xml .= '<language>'.setting('locale')}</language>';
-        $xml .= '<description>'.setting('description', '')}</description>';
-        $xml .= '<webMaster>'.setting('mail.from.address')}</webMaster>';
+        $xml .= '<link>{route('home')}</link>';
+        $xml .= '<language>{setting('locale')}</language>';
+        $xml .= '<description>{setting('description', '')}</description>';
+        $xml .= '<webMaster>{setting('mail.from.address')}</webMaster>';
 
         $xml .= '<image>';
         $xml .= ' <title>{site_name()}</title>';
