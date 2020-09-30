@@ -29,7 +29,7 @@ class NewsRSSController extends Controller
         $xml = $xml.'<title>'.site_name().'</title>';
         $xml = $xml.'<link>'.route('home').'</link>';
         $xml = $xml.'<language>'.setting('locale').'</language>';
-        $xml = $xml.'<description>'.setting('description', '').'</description>';        
+        $xml = $xml.'<description>'.setting('description', '').'</description>';
         $xml = $xml.'<webMaster>'.setting('mail.from.address').'</webMaster>';
 
         $xml = $xml.'<image>';
@@ -46,7 +46,7 @@ class NewsRSSController extends Controller
             } else {
                 $xml = $xml.'<image></image>';
             }
-            
+
             $xml = $xml.'<link>'.route('posts.show', $post).'</link>';
             $xml = $xml.'<content>'.$post->content.'</content>';
             $xml = $xml.'<pubDate>'.$post->published_at.'</pubDate>';
