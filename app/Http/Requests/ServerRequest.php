@@ -51,10 +51,8 @@ class ServerRequest extends FormRequest
             $data = ['azlink-ping' => $this->filled('azlink-ping')];
 
             if ($this->filled('azlink-custom-port')) {
-                $data = ['azlink-port' => $this->input('azlink-port')];
+                $data['azlink-port'] = $this->input('azlink-port');
             }
-        } else {
-            $data = null;
         }
 
         $validated = $this->validator->validated();
