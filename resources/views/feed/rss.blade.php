@@ -12,7 +12,7 @@
             <link>{{ route('home') }}</link>
         </image>
 
-        <atom:link href="{{ route('rss') }}" rel="self" type="application/rss+xml"/>
+        <atom:link href="{{ route('feeds.rss') }}" rel="self" type="application/rss+xml"/>
 
         @foreach($posts as $post)
             <item>

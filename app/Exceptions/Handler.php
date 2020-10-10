@@ -6,6 +6,7 @@ use Azuriom\Azuriom;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -106,6 +107,12 @@ class Handler extends ExceptionHandler
         }
 
         try {
+            if (RateLimiter::tooManyAttempts('errors', 1)) {
+                return;
+            }
+
+            RateLimiter::hit('errors');
+
             $exceptions = collect([]);
 
             $ex = $exception;
