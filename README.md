@@ -24,7 +24,7 @@ Currently, Azuriom supports the following games:
 
 ## Documentation
 
-Azuriom's documentation is available [here](https://azuriom.com/docs).
+Azuriom's documentation is available [on our website](https://azuriom.com/docs).
 
 ## Installation
 
