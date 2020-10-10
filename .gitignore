@@ -10,6 +10,9 @@
 # Mac
 .DS_Store
 
+# Azuriom
+public/assets/vendor
+
 # Laravel
 /node_modules
 /public/hot
