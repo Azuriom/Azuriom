@@ -13,6 +13,9 @@
 # Azuriom
 public/assets/vendor
 
+# PHP CS Fixer
+.php_cs.cache
+
 # Laravel
 /node_modules
 /public/hot
