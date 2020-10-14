@@ -1,4 +1,5 @@
 # Use with Docker & Docker Compose
+
 Requirements :
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
@@ -21,14 +22,14 @@ Set rights on files & folders
 chmod -R 755 storage bootstrap/cache resources/themes plugins
 ```
 
-Copy the **.env.example** to .env and set the database informations like this
+Copy the `.env.example` to `.env` and set the database information like this
 ```
 DB_CONNECTION=pgsql
 DB_HOST=database
 DB_PORT=5432
 DB_DATABASE=[database name]
 DB_USERNAME=[database user]
-DB_PASSWORD=[database password (can't be empty)]
+DB_PASSWORD=[database password]
 ```
 
 Start the containers

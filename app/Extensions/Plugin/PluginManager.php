@@ -384,6 +384,10 @@ class PluginManager extends ExtensionManager
             return in_array($plugin, $enabledPlugins, true);
         });
 
+        if ($plugins->isEmpty() && app()->runningInConsole()) {
+            return $plugins;
+        }
+
         $pluginsCache = $plugins->map(function ($plugin) {
             return (array) $plugin;
         })->all();

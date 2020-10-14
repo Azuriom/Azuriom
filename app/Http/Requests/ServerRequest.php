@@ -37,7 +37,7 @@ class ServerRequest extends FormRequest
         $data = null;
         $type = $this->input('type');
 
-        if ($type === 'mc-rcon' || $type === 'source-rcon' || $type === 'rust-rcon') {
+        if (in_array($type, ['mc-rcon', 'source-rcon', 'rust-rcon'], true)) {
             $data = [
                 'query-port' => $this->input('query-port'),
                 'rcon-port' => $this->input('rcon-port'),

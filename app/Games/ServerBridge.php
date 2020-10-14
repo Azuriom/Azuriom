@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 abstract class ServerBridge
 {
     protected const TIMEOUT = 1;
+
     protected const COMMANDS_TIMEOUT = 3;
 
     /**
