@@ -15,6 +15,10 @@ class Username implements Rule
      */
     public function passes($attribute, $value)
     {
+        if (oauth_login()) {
+            return true;
+        }
+
         return preg_match('/^[A-Za-z0-9_]+$/', $value);
     }
 

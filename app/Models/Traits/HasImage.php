@@ -17,7 +17,7 @@ trait HasImage
     protected static function bootHasImage()
     {
         static::deleted(function (Model $model) {
-            if (! ($model->forceDeleting ?? true)) {
+            if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
                 return;
             }
 
@@ -30,12 +30,13 @@ trait HasImage
      *
      * @param  \Illuminate\Http\UploadedFile  $file
      * @param  bool  $save
+     * @return string
      */
     public function storeImage(UploadedFile $file, bool $save = false)
     {
         $this->deleteImage();
 
-        $path = basename($file->storePublicly($this->getImagePath(), $this->imageDisk));
+        $path = basename($file->storePublicly($this->resolveImagePath(), $this->imageDisk));
 
         $this->setAttribute($this->getImageKey(), $path);
 
@@ -60,7 +61,7 @@ trait HasImage
             return false;
         }
 
-        if (! Storage::disk($this->imageDisk)->delete($this->getImagePath($image))) {
+        if (! $this->getImageDisk()->delete($this->resolveImagePath($image))) {
             return false;
         }
 
@@ -92,7 +93,28 @@ trait HasImage
             return null;
         }
 
-        return url(Storage::disk($this->imageDisk)->url($this->getImagePath($image)));
+        return url($this->getImageDisk()->url($this->resolveImagePath($image)));
+    }
+
+    /**
+     * Get this post image path.
+     *
+     * @return string|null
+     */
+    public function getImagePath()
+    {
+        $image = $this->getAttribute($this->getImageKey());
+
+        if ($image === null) {
+            return null;
+        }
+
+        return $this->resolveImagePath($image);
+    }
+
+    public function getImageDisk()
+    {
+        return Storage::disk($this->imageDisk);
     }
 
     protected function getImageKey()
@@ -100,7 +122,7 @@ trait HasImage
         return $this->imageKey ?? 'image';
     }
 
-    protected function getImagePath(string $path = '')
+    protected function resolveImagePath(string $path = '')
     {
         return ($this->imagePath ?? Str::snake(Str::pluralStudly(class_basename($this)))).'/'.$path;
     }

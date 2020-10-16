@@ -22,6 +22,10 @@
                 <description>{{ $post->description }}</description>
                 <pubDate>{{ $post->published_at->toRssString() }}</pubDate>
 
+                @if($post->hasImage())
+                    <enclosure url="{{ $post->imageUrl() }}" length="{{ $post->getImageDisk()->size($post->getImagePath()) }}" type="image/*"/>
+                @endif
+
                 <content:encoded>{{ $post->content }}</content:encoded>
                 <dc:creator>{{ $post->author->name }}</dc:creator>
                 <slash:comments>{{ $post->comments->count() }}</slash:comments>
