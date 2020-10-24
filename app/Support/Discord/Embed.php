@@ -6,6 +6,7 @@ use Azuriom\Support\Discord\Embeds\EmbedAuthor;
 use Azuriom\Support\Discord\Embeds\EmbedField;
 use Azuriom\Support\Discord\Embeds\EmbedFooter;
 use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class Embed implements Arrayable
     /**
      * Timestamp of embed content.
      *
-     * @var \DateTimeInterface|null
+     * @var \Carbon\CarbonInterface|null
      */
     protected $timestamp;
 
@@ -133,7 +134,7 @@ class Embed implements Arrayable
      */
     public function timestamp(?DateTimeInterface $timestamp)
     {
-        $this->timestamp = $timestamp;
+        $this->timestamp = Carbon::instance($timestamp);
 
         return $this;
     }
@@ -227,7 +228,7 @@ class Embed implements Arrayable
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'timestamp' => optional($this->timestamp)->format(DateTimeInterface::ATOM),
+            'timestamp' => optional($this->timestamp)->toAtomString(),
             'color' => $this->color,
             'footer' => optional($this->footer)->toArray(),
             'thumbnail' => optional($this->thumbnail)->toArray(),

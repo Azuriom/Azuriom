@@ -13,6 +13,7 @@ use DateTimeZone;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
@@ -48,16 +49,6 @@ class SettingsController extends Controller
         'bcrypt' => 'Bcrypt',
         'argon' => 'Argon2i',
         'argon2id' => 'Argon2id',
-    ];
-
-    /**
-     * The hash algorithms PHP constants.
-     *
-     * @var array
-     */
-    private $hashCompatibility = [
-        'argon' => 'PASSWORD_ARGON2I',
-        'argon2id' => 'PASSWORD_ARGON2ID',
     ];
 
     /**
@@ -174,11 +165,7 @@ class SettingsController extends Controller
             'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50'],
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
-                    if (! array_key_exists($value, $this->hashCompatibility)) {
-                        return;
-                    }
-
-                    if (! defined($this->hashCompatibility[$value])) {
+                    if (! $this->isHashSupported($value)) {
                         $fail(trans('admin.settings.security.hash-error'));
                     }
                 },
@@ -429,5 +416,20 @@ class SettingsController extends Controller
         return collect(File::directories($this->app->langPath()))->map(function ($path) {
             return basename($path);
         });
+    }
+
+    protected function isHashSupported(string $algo)
+    {
+        if ($algo === 'bcrypt') {
+            return true;
+        }
+
+        try {
+            $hashManager = $this->app->make(HashManager::class);
+
+            return $hashManager->driver($algo)->make('hello') !== null;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

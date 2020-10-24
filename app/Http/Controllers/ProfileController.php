@@ -40,7 +40,14 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
-        $request->user()->update($request->only('email'));
+        $user = $request->user();
+
+        $user->forceFill([
+            'email' => $request->input('email'),
+            'email_verified_at' => null,
+        ])->save();
+
+        $user->sendEmailVerificationNotification();
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }

@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Azuriom\Support\Discord\DiscordWebhook;
 use Azuriom\Support\Discord\Embed;
+use Carbon\Carbon;
 use InvalidArgumentException;
 use Tests\TestCase;
 
@@ -11,6 +12,8 @@ class DiscordTest extends TestCase
 {
     public function testDiscordWebhook()
     {
+        $date = Carbon::create(2020, 2, 1, 14, 15, 16, 'UTC');
+
         $embed = Embed::create()
             ->color(7506394)
             ->title('Hello')
@@ -18,6 +21,7 @@ class DiscordTest extends TestCase
             ->addField('A field', 'Wow', true)
             ->footer('The footer text')
             ->url('https://github.com')
+            ->timestamp($date)
             ->author('Wampus', 'https://github.com', 'https://github.com');
 
         $webhook = DiscordWebhook::create()
@@ -37,7 +41,7 @@ class DiscordTest extends TestCase
                     'title' => 'Hello',
                     'description' => 'This is the description',
                     'url' => 'https://github.com',
-                    'timestamp' => null,
+                    'timestamp' => '2020-02-01T14:15:16+00:00',
                     'color' => 7506394,
                     'footer' => [
                         'text' => 'The footer text',
