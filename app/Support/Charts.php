@@ -58,7 +58,7 @@ class Charts
         if ($driver === 'sqlsrv') {
             $dbRaw = DB::raw("CAST($sqlColumn as date) as date, {$function}({$sqlGroupColumn}) as aggregate");
         } else {
-            DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
+            $dbRaw = DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
         }
         $escapedColumnName = Str::between($column, '[', ']');
         $results = $query->select($dbRaw)
