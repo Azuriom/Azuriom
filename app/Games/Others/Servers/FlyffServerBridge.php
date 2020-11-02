@@ -75,6 +75,11 @@ class FlyffServerBridge extends ServerBridge
             $character = null;
 
             if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
+
+                if ($user === null) {
+                    throw new Exception('No user were provided');
+                }
+
                 $this->setOdbcDatasource('ACCOUNT_DBF');
                 $account = DB::connection('flyff')->table('ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
