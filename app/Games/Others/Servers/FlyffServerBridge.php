@@ -30,10 +30,14 @@ class FlyffServerBridge extends ServerBridge
     }
 
     /**
-     * We check if the database contains the table CHARACTER_TBL, it's all we need to send items.
+     * We check if the database contains the table CHARACTER_TBL and that the socket extension is loaded
      */
     public function verifyLink()
     {
+        if (!extension_loaded ('sockets')) {
+            throw new Exception("You need to enable the sockets extentions in your php.ini");
+        }
+
         $this->setOdbcDatasource('CHARACTER_01_DBF');
 
         return DB::connection('flyff')->getSchemaBuilder()->hasTable('CHARACTER_TBL');
