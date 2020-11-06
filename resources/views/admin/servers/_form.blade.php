@@ -128,7 +128,7 @@
     </div>
 </div>
 
-<div data-server-type="mc-rcon source-rcon rust-rcon" class="form-group d-none">
+<div data-server-type="mc-rcon source-rcon rust-rcon" class="d-none">
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>

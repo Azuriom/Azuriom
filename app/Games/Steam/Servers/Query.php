@@ -38,11 +38,6 @@ class Query extends ServerBridge
         return $this->connect()->GetInfo() !== false;
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
-    {
-        report(new RuntimeException('Command cannot be executed with ping link.'));
-    }
-
     public function canExecuteCommand()
     {
         return false;

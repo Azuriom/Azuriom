@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4af1950046b9a41c7f80d925fe5f285",
+    "content-hash": "153134b75ac89c9a9db4ce1fd0be4cea",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -744,20 +744,20 @@
         },
         {
             "name": "funkjedi/composer-include-files",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/funkjedi/composer-include-files.git",
-                "reference": "5e96f2e46537d99b8b72662796955dba739e251f"
+                "reference": "7e4f8ec0f83d57434aaa3cd6f736378c68e19d4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/funkjedi/composer-include-files/zipball/5e96f2e46537d99b8b72662796955dba739e251f",
-                "reference": "5e96f2e46537d99b8b72662796955dba739e251f",
+                "url": "https://api.github.com/repos/funkjedi/composer-include-files/zipball/7e4f8ec0f83d57434aaa3cd6f736378c68e19d4b",
+                "reference": "7e4f8ec0f83d57434aaa3cd6f736378c68e19d4b",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0"
+                "composer-plugin-api": "^1.0 || ^2.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -784,7 +784,11 @@
                 "autoload",
                 "composer"
             ],
-            "time": "2016-12-23T18:15:30+00:00"
+            "support": {
+                "issues": "https://github.com/funkjedi/composer-include-files/issues",
+                "source": "https://github.com/funkjedi/composer-include-files/tree/master"
+            },
+            "time": "2020-06-25T19:56:07+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -8525,5 +8529,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

@@ -17,7 +17,7 @@
         "composer/semver": "^3.2",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "funkjedi/composer-include-files": "^1.0",
+        "funkjedi/composer-include-files": "^1.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
