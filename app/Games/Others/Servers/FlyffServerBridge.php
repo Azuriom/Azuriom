@@ -64,9 +64,9 @@ class FlyffServerBridge extends ServerBridge
         }
 
         if ($this->character_is_connected($id_Player, $id_Server)) {
-            $this->send_items_with_socket($id_Player, $id_Server);
+            $this->send_items_with_socket($id_Player, $id_Server, $commands);
         } else {
-            $this->send_items_with_database($id_Player, $id_Server);
+            $this->send_items_with_database($id_Player, $id_Server, $commands);
         }
     }
 
@@ -101,7 +101,7 @@ class FlyffServerBridge extends ServerBridge
             $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')
                 ->where([ //get first not deleted character
-                    ['m_szName', $player_name_if_website],
+                    ['m_szName', $player_name_if_navigator],
                     ['isblock', 'F'],
                 ])->first();
 
@@ -130,7 +130,7 @@ class FlyffServerBridge extends ServerBridge
      * $command should look like : 26228,Elixir of Stone,1
      * which is : id,name,quantity.
      */
-    private function send_items_with_database($id_Player, $id_Server)
+    private function send_items_with_database($id_Player, $id_Server, $commands)
     {
         foreach ($commands as $command) {
             $id_name_quantity = explode(',', $command);
@@ -146,7 +146,7 @@ class FlyffServerBridge extends ServerBridge
         }
     }
 
-    private function send_items_with_socket($id_Player, $id_Server)
+    private function send_items_with_socket($id_Player, $id_Server, $commands)
     {
         $fp = fsockopen($this->server->address, $this->server->port, $errno, $errstr);
         if (! $fp) {
