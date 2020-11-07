@@ -2,11 +2,10 @@
 
 namespace Azuriom\Games\Others\Servers;
 
-use Throwable;
-use RuntimeException;
-use Azuriom\Models\User;
 use Azuriom\Games\ServerBridge;
+use Azuriom\Models\User;
 use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
 /**
  * CHARACTER_01_DBF
@@ -134,7 +133,6 @@ class FlyffServerBridge extends ServerBridge
     private function send_items_with_database($id_Player, $id_Server)
     {
         foreach ($commands as $command) {
-
             $id_name_quantity = explode(',', $command);
             DB::table('CHARACTER_01_DBF.dbo.ITEM_SEND_TBL')
                 ->insert([
@@ -157,7 +155,6 @@ class FlyffServerBridge extends ServerBridge
 
         foreach ($commands as $command) {
             $id_name_quantity = explode(',', $command);
-            
             $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($id_name_quantity[0]), trim($id_name_quantity[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
             fwrite($fp, $packet);
         }
