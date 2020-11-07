@@ -2,152 +2,72 @@
 
 namespace Azuriom\Games\Others\Servers;
 
-use Azuriom\Games\ServerBridge;
-use Azuriom\Models\User;
-use Illuminate\Support\Facades\DB;
 use Throwable;
+use RuntimeException;
+use Azuriom\Models\User;
+use Azuriom\Games\ServerBridge;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * CHARACTER_01_DBF
+ * LOGGING_01_DBF
+ * ACCOUNT_DBF
+ */
 class FlyffServerBridge extends ServerBridge
 {
     protected const DEFAULT_PORT = 29000;
 
+    /**
+     * Here the $users_max represents the record of users connected simultaneously
+     */
     public function getServerData()
     {
-        try {
-            $this->setOdbcDatasource('CHARACTER_01_DBF');
-            $connected = DB::connection('flyff')->table('CHARACTER_TBL')->where('MultiServer', '1')->count();
+        $connected = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
+        $users_max = (int) DB::table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
 
-            $this->setOdbcDatasource('LOGGING_01_DBF');
-            $users_max = DB::connection('flyff')->table('LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
-
-            return [
-                'players' => $connected,
-                'max_players' => $users_max,
-            ];
-        } catch (Throwable $e) {
-            return null;
-        }
+        return [
+            'players' => $connected,
+            'max_players' => $users_max,
+        ];
     }
 
     /**
-     * We check if the database contains the table CHARACTER_TBL and that the socket extension is loaded
+     * We check if the table CHARACTER_01_DBF.dbo.BASE_VALUE_TBL contains atleast one value
+     * it means the flyff database is properly setup and accessible, enough to send items.
      */
     public function verifyLink()
     {
-        if (!extension_loaded ('sockets')) {
-            throw new Exception("You need to enable the sockets extentions in your php.ini");
-        }
-
-        $this->setOdbcDatasource('CHARACTER_01_DBF');
-
-        return DB::connection('flyff')->getSchemaBuilder()->hasTable('CHARACTER_TBL');
+        return DB::table('CHARACTER_01_DBF.dbo.BASE_VALUE_TBL')->count() > 0;
     }
 
     /**
-     * 'm_idPlayer' and 'm_nServer' are set if the user open the shop in-game
-     * using session vars set in the theme.
+     * $m_idPlayer and $m_nServer are set if the user open the shop in-game
+     * using session vars set in the default theme.
+     * 
+     * $player_name_if_navigator is set with the theme when the user buy in the shop
+     * outside of the game, from his phone for example.
      *
-     * $player_name_if_website is set by user when paying in the theme
-     *
-     * if the shop has been open on regular navigator we look for the character
-     * with $player_name_if_website if none is provided it fallback
-     * on the first character that is not deleted using the Azuriom_user_id
-     * in ACCOUNT_DBF
-     *
-     * if
-     *
-     * the character is connected in game webshop interface or MultiServer !=0
-     * We will use TCP socket to the WorldServer to send the items
-     *
-     * else
-     *
-     * insert into the database (the game will handle it in the next login of the character)
-     *
-     * endif
-     *
-     * @return void
      */
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
+        if ($user === null)
+            throw new RuntimeException('User is required to send commands.');
+
         $id_Player = session('m_idPlayer');
         $id_Server = session('m_nServer');
-        $is_connected = true;
+        $player_name_if_navigator = request()->flyff_player_name;
 
         if (empty($id_Player) || empty($id_Server)) {
-            $player_name_if_website = request()->flyff_player_name;
-
-            $character = null;
-
-            if (empty($player_name_if_website)) { // if user didn't add username fallback to first character
-
-                if ($user === null) {
-                    throw new Exception('No user were provided');
-                }
-
-                $this->setOdbcDatasource('ACCOUNT_DBF');
-                $account = DB::connection('flyff')->table('ACCOUNT_TBL')
-                ->select('account')->where('Azuriom_user_id', $user->id)->first();
-
-                $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $character = DB::connection('flyff')->table('CHARACTER_TBL')
-                ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
-                    ['account', $account->account],
-                    ['isblock', 'F'],
-                ])->first();
-            } else {
-                $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $character = DB::connection('flyff')->table('CHARACTER_TBL')
-                ->select('m_idPlayer', 'serverindex', 'MultiServer')->where([ //get first not deleted character
-                    ['m_szName', $player_name_if_website],
-                    ['isblock', 'F'],
-                ])->first();
-            }
-
-            if (! $character) {
-                abort(403, 'Character not found');
-            }
-
-            if ($character->MultiServer != '0') {
-                $is_connected = false;
-            }
-
-            $id_Player = $character->m_idPlayer;
-            $id_Server = $character->serverindex;
+            $this->get_character_from_name_or_fallback($player_name_if_navigator, $user, $id_Player, $id_Server);
         } else {
-            $id_Player = str_pad($id_Player, 7, '0', STR_PAD_LEFT);
+            $id_Player = str_pad($id_Player, 7, '0', STR_PAD_LEFT); //formating nothing important
             $id_Server = str_pad($id_Server, 2, '0', STR_PAD_LEFT);
         }
 
-        $socket = null;
-        if ($is_connected) {
-            $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-            if (! socket_connect($socket, $this->server->address, $this->server->port)) {
-                socket_close($socket);
-                throw new Exception('Worldserver unreachable, verify the port');
-            }
-        }
-        foreach ($commands as $command) {
-            $name_and_id = explode(',', $command); // name, id, quantity
-
-            if ($is_connected) {
-                $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($name_and_id[1]), trim($name_and_id[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
-                socket_write($socket, $packet, strlen($packet));
-            } else {
-                $this->setOdbcDatasource('CHARACTER_01_DBF');
-                $res = DB::connection('flyff')->table('ITEM_SEND_TBL')
-                    ->insert([
-                        'm_idPlayer' => $id_Player,
-                        'serverindex' => $id_Server,
-                        'Item_Name' => trim($name_and_id[0]),
-                        'Item_count' => trim($name_and_id[2]),
-                        'idSender' => '0000000',
-                        'adwItemId0' => trim($name_and_id[1]),
-                    ]);
-            }
-        }
-
-        if ($socket) {
-            socket_close($socket);
+        if ($this->character_is_connected($id_Player, $id_Server)) {
+            $this->send_items_with_socket($id_Player, $id_Server);
+        } else {
+            $this->send_items_with_database($id_Player, $id_Server);
         }
     }
 
@@ -156,28 +76,95 @@ class FlyffServerBridge extends ServerBridge
         return true;
     }
 
-    public static function setOdbcDatasource($name)
-    {
-        switch ($name) {
-            case 'CHARACTER_01_DBF':
-                config(['database.connections.odbc.odbc_datasource_name' => env('CHARACTER_01_DBF', 'character01')]);
-                break;
-            case 'LOGGING_01_DBF':
-                config(['database.connections.odbc.odbc_datasource_name' => env('LOGGING_01_DBF', 'log01')]);
-                break;
-            case 'ACCOUNT_DBF':
-                config(['database.connections.odbc.odbc_datasource_name' => env('ACCOUNT_DBF', 'login')]);
-                break;
-            default:
-                // code...
-                break;
-        }
-        config(['database.connections.flyff' => config('database.connections.odbc')]);
-        DB::purge('flyff');
-    }
-
     public function getDefaultPort()
     {
         return self::DEFAULT_PORT;
     }
+
+    private function get_character_from_name_or_fallback($player_name_if_navigator, $user, &$id_Player, &$id_Server)
+    {
+        if (empty($player_name_if_navigator)) {
+            //this is the fallback, it gets the first character, not deleted of the Azuriom connected user.
+            $account = DB::table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
+                ->select('account')->where('Azuriom_user_id', $user->id)->first();
+
+            $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+                ->select('m_idPlayer', 'serverindex', 'MultiServer')
+                ->where(
+                    [
+                        ['account', $account->account],
+                        ['isblock', 'F'],
+                    ])->first();
+
+            $id_Player = $character->m_idPlayer;
+            $id_Server = $character->serverindex;
+        } else {
+            $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+                ->select('m_idPlayer', 'serverindex', 'MultiServer')
+                ->where([ //get first not deleted character
+                    ['m_szName', $player_name_if_website],
+                    ['isblock', 'F'],
+                ])->first();
+
+            if (! $character) {
+                abort(403, 'Character not found');
+            }
+
+            $id_Player = $character->m_idPlayer;
+            $id_Server = $character->serverindex;
+        }
+    }
+
+    private function character_is_connected($id_Player, $id_Server)
+    {
+
+        $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+            ->select('MultiServer')
+            ->where([ //get first not deleted character
+                ['m_idPlayer', $id_Player],
+                ['serverindex', $id_Server],
+            ])->first();
+
+        return $character->MultiServer === '1';
+    }
+
+    /**
+     * $command should look like : 26228,Elixir of Stone,1
+     * wich is : id,name,quantity
+     */
+    private function send_items_with_database($id_Player, $id_Server)
+    {
+        foreach ($commands as $command) {
+            $id_name_quantity = explode(',', $command);
+            DB::table('CHARACTER_01_DBF.dbo.ITEM_SEND_TBL')
+                ->insert([
+                    'm_idPlayer' => $id_Player,
+                    'serverindex' => $id_Server,
+                    'Item_Name' => trim($id_name_quantity[1]),
+                    'Item_count' => trim($id_name_quantity[2]),
+                    'idSender' => '0000000',
+                    'adwItemId0' => trim($id_name_quantity[0]),
+                ]);
+        }
+    }
+
+    private function send_items_with_socket($id_Player, $id_Server)
+    {
+        $fp = fsockopen($this->server->address, $this->server->port, $errno, $errstr);
+        if (! $fp) {
+            throw new Exception("$errstr ($errno)");
+        }
+
+        foreach ($commands as $command) {
+            $id_name_quantity = explode(',', $command);
+            
+            $packet = pack('VVVVV', $id_Server, $id_Player, 0, trim($id_name_quantity[0]), trim($id_name_quantity[2])).str_pad(env('FLYFF_WEBSHOP_KEY', '8b8d0c753894b018ce454b2e'), 21, ' ').pack('V', 1);
+            fwrite($fp, $packet);
+        }
+
+        if ($fp) {
+            fclose($fp);
+        }
+    }
+
 }
