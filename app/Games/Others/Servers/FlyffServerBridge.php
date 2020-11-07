@@ -150,7 +150,7 @@ class FlyffServerBridge extends ServerBridge
     {
         $fp = fsockopen($this->server->address, $this->server->port, $errno, $errstr);
         if (! $fp) {
-            throw new Exception("$errstr ($errno)");
+            throw new RuntimeException("$errstr ($errno)");
         }
 
         foreach ($commands as $command) {
@@ -163,5 +163,4 @@ class FlyffServerBridge extends ServerBridge
             fclose($fp);
         }
     }
-
 }
