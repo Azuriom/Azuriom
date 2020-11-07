@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\DB;
 /**
  * CHARACTER_01_DBF
  * LOGGING_01_DBF
- * ACCOUNT_DBF
+ * ACCOUNT_DBF.
  */
 class FlyffServerBridge extends ServerBridge
 {
     protected const DEFAULT_PORT = 29000;
 
     /**
-     * Here the $users_max represents the record of users connected simultaneously
+     * Here the $users_max represents the record of users connected simultaneously.
      */
     public function getServerData()
     {
@@ -43,15 +43,15 @@ class FlyffServerBridge extends ServerBridge
     /**
      * $m_idPlayer and $m_nServer are set if the user open the shop in-game
      * using session vars set in the default theme.
-     * 
+     *
      * $player_name_if_navigator is set with the theme when the user buy in the shop
      * outside of the game, from his phone for example.
-     *
      */
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
-        if ($user === null)
+        if ($user === null) {
             throw new RuntimeException('User is required to send commands.');
+        }
 
         $id_Player = session('m_idPlayer');
         $id_Server = session('m_nServer');
@@ -117,7 +117,6 @@ class FlyffServerBridge extends ServerBridge
 
     private function character_is_connected($id_Player, $id_Server)
     {
-
         $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
             ->select('MultiServer')
             ->where([ //get first not deleted character
@@ -130,11 +129,12 @@ class FlyffServerBridge extends ServerBridge
 
     /**
      * $command should look like : 26228,Elixir of Stone,1
-     * wich is : id,name,quantity
+     * which is : id,name,quantity.
      */
     private function send_items_with_database($id_Player, $id_Server)
     {
         foreach ($commands as $command) {
+
             $id_name_quantity = explode(',', $command);
             DB::table('CHARACTER_01_DBF.dbo.ITEM_SEND_TBL')
                 ->insert([
