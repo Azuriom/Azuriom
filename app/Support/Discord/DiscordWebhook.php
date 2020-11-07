@@ -140,7 +140,7 @@ class DiscordWebhook implements Arrayable
      * @param  bool  $throw
      * @return \Illuminate\Http\Client\Response
      *
-     * @throws \Illuminate\Http\Client\RequestException
+     * @throws \Illuminate\Http\Client\HttpClientException
      */
     public function send(string $url, bool $throw = true)
     {

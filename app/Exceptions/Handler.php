@@ -6,6 +6,7 @@ use Azuriom\Azuriom;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -39,7 +40,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Exception $e) {
-            //
+            $this->reportException($e);
         });
     }
 
@@ -106,30 +107,40 @@ class Handler extends ExceptionHandler
         }
 
         try {
-            $exceptions = collect([]);
+            if (RateLimiter::tooManyAttempts('errors', 1)) {
+                return;
+            }
 
-            $ex = $exception;
-
-            do {
-                $exceptions->push([
-                    'message' => $ex->getMessage(),
-                    'file' => $ex->getFile(),
-                    'line' => $ex->getLine(),
-                    'trace' => $ex->getTraceAsString(),
-                ]);
-            } while (($ex = $ex->getPrevious()));
+            RateLimiter::hit('errors');
 
             $data = [
                 'version' => Azuriom::version(),
-                'php_version' => phpversion(),
+                'php_version' => PHP_VERSION,
                 'url' => request()->url(),
                 'method' => request()->method(),
-                'exceptions' => $exceptions,
+                'exceptions' => $this->getExceptionReport($exception),
             ];
 
             Http::post('https://azuriom.com/api/errors/report', $data);
         } catch (Throwable $t) {
             //
         }
+    }
+
+    protected function getExceptionReport(Throwable $exception)
+    {
+        $exceptions = collect([]);
+
+        do {
+            $exceptions->push([
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTraceAsString(),
+                'class' => get_class($exception),
+            ]);
+        } while ($exception = $exception->getPrevious());
+
+        return $exceptions;
     }
 }

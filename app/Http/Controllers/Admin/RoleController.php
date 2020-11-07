@@ -113,11 +113,13 @@ class RoleController extends Controller
     {
         $this->authorize('update', $role);
 
-        if ($request->user()->isAdmin() && $role->is($request->user()->role) && ! $request->input('is_admin')) {
+        $user = $request->user();
+
+        if ($user->isAdmin() && $role->is($user->role) && ! $request->input('is_admin')) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.remove-admin'));
         }
 
-        if (! $request->user()->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
+        if (! $user->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.add-admin'));
         }
 

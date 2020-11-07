@@ -29,7 +29,7 @@ class Attachment extends Model
         return $this->morphTo('attachable');
     }
 
-    protected function getImagePath(string $path = '')
+    protected function resolveImagePath(string $path = '')
     {
         return $this->attachable->getAttachmentsPath().'/'.$path;
     }

@@ -147,7 +147,11 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon', 'rust-rcon', 'flyff-server']);
+        $servers = collect(game()->getSupportedServers())->filter(function (string $bridge) {
+            return (new $bridge($this))->canExecuteCommand();
+        });
+
+        return $query->whereIn('type', $servers->keys());
     }
 
     /**

@@ -17,6 +17,7 @@ class MinecraftPing
     private $socket;
 
     private $address;
+
     private $port;
 
     public function __construct(string $address, int $port = 25565, bool $resolveSrv = true)

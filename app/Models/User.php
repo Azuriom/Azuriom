@@ -161,7 +161,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64)
     {
-        /** @noinspection PhpDeprecationInspection */
+        /* @noinspection PhpDeprecationInspection */
         return game()->getAvatarUrl($this, $size);
     }
 

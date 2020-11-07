@@ -4,6 +4,7 @@ namespace Azuriom\Models\Traits;
 
 use Azuriom\Support\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
 
@@ -35,11 +36,15 @@ trait HasMarkdown
             return new HtmlString(Markdown::parse($text, $inlineOnly));
         }
 
-        $cacheKey = $this->getMarkdownCacheKey().'.'.$attribute;
+        $cached = Cache::get($this->getMarkdownCacheKey(), []);
 
-        return new HtmlString(Cache::remember($cacheKey, now()->addMinutes(5), function () use ($text, $inlineOnly) {
-            return Markdown::parse($text, $inlineOnly);
-        }));
+        if (! Arr::has($cached, $attribute)) {
+            $cached[$attribute] = Markdown::parse($text, $inlineOnly);
+
+            Cache::put($this->getMarkdownCacheKey(), $cached, now()->addMinutes(15));
+        }
+
+        return new HtmlString(Arr::get($cached, $attribute));
     }
 
     protected function getMarkdownCacheKey()

@@ -40,7 +40,14 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
-        $request->user()->update($request->only('email'));
+        $user = $request->user();
+
+        $user->forceFill([
+            'email' => $request->input('email'),
+            'email_verified_at' => null,
+        ])->save();
+
+        $user->sendEmailVerificationNotification();
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
@@ -127,13 +134,13 @@ class ProfileController extends Controller
 
     public function theme(Request $request)
     {
-        $theme = $this->validate($request, [
+        $this->validate($request, [
             'theme' => ['required', 'in:light,dark'],
         ]);
 
-        $request->session()->put($theme);
+        $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
-        return redirect()->back();
+        return redirect()->back()->withCookie($cookie);
     }
 
     public function transferMoney(Request $request)

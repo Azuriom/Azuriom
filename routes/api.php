@@ -1,6 +1,7 @@
 <?php
 
 use Azuriom\Http\Controllers\Api\AuthController;
+use Azuriom\Http\Controllers\Api\FeedController;
 use Azuriom\Http\Controllers\Api\PostController;
 use Azuriom\Http\Controllers\Api\ServerController;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,6 @@ Route::prefix('/azlink')->middleware('server.token')->group(function () {
     Route::get('/', [ServerController::class, 'status'])->name('azlink');
     Route::post('/', [ServerController::class, 'fetch']);
 });
+
+Route::get('/rss', [FeedController::class, 'rss'])->name('feeds.rss');
+Route::get('/atom', [FeedController::class, 'atom'])->name('feeds.atom');

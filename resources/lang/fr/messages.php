@@ -167,7 +167,7 @@ return [
     'comments' => [
         'create' => 'Laisser un commentaire',
         'guest' => 'Vous devez être connecté pour laisser un commentaire.',
-        'author' => '<strong>:user</strong> à commenté le :date',
+        'author' => '<strong>:user</strong> a commenté le :date',
         'your-comment' => 'Votre commentaire',
         'delete-title' => 'Supprimer ?',
         'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',

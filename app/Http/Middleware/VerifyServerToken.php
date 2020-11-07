@@ -50,6 +50,6 @@ class VerifyServerToken
             return null;
         }
 
-        return base64_decode(Str::substr($header, 6));
+        return base64_decode(Str::substr($header, 6), true);
     }
 }

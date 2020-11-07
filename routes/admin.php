@@ -59,7 +59,7 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
 
 Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(function () {
     Route::post('/{user}/verify', [UserController::class, 'verifyEmail'])->name('verify');
-    Route::post('/{user}/2fa', 'UserController@disable2fa')->name('2fa');
+    Route::post('/{user}/2fa', [UserController::class, 'disable2fa'])->name('2fa');
 });
 
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
@@ -118,4 +118,4 @@ Route::post('/servers/default', [ServerController::class, 'changeDefault'])->nam
 Route::post('logs/clear', [ActionLogController::class, 'clear'])->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', ActionLogController::class)->only(['index'])->middleware('can:admin.logs');
 
-Route::fallback('AdminController@fallback');
+Route::fallback([AdminController::class, 'fallback']);

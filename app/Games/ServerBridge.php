@@ -5,10 +5,12 @@ namespace Azuriom\Games;
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 abstract class ServerBridge
 {
     protected const TIMEOUT = 1;
+
     protected const COMMANDS_TIMEOUT = 3;
 
     /**
@@ -49,7 +51,15 @@ abstract class ServerBridge
      * @param  \Azuriom\Models\User|null  $user
      * @param  bool  $needConnected
      */
-    abstract public function sendCommands(array $commands, User $user = null, bool $needConnected = false);
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false) {
+        if (! $this->canExecuteCommand()) {
+            report(new RuntimeException('Command cannot be executed with this link.'));
+
+            return false;
+        }
+
+        throw new RuntimeException('The sendCommands() method must be implemented.');
+    }
 
     /**
      * Execute a command on the given server.

@@ -24,12 +24,9 @@ class Ping extends ServerBridge
 
     public function verifyLink()
     {
-        return $this->ping($this->server->address, $this->server->port);
-    }
+        $this->ping($this->server->address, $this->server->port);
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
-    {
-        report(new RuntimeException('Command cannot be executed with ping link.'));
+        return true;
     }
 
     public function canExecuteCommand()

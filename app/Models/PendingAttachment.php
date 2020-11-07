@@ -29,7 +29,7 @@ class PendingAttachment extends Model
 
     protected $imageKey = 'file';
 
-    protected function getImagePath(string $path = '')
+    protected function resolveImagePath(string $path = '')
     {
         $type = Relation::getMorphedModel($this->pending_type) ?? $this->pending_type;
 
