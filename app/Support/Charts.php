@@ -60,11 +60,11 @@ class Charts
         } else {
             $dbRaw = DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
         }
-        $escapedColumnName = Str::between($column, '[', ']');
+
         $results = $query->select($dbRaw)
             ->where($column, '>', $start)
-            ->groupBy($escapedColumnName)
-            ->orderBy($escapedColumnName)
+            ->groupBy($column)
+            ->orderBy($column)
             ->get()
             ->mapWithKeys(function ($value) {
                 $date = Carbon::createFromFormat('Y-m-d', $value->date);
@@ -100,11 +100,11 @@ class Charts
 
         $rawQuery = static::getDatabaseRawQuery($query, $query->getGrammar()->wrap($column));
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
-        $escapedColumnName = Str::between($column, '[', ']');
+
         $results = $query->select(DB::raw("{$rawQuery} as date, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
-            ->groupBy($escapedColumnName)
-            ->orderBy($escapedColumnName)
+            ->groupBy($column)
+            ->orderBy($column)
             ->get()
             ->mapWithKeys(function ($result) {
                 $date = Carbon::createFromFormat('Y-m', $result->date);
