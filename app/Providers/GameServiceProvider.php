@@ -12,6 +12,8 @@ use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider
 {
+    protected static $games = [];
+
     /**
      * Register services.
      *
@@ -19,7 +21,15 @@ class GameServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        self::registerGames([
+            'mc-online' => MinecraftOnlineGame::class,
+            'mc-offline' => MinecraftOfflineGame::class,
+            'gmod' => SteamGame::forName('Garry\'s Mod'),
+            'ark' => SteamGame::forName('ARK'),
+            'rust' => RustGame::class,
+            'csgo' => SteamGame::forName('CS:GO'),
+            'tf2' => SteamGame::forName('Team Fortress 2'),
+        ]);
     }
 
     /**
@@ -30,7 +40,7 @@ class GameServiceProvider extends ServiceProvider
     public function boot()
     {
         $gameType = config('azuriom.game') ?? setting('game-type', 'mc-offline');
-        $game = Arr::get($this->getAvailableGames(), $gameType, FallbackGame::class);
+        $game = Arr::get(static::$games, $gameType, FallbackGame::class);
 
         if (is_string($game)) {
             $this->app->singleton('game', $game);
@@ -41,16 +51,8 @@ class GameServiceProvider extends ServiceProvider
         $this->app->instance('game', $game);
     }
 
-    protected function getAvailableGames()
+    public static function registerGames(array $games)
     {
-        return [
-            'mc-online' => MinecraftOnlineGame::class,
-            'mc-offline' => MinecraftOfflineGame::class,
-            'gmod' => SteamGame::forName('Garry\'s Mod'),
-            'ark' => SteamGame::forName('ARK'),
-            'rust' => RustGame::class,
-            'csgo' => SteamGame::forName('CS:GO'),
-            'tf2' => SteamGame::forName('Team Fortress 2'),
-        ];
+        static::$games = array_merge(static::$games, $games);
     }
 }

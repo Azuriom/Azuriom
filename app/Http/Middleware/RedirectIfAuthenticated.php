@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Middleware;
 
+use Azuriom\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect()->home();
+                return redirect()->intended(RouteServiceProvider::HOME);
             }
         }
 
