@@ -57,7 +57,7 @@ class GameServiceProvider extends ServiceProvider
 
     protected function getAvailableGames()
     {
-        return $this->games;
+        return GameServiceProvider::$games;
     }
 
     public static function addGames(array $games)
