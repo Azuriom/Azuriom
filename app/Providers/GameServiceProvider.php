@@ -13,7 +13,6 @@ use Illuminate\Support\ServiceProvider;
 class GameServiceProvider extends ServiceProvider
 {
     protected static $games = [
-        'fallback' => FallbackGame::class,
         'mc-online' => MinecraftOnlineGame::class,
         'mc-offline' => MinecraftOfflineGame::class,
         'rust' => RustGame::class,
