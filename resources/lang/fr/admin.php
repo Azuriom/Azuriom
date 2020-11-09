@@ -322,7 +322,7 @@ return [
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
             'rust-rcon' => 'Rust RCON',
-            'flyff-server' => 'Serveur Flyff'
+            'flyff-server' => 'Serveur Flyff',
         ],
     ],
 
