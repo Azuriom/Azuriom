@@ -55,15 +55,15 @@ class Charts
         $driver = $query->getConnection()->getDriverName();
         $dbRaw = null;
         if ($driver === 'sqlsrv') {
-            $dbRaw = DB::raw("CAST($sqlColumn as date) as date, {$function}({$sqlGroupColumn}) as aggregate");
+            $dbRaw = DB::raw("CAST($sqlColumn as date) as date_aggr, {$function}({$sqlGroupColumn}) as aggregate");
         } else {
-            $dbRaw = DB::raw("date({$sqlColumn}) as date, {$function}({$sqlGroupColumn}) as aggregate");
+            $dbRaw = DB::raw("date({$sqlColumn}) as date_aggr, {$function}({$sqlGroupColumn}) as aggregate");
         }
 
         $results = $query->select($dbRaw)
             ->where($column, '>', $start)
-            ->groupBy($column)
-            ->orderBy($column)
+            ->groupBy('date_aggr')
+            ->orderBy('date_aggr')
             ->get()
             ->mapWithKeys(function ($value) {
                 $date = Carbon::createFromFormat('Y-m-d', $value->date);
@@ -100,10 +100,10 @@ class Charts
         $rawQuery = static::getDatabaseRawQuery($query, $query->getGrammar()->wrap($column));
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
 
-        $results = $query->select(DB::raw("{$rawQuery} as date, {$function}({$sqlGroupColumn}) as aggregate"))
+        $results = $query->select(DB::raw("{$rawQuery} as date_aggr, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
-            ->groupBy($column)
-            ->orderBy($column)
+            ->groupBy('date_aggr')
+            ->orderBy('date_aggr')
             ->get()
             ->mapWithKeys(function ($result) {
                 $date = Carbon::createFromFormat('Y-m', $result->date);
