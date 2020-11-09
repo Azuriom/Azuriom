@@ -2,14 +2,13 @@
 
 namespace Azuriom\Providers;
 
-use Illuminate\Support\Arr;
 use Azuriom\Games\FallbackGame;
+use Azuriom\Games\Minecraft\MinecraftOfflineGame;
+use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
-use Azuriom\Games\FallbackServerBridge;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Azuriom\Games\Minecraft\MinecraftOnlineGame;
-use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 
 class GameServiceProvider extends ServiceProvider
 {
