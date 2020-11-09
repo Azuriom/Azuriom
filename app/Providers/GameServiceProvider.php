@@ -12,7 +12,6 @@ use Illuminate\Support\ServiceProvider;
 
 class GameServiceProvider extends ServiceProvider
 {
-
     protected static $games = [
         'fallback' => FallbackGame::class,
         'mc-online' => MinecraftOnlineGame::class,
@@ -31,8 +30,8 @@ class GameServiceProvider extends ServiceProvider
             'gmod' => SteamGame::forName('Garry\'s Mod'),
             'ark' => SteamGame::forName('ARK'),
             'csgo' => SteamGame::forName('CS:GO'),
-            'tf2' => SteamGame::forName('Team Fortress 2')
-        ]); 
+            'tf2' => SteamGame::forName('Team Fortress 2'),
+        ]);
     }
 
     /**
