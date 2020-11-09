@@ -53,20 +53,15 @@ class Charts
         $sqlColumn = $query->getGrammar()->wrap($column);
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
         $driver = $query->getConnection()->getDriverName();
-        $dbRaw = null;
-        if ($driver === 'sqlsrv') {
-            $dbRaw = DB::raw("CAST($sqlColumn as date) as date_aggr, {$function}({$sqlGroupColumn}) as aggregate");
-        } else {
-            $dbRaw = DB::raw("date({$sqlColumn}) as date_aggr, {$function}({$sqlGroupColumn}) as aggregate");
-        }
+        $dateCast = $driver !== 'sqlsrv' ? "date({$sqlColumn})" : "CAST($sqlColumn as date)";
 
-        $results = $query->select($dbRaw)
+        $results = $query->select(DB::raw("{$dateCast} as date_aggr, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
             ->groupBy('date_aggr')
             ->orderBy('date_aggr')
             ->get()
             ->mapWithKeys(function ($value) {
-                $date = Carbon::createFromFormat('Y-m-d', $value->date);
+                $date = Carbon::createFromFormat('Y-m-d', $value->date_aggr);
 
                 return [format_date($date) => $value->aggregate];
             });
@@ -106,7 +101,7 @@ class Charts
             ->orderBy('date_aggr')
             ->get()
             ->mapWithKeys(function ($result) {
-                $date = Carbon::createFromFormat('Y-m', $result->date);
+                $date = Carbon::createFromFormat('Y-m', $result->date_aggr);
 
                 return [$date->translatedFormat('F Y') => $result->aggregate];
             });
@@ -126,7 +121,7 @@ class Charts
             case 'pgsql':
                 return "to_char({$column}, 'YYYY-MM')";
             case 'sqlsrv':
-                return "FORMAT($column, 'yyyy-MM')";
+                return "FORMAT({$column}, 'yyyy-MM')";
             default:
                 throw new RuntimeException('Unsupported database driver: '.$driver);
         }
