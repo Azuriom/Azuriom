@@ -53,8 +53,8 @@ class Charts
         $sqlColumn = $query->getGrammar()->wrap($column);
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
         $driver = $query->getConnection()->getDriverName();
-        
-        if($driver === 'sqlsrv') {
+
+        if ($driver === 'sqlsrv') {
             $dateCast = "CAST($sqlColumn as date)";
             $groupBy = $orderBy = $sqlColumn;
         } else {
@@ -104,7 +104,7 @@ class Charts
 
         $driver = $query->getConnection()->getDriverName();
 
-        if($driver === 'sqlsrv') {
+        if ($driver === 'sqlsrv') {
             $groupBy = $orderBy = DB::raw("FORMAT([created_at], 'yyyy-MM')");
         } else {
             $groupBy = $orderBy = 'date_aggr';
