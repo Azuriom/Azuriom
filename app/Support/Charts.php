@@ -53,12 +53,19 @@ class Charts
         $sqlColumn = $query->getGrammar()->wrap($column);
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
         $driver = $query->getConnection()->getDriverName();
-        $dateCast = $driver !== 'sqlsrv' ? "date({$sqlColumn})" : "CAST($sqlColumn as date)";
+        
+        if($driver === 'sqlsrv') {
+            $dateCast = "CAST($sqlColumn as date)";
+            $groupBy = $orderBy = $sqlColumn;
+        } else {
+            $dateCast = "date({$sqlColumn})";
+            $groupBy = $orderBy = 'date_aggr';
+        }
 
         $results = $query->select(DB::raw("{$dateCast} as date_aggr, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
-            ->groupBy('date_aggr')
-            ->orderBy('date_aggr')
+            ->groupBy($groupBy)
+            ->orderBy($orderBy)
             ->get()
             ->mapWithKeys(function ($value) {
                 $date = Carbon::createFromFormat('Y-m-d', $value->date_aggr);
@@ -95,10 +102,18 @@ class Charts
         $rawQuery = static::getDatabaseRawQuery($query, $query->getGrammar()->wrap($column));
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
 
+        $driver = $query->getConnection()->getDriverName();
+
+        if($driver === 'sqlsrv') {
+            $groupBy = $orderBy = DB::raw("FORMAT([created_at], 'yyyy-MM')");
+        } else {
+            $groupBy = $orderBy = 'date_aggr';
+        }
+
         $results = $query->select(DB::raw("{$rawQuery} as date_aggr, {$function}({$sqlGroupColumn}) as aggregate"))
             ->where($column, '>', $start)
-            ->groupBy('date_aggr')
-            ->orderBy('date_aggr')
+            ->groupBy($groupBy)
+            ->orderBy($orderBy)
             ->get()
             ->mapWithKeys(function ($result) {
                 $date = Carbon::createFromFormat('Y-m', $result->date_aggr);
