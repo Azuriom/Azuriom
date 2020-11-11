@@ -56,7 +56,7 @@ class Charts
 
         if ($driver === 'sqlsrv') {
             $dateCast = "CAST($sqlColumn as date)";
-            $groupBy = $orderBy = $sqlColumn;
+            $groupBy = $orderBy = $column;
         } else {
             $dateCast = "date({$sqlColumn})";
             $groupBy = $orderBy = 'date_aggr';
