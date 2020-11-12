@@ -105,7 +105,7 @@ class Charts
         $driver = $query->getConnection()->getDriverName();
 
         if ($driver === 'sqlsrv') {
-            $groupBy = $orderBy = DB::raw("FORMAT([created_at], 'yyyy-MM')");
+            $groupBy = $orderBy = DB::raw("FORMAT([$column], 'yyyy-MM')");
         } else {
             $groupBy = $orderBy = 'date_aggr';
         }
