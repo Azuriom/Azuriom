@@ -23,7 +23,7 @@
                 <pubDate>{{ $post->published_at->toRssString() }}</pubDate>
 
                 @if($post->hasImage())
-                    <enclosure url="{{ $post->imageUrl() }}" length="{{ $post->getImageDisk()->size($post->getImagePath()) }}" type="image/*"/>
+                    <enclosure url="{{ $post->imageUrl() }}" length="{{ $post->getImageSize() }}" type="image/*"/>
                 @endif
 
                 <content:encoded>{{ $post->content }}</content:encoded>
