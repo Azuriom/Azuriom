@@ -413,6 +413,7 @@ return [
     'permissions' => [
         'create-comments' => 'Commenter un article',
         'delete-other-comments' => 'Supprimer un commentaire d\'un autre utilisateur',
+        'maintenance-access' => 'Accéder au site pendant une maintenance',
         'admin-access' => 'Accéder au panel administrateur',
         'admin-logs' => 'Voir et gérer les logs du site',
         'admin-images' => 'Voir et gérer les images',

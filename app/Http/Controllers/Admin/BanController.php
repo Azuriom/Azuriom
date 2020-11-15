@@ -35,8 +35,6 @@ class BanController extends Controller
             'reason' => $request->input('reason'),
         ]);
 
-        $user->update(['is_banned' => true]);
-
         return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.banned'));
     }
 

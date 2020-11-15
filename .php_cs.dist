@@ -4,8 +4,8 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-    ->files()
     ->in(__DIR__.'/app')
+    ->in(__DIR__.'/config')
     ->in(__DIR__.'/database')
     ->in(__DIR__.'/resources/lang')
     ->in(__DIR__.'/routes');

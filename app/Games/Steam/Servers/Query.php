@@ -6,7 +6,6 @@ use Azuriom\Games\ServerBridge;
 use Azuriom\Games\Steam\SteamID;
 use Azuriom\Models\User;
 use Exception;
-use RuntimeException;
 use xPaw\SourceQuery\SourceQuery;
 
 class Query extends ServerBridge

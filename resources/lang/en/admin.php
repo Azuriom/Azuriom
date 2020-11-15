@@ -323,7 +323,7 @@ return [
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
             'rust-rcon' => 'Rust RCON',
-            'flyff-server' => 'Flyff Server',
+            'flyff-server' => 'Flyff Server', // TODO make this dynamic
         ],
     ],
 
@@ -414,6 +414,7 @@ return [
     'permissions' => [
         'create-comments' => 'Comment a post',
         'delete-other-comments' => 'Delete a post comment from another user',
+        'maintenance-access' => 'Access the website during a maintenance',
         'admin-access' => 'Access to the admin dashboard',
         'admin-logs' => 'View and manage site logs',
         'admin-images' => 'View and manage images',

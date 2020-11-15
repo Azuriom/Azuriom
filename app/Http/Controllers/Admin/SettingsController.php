@@ -218,8 +218,9 @@ class SettingsController extends Controller
             return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
         }
 
-        return $redirect->with('success',
-            trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled')));
+        $message = trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled'));
+
+        return $redirect->with('success', $message);
     }
 
     public function disableAdvancedCache()

@@ -162,8 +162,10 @@ class ThemeController extends Controller
 
             $this->themes->updateConfig($theme, $validated);
 
-            return redirect()->route('admin.themes.index')->with('success',
-                trans('admin.themes.status.config-updated'));
+            return redirect()->route('admin.themes.index')->with(
+                'success',
+                trans('admin.themes.status.config-updated')
+            );
         } catch (FileNotFoundException $e) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
         }

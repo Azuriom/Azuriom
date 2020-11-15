@@ -4,10 +4,8 @@ namespace Azuriom\Games\Minecraft\Servers;
 
 use Azuriom\Games\Minecraft\Servers\Protocol\MinecraftPing;
 use Azuriom\Games\ServerBridge;
-use Azuriom\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
-use RuntimeException;
 
 class Ping extends ServerBridge
 {

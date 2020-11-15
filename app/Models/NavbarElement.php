@@ -61,7 +61,7 @@ class NavbarElement extends Model
     protected static function booted()
     {
         foreach (['created', 'updated', 'deleted'] as $event) {
-            static::$event(function () {
+            static::registerModelEvent($event, function () {
                 static::clearCache();
             });
         }

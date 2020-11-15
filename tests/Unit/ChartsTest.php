@@ -14,10 +14,10 @@ class ChartsTest extends TestCase
     public function testDailyChart()
     {
         $dates = [
-            today()->subMonths(2),
-            today()->subDays(5),
-            today()->subDays(3),
-            today()->subDays(3),
+            today()->subMonths(2)->addMinutes(20),
+            today()->subDays(5)->addMinutes(45),
+            today()->subDays(3)->addMinutes(10),
+            today()->subDays(3)->addMinutes(15),
             today()->subDays(3),
             today(),
         ];
@@ -35,13 +35,13 @@ class ChartsTest extends TestCase
 
     public function testMonthlyChart()
     {
-        $month = today()->startOfMonth()->toImmutable();
+        $month = today()->startOfMonth()->addHour()->toImmutable();
 
         $dates = [
-            $month->subMonths(7),
-            $month->subMonths(5),
-            $month->subMonths(3),
-            $month->subMonths(3),
+            $month->subMonths(7)->addHours(10),
+            $month->subMonths(5)->addHours(12),
+            $month->subMonths(3)->addHours(16),
+            $month->subMonths(3)->addHours(15),
             $month->subMonth(),
             $month,
         ];
@@ -50,7 +50,7 @@ class ChartsTest extends TestCase
             User::factory()->create(['created_at' => $date]);
         }
 
-        $expected = collect([0, 0, 2, 0, 1, 1])->mapWithKeys(function (int $count, int $i) {
+        $expected = collect([1, 0, 2, 0, 1, 1])->mapWithKeys(function (int $count, int $i) {
             return [today()->subMonths(5 - $i)->translatedFormat('F Y') => $count];
         })->all();
 

@@ -4,6 +4,8 @@
 
 Azuriom follows the [PSR-12 coding style](https://www.php-fig.org/psr/psr-12/).
 
+You can also run [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to automatically fix the code style with this command.
+
 ## Manual installation for development
 
 1. Clone the [GitHub repository](https://github.com/Azuriom/Azuriom).
