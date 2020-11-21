@@ -16,7 +16,7 @@ class VerifyServerToken
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $token = $request->header('Azuriom-Link-Token');
 

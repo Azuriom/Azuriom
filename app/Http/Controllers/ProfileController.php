@@ -5,10 +5,14 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
-use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -80,15 +84,15 @@ class ProfileController extends Controller
 
         $google2fa = new Google2FA();
         $secret = $request->old('2fa_key', $google2fa->generateSecretKey());
-        $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
+        $qrCodeUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
 
-        $qrCodeUrl = (new QRCode(new QROptions([
-            'imageTransparent' => false,
-        ])))->render($otpUrl);
+        $renderer = new ImageRenderer(new RendererStyle(246, 0), new SvgImageBackEnd());
+        $svg = Str::after((new Writer($renderer))->writeString($qrCodeUrl), '?>');
 
         return view('profile.2fa', [
             'secretKey' => $secret,
-            'qrCodeUrl' => $qrCodeUrl,
+            'qrCodeUrl' => 'data:image/svg+xml,'.rawurlencode($svg), // TODO remove in Azuriom 1.0
+            'qrCode' => new HtmlString($svg),
         ]);
     }
 

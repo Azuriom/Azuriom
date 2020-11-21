@@ -3,7 +3,7 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
 class EnsureInstalled
@@ -15,7 +15,7 @@ class EnsureInstalled
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (config('app.key') === null) {
             // Azuriom is not installed... yet !

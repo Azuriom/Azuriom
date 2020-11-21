@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LogoutIfSuspended
@@ -14,7 +15,7 @@ class LogoutIfSuspended
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
 

@@ -1,0 +1,53 @@
+name: PHP CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        php-version: [7.3, 7.4, 8.0]
+
+    name: PHP ${{ matrix.php-version }}
+
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: azuriom
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: pdo, sqlite, pdo_sqlite, bcmath, mbstring, curl, libxml, zip, intl, gd
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --ansi --no-interaction --no-progress --prefer-dist
+        if: matrix.php-version < 8.0
+
+      # Ignore platform requirements on PHP 8.0 as some dependencies are not updated yet on Packagist
+      - name: Install dependencies (without platform requirements)
+        run: composer install --ansi --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
+        if: matrix.php-version >= 8.0
+
+      - name: Run tests
+        run: vendor/bin/phpunit
+        env:
+          APP_KEY: "base64:dpPUwuuA5ojUpdVwUJcPT13NdOe+RSM/1QXSW/VuJIc="
+          DB_CONNECTION: mysql
+          DB_DATABASE: azuriom
+          DB_USERNAME: root

@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteLogin
@@ -14,7 +15,7 @@ class SocialiteLogin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (oauth_login()) {
             $driver = game()->getSocialiteDriverName();

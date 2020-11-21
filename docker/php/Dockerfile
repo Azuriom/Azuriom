@@ -7,15 +7,11 @@ RUN apt-get update && apt-get install -y libicu-dev libzip-dev \
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip 
+    && docker-php-ext-install pdo pdo_pgsql pgsql zip
 
 RUN apt-get clean
 
-RUN pecl install apcu xdebug
-RUN docker-php-ext-enable apcu xdebug
 RUN docker-php-ext-install intl opcache bcmath mbstring tokenizer ctype json xml curl
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
 
 COPY custom.ini $PHP_INI_DIR/conf.d/
 
