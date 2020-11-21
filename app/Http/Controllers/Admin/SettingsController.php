@@ -119,7 +119,7 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
-        Setting::updateSettings($this->validate($request, [
+        $settings = array_merge($this->validate($request, [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['nullable', 'string', 'max:255'],
             'url' => ['required', 'url'],
@@ -132,9 +132,12 @@ class SettingsController extends Controller
             'background' => ['nullable', 'exists:images,file'],
             'money' => ['required', 'string', 'max:15'],
             'site-key' => ['nullable', 'string', 'size:50'],
-        ]) + [
+        ]), [
             'user_money_transfer' => $request->filled('user_money_transfer'),
+            'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
+
+        Setting::updateSettings($settings);
 
         ActionLog::log('settings.updated');
 

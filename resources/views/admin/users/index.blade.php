@@ -45,7 +45,7 @@
                                 @elseif($user->isAdmin())
                                     <i class="fas fa-crown text-warning" title="{{ trans('admin.users.info.admin') }}" data-toggle="tooltip"></i>
                                 @endif
-                                @if($user->is_banned)
+                                @if($user->isBanned())
                                     <i class="fas fa-ban text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>

@@ -7,7 +7,7 @@
         <div class="alert alert-warning" role="alert">
             <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
-    @elseif($user->is_banned)
+    @elseif($user->isBanned())
         <div class="alert alert-warning shadow" role="alert">
             <h5><i class="fas fa-exclamation-circle"></i> {{ trans('admin.users.alert-banned.title') }}</h5>
             <ul>
@@ -108,7 +108,7 @@
                         </button>
 
                         @if (! $user->is_deleted)
-                            @if(! $user->is_banned)
+                            @if(! $user->isBanned())
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal">
                                     <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
                                 </button>
@@ -201,7 +201,7 @@
         </div>
     </div>
 
-    @if(! $user->is_banned)
+    @if(! $user->isBanned())
         <div class="modal fade show" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-modal="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

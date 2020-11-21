@@ -31,10 +31,6 @@ class UserController extends Controller
                 $query->scopes(['search' => $search]);
             })->paginate();
 
-        foreach ($users as $user) {
-            $user->refreshActiveBan();
-        }
-
         return view('admin.users.index', [
             'users' => $users,
             'search' => $search,
@@ -83,7 +79,7 @@ class UserController extends Controller
             ->paginate();
 
         return view('admin.users.edit', [
-            'user' => $user->refreshActiveBan(),
+            'user' => $user->load('ban'),
             'roles' => Role::all(),
             'logs' => $logs,
         ]);

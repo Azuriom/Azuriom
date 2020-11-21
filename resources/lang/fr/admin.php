@@ -532,7 +532,7 @@ return [
             'reloaded' => 'Les thèmes ont été rechargés.',
             'no-config' => 'Ce thème n\'a pas de configuration.',
             'config-updated' => 'La configuration du thème a été mise à jour.',
-            'invalid' => 'Ce thème n\'est pas valide.',
+            'invalid' => 'Ce thème n\'est pas valide (le nom du dossier du thème doit être l\'id du thème).',
             'updated' => 'Le thème a été mis à jour.',
             'installed' => 'Le thème a été installé.',
             'deleted' => 'Le thème a été supprimé.',

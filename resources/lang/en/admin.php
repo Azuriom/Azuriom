@@ -533,7 +533,7 @@ return [
             'reloaded' => 'The themes have been reloaded.',
             'no-config' => 'This theme don\'t have config.',
             'config-updated' => 'The theme config has been updated.',
-            'invalid' => 'This theme is invalid.',
+            'invalid' => 'This theme is invalid (the theme folder name must be the theme id).',
             'updated' => 'The theme has been updated.',
             'installed' => 'The theme has been installed.',
             'deleted' => 'The theme has been deleted.',

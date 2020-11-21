@@ -22,7 +22,7 @@ class AuthenticatedUser extends JsonResource
             'email_verified' => $this->email_verified_at !== null,
             'money' => $this->money,
             'role' => new RoleResource($this->role),
-            'banned' => $this->is_banned,
+            'banned' => $this->isBanned(),
             'uuid' => $this->game_id,
             'access_token' => $this->access_token,
             'created_at' => $this->created_at->toIso8601String(),

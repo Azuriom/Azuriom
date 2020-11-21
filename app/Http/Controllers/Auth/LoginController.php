@@ -86,7 +86,7 @@ class LoginController extends Controller
 
     protected function loginUser(Request $request, User $user)
     {
-        if ($user->refreshActiveBan()->is_banned) {
+        if ($user->isBanned()) {
             throw ValidationException::withMessages([
                 $this->username() => trans('auth.suspended'),
             ]);

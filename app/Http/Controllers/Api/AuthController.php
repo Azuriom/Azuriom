@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         $user = Auth::getLastAttempted();
 
-        if ($user->is_banned) {
+        if ($user->isBanned()) {
             return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 
@@ -84,7 +84,7 @@ class AuthController extends Controller
             return response()->json(['status' => false, 'message' => 'Invalid token'], 422);
         }
 
-        if ($user->is_banned) {
+        if ($user->isBanned()) {
             return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 
