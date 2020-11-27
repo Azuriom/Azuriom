@@ -55,31 +55,47 @@
             <form action="{{ route('admin.settings.security.update') }}" method="POST">
                 @csrf
 
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="recaptcha" data-toggle="collapse" data-target="#captchaGroup" @if($showReCaptcha) checked @endif>
-                    <label class="custom-control-label" for="enableSwitch">{{ trans('admin.settings.security.recaptcha') }}</label>
+                <div class="form-group">
+                    <label for="captchaSelect">{{ trans('admin.settings.security.captcha.title') }}</label>
+                    <select class="custom-select @error('captcha') is-invalid @enderror" id="captchaSelect" name="captcha" data-toggle-select="captcha-type">
+                        <option value="">{{ trans('messages.none') }}</option>
+                        <option value="hcaptcha" @if($captchaType === 'hcaptcha') selected @endif>hCaptcha</option>
+                        <option value="recaptcha" @if($captchaType === 'recaptcha') selected @endif>reCaptcha</option>
+                    </select>
+
+                    @error('captcha')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
                 </div>
 
-                <div id="captchaGroup" class="{{ $showReCaptcha ? 'show' : 'collapse' }}">
+                <div data-captcha-type="recaptcha hcaptcha">
                     <div class="card card-body mb-2">
-                        <div class="form-group">
-                            <label for="siteKeyInput">{{ trans('admin.settings.security.recaptcha-site-key') }}</label>
-                            <input type="text" class="form-control @error('recaptcha-site-key') is-invalid @enderror" id="siteKeyInput" name="recaptcha-site-key" value="{{ old('recaptcha-site-key', setting('recaptcha-site-key', '')) }}">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="siteKeyInput">{{ trans('admin.settings.security.captcha.site-key') }}</label>
+                                <input type="text" class="form-control @error('site_key') is-invalid @enderror" id="siteKeyInput" name="site_key" value="{{ old('captcha.site_key', setting('captcha.site_key', '')) }}">
 
-                            @error('recaptcha-site-key')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
+                                @error('site_key')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
 
-                        <div class="form-group mb-0">
-                            <label for="secretKeyInput">{{ trans('admin.settings.security.recaptcha-secret-key') }}</label>
-                            <input type="text" class="form-control @error('recaptcha-secret-key') is-invalid @enderror" id="secretKeyInput" name="recaptcha-secret-key" value="{{ old('recaptcha-secret-key', setting('recaptcha-secret-key', '')) }}" aria-describedby="secretKeyInfo">
+                                <small class="form-text" data-captcha-type="recaptcha">
+                                    @lang('admin.settings.security.captcha.recaptcha')
+                                </small>
 
-                            @error('recaptcha-secret-key')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                <small class="form-text" data-captcha-type="hcaptcha">
+                                    @lang('admin.settings.security.captcha.hcaptcha')
+                                </small>
+                            </div>
 
-                            <small id="secretKeyInfo" class="form-text">@lang('admin.settings.security.recaptcha-info')</small>
+                            <div class="form-group col-md-6 mb-0">
+                                <label for="secretKeyInput">{{ trans('admin.settings.security.captcha.secret-key') }}</label>
+                                <input type="text" class="form-control @error('secret_key') is-invalid @enderror" id="secretKeyInput" name="secret_key" value="{{ old('secret_key', setting('captcha.secret_key', '')) }}">
+
+                                @error('secret_key')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

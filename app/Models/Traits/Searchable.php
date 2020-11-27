@@ -28,7 +28,7 @@ trait Searchable
 
         return $query->where(function ($query) use ($search, $columns) {
             foreach ($columns ?? $this->searchable as $column) {
-                $query->orWhere($column, 'LIKE', "%{$search}%");
+                $query->orWhere($column, 'like', "%{$search}%");
             }
 
             if (is_numeric($search) || $this->getKeyType() !== 'int') {

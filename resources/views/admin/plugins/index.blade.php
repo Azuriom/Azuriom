@@ -32,7 +32,7 @@
                                     {{ $plugin->name }}
                                 @endisset
                             </th>
-                            <td>{{ join(', ', $plugin->authors ?? []) }}</td>
+                            <td>{{ implode(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
                                 <span class="badge badge-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">

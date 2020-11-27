@@ -100,7 +100,7 @@ class Server extends Model
 
         if (is_array($data) && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
             $stats = Arr::except($data, 'max_players');
-            $statsData = ['data' => Arr::except($stats, ['players', 'cpu', 'ram'])];
+            $statsData = ['data' => array_filter(Arr::except($stats, ['players', 'cpu', 'ram']))];
 
             $this->stats()->create(array_merge(Arr::only($stats, ['players', 'cpu', 'ram']), $statsData));
         }

@@ -16,7 +16,7 @@
                             <a class="nav-link" href="{{ $element->getLink() }}" @if($element->new_tab) target="_blank" rel="noopener noreferrer" @endif>{{ $element->name }}</a>
                         </li>
                     @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown @if($element->isCurrent()) active @endif">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ $element->id }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ $element->name }}
                             </a>

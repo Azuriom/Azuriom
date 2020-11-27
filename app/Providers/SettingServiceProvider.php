@@ -7,6 +7,7 @@ use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -47,8 +48,8 @@ class SettingServiceProvider extends ServiceProvider
         try {
             $settings = $this->loadSettings();
 
-            // TODO 1.0: remove migration for old mail configuration
-            if (array_key_exists('mail.driver', $settings)) {
+            // TODO 1.0: remove migration for old captcha configuration
+            if (array_key_exists('recaptcha-site-key', $settings)) {
                 $this->migrateOldSettings($settings);
             }
 
@@ -110,17 +111,17 @@ class SettingServiceProvider extends ServiceProvider
 
     protected function migrateOldSettings(array $settings)
     {
-        $mailSettings = [
-            'mail.mailer' => $settings['mail.driver'] ?? 'sendmail',
-            'mail.driver' => null,
-            'mail.sendmail' => null,
-        ];
+        $siteKey = Arr::get($settings, 'recaptcha-site-key');
+        $secretKey = Arr::get($settings, 'recaptcha-secret-key');
 
-        foreach (['host', 'port', 'encryption', 'username', 'password'] as $setting) {
-            $mailSettings["mail.{$setting}"] = null;
-            $mailSettings["mail.smtp.{$setting}"] = $settings["mail.{$setting}"] ?? null;
+        if (empty($siteKey) || empty($secretKey)) {
+            return;
         }
 
-        Setting::updateSettings($mailSettings);
+        Setting::updateSettings([
+            'captcha.type' => null,
+            'captcha.site_key' => $siteKey,
+            'captcha.secret_key' => $secretKey,
+        ]);
     }
 }

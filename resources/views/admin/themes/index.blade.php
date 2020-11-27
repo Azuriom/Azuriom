@@ -11,7 +11,7 @@
             @if($current)
                 <h3 class="h5">{{ $current->name }}</h3>
                 <ul>
-                    <li>{{ trans('admin.themes.current.author', ['author' => join(', ', $current->authors)]) }}</li>
+                    <li>{{ trans('admin.themes.current.author', ['author' => implode(', ', $current->authors)]) }}</li>
                     <li>{{ trans('admin.themes.current.version', ['version' => $current->version]) }}</li>
                 </ul>
 
@@ -71,7 +71,7 @@
                                     {{ $theme->name }}
                                 @endisset
                             </th>
-                            <td>{{ join(', ', $theme->authors ?? []) }}</td>
+                            <td>{{ implode(', ', $theme->authors ?? []) }}</td>
                             <td>{{ $theme->version }}</td>
                             <td>
                                 <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">

@@ -116,10 +116,13 @@ return [
         'security' => [
             'title' => 'Paramètres de sécurité',
 
-            'recaptcha' => 'Activer la protection par Google reCaptcha',
-            'recaptcha-site-key' => 'Clé du site',
-            'recaptcha-secret-key' => 'Clé secrète',
-            'recaptcha-info' => 'Vous pouvez obtenir les clés Google reCaptcha sur la page de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+            'captcha' => [
+                'title' => 'Captcha (protection anti bot)',
+                'site-key' => 'Clé du site',
+                'secret-key' => 'Clé secrète',
+                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur la site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+                'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur la site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
+            ],
 
             'hash' => 'Algorithme de hachage',
             'hash-info' => 'Argon2id est l\'algorithme le plus sécurisé mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',

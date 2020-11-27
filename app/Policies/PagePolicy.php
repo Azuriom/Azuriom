@@ -13,7 +13,7 @@ class PagePolicy
     /**
      * Determine whether the user can view the post.
      *
-     * @param  \Azuriom\Models\User  $user
+     * @param  \Azuriom\Models\User|null  $user
      * @param  \Azuriom\Models\Page  $page
      * @return mixed
      */

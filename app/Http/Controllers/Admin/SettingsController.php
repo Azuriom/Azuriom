@@ -163,9 +163,10 @@ class SettingsController extends Controller
     {
         $hash = array_keys($this->hashAlgorithms);
 
-        $settings = $this->validate($request, [
-            'recaptcha-site-key' => ['required_with:recaptcha', 'max:50'],
-            'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50'],
+        $this->validate($request, [
+            'captcha' => ['nullable', 'in:none,recaptcha,hcaptcha', 'max:50'],
+            'site_key' => ['required_with:captcha', 'max:50'],
+            'secret_key' => ['required_with:captcha', 'max:50'],
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
                     if (! $this->isHashSupported($value)) {
@@ -175,13 +176,20 @@ class SettingsController extends Controller
             ],
         ]);
 
-        if ($request->filled('recaptcha')) {
-            Setting::updateSettings($settings);
+        Setting::updateSettings($request->only('hash'));
+
+        if ($request->filled('captcha')) {
+            Setting::updateSettings([
+                'captcha.type' => $request->input('captcha'),
+                'captcha.site_key' => $request->input('site_key'),
+                'captcha.secret_key' => $request->input('secret_key'),
+            ]);
         } else {
             Setting::updateSettings([
-                'recaptcha-site-key' => null,
-                'recaptcha-secret-key' => null,
-            ] + $request->only('hash'));
+                'captcha.type' => null,
+                'captcha.site_key' => null,
+                'captcha.secret_key' => null,
+            ]);
         }
 
         ActionLog::log('settings.updated');
@@ -294,7 +302,7 @@ class SettingsController extends Controller
             'minecraftVerification' => setting('game-type') === 'mc-online',
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
-            'showReCaptcha' => $show,
+            'captchaType' => old('captcha', setting('captcha.type')),
         ]);
     }
 

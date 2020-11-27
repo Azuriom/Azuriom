@@ -36,7 +36,7 @@
                     input: true,
                 }
             }
-        }).on('change', function (color, instance) {
+        }).on('change', function (color) {
             if (color) {
                 colorPickrForm.value = color.toHEXA();
             }

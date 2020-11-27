@@ -4,6 +4,7 @@ namespace Azuriom\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use ReCaptcha\ReCaptcha;
 use ReCaptcha\RequestMethod\CurlPost;
 
@@ -18,20 +19,46 @@ class VerifyCaptcha
      */
     public function handle(Request $request, Closure $next)
     {
-        $secretKey = setting('recaptcha-secret-key');
+        $captchaType = setting('captcha.type');
+        $secretKey = setting('captcha.secret_key');
 
-        if (empty($secretKey)) {
+        if (! $captchaType || empty($secretKey)) {
             return $next($request);
         }
 
-        $reCaptcha = new ReCaptcha($secretKey, new CurlPost());
+        $success = $captchaType === 'hcaptcha'
+            ? $this->verifyHCaptcha($request, $secretKey)
+            : $this->verifyReCaptcha($request, $secretKey);
 
-        $response = $reCaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
-
-        if ($response->isSuccess()) {
+        if ($success) {
             return $next($request);
         }
 
         return redirect()->back()->with('error', trans('messages.captcha'))->withInput();
+    }
+
+    protected function verifyReCaptcha(Request $request, string $secretKey)
+    {
+        $reCaptcha = new ReCaptcha($secretKey, new CurlPost());
+
+        $response = $reCaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+
+        return $response->isSuccess();
+    }
+
+    protected function verifyHCaptcha(Request $request, string $secretKey)
+    {
+        $code = $request->input('h-captcha-response');
+
+        if ($code === null) {
+            return false;
+        }
+
+        $response = Http::asForm()->post('https://hcaptcha.com/siteverify', [
+            'secret' => $secretKey,
+            'response' => $code,
+        ]);
+
+        return $response->successful() && $response->json('success');
     }
 }

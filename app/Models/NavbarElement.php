@@ -120,6 +120,11 @@ class NavbarElement extends Model
                 return $request->routeIs('posts.*');
             case 'plugin':
                 return $request->routeIs(Str::beforeLast($this->value, '.').'.*');
+            case 'dropdown':
+                return $this->elements
+                    ->contains(function (self $element) {
+                        return ! $element->isDropdown() && $element->isCurrent();
+                    });
             default:
                 return false;
         }

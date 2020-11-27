@@ -11,7 +11,7 @@
                 return;
             }
 
-            el.addEventListener('change', function (ev) {
+            el.addEventListener('change', function () {
                 if (el.checked) {
                     document.querySelector('[name="permissions[admin.access]"]').checked = true;
                 }
