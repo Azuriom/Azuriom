@@ -66,8 +66,8 @@ return [
     ],
 
     'confirm-delete' => [
-        'title' => 'Delete ?',
-        'description' => 'Are you sure you want to delete this ? It can\'t be undo !',
+        'title' => 'Delete?',
+        'description' => 'Are you sure you want to delete this? You won\'t be able to go back!',
     ],
 
     'footer' => 'Powered by :azuriom &copy; :year. Panel designed by :startbootstrap.',
@@ -183,7 +183,7 @@ return [
             'html-code-info' => 'E.g: Cookie banner, Google Analytics, etc',
 
             'welcome-popup' => [
-                'enable' => 'Enable welcome popup ?',
+                'enable' => 'Enable welcome popup?',
                 'message' => 'Welcome Popup Message',
                 'info' => 'This popup will be displayed the first time a user visits the site.',
             ],
@@ -370,7 +370,7 @@ return [
         'user-info' => 'User information',
 
         'ban-title' => 'Ban :user',
-        'ban-description' => 'Are you sure you want to ban this user ?',
+        'ban-description' => 'Are you sure you want to ban this user?',
 
         'status' => [
             'created' => 'The user has been created.',
@@ -555,7 +555,7 @@ return [
         'download' => 'The latest version of Azuriom is ready for download.',
         'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
 
-        'backup-info' => 'Before updating Azuriom, you should make a backup of your site !',
+        'backup-info' => 'Before updating Azuriom, you should make a backup of your site!',
 
         'up-to-date' => 'You are running the latest version of Azuriom: <code>:version</code>.',
 
