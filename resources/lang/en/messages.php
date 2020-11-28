@@ -169,8 +169,8 @@ return [
         'guest' => 'You must be logged in to leave a comment.',
         'author' => '<strong>:user</strong> commented on :date',
         'your-comment' => 'Your comment',
-        'delete-title' => 'Delete ?',
-        'delete-description' => 'Are you sure you want to delete this comment ?',
+        'delete-title' => 'Delete?',
+        'delete-description' => 'Are you sure you want to delete this comment?',
     ],
 
     'likes' => 'Likes: :count',

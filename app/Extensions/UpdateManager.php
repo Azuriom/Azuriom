@@ -145,7 +145,7 @@ class UpdateManager
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('File hash don\'t match excepted hash !');
+            throw new Exception('The file hash do not match expected hash!');
         }
     }
 

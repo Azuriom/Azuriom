@@ -35,7 +35,7 @@ class PluginClearCommand extends Command
             $files->delete($plugins->getCachedPluginsPath());
         }
 
-        $this->info('Cached plugins files removed');
+        $this->info('Cached plugins files removed.');
 
         return 0;
     }

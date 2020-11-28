@@ -1,13 +1,13 @@
 # Use with Docker & Docker Compose
 
-Requirements :
+Requirements:
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Make](https://en.wikipedia.org/wiki/Make_(software))
 
 # Installation
 
-Get the repository
+Clone the repository
 ```
 git clone https://github.com/Azuriom/Azuriom.git
 ```
@@ -22,7 +22,7 @@ Set rights on files & folders
 chmod -R 755 storage bootstrap/cache resources/themes plugins
 ```
 
-Copy the `.env.example` to `.env` and set the database information like this
+Copy the `.env.example` to `.env` and set the database information like this:
 ```
 DB_CONNECTION=pgsql
 DB_HOST=database
@@ -57,10 +57,10 @@ Create a new user as an administrator
 make create-admin
 ```
 
-It's ready to be used on port 80 !
+It's ready to be used on port 80!
 
 [Optional]
-You can a scheduler with this CRON entry
+You can add the scheduler with this CRON entry
 ```
 * * * * * cd [Path to the CMS folder] && docker-compose exec php-fpm php artisan schedule:run >> /dev/null 2>&1
 ```

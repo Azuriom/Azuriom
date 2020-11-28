@@ -25,14 +25,14 @@ class DiscordTest extends TestCase
             ->author('Wampus', 'https://github.com', 'https://github.com');
 
         $webhook = DiscordWebhook::create()
-            ->content('Hello World !')
+            ->content('Hello World!')
             ->username('Wampus')
             ->tts()
             ->avatarUrl('https://discordapp.com')
             ->addEmbed($embed);
 
         $this->assertSame([
-            'content' => 'Hello World !',
+            'content' => 'Hello World!',
             'username' => 'Wampus',
             'avatar_url' => 'https://discordapp.com',
             'tts' => true,

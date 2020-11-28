@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // TODO : change default string length only on incompatible
-        //  database versions (MySQL < 5.7.7 & MariaDB < 10.2) ?
+        //  database versions (MySQL < 5.7.7 & MariaDB < 10.2)?
         Schema::defaultStringLength(191);
 
         Relation::morphMap([

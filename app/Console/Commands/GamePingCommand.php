@@ -36,7 +36,7 @@ class GamePingCommand extends Command
             $server->updateData($data);
         }
 
-        $this->info($servers->count().' servers was successfully pinged.');
+        $this->info($servers->count().' servers were successfully pinged.');
 
         return 0;
     }
