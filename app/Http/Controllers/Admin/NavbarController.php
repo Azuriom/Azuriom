@@ -98,7 +98,7 @@ class NavbarController extends Controller
         $data = $request->validated();
         $navbar = new NavbarElement(Arr::except($data, 'translations'));
 
-        save_translations($navbar, $data['translations']);
+        set_spatie_translations($navbar, $data['translations']);
         $navbar->save();
 
         return redirect()->route('admin.navbar-elements.index')
@@ -139,7 +139,7 @@ class NavbarController extends Controller
         }
 
         $data = $request->validated();
-        save_translations($navbarElement, $data['translations']);
+        set_spatie_translations($navbarElement, $data['translations']);
 
         $navbarElement->update(Arr::except($data, 'translations'));
 

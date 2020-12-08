@@ -43,7 +43,7 @@ class PageController extends Controller
         $data = $request->validated();
         $page = new Page(Arr::except($data, 'translations'));
 
-        save_translations($page, $data['translations']);
+        set_spatie_translations($page, $data['translations']);
         $page->save();
 
         $page->persistPendingAttachments($request->input('pending_id'));
@@ -72,7 +72,7 @@ class PageController extends Controller
     public function update(PageRequest $request, Page $page)
     {
         $data = $request->validated();
-        save_translations($page, $data['translations']);
+        set_spatie_translations($page, $data['translations']);
 
         $page->update(Arr::except($data, 'translations'));
 

@@ -45,7 +45,7 @@ class PostController extends Controller
         $data = $request->validated();
         $post = new Post(Arr::except($data, ['image', 'translations']));
 
-        save_translations($post, $data['translations']);
+        set_spatie_translations($post, $data['translations']);
         $post->save();
 
         if ($request->hasFile('image')) {
@@ -82,7 +82,7 @@ class PostController extends Controller
         }
 
         $data = $request->validated();
-        save_translations($post, $data['translations']);
+        set_spatie_translations($post, $data['translations']);
 
         $post->update(Arr::except($data, ['image', 'translations']));
 

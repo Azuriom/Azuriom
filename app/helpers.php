@@ -246,8 +246,8 @@ if (! function_exists('dark_theme')) {
     }
 }
 
-if (! function_exists('save_translations')) {
-    function save_translations(&$model, $translations)
+if (! function_exists('set_spatie_translations')) {
+    function set_spatie_translations(&$model, $translations)
     {
         foreach ($translations as $index => $fields) {
             foreach ($fields as $key => $value) {
