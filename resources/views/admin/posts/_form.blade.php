@@ -95,52 +95,56 @@
     </div>
 @empty
     <div class="form-group">
-        <label for="translationInput-0">Translation</label>
-        <input type="text" class="form-control" id="translationInput-0" name="translations[0][locale]" value="{{ old('translations.0.locale', app()->getLocale()) }}" required>
+        <label for="translationInput-default">Translation</label>
+        <input type="text" class="form-control" id="translationInput-default" name="translations[default][locale]" value="{{ old('translations.default.locale', app()->getLocale()) }}" required>
     </div>
 
     <div class="form-group">
-        <label for="titleInput-0">{{ trans('messages.fields.title') }}</label>
-        <input type="text" class="form-control @error('title-0') is-invalid @enderror" id="titleInput-0" name="translations[0][title]" value="{{ old('translations.0.title', '') }}" required>
+        <label for="titleInput-default">{{ trans('messages.fields.title') }}</label>
+        <input type="text" class="form-control @error('title-default') is-invalid @enderror" id="titleInput-default" name="translations[default][title]" value="{{ old('translations.default.title', '') }}" required>
     
-        @error('title-0')
+        @error('title-default')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
     
     <div class="form-group">
-        <label for="descriptionInput-0">{{ trans('messages.fields.description') }}</label>
-        <input type="text" class="form-control @error('description-0') is-invalid @enderror" id="descriptionInput-0" name="translations[0][description]" value="{{ old('translations.0.description', '') }}" required>
+        <label for="descriptionInput-default">{{ trans('messages.fields.description') }}</label>
+        <input type="text" class="form-control @error('description-default') is-invalid @enderror" id="descriptionInput-default" name="translations[default][description]" value="{{ old('translations.default.description', '') }}" required>
     
-        @error('description-0')
+        @error('description-default')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
     
     <div class="form-group">
-        <label for="slugInput-0">{{ trans('messages.fields.slug') }}</label>
+        <label for="slugInput-default">{{ trans('messages.fields.slug') }}</label>
         <div class="input-group">
             <div class="input-group-prepend">
                 <div class="input-group-text">{{ route('posts.index') }}/</div>
             </div>
-            <input type="text" class="form-control @error('slug-0') is-invalid @enderror" id="slugInput-0" name="translations[0][slug]" value="{{ old('translations.0.slug', '') }}" required>
+            <input type="text" class="form-control @error('slug-default') is-invalid @enderror" id="slugInput-default" name="translations[default][slug]" value="{{ old('translations.default.slug', '') }}" required>
     
-            @error('slug-0')
+            @error('slug-default')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
     </div>
     
     <div class="form-group">
-        <label for="textArea-0">{{ trans('messages.fields.content') }}</label>
-        <textarea class="form-control html-editor @error('content-0') is-invalid @enderror" id="textArea-0" name="translations[0][content]" rows="5">{{ old('translations.0.content', '') }}</textarea>
+        <label for="textArea-default">{{ trans('messages.fields.content') }}</label>
+        <textarea class="form-control html-editor @error('content-default') is-invalid @enderror" id="textArea-default" name="translations[default][content]" rows="5">{{ old('translations.default.content', '') }}</textarea>
     
-        @error('content-0')
+        @error('content-default')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
 @endforelse
 </div>
+
+<button type="button" id="addCommandButton" class="btn btn-sm btn-success my-2">
+    <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+</button>
 
 <div class="form-group">
     <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
@@ -159,7 +163,7 @@
 <div class="form-group">
     <label for="imageInput">{{ trans('messages.fields.image') }}</label>
     <div class="custom-file">
-        <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput-0" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="imagePreview">
+        <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput-default" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="imagePreview">
         <label class="custom-file-label" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
 
         @error('image')
@@ -185,7 +189,3 @@
     <input type="checkbox" class="custom-control-input" id="pinnedSwitch" name="is_pinned" @if($post->is_pinned ?? false) checked @endif>
     <label class="custom-control-label" for="pinnedSwitch">{{ trans('admin.posts.pin') }}</label>
 </div>
-
-<button type="button" id="addCommandButton" class="btn btn-sm btn-success">
-    <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
-</button>

@@ -56,6 +56,14 @@ class SwitchToSpatieTranslations extends Migration
                 ->save();
         }
 
+        $rawModels = DB::table('navbar_elements')->get();
+        foreach ($rawModels as $key => $element) {
+            $element = Page::find($element->id);
+            $element
+                ->setTranslation('name', $locale, $rawModels[$key]->name)
+                ->save();
+        }
+
         DB::table('comments')->update(['locale' => $locale]);
         DB::table('users')->update(['locale' => $locale]);
     }

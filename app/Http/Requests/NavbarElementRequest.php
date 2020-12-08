@@ -44,7 +44,8 @@ class NavbarElementRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
+            'translations.*.locale' => ['required', 'string'],
+            'translations.*.name' => ['required', 'string', 'max:50'],
             'type' => ['string', Rule::in(NavbarElement::types())],
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],

@@ -8,6 +8,7 @@ use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class NavbarController extends Controller
 {
@@ -94,7 +95,11 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        NavbarElement::create($request->validated());
+        $navbar = new NavbarElement();
+        $data = $request->validated();
+        save_translations($navbar, $data['translations']);
+
+        $navbar->update(Arr::except($data, 'translations'));
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.created'));
@@ -132,8 +137,10 @@ class NavbarController extends Controller
                 $element->save();
             }
         }
+        $data = $request->validated();
+        save_translations($navbarElement, $data['translations']);
 
-        $navbarElement->update($request->validated());
+        $navbarElement->update(Arr::except($data, 'translations'));
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.updated'));
