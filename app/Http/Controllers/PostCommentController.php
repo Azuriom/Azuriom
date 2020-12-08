@@ -25,7 +25,7 @@ class PostCommentController extends Controller
      */
     public function store(CommentRequest $request, Post $post)
     {
-        $post->comments()->create($request->validated()+['locale' => app()->getLocale()]);
+        $post->comments()->create($request->validated() + ['locale' => app()->getLocale()]);
 
         return redirect()->route('posts.show', $post);
     }

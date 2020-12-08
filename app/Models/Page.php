@@ -3,10 +3,10 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Attachable;
+use Azuriom\Models\Traits\HasTranslations;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Azuriom\Models\Traits\HasTranslations;
 
 /**
  * @property int $id

@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Post;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PostController extends Controller

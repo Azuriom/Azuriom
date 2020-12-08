@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasImage;
+use Azuriom\Models\Traits\HasTranslations;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
 use Exception;
@@ -11,7 +12,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Azuriom\Models\Traits\HasTranslations;
 
 /**
  * @property int $id

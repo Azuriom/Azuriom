@@ -40,7 +40,7 @@ class PageController extends Controller
     public function store(PageRequest $request)
     {
         $page = new Page();
-        
+
         $data = $request->validated();
         foreach ($data['translations'] as $index => $fields) {
             foreach ($fields as $key => $value) {
