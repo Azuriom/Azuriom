@@ -2,12 +2,12 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Azuriom\Models\Traits\HasTranslations;
 
 /**
  * @property int $id

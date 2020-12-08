@@ -156,12 +156,14 @@ if (!$.easing.easeInOutExpo) {
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
+var numberOfTranslatedElements = 0;
+
 function addCommandListenerToTranslations(el) {
     el.addEventListener('click', function () {
       const element = el.parentNode.parentNode.parentNode.parentNode;
 
       element.parentNode.removeChild(element);
-      numberOfElements--;
+      numberOfTranslatedElements--;
     });
 }
 
@@ -174,7 +176,7 @@ function addNodeToTranslationsDom(form) {
     document.getElementById('translations').appendChild(newElement);
         
     tinymce.init({
-        selector: '#textArea-'+numberOfElements,
+        selector: '#textArea-'+numberOfTranslatedElements,
         height: 400,
         min_height: 200,
         entity_encoding: 'raw',
@@ -210,5 +212,5 @@ function addNodeToTranslationsDom(form) {
             });
         },
     });
-    numberOfElements++;
+    numberOfTranslatedElements++;
 }

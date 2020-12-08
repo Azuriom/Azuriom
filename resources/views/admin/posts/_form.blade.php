@@ -7,7 +7,7 @@
 
 @push('footer-scripts')
     <script>
-        var numberOfElements = parseInt({{count($locales)}});
+        numberOfTranslatedElements = parseInt({{count($locales)}});
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -18,9 +18,9 @@
             document.getElementById('addCommandButton').addEventListener('click', function () {
                 let form = `
                 <div class="form-group">
-                    <label for="translationInput-`+numberOfElements+`">Translation</label>
+                    <label for="translationInput-`+numberOfTranslatedElements+`">Translation</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="translationInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][locale]" value="" required>
+                        <input type="text" class="form-control" id="translationInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][locale]" value="" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
                             </button>
@@ -29,18 +29,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="titleInput-`+numberOfElements+`">{{ trans('messages.fields.title') }}</label>
-                    <input type="text" class="form-control" id="titleInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][title]" value="" required>
+                    <label for="titleInput-`+numberOfTranslatedElements+`">{{ trans('messages.fields.title') }}</label>
+                    <input type="text" class="form-control" id="titleInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][title]" value="" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="descriptionInput-`+numberOfElements+`">{{ trans('messages.fields.description') }}</label>
-                    <input type="text" class="form-control" id="descriptionInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][description]" value="" required>
+                    <label for="descriptionInput-`+numberOfTranslatedElements+`">{{ trans('messages.fields.description') }}</label>
+                    <input type="text" class="form-control" id="descriptionInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][description]" value="" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="textArea-`+numberOfElements+`">{{ trans('messages.fields.content') }}</label>
-                    <textarea class="form-control" id="textArea-`+numberOfElements+`" name="translations[`+numberOfElements+`][content]" rows="5"></textarea>
+                    <label for="textArea-`+numberOfTranslatedElements+`">{{ trans('messages.fields.content') }}</label>
+                    <textarea class="form-control" id="textArea-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][content]" rows="5"></textarea>
                 </div>
                 `;
                 addNodeToTranslationsDom(form);
