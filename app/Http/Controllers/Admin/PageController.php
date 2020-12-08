@@ -5,8 +5,8 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -40,12 +40,12 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $page = new Page();
         $data = $request->validated();
+        $page = new Page(Arr::except($data, 'translations'));
 
-        save_translations($page, $data['translations']);      
+        save_translations($page, $data['translations']);
+        $page->save();
 
-        $page->update(Arr::except($data, 'translations'));
         $page->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));

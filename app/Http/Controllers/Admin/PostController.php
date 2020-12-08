@@ -5,8 +5,8 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Post;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -42,12 +42,11 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = new Post();
-
         $data = $request->validated();
-        save_translations($post, $data['translations']);
+        $post = new Post(Arr::except($data, ['image', 'translations']));
 
-        $post->update(Arr::except($data, ['image', 'translations']));
+        save_translations($post, $data['translations']);
+        $post->save();
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'), true);

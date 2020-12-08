@@ -95,11 +95,11 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        $navbar = new NavbarElement();
         $data = $request->validated();
-        save_translations($navbar, $data['translations']);
+        $navbar = new NavbarElement(Arr::except($data, 'translations'));
 
-        $navbar->update(Arr::except($data, 'translations'));
+        save_translations($navbar, $data['translations']);
+        $navbar->save();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.created'));
@@ -137,6 +137,7 @@ class NavbarController extends Controller
                 $element->save();
             }
         }
+
         $data = $request->validated();
         save_translations($navbarElement, $data['translations']);
 
