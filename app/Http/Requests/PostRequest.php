@@ -28,10 +28,11 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:150'],
-            'description' => ['required', 'string', 'max:255'],
+            'translations.*.locale' => ['required', 'string'],
+            'translations.*.title' => ['required', 'string', 'max:150'],
+            'translations.*.description' => ['required', 'string', 'max:255'],
+            'translations.*.content' => ['required', 'string'],
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($this->post, 'slug')],
-            'content' => ['required', 'string'],
             'published_at' => ['required', 'date'],
             'is_pinned' => ['filled', 'boolean'],
             'image' => ['nullable', 'image'],

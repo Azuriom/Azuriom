@@ -39,8 +39,19 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $page = Page::create($request->validated());
+        $page = new Page();
+        
+        $data = $request->validated();
+        foreach ($data['translations'] as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $page->setTranslation($key, $data['translations'][$index]['locale'], $value);
+                }
+            }
+        }
+        $page->is_enabled = $data['is_enabled'];
 
+        $page->save();
         $page->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));
@@ -66,7 +77,16 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        $page->update($request->validated());
+        $data = $request->validated();
+        foreach ($data['translations'] as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $page->setTranslation($key, $data['translations'][$index]['locale'], $value);
+                }
+            }
+        }
+        $page->is_enabled = $data['is_enabled'];
+        $page->save();
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.updated'));
     }

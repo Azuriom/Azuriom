@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Azuriom\Models\Traits\HasTranslations;
 
 /**
  * @property int $id
@@ -38,6 +39,14 @@ class Post extends Model
     use HasImage;
     use HasUser;
     use Loggable;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = ['title', 'description', 'content'];
 
     /**
      * The attributes that are mass assignable.

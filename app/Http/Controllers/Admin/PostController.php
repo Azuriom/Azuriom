@@ -42,7 +42,21 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = Post::create(Arr::except($request->validated(), 'image'));
+        $post = new Post();
+
+        $data = $request->validated();
+        foreach ($data['translations'] as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $post->setTranslation($key, $data['translations'][$index]['locale'], $value);
+                }
+            }
+        }
+
+        $post->published_at = $data['published_at'];
+        $post->is_pinned = $data['is_pinned'];
+
+        $post->save();
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'), true);
@@ -77,7 +91,19 @@ class PostController extends Controller
             $post->storeImage($request->file('image'));
         }
 
-        $post->update(Arr::except($request->validated(), 'image'));
+        $data = $request->validated();
+        foreach ($data['translations'] as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $post->setTranslation($key, $data['translations'][$index]['locale'], $value);
+                }
+            }
+        }
+
+        $post->published_at = $data['published_at'];
+        $post->is_pinned = $data['is_pinned'];
+
+        $post->save();
 
         return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.updated'));
     }
