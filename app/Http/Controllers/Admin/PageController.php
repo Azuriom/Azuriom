@@ -40,15 +40,10 @@ class PageController extends Controller
     public function store(PageRequest $request)
     {
         $page = new Page();
-
         $data = $request->validated();
-        foreach ($data['translations'] as $index => $fields) {
-            foreach ($fields as $key => $value) {
-                if ($key !== 'locale') {
-                    $page->setTranslation($key, $data['translations'][$index]['locale'], $value);
-                }
-            }
-        }
+
+        save_translations($page, $data['translations']);
+
         $page->is_enabled = $data['is_enabled'];
 
         $page->save();
@@ -78,13 +73,8 @@ class PageController extends Controller
     public function update(PageRequest $request, Page $page)
     {
         $data = $request->validated();
-        foreach ($data['translations'] as $index => $fields) {
-            foreach ($fields as $key => $value) {
-                if ($key !== 'locale') {
-                    $page->setTranslation($key, $data['translations'][$index]['locale'], $value);
-                }
-            }
-        }
+        save_translations($page, $data['translations']);
+
         $page->is_enabled = $data['is_enabled'];
         $page->save();
 

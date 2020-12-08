@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Azuriom\Models\Traits\HasTranslations;
 
 /**
  * @property int $id
@@ -24,6 +25,15 @@ use Illuminate\Support\Str;
  */
 class NavbarElement extends Model
 {
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = ['name'];
+
     /**
      * The navbar elements types.
      *

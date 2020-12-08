@@ -245,3 +245,16 @@ if (! function_exists('dark_theme')) {
         return request()->cookie('theme') === 'dark';
     }
 }
+
+if (! function_exists('save_translations')) {
+    function save_translations($model, $translations)
+    {
+        foreach ($translations as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $model->setTranslation($key, $translations[$index]['locale'], $value);
+                }
+            }
+        }
+    }
+}

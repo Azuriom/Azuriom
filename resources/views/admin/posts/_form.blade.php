@@ -7,98 +7,45 @@
 
 @push('footer-scripts')
     <script>
-      function addCommandListener(el) {
-        el.addEventListener('click', function () {
-          const element = el.parentNode.parentNode.parentNode.parentNode;
+        var numberOfElements = parseInt({{count($locales)}});
 
-          element.parentNode.removeChild(element);
-          numberOfPages--;
-        });
-      }
+        document.addEventListener('DOMContentLoaded', function() {
 
-      var numberOfPages = parseInt({{count($locales)}});
+            document.querySelectorAll('.command-remove').forEach(function (el) {
+                addCommandListenerToTranslations(el);
+            });
 
-      document.querySelectorAll('.command-remove').forEach(function (el) {
-        addCommandListener(el);
-      });
-
-      document.getElementById('addCommandButton').addEventListener('click', function () {
-        
-        let form = `
-        <div class="form-group">
-            <label for="translationInput-`+numberOfPages+`">Translation</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="translationInput-`+numberOfPages+`" name="translations[`+numberOfPages+`][locale]" value="" required>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
-                    </button>
+            document.getElementById('addCommandButton').addEventListener('click', function () {
+                let form = `
+                <div class="form-group">
+                    <label for="translationInput-`+numberOfElements+`">Translation</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="translationInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][locale]" value="" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <label for="titleInput-`+numberOfPages+`">{{ trans('messages.fields.title') }}</label>
-            <input type="text" class="form-control" id="titleInput-`+numberOfPages+`" name="translations[`+numberOfPages+`][title]" value="" required>
-        </div>
+                <div class="form-group">
+                    <label for="titleInput-`+numberOfElements+`">{{ trans('messages.fields.title') }}</label>
+                    <input type="text" class="form-control" id="titleInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][title]" value="" required>
+                </div>
 
-        <div class="form-group">
-            <label for="descriptionInput-`+numberOfPages+`">{{ trans('messages.fields.description') }}</label>
-            <input type="text" class="form-control" id="descriptionInput-`+numberOfPages+`" name="translations[`+numberOfPages+`][description]" value="" required>
-        </div>
+                <div class="form-group">
+                    <label for="descriptionInput-`+numberOfElements+`">{{ trans('messages.fields.description') }}</label>
+                    <input type="text" class="form-control" id="descriptionInput-`+numberOfElements+`" name="translations[`+numberOfElements+`][description]" value="" required>
+                </div>
 
-        <div class="form-group">
-            <label for="textArea-`+numberOfPages+`">{{ trans('messages.fields.content') }}</label>
-            <textarea class="form-control" id="textArea-`+numberOfPages+`" name="translations[`+numberOfPages+`][content]" rows="5"></textarea>
-        </div>
-        `;
-
-        const newElement = document.createElement('div');
-        newElement.innerHTML = form;
-
-        addCommandListener(newElement.querySelector('.command-remove'));
-        
-        document.getElementById('translations').appendChild(newElement);
-        
-        tinymce.init({
-            selector: '#textArea-'+numberOfPages,
-            height: 400,
-            min_height: 200,
-            entity_encoding: 'raw',
-            plugins: 'preview searchreplace autolink code image link hr anchor lists paste',
-            toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
-            relative_urls : false,
-
-                        automatic_uploads: true,
-            paste_data_images: true,
-            images_replace_blob_uris: true,
-            images_upload_handler: function (blobInfo, success, failure, progress) {
-                const formData = new FormData();
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                axios.post('http://azuriom.test/admin/pages/1/attachments', formData, {
-                    onUploadProgress: function (progressEvent) {
-                        if (progressEvent.lengthComputable) {
-                            progress(progressEvent.loaded / progressEvent.total * 100);
-                        }
-                    },
-                }).then(function (response) {
-                    success(response.data.location);
-                }).catch(function (error) {
-                    tinymce.activeEditor.dom.doc.querySelectorAll('img[src^="blob:"]').forEach(function (img) {
-                        tinymce.activeEditor.execCommand('mceRemoveNode', false, img);
-                    });
-
-                    if (error.response) {
-                        failure(error.response.data.message);
-                        return;
-                    }
-
-                    failure(error);
-                });
-            },
+                <div class="form-group">
+                    <label for="textArea-`+numberOfElements+`">{{ trans('messages.fields.content') }}</label>
+                    <textarea class="form-control" id="textArea-`+numberOfElements+`" name="translations[`+numberOfElements+`][content]" rows="5"></textarea>
+                </div>
+                `;
+                addNodeToTranslationsDom(form);
+            });
         });
-        numberOfPages++;
-      });
     </script>
 @endpush
 
@@ -149,7 +96,7 @@
 @empty
     <div class="form-group">
         <label for="translationInput-0">Translation</label>
-        <input type="text" class="form-control" id="translationInput-0" name="translations[0][locale]" value="{{ old('translations.0.locale','') }}" required>
+        <input type="text" class="form-control" id="translationInput-0" name="translations[0][locale]" value="{{ old('translations.0.locale', app()->getLocale()) }}" required>
     </div>
 
     <div class="form-group">

@@ -44,13 +44,7 @@ class PostController extends Controller
         $post = new Post();
 
         $data = $request->validated();
-        foreach ($data['translations'] as $index => $fields) {
-            foreach ($fields as $key => $value) {
-                if ($key !== 'locale') {
-                    $post->setTranslation($key, $data['translations'][$index]['locale'], $value);
-                }
-            }
-        }
+        save_translations($post, $data['translations']);
 
         $post->published_at = $data['published_at'];
         $post->is_pinned = $data['is_pinned'];
@@ -91,13 +85,7 @@ class PostController extends Controller
         }
 
         $data = $request->validated();
-        foreach ($data['translations'] as $index => $fields) {
-            foreach ($fields as $key => $value) {
-                if ($key !== 'locale') {
-                    $post->setTranslation($key, $data['translations'][$index]['locale'], $value);
-                }
-            }
-        }
+        save_translations($post, $data['translations']);
 
         $post->published_at = $data['published_at'];
         $post->is_pinned = $data['is_pinned'];
