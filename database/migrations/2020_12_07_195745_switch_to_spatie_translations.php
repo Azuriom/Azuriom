@@ -27,11 +27,11 @@ class SwitchToSpatieTranslations extends Migration
         });
 
         Schema::table('comments', function (Blueprint $table) {
-            $table->string('locale');
+            $table->string('locale')->default('en');
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('locale');
+            $table->string('locale')->default('en');
         });
 
         $locale = App::getLocale();
