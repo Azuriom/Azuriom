@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class PageController extends Controller
 {
@@ -42,11 +43,9 @@ class PageController extends Controller
         $page = new Page();
         $data = $request->validated();
 
-        save_translations($page, $data['translations']);
+        save_translations($page, $data['translations']);      
 
-        $page->is_enabled = $data['is_enabled'];
-
-        $page->save();
+        $page->update(Arr::except($data, 'translations'));
         $page->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));
@@ -75,8 +74,7 @@ class PageController extends Controller
         $data = $request->validated();
         save_translations($page, $data['translations']);
 
-        $page->is_enabled = $data['is_enabled'];
-        $page->save();
+        $page->update(Arr::except($data, 'translations'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.updated'));
     }

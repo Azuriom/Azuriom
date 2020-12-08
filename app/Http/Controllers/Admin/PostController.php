@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Post;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
@@ -46,10 +47,7 @@ class PostController extends Controller
         $data = $request->validated();
         save_translations($post, $data['translations']);
 
-        $post->published_at = $data['published_at'];
-        $post->is_pinned = $data['is_pinned'];
-
-        $post->save();
+        $post->update(Arr::except($data, ['image', 'translations']));
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'), true);
@@ -87,10 +85,7 @@ class PostController extends Controller
         $data = $request->validated();
         save_translations($post, $data['translations']);
 
-        $post->published_at = $data['published_at'];
-        $post->is_pinned = $data['is_pinned'];
-
-        $post->save();
+        $post->update(Arr::except($data, ['image', 'translations']));
 
         return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.updated'));
     }
