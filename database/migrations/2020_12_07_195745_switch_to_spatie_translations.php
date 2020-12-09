@@ -34,6 +34,10 @@ class SwitchToSpatieTranslations extends Migration
             $table->string('locale')->default('en');
         });
 
+        Schema::table('navbar_elements', function (Blueprint $table) {
+            $table->text('name')->change();
+        });
+
         $locale = App::getLocale();
 
         $rawModels = DB::table('posts')->get();
