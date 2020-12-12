@@ -12,7 +12,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelectorAll('.command-remove').forEach(function (el) {
+            document.querySelectorAll('.translation-remove').forEach(function (el) {
                 addCommandListenerToTranslations(el);
             });
 
@@ -24,7 +24,7 @@
                     <input type="text" name="translations[`+numberOfTranslatedElements+`][locale]" aria-label="en" class="form-control">
                     <input type="text" name="translations[`+numberOfTranslatedElements+`][name]" aria-label="Home" class="form-control">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
+                        <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <input type="text" value="{{ old('translations.'.$loop->index.'.locale', $locale ?? '') }}" name="translations[{{$loop->index}}][locale]" aria-label="en" class="form-control">
                 <input type="text" value="{{ old('translations.'.$loop->index.'.name', $translations['name'][$locale] ?? '') }}" name="translations[{{$loop->index}}][name]" aria-label="Home" class="form-control">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
+                    <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>

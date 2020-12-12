@@ -171,7 +171,7 @@ function addNodeToTranslationsDom(form) {
     const newElement = document.createElement('div');
     newElement.innerHTML = form;
 
-    addCommandListenerToTranslations(newElement.querySelector('.command-remove'));
+    addCommandListenerToTranslations(newElement.querySelector('.translation-remove'));
         
     document.getElementById('translations').appendChild(newElement);
     

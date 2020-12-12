@@ -11,7 +11,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            document.querySelectorAll('.command-remove').forEach(function (el) {
+            document.querySelectorAll('.translation-remove').forEach(function (el) {
                 addCommandListenerToTranslations(el);
             });
 
@@ -22,7 +22,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="translationInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][locale]" value="" required>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
+                            <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                             </button>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" id="translationInput-{{$loop->index}}" name="translations[{{$loop->index}}][locale]" value="{{ old('translations.'.$loop->index.'.locale', $locale ?? '') }}" required>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-danger command-remove" type="button"><i class="fas fa-times"></i>
+                    <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
