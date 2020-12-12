@@ -156,7 +156,7 @@ if (!$.easing.easeInOutExpo) {
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
-var numberOfTranslatedElements = 0;
+var numberOfTranslatedElements;
 
 function addCommandListenerToTranslations(el) {
     el.addEventListener('click', function () {
