@@ -37,4 +37,17 @@ class HomeController extends Controller
 
         return view('maintenance', ['maintenanceMessage' => $maintenanceMessage]);
     }
+
+    public function locale($locale)
+    {
+        abort_unless(in_array($locale, ['en', 'fr'], true), 401);
+
+        if (auth()->check()) {
+            auth()->user()->update(['locale' => $locale]);
+        } else {
+            session()->put('locale', $locale);
+        }
+
+        return redirect()->back();
+    }
 }
