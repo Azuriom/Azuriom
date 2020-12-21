@@ -22,18 +22,14 @@
         });
 
         function serialize(sortable) {
-            const serialized = [];
-
-            [].slice.call(sortable.children).forEach(function (child) {
+            return [].slice.call(sortable.children).map(function (child) {
                 const nested = child.querySelector('.sortable');
 
-                serialized.push({
+                return {
                     id: child.dataset['id'],
                     children: nested ? serialize(nested) : [],
-                });
+                };
             });
-
-            return serialized
         }
 
         const saveButton = document.getElementById('save');

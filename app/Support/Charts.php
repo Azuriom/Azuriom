@@ -40,12 +40,21 @@ class Charts
     public static function aggregateByDays(Builder $query, string $function, string $group, string $column = null, int $days = 7)
     {
         $start = today()->subDays($days);
+        $result = static::rawAggregateByDays($query, $start, $function, $group, $column);
+
+        return $result->mapWithKeys(function ($value, string $date) {
+            return [format_date(Carbon::createFromFormat('Y-m-d', $date)) => $value];
+        });
+    }
+
+    public static function rawAggregateByDays(Builder $query, Carbon $start, string $function, string $group, ?string $column)
+    {
         $date = $start->clone();
         $dates = collect();
         $column = $column ?? $query->getModel()->getCreatedAtColumn();
 
         while ($date->isPast() || $date->isToday()) {
-            $dates->put(format_date($date), 0);
+            $dates->put($date->format('Y-m-d'), 0);
 
             $date = $date->addDay();
         }
@@ -60,11 +69,7 @@ class Charts
             ->groupBy($driver !== 'sqlsrv' ? 'date' : DB::raw($dateCast))
             ->orderBy('date')
             ->get()
-            ->mapWithKeys(function ($value) {
-                $date = Carbon::createFromFormat('Y-m-d', $value->date);
-
-                return [format_date($date) => $value->aggregate];
-            });
+            ->pluck('aggregate', 'date');
 
         return $dates->merge($results);
     }
@@ -82,12 +87,23 @@ class Charts
     public static function aggregateByMonths(Builder $query, string $function, string $group, string $column = null, int $months = 12)
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
+        $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);
+
+        return $result->mapWithKeys(function ($value, string $date) {
+            $carbon = Carbon::createFromFormat('Y-m', $date);
+
+            return [$carbon->translatedFormat('F Y') => $value];
+        });
+    }
+
+    public static function rawAggregateByMonths(Builder $query, Carbon $start, string $function, string $group, ?string $column)
+    {
         $date = $start->clone();
         $dates = collect();
         $column = $column ?? $query->getModel()->getCreatedAtColumn();
 
         while ($date->isPast()) {
-            $dates->put($date->translatedFormat('F Y'), 0);
+            $dates->put($date->format('Y-m'), 0);
 
             $date = $date->addMonth();
         }
@@ -101,11 +117,7 @@ class Charts
             ->groupBy($driver !== 'sqlsrv' ? 'date' : DB::raw($rawQuery))
             ->orderBy('date')
             ->get()
-            ->mapWithKeys(function ($result) {
-                $date = Carbon::createFromFormat('Y-m', $result->date);
-
-                return [$date->translatedFormat('F Y') => $result->aggregate];
-            });
+            ->pluck('aggregate', 'date');
 
         return $dates->merge($results);
     }

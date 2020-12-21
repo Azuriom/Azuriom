@@ -33,6 +33,8 @@ class ServerStat extends Model
      * @var array
      */
     protected $casts = [
+        'players' => 'int',
+        'ram' => 'int',
         'cpu' => 'float',
         'data' => 'array',
     ];

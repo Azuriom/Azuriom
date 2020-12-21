@@ -60,6 +60,13 @@ class PluginController extends Controller
     public function enable(string $plugin)
     {
         try {
+            if (! $this->plugins->isSupportedByGame($plugin)) {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.game-requirement', [
+                        'game' => game()->name(),
+                    ]));
+            }
+
             $requirements = $this->plugins->getMissingRequirements($plugin);
 
             if ($requirements === 'azuriom') {

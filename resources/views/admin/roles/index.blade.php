@@ -13,13 +13,9 @@
             });
 
             function serialize(sortable) {
-                const serialized = [];
-
-                [].slice.call(sortable.children).forEach(function (child) {
-                    serialized.push(child.dataset['id']);
+                return [].slice.call(sortable.children).map(function (child) {
+                    return child.dataset['id'];
                 });
-
-                return serialized
             }
 
             const saveButton = document.getElementById('save');

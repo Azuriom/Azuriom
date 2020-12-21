@@ -9,7 +9,7 @@ class RustGame extends SteamGame
 {
     public function __construct()
     {
-        parent::__construct('Rust');
+        parent::__construct('rust', 'Rust');
     }
 
     public function getSupportedServers()

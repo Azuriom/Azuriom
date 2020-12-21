@@ -501,6 +501,7 @@ return [
         'available' => 'Available plugins',
 
         'azuriom-requirement' => 'This plugin is not compatible with your Azuriom version.',
+        'game-requirement' => 'This plugin is not compatible with the game :game.',
         'plugin-requirement' => 'The plugin ":plugin" is missing or its version is not compatible with this plugin.',
 
         'status' => [

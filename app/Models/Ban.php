@@ -59,7 +59,7 @@ class Ban extends Model
     {
         foreach (['created', 'deleted'] as $event) {
             static::registerModelEvent($event, function (self $ban) {
-                $ban->user->refreshActiveBan();
+                $ban->user->flushBanCache();
             });
         }
     }

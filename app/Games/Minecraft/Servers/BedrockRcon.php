@@ -4,7 +4,7 @@ namespace Azuriom\Games\Minecraft\Servers;
 
 use Azuriom\Models\User;
 
-class Rcon extends Ping
+class BedrockRcon extends BedrockPing
 {
     use RconTrait;
 
@@ -24,6 +24,6 @@ class Rcon extends Ping
         }
 
         return parent::replacePlaceholders($command, $user)
-            ->replace('{uuid}', $user->game_id);
+            ->replace('{xuid}', $user->game_id);
     }
 }

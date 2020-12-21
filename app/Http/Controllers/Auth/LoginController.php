@@ -77,7 +77,7 @@ class LoginController extends Controller
         /** @var \Azuriom\Models\User $user */
         $user = $this->guard()->user();
 
-        if ($user === null || $user->is_deleted) {
+        if ($user === null || $user->isDeleted()) {
             return $this->sendFailedLoginResponse($request);
         }
 

@@ -12,6 +12,7 @@ use Composer\Semver\Semver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
@@ -296,6 +297,18 @@ class PluginManager extends ExtensionManager
         return $this->getMissingRequirements($plugin) === null;
     }
 
+    public function isSupportedByGame(string $plugin)
+    {
+        $description = $this->findDescription($plugin);
+        $supportedGames = $description->games ?? null;
+
+        if (! is_array($supportedGames)) {
+            return true;
+        }
+
+        return game()->isExtensionCompatible($supportedGames);
+    }
+
     public function getMissingRequirements(string $plugin)
     {
         $description = $this->findDescription($plugin);
@@ -413,9 +426,14 @@ class PluginManager extends ExtensionManager
                 return isset($plugin->apiId);
             });
 
-        return collect($plugins)->filter(function ($plugin) use ($installedPlugins) {
-            return ! $installedPlugins->contains('apiId', $plugin['id']);
-        });
+        return collect($plugins)
+            ->filter(function ($plugin) use ($installedPlugins) {
+                return ! $installedPlugins->contains('apiId', $plugin['id']);
+            })->filter(function ($plugin) {
+                $games = Arr::get($plugin, 'games', '*');
+
+                return $games === '*' || game()->isExtensionCompatible($games);
+            });
     }
 
     public function getPluginToUpdate(bool $force = false)
