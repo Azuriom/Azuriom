@@ -38,6 +38,7 @@ class ServerController extends Controller
         $commands = $server->commands()
             ->whereIn('player_name', $players)
             ->orWhere('need_online', false)
+            ->limit(100)
             ->get();
 
         if (! $commands->isEmpty()) {
@@ -49,6 +50,9 @@ class ServerController extends Controller
                 });
         }
 
-        return response()->json(['commands' => $commands]);
+        return response()->json([
+            'commands' => $commands,
+            'retry' => $commands->count() > 100,
+        ]);
     }
 }

@@ -37,12 +37,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --ansi --no-interaction --no-progress --prefer-dist
-        if: matrix.php-version < 8.0
-
-      # Ignore platform requirements on PHP 8.0 as some dependencies are not updated yet on Packagist
-      - name: Install dependencies (without platform requirements)
-        run: composer install --ansi --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
-        if: matrix.php-version >= 8.0
 
       - name: Run tests
         run: vendor/bin/phpunit

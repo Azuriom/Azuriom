@@ -88,17 +88,21 @@ $('.custom-file-input').on('change', function () {
     }
 });
 
-if ($(window).width() < 450 || localStorage.getItem('azuriom-toggle-admin-sidebar') === 'true') {
-    $('#sidebarToggleTop').trigger('click');
-}
-
 $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
+    if ($(window).width() < 480 ) {
+        return;
+    }
+
     if ($('.sidebar').hasClass('toggled')) {
         localStorage.setItem('azuriom-toggle-admin-sidebar', 'true');
     } else {
         localStorage.removeItem('azuriom-toggle-admin-sidebar');
     }
 });
+
+if ($(window).width() < 480 || localStorage.getItem('azuriom-toggle-admin-sidebar') === 'true') {
+    $('#sidebarToggleTop').trigger('click');
+}
 
 function updateToggleSelect(selector, el) {
     const value = el.val() !== '' ? el.val() : 'undefined';
