@@ -43,7 +43,9 @@ class HomeController extends Controller
         abort_unless(in_array($locale, ['en', 'fr'], true), 401);
 
         if (auth()->check()) {
-            auth()->user()->update(['locale' => $locale]);
+            $user = auth()->user();
+            $user->locale = $locale;
+            $user->save();
         } else {
             session()->put('locale', $locale);
         }
