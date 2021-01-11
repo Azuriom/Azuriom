@@ -2,6 +2,7 @@
 
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Models\NavbarElement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -62,7 +63,7 @@ class SwitchToSpatieTranslations extends Migration
 
         $rawModels = DB::table('navbar_elements')->get();
         foreach ($rawModels as $key => $element) {
-            $element = Page::find($element->id);
+            $element = NavbarElement::find($element->id);
             $element
                 ->setTranslation('name', $locale, $rawModels[$key]->name)
                 ->save();
