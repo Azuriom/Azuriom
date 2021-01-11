@@ -118,20 +118,6 @@
     </div>
     
     <div class="form-group">
-        <label for="slugInput-default">{{ trans('messages.fields.slug') }}</label>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">{{ route('posts.index') }}/</div>
-            </div>
-            <input type="text" class="form-control @error('slug-default') is-invalid @enderror" id="slugInput-default" name="translations[default][slug]" value="{{ old('translations.default.slug', '') }}" required>
-    
-            @error('slug-default')
-            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-        </div>
-    </div>
-    
-    <div class="form-group">
         <label for="textArea-default">{{ trans('messages.fields.content') }}</label>
         <textarea class="form-control html-editor @error('content-default') is-invalid @enderror" id="textArea-default" name="translations[default][content]" rows="5">{{ old('translations.default.content', '') }}</textarea>
     
