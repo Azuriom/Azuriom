@@ -115,13 +115,20 @@ class SettingServiceProvider extends ServiceProvider
         $secretKey = Arr::get($settings, 'recaptcha-secret-key');
 
         if (empty($siteKey) || empty($secretKey)) {
+            Setting::updateSettings([
+                'recaptcha-site-key' => null,
+                'recaptcha-secret-key' => null,
+            ]);
+
             return;
         }
 
         Setting::updateSettings([
-            'captcha.type' => null,
+            'captcha.type' => 'recaptcha',
             'captcha.site_key' => $siteKey,
             'captcha.secret_key' => $secretKey,
+            'recaptcha-site-key' => null,
+            'recaptcha-secret-key' => null,
         ]);
     }
 }

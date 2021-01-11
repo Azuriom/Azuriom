@@ -94,7 +94,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        if ($user->is_deleted) {
+        if ($user->isDeleted()) {
             return redirect()->back();
         }
 
@@ -116,7 +116,7 @@ class UserController extends Controller
 
     public function verifyEmail(User $user)
     {
-        if ($user->is_deleted) {
+        if ($user->isDeleted()) {
             return redirect()->back();
         }
 
@@ -145,7 +145,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->is_deleted || $user->isAdmin()) {
+        if ($user->isDeleted() || $user->isAdmin()) {
             return redirect()->back();
         }
 

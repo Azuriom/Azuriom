@@ -7,6 +7,13 @@ use Azuriom\Models\User;
 abstract class Game
 {
     /**
+     * Get the id of this game.
+     *
+     * @return string
+     */
+    abstract public function id();
+
+    /**
      * Get the name of this game.
      *
      * @return string
@@ -76,4 +83,15 @@ abstract class Game
      * @return \Azuriom\Games\ServerBridge[]
      */
     abstract public function getSupportedServers();
+
+    /**
+     * Determine if an extension is compatible based on their supported games.
+     *
+     * @param  string[]  $supportedGames
+     * @return bool
+     */
+    public function isExtensionCompatible(array $supportedGames)
+    {
+        return in_array($this->id(), $supportedGames, true);
+    }
 }

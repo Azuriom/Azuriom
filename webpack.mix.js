@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const fs = require('fs');
 
 /*
  |--------------------------------------------------------------------------
@@ -37,3 +38,12 @@ mix.setPublicPath('public/assets/')
 for (const path of ['css', 'js', 'sprites', 'webfonts']) {
     mix.copyDirectory(`node_modules/@fortawesome/fontawesome-free/${path}`, `${vendorPath}/fontawesome/${path}`);
 }
+
+// Ugly fix for https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues/303
+setTimeout(() => {
+    const sbAdmin2Js = `${vendorPath}/sb-admin-2/js/sb-admin-2.min.js`;
+    const content = fs.readFileSync(sbAdmin2Js, 'utf8')
+        .replace('width()<480&&', 'width()<480&&false&&');
+
+    fs.writeFileSync(sbAdmin2Js, content, 'utf8');
+}, 500);

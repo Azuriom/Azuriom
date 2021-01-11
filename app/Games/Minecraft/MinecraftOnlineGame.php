@@ -11,6 +11,11 @@ use RuntimeException;
 
 class MinecraftOnlineGame extends AbstractMinecraftGame
 {
+    public function id()
+    {
+        return 'mc-online';
+    }
+
     public function getAvatarUrl(User $user, int $size = 64)
     {
         // Fallback to MHF_Steve if the user don't have an uuid

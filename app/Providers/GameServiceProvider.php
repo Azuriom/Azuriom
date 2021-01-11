@@ -3,6 +3,7 @@
 namespace Azuriom\Providers;
 
 use Azuriom\Games\FallbackGame;
+use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\RustGame;
@@ -24,11 +25,12 @@ class GameServiceProvider extends ServiceProvider
         self::registerGames([
             'mc-online' => MinecraftOnlineGame::class,
             'mc-offline' => MinecraftOfflineGame::class,
-            'gmod' => SteamGame::forName('Garry\'s Mod'),
-            'ark' => SteamGame::forName('ARK'),
+            'mc-bedrock' => MinecraftBedrockGame::class,
+            'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod'),
+            'ark' => SteamGame::forName('ark', 'ARK'),
             'rust' => RustGame::class,
-            'csgo' => SteamGame::forName('CS:GO'),
-            'tf2' => SteamGame::forName('Team Fortress 2'),
+            'csgo' => SteamGame::forName('csgo', 'CS:GO'),
+            'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
         ]);
     }
 

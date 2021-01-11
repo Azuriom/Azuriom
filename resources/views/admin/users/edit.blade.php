@@ -3,7 +3,7 @@
 @section('title', trans('admin.users.title-edit', ['user' => $user->name]))
 
 @section('content')
-    @if($user->is_deleted)
+    @if($user->isDeleted())
         <div class="alert alert-warning" role="alert">
             <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
@@ -42,7 +42,7 @@
                             <div class="col-md-9">
                                 <div class="form-group">
                                     <label for="nameInput">{{ trans('auth.name') }}</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->isDeleted()) disabled @endif>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -51,7 +51,7 @@
 
                                 <div class="form-group @if(oauth_login()) d-none @endif">
                                     <label for="emailInput">{{ trans('auth.email') }}</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->isDeleted()) disabled @endif>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -67,7 +67,7 @@
                         @if(! oauth_login())
                             <div class="form-group">
                                 <label for="passwordInput">{{ trans('auth.password') }}</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->isDeleted()) disabled @endif>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -77,7 +77,7 @@
 
                         <div class="form-group">
                             <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->is_deleted) disabled @endif>
+                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->isDeleted()) disabled @endif>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role->is($role)) selected @endif>{{ $role->name }}</option>
                                 @endforeach
@@ -91,7 +91,7 @@
                         <div class="form-group">
                             <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->is_deleted) disabled @endif>
+                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->isDeleted()) disabled @endif>
 
                                 <div class="input-group-append">
                                     <span class="input-group-text">{{ money_name() }}</span>
@@ -103,13 +103,13 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif>
+                        <button type="submit" class="btn btn-primary" @if($user->isDeleted()) disabled @endif>
                             <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                         </button>
 
-                        @if (! $user->is_deleted)
+                        @if (! $user->isDeleted() && ! $user->is(Auth::user()))
                             @if(! $user->isBanned())
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal">
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal" @if($user->isAdmin()) disabled @endif>
                                     <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
                                 </button>
                             @endif
@@ -154,7 +154,7 @@
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
 
-                                        @if(! $user->is_deleted)
+                                        @if(! $user->isDeleted())
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
                                             </div>

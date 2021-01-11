@@ -5,6 +5,7 @@ namespace Azuriom\Games\Minecraft\Servers;
 use Azuriom\Games\ServerBridge;
 use Azuriom\Models\User;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
 class AzLink extends ServerBridge
@@ -58,11 +59,23 @@ class AzLink extends ServerBridge
 
     public function sendServerRequest()
     {
+        $host = $this->resolveSrv($this->server->address);
         $port = $this->server->data['azlink-port'] ?? self::DEFAULT_LINK_PORT;
         $token = hash('sha256', $this->server->token);
 
         return Http::withToken($token, '')
             ->timeout(self::COMMANDS_TIMEOUT)
-            ->post("http://{$this->server->address}:{$port}");
+            ->post("http://{$host}:{$port}");
+    }
+
+    protected function resolveSrv(string $host)
+    {
+        if (ip2long($host) !== false) {
+            return $host;
+        }
+
+        $record = @dns_get_record('_minecraft._tcp.'.$host, DNS_SRV);
+
+        return empty($record) ? $host : Arr::get($record, '0.target', $host);
     }
 }

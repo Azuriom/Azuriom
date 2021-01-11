@@ -27,4 +27,13 @@ abstract class AbstractMinecraftGame extends Game
     {
         return trans('game.minecraft.'.$key, $placeholders);
     }
+
+    public function isExtensionCompatible(array $supportedGames)
+    {
+        if (parent::isExtensionCompatible($supportedGames)) {
+            return true;
+        }
+
+        return in_array('minecraft', $supportedGames, true);
+    }
 }

@@ -20,7 +20,7 @@ class ServerRequest extends FormRequest
             'type' => ['required', 'string', Rule::in(Server::types())],
             'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'between:1,65535'],
-            'rcon-port' => ['required_if:type,mc-rcon', 'nullable', 'integer', 'between:1,65535'],
+            'rcon-port' => ['nullable', 'integer', 'between:1,65535'],
             'rcon-password' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],

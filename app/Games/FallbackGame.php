@@ -14,6 +14,11 @@ class FallbackGame extends Game
         return 'None';
     }
 
+    public function id()
+    {
+        return 'none';
+    }
+
     public function getAvatarUrl(User $user, int $size = 64)
     {
         return 'https://www.gravatar.com/avatar/'.md5($user->email).'?d=mp&s='.$size;
@@ -32,5 +37,10 @@ class FallbackGame extends Game
     public function getSupportedServers()
     {
         return [];
+    }
+
+    public function isExtensionCompatible(array $supportedGames)
+    {
+        return empty($supportedGames);
     }
 }

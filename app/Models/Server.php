@@ -94,11 +94,11 @@ class Server extends Model
         return $this->getData('max_players');
     }
 
-    public function updateData($data, bool $full = false)
+    public function updateData(array $data = null, bool $full = false)
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
-        if (is_array($data) && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
+        if ($data !== null && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
             $stats = Arr::except($data, 'max_players');
             $statsData = ['data' => array_filter(Arr::except($stats, ['players', 'cpu', 'ram']))];
 

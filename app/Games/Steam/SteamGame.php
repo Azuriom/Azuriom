@@ -22,18 +22,32 @@ class SteamGame extends Game
     protected $name;
 
     /**
+     * The game's id.
+     *
+     * @var string
+     */
+    protected $id;
+
+    /**
      * Create a new game instance.
      *
+     * @param  string  $id
      * @param  string  $name
      */
-    protected function __construct(string $name)
+    protected function __construct(string $id, string $name)
     {
+        $this->id = $id;
         $this->name = $name;
     }
 
-    public static function forName(string $name)
+    public static function forName(string $id, string $name)
     {
-        return new self($name);
+        return new self($id, $name);
+    }
+
+    public function id()
+    {
+        return $this->id;
     }
 
     public function name()
@@ -91,5 +105,14 @@ class SteamGame extends Game
 
             return $response->throw()->json('response.players.0');
         });
+    }
+
+    public function isExtensionCompatible(array $supportedGames)
+    {
+        if (parent::isExtensionCompatible($supportedGames)) {
+            return true;
+        }
+
+        return in_array('steam', $supportedGames, true);
     }
 }

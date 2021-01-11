@@ -40,7 +40,7 @@
                             <th scope="row">
                                 {{ $user->id }}
 
-                                @if($user->is_deleted)
+                                @if($user->isDeleted())
                                     <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.info.deleted') }}" data-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
                                     <i class="fas fa-crown text-warning" title="{{ trans('admin.users.info.admin') }}" data-toggle="tooltip"></i>
@@ -49,10 +49,10 @@
                                     <i class="fas fa-ban text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
-                            <td @if($user->is_deleted) class="text-strikethrough" @endif>
+                            <td @if($user->isDeleted()) class="text-strikethrough" @endif>
                                 {{ $user->name }}
                             </td>
-                            <td @if($user->is_deleted) class="text-strikethrough" @endif>
+                            <td @if($user->isDeleted()) class="text-strikethrough" @endif>
                                 {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
                             </td>
                             <td>

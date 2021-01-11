@@ -6,6 +6,11 @@ use Azuriom\Models\User;
 
 class MinecraftOfflineGame extends AbstractMinecraftGame
 {
+    public function id()
+    {
+        return 'mc-offline';
+    }
+
     public function getAvatarUrl(User $user, int $size = 64)
     {
         return "https://minotar.net/helm/{$user->name}/{$size}.png";

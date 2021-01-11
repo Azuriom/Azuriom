@@ -175,6 +175,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->ban !== null;
     }
 
+    public function isDeleted()
+    {
+        return $this->is_deleted;
+    }
+
     public function flushBanCache()
     {
         Cache::forget("users.{$this->id}.banned");
