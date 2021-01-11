@@ -27,11 +27,11 @@ class SwitchToSpatieTranslations extends Migration
         });
 
         Schema::table('comments', function (Blueprint $table) {
-            $table->string('locale')->default('en');
+            $table->string('locale')->default('en')->change();;
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('locale')->default('en');
+            $table->string('locale')->default('en')->change();;
         });
 
         Schema::table('navbar_elements', function (Blueprint $table) {
