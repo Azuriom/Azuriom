@@ -32,7 +32,7 @@ class SwitchToSpatieTranslations extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('locale')->default('en')->change();
+            $table->string('locale')->default('en');
         });
 
         Schema::table('navbar_elements', function (Blueprint $table) {
