@@ -1,8 +1,8 @@
 <?php
 
+use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
-use Azuriom\Models\NavbarElement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +28,11 @@ class SwitchToSpatieTranslations extends Migration
         });
 
         Schema::table('comments', function (Blueprint $table) {
-            $table->string('locale')->default('en')->change();;
+            $table->string('locale')->default('en')->change();
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->string('locale')->default('en')->change();;
+            $table->string('locale')->default('en')->change();
         });
 
         Schema::table('navbar_elements', function (Blueprint $table) {
