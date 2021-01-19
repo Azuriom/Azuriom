@@ -2,10 +2,6 @@
 
 namespace Azuriom\Extensions\Plugin;
 
-use Illuminate\View\View;
-use Illuminate\Support\Arr;
-use Azuriom\Extensions\Plugin\AdminDashboardCardComposer;
-
 abstract class UserProfileCardComposer extends AdminDashboardCardComposer
 {
     /**
