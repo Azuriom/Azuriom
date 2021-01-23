@@ -17,7 +17,7 @@ return [
 
     'regards' => 'Mit freundlichen Grüßen,',
 
-    'link' => "Wenn Sie Probleme beim Klicken auf die \":actionText\" Schaltfläche haben, kopieren Sie die folgende URL und fügen Sie sie in Ihren Webbrowser ein: [:displayableActionUrl](:actionURL)",
+    'link' => 'Wenn Sie Probleme beim Klicken auf die ":actionText" Schaltfläche haben, kopieren Sie die folgende URL und fügen Sie sie in Ihren Webbrowser ein: [:displayableActionUrl](:actionURL)',
 
     'copyright' => '&copy; :year :name. Alle Rechte vorbehalten.',
 
