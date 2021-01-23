@@ -85,7 +85,7 @@ return [
         'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
-        'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
+        'emails-disabled' => 'L\'envoi des mails est désactivé. Si un utilisateur oublie son mot de passe, il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
         'posts' => 'Articles',
         'pages' => 'Pages',
@@ -102,7 +102,7 @@ return [
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
             'favicon' => 'Favicon',
-            'background' => 'Background',
+            'background' => 'Image de fond',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
@@ -120,7 +120,7 @@ return [
                 'title' => 'Captcha (protection anti bot)',
                 'site-key' => 'Clé du site',
                 'secret-key' => 'Clé secrète',
-                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur la site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+                'recaptcha' => 'Vous pouvez obtenir les clés Google reCAPTCHA sur la site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA</a>. Vous devez utiliser des clés reCAPTCHA <strong>v2 invisible</strong>.',
                 'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur la site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
             ],
 
@@ -149,7 +149,7 @@ return [
             'boost' => [
                 'title' => 'AzBoost',
                 'description' => 'AzBoost permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
-                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger AzBoost.',
+                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension, vous devriez recharger AzBoost.',
 
                 'current' => [
                     'status' => 'AzBoost est actuellement :status.',
@@ -179,7 +179,7 @@ return [
             'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
             'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
-            'html-code-info' => 'Exemple: Bannière cookies, Google Analytics, etc',
+            'html-code-info' => 'Exemple : Bannière cookies, Google Analytics, etc',
 
             'welcome-popup' => [
                 'enable' => 'Activer le popup de bienvenue ?',
@@ -289,13 +289,13 @@ return [
         ],
 
         'azlink' => [
-            'link' => 'Pour lier votre serveur Minecraft à votre site Web en utilisant AzLink vous devez:',
+            'link' => 'Pour lier votre serveur Minecraft à votre site Web en utilisant AzLink vous devez :',
             'link-1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
             'link-2' => 'Redémarrer votre serveur.',
-            'link-3' => 'Exécuter cette commande sur votre serveur: ',
+            'link-3' => 'Exécuter cette commande sur votre serveur : ',
 
-            'link-info' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
-            'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
+            'link-info' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande : ',
+            'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande : ',
 
             'enable-ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
             'ping-info' => 'Lorsque les commandes instantanées ne sont pas activées, les commandes seront exécutées avec un délai de 30 secondes à 1 minute.',
@@ -311,7 +311,7 @@ return [
             'deleted' => 'Le serveur a été supprimé.',
 
             'connect-success' => 'La connexion au serveur a été effectuée avec succès !',
-            'connect-error' => 'La connexion au serveur a échouée: :error',
+            'connect-error' => 'La connexion au serveur a échouée : :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
             'azlink-connect' => 'La connexion au serveur a échouée, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
@@ -358,10 +358,10 @@ return [
 
         'alert-deleted' => 'Cet utilisateur a été supprimé, il ne peut pas être édité.',
         'alert-banned' => [
-            'title' => 'Cet utilisateur est actuellement banni:',
-            'banned-by' => 'Banni par: :author',
-            'reason' => 'Raison: :reason',
-            'date' => 'Date: :date',
+            'title' => 'Cet utilisateur est actuellement banni :',
+            'banned-by' => 'Banni par : :author',
+            'reason' => 'Raison : :reason',
+            'date' => 'Date : :date',
         ],
 
         'edit-profile' => 'Éditer le profil',
@@ -509,7 +509,7 @@ return [
             'disabled' => 'Le plugin a été désactivé.',
             'updated' => 'Le plugin a été mis à jour.',
             'installed' => 'Le plugin a été installé.',
-            'deleted' => 'Le plus a été supprimé.',
+            'deleted' => 'Le plugin a été supprimé.',
 
             'error-delete' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
         ],
@@ -520,8 +520,8 @@ return [
 
         'current' => [
             'title' => 'Thème actuel',
-            'author' => 'Auteur: :author',
-            'version' => 'Version: :version',
+            'author' => 'Auteur : :author',
+            'version' => 'Version : :version',
         ],
         'installed' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
@@ -557,16 +557,16 @@ return [
 
         'backup-info' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
 
-        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
+        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom : <code>:version</code>.',
 
         'status' => [
             'download-success' => 'La dernière version d\'Azuriom a été téléchargée, vous pouvez maintenant l\'installer.',
             'install-success' => 'La dernière version d\'Azuriom a été installée avec succès.',
 
             'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom.',
-            'error-fetch' => 'Une erreur s\'est produite lors de la vérification de la mise à jour: :error',
-            'error-download' => 'Une erreur s\'est produite lors du téléchargement de la mise à jour: :error',
-            'error-install' => 'Une erreur s\'est produite lors de l\'installation de la mise à jour: :error',
+            'error-fetch' => 'Une erreur s\'est produite lors de la vérification de la mise à jour : :error',
+            'error-download' => 'Une erreur s\'est produite lors du téléchargement de la mise à jour : :error',
+            'error-install' => 'Une erreur s\'est produite lors de l\'installation de la mise à jour : :error',
         ],
 
         'actions' => [
@@ -620,7 +620,7 @@ return [
         'users' => [
             'updated' => 'Mise à jour de l\'utilisateur #:id',
             'deleted' => 'Suppression de l\'utilisateur #:id',
-            'transfer' => 'Envoie d\'argent de :money à l\'utilisateur #:id',
+            'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
         ],
 
         'settings' => [
@@ -637,7 +637,7 @@ return [
         ],
 
         'themes' => [
-            'changed' => 'Changement de theme',
+            'changed' => 'Changement de thème',
         ],
     ],
 
