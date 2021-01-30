@@ -17,7 +17,7 @@ return [
 
     'regards' => 'vriendelijke groeten,',
 
-    'link' => 'Als u problemen ondervindt bij het klikken op de \":actionText\" knop, kopieer en plak de onderstaande URL in uw webbrowser: [:displayableActionUrl](:actionURL)',
+    'link' => 'Als u problemen ondervindt bij het klikken op de ":actionText" knop, kopieer en plak de onderstaande URL in uw webbrowser: [:displayableActionUrl](:actionURL)',
 
     'copyright' => '&copy; :year :name. Alle rechten voorbehouden.',
 
