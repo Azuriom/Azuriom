@@ -34,7 +34,7 @@
                 hue: true,
                 interaction: {
                     input: true,
-                }
+                },
             }
         }).on('change', function (color) {
             if (color) {
@@ -43,7 +43,7 @@
         });
 
         colorPickrForm.addEventListener('click', function (e) {
-            e.preventDefault()
+            e.preventDefault();
         });
     </script>
 @endpush

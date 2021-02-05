@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Azuriom\Support\SettingsRepository;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class SettingsTest extends TestCase
 {

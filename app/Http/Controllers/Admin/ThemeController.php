@@ -95,7 +95,7 @@ class ThemeController extends Controller
                 if ($oldConfig !== null) {
                     $newConfig = $this->themes->readConfig($theme);
 
-                    $this->themes->updateConfig($theme, $oldConfig + $newConfig);
+                    $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
                 }
             }
         } catch (Throwable $t) {
