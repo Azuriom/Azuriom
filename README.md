@@ -19,6 +19,7 @@ Currently, Azuriom supports the following games:
 * [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/)
 * [ARK: Survival Evolved](https://store.steampowered.com/app/346110/ARK_Survival_Evolved/)
 * [Rust](https://store.steampowered.com/agecheck/app/252490/)
+* [FiveM](https://fivem.net/)
 * [Counter-Strike: Global Offensive](https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/)
 * [Team Fortress 2](https://store.steampowered.com/app/440/Team_Fortress_2/)
 

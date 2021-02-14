@@ -7,7 +7,7 @@ use WebSocket\Client;
 /**
  * A Rust RCON client implementation in PHP.
  *
- * Based on https://github.com/Facepunch/webrcon
+ * Based on https://github.com/Facepunch/webrcon under MIT license.
  */
 class RustRcon
 {

@@ -325,6 +325,10 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'bedrock-ping' => 'Bedrock Ping',
+            'bedrock-rcon' => 'Bedrock RCON',
+            'fivem-status' => 'FiveM status',
+            'fivem-rcon' => 'FiveM RCON',
             'rust-rcon' => 'Rust RCON',
             'flyff-server' => 'Flyff Server', // TODO make this dynamic
         ],

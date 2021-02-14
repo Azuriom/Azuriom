@@ -14,25 +14,24 @@
                 e.trigger.setAttribute('data-original-title', oldTitle === undefined ? '' : oldTitle);
             }
         });
-
-        const azLinkPortInput = document.getElementById('azlinkPortInput');
-
-        if (azLinkPortInput) {
-            azLinkPortInput.addEventListener('input', function (e) {
-                let port = azLinkPortInput.value;
-
-                if (port < 1 || port > 65535) {
-                    port = '25888';
-                }
-
-                document.getElementById('azLinkPortDisplay').innerText = port;
-            });
-        }
     </script>
     @isset($server)
         <script>
+            const azLinkPortInput = document.getElementById('azlinkPortInput');
             const verifyButton = document.getElementById('verifyAzLink');
             const verifyButtonIcon = verifyButton.querySelector('.btn-spinner');
+
+            if (azLinkPortInput) {
+                azLinkPortInput.addEventListener('input', function (e) {
+                    let port = azLinkPortInput.value;
+
+                    if (port < 1 || port > 65535) {
+                        port = '25888';
+                    }
+
+                    document.getElementById('azLinkPortDisplay').innerText = port;
+                });
+            }
 
             verifyButton.addEventListener('click', function () {
                 verifyButton.setAttribute('disabled', '');
@@ -128,7 +127,7 @@
     </div>
 </div>
 
-<div data-server-type="mc-rcon source-rcon rust-rcon" class="d-none">
+<div data-server-type="mc-rcon source-rcon rust-rcon fivem-rcon" class="d-none">
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
@@ -194,12 +193,12 @@
             </div>
         </div>
 
-        @isset($server)
+        @if(isset($server) && $server->isOnline())
             <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
                 <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
                 <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
             </button>
-        @endisset
+        @endif
     </div>
 
     @isset($server)
