@@ -6,6 +6,7 @@ use Azuriom\Games\FallbackGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
+use Azuriom\Games\Steam\FiveMGame;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
 use Illuminate\Support\Arr;
@@ -29,6 +30,7 @@ class GameServiceProvider extends ServiceProvider
             'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod'),
             'ark' => SteamGame::forName('ark', 'ARK'),
             'rust' => RustGame::class,
+            'fivem' => FiveMGame::class,
             'csgo' => SteamGame::forName('csgo', 'CS:GO'),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
         ]);

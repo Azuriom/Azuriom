@@ -293,8 +293,6 @@ class SettingsController extends Controller
 
     public function auth()
     {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
-
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
             'register' => setting('register', true),

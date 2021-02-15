@@ -97,6 +97,10 @@ class SteamGame extends Game
 
     public function getUserProfile(User $user)
     {
+        if (empty($user->game_id)) {
+            return [];
+        }
+
         return Cache::remember("users.{$user->id}.steam", now()->addMinutes(15), function () use ($user) {
             $response = Http::get(self::USER_INFO_URL, [
                 'key' => config('services.steam.client_secret'),
