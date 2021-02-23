@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
             \Azuriom\Http\Middleware\VerifyCsrfToken::class,
             \Azuriom\Http\Middleware\CheckForMaintenanceSettings::class,
             \Azuriom\Http\Middleware\LogoutIfSuspended::class,
+            \Azuriom\Http\Middleware\Language::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
