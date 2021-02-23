@@ -3,8 +3,8 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\Request;
 
 class Language
 {
@@ -17,8 +17,8 @@ class Language
      */
     public function handle(Request $request, Closure $next)
     {
-    	$locales = array_map('basename', app()->make(Filesystem::class)->directories(resource_path('lang')));
-    	$locale = $request->session()->get('locale', $request->getPreferredLanguage($locales));
+        $locales = array_map('basename', app()->make(Filesystem::class)->directories(resource_path('lang')));
+        $locale = $request->session()->get('locale', $request->getPreferredLanguage($locales));
 
         app()->setLocale($locale);
 
