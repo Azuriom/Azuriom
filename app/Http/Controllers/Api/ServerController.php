@@ -7,6 +7,7 @@ use Azuriom\Models\Server;
 use Azuriom\Models\ServerCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class ServerController extends Controller
 {
@@ -45,7 +46,7 @@ class ServerController extends Controller
             ServerCommand::whereIn('id', $commands->modelKeys())->delete();
 
             $commands = $commands->groupBy('player_name')
-                ->map(function ($serverCommands) {
+                ->map(function (Collection $serverCommands) {
                     return $serverCommands->pluck('command');
                 });
         }

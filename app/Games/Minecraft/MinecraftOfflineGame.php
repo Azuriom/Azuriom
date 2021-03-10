@@ -13,7 +13,7 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
-        return "https://minotar.net/helm/{$user->name}/{$size}.png";
+        return "https://crafthead.net/helm/{$user->name}/{$size}.png";
     }
 
     public function getUserUniqueId(string $name)

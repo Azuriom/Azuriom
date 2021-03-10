@@ -17,7 +17,7 @@ class FiveMRcon
 
     private $socket;
 
-    public function __construct(string $address, string $port, string $password)
+    public function __construct(string $address, int $port, string $password)
     {
         $this->address = $address;
         $this->port = $port;

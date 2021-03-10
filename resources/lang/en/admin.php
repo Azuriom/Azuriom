@@ -107,7 +107,7 @@ return [
             'logo' => 'Logo',
             'timezone' => 'Timezone',
             'locale' => 'Locale',
-            'money' => 'Name of the site currency',
+            'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
             'user-money-transfer' => 'Enable money transfer between users',
             'site-key' => 'Site key for azuriom.com',
@@ -237,7 +237,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
-        'dropdown-info' => 'You can add elements to this dropdown when this element is save.',
+        'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [
             'home' => 'Home',
@@ -516,7 +516,7 @@ return [
             'installed' => 'The plugin has been installed.',
             'deleted' => 'The plugin has been deleted.',
 
-            'error-delete' => 'The plugin must be disabled before it can be delete.',
+            'error-delete' => 'The plugin must be disabled before it can be deleted.',
         ],
     ],
 

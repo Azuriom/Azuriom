@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Cache;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
+ * @property \Azuriom\Models\ServerStat $stat
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerStat[] $stats
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerCommand[] $commands
  *
