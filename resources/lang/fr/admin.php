@@ -410,6 +410,7 @@ return [
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
 
+            'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
             'add-admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
             'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
@@ -428,6 +429,7 @@ return [
         'admin-pages' => 'Voir et gérer les pages',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
+        'admin-users' => 'Voir et gérer les utilisateurs',
         'admin-themes' => 'Voir et gérer les thèmes',
         'admin-plugins' => 'Voir et gérer les plugins',
     ],

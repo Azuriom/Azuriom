@@ -411,6 +411,7 @@ return [
             'updated' => 'This role has been updated.',
             'deleted' => 'This role has been deleted.',
 
+            'unauthorized' => 'This role is higher than your own role.',
             'add-admin' => 'You can\'t add the admin permission to a role.',
             'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
@@ -429,6 +430,7 @@ return [
         'admin-pages' => 'View and manage pages',
         'admin-posts' => 'View and manage posts',
         'admin-settings' => 'View and manage settings',
+        'admin-users' => 'View and manage users',
         'admin-themes' => 'View and manage themes',
         'admin-plugins' => 'View and manage plugins',
     ],

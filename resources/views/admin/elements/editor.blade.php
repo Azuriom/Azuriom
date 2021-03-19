@@ -6,7 +6,7 @@
             height: 400,
             min_height: 200,
             entity_encoding: 'raw',
-            plugins: 'preview searchreplace autolink code image link hr anchor lists paste',
+            plugins: 'searchreplace autolink code image link hr anchor lists paste',
             toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls : false,
 
