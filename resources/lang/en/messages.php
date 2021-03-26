@@ -40,6 +40,8 @@ return [
         'reload' => 'Reload',
         'refresh' => 'Refresh',
         'duplicate' => 'Duplicate',
+        'remove' => 'Remove',
+        'back' => 'Back',
     ],
 
     'fields' => [
@@ -67,7 +69,17 @@ return [
         'category' => 'Category',
         'version' => 'Version',
         'game' => 'Game',
+        'price' => 'Price',
+        'icon' => 'Icon',
+        'server' => 'Server',
     ],
+
+    'range' => [
+        'days' => 'By days',
+        'months' => 'By months',
+    ],
+
+    'loading' => 'Loading...',
 
     'yes' => 'Yes',
     'no' => 'No',
@@ -83,6 +95,11 @@ return [
 
     'status-success' => 'The action was successfully completed!',
     'status-error' => 'An error occurred: :error',
+
+    'theme' => [
+        'light' => 'Light theme',
+        'dark' => 'Dark theme',
+    ],
 
     'captcha' => 'The captcha verification failed, please try again.',
 
@@ -104,7 +121,7 @@ return [
 
     'profile' => [
         'title' => 'My Profile',
-        'change-email' => 'Change E-Mail Address',
+        'change-email' => 'Change Email Address',
         'change-password' => 'Change Password',
         'set-password-first' => 'Please set a password before changing the email address.',
 
@@ -122,7 +139,7 @@ return [
         '2fa' => [
             'enable' => 'Enable 2FA',
             'disable' => 'Disable 2FA',
-            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy or Google Authenticator.',
+            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy, 1Password or Google Authenticator.',
             'secret' => 'Secret key: :secret',
             'title' => 'Enable Two-Factor Authentication',
             'code' => 'Code',
@@ -137,6 +154,7 @@ return [
             'self' => 'You can\'t send money to yourself.',
             'not-enough' => 'You don\'t have enough money to make this transfer.',
             'success' => 'The money was successfully sent.',
+            'notification' => ':user sent you :money.',
         ],
     ],
 
@@ -152,8 +170,8 @@ return [
         'guest' => 'You must be logged in to leave a comment.',
         'author' => '<strong>:user</strong> commented on :date',
         'your-comment' => 'Your comment',
-        'delete-title' => 'Delete ?',
-        'delete-description' => 'Are you sure you want to delete this comment ?',
+        'delete-title' => 'Delete?',
+        'delete-description' => 'Are you sure you want to delete this comment?',
     ],
 
     'likes' => 'Likes: :count',

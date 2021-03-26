@@ -7,7 +7,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.settings.update-maintenance') }}" method="POST">
+            <form action="{{ route('admin.settings.maintenance.update') }}" method="POST">
                 @csrf
 
                 <div class="form-group custom-control custom-switch">

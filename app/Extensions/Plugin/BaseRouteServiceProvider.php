@@ -9,7 +9,7 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
     use HasPlugin;
 
     /**
-     * Define the routes for the application.
+     * Define the routes for the plugin.
      *
      * @return void
      */

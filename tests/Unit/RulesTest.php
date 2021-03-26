@@ -42,7 +42,7 @@ class RulesTest extends TestCase
 
     public function testUsernameRule()
     {
-        $validNames = ['Hello', 'Hello1234', 'Hello_1234'];
+        $validNames = ['Hello', 'Hello1234', 'Hello_1234', '*Hello'];
         $invalidNames = ['H€llo', 'hello@world', 'Hello#World'];
 
         foreach ($validNames as $name) {

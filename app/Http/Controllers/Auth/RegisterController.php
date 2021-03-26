@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Azuriom\Rules\GameAuth;
@@ -43,6 +44,8 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
 
+        $this->middleware('login.socialite');
+
         $this->middleware('captcha')->only('register');
     }
 
@@ -53,9 +56,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.register', [
-            'conditions' => setting('conditions'),
-        ]);
+        return view('auth.register', ['conditions' => setting('conditions')]);
     }
 
     /**
@@ -82,17 +83,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = new User([
+        return User::forceCreate([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role_id' => Role::defaultRoleId(),
             'game_id' => game()->getUserUniqueId($data['name']),
+            'last_login_ip' => Request::ip(),
+            'last_login_at' => now(),
         ]);
-        $user->last_login_ip = Request::ip();
-        $user->last_login_at = now();
-
-        $user->save();
-
-        return $user;
     }
 }

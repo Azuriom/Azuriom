@@ -20,9 +20,9 @@ class ServerRequest extends FormRequest
             'type' => ['required', 'string', Rule::in(Server::types())],
             'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'between:1,65535'],
-            'rcon-port' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'integer', 'between:1,65535'],
-            'rcon-password' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'string'],
-            'query-port' => ['required_if:type,source-rcon', 'nullable', 'integer', 'between:1,65535'],
+            'rcon-port' => ['nullable', 'integer', 'between:1,65535'],
+            'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
+            'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
         ];
     }
@@ -34,25 +34,31 @@ class ServerRequest extends FormRequest
      */
     public function validated()
     {
-        $validated = $this->validator->validated();
-
+        $data = null;
         $type = $this->input('type');
 
-        if ($type === 'mc-rcon' || $type === 'source-rcon') {
-            $validated['data'] = [
+        if (in_array($type, ['mc-rcon', 'source-rcon', 'rust-rcon', 'fivem-rcon'], true)) {
+            $data = [
+                'query-port' => $this->input('query-port'),
                 'rcon-port' => $this->input('rcon-port'),
                 'rcon-password' => encrypt($this->input('rcon-password'), false),
             ];
         } elseif ($type === 'source-query') {
-            $validated['data'] = [
+            $data = [
                 'query-port' => $this->input('query-port'),
             ];
-        } elseif ($type === 'mc-azlink' && $this->filled('azlink-custom-port')) {
-            $validated['data'] = [
-                'azlink-port' => $this->input('azlink-port'),
-            ];
-        } else {
-            $validated['data'] = null;
+        } elseif ($type === 'mc-azlink') {
+            $data = ['azlink-ping' => $this->filled('azlink-ping')];
+
+            if ($this->filled('azlink-custom-port')) {
+                $data['azlink-port'] = $this->input('azlink-port');
+            }
+        }
+
+        $validated = $this->validator->validated();
+
+        if ($data !== null) {
+            $validated['data'] = array_filter($data);
         }
 
         return $validated;

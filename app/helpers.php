@@ -258,3 +258,17 @@ if (! function_exists('game')) {
         return app('game');
     }
 }
+
+if (! function_exists('oauth_login')) {
+    function oauth_login()
+    {
+        return game()->loginWithOAuth();
+    }
+}
+
+if (! function_exists('dark_theme')) {
+    function dark_theme()
+    {
+        return request()->cookie('theme') === 'dark';
+    }
+}

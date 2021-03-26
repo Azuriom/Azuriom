@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Azuriom\Casts\Color;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+    use HasFactory;
     use Loggable;
 
     /**
@@ -115,7 +117,7 @@ class Role extends Model
      */
     public function isDefault()
     {
-        return $this->id === 1;
+        return $this->id === self::defaultRoleId();
     }
 
     /**
@@ -125,7 +127,17 @@ class Role extends Model
      */
     public static function defaultRole()
     {
-        return self::find(1);
+        return self::find(self::defaultRoleId());
+    }
+
+    /**
+     * Get the default role id.
+     *
+     * @return int
+     */
+    public static function defaultRoleId()
+    {
+        return (int) setting('role.default', 1);
     }
 
     /**

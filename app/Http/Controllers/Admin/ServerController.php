@@ -11,6 +11,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use RuntimeException;
 
 class ServerController extends Controller
 {
@@ -68,11 +69,11 @@ class ServerController extends Controller
             $server = new Server($request->validated() + ['token' => Str::random(32)]);
 
             if (! $server->bridge()->verifyLink()) {
-                throw new Exception('Unable to connect to the server');
+                throw new RuntimeException('Unable to connect to the server');
             }
-        } catch (Exception $t) {
+        } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
-                'error' => utf8_encode($t->getMessage()),
+                'error' => $e->getMessage(),
             ]));
         }
 
@@ -112,11 +113,11 @@ class ServerController extends Controller
 
         try {
             if (! $server->bridge()->verifyLink()) {
-                throw new Exception('Unable to connect to the server');
+                throw new RuntimeException('Unable to connect to the server');
             }
-        } catch (Exception $t) {
+        } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
-                'error' => utf8_encode($t->getMessage()),
+                'error' => $e->getMessage(),
             ]));
         }
         $server->save();

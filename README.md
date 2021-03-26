@@ -2,18 +2,30 @@
 
 # Azuriom
 
-[![Build Status](https://img.shields.io/travis/Azuriom/Azuriom/master?style=flat-square)](https://travis-ci.org/Azuriom/Azuriom)
+[![Build Status](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
+[![Code Quality](https://img.shields.io/scrutinizer/quality/g/Azuriom/Azuriom?style=flat-square)](https://scrutinizer-ci.com/g/Azuriom/Azuriom/)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square&include_prereleases)](http://github.com/Azuriom/Azuriom/releases)
-[![Chat](https://img.shields.io/discord/625774284823986183?color=7289da&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
+[![Chat](https://img.shields.io/discord/625774284823986183?color=7289da&label=discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
 
 **Azuriom** is the next generation game CMS, it's free and open-source, and is a modern, reliable, fast and secure alternative to existing CMS so you can have the best web experience possible.
 
 ![Screenshot](https://azuriom.com/assets/img/home.png)
 
+## Supported Games
+
+Currently, Azuriom supports the following games:
+* [Minecraft](https://www.minecraft.net/)
+* [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/)
+* [ARK: Survival Evolved](https://store.steampowered.com/app/346110/ARK_Survival_Evolved/)
+* [Rust](https://store.steampowered.com/agecheck/app/252490/)
+* [FiveM](https://fivem.net/)
+* [Counter-Strike: Global Offensive](https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/)
+* [Team Fortress 2](https://store.steampowered.com/app/440/Team_Fortress_2/)
+
 ## Documentation
 
-Azuriom's documentation is available [here](https://azuriom.com/docs).
+Azuriom's documentation is available [on our website](https://azuriom.com/docs).
 
 ## Installation
 
@@ -22,6 +34,10 @@ You can find system requirements and installation guide on our [documentation](h
 ## Community
 
 You can ask for support and talk on our [Discord server](https://azuriom.com/discord).
+
+## Translations
+
+You can contribute to translating Azuriom on our [Crowdin](https://translate.azuriom.com/).
 
 ## Security
 

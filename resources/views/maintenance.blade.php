@@ -10,7 +10,9 @@
                     <div class="card-header">{{ trans('messages.maintenance') }}</div>
 
                     <div class="card-body">
-                        <h1>{!! $maintenanceMessage !!}</h1>
+                        <div class="card-text user-html-content">
+                            {!! $maintenanceMessage !!}
+                        </div>
                     </div>
                 </div>
             </div>

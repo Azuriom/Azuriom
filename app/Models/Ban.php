@@ -55,6 +55,15 @@ class Ban extends Model
      */
     protected $userKey = 'author_id';
 
+    protected static function booted()
+    {
+        foreach (['created', 'deleted'] as $event) {
+            static::registerModelEvent($event, function (self $ban) {
+                $ban->user->flushBanCache();
+            });
+        }
+    }
+
     /**
      * Get the banned user.
      */
@@ -92,7 +101,5 @@ class Ban extends Model
         $this->save();
 
         $this->delete();
-
-        $this->user->update(['is_banned' => false]);
     }
 }

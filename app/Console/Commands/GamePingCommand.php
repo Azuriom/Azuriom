@@ -24,7 +24,7 @@ class GamePingCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -33,9 +33,11 @@ class GamePingCommand extends Command
         foreach ($servers as $server) {
             $data = $server->bridge()->getServerData();
 
-            $server->updateData($data);
+            $server->updateData($data, now()->minute % 15 === 0);
         }
 
-        $this->info($servers->count().' servers was successfully pinged.');
+        $this->info($servers->count().' server(s) were successfully pinged.');
+
+        return 0;
     }
 }

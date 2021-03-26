@@ -1,20 +1,34 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use Azuriom\Models\Post;
 use Azuriom\Models\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Post::class, function (Faker $faker) {
-    return [
-        'title' => $faker->unique()->sentence,
-        'description' => $faker->sentence,
-        'slug' => $faker->slug,
-        'content' => $faker->paragraph,
-        'published_at' => now(),
-        'author_id' => function () {
-            return factory(User::class)->create()->id;
-        },
-    ];
-});
+class PostFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Post::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->unique()->sentence,
+            'description' => $this->faker->sentence,
+            'slug' => $this->faker->slug,
+            'content' => $this->faker->paragraph,
+            'published_at' => now(),
+            'author_id' => User::factory(),
+        ];
+    }
+}

@@ -63,6 +63,12 @@ $('[data-confirm="delete"]').on('click', function (e) {
     confirmDelete($(this).attr('href'));
 });
 
+$('[data-route="theme"]').on('click', function (e) {
+    e.preventDefault();
+
+    $('#themeForm').submit();
+});
+
 $('[data-route="logout"]').on('click', function (e) {
     e.preventDefault();
 
@@ -82,11 +88,11 @@ $('.custom-file-input').on('change', function () {
     }
 });
 
-if ($(window).width() < 450 || localStorage.getItem('azuriom-toggle-admin-sidebar') === 'true') {
-    $('#sidebarToggleTop').trigger('click');
-}
-
 $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
+    if ($(window).width() < 480 ) {
+        return;
+    }
+
     if ($('.sidebar').hasClass('toggled')) {
         localStorage.setItem('azuriom-toggle-admin-sidebar', 'true');
     } else {
@@ -94,9 +100,15 @@ $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
     }
 });
 
+if ($(window).width() < 480 || localStorage.getItem('azuriom-toggle-admin-sidebar') === 'true') {
+    $('#sidebarToggleTop').trigger('click');
+}
+
 function updateToggleSelect(selector, el) {
+    const value = el.val() !== '' ? el.val() : 'undefined';
+
     $('[' + selector + ']').addClass('d-none');
-    $('[' + selector + '~="' + el.val() + '"]').removeClass('d-none');
+    $('[' + selector + '~="' + value + '"]').removeClass('d-none');
 }
 
 $('[data-toggle-select]').each(function () {

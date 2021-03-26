@@ -13,8 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')
-            ->scopes('published')
+        $posts = Post::published()
+            ->with('author')
             ->orderByDesc('is_pinned')
             ->latest('published_at')
             ->get();

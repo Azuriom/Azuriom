@@ -18,7 +18,7 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('vendor/axios/axios.min.js') }}" defer></script>
     <script src="{{ asset('vendor/sb-admin-2/js/sb-admin-2.min.js') }}" defer></script>
-    <script src="{{ asset('admin/js/admin.js') }}" defer></script>
+    <script src="{{ asset('admin/js/admin.js') }}?v000208" defer></script>
 
     <!-- Page level scripts -->
     @stack('scripts')
@@ -31,6 +31,9 @@
     <!-- Styles -->
     <link href="{{ asset('vendor/sb-admin-2/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/admin.css') }}" rel="stylesheet">
+    @if(dark_theme())
+        <link href="{{ asset('admin/css/dark.css') }}" rel="stylesheet">
+    @endif
     @stack('styles')
 </head>
 <body>
@@ -46,7 +49,11 @@
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('svg/azuriom-white.svg') }}" alt="Azuriom">
                 </div>
-                <div class="sidebar-brand-text mx-3"><img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom"><sup>{{ Azuriom::version() }}</sup>
+                <div class="sidebar-brand-text mx-3">
+                    <img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom">
+                    <sup>{{ Azuriom::version() }}</sup>
+
+                    <small class="font-weight-bold">{{ game()->name() }}</small>
                 </div>
             </a>
 
@@ -69,17 +76,19 @@
             @can('admin.settings')
                 <div class="nav-item {{ add_active('admin.settings.*') }}">
                     <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
-                        <i class="fas fa-fw fa-wrench"></i>
+                        <i class="fas fa-fw fa-cogs"></i>
                         <span>{{ trans('admin.nav.settings.heading') }}</span>
                     </a>
                     <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
                             <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">{{ trans('admin.nav.settings.settings.global') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.security') }}" href="{{ route('admin.settings.security') }}">{{ trans('admin.nav.settings.settings.security') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">{{ trans('admin.nav.settings.settings.seo') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
+                            @if(! oauth_login())
+                                <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">{{ trans('admin.nav.settings.settings.auth') }}</a>
+                                <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
+                            @endif
+                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.socials') }}" href="{{ route('admin.settings.socials') }}">{{ trans('admin.nav.settings.settings.socials') }}</a>
                         </div>
@@ -355,6 +364,10 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.profile.profile') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ route('profile.theme') }}" data-route="theme">
+                                    <i class="fas fa-{{ dark_theme() ? 'sun' : 'moon' }} fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    {{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('home') }}">
                                     <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.back-website') }}
@@ -446,6 +459,12 @@
 
 <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
+</form>
+
+<form id="themeForm" action="{{ route('profile.theme') }}" method="POST" class="d-none">
+    @csrf
+
+    <input type="hidden" name="theme" value="{{ dark_theme() ? 'light' : 'dark' }}">
 </form>
 
 @stack('footer-scripts')

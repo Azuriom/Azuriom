@@ -29,10 +29,8 @@ class UpdateController extends Controller
 
     public function index()
     {
-        $version = $this->updates->getLastVersion();
-
         return view('admin.update.index', [
-            'lastVersion' => $version,
+            'lastVersion' => $this->updates->getLastVersion(),
             'hasUpdate' => $this->updates->hasUpdate(),
             'isDownloaded' => $this->updates->isLastVersionDownloaded(),
         ]);
@@ -43,7 +41,7 @@ class UpdateController extends Controller
         $response = redirect()->route('admin.update.index');
 
         try {
-            $this->updates->forceFetchUpdatesOrFail();
+            $this->updates->forceFetchUpdates();
         } catch (Exception $e) {
             return $response->with('error', trans('admin.update.status.error-fetch', [
                 'error' => $e->getMessage(),

@@ -29,7 +29,7 @@
                     <img class="img-fluid rounded mx-auto mb-2" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
                 @endif
 
-                <div class="card-text">
+                <div class="card-text user-html-content">
                     {!! $post->content !!}
                 </div>
 
@@ -56,8 +56,9 @@
                     <div class="media-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="content-body">
-                                {{ $comment->content }}
+                                {{ $comment->parseContent() }}
                             </div>
+
                             @can('delete', $comment)
                                 <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
                             @endif

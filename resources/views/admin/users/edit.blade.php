@@ -3,11 +3,11 @@
 @section('title', trans('admin.users.title-edit', ['user' => $user->name]))
 
 @section('content')
-    @if($user->is_deleted)
+    @if($user->isDeleted())
         <div class="alert alert-warning" role="alert">
             <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
-    @elseif($user->is_banned)
+    @elseif($user->isBanned())
         <div class="alert alert-warning shadow" role="alert">
             <h5><i class="fas fa-exclamation-circle"></i> {{ trans('admin.users.alert-banned.title') }}</h5>
             <ul>
@@ -38,42 +38,52 @@
                         @method('PATCH')
                         @csrf
 
-                        <div class="form-group">
-                            <label for="nameInput">{{ trans('auth.name') }}</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->is_deleted) disabled @endif>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="nameInput">{{ trans('auth.name') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->isDeleted()) disabled @endif>
 
-                            @error('name')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group @if(oauth_login()) d-none @endif">
+                                    <label for="emailInput">{{ trans('auth.email') }}</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->isDeleted()) disabled @endif>
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 text-center">
+                                <img src="{{ $user->getAvatar(256) }}" alt="{{ $user->name }}" class="rounded mb-3" height="150">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="emailInput">{{ trans('auth.email') }}</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->is_deleted) disabled @endif>
+                        @if(! oauth_login())
+                            <div class="form-group">
+                                <label for="passwordInput">{{ trans('auth.password') }}</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->isDeleted()) disabled @endif>
 
-                            @error('email')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="passwordInput">{{ trans('auth.password') }}</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->is_deleted) disabled @endif>
-
-                            @error('password')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        @endif
 
                         <div class="form-group">
                             <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->is_deleted) disabled @endif>
+                            <select class="custom-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role" @if($user->isDeleted()) disabled @endif>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role->is($role)) selected @endif>{{ $role->name }}</option>
                                 @endforeach
                             </select>
 
-                            @error('role')
+                            @error('role_id')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>
@@ -81,7 +91,7 @@
                         <div class="form-group">
                             <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="1000000000000" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->is_deleted) disabled @endif>
+                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->isDeleted()) disabled @endif>
 
                                 <div class="input-group-append">
                                     <span class="input-group-text">{{ money_name() }}</span>
@@ -93,13 +103,13 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" @if($user->is_deleted) disabled @endif>
+                        <button type="submit" class="btn btn-primary" @if($user->isDeleted()) disabled @endif>
                             <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                         </button>
 
-                        @if (! $user->is_deleted)
-                            @if(! $user->is_banned)
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal">
+                        @if (! $user->isDeleted() && ! $user->is(Auth::user()))
+                            @if(! $user->isBanned())
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal" @if($user->isAdmin()) disabled @endif>
                                     <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
                                 </button>
                             @endif
@@ -124,27 +134,36 @@
                         <input type="text" class="form-control" id="registerInput" value="{{ format_date_compact($user->created_at) }}" disabled>
                     </div>
 
-                    <form action="{{ route('admin.users.verify', $user) }}" method="POST">
-                        @csrf
-
+                    @if($user->last_login_at)
                         <div class="form-group">
-                            <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
-
-                            @if($user->hasVerifiedEmail())
-                                <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
-                            @else
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
-
-                                    @if(! $user->is_deleted)
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
+                            <label for="lastLoginInput">{{ trans('admin.users.fields.last-login') }}</label>
+                            <input type="text" class="form-control" id="lastLoginInput" value="{{ format_date_compact($user->last_login_at) }}" disabled>
                         </div>
-                    </form>
+                    @endif
+
+                    @if(! oauth_login())
+                        <form action="{{ route('admin.users.verify', $user) }}" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
+
+                                @if($user->hasVerifiedEmail())
+                                    <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
+                                @else
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
+
+                                        @if(! $user->isDeleted())
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                        </form>
+                    @endif
 
                     <form action="{{ route('admin.users.2fa', $user) }}" method="POST">
                         @csrf
@@ -173,7 +192,7 @@
 
                     @if($user->game_id)
                         <div class="form-group">
-                            <label for="idInput">UUID</label>
+                            <label for="idInput">{{ game()->trans('id') }}</label>
                             <input type="text" class="form-control" id="idInput" value="{{ $user->game_id }}" disabled>
                         </div>
                     @endif
@@ -182,7 +201,7 @@
         </div>
     </div>
 
-    @if(! $user->is_banned)
+    @if(! $user->isBanned())
         <div class="modal fade show" id="banModal" tabindex="-1" role="dialog" aria-labelledby="banLabel" aria-modal="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -215,6 +234,43 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    @endif
+
+    @if(! $logs->isEmpty())
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.logs.title') }}</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            <th scope="col">{{ trans('messages.fields.date') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @foreach($logs as $log)
+                            <tr>
+                                <th scope="row">{{ $log->id }}</th>
+                                <td>
+                                    <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                    {{ $log->getActionMessage() }}
+                                </td>
+                                <td>{{ format_date_compact($log->created_at) }}</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {{ $logs->links() }}
             </div>
         </div>
     @endif

@@ -160,7 +160,7 @@ class ThemeManager extends ExtensionManager
     /**
      * Get an array containing the descriptions of the installed themes.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function findThemesDescriptions()
     {
@@ -176,7 +176,7 @@ class ThemeManager extends ExtensionManager
             }
         }
 
-        return $themes;
+        return collect($themes);
     }
 
     /**
@@ -188,10 +188,6 @@ class ThemeManager extends ExtensionManager
     public function findDescription(string $theme)
     {
         $path = $this->path('theme.json', $theme);
-
-        if ($path === null) {
-            return null;
-        }
 
         $json = $this->getJson($path);
 
@@ -262,15 +258,13 @@ class ThemeManager extends ExtensionManager
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
-        $installedThemes = collect($this->findThemesDescriptions())
+        $installedThemes = $this->findThemesDescriptions()
             ->filter(function ($theme) {
                 return isset($theme->apiId);
-            })
-            ->pluck('apiId')
-            ->all();
+            });
 
-        return array_filter($themes, function ($theme) use ($installedThemes) {
-            return ! in_array($theme['id'], $installedThemes, true);
+        return collect($themes)->filter(function ($theme) use ($installedThemes) {
+            return ! $installedThemes->contains('apiId', $theme['id']);
         });
     }
 
@@ -278,7 +272,7 @@ class ThemeManager extends ExtensionManager
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
-        return array_filter($this->findThemesDescriptions(), function ($theme) use ($themes) {
+        return $this->findThemesDescriptions()->filter(function ($theme) use ($themes) {
             $id = $theme->apiId ?? 0;
 
             if (! array_key_exists($id, $themes)) {

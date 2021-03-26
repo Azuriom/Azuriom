@@ -12,10 +12,12 @@ use Illuminate\Support\Str;
  */
 trait HasImage
 {
+    protected $imageDisk = 'public';
+
     protected static function bootHasImage()
     {
-        static::deleting(function (Model $model) {
-            if (! ($model->forceDeleting ?? true)) {
+        static::deleted(function (Model $model) {
+            if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
                 return;
             }
 
@@ -27,31 +29,55 @@ trait HasImage
      * Store the image and associate it with this model.
      *
      * @param  \Illuminate\Http\UploadedFile  $file
+     * @param  bool  $save
+     * @return string
      */
-    public function storeImage(UploadedFile $file)
+    public function storeImage(UploadedFile $file, bool $save = false)
     {
         $this->deleteImage();
 
-        $path = basename($file->storePublicly($this->getImagePath(), 'public'));
+        $path = basename($file->storePublicly($this->resolveImagePath(), $this->imageDisk));
 
         $this->setAttribute($this->getImageKey(), $path);
+
+        if ($save) {
+            $this->save();
+        }
+
+        return $this->imageUrl();
     }
 
     /**
      * Delete the image associated with this model.
      *
-     * @return void
+     * @return bool
      */
     public function deleteImage()
     {
         $key = $this->getImageKey();
         $image = $this->getAttribute($key);
 
-        if ($image !== null) {
-            Storage::disk('public')->delete($this->getImagePath($image));
-
-            $this->setAttribute($key, null);
+        if ($image === null) {
+            return false;
         }
+
+        if (! $this->getImageDisk()->delete($this->resolveImagePath($image))) {
+            return false;
+        }
+
+        $this->setAttribute($key, null);
+
+        return true;
+    }
+
+    /**
+     * Return true if this this model has an image.
+     *
+     * @return bool
+     */
+    public function hasImage()
+    {
+        return $this->getAttribute($this->getImageKey()) !== null;
     }
 
     /**
@@ -67,17 +93,28 @@ trait HasImage
             return null;
         }
 
-        return url(Storage::disk('public')->url($this->getImagePath($image)));
+        return url($this->getImageDisk()->url($this->resolveImagePath($image)));
     }
 
     /**
-     * Return true if this this model has an image.
+     * Get this post image path.
      *
-     * @return bool
+     * @return string|null
      */
-    public function hasImage()
+    public function getImagePath()
     {
-        return $this->image !== null;
+        $image = $this->getAttribute($this->getImageKey());
+
+        if ($image === null) {
+            return null;
+        }
+
+        return $this->resolveImagePath($image);
+    }
+
+    public function getImageDisk()
+    {
+        return Storage::disk($this->imageDisk);
     }
 
     protected function getImageKey()
@@ -85,7 +122,7 @@ trait HasImage
         return $this->imageKey ?? 'image';
     }
 
-    protected function getImagePath(string $path = '')
+    protected function resolveImagePath(string $path = '')
     {
         return ($this->imagePath ?? Str::snake(Str::pluralStudly(class_basename($this)))).'/'.$path;
     }

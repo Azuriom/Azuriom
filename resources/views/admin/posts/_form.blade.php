@@ -1,4 +1,3 @@
-@include('admin.elements.editor')
 @include('admin.elements.date-picker')
 
 @csrf

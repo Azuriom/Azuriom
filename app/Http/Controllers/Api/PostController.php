@@ -15,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return PostResource::collection(Post::with('author')
-            ->scopes('published')
+        return PostResource::collection(Post::published()
+            ->with('author')
             ->latest('published_at')
             ->get());
     }

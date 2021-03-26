@@ -16,6 +16,7 @@ class Permission extends Model
     private static $permissions = [
         'comments.create' => 'admin.permissions.create-comments',
         'comments.delete.other' => 'admin.permissions.delete-other-comments',
+        'maintenance.access' => 'admin.permissions.maintenance-access',
         'admin.access' => 'admin.permissions.admin-access',
         'admin.logs' => 'admin.permissions.admin-logs',
         'admin.images' => 'admin.permissions.admin-images',
@@ -23,6 +24,7 @@ class Permission extends Model
         'admin.pages' => 'admin.permissions.admin-pages',
         'admin.posts' => 'admin.permissions.admin-posts',
         'admin.settings' => 'admin.permissions.admin-settings',
+        'admin.users' => 'admin.permissions.admin-users',
         'admin.themes' => 'admin.permissions.admin-themes',
         'admin.plugins' => 'admin.permissions.admin-plugins',
     ];

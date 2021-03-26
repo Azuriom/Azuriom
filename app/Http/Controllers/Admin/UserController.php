@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -26,19 +27,10 @@ class UserController extends Controller
         $search = $request->input('search');
 
         $users = User::with('ban')
+            ->where('is_deleted', false)
             ->when($search, function (Builder $query, string $search) {
-                $query->where('email', 'LIKE', "%{$search}%")
-                    ->orWhere('name', 'LIKE', "%{$search}%")
-                    ->orWhere('game_id', 'LIKE', "%{$search}%");
-
-                if (is_numeric($search)) {
-                    $query->orWhere('id', $search);
-                }
+                $query->scopes(['search' => $search]);
             })->paginate();
-
-        foreach ($users as $user) {
-            $user->refreshActiveBan();
-        }
 
         return view('admin.users.index', [
             'users' => $users,
@@ -61,10 +53,15 @@ class UserController extends Controller
      *
      * @param  \Azuriom\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException;
      */
     public function store(UserRequest $request)
     {
         $role = Role::find($request->input('role'));
+
+        $this->validateRole($request->user(), $role);
+
         $passwordHash = Hash::make($request->input('password'));
 
         $user = new User(['password' => $passwordHash] + $request->validated());
@@ -82,9 +79,15 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $logs = ActionLog::with('target')
+            ->where('user_id', $user->id)
+            ->latest()
+            ->paginate();
+
         return view('admin.users.edit', [
-            'user' => $user->refreshActiveBan(),
+            'user' => $user->load('ban'),
             'roles' => Role::all(),
+            'logs' => $logs,
         ]);
     }
 
@@ -94,10 +97,12 @@ class UserController extends Controller
      * @param  \Azuriom\Http\Requests\UserRequest  $request
      * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException;
      */
     public function update(UserRequest $request, User $user)
     {
-        if ($user->is_deleted) {
+        if ($user->isDeleted()) {
             return redirect()->back();
         }
 
@@ -109,6 +114,8 @@ class UserController extends Controller
 
         $role = Role::find($request->input('role'));
 
+        $this->validateRole($request->user(), $role);
+
         $user->role()->associate($role);
         $user->save();
 
@@ -119,7 +126,7 @@ class UserController extends Controller
 
     public function verifyEmail(User $user)
     {
-        if ($user->is_deleted) {
+        if ($user->isDeleted()) {
             return redirect()->back();
         }
 
@@ -148,32 +155,39 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->is_deleted || $user->isAdmin()) {
+        if ($user->isDeleted() || $user->isAdmin()) {
             return redirect()->back();
         }
 
         $user->comments()->delete();
         $user->likes()->delete();
 
-        $user->fill([
+        $user->setRememberToken(null);
+
+        $user->forceFill([
             'name' => 'Deleted #'.$user->id,
             'email' => 'deleted'.$user->id.'@deleted.ltd',
             'password' => Hash::make(Str::random()),
-            'role_id' => 1,
+            'role_id' => Role::defaultRoleId(),
             'game_id' => null,
             'access_token' => null,
             'google_2fa_secret' => null,
-        ]);
+            'email_verified_at' => null,
+            'last_login_ip' => null,
+            'is_deleted' => true,
+        ])->save();
 
-        $user->email_verified_at = null;
-        $user->last_login_ip = null;
-        $user->is_deleted = true;
-
-        $user->setRememberToken(null);
-        $user->save();
-
-        ActionLog::log('user.deleted', $user);
+        ActionLog::log('users.deleted', $user);
 
         return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
+    }
+
+    protected function validateRole(User $user, Role $role)
+    {
+        if (! $user->isAdmin() && $role->power > $user->role->power) {
+            throw ValidationException::withMessages([
+                'role_id' => trans('admin.roles.status.unauthorized'),
+            ]);
+        }
     }
 }

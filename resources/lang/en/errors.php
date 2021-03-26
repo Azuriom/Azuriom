@@ -4,7 +4,7 @@ return [
     'error' => 'Error',
     'code' => 'Error :code',
     'home' => 'Back to home',
-    'whoops' => 'Whoops !',
+    'whoops' => 'Whoops!',
 
     '401' => [
         'title' => 'Unauthorized',
@@ -37,5 +37,11 @@ return [
 
     'fallback' => [
         'message' => 'An error occurred. Please try again.',
+    ],
+
+    'install' => [
+        'welcome' => 'Welcome',
+        'title' => 'Azuriom is not installed',
+        'message' => 'You can follow the steps in our documentation to install it.',
     ],
 ];

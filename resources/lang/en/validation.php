@@ -90,6 +90,7 @@ return [
         'string' => 'The :attribute must be at least :min characters.',
         'array' => 'The :attribute must have at least :min items.',
     ],
+    'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
     'numeric' => 'The :attribute must be a number.',
@@ -152,7 +153,7 @@ return [
     */
 
     'attributes' => [
-        'email' => 'E-Mail Address',
+        'email' => 'Email Address',
         'name' => 'name',
         'title' => 'title',
         'slug' => 'slug',

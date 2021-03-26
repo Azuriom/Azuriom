@@ -30,12 +30,12 @@ class UserCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
         $data = [
-            'role_id' => 1,
+            'role_id' => Role::defaultRoleId(),
         ];
 
         $admin = $this->option('admin');
@@ -55,6 +55,8 @@ class UserCreateCommand extends Command
             }
         }
 
-        $this->info('User created !');
+        $this->info('User created!');
+
+        return 0;
     }
 }

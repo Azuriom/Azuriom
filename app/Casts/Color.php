@@ -27,7 +27,7 @@ class Color implements CastsAttributes
      * @param  string  $key
      * @param  array  $value
      * @param  array  $attributes
-     * @return string|array
+     * @return mixed
      */
     public function set($model, $key, $value, $attributes)
     {

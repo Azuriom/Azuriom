@@ -14,25 +14,24 @@
                 e.trigger.setAttribute('data-original-title', oldTitle === undefined ? '' : oldTitle);
             }
         });
-
-        const azLinkPortInput = document.getElementById('azlinkPortInput');
-
-        if (azLinkPortInput) {
-            azLinkPortInput.addEventListener('input', function (e) {
-                let port = azLinkPortInput.value;
-
-                if (port < 1 || port > 65535) {
-                    port = '25888';
-                }
-
-                document.getElementById('azLinkPortDisplay').innerText = port;
-            });
-        }
     </script>
     @isset($server)
         <script>
+            const azLinkPortInput = document.getElementById('azlinkPortInput');
             const verifyButton = document.getElementById('verifyAzLink');
             const verifyButtonIcon = verifyButton.querySelector('.btn-spinner');
+
+            if (azLinkPortInput) {
+                azLinkPortInput.addEventListener('input', function (e) {
+                    let port = azLinkPortInput.value;
+
+                    if (port < 1 || port > 65535) {
+                        port = '25888';
+                    }
+
+                    document.getElementById('azLinkPortDisplay').innerText = port;
+                });
+            }
 
             verifyButton.addEventListener('click', function () {
                 verifyButton.setAttribute('disabled', '');
@@ -103,12 +102,32 @@
 
 <div data-server-type="mc-ping" class="form-group d-none">
     <div class="alert alert-info" role="alert">
-        <i class="fas fa-info-circle"></i>
-        {{ trans('admin.servers.ping-no-commands') }}
+        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.ping-no-commands') }}
     </div>
 </div>
 
-<div data-server-type="mc-rcon source-rcon" class="form-group d-none">
+<div data-server-type="source-query source-rcon" class="d-none">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="querySourcePortInput">{{ trans('admin.servers.fields.query-port') }}</label>
+            <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '') }}" aria-describedby="queryPortInfo">
+
+            @error('query-port')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+
+            <small id="queryPortInfo" class="form-text">{{ trans('admin.servers.query-port-info') }}</small>
+        </div>
+    </div>
+</div>
+
+<div data-server-type="source-query" class="form-group d-none">
+    <div class="alert alert-info" role="alert">
+        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.query-no-commands') }}
+    </div>
+</div>
+
+<div data-server-type="mc-rcon source-rcon rust-rcon fivem-rcon" class="d-none">
     <div class="form-row">
         <div class="form-group col-md-8">
             <label for="rconPasswordInput">{{ trans('admin.servers.fields.rcon-password') }}</label>
@@ -129,57 +148,69 @@
 
         <div class="form-group col-md-4">
             <label for="rconPortInput">{{ trans('admin.servers.fields.rcon-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '25575') }}">
+            <input type="number" min="1" max="65535" class="form-control @error('rcon-port') is-invalid @enderror" id="rconPortInput" name="rcon-port" value="{{ old('rcon-port', $server->data['rcon-port'] ?? '') }}" aria-describedby="rconPortInfo">
 
             @error('rcon-port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
-        </div>
-    </div>
-</div>
 
-<div data-server-type="source-query" class="form-group d-none">
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="querySourcePortInput">{{ trans('admin.servers.fields.query-port') }}</label>
-            <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '27015') }}">
-
-            @error('query-port')
-            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
+            <small id="rconPortInfo" class="form-text">{{ trans('admin.servers.query-port-info') }}</small>
         </div>
     </div>
 </div>
 
 <div data-server-type="mc-azlink" class="d-none">
     <div class="form-group custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
-        <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>
+        <input type="checkbox" class="custom-control-input" id="hasPingSwitch" name="azlink-ping" data-toggle="collapse" data-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? false)) checked @endisset aria-describedby="pingInfo">
+        <label class="custom-control-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.enable-ping') }}</label>
+
+        <small class="form-text" id="pingInfo">{{ trans('admin.servers.azlink.ping-info') }}</small>
     </div>
 
-    <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
-        <div class="card card-body mb-3">
-            <div class="form-group">
-                <label for="azlinkPortInput">{{ trans('admin.servers.fields.azlink-port') }}</label>
-                <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
+    <div id="hasPingGroup" class="@if(isset($server) && ($server->data['azlink-ping'] ?? false)) show @else collapse @endisset">
+        <div class="form-group custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customPortSwitch" name="azlink-custom-port" data-toggle="collapse" data-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
+            <label class="custom-control-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom-port') }}</label>
+        </div>
 
-                @error('azlink-port')
-                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                @enderror
-            </div>
+        <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
+            <div class="card card-body mb-3">
+                <div class="form-group">
+                    <label for="azlinkPortInput">{{ trans('admin.servers.fields.azlink-port') }}</label>
+                    <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
 
-            <div class="alert alert-info mb-0" role="alert">
-                <i class="fas fa-info-circle"></i>
-                {{ trans('admin.servers.azlink.port-info') }}
-                <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
-                    <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+                    @error('azlink-port')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="alert alert-info mb-0" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ trans('admin.servers.azlink.port-info') }}
+                    <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
+                        <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+                </div>
             </div>
         </div>
+
+        @if(isset($server) && $server->isOnline())
+            <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
+                <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
+                <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+            </button>
+        @endif
     </div>
 
     @isset($server)
         <div class="form-group">
-            @if($server->getOnlinePlayers() < 0)
+            @if($server->isOnline())
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    {{ trans('admin.servers.azlink.link-info') }}
+                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                    .
+                </div>
+            @else
                 <div class="alert alert-primary" role="alert">
                     {{ trans('admin.servers.azlink.link') }}
                     <ol class="mb-0">
@@ -192,20 +223,8 @@
                         </li>
                     </ol>
                 </div>
-            @else
-                <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle"></i>
-                    {{ trans('admin.servers.azlink.link-info') }}
-                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
-                    .
-                </div>
             @endif
         </div>
-
-        <button type="button" class="btn btn-success mb-2" id="verifyAzLink">
-            <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
-            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-        </button>
     @else
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
             <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}

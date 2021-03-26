@@ -2,14 +2,11 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Games\Minecraft\Servers\Azlink as MinecraftAzLink;
-use Azuriom\Games\Minecraft\Servers\Ping as MinecraftPing;
-use Azuriom\Games\Minecraft\Servers\Rcon as MinecraftRcon;
-use Azuriom\Games\Steam\Servers\Query as SourceQuery;
-use Azuriom\Games\Steam\Servers\Rcon as SourceRcon;
+use Azuriom\Games\FallbackServerBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -23,6 +20,7 @@ use Illuminate\Support\Facades\Cache;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
+ * @property \Azuriom\Models\ServerStat $stat
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerStat[] $stats
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerCommand[] $commands
  *
@@ -32,19 +30,6 @@ use Illuminate\Support\Facades\Cache;
 class Server extends Model
 {
     use Loggable;
-
-    /**
-     * The servers link types.
-     *
-     * @var array
-     */
-    private const TYPES = [
-        'mc-ping' => MinecraftPing::class,
-        'mc-rcon' => MinecraftRcon::class,
-        'mc-azlink' => MinecraftAzLink::class,
-        'source-query' => SourceQuery::class,
-        'source-rcon' => SourceRcon::class,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -66,7 +51,9 @@ class Server extends Model
 
     public function stat()
     {
-        return $this->hasOne(ServerStat::class)->latest()->where('created_at', '>', now()->subSeconds(65));
+        return $this->hasOne(ServerStat::class)
+            ->latest()
+            ->where('created_at', '>', now()->subSeconds(65));
     }
 
     public function stats()
@@ -86,7 +73,7 @@ class Server extends Model
 
     public function fullAddress()
     {
-        if ($this->port === $this->bridge()->getDefaultPort()) {
+        if ($this->port === null || $this->port === $this->bridge()->getDefaultPort()) {
             return $this->address;
         }
 
@@ -108,12 +95,15 @@ class Server extends Model
         return $this->getData('max_players');
     }
 
-    public function updateData($data, bool $full = false)
+    public function updateData(array $data = null, bool $full = false)
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
-        if (is_array($data) && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
-            $this->stats()->create($data);
+        if ($data !== null && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
+            $stats = Arr::except($data, 'max_players');
+            $statsData = ['data' => array_filter(Arr::except($stats, ['players', 'cpu', 'ram']))];
+
+            $this->stats()->create(array_merge(Arr::only($stats, ['players', 'cpu', 'ram']), $statsData));
         }
     }
 
@@ -131,7 +121,13 @@ class Server extends Model
      */
     public function bridge()
     {
-        return app(self::TYPES[$this->type], ['server' => $this]);
+        $games = game()->getSupportedServers();
+
+        if (! array_key_exists($this->type, $games)) {
+            return new FallbackServerBridge($this);
+        }
+
+        return app($games[$this->type], ['server' => $this]);
     }
 
     public function getLinkCommand()
@@ -141,7 +137,7 @@ class Server extends Model
 
     public static function types()
     {
-        return array_keys(self::TYPES);
+        return array_keys(game()->getSupportedServers());
     }
 
     /**
@@ -152,7 +148,11 @@ class Server extends Model
      */
     public function scopeExecutable(Builder $query)
     {
-        return $query->whereIn('type', ['mc-rcon', 'mc-azlink', 'source-rcon']);
+        $servers = collect(game()->getSupportedServers())->filter(function (string $bridge) {
+            return (new $bridge($this))->canExecuteCommand();
+        });
+
+        return $query->whereIn('type', $servers->keys());
     }
 
     /**

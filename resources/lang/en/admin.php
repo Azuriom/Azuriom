@@ -21,6 +21,7 @@ return [
                 'security' => 'Security',
                 'performances' => 'Performances',
                 'seo' => 'SEO',
+                'auth' => 'Authentication',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
                 'socials' => 'Socials Sign-in',
@@ -66,8 +67,8 @@ return [
     ],
 
     'confirm-delete' => [
-        'title' => 'Delete ?',
-        'description' => 'Are you sure you want to delete this ? It can\'t be undo !',
+        'title' => 'Delete?',
+        'description' => 'Are you sure you want to delete this? You won\'t be able to go back!',
     ],
 
     'footer' => 'Powered by :azuriom &copy; :year. Panel designed by :startbootstrap.',
@@ -86,7 +87,7 @@ return [
         'proxy-warning' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent-users' => 'Recent users',
         'active-users' => 'Active users',
-
+        'emails-disabled' => 'Emails are disabled. If a user forgets his password he will not be able to reset it. You can enable emails in the <a href=":url">mail settings</a>.',
         'users' => 'Users',
         'posts' => 'Posts',
         'pages' => 'Pages',
@@ -100,37 +101,30 @@ return [
             'site-name' => 'Site Name',
             'site-url' => 'Site URL',
             'site-description' => 'Site Description',
+            'meta' => 'Meta keywords',
+            'meta-info' => 'The keywords must be separated with a comma.',
             'favicon' => 'Favicon',
             'background' => 'Background',
             'logo' => 'Logo',
             'timezone' => 'Timezone',
             'locale' => 'Locale',
+            'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
-            'conditions-url' => 'Conditions URL',
-            'enable-user-registration' => 'Enable user registration',
-            'enable-user-registration-label' => 'It can still be possible to register through plugins.',
-            'auth-api' => 'Enable Auth API',
-            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
-            'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
-            'user-money-transfer' => 'Allow money transfer between users',
+            'user-money-transfer' => 'Enable money transfer between users',
             'site-key' => 'Site key for azuriom.com',
             'site-key-label' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
-        ],
-
-        'maintenance' => [
-            'title' => 'Maintenance settings',
-
-            'enable' => 'Enable maintenance',
-            'message' => 'Maintenance message',
         ],
 
         'security' => [
             'title' => 'Security settings',
 
-            'recaptcha' => 'Enable Google reCaptcha protection',
-            'recaptcha-site-key' => 'Site key',
-            'recaptcha-secret-key' => 'Secret key',
-            'recaptcha-info' => 'You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>. You need to use reCaptcha <strong>v2 invisible</strong> keys.',
+            'captcha' => [
+                'title' => 'Captcha',
+                'site-key' => 'Site key',
+                'secret-key' => 'Secret key',
+                'recaptcha' => 'You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>. You need to use reCaptcha <strong>v2 invisible</strong> keys.',
+                'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer"> hCaptcha website</a>.',
+            ],
 
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
@@ -155,28 +149,28 @@ return [
             ],
 
             'boost' => [
-                'title' => 'RocketBooster',
-                'description' => 'RocketBooster improves your website performances by adding one more exclusive cache layer.',
+                'title' => 'AzBoost',
+                'description' => 'AzBoost improves your website performances by adding one more exclusive cache layer.',
                 'info' => 'If you have some issues after enabling an extension you should reload the cache.',
 
                 'current' => [
-                    'status' => 'RocketBooster is currently :status.',
+                    'status' => 'AzBoost is currently :status.',
                     'enabled' => '<span class="text-success">enabled</span>',
                     'disabled' => '<span class="text-danger">disabled</span>',
                 ],
 
                 'status' => [
-                    'enabled' => 'RocketBooster is now enabled.',
-                    'disabled' => 'RocketBooster is now disabled.',
-                    'reloaded' => 'RocketBooster was reloaded.',
+                    'enabled' => 'AzBoost is now enabled.',
+                    'disabled' => 'AzBoost is now disabled.',
+                    'reloaded' => 'AzBoost was reloaded.',
 
-                    'enable-error' => 'Error while enabling RocketBooster.',
+                    'enable-error' => 'Error while enabling AzBoost.',
                 ],
 
                 'actions' => [
-                    'enable' => 'Enable RocketBooster',
-                    'disable' => 'Disable RocketBooster',
-                    'reload' => 'Reload RocketBooster',
+                    'enable' => 'Enable AzBoost',
+                    'disable' => 'Disable AzBoost',
+                    'reload' => 'Reload AzBoost',
                 ],
             ],
         ],
@@ -184,29 +178,37 @@ return [
         'seo' => [
             'title' => 'SEO settings',
 
-            'google-analytics' => 'Google Analytics site id',
-            'google-analytics-info' => 'You can get the site id on the <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer"> Google Analytics website</a>.',
-            'meta' => 'Meta keywords',
-            'meta-info' => 'The keywords must be separated with a comma.',
-
             'html-head-code' => 'HTML code to include in the <head> of all pages.',
             'html-body-code' => 'HTML code to include in the <body> of all pages.',
 
-            'html-code-info' => 'E.g: Cookie banner, etc',
+            'html-code-info' => 'E.g: Cookie banner, Google Analytics, etc',
 
             'welcome-popup' => [
-                'enable' => 'Enable welcome popup ?',
+                'enable' => 'Enable welcome popup?',
                 'message' => 'Welcome Popup Message',
                 'info' => 'This popup will be displayed the first time a user visits the site.',
             ],
         ],
 
+        'auth' => [
+            'title' => 'Authentication',
+
+            'conditions-url' => 'Conditions URL',
+            'conditions-info' => 'Users will have to accept these conditions when registering.',
+            'enable-user-registration' => 'Enable user registration',
+            'enable-user-registration-label' => 'It can still be possible to register through plugins.',
+            'auth-api' => 'Enable Auth API',
+            'auth-api-label' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
+            'minecraft-verification' => 'Enable Minecraft username verification with minecraft.net',
+        ],
+
         'mail' => [
             'title' => 'Mail settings',
-
-            'from-address' => 'E-Mail address used to send e-mails.',
-            'driver' => 'E-Mail type',
-            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending e-mails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'from-address' => 'Email address used to send emails.',
+            'driver' => 'Email type',
+            'driver-info' => 'Azuriom supports SMTP and Sendmail for sending emails. You can find more information on the mail configuration on our <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'When emails are disabled, users will not be able to reset their password if they forget it.',
+            'sendmail-warn' => 'Using Sendmail is not recommended and you should instead use an SMTP server when possible.',
             'smtp' => [
                 'host' => 'SMTP Host Address',
                 'port' => 'SMTP Host Port',
@@ -214,6 +216,16 @@ return [
                 'username' => 'SMTP Server Username',
                 'password' => 'SMTP Server Password',
             ],
+            'enable-users-verification' => 'Enable user email address verification',
+            'send' => 'Send a test email',
+            'sent' => 'The test mail has been successfully sent.',
+        ],
+
+        'maintenance' => [
+            'title' => 'Maintenance settings',
+
+            'enable' => 'Enable maintenance',
+            'message' => 'Maintenance message',
         ],
 
         'status' => [
@@ -255,7 +267,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
-        'dropdown-info' => 'You can add elements to this dropdown when this element is save.',
+        'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [
             'home' => 'Home',
@@ -284,14 +296,17 @@ return [
         'title-edit' => 'Edit server :server',
         'title-create' => 'Add server',
 
-        'default-server' => 'Default server',
+        'default' => 'Default server',
+        'default-info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
         'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
+        'query-no-commands' => 'With query link, it\'s not possible to execute commands on the server.',
+
+        'query-port-info' => 'Can be empty if it\'s the same as the game port.',
 
         'fields' => [
             'address' => 'Address',
             'port' => 'Port',
-            'status' => 'Status',
 
             'rcon-password' => 'Rcon Password',
             'rcon-port' => 'Rcon Port',
@@ -313,6 +328,8 @@ return [
             'link-info' => 'You can link your Minecraft server to your website with the command: ',
             'port-info' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
 
+            'enable-ping' => 'Enable instant commands (require an open port on the server)',
+            'ping-info' => 'When instant commands are not enabled, commands will be executed with a delay of 30 seconds to 1 minute.',
             'custom-port' => 'Use a custom AzLink port',
         ],
 
@@ -338,6 +355,12 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'bedrock-ping' => 'Bedrock Ping',
+            'bedrock-rcon' => 'Bedrock RCON',
+            'fivem-status' => 'FiveM status',
+            'fivem-rcon' => 'FiveM RCON',
+            'rust-rcon' => 'Rust RCON',
+            'flyff-server' => 'Flyff Server', // TODO make this dynamic
         ],
     ],
 
@@ -348,7 +371,8 @@ return [
 
         'fields' => [
             'register-date' => 'Register at',
-            'email-verified' => 'E-Mail Address verified',
+            'last-login' => 'Last login at',
+            'email-verified' => 'Email Address verified',
             '2fa' => 'Two Factor Authentication',
             'ip' => 'IP Address',
         ],
@@ -380,14 +404,14 @@ return [
         'user-info' => 'User information',
 
         'ban-title' => 'Ban :user',
-        'ban-description' => 'Are you sure you want to ban this user ?',
+        'ban-description' => 'Are you sure you want to ban this user?',
 
         'status' => [
             'created' => 'The user has been created.',
             'updated' => 'This user has been updated.',
             'deleted' => 'This user has been deleted.',
 
-            'email-verified' => 'The E-Mail Address has been verified.',
+            'email-verified' => 'The Email Address has been verified.',
             '2fa-disabled' => 'The Two Factor Authentication has been disabled.',
 
             'banned' => 'This user is now banned.',
@@ -417,6 +441,7 @@ return [
             'updated' => 'This role has been updated.',
             'deleted' => 'This role has been deleted.',
 
+            'unauthorized' => 'This role is higher than your own role.',
             'add-admin' => 'You can\'t add the admin permission to a role.',
             'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
@@ -427,6 +452,7 @@ return [
     'permissions' => [
         'create-comments' => 'Comment a post',
         'delete-other-comments' => 'Delete a post comment from another user',
+        'maintenance-access' => 'Access the website during a maintenance',
         'admin-access' => 'Access to the admin dashboard',
         'admin-logs' => 'View and manage site logs',
         'admin-images' => 'View and manage images',
@@ -434,6 +460,7 @@ return [
         'admin-pages' => 'View and manage pages',
         'admin-posts' => 'View and manage posts',
         'admin-settings' => 'View and manage settings',
+        'admin-users' => 'View and manage users',
         'admin-themes' => 'View and manage themes',
         'admin-plugins' => 'View and manage plugins',
     ],
@@ -509,6 +536,10 @@ return [
         'installed' => 'Installed plugins',
         'available' => 'Available plugins',
 
+        'azuriom-requirement' => 'This plugin is not compatible with your Azuriom version.',
+        'game-requirement' => 'This plugin is not compatible with the game :game.',
+        'plugin-requirement' => 'The plugin ":plugin" is missing or its version is not compatible with this plugin.',
+
         'status' => [
             'reloaded' => 'The plugins have been reloaded.',
             'enabled' => 'The plugin has been enabled.',
@@ -517,7 +548,7 @@ return [
             'installed' => 'The plugin has been installed.',
             'deleted' => 'The plugin has been deleted.',
 
-            'error-delete' => 'The plugin must be disabled before it can be delete.',
+            'error-delete' => 'The plugin must be disabled before it can be deleted.',
         ],
     ],
 
@@ -542,7 +573,7 @@ return [
             'reloaded' => 'The themes have been reloaded.',
             'no-config' => 'This theme don\'t have config.',
             'config-updated' => 'The theme config has been updated.',
-            'invalid' => 'This theme is invalid.',
+            'invalid' => 'This theme is invalid (the theme folder name must be the theme id).',
             'updated' => 'The theme has been updated.',
             'installed' => 'The theme has been installed.',
             'deleted' => 'The theme has been deleted.',
@@ -561,7 +592,7 @@ return [
         'download' => 'The latest version of Azuriom is ready for download.',
         'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
 
-        'backup-info' => 'Before updating Azuriom, you should make a backup of your site !',
+        'backup-info' => 'Before updating Azuriom, you should make a backup of your site!',
 
         'up-to-date' => 'You are running the latest version of Azuriom: <code>:version</code>.',
 

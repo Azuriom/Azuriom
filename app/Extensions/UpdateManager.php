@@ -10,6 +10,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use RuntimeException;
 use ZipArchive;
 
 class UpdateManager
@@ -87,44 +88,37 @@ class UpdateManager
         }
 
         if ($force) {
-            $updates = $this->forceFetchUpdates();
-
-            if ($updates !== null) {
-                Cache::put('updates', $updates, now()->addMinutes(15));
+            try {
+                return $this->forceFetchUpdates();
+            } catch (Exception $e) {
+                return [];
             }
-
-            return $updates;
         }
 
         return Cache::remember('updates', now()->addMinutes(15), function () {
-            return $this->forceFetchUpdates();
+            try {
+                return $this->forceFetchUpdates(false);
+            } catch (Exception $e) {
+                return [];
+            }
         });
     }
 
-    public function forceFetchUpdates()
-    {
-        try {
-            $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
-
-            $updates = $response->throw()->json();
-
-            if ($updates !== null) {
-                $this->updates = $updates;
-            }
-
-            return $updates;
-        } catch (Exception $e) {
-            logger()->warning('Unable to check updates '.$e->getMessage());
-
-            return [];
-        }
-    }
-
-    public function forceFetchUpdatesOrFail()
+    public function forceFetchUpdates(bool $cache = true)
     {
         $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
 
-        return $response->throw()->json();
+        $updates = $response->throw()->json();
+
+        if ($updates !== null) {
+            $this->updates = $updates;
+        }
+
+        if ($cache) {
+            Cache::put('updates', $updates ?? [], now()->addMinutes(15));
+        }
+
+        return $updates;
     }
 
     public function download(array $info, string $tempDir = '')
@@ -151,7 +145,7 @@ class UpdateManager
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('File hash don\'t match excepted hash !');
+            throw new Exception('The file hash do not match expected hash!');
         }
     }
 
@@ -169,7 +163,7 @@ class UpdateManager
         $file = storage_path('app/updates/'.$tempDir.$info['file']);
 
         if ($this->files->extension($file) !== 'zip') {
-            throw new Exception('Invalid file extension');
+            throw new RuntimeException('Invalid file extension');
         }
 
         if (! $this->files->exists($file)) {
@@ -179,11 +173,11 @@ class UpdateManager
         $zip = new ZipArchive();
 
         if (($status = $zip->open($file)) !== true) {
-            throw new Exception('Unable to open zip: '.$status);
+            throw new RuntimeException('Unable to open zip: '.$status);
         }
 
         if (! $zip->extractTo($targetDir)) {
-            throw new Exception('Unable to extract zip');
+            throw new RuntimeException('Unable to extract zip');
         }
 
         $zip->close();
@@ -198,6 +192,9 @@ class UpdateManager
         $request = Http::withHeaders([
             'User-Agent' => $userAgent,
             'Azuriom-Version' => Azuriom::version(),
+            'Azuriom-PHP-Version' => PHP_VERSION,
+            'Azuriom-Locale' => app()->getLocale(),
+            'Azuriom-Game' => game()->id(),
         ]);
 
         $siteKey = setting('site-key');

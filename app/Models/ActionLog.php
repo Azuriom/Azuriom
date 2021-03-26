@@ -75,11 +75,10 @@ class ActionLog extends Model
         'data' => 'array',
     ];
 
-    public static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
         self::registerLogModels([
+            Ban::class,
             Post::class,
             Page::class,
             Role::class,
@@ -134,29 +133,22 @@ class ActionLog extends Model
      * Create a new log entry.
      *
      * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model  $target
+     * @param  \Illuminate\Database\Eloquent\Model|null  $target
      * @param  array  $data
+     * @return \Azuriom\Models\ActionLog|null
      */
     public static function log(string $action, Model $target = null, array $data = [])
     {
         if (Auth::guest()) {
-            return;
+            return null;
         }
 
-        $log = new self([
+        return self::create([
             'user_id' => Auth::id(),
             'action' => $action,
+            'target_id' => $target ? $target->getKey() : null,
+            'data' => $data ?: null,
         ]);
-
-        if ($target !== null) {
-            $log->fill(['target_id' => $target->getKey()]);
-        }
-
-        if ($data) {
-            $log->fill(['data' => $data]);
-        }
-
-        $log->save();
     }
 
     public static function registerLogModels(array $models, string $transNamespacePrefix)

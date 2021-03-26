@@ -8,6 +8,8 @@
             <form action="{{ route('admin.pages.update', $page) }}" method="POST">
                 @method('PUT')
 
+                @include('admin.elements.editor', ['imagesUploadUrl' => route('admin.pages.attachments.store', $page)])
+
                 @include('admin.pages._form')
 
                 <button type="submit" class="btn btn-primary">

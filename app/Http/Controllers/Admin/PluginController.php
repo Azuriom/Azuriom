@@ -35,14 +35,10 @@ class PluginController extends Controller
      */
     public function index()
     {
-        $plugins = collect($this->plugins->findPluginsDescriptions());
-        $availablePlugins = collect($this->plugins->getOnlinePlugins());
-        $pluginsUpdates = collect($this->plugins->getPluginToUpdate());
-
         return view('admin.plugins.index', [
-            'plugins' => $plugins,
-            'availablePlugins' => $availablePlugins,
-            'pluginsUpdates' => $pluginsUpdates,
+            'plugins' => $this->plugins->findPluginsDescriptions(),
+            'availablePlugins' => $this->plugins->getOnlinePlugins(),
+            'pluginsUpdates' => $this->plugins->getPluginToUpdate(),
         ]);
     }
 
@@ -51,7 +47,7 @@ class PluginController extends Controller
         $response = redirect()->route('admin.plugins.index');
 
         try {
-            app(UpdateManager::class)->forceFetchUpdatesOrFail();
+            app(UpdateManager::class)->forceFetchUpdates();
         } catch (Exception $e) {
             return $response->with('error', trans('messages.status-error', [
                 'error' => $e->getMessage(),
@@ -64,8 +60,31 @@ class PluginController extends Controller
     public function enable(string $plugin)
     {
         try {
+            if (! $this->plugins->isSupportedByGame($plugin)) {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.game-requirement', [
+                        'game' => game()->name(),
+                    ]));
+            }
+
+            $requirements = $this->plugins->getMissingRequirements($plugin);
+
+            if ($requirements === 'azuriom') {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.azuriom-requirement'));
+            }
+
+            if ($requirements !== null) {
+                return redirect()->route('admin.plugins.index')
+                    ->with('error', trans('admin.plugins.plugin-requirement', [
+                        'plugin' => $requirements,
+                    ]));
+            }
+
             $this->plugins->enable($plugin);
         } catch (Throwable $t) {
+            report($t);
+
             return redirect()->route('admin.plugins.index')->with('error', trans('messages.status-error', [
                 'error' => $t->getMessage(),
             ]));

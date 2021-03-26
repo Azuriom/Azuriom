@@ -5,20 +5,22 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.servers.default-server') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.servers.default') }}</h6>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('admin.servers.change-default') }}">
                 @csrf
 
                 <div class="form-group">
-                    <label for="serverSelect">{{ trans('admin.servers.default-server') }}</label>
-                    <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server">
+                    <label for="serverSelect">{{ trans('admin.servers.default') }}</label>
+                    <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server" aria-describedby="serverLabel">
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)
                             <option value="{{ $server->id }}" @if($defaultServerId === $server->id) selected @endif>{{ $server->name }}</option>
                         @endforeach
                     </select>
+
+                    <small id="serverLabel" class="form-text">{{ trans('admin.servers.default-info') }}</small>
 
                     @error('server')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -44,7 +46,7 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
                         <th scope="col">{{ trans('admin.servers.fields.address') }}</th>
-                        <th scope="col">{{ trans('admin.servers.fields.status') }}</th>
+                        <th scope="col">{{ trans('messages.fields.status') }}</th>
                         <th scope="col">{{ trans('messages.fields.type') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
@@ -56,7 +58,7 @@
                             <th scope="row">
                                 {{ $server->id }}
                                 @if($server->id === $defaultServerId)
-                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default-server') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>{{ $server->name }}</td>

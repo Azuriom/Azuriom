@@ -66,4 +66,9 @@ return [
         'redirect'      => '/login/sign-in-with-apple/callback',
     ],
 
+    'steam' => [
+        'client_id' => null,
+        'client_secret' => env('STEAM_KEY'),
+        'redirect' => '/user/login/callback',
+    ],
 ];

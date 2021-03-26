@@ -2,11 +2,12 @@
 
 namespace Azuriom\Games\Minecraft\Servers;
 
-use RuntimeException;
-use Thedudeguy\Rcon as MinecraftRcon;
+use Azuriom\Models\User;
 
 class Rcon extends Ping
 {
+    use RconTrait;
+
     public function verifyLink()
     {
         if (! parent::verifyLink()) {
@@ -16,31 +17,13 @@ class Rcon extends Ping
         return $this->connectRcon()->sendCommand('list');
     }
 
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
+    public function replacePlaceholders(string $command, User $user = null)
     {
-        $rcon = $this->connectRcon();
-
-        foreach ($commands as $command) {
-            $rcon->sendCommand(str_replace('{player}', $playerName ?? '?', $command));
-        }
-    }
-
-    public function canExecuteCommand()
-    {
-        return true;
-    }
-
-    protected function connectRcon()
-    {
-        $port = $this->server->data['rcon-port'] ?? 27015;
-        $password = decrypt($this->server->data['rcon-password'], false);
-
-        $rcon = new MinecraftRcon($this->server->address, $port, $password, 3);
-
-        if (! $rcon->connect()) {
-            throw new RuntimeException('Unable to connect to rcon.');
+        if ($user === null) {
+            return parent::replacePlaceholders($command, $user);
         }
 
-        return $rcon;
+        return parent::replacePlaceholders($command, $user)
+            ->replace('{uuid}', $user->game_id);
     }
 }

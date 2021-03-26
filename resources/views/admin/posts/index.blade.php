@@ -14,6 +14,7 @@
                         <th scope="col">{{ trans('messages.fields.image') }}</th>
                         <th scope="col">{{ trans('messages.fields.slug') }}</th>
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
+                        <th scope="col">{{ trans('messages.fields.date') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
@@ -37,6 +38,7 @@
                             <td>
                                 <a href="{{ route('admin.users.edit', $post->author ) }}">{{ $post->author->name }}</a>
                             </td>
+                            <td>{{ format_date($post->published_at)  }}</td>
                             <td>
                                 <a href="{{ route('admin.posts.edit', $post) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('admin.posts.destroy', $post) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>

@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+    nginx:
+        build: docker/nginx
+        restart: always
+        ports:
+            - '80:80'
+        volumes:
+            - './:/usr/share/nginx/html'
+    php-fpm:
+        build: docker/php
+        restart: always
+        volumes:
+            - './:/usr/share/nginx/html'
+    composer:
+        image: 'composer:1.10'
+        command: install --ignore-platform-reqs
+        volumes:
+            - './:/app'
+    database:
+        image: 'postgres:12'
+        restart: always
+        volumes:
+            - pgsql-data:/var/lib/postgresql/data
+        environment:
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_DB=${DB_DATABASE}
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+volumes:
+    pgsql-data:

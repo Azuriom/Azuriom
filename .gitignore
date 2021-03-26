@@ -10,6 +10,12 @@
 # Mac
 .DS_Store
 
+# Azuriom
+public/assets/vendor
+
+# PHP CS Fixer
+.php_cs.cache
+
 # Laravel
 /node_modules
 /public/hot
@@ -19,6 +25,7 @@
 .env
 .env.backup
 .phpunit.result.cache
+docker-compose.override.yml
 Homestead.json
 Homestead.yaml
 npm-debug.log

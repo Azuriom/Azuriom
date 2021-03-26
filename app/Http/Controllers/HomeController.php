@@ -14,10 +14,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')
-            ->scopes('published')
+        $posts = Post::published()
+            ->with('author')
             ->latest('published_at')
-            ->take(3)
+            ->take(5)
             ->get();
 
         return view('home', ['posts' => $posts]);
@@ -35,8 +35,6 @@ class HomeController extends Controller
 
         $maintenanceMessage = setting('maintenance-message', trans('messages.maintenance-message'));
 
-        return view('maintenance', [
-            'maintenanceMessage' => $maintenanceMessage,
-        ]);
+        return view('maintenance', ['maintenanceMessage' => $maintenanceMessage]);
     }
 }

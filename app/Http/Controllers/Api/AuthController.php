@@ -17,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
+        $this->middleware(function (Request $request, callable $next) {
             if (! setting('auth-api', false)) {
                 return response()->json([
                     'status' => false,
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
         $user = Auth::getLastAttempted();
 
-        if ($user->is_banned) {
+        if ($user->isBanned()) {
             return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 
@@ -84,7 +84,7 @@ class AuthController extends Controller
             return response()->json(['status' => false, 'message' => 'Invalid token'], 422);
         }
 
-        if ($user->is_banned) {
+        if ($user->isBanned()) {
             return response()->json(['status' => false, 'message' => 'User banned'], 422);
         }
 

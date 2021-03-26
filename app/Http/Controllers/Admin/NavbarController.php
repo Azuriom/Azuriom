@@ -64,6 +64,8 @@ class NavbarController extends Controller
             }
         }
 
+        NavbarElement::clearCache();
+
         return response()->json([
             'message' => trans('admin.navbar-elements.status.nav-updated'),
         ]);

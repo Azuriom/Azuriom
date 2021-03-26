@@ -6,11 +6,14 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
+use Azuriom\Notifications\TestMail;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
@@ -49,16 +52,6 @@ class SettingsController extends Controller
     ];
 
     /**
-     * The hash algorithms PHP constants.
-     *
-     * @var array
-     */
-    private $hashCompatibility = [
-        'argon' => 'PASSWORD_ARGON2I',
-        'argon2id' => 'PASSWORD_ARGON2ID',
-    ];
-
-    /**
      * The application instance.
      *
      * @var \Illuminate\Contracts\Foundation\Application
@@ -68,7 +61,7 @@ class SettingsController extends Controller
     /**
      * The application cache.
      *
-     * @var \Illuminate\Cache\Repository
+     * @var \Illuminate\Contracts\Cache\Repository
      */
     private $cache;
 
@@ -112,9 +105,6 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'money' => setting('money'),
             'siteKey' => setting('site-key'),
-            'register' => setting('register', true),
-            'authApi' => setting('auth-api', false),
-            'minecraftVerification' => setting('game-type') === 'mc-online',
             'userMoneyTransfer' => setting('user_money_transfer'),
         ]);
     }
@@ -129,51 +119,35 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
-        Setting::updateSettings($this->validate($request, [
+        $settings = array_merge($this->validate($request, [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['nullable', 'string', 'max:255'],
             'url' => ['required', 'url'],
             'timezone' => ['required', 'timezone'],
             'copyright' => ['nullable', 'string', 'max:150'],
-            'conditions' => ['nullable', 'url', 'max:150'],
+            'keywords' => ['nullable', 'string', 'max:150'],
             'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
             'icon' => ['nullable', 'exists:images,file'],
             'logo' => ['nullable', 'exists:images,file'],
             'background' => ['nullable', 'exists:images,file'],
             'money' => ['required', 'string', 'max:15'],
             'site-key' => ['nullable', 'string', 'size:50'],
-        ]) + [
-            'register' => $request->filled('register'),
-            'auth-api' => $request->filled('auth-api'),
-            'game-type' => $request->filled('minecraft-verification') ? 'mc-online' : 'mc-offline',
+        ]), [
             'user_money_transfer' => $request->filled('user_money_transfer'),
+            'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
+
+        Setting::updateSettings($settings);
 
         ActionLog::log('settings.updated');
 
         $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
 
-        if (setting('register', false) !== $request->filled('register')) {
+        if (setting('register', true) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();
         }
 
         return $response;
-    }
-
-    /**
-     * Show the application security settings.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function security()
-    {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
-
-        return view('admin.settings.security', [
-            'hashAlgorithms' => $this->hashAlgorithms,
-            'currentHash' => config('hashing.driver'),
-            'showReCaptcha' => $show,
-        ]);
     }
 
     /**
@@ -189,38 +163,45 @@ class SettingsController extends Controller
     {
         $hash = array_keys($this->hashAlgorithms);
 
-        $settings = $this->validate($request, [
-            'recaptcha-site-key' => ['required_with:recaptcha', 'max:50'],
-            'recaptcha-secret-key' => ['required_with:recaptcha', 'max:50'],
+        $this->validate($request, [
+            'captcha' => ['nullable', 'in:recaptcha,hcaptcha'],
+            'site_key' => ['required_with:captcha', 'max:50'],
+            'secret_key' => ['required_with:captcha', 'max:50'],
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
-                    if (! array_key_exists($value, $this->hashCompatibility)) {
-                        return;
-                    }
-
-                    if (! defined($this->hashCompatibility[$value])) {
+                    if (! $this->isHashSupported($value)) {
                         $fail(trans('admin.settings.security.hash-error'));
                     }
                 },
             ],
         ]);
 
-        if ($request->filled('recaptcha')) {
-            Setting::updateSettings($settings);
-        } else {
-            Setting::updateSettings($request->only(['hash']));
+        Setting::updateSettings($request->only('hash'));
 
-            Setting::whereIn('name', ['recaptcha-site-key', 'recaptcha-secret-key'])->delete();
+        if ($request->filled('captcha')) {
+            Setting::updateSettings([
+                'captcha.type' => $request->input('captcha'),
+                'captcha.site_key' => $request->input('site_key'),
+                'captcha.secret_key' => $request->input('secret_key'),
+            ]);
+        } else {
+            Setting::updateSettings([
+                'captcha.type' => null,
+                'captcha.site_key' => null,
+                'captcha.secret_key' => null,
+            ]);
         }
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.security')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
     }
 
     public function performance()
     {
-        return view('admin.settings.performance', ['cacheStatus' => $this->optimizer->isEnabled()]);
+        return view('admin.settings.performance', [
+            'cacheStatus' => $this->optimizer->isEnabled(),
+        ]);
     }
 
     /**
@@ -248,8 +229,9 @@ class SettingsController extends Controller
             return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
         }
 
-        return $redirect->with('success',
-            trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled')));
+        $message = trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled'));
+
+        return $redirect->with('success', $message);
     }
 
     public function disableAdvancedCache()
@@ -262,9 +244,12 @@ class SettingsController extends Controller
 
     public function linkStorage()
     {
-        $storagePublicPath = public_path('storage');
+        $target = storage_path('app/public');
+        $link = public_path('storage');
 
-        Files::relativeLink(storage_path('app/public'), $storagePublicPath, true);
+        Files::removeLink($link);
+
+        Files::relativeLink($target, $link);
 
         return redirect()->route('admin.settings.performance')
             ->with('success', trans('messages.status-success'));
@@ -273,7 +258,6 @@ class SettingsController extends Controller
     public function seo()
     {
         return view('admin.settings.seo', [
-            'enableAnalytics' => setting('g-analytics-id') || old('enable-g-analytics'),
             'htmlHead' => setting('html-head'),
             'htmlBody' => setting('html-body'),
             'welcomePopup' => setting('welcome-popup'),
@@ -291,8 +275,6 @@ class SettingsController extends Controller
     public function updateSeo(Request $request)
     {
         $settings = $this->validate($request, [
-            'keywords' => ['nullable', 'string', 'max:150'],
-            'g-analytics-id' => ['nullable', 'string', 'max:50'],
             'html-head' => ['nullable', 'string'],
             'html-body' => ['nullable', 'string'],
             'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
@@ -359,7 +341,36 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return  redirect()->route('admin.settings.socials')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.socials')->with('success', trans('admin.settings.status.updated'));
+    }
+
+    public function auth()
+    {
+        return view('admin.settings.authentification', [
+            'conditions' => setting('conditions'),
+            'register' => setting('register', true),
+            'authApi' => setting('auth-api', false),
+            'minecraftVerification' => setting('game-type') === 'mc-online',
+            'hashAlgorithms' => $this->hashAlgorithms,
+            'currentHash' => config('hashing.driver'),
+            'captchaType' => old('captcha', setting('captcha.type')),
+        ]);
+    }
+
+    public function updateAuth(Request $request)
+    {
+        $settings = $this->validate($request, [
+            'conditions' => ['nullable', 'url', 'max:150'],
+        ]) + [
+            'register' => $request->filled('register'),
+            'auth-api' => $request->filled('auth-api'),
+        ];
+
+        Setting::updateSettings($settings);
+
+        ActionLog::log('settings.updated');
+
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
     }
 
     /**
@@ -394,12 +405,15 @@ class SettingsController extends Controller
             'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
             'smtp-username' => ['nullable', 'string'],
             'smtp-password' => ['nullable', 'string'],
-        ]);
+        ]) + [
+            'users_email_verification' => $request->filled('users_email_verification'),
+        ];
 
         $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
 
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
+            $mailSettings['users_email_verification'] = false;
         }
 
         foreach ($mailSettings as $key => $value) {
@@ -409,6 +423,19 @@ class SettingsController extends Controller
         ActionLog::log('settings.updated');
 
         return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
+    }
+
+    public function sendTestMail(Request $request)
+    {
+        try {
+            $request->user()->notify(new TestMail());
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+            ], 500);
+        }
+
+        return response()->json(['message' => trans('admin.settings.mail.sent')]);
     }
 
     /**
@@ -442,15 +469,30 @@ class SettingsController extends Controller
 
     protected function getAvailableLocales()
     {
-        return $this->getAvailableLocaleCodes()->mapWithKeys(function ($file) {
+        return $this->getAvailableLocaleCodes()->mapWithKeys(function (string $file) {
             return [$file => trans('messages.lang', [], $file)];
         });
     }
 
     protected function getAvailableLocaleCodes()
     {
-        return collect(File::directories($this->app->langPath()))->map(function ($path) {
+        return collect(File::directories($this->app->langPath()))->map(function (string $path) {
             return basename($path);
         });
+    }
+
+    protected function isHashSupported(string $algo)
+    {
+        if ($algo === 'bcrypt') {
+            return true;
+        }
+
+        try {
+            $hashManager = $this->app->make(HashManager::class);
+
+            return $hashManager->driver($algo)->make('hello') !== null;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

@@ -6,9 +6,11 @@ use Azuriom\Support\Discord\Embeds\EmbedAuthor;
 use Azuriom\Support\Discord\Embeds\EmbedField;
 use Azuriom\Support\Discord\Embeds\EmbedFooter;
 use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 class Embed implements Arrayable
 {
@@ -36,7 +38,7 @@ class Embed implements Arrayable
     /**
      * Timestamp of embed content.
      *
-     * @var \DateTimeInterface|null
+     * @var \Carbon\CarbonInterface|null
      */
     protected $timestamp;
 
@@ -132,7 +134,7 @@ class Embed implements Arrayable
      */
     public function timestamp(?DateTimeInterface $timestamp)
     {
-        $this->timestamp = $timestamp;
+        $this->timestamp = Carbon::instance($timestamp);
 
         return $this;
     }
@@ -146,10 +148,16 @@ class Embed implements Arrayable
     public function color($color)
     {
         if (is_string($color) && Str::startsWith($color, '#')) {
-            $color = (int) hexdec($color);
+            $this->color = (int) hexdec(Str::substr($color, 1));
+
+            return $this;
         }
 
-        $this->color = $color;
+        if (! is_numeric($color)) {
+            throw new InvalidArgumentException('Color format must be hex or decimal.');
+        }
+
+        $this->color = (int) $color;
 
         return $this;
     }
@@ -220,7 +228,7 @@ class Embed implements Arrayable
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'timestamp' => optional($this->timestamp)->format(DateTimeInterface::ATOM),
+            'timestamp' => optional($this->timestamp)->toAtomString(),
             'color' => $this->color,
             'footer' => optional($this->footer)->toArray(),
             'thumbnail' => optional($this->thumbnail)->toArray(),

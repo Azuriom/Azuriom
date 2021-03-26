@@ -1,18 +1,3 @@
-@if($analyticsId = setting('g-analytics-id')) @push('scripts')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $analyticsId }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', '{{ $analyticsId }}');
-    </script>
-@endpush @endif
-
 @if($htmlScriptsHead = setting('html-head')) @push('scripts')
     {!! $htmlScriptsHead !!}
 @endpush @endif
@@ -38,7 +23,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{ $welcomePopup }}
+                        {!! $welcomePopup !!}
                     </div>
                 </div>
             </div>
@@ -53,7 +38,5 @@
         </script>
     @endpush
 
-    @php
-        session()->put('welcome_popup', true);
-    @endphp
+    @php(session()->put('welcome_popup', true))
 @endif

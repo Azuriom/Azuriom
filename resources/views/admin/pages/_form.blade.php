@@ -1,5 +1,3 @@
-@include('admin.elements.editor')
-
 @csrf
 
 <div class="form-group">

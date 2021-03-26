@@ -5,6 +5,7 @@ namespace Azuriom\Http\Resources;
 use Azuriom\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin \Azuriom\Models\Comment */
 class Comment extends JsonResource
 {
     /**

@@ -2,9 +2,10 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasUuidKey;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\DatabaseNotificationCollection;
-use Illuminate\Support\Str;
 
 /**
  * @property string $id
@@ -22,19 +23,7 @@ use Illuminate\Support\Str;
  */
 class Notification extends Model
 {
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
+    use HasUuidKey;
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +31,7 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'level', 'content', 'link', 'read_at',
+        'author_id', 'level', 'content', 'link', 'read_at',
     ];
 
     /**
@@ -65,16 +54,6 @@ class Notification extends Model
         'danger' => 'exclamation-triangle',
         'success' => 'check',
     ];
-
-    /**
-     * The "booted" method of the model.
-     */
-    public static function booted()
-    {
-        static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Str::uuid());
-        });
-    }
 
     /**
      * Get the user that the notification belongs to.
@@ -144,6 +123,28 @@ class Notification extends Model
     public function unread()
     {
         return $this->read_at === null;
+    }
+
+    /**
+     * Scope a query to only include read notifications.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRead(Builder $query)
+    {
+        return $query->whereNotNull('read_at');
+    }
+
+    /**
+     * Scope a query to only include unread notifications.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnread(Builder $query)
+    {
+        return $query->whereNull('read_at');
     }
 
     /**

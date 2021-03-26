@@ -4,13 +4,14 @@ namespace Azuriom\Http\Middleware;
 
 use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class TrustProxies extends Middleware
 {
     /**
      * The trusted proxies for this application.
      *
-     * @var array|string
+     * @var array|string|null
      */
     protected $proxies;
 
@@ -19,5 +20,19 @@ class TrustProxies extends Middleware
      *
      * @var int
      */
-    protected $headers = Request::HEADER_X_FORWARDED_ALL;
+    protected $headers = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
+
+    /**
+     * Sets the trusted proxies on the request to the value of 'trustedproxy.proxies'.
+     *
+     * @param \Illuminate\Http\Request $request
+     */
+    protected function setTrustedProxyIpAddresses(Request $request)
+    {
+        parent::setTrustedProxyIpAddresses($request);
+
+        if (! $request->secure() && $request->header('X-Forwarded-Proto') === 'https') {
+            URL::forceScheme('https');
+        }
+    }
 }

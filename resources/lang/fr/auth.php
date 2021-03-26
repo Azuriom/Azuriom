@@ -19,7 +19,7 @@ return [
     'register' => 'Inscription',
     'login' => 'Connexion',
     'logout' => 'Déconnexion',
-    'verify' => 'Vérifiez votre adresse e-mail',
+    'verify' => 'Vérifiez votre adresse email',
     'passwords' => [
         'confirm' => 'Confirmer le mot de passe',
         'reset' => 'Réinitialiser le mot de passe',
@@ -27,7 +27,7 @@ return [
     ],
 
     'name' => 'Pseudo',
-    'email' => 'Adresse E-Mail ',
+    'email' => 'Adresse Email ',
     'password' => 'Mot de passe',
     'confirm-password' => 'Confirmation du mot de passe',
     'current-password' => 'Mot de passe actuel',
@@ -43,8 +43,8 @@ return [
     'remember-me' => 'Se souvenir de moi',
     'forgot-password' => 'Mot de passe oublié ?',
 
-    'verify-sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
-    'verify-check' => 'Avant de continuer, veuillez vérifier si vous n\'avez pas reçu de lien de vérification par e-mail.',
+    'verify-sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse email.',
+    'verify-check' => 'Avant de continuer, veuillez vérifier si vous n\'avez pas reçu de lien de vérification par email.',
     'verify-request' => 'Si vous n\'avez pas reçu le mail vous pouvez en demander un autre.',
     'verify-resend' => 'Renvoyer',
 

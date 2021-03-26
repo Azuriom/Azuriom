@@ -14,9 +14,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \Azuriom\Http\Middleware\EnsureInstalled::class,
+        // \Azuriom\Http\Middleware\TrustHosts::class,
         \Azuriom\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
-        \Azuriom\Http\Middleware\CheckForMaintenanceMode::class,
+        \Azuriom\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Azuriom\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
@@ -32,7 +34,7 @@ class Kernel extends HttpKernel
             \Azuriom\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Azuriom\Http\Middleware\VerifyCsrfToken::class,
             \Azuriom\Http\Middleware\CheckForMaintenanceSettings::class,
@@ -41,7 +43,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -64,16 +66,16 @@ class Kernel extends HttpKernel
         'admin' => \Azuriom\Http\Middleware\AdminAuthenticate::class,
         'auth' => \Azuriom\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'captcha' => \Azuriom\Http\Middleware\VerifyCaptcha::class,
         'guest' => \Azuriom\Http\Middleware\RedirectIfAuthenticated::class,
+        'login.socialite' => \Azuriom\Http\Middleware\SocialiteLogin::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'server.token' => \Azuriom\Http\Middleware\VerifyServerToken::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified' => \Azuriom\Http\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**

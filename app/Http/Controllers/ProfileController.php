@@ -4,11 +4,15 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
-use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
+use Azuriom\Notifications\AlertNotification;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -29,7 +33,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user e-mail address.
+     * Update the user email address.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -43,7 +47,14 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
-        $request->user()->update($request->only('email'));
+        $user = $request->user();
+
+        $user->forceFill([
+            'email' => $request->input('email'),
+            'email_verified_at' => null,
+        ])->save();
+
+        $user->sendEmailVerificationNotification();
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
@@ -100,9 +111,7 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $password = Hash::make($request->input('password'));
-
-        $request->user()->update(['password' => $password]);
+        Auth::logoutOtherDevices($request->input('password'));
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
@@ -123,15 +132,15 @@ class ProfileController extends Controller
 
         $google2fa = new Google2FA();
         $secret = $request->old('2fa_key', $google2fa->generateSecretKey());
-        $otpUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
+        $qrCodeUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
 
-        $qrCodeUrl = (new QRCode(new QROptions([
-            'imageTransparent' => false,
-        ])))->render($otpUrl);
+        $renderer = new ImageRenderer(new RendererStyle(246, 0), new SvgImageBackEnd());
+        $svg = Str::after((new Writer($renderer))->writeString($qrCodeUrl), '?>');
 
         return view('profile.2fa', [
             'secretKey' => $secret,
-            'qrCodeUrl' => $qrCodeUrl,
+            'qrCodeUrl' => 'data:image/svg+xml,'.rawurlencode($svg), // TODO remove in Azuriom 1.0
+            'qrCode' => new HtmlString($svg),
         ]);
     }
 
@@ -175,6 +184,17 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
     }
 
+    public function theme(Request $request)
+    {
+        $this->validate($request, [
+            'theme' => ['required', 'in:light,dark'],
+        ]);
+
+        $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
+
+        return redirect()->back()->withCookie($cookie);
+    }
+
     public function transferMoney(Request $request)
     {
         abort_if(! setting('user_money_transfer'), 403);
@@ -205,6 +225,13 @@ class ProfileController extends Controller
         $receiver->addMoney($money);
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
+
+        $notification = (new AlertNotification(trans('messages.profile.money-transfer.notification', [
+            'user' => $user->name,
+            'money' => format_money($money),
+        ])))->from($user);
+
+        $receiver->notifications()->create($notification->toArray());
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.money-transfer.success'));

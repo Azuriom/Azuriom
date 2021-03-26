@@ -2,10 +2,13 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +33,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class Post extends Model
 {
+    use Attachable;
+    use HasFactory;
     use HasImage;
     use HasUser;
     use Loggable;
@@ -102,6 +107,15 @@ class Post extends Model
     public function isPublished()
     {
         return $this->published_at->isPast();
+    }
+
+    public function getImageSize()
+    {
+        try {
+            return $this->getImageDisk()->size($this->getImagePath());
+        } catch (Exception $e) {
+            return 0;
+        }
     }
 
     /**

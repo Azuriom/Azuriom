@@ -6,6 +6,7 @@ use Azuriom\Http\Resources\Comment as CommentResource;
 use Azuriom\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin \Azuriom\Models\Post */
 class Post extends JsonResource
 {
     /**

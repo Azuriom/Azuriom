@@ -11,7 +11,7 @@
                 return;
             }
 
-            el.addEventListener('change', function (ev) {
+            el.addEventListener('change', function () {
                 if (el.checked) {
                     document.querySelector('[name="permissions[admin.access]"]').checked = true;
                 }
@@ -32,7 +32,7 @@
 
     <div class="form-group col-md-6 mb-4">
         <label for="colorInput">{{ trans('messages.fields.color') }}</label>
-        <input type="color" class="form-control color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
+        <input type="color" class="form-control form-control-color color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
 
         @error('color')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

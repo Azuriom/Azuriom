@@ -2,14 +2,18 @@
 
 namespace Azuriom\Extensions\Plugin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use Composer\Autoload\ClassLoader;
+use Composer\Semver\Semver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
 
@@ -96,9 +100,11 @@ class PluginManager extends ExtensionManager
 
                 $this->autoloadPlugin($pluginId, $composer, $plugin->composer);
 
-                foreach ($plugin->providers ?? [] as $pluginProvider) {
-                    $provider = new $pluginProvider($app);
+                $providers = array_map(function ($provider) use ($app) {
+                    return new $provider($app);
+                }, $plugin->providers ?? []);
 
+                foreach ($providers as $provider) {
                     if (method_exists($provider, 'bindPlugin')) {
                         $provider->bindPlugin($plugin);
                     }
@@ -106,7 +112,13 @@ class PluginManager extends ExtensionManager
                     $app->register($provider);
                 }
             } catch (Throwable $t) {
+                if (! $app->isProduction()) {
+                    throw $t;
+                }
+
                 report($t);
+
+                $this->disable($pluginId);
             }
         }
     }
@@ -137,8 +149,8 @@ class PluginManager extends ExtensionManager
      * Get the path of the specified plugin.
      *
      * @param  string  $path
-     * @param  string|null  $plugin
-     * @return string|null
+     * @param  string  $plugin
+     * @return string
      */
     public function path(string $plugin, string $path = '')
     {
@@ -163,7 +175,7 @@ class PluginManager extends ExtensionManager
     /**
      * Get an array containing the descriptions of the installed plugins.
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function findPluginsDescriptions()
     {
@@ -181,7 +193,7 @@ class PluginManager extends ExtensionManager
             }
         }
 
-        return $plugins;
+        return collect($plugins);
     }
 
     /**
@@ -193,10 +205,6 @@ class PluginManager extends ExtensionManager
     public function findDescription(string $plugin)
     {
         $path = $this->path($plugin, 'plugin.json');
-
-        if ($path === null) {
-            return null;
-        }
 
         $json = $this->getJson($path);
 
@@ -284,6 +292,56 @@ class PluginManager extends ExtensionManager
         $this->setPluginEnabled($plugin, false);
     }
 
+    public function hasRequirements(string $plugin)
+    {
+        return $this->getMissingRequirements($plugin) === null;
+    }
+
+    public function isSupportedByGame(string $plugin)
+    {
+        $description = $this->findDescription($plugin);
+        $supportedGames = $description->games ?? null;
+
+        if (! is_array($supportedGames)) {
+            return true;
+        }
+
+        return game()->isExtensionCompatible($supportedGames);
+    }
+
+    public function getMissingRequirements(string $plugin)
+    {
+        $description = $this->findDescription($plugin);
+
+        if (! isset($description->dependencies)) {
+            return null;
+        }
+
+        foreach ($description->dependencies as $dependency => $minVersion) {
+            $optional = Str::endsWith($dependency, '?');
+
+            if ($optional) {
+                $dependency = Str::substr($dependency, 0, -1);
+            }
+
+            if ($dependency === 'azuriom') {
+                $version = Azuriom::version();
+            } elseif ($this->isEnabled($dependency)) {
+                $version = $this->plugins[$dependency]->version;
+            } elseif ($optional) {
+                continue; // Dependency is missing but is optional
+            } else {
+                return $dependency;
+            }
+
+            if (! Semver::satisfies($version, $minVersion)) {
+                return $dependency;
+            }
+        }
+
+        return null;
+    }
+
     public function addRouteDescription(array $items)
     {
         foreach ($items as $key => $value) {
@@ -335,19 +393,17 @@ class PluginManager extends ExtensionManager
             $enabledPlugins = $this->getJson($this->pluginsPath('plugins.json'), true) ?? [];
         }
 
-        $plugins = array_filter($this->findPluginsDescriptions(), function ($plugin) use ($enabledPlugins) {
+        $plugins = $this->findPluginsDescriptions()->filter(function ($desc, $plugin) use ($enabledPlugins) {
             return in_array($plugin, $enabledPlugins, true);
-        }, ARRAY_FILTER_USE_KEY);
+        });
 
-        if (empty($enabledPlugins)) {
-            $this->files->delete($this->getCachedPluginsPath());
-
-            return [];
+        if ($plugins->isEmpty() && app()->runningInConsole()) {
+            return $plugins;
         }
 
-        $pluginsCache = array_map(function ($plugin) {
+        $pluginsCache = $plugins->map(function ($plugin) {
             return (array) $plugin;
-        }, $plugins);
+        })->all();
 
         $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
@@ -365,23 +421,26 @@ class PluginManager extends ExtensionManager
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
-        $installedPlugins = collect($this->findPluginsDescriptions())
+        $installedPlugins = $this->findPluginsDescriptions()
             ->filter(function ($plugin) {
                 return isset($plugin->apiId);
-            })
-            ->pluck('apiId')
-            ->all();
+            });
 
-        return array_filter($plugins, function ($plugin) use ($installedPlugins) {
-            return ! in_array($plugin['id'], $installedPlugins, true);
-        });
+        return collect($plugins)
+            ->filter(function ($plugin) use ($installedPlugins) {
+                return ! $installedPlugins->contains('apiId', $plugin['id']);
+            })->filter(function ($plugin) {
+                $games = Arr::get($plugin, 'games', '*');
+
+                return $games === '*' || game()->isExtensionCompatible($games);
+            });
     }
 
     public function getPluginToUpdate(bool $force = false)
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
-        return array_filter($this->findPluginsDescriptions(), function ($plugin) use ($plugins) {
+        return $this->findPluginsDescriptions()->filter(function ($plugin) use ($plugins) {
             $id = $plugin->apiId ?? 0;
 
             if (! array_key_exists($id, $plugins)) {
@@ -418,6 +477,12 @@ class PluginManager extends ExtensionManager
 
         $this->createAssetsLink($plugin);
 
+        if (! $this->hasRequirements($plugin)) {
+            $this->disable($plugin);
+
+            return;
+        }
+
         // Run the migrations if the plugin was updated
         if ($this->isEnabled($plugin)) {
             $this->runMigrations($plugin);
@@ -435,7 +500,7 @@ class PluginManager extends ExtensionManager
 
             return $this->plugins;
         } catch (FileNotFoundException $e) {
-            $this->plugins = $this->cachePlugins();
+            $this->plugins = $this->cachePlugins()->all();
 
             return $this->plugins;
         }
@@ -457,6 +522,8 @@ class PluginManager extends ExtensionManager
             foreach (array_keys($plugins, $plugin, true) as $key) {
                 unset($plugins[$key]);
             }
+
+            $plugins = array_values($plugins);
         }
 
         $this->files->put($this->pluginsPath('plugins.json'), json_encode($plugins));

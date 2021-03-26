@@ -18,7 +18,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.roles.index', ['roles' => Role::orderByDesc('power')->get()]);
+        return view('admin.roles.index', [
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
@@ -58,7 +60,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create', ['permissions' => Permission::permissionsWithName()]);
+        return view('admin.roles.create', [
+            'permissions' => Permission::permissionsWithName(),
+        ]);
     }
 
     /**
@@ -109,11 +113,13 @@ class RoleController extends Controller
     {
         $this->authorize('update', $role);
 
-        if ($request->user()->isAdmin() && $role->is($request->user()->role) && ! $request->input('is_admin')) {
+        $user = $request->user();
+
+        if ($user->isAdmin() && $role->is($user->role) && ! $request->input('is_admin')) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.remove-admin'));
         }
 
-        if (! $request->user()->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
+        if (! $user->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.add-admin'));
         }
 
@@ -144,7 +150,7 @@ class RoleController extends Controller
             return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.status.own-role'));
         }
 
-        $role->users()->update(['role_id' => 1]);
+        $role->users()->update(['role_id' => Role::defaultRoleId()]);
 
         $role->delete();
 

@@ -50,7 +50,7 @@ class PluginCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -63,7 +63,7 @@ class PluginCreateCommand extends Command
         if ($this->files->exists($path)) {
             $this->error("The plugin '{$path}' already exists!");
 
-            return false;
+            return 1;
         }
 
         $this->files->makeDirectory($path);
@@ -89,6 +89,8 @@ class PluginCreateCommand extends Command
         }
 
         $this->info('Plugin created successfully.');
+
+        return 0;
     }
 
     private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace)
@@ -118,9 +120,6 @@ class PluginCreateCommand extends Command
             'autoload' => [
                 'psr-4' => [
                     "{$namespace}\\" => 'src/',
-                ],
-                'files' => [
-                    'src/helpers.php',
                 ],
             ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));

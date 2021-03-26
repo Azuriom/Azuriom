@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -57,11 +58,26 @@ class NavbarElement extends Model
         'new_tab' => 'boolean',
     ];
 
+    protected static function booted()
+    {
+        foreach (['created', 'updated', 'deleted'] as $event) {
+            static::registerModelEvent($event, function () {
+                static::clearCache();
+            });
+        }
+    }
+
+    /**
+     * Get the parent element of this element.
+     */
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
+    /**
+     * Get the child elements if this element is a dropdown.
+     */
     public function elements()
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('position');
@@ -104,6 +120,11 @@ class NavbarElement extends Model
                 return $request->routeIs('posts.*');
             case 'plugin':
                 return $request->routeIs(Str::beforeLast($this->value, '.').'.*');
+            case 'dropdown':
+                return $this->elements
+                    ->contains(function (self $element) {
+                        return ! $element->isDropdown() && $element->isCurrent();
+                    });
             default:
                 return false;
         }
@@ -138,5 +159,15 @@ class NavbarElement extends Model
     public static function types()
     {
         return self::TYPES;
+    }
+
+    /**
+     * Clear the navbar elements cache.
+     *
+     * @return void
+     */
+    public static function clearCache()
+    {
+        Cache::forget('navbar_elements');
     }
 }

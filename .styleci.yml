@@ -4,6 +4,3 @@ finder:
   not-name:
     - index.php
     - server.php
-
-disabled:
-  - simplified_null_return

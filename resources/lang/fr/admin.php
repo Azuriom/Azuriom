@@ -86,7 +86,7 @@ return [
         'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
-
+        'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
         'posts' => 'Articles',
         'pages' => 'Pages',
@@ -100,40 +100,33 @@ return [
             'site-name' => 'Nom du site',
             'site-url' => 'URL du site',
             'site-description' => 'Description du site',
+            'meta' => 'Mots-clés du site',
+            'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
             'favicon' => 'Favicon',
             'background' => 'Background',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
             'copyright' => 'Copyright',
-            'conditions-url' => 'Liens des CGU',
-            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
-            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer via des plugins par exemple.',
-            'auth-api' => 'Activer l\'API auth',
-            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener">AzAuth</a> pour une intégration simple et rapide.',
-            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
-            'user-money-transfer' => 'Autoriser le transfert de d\'argent entre les utilisateurs',
+            'money' => 'Nom de la monnaie du site',
+            'user-money-transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
             'site-key' => 'Clé de site pour azuriom.com',
             'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
-        ],
-
-        'maintenance' => [
-            'title' => 'Maintenance',
-
-            'enable' => 'Activer la maintenance',
-            'message' => 'Message de maintenance',
         ],
 
         'security' => [
             'title' => 'Paramètres de sécurité',
 
-            'recaptcha' => 'Activer la protection par Google reCaptcha',
-            'recaptcha-site-key' => 'Clé du site',
-            'recaptcha-secret-key' => 'Clé secrète',
-            'recaptcha-info' => 'Vous pouvez obtenir les clés Google reCaptcha sur la page de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+            'captcha' => [
+                'title' => 'Captcha (protection anti bot)',
+                'site-key' => 'Clé du site',
+                'secret-key' => 'Clé secrète',
+                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur la site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+                'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur la site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
+            ],
 
             'hash' => 'Algorithme de hachage',
-            'hash-info' => 'Argon2id est l\'algorithme le plus sûr mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
+            'hash-info' => 'Argon2id est l\'algorithme le plus sécurisé mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
             'hash-error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
         ],
 
@@ -155,28 +148,28 @@ return [
             ],
 
             'boost' => [
-                'title' => 'RocketBooster',
-                'description' => 'RocketBooster permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
-                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger RocketBooster.',
+                'title' => 'AzBoost',
+                'description' => 'AzBoost permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
+                'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger AzBoost.',
 
                 'current' => [
-                    'status' => 'RocketBooster est actuellement :status.',
+                    'status' => 'AzBoost est actuellement :status.',
                     'enabled' => '<span class="text-success">activé</span>',
                     'disabled' => '<span class="text-danger">désactivé</span>',
                 ],
 
                 'status' => [
-                    'enabled' => 'RocketBooster a été activé.',
-                    'disabled' => 'RocketBooster a été désactivé.',
-                    'reloaded' => 'RocketBooster a été rechargé.',
+                    'enabled' => 'AzBoost a été activé.',
+                    'disabled' => 'AzBoost a été désactivé.',
+                    'reloaded' => 'AzBoost a été rechargé.',
 
-                    'enable-error' => 'Une erreur est survenue en activant RocketBooster.',
+                    'enable-error' => 'Une erreur est survenue en activant AzBoost.',
                 ],
 
                 'actions' => [
-                    'enable' => 'Activer RocketBooster',
-                    'disable' => 'Désactiver RocketBooster',
-                    'reload' => 'Recharger RocketBooster',
+                    'enable' => 'Activer AzBoost',
+                    'disable' => 'Désactiver AzBoost',
+                    'reload' => 'Recharger AzBoost',
                 ],
             ],
         ],
@@ -184,15 +177,10 @@ return [
         'seo' => [
             'title' => 'Paramètres SEO',
 
-            'google-analytics' => 'Identifiant du site Google Analytics',
-            'google-analytics-info' => 'Vous pouvez obtenir l\'identifiant du site sur la page de <a href="https://www.google.com/analytics/web/" target="_blank" rel="noopener noreferrer">Google Analytics</a>.',
-            'meta' => 'Mots-clés du site',
-            'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
-
             'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
             'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
 
-            'html-code-info' => 'Exemple: Bannière cookies, etc',
+            'html-code-info' => 'Exemple: Bannière cookies, Google Analytics, etc',
 
             'welcome-popup' => [
                 'enable' => 'Activer le popup de bienvenue ?',
@@ -201,12 +189,25 @@ return [
             ],
         ],
 
+        'auth' => [
+            'title' => 'Authentification',
+
+            'conditions-url' => 'Liens des CGU',
+            'conditions-info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
+            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
+            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
+            'auth-api' => 'Activer l\'API auth',
+            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
+            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
+        ],
+
         'mail' => [
             'title' => 'Paramètres Mail',
-
-            'from-address' => 'Adresse E-Mail utilisée pour envoyer les e-mails.',
+            'from-address' => 'Adresse Email utilisée pour envoyer les emails.',
             'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des e-mails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des emails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'Lorsque l\'envoie des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
+            'sendmail-warn' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
@@ -214,6 +215,16 @@ return [
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
+            'enable-users-verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
+            'send' => 'Envoyer un mail de test',
+            'sent' => 'Le mail de test a bien été envoyé.',
+        ],
+
+        'maintenance' => [
+            'title' => 'Maintenance',
+
+            'enable' => 'Activer la maintenance',
+            'message' => 'Message de maintenance',
         ],
 
         'status' => [
@@ -284,14 +295,17 @@ return [
         'title-edit' => 'Édition du serveur :server',
         'title-create' => 'Ajout d\'un serveur',
 
-        'default-server' => 'Serveur par défaut',
+        'default' => 'Serveur par défaut',
+        'default-info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
 
         'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
+        'query-no-commands' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
+
+        'query-port-info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 
         'fields' => [
             'address' => 'Adresse',
             'port' => 'Port',
-            'status' => 'Status',
 
             'rcon-password' => 'Mot de passe Rcon',
             'rcon-port' => 'Port Rcon',
@@ -313,6 +327,8 @@ return [
             'link-info' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
             'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
 
+            'enable-ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
+            'ping-info' => 'Lorsque les commandes instantanées ne sont pas activées, les commandes seront exécutées avec un délai de 30 secondes à 1 minute.',
             'custom-port' => 'Utiliser un port AzLink personnalisé',
         ],
 
@@ -337,7 +353,13 @@ return [
             'mc-rcon' => 'Minecraft RCON',
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
-            'source-rcon' => 'Source RCON',
+            'source-rcon' => 'RCON Source',
+            'bedrock-ping' => 'Ping Bedrock',
+            'bedrock-rcon' => 'RCON Bedrock',
+            'fivem-status' => 'Statut FiveM',
+            'fivem-rcon' => 'RCON FiveM',
+            'rust-rcon' => 'Rust RCON',
+            'flyff-server' => 'Serveur Flyff',
         ],
     ],
 
@@ -348,7 +370,8 @@ return [
 
         'fields' => [
             'register-date' => 'Inscrit le',
-            'email-verified' => 'Adresse E-Mail vérifiée',
+            'email-verified' => 'Adresse Email vérifiée',
+            'last-login' => 'Dernière connexion',
             '2fa' => 'Authentification à deux facteurs',
             'ip' => 'Adresse IP',
         ],
@@ -363,7 +386,7 @@ return [
             'ban' => 'Bannir',
             'unban' => 'Débannir',
             'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'adresse e-mail',
+            'verify-email' => 'Vérifier l\'adresse email',
             'disable-2fa' => 'Désactiver l\'A2F',
         ],
 
@@ -387,7 +410,7 @@ return [
             'updated' => 'L\'utilisateur a été mis à jour.',
             'deleted' => 'L\'utilisateur a été supprimé.',
 
-            'email-verified' => 'L\'adresse E-Mail a été vérifiée',
+            'email-verified' => 'L\'adresse Email a été vérifiée',
             '2fa-disabled' => 'L\'authentification à deux facteurs a été désactivée',
 
             'banned' => 'Utilisateur banni',
@@ -417,6 +440,7 @@ return [
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
 
+            'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
             'add-admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
             'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
@@ -427,6 +451,7 @@ return [
     'permissions' => [
         'create-comments' => 'Commenter un article',
         'delete-other-comments' => 'Supprimer un commentaire d\'un autre utilisateur',
+        'maintenance-access' => 'Accéder au site pendant une maintenance',
         'admin-access' => 'Accéder au panel administrateur',
         'admin-logs' => 'Voir et gérer les logs du site',
         'admin-images' => 'Voir et gérer les images',
@@ -434,6 +459,7 @@ return [
         'admin-pages' => 'Voir et gérer les pages',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
+        'admin-users' => 'Voir et gérer les utilisateurs',
         'admin-themes' => 'Voir et gérer les thèmes',
         'admin-plugins' => 'Voir et gérer les plugins',
     ],
@@ -509,6 +535,10 @@ return [
         'installed' => 'Plugins installés',
         'available' => 'Plugins disponibles',
 
+        'azuriom-requirement' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
+        'game-requirement' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
+        'plugin-requirement' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',
+
         'status' => [
             'reloaded' => 'Les plugins ont été rechargés.',
             'enabled' => 'Le plugin a été activé.',
@@ -541,8 +571,8 @@ return [
         'status' => [
             'reloaded' => 'Les thèmes ont été rechargés.',
             'no-config' => 'Ce thème n\'a pas de configuration.',
-            'config-updated' => 'La configuration du thème a été mise à jour..',
-            'invalid' => 'Ce thème n\'est pas valide.',
+            'config-updated' => 'La configuration du thème a été mise à jour.',
+            'invalid' => 'Ce thème n\'est pas valide (le nom du dossier du thème doit être l\'id du thème).',
             'updated' => 'Le thème a été mis à jour.',
             'installed' => 'Le thème a été installé.',
             'deleted' => 'Le thème a été supprimé.',

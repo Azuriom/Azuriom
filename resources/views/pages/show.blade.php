@@ -9,7 +9,9 @@
             <div class="card-body">
                 <h1>{{ $page->title }}</h1>
 
-                {!! $page->content !!}
+                <div class="card-text user-html-content">
+                    {!! $page->content !!}
+                </div>
             </div>
         </div>
     </div>

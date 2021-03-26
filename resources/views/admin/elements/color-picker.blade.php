@@ -34,16 +34,16 @@
                 hue: true,
                 interaction: {
                     input: true,
-                }
+                },
             }
-        }).on('change', function (color, instance) {
+        }).on('change', function (color) {
             if (color) {
                 colorPickrForm.value = color.toHEXA();
             }
         });
 
         colorPickrForm.addEventListener('click', function (e) {
-            e.preventDefault()
+            e.preventDefault();
         });
     </script>
 @endpush

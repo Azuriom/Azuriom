@@ -9,7 +9,10 @@
             time_24hr: true,
             enableTime: true,
             enableSeconds: true,
-            minuteIncrement: 1
+            minuteIncrement: 1,
+            // Prevent error with MySQL
+            minDate: '2000-01-01',
+            maxDate: '2037-31-12',
         });
     </script>
 @endpush
