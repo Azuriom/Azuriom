@@ -1,4 +1,3 @@
-
 @foreach (socials_getProviders() as $item)
     @switch($item)
         @case('facebook')

@@ -70,9 +70,9 @@
                     <div class="card shadow-sm mb-4">
                         <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
                         <div class="card-body">
-                            <form action="@if ($user->password === null) {{ route('profile.set-password') }}  @else {{ route('profile.password') }} @endif" method="POST">
+                            <form action="@if ($user->password === 'signed_in_with_social') {{ route('profile.set-password') }}  @else {{ route('profile.password') }} @endif" method="POST">
                                 @csrf
-                                @if ($user->password !== null)
+                                @if ($user->password !== 'signed_in_with_social')
                                     <div class="form-group">
                                         <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
                                         <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
@@ -81,20 +81,20 @@
                                         @enderror
                                     </div>
                                 @endif
-    
+
                                 <div class="form-group">
                                     <label for="passwordInput">{{ trans('auth.password') }}</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
-    
+
                                 <div class="form-group">
                                     <label for="confirmPasswordInput">{{ trans('auth.confirm-password') }}</label>
                                     <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
                                 </div>
-    
+
                                 <button type="submit" class="btn btn-primary">
                                     {{ trans('messages.actions.update') }}
                                 </button>

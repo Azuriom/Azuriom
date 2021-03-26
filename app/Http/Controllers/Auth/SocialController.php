@@ -99,7 +99,7 @@ class SocialController extends Controller
                 $user = User::create([
                     'email' => $providerUser->getEmail(),
                     'name'  => $user_name,
-                    'password' => null,
+                    'password' => 'signed_in_with_social',
                     'game_id' => null,
                 ]);
             }
