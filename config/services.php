@@ -42,12 +42,6 @@ return [
         'redirect' => '/login/twitter/callback',
     ],
 
-    'steam' => [
-        'client_id' => null,
-        'client_secret' => env('STEAM_SECRET'),
-        'redirect' => '/login/steam/callback',
-    ],
-
     'discord' => [
         'client_id'     => env('DISCORD_CLIENT_ID'),
         'client_secret' => env('DISCORD_CLIENT_SECRET'),
