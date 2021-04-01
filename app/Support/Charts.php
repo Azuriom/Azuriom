@@ -143,7 +143,7 @@ class Charts
         $dates = collect();
         $column = $column ?? $query->getModel()->getCreatedAtColumn();
 
-        while ($date->isPast() || !$date->isFuture()) {
+        while ($date->isPast() || ! $date->isFuture()) {
             $dates->put($date->format('Y-m-d H'), 0);
 
             $date = $date->addHour();
@@ -175,7 +175,7 @@ class Charts
             case 'sqlsrv':
                 return "FORMAT({$column}, 'yyyy-MM')";
             default:
-                throw new RuntimeException('Unsupported database driver: ' . $driver);
+                throw new RuntimeException('Unsupported database driver: '.$driver);
         }
     }
 
@@ -191,7 +191,7 @@ class Charts
             case 'sqlsrv':
                 return "FORMAT({$column}, 'yyyy-MM-dd HH')";
             default:
-                throw new RuntimeException('Unsupported database driver: ' . $driver);
+                throw new RuntimeException('Unsupported database driver: '.$driver);
         }
     }
 }
