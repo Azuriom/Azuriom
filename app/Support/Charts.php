@@ -90,8 +90,7 @@ class Charts
         $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);
 
         return $result->mapWithKeys(function ($value, string $date) {
-            $carbon = Carbon::createFromFormat('Y-m', $date);
-
+            $carbon = Carbon::createFromFormat('!Y-m', $date);
             return [$carbon->translatedFormat('F Y') => $value];
         });
     }
@@ -104,8 +103,7 @@ class Charts
 
         while ($date->isPast()) {
             $dates->put($date->format('Y-m'), 0);
-
-            $date = $date->addMonth();
+            $date = $date->addMonthNoOverflow();
         }
 
         $driver = $query->getConnection()->getDriverName();
