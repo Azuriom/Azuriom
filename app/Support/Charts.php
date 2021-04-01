@@ -120,6 +120,49 @@ class Charts
         return $dates->merge($results);
     }
 
+    public static function avgByHours(Builder $query, string $group, string $column = null, int $hours = 23)
+    {
+        return static::aggregateByHours($query, 'avg', $group, $column, $hours);
+    }
+
+    public static function aggregateByHours(Builder $query, string $function, string $group, string $column = null, int $hours = 23)
+    {
+        $carbon = Carbon::now();
+        $start = $carbon->subHours($hours);
+        $result = static::rawAggregateByHours($query, $start, $function, $group, $column);
+
+        return $result->mapWithKeys(function ($value, string $date) {
+            $carbon = Carbon::createFromFormat('Y-m-d H', $date);
+            return [$carbon->translatedFormat('Y-m-d H') => $value];
+        });
+    }
+
+    public static function rawAggregateByHours(Builder $query, Carbon $start, string $function, string $group, ?string $column)
+    {
+        $date = $start->clone();
+        $dates = collect();
+        $column = $column ?? $query->getModel()->getCreatedAtColumn();
+
+        while ($date->isPast() || !$date->isFuture()) {
+            $dates->put($date->format('Y-m-d H'), 0);
+
+            $date = $date->addHour();
+        }
+
+        $sqlGroupColumn = $query->getGrammar()->wrap($group);
+        $driver = $query->getConnection()->getDriverName();
+        $dateCast = self::getDatabaseRawQueryByHours($driver, $query->getGrammar()->wrap($column));
+
+        $results = $query->select(DB::raw("{$dateCast} as date, {$function}({$sqlGroupColumn}) as aggregate"))
+            ->where($column, '>', $start)
+            ->groupBy($driver !== 'sqlsrv' ? 'date' : DB::raw($dateCast))
+            ->orderBy('date')
+            ->get()
+            ->pluck('aggregate', 'date');
+
+        return $dates->merge($results);
+    }
+
     protected static function getDatabaseRawQuery(string $driver, string $column)
     {
         switch ($driver) {
@@ -132,7 +175,23 @@ class Charts
             case 'sqlsrv':
                 return "FORMAT({$column}, 'yyyy-MM')";
             default:
-                throw new RuntimeException('Unsupported database driver: '.$driver);
+                throw new RuntimeException('Unsupported database driver: ' . $driver);
+        }
+    }
+
+    protected static function getDatabaseRawQueryByHours(string $driver, string $column)
+    {
+        switch ($driver) {
+            case 'mysql':
+                return "date_format({$column}, '%Y-%m-%d %H')";
+            case 'sqlite':
+                return "strftime('%Y-%m-%d %H', {$column})";
+            case 'pgsql':
+                return "to_char({$column}, 'YYYY-MM-dd HH')";
+            case 'sqlsrv':
+                return "FORMAT({$column}, 'yyyy-MM-dd HH')";
+            default:
+                throw new RuntimeException('Unsupported database driver: ' . $driver);
         }
     }
 }
