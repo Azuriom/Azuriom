@@ -3,7 +3,7 @@
 @section('title', trans('messages.profile.title'))
 
 @section('content')
-    <div class="container content">
+    <div class="container content profile">
         <div class="card mb-4 shadow-sm">
             <div class="card-header">{{ trans('messages.profile.title') }}</div>
             <div class="card-body">

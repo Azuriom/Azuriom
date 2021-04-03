@@ -19,7 +19,7 @@ return [
                 'settings' => 'Settings',
                 'global' => 'Global',
                 'security' => 'Security',
-                'performances' => 'Performances',
+                'performances' => 'Performance',
                 'seo' => 'SEO',
                 'auth' => 'Authentication',
                 'mail' => 'Mail',
@@ -269,7 +269,7 @@ return [
         'default' => 'Default server',
         'default-info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
-        'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
+        'ping-no-commands' => 'The ping link doesn\'t need a plugin, but you can\'t execute commands with it.',
         'query-no-commands' => 'With query link, it\'s not possible to execute commands on the server.',
 
         'query-port-info' => 'Can be empty if it\'s the same as the game port.',
@@ -340,7 +340,7 @@ return [
         'title-create' => 'Create user',
 
         'fields' => [
-            'register-date' => 'Register at',
+            'register-date' => 'Registered at',
             'last-login' => 'Last login at',
             'email-verified' => 'Email Address verified',
             '2fa' => 'Two Factor Authentication',
@@ -532,7 +532,7 @@ return [
         ],
         'installed' => 'Installed themes',
         'available' => 'Available themes',
-        'no-enabled' => 'You don\'t have any theme enable.',
+        'no-enabled' => 'You don\'t have any themes enabled.',
 
         'actions' => [
             'edit-config' => 'Edit config',
@@ -541,7 +541,7 @@ return [
 
         'status' => [
             'reloaded' => 'The themes have been reloaded.',
-            'no-config' => 'This theme don\'t have config.',
+            'no-config' => 'This theme doesn\'t have config.',
             'config-updated' => 'The theme config has been updated.',
             'invalid' => 'This theme is invalid (the theme folder name must be the theme id).',
             'updated' => 'The theme has been updated.',
