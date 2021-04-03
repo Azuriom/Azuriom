@@ -91,6 +91,7 @@ class Charts
 
         return $result->mapWithKeys(function ($value, string $date) {
             $carbon = Carbon::createFromFormat('!Y-m', $date);
+
             return [$carbon->translatedFormat('F Y') => $value];
         });
     }
@@ -133,6 +134,7 @@ class Charts
 
         return $result->mapWithKeys(function ($value, string $date) {
             $carbon = Carbon::createFromFormat('Y-m-d H', $date);
+
             return [$carbon->translatedFormat('Y-m-d H') => $value];
         });
     }
