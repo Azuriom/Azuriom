@@ -167,7 +167,6 @@ function addCommandListenerToTranslations(el) {
       const element = el.parentNode.parentNode.parentNode.parentNode;
 
       element.parentNode.removeChild(element);
-      numberOfTranslatedElements--;
     });
 }
 

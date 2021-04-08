@@ -652,4 +652,8 @@ return [
         '404' => 'Page Non Trouvée',
         'info' => 'Il semblerait que vous avez trouvé un bug dans la matrice...',
     ],
+
+    'translations' => [
+        'add' => 'Ajouter une traduction',
+    ],
 ];

@@ -258,3 +258,26 @@ if (! function_exists('set_spatie_translations')) {
         }
     }
 }
+
+if(! function_exists('get_available_locales')) {
+    /**
+     * Get locales with their name 
+     * ex: [ ['fr' => 'Français'], ['en' => 'English'] ]
+     */
+    function get_available_locales() {
+        return get_available_locales_codes()->mapWithKeys(function (string $file) {
+            return [$file => trans('messages.lang', [], $file)];
+        });
+    }
+}
+//$this->app->langPath()
+if(! function_exists('get_available_locales_codes')) {
+    /**
+     * Get availables locales within the ressources/lang folder.
+     */
+    function get_available_locales_codes() {
+        return collect(File::directories(resource_path('lang')))->map(function (string $path) {
+            return basename($path);
+        });
+    }
+}

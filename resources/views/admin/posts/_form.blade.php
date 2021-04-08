@@ -18,9 +18,13 @@
             document.getElementById('addCommandButton').addEventListener('click', function () {
                 let form = `
                 <div class="form-group">
-                    <label for="translationInput-`+numberOfTranslatedElements+`">Translation</label>
+                    <label for="translationInput-`+numberOfTranslatedElements+`">{{ trans('admin.settings.index.locale') }}</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="translationInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][locale]" value="" required>
+                        <select class="custom-select" id="translationInput-`+numberOfTranslatedElements+`" name="translations[`+numberOfTranslatedElements+`][locale]" required>
+                            @foreach($available_locales as $localeCode => $localeName)
+                                <option value="{{ $localeCode }}">{{ $localeName }}</option>
+                            @endforeach
+                        </select>
                         <div class="input-group-append">
                             <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                             </button>
@@ -56,9 +60,13 @@
 @forelse ($locales as $locale)
     <div>
         <div class="form-group">
-            <label for="translationInput-{{$loop->index}}">Translation</label>
+            <label for="translationInput-{{$loop->index}}">{{ trans('admin.settings.index.locale') }}</label>
             <div class="input-group">
-                <input type="text" class="form-control" id="translationInput-{{$loop->index}}" name="translations[{{$loop->index}}][locale]" value="{{ old('translations.'.$loop->index.'.locale', $locale ?? '') }}" required>
+                <select class="custom-select" id="translationInput-{{$loop->index}}" name="translations[{{$loop->index}}][locale]" required>
+                    @foreach($available_locales as $localeCode => $localeName)
+                        <option value="{{ $localeCode }}" @if($localeCode === $locale) selected @endif>{{ $localeName }}</option>
+                    @endforeach
+                </select>
                 <div class="input-group-append">
                     <button class="btn btn-outline-danger translation-remove" type="button"><i class="fas fa-times"></i>
                     </button>
@@ -95,8 +103,14 @@
     </div>
 @empty
     <div class="form-group">
-        <label for="translationInput-default">Translation</label>
-        <input type="text" class="form-control" id="translationInput-default" name="translations[default][locale]" value="{{ old('translations.default.locale', app()->getLocale()) }}" required>
+        <label for="translationInput-default">{{ trans('admin.settings.index.locale') }}</label>
+        <div class="input-group">
+            <select class="custom-select" id="translationInput-default" name="translations[default][locale]" required>
+                @foreach($available_locales as $localeCode => $localeName)
+                    <option value="{{ $localeCode }}">{{ $localeName }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <div class="form-group">
@@ -129,7 +143,7 @@
 </div>
 
 <button type="button" id="addCommandButton" class="btn btn-sm btn-success my-2">
-    <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+    <i class="fas fa-plus"></i> {{ trans('admin.translations.add') }}
 </button>
 
 <div class="form-group">

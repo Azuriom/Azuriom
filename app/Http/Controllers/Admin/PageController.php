@@ -29,6 +29,7 @@ class PageController extends Controller
     {
         return view('admin.pages.create', [
             'pendingId' => old('pending_id', Str::uuid()),
+            'available_locales' => get_available_locales(),
         ]);
     }
 
@@ -59,7 +60,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', ['page' => $page]);
+        return view('admin.pages.edit', ['page' => $page,'available_locales' => get_available_locales(),]);
     }
 
     /**
