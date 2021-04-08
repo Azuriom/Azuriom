@@ -19,7 +19,7 @@ return [
                 'settings' => 'Settings',
                 'global' => 'Global',
                 'security' => 'Security',
-                'performances' => 'Performances',
+                'performances' => 'Performance',
                 'seo' => 'SEO',
                 'auth' => 'Authentication',
                 'mail' => 'Mail',
@@ -107,7 +107,7 @@ return [
             'logo' => 'Logo',
             'timezone' => 'Timezone',
             'locale' => 'Locale',
-            'money' => 'Name of the site currency',
+            'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
             'user-money-transfer' => 'Enable money transfer between users',
             'site-key' => 'Site key for azuriom.com',
@@ -237,7 +237,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
-        'dropdown-info' => 'You can add elements to this dropdown when this element is save.',
+        'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [
             'home' => 'Home',
@@ -269,7 +269,7 @@ return [
         'default' => 'Default server',
         'default-info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
-        'ping-no-commands' => 'The ping link don\'t need a plugin, but you can\'t execute command with this link.',
+        'ping-no-commands' => 'The ping link doesn\'t need a plugin, but you can\'t execute commands with it.',
         'query-no-commands' => 'With query link, it\'s not possible to execute commands on the server.',
 
         'query-port-info' => 'Can be empty if it\'s the same as the game port.',
@@ -340,7 +340,7 @@ return [
         'title-create' => 'Create user',
 
         'fields' => [
-            'register-date' => 'Register at',
+            'register-date' => 'Registered at',
             'last-login' => 'Last login at',
             'email-verified' => 'Email Address verified',
             '2fa' => 'Two Factor Authentication',
@@ -411,6 +411,7 @@ return [
             'updated' => 'This role has been updated.',
             'deleted' => 'This role has been deleted.',
 
+            'unauthorized' => 'This role is higher than your own role.',
             'add-admin' => 'You can\'t add the admin permission to a role.',
             'remove-admin' => 'You can\'t remove the admin permission of your role.',
             'permanent-role' => 'This role cannot be deleted.',
@@ -429,6 +430,7 @@ return [
         'admin-pages' => 'View and manage pages',
         'admin-posts' => 'View and manage posts',
         'admin-settings' => 'View and manage settings',
+        'admin-users' => 'View and manage users',
         'admin-themes' => 'View and manage themes',
         'admin-plugins' => 'View and manage plugins',
     ],
@@ -516,7 +518,7 @@ return [
             'installed' => 'The plugin has been installed.',
             'deleted' => 'The plugin has been deleted.',
 
-            'error-delete' => 'The plugin must be disabled before it can be delete.',
+            'error-delete' => 'The plugin must be disabled before it can be deleted.',
         ],
     ],
 
@@ -530,7 +532,7 @@ return [
         ],
         'installed' => 'Installed themes',
         'available' => 'Available themes',
-        'no-enabled' => 'You don\'t have any theme enable.',
+        'no-enabled' => 'You don\'t have any themes enabled.',
 
         'actions' => [
             'edit-config' => 'Edit config',
@@ -539,7 +541,7 @@ return [
 
         'status' => [
             'reloaded' => 'The themes have been reloaded.',
-            'no-config' => 'This theme don\'t have config.',
+            'no-config' => 'This theme doesn\'t have config.',
             'config-updated' => 'The theme config has been updated.',
             'invalid' => 'This theme is invalid (the theme folder name must be the theme id).',
             'updated' => 'The theme has been updated.',

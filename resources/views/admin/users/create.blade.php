@@ -37,13 +37,13 @@
 
                 <div class="form-group">
                     <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                    <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role">
+                    <select class="custom-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role">
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach
                     </select>
 
-                    @error('role')
+                    @error('role_id')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>

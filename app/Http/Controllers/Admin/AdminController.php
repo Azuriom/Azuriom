@@ -38,12 +38,12 @@ class AdminController extends Controller
 
         return view('admin.dashboard', [
             'secure' => $request->secure() || ! $this->app->isProduction(),
-            'userCount' => User::count(),
+            'userCount' => User::where('is_deleted', false)->count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),
-            'newUsersPerMonths' => Charts::countByMonths(User::query()),
-            'newUsersPerDays' => Charts::countByDays(User::query()),
+            'newUsersPerMonths' => Charts::countByMonths(User::where('is_deleted', false)),
+            'newUsersPerDays' => Charts::countByDays(User::where('is_deleted', false)),
             'activeUsers' => $this->getActiveUsers(),
             'newVersion' => $newVersion,
             'apiAlerts' => $updates->getApiAlerts(),

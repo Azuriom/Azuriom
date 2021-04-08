@@ -24,6 +24,7 @@ class Permission extends Model
         'admin.pages' => 'admin.permissions.admin-pages',
         'admin.posts' => 'admin.permissions.admin-posts',
         'admin.settings' => 'admin.permissions.admin-settings',
+        'admin.users' => 'admin.permissions.admin-users',
         'admin.themes' => 'admin.permissions.admin-themes',
         'admin.plugins' => 'admin.permissions.admin-plugins',
     ];

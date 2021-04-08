@@ -26,7 +26,7 @@ trait Searchable
             $columns = Arr::wrap($columns);
         }
 
-        return $query->where(function ($query) use ($search, $columns) {
+        return $query->where(function (Builder $query) use ($search, $columns) {
             foreach ($columns ?? $this->searchable as $column) {
                 $query->orWhere($column, 'like', "%{$search}%");
             }

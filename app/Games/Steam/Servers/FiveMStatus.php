@@ -24,7 +24,7 @@ class FiveMStatus extends ServerBridge
                 ->json('vars.sv_maxClients', 64);
 
             return [
-                'players' => count($players),
+                'players' => is_array($players) ? count($players) : 0,
                 'max_players' => $maxPlayers,
             ];
         } catch (Exception $e) {

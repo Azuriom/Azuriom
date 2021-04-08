@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -52,10 +53,15 @@ class UserController extends Controller
      *
      * @param  \Azuriom\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException;
      */
     public function store(UserRequest $request)
     {
         $role = Role::find($request->input('role'));
+
+        $this->validateRole($request->user(), $role);
+
         $passwordHash = Hash::make($request->input('password'));
 
         $user = new User(['password' => $passwordHash] + $request->validated());
@@ -91,6 +97,8 @@ class UserController extends Controller
      * @param  \Azuriom\Http\Requests\UserRequest  $request
      * @param  \Azuriom\Models\User  $user
      * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException;
      */
     public function update(UserRequest $request, User $user)
     {
@@ -105,6 +113,8 @@ class UserController extends Controller
         }
 
         $role = Role::find($request->input('role'));
+
+        $this->validateRole($request->user(), $role);
 
         $user->role()->associate($role);
         $user->save();
@@ -170,5 +180,14 @@ class UserController extends Controller
         ActionLog::log('users.deleted', $user);
 
         return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
+    }
+
+    protected function validateRole(User $user, Role $role)
+    {
+        if (! $user->isAdmin() && $role->power > $user->role->power) {
+            throw ValidationException::withMessages([
+                'role_id' => trans('admin.roles.status.unauthorized'),
+            ]);
+        }
     }
 }
