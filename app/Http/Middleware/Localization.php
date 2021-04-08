@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Middleware;
 
 use Closure;
-use Illuminate\Filesystem\Filesystem;
 
 class Localization
 {
@@ -20,7 +19,7 @@ class Localization
             $user = auth()->user();
             app()->setLocale($user->locale);
         } else {
-            $locales = array_map('basename', app()->make(Filesystem::class)->directories(resource_path('lang')));
+            $locales = get_available_locales_codes();
             $locale = $request->session()->get('locale', $request->getPreferredLanguage($locales));
             app()->setLocale($locale);
         }

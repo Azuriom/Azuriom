@@ -40,7 +40,7 @@ class HomeController extends Controller
 
     public function locale($locale)
     {
-        abort_unless(in_array($locale, ['en', 'fr'], true), 401);
+        abort_unless(in_array($locale, get_available_locales_codes(), true), 401);
 
         if (auth()->check()) {
             $user = auth()->user();
