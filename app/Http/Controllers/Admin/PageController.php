@@ -60,7 +60,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', ['page' => $page,'available_locales' => get_available_locales(),]);
+        return view('admin.pages.edit', ['page' => $page, 'available_locales' => get_available_locales()]);
     }
 
     /**

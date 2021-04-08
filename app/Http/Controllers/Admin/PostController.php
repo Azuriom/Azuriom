@@ -66,7 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', ['post' => $post, 'available_locales' => get_available_locales(),]);
+        return view('admin.posts.edit', ['post' => $post, 'available_locales' => get_available_locales()]);
     }
 
     /**
