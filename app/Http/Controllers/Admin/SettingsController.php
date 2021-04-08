@@ -125,7 +125,7 @@ class SettingsController extends Controller
             'timezone' => ['required', 'timezone'],
             'copyright' => ['nullable', 'string', 'max:150'],
             'keywords' => ['nullable', 'string', 'max:150'],
-            'locale' => ['required', 'string', Rule::in(get_available_locales_codes())],
+            'locale.*' => ['required', 'string', Rule::in(get_available_locales_codes())],
             'icon' => ['nullable', 'exists:images,file'],
             'logo' => ['nullable', 'exists:images,file'],
             'background' => ['nullable', 'exists:images,file'],
@@ -136,6 +136,7 @@ class SettingsController extends Controller
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
 
+        $settings['locale'] = implode(',', $settings['locale']);
         Setting::updateSettings($settings);
 
         ActionLog::log('settings.updated');

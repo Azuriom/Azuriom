@@ -284,3 +284,12 @@ if (! function_exists('get_available_locales_codes')) {
         });
     }
 }
+
+if(! function_exists('get_selected_locales_codes')) {
+    /**
+     * Get the locales that admins offer on this website
+     */
+    function get_selected_locales_codes() {
+        return explode(',', setting('locale'));
+    }
+}

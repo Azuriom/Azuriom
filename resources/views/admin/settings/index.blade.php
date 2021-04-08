@@ -151,9 +151,9 @@
 
                     <div class="form-group col-md-6">
                         <label for="localeSelect">{{ trans('admin.settings.index.locale') }}</label>
-                        <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
+                        <select class="custom-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale[]" required multiple>
                             @foreach($locales as $localeCode => $localeName)
-                                <option value="{{ $localeCode }}" @if($localeCode === app()->getLocale()) selected @endif>{{ $localeName }}</option>
+                                <option value="{{ $localeCode }}" @if(in_array($localeCode, get_selected_locales_codes())) selected @endif>{{ $localeName }}</option>
                             @endforeach
                         </select>
 
