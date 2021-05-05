@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'google_2fa_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'google_2fa_secret', 'settings',
     ];
 
     /**
@@ -75,6 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'is_deleted' => 'boolean',
+        'settings' => 'array',
     ];
 
     /**
@@ -160,8 +161,36 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64)
     {
-        /* @noinspection PhpDeprecationInspection */
-        return game()->getAvatarUrl($this, $size);
+        $user_preference = $this->settings['avatar_from_provider'] ?? null;
+        $admin_choice = setting('overwrite_avatar');
+        if ($admin_choice === 'default') {
+            $identity = SocialIdentity::where([
+                ['provider_name', $user_preference],
+                ['user_id', $this->id],
+            ])->first();
+            if ($identity) {
+                return $identity->data['avatar'];
+            } else {
+                /** @noinspection PhpDeprecationInspection */
+                return game()->getAvatarUrl($this, $size);
+            }
+        } else {
+            $identity = SocialIdentity::where([
+                ['provider_name', $admin_choice],
+                ['user_id', $this->id],
+            ])->first();
+            if ($identity) {
+                return $identity->data['avatar'];
+            } else {
+                /** @noinspection PhpDeprecationInspection */
+                return game()->getAvatarUrl($this, $size);
+            }
+        }
+    }
+
+    public function isNewUser()
+    {
+        return $this->settings['new_user'] ?? false;
     }
 
     public function isBanned(bool $useCache = false)
@@ -230,5 +259,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
+    }
+
+    public function identities()
+    {
+        return $this->hasMany(SocialIdentity::class);
     }
 }

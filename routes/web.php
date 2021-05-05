@@ -1,6 +1,7 @@
 <?php
 
 use Azuriom\Http\Controllers\Auth\LoginController;
+use Azuriom\Http\Controllers\Auth\SocialController;
 use Azuriom\Http\Controllers\HomeController;
 use Azuriom\Http\Controllers\NotificationController;
 use Azuriom\Http\Controllers\PageController;
@@ -53,6 +54,8 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
     Route::post('/email', [ProfileController::class, 'updateEmail'])->name('email');
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
+    Route::post('/update_avatar', [ProfileController::class, 'updateAvatar'])->name('avatar_from_provider');
+    Route::post('/set_password', [ProfileController::class, 'setPassword'])->name('set-password');
 
     Route::prefix('2fa')->name('2fa.')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
@@ -83,3 +86,5 @@ Route::resource('posts.comments', PostCommentController::class)
     ->middleware(['auth', 'verified'])->only(['store', 'destroy']);
 
 Route::get('/{page:slug}', [PageController::class, 'show'])->name('pages.show');
+Route::get('login/{provider}', [SocialController::class, 'redirectToProvider']);
+Route::get('login/{provider}/callback', [SocialController::class, 'handleProviderCallback']);

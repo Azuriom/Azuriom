@@ -26,7 +26,10 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return view('profile.index', ['user' => $request->user()]);
+        $providers = socials_getProviders();
+        $providers[] = 'default';
+
+        return view('profile.index', ['user' => $request->user(), 'auth_methods' => $providers]);
     }
 
     /**
@@ -52,6 +55,51 @@ class ProfileController extends Controller
         ])->save();
 
         $user->sendEmailVerificationNotification();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+    }
+
+    /**
+     * Update the user avatar preference.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateAvatar(Request $request)
+    {
+        $providers = socials_getProviders();
+        $providers[] = 'default';
+        $this->validate($request, [
+            'avatar_from_provider' => ['required', Rule::in($providers)],
+        ]);
+        $user = $request->user();
+        $settings = $user->settings;
+        $settings['avatar_from_provider'] = $request->input('avatar_from_provider');
+        $user->settings = $settings;
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+    }
+
+    /**
+     * This function aims to set a password for a user, most likely called from user which
+     * connected through a sociolite provider and thus have no password ($user->password === null).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function setPassword(Request $request)
+    {
+        $data = $this->validate($request, [
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $password = Hash::make($request->input('password'));
+
+        $request->user()->update(['password' => $password]);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }

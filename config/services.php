@@ -30,6 +30,36 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => '/login/facebook/callback',
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => '/login/twitter/callback',
+    ],
+
+    'discord' => [
+        'client_id'     => env('DISCORD_CLIENT_ID'),
+        'client_secret' => env('DISCORD_CLIENT_SECRET'),
+        'redirect'      => '/login/discord/callback',
+    ],
+
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => '/login/google/callback',
+    ],
+
+    'sign-in-with-apple' => [
+        'client_id'     => env('SIGN_IN_WITH_APPLE_CLIENT_ID'),
+        'client_secret' => env('SIGN_IN_WITH_APPLE_CLIENT_SECRET'),
+        'redirect'      => '/login/sign-in-with-apple/callback',
+    ],
+
     'steam' => [
         'client_id' => null,
         'client_secret' => env('STEAM_KEY'),

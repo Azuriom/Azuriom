@@ -291,6 +291,59 @@ class SettingsController extends Controller
         return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
     }
 
+    public function socials()
+    {
+        return view('admin.settings.socials');
+    }
+
+    /**
+     * Update the application settings.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function socialsUpdate(Request $request)
+    {
+        $data = $this->validate($request, [
+            'services-facebook-client_id' => ['required_with:enable_facebook_login', 'nullable', 'string'],
+            'services-facebook-client_secret' => ['required_with:enable_facebook_login', 'nullable', 'string'],
+            'services-twitter-client_id' => ['required_with:enable_twitter_login', 'nullable', 'string'],
+            'services-twitter-client_secret' => ['required_with:enable_twitter_login', 'nullable', 'string'],
+            'services-steam-client_secret' => ['required_with:enable_steam_login', 'nullable', 'string'],
+            'services-discord-client_id' => ['required_with:enable_discord_login', 'nullable', 'string'],
+            'services-discord-client_secret' => ['required_with:enable_discord_login', 'nullable', 'string'],
+            'services-google-client_id' => ['required_with:enable_google_login', 'nullable', 'string'],
+            'services-google-client_secret' => ['required_with:enable_google_login', 'nullable', 'string'],
+            'services-sign-in-with-apple-client_id' => ['required_with:enable_sign-in-with-apple_login', 'nullable', 'string'],
+            'services-sign-in-with-apple-client_secret' => ['required_with:enable_sign-in-with-apple_login', 'nullable', 'string'],
+            'overwrite_avatar' => ['required', 'in:default,minecraft,facebook,twitter,steam,discord,google'],
+        ]);
+        foreach ($data as $key => $value) {
+            if ($key === 'services-sign-in-with-apple-client_id') {
+                $key = 'services.sign-in-with-apple.client_id';
+            } elseif ($key === 'services-sign-in-with-apple-client_secret') {
+                $key = 'services.sign-in-with-apple.client_secret';
+            } else {
+                $key = str_replace('-', '.', $key);
+            }
+            Setting::updateSettings($key, $value);
+        }
+        Setting::updateSettings([
+            'enable_facebook_login' => $request->filled('enable_facebook_login'),
+            'enable_twitter_login' => $request->filled('enable_twitter_login'),
+            'enable_steam_login' => $request->filled('enable_steam_login'),
+            'enable_discord_login' => $request->filled('enable_discord_login'),
+            'enable_google_login' => $request->filled('enable_google_login'),
+            'enable_sign-in-with-apple_login' => $request->filled('enable_sign-in-with-apple_login'),
+        ]);
+
+        ActionLog::log('settings.updated');
+
+        return redirect()->route('admin.settings.socials')->with('success', trans('admin.settings.status.updated'));
+    }
+
     public function auth()
     {
         return view('admin.settings.authentification', [

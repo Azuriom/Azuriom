@@ -49,6 +49,9 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::post('/auth/update', [SettingsController::class, 'updateauth'])->name('auth.update');
     Route::post('/security/update', [SettingsController::class, 'updateSecurity'])->name('security.update');
 
+    Route::get('/socials', [SettingsController::class, 'socials'])->name('socials');
+    Route::post('/socials/update', [SettingsController::class, 'socialsUpdate'])->name('socials-update');
+
     Route::get('/mail', [SettingsController::class, 'mail'])->name('mail');
     Route::post('/mail/update', [SettingsController::class, 'updateMail'])->name('mail.update');
     Route::post('/mail/test', [SettingsController::class, 'sendTestMail'])->name('mail.send');

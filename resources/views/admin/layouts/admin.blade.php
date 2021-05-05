@@ -90,6 +90,7 @@
                             @endif
                             <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
                             <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.socials') }}" href="{{ route('admin.settings.socials') }}">{{ trans('admin.nav.settings.settings.socials') }}</a>
                         </div>
                     </div>
                 </div>

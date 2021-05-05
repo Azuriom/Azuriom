@@ -89,6 +89,33 @@ if (! function_exists('favicon')) {
     }
 }
 
+if (! function_exists('socials_getProviders')) {
+    function socials_getProviders()
+    {
+        $providers = [];
+        if (setting('enable_facebook_login')) {
+            $providers[] = 'facebook';
+        }
+        if (setting('enable_twitter_login')) {
+            $providers[] = 'twitter';
+        }
+        if (setting('enable_steam_login')) {
+            $providers[] = 'steam';
+        }
+        if (setting('enable_discord_login')) {
+            $providers[] = 'discord';
+        }
+        if (setting('enable_google_login')) {
+            $providers[] = 'google';
+        }
+        if (setting('enable_sign-in-with-apple_login')) {
+            $providers[] = 'sign-in-with-apple';
+        }
+
+        return $providers;
+    }
+}
+
 if (! function_exists('site_logo')) {
     function site_logo()
     {

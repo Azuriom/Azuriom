@@ -24,6 +24,7 @@ return [
                 'auth' => 'Authentication',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
+                'socials' => 'Socials Sign-in',
             ],
             'navbar' => 'Navbar',
             'servers' => 'Servers',
@@ -229,6 +230,35 @@ return [
 
         'status' => [
             'updated' => 'The settings have been updated.',
+        ],
+
+        'socials' => [
+            'title' => 'Socials Sign-in',
+            'dev-account' => 'Get a developper account',
+            'create-app' => 'Create an app',
+            'base-url' => 'Your Website base URL',
+            'callback-url' => 'The callback/redirect URL',
+            'detailed-instructions' => 'Follow these detailed instructions if you need help',
+            'facebook' => [
+
+            ],
+            'twitter' => [
+                'terms' => 'Provide a "Terms of Service" URL, you can create a page here',
+                'privacy' => 'Provide a "Privacy policy" URL, you can create a page here',
+                'request-email' => 'Your app permissions should be  "read-only" and have the "request email address from users" checked',
+            ],
+            'steam' => [
+
+            ],
+            'discord' => [
+
+            ],
+            'google' => [
+
+            ],
+            'sign-in-with-apple' => [
+
+            ],
         ],
     ],
 

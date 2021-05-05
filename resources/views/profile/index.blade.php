@@ -70,22 +70,21 @@
                     <div class="card shadow-sm mb-4">
                         <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
                         <div class="card-body">
-                            <form action="{{ route('profile.password') }}" method="POST">
+                            <form action="@if ($user->password === 'signed_in_with_social') {{ route('profile.set-password') }}  @else {{ route('profile.password') }} @endif" method="POST">
                                 @csrf
-
-                                <div class="form-group">
-                                    <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
-                                    <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
-
-                                    @error('password_confirm_pass')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
+                                @if ($user->password !== 'signed_in_with_social')
+                                    <div class="form-group">
+                                        <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
+                                        <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
+                                        @error('password_confirm_pass')
+                                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                @endif
 
                                 <div class="form-group">
                                     <label for="passwordInput">{{ trans('auth.password') }}</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
-
                                     @error('password')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
@@ -173,6 +172,59 @@
                 @endif
             </div>
         @endif
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">Socials</div>
+                <div class="card-body">
+                    @php
+                        $connected_to = $user->identities->pluck('provider_name')->toArray();
+                        $connected_to[] = 'default';
+                        $auth_methods = array_diff($auth_methods, $connected_to);
+                    @endphp
+                        @foreach ($auth_methods as $item)
+                        @switch($item)
+                            @case('facebook')
+                                <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/facebook') }}"><i class="fab fa-facebook-square"></i> Sign-in with FaceBook</a>
+                                @break
+                            @case('twitter')
+                                <a style="background-color: #00acee;border-color: #00acee;" class="btn btn-primary" href="{{ url('/login/twitter') }}"><i class="fab fa-twitter-square"></i> Sign-in with Twitter</a>
+                                @break
+                            @case('steam')
+                                <a style="background-color: #34aa57;border-color: #34aa57;" class="btn btn-primary" href="{{ url('/login/steam') }}"><i class="fab fa-steam-square"></i> Sign-in with Steam</a>
+                                @break
+                            @case('discord')
+                                <a style="background-color: #3b5998;border-color: #3b5998;" class="btn btn-primary" href="{{ url('/login/discord') }}"><i class="fab fa-discord"></i> Sign-in with Discord</a>
+                                @break
+                            @case('google')
+                                <a style="background-color: #992c1d;border-color: #992c1d;" class="btn btn-primary" href="{{ url('/login/google') }}"><i class="fab fa-google"></i> Sign-in with Google</a>
+                                @break
+                            @case('sign-in-with-apple')
+                                <a style="background-color: #000000;border-color: #000000;" class="btn btn-primary" href="{{ url('/login/sign-in-with-apple') }}"><i class="fab fa-apple"></i> Sign-in with Apple</a>
+                                @break
+                            @default
+                            @endswitch
+                        @endforeach
+    
+                        @if (count($connected_to) > 1)
+                            <h4>Avatar choice <small>(can be overwritten by admins)</small></h4>
+                            <form action="{{ route('profile.avatar_from_provider') }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <select class="form-control" name="avatar_from_provider">
+                                        @foreach ($connected_to as $item)
+                                            <option value="{{$item}}" @if ($item === ($user->settings['avatar_from_provider'] ?? 'default') ) selected @endif >{{$item}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ trans('messages.actions.update') }}
+                                </button>
+                            </form>
+                        @endif
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
