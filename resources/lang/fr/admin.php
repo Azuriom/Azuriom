@@ -191,7 +191,7 @@ return [
         'auth' => [
             'title' => 'Authentification',
 
-            'conditions-url' => 'Liens des CGU',
+            'conditions-url' => 'Lien des CGU',
             'conditions-info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
             'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
             'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
@@ -204,13 +204,13 @@ return [
             'title' => 'Paramètres Mail',
             'from-address' => 'Adresse Email utilisée pour envoyer les emails.',
             'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoie des emails. Vous pouvez trouver plus d\'informations sur l\'envoie des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
-            'disabled-warn' => 'Lorsque l\'envoie des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
+            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoi des emails. Vous pouvez trouver plus d\'informations sur l\'envoi des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled-warn' => 'Lorsque l\'envoi des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
             'sendmail-warn' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
-                'encryption' => 'Protocol de chiffrement',
+                'encryption' => 'Protocole de chiffrement',
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
@@ -314,8 +314,8 @@ return [
             'connect-error' => 'La connexion au serveur a échouée: :error',
 
             'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
-            'azlink-connect' => 'La connexion au serveur a échouée, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
-            'azlink-badresponse' => 'La connexion au serveur a échouée (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
+            'azlink-connect' => 'La connexion au serveur a échoué, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
+            'azlink-badresponse' => 'La connexion au serveur a échoué (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
         ],
 
         'type' => [
@@ -323,7 +323,11 @@ return [
             'mc-rcon' => 'Minecraft RCON',
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
-            'source-rcon' => 'Source RCON',
+            'source-rcon' => 'RCON Source',
+            'bedrock-ping' => 'Ping Bedrock',
+            'bedrock-rcon' => 'RCON Bedrock',
+            'fivem-status' => 'Statut FiveM',
+            'fivem-rcon' => 'RCON FiveM',
             'rust-rcon' => 'Rust RCON',
             'flyff-server' => 'Serveur Flyff',
         ],
@@ -331,7 +335,7 @@ return [
 
     'users' => [
         'title' => 'Utilisateurs',
-        'title-edit' => 'Edition de l\'utilisateur :user',
+        'title-edit' => 'Édition de l\'utilisateur :user',
         'title-create' => 'Création d\'un utilisateur',
 
         'fields' => [
@@ -406,6 +410,7 @@ return [
             'updated' => 'Le grade a été mis à jour.',
             'deleted' => 'Le grade a été supprimé.',
 
+            'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
             'add-admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
             'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
             'permanent-role' => 'Ce grade ne peut pas être supprimé.',
@@ -424,6 +429,7 @@ return [
         'admin-pages' => 'Voir et gérer les pages',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
+        'admin-users' => 'Voir et gérer les utilisateurs',
         'admin-themes' => 'Voir et gérer les thèmes',
         'admin-plugins' => 'Voir et gérer les plugins',
     ],
@@ -444,7 +450,7 @@ return [
         'title-edit' => 'Édition de l\'article :post',
         'title-create' => 'Création d\'un article',
 
-        'published-info' => 'Cet article sera visible de façon publique qu\'à partir de cette date.',
+        'published-info' => 'Cet article ne sera visible de façon publique qu\'à partir de cette date.',
 
         'fields' => [
             'published-at' => 'Publié le',
@@ -509,7 +515,7 @@ return [
             'disabled' => 'Le plugin a été désactivé.',
             'updated' => 'Le plugin a été mis à jour.',
             'installed' => 'Le plugin a été installé.',
-            'deleted' => 'Le plus a été supprimé.',
+            'deleted' => 'Le plugin a été supprimé.',
 
             'error-delete' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
         ],
@@ -620,7 +626,7 @@ return [
         'users' => [
             'updated' => 'Mise à jour de l\'utilisateur #:id',
             'deleted' => 'Suppression de l\'utilisateur #:id',
-            'transfer' => 'Envoie d\'argent de :money à l\'utilisateur #:id',
+            'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
         ],
 
         'settings' => [

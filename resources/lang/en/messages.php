@@ -138,7 +138,7 @@ return [
         '2fa' => [
             'enable' => 'Enable 2FA',
             'disable' => 'Disable 2FA',
-            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy or Google Authenticator.',
+            'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy, 1Password or Google Authenticator.',
             'secret' => 'Secret key: :secret',
             'title' => 'Enable Two-Factor Authentication',
             'code' => 'Code',

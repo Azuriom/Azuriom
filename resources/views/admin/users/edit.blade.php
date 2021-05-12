@@ -77,13 +77,13 @@
 
                         <div class="form-group">
                             <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                            <select class="custom-select @error('role') is-invalid @enderror" id="roleSelect" name="role" @if($user->isDeleted()) disabled @endif>
+                            <select class="custom-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role" @if($user->isDeleted()) disabled @endif>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @if($user->role->is($role)) selected @endif>{{ $role->name }}</option>
                                 @endforeach
                             </select>
 
-                            @error('role')
+                            @error('role_id')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
                         </div>

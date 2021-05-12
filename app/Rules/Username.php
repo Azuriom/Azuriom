@@ -2,6 +2,7 @@
 
 namespace Azuriom\Rules;
 
+use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Illuminate\Contracts\Validation\Rule;
 
 class Username implements Rule
@@ -15,11 +16,11 @@ class Username implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (oauth_login()) {
+        if (oauth_login() || game() instanceof MinecraftBedrockGame) {
             return true;
         }
 
-        return preg_match('/^[A-Za-z0-9_]+$/', $value);
+        return preg_match('/^[A-Za-z0-9_*]+$/', $value);
     }
 
     /**

@@ -21,7 +21,7 @@ class ServerRequest extends FormRequest
             'address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'between:1,65535'],
             'rcon-port' => ['nullable', 'integer', 'between:1,65535'],
-            'rcon-password' => ['required_if:type,mc-rcon,source-rcon', 'nullable', 'string'],
+            'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
         ];
@@ -37,7 +37,7 @@ class ServerRequest extends FormRequest
         $data = null;
         $type = $this->input('type');
 
-        if (in_array($type, ['mc-rcon', 'source-rcon', 'rust-rcon'], true)) {
+        if (in_array($type, ['mc-rcon', 'source-rcon', 'rust-rcon', 'fivem-rcon'], true)) {
             $data = [
                 'query-port' => $this->input('query-port'),
                 'rcon-port' => $this->input('rcon-port'),

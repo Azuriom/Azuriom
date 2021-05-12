@@ -194,6 +194,7 @@ class UpdateManager
             'Azuriom-Version' => Azuriom::version(),
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),
+            'Azuriom-Game' => game()->id(),
         ]);
 
         $siteKey = setting('site-key');

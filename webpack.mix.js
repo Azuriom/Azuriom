@@ -33,7 +33,7 @@ mix.setPublicPath('public/assets/')
     .copyDirectory('node_modules/startbootstrap-sb-admin-2/js', `${vendorPath}/sb-admin-2/js`)
     .copyDirectory('node_modules/flatpickr/dist/*.css', `${vendorPath}/flatpickr/css`)
     .copyDirectory('node_modules/flatpickr/dist/*.js', `${vendorPath}/flatpickr/js`)
-    .copy('node_modules/sortablejs/dist/sortable.umd.js', `${vendorPath}/sortablejs/Sortable.min.js`);
+    .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`);
 
 for (const path of ['css', 'js', 'sprites', 'webfonts']) {
     mix.copyDirectory(`node_modules/@fortawesome/fontawesome-free/${path}`, `${vendorPath}/fontawesome/${path}`);
@@ -46,4 +46,4 @@ setTimeout(() => {
         .replace('width()<480&&', 'width()<480&&false&&');
 
     fs.writeFileSync(sbAdmin2Js, content, 'utf8');
-}, 500);
+}, 1000);

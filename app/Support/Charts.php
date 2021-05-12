@@ -43,7 +43,7 @@ class Charts
         $result = static::rawAggregateByDays($query, $start, $function, $group, $column);
 
         return $result->mapWithKeys(function ($value, string $date) {
-            return [format_date(Carbon::createFromFormat('Y-m-d', $date)) => $value];
+            return [format_date(Carbon::createFromFormat('!Y-m-d', $date)) => $value];
         });
     }
 
@@ -90,7 +90,7 @@ class Charts
         $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);
 
         return $result->mapWithKeys(function ($value, string $date) {
-            $carbon = Carbon::createFromFormat('Y-m', $date);
+            $carbon = Carbon::createFromFormat('!Y-m', $date);
 
             return [$carbon->translatedFormat('F Y') => $value];
         });

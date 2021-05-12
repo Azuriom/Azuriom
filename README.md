@@ -2,7 +2,7 @@
 
 # Azuriom
 
-[![Build Status](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
+[![Tests](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
 [![Code Quality](https://img.shields.io/scrutinizer/quality/g/Azuriom/Azuriom?style=flat-square)](https://scrutinizer-ci.com/g/Azuriom/Azuriom/)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square&include_prereleases)](http://github.com/Azuriom/Azuriom/releases)
@@ -19,6 +19,7 @@ Currently, Azuriom supports the following games:
 * [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/)
 * [ARK: Survival Evolved](https://store.steampowered.com/app/346110/ARK_Survival_Evolved/)
 * [Rust](https://store.steampowered.com/agecheck/app/252490/)
+* [FiveM](https://fivem.net/)
 * [Counter-Strike: Global Offensive](https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/)
 * [Team Fortress 2](https://store.steampowered.com/app/440/Team_Fortress_2/)
 

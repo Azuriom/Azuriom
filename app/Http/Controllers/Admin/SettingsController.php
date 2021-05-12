@@ -143,7 +143,7 @@ class SettingsController extends Controller
 
         $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
 
-        if (setting('register', false) !== $request->filled('register')) {
+        if (setting('register', true) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();
         }
 
@@ -293,8 +293,6 @@ class SettingsController extends Controller
 
     public function auth()
     {
-        $show = (setting('recaptcha-site-key') && setting('recaptcha-secret-key')) || old('recaptcha');
-
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
             'register' => setting('register', true),
@@ -418,14 +416,14 @@ class SettingsController extends Controller
 
     protected function getAvailableLocales()
     {
-        return $this->getAvailableLocaleCodes()->mapWithKeys(function ($file) {
+        return $this->getAvailableLocaleCodes()->mapWithKeys(function (string $file) {
             return [$file => trans('messages.lang', [], $file)];
         });
     }
 
     protected function getAvailableLocaleCodes()
     {
-        return collect(File::directories($this->app->langPath()))->map(function ($path) {
+        return collect(File::directories($this->app->langPath()))->map(function (string $path) {
             return basename($path);
         });
     }

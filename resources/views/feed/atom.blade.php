@@ -1,4 +1,4 @@
-{!! '<?xml version="1.0" encoding="utf-8"?>' !!}
+@php echo '<?xml version="1.0" encoding="utf-8"?>' @endphp
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>{{ route('home') }}/</id>
     <title>{{ site_name() }}</title>

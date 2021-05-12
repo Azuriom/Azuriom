@@ -17,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
+        $this->middleware(function (Request $request, callable $next) {
             if (! setting('auth-api', false)) {
                 return response()->json([
                     'status' => false,

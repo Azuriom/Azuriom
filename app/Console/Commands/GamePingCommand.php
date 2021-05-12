@@ -33,10 +33,10 @@ class GamePingCommand extends Command
         foreach ($servers as $server) {
             $data = $server->bridge()->getServerData();
 
-            $server->updateData($data);
+            $server->updateData($data, now()->minute % 15 === 0);
         }
 
-        $this->info($servers->count().' servers were successfully pinged.');
+        $this->info($servers->count().' server(s) were successfully pinged.');
 
         return 0;
     }
