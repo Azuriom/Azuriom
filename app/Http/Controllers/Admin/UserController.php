@@ -114,7 +114,7 @@ class UserController extends Controller
 
         $role = Role::find($request->input('role'));
 
-        $this->validateRole($request->user(), $role);
+        $this->validateRole($request->user(), $role, $user);
 
         $user->role()->associate($role);
         $user->save();
@@ -182,9 +182,9 @@ class UserController extends Controller
         return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
     }
 
-    protected function validateRole(User $user, Role $role)
+    protected function validateRole(User $user, Role $role, User $target = null)
     {
-        if (! $user->isAdmin() && $role->power > $user->role->power) {
+        if (! $user->isAdmin() && $role->power > $user->role->power || $target && $target->role->power > $user->role->power) {
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.status.unauthorized'),
             ]);
