@@ -104,6 +104,9 @@ return [
     'required_with_all' => 'Le champ :attribute est requis quand :values sont présents.',
     'required_without' => 'Le champ :attribute est requis quand :values n\'est pas présent.',
     'required_without_all' => 'Le champ :attribute est requis quand aucun de :values n\'est présent.',
+    'prohibited' => 'Le champ :attribute ne peut pas être présent.',
+    'prohibited_if' => 'Le champ :attribute ne peut pas être présent quand :other est :value.',
+    'prohibited_unless' => 'Le champ :attribute ne peut pas être présent si :other n\'est pas dans :values.',
     'same' => 'Les champs :attribute et :other doivent être identiques.',
     'size' => [
         'numeric' => 'La valeur du champ :attribute doit être :size.',

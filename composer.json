@@ -2,11 +2,7 @@
     "name": "azuriom/azuriom",
     "type": "project",
     "description": "Azuriom is an open-source game CMS based on Laravel.",
-    "keywords": [
-        "cms",
-        "azuriom",
-        "laravel"
-    ],
+    "keywords": ["cms", "azuriom", "laravel"],
     "license": "GPL-3.0-or-later",
     "require": {
         "php": "^7.3|^8.0",
@@ -19,7 +15,7 @@
         "funkjedi/composer-include-files": "^1.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^8.40",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
@@ -38,20 +34,6 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "platform-check": false,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        },
-        "include_files": [
-            "app/base_helpers.php"
-        ]
-    },
     "autoload": {
         "psr-4": {
             "Azuriom\\": "app/",
@@ -67,8 +49,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -80,5 +60,20 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        },
+        "include_files": [
+            "app/base_helpers.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
