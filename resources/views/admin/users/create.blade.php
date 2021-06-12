@@ -39,7 +39,7 @@
                     <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
                     <select class="custom-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role">
                         @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            <option @if(old('role') == $role->id) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach
                     </select>
 
