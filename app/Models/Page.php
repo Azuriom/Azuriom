@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Attachable;
+use Azuriom\Models\Traits\HasTranslations;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,14 @@ class Page extends Model
 {
     use Attachable;
     use Loggable;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatable = ['title', 'description', 'content'];
 
     /**
      * The attributes that are mass assignable.

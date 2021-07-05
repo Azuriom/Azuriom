@@ -28,10 +28,11 @@ class PageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:150'],
-            'description' => ['required', 'string', 'max:255'],
+            'translations.*.locale' => ['required', Rule::in(get_available_locales_codes())],
+            'translations.*.title' => ['required', 'string', 'max:150'],
+            'translations.*.description' => ['required', 'string', 'max:255'],
+            'translations.*.content' => ['required', 'string'],
             'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('pages')->ignore($this->page, 'slug')],
-            'content' => ['required', 'string'],
             'is_enabled' => ['filled', 'boolean'],
         ];
     }

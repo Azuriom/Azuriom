@@ -8,6 +8,7 @@ use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class NavbarController extends Controller
 {
@@ -94,7 +95,11 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        NavbarElement::create($request->validated());
+        $data = $request->validated();
+        $navbar = new NavbarElement(Arr::except($data, 'translations'));
+
+        set_spatie_translations($navbar, $data['translations']);
+        $navbar->save();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.created'));
@@ -133,7 +138,10 @@ class NavbarController extends Controller
             }
         }
 
-        $navbarElement->update($request->validated());
+        $data = $request->validated();
+        set_spatie_translations($navbarElement, $data['translations']);
+
+        $navbarElement->update(Arr::except($data, 'translations'));
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.updated'));

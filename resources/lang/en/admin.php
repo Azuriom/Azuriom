@@ -653,4 +653,8 @@ return [
         '404' => 'Page Not Found',
         'info' => 'It looks like you found a glitch in the matrix...',
     ],
+
+    'translations' => [
+        'add' => 'Add a translation',
+    ],
 ];

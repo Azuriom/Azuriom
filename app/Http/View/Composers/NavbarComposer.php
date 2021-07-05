@@ -40,7 +40,12 @@ class NavbarComposer
 
         if ($elements instanceof ModelCollection) {
             // Not in cache yet
-            Cache::put('navbar_elements', $elements->toArray(), now()->addDay());
+            $elementsToCache = $elements->toArray();
+            for ($i = 0; $i < count($elements); $i++) {
+                $elementsToCache[$i]['name'] = json_encode($elements[$i]->getTranslations('name'));
+            }
+
+            Cache::put('navbar_elements', $elementsToCache, now()->addDay());
 
             return $elements;
         }

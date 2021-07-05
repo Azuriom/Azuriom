@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/locale/{locale}', [HomeController::class, 'locale']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/maintenance', [HomeController::class, 'maintenance'])->name('maintenance');
 

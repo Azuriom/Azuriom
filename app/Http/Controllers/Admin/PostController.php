@@ -31,6 +31,7 @@ class PostController extends Controller
     {
         return view('admin.posts.create', [
             'pendingId' => old('pending_id', Str::uuid()),
+            'available_locales' => get_available_locales(),
         ]);
     }
 
@@ -42,7 +43,11 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = Post::create(Arr::except($request->validated(), 'image'));
+        $data = $request->validated();
+        $post = new Post(Arr::except($data, ['image', 'translations']));
+
+        set_spatie_translations($post, $data['translations']);
+        $post->save();
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'), true);
@@ -61,7 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', ['post' => $post]);
+        return view('admin.posts.edit', ['post' => $post, 'available_locales' => get_available_locales()]);
     }
 
     /**
@@ -77,7 +82,10 @@ class PostController extends Controller
             $post->storeImage($request->file('image'));
         }
 
-        $post->update(Arr::except($request->validated(), 'image'));
+        $data = $request->validated();
+        set_spatie_translations($post, $data['translations']);
+
+        $post->update(Arr::except($data, ['image', 'translations']));
 
         return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.updated'));
     }

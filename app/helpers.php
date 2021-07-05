@@ -245,3 +245,52 @@ if (! function_exists('dark_theme')) {
         return request()->cookie('theme') === 'dark';
     }
 }
+
+if (! function_exists('set_spatie_translations')) {
+    function set_spatie_translations(&$model, $translations)
+    {
+        foreach ($translations as $index => $fields) {
+            foreach ($fields as $key => $value) {
+                if ($key !== 'locale') {
+                    $model->setTranslation($key, $translations[$index]['locale'], $value);
+                }
+            }
+        }
+    }
+}
+
+if (! function_exists('get_available_locales')) {
+    /**
+     * Get locales with their name
+     * ex: [ ['fr' => 'Français'], ['en' => 'English'] ].
+     */
+    function get_available_locales()
+    {
+        return get_available_locales_codes()->mapWithKeys(function (string $file) {
+            return [$file => trans('messages.lang', [], $file)];
+        });
+    }
+}
+
+if (! function_exists('get_available_locales_codes')) {
+    /**
+     * Get availables locales within the ressources/lang folder
+     * ex: ['fr', 'en'].
+     */
+    function get_available_locales_codes()
+    {
+        return collect(File::directories(resource_path('lang')))->map(function (string $path) {
+            return basename($path);
+        });
+    }
+}
+
+if (! function_exists('get_selected_locales_codes')) {
+    /**
+     * Get the locales that admins offer on this website.
+     */
+    function get_selected_locales_codes()
+    {
+        return explode(',', setting('locale'));
+    }
+}

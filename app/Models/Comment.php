@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\HasMarkdown;
 use Azuriom\Models\Traits\HasUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $post_id
  * @property int $author_id
  * @property string $content
+ * @property string $locale
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
@@ -39,6 +41,13 @@ class Comment extends Model
      * @var string
      */
     protected $userKey = 'author_id';
+
+    protected static function booted()
+    {
+        static::addGlobalScope('localized', function (Builder $builder) {
+            $builder->where('locale', app()->getLocale());
+        });
+    }
 
     /**
      * Get the post of this comment.

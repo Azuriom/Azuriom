@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -28,6 +29,7 @@ class PageController extends Controller
     {
         return view('admin.pages.create', [
             'pendingId' => old('pending_id', Str::uuid()),
+            'available_locales' => get_available_locales(),
         ]);
     }
 
@@ -39,7 +41,11 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $page = Page::create($request->validated());
+        $data = $request->validated();
+        $page = new Page(Arr::except($data, 'translations'));
+
+        set_spatie_translations($page, $data['translations']);
+        $page->save();
 
         $page->persistPendingAttachments($request->input('pending_id'));
 
@@ -54,7 +60,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', ['page' => $page]);
+        return view('admin.pages.edit', ['page' => $page, 'available_locales' => get_available_locales()]);
     }
 
     /**
@@ -66,7 +72,10 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        $page->update($request->validated());
+        $data = $request->validated();
+        set_spatie_translations($page, $data['translations']);
+
+        $page->update(Arr::except($data, 'translations'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.updated'));
     }
