@@ -83,3 +83,5 @@ Route::resource('posts.comments', PostCommentController::class)
     ->middleware(['auth', 'verified'])->only(['store', 'destroy']);
 
 Route::get('/{page:slug}', [PageController::class, 'show'])->name('pages.show');
+
+Route::get('/locale/{locale}', [HomeController::class, 'locale']);
