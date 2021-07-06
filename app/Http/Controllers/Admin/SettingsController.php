@@ -2,21 +2,21 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
-use Exception;
-use DateTimeZone;
-use Azuriom\Models\User;
-use Azuriom\Models\Image;
-use Azuriom\Support\Files;
-use Azuriom\Models\Setting;
-use Illuminate\Http\Request;
-use Azuriom\Models\ActionLog;
-use Azuriom\Support\Optimizer;
-use Illuminate\Validation\Rule;
-use Azuriom\Notifications\TestMail;
-use Illuminate\Hashing\HashManager;
 use Azuriom\Http\Controllers\Controller;
-use Illuminate\Contracts\Foundation\Application;
+use Azuriom\Models\ActionLog;
+use Azuriom\Models\Image;
+use Azuriom\Models\Setting;
+use Azuriom\Models\User;
+use Azuriom\Notifications\TestMail;
+use Azuriom\Support\Files;
+use Azuriom\Support\Optimizer;
+use DateTimeZone;
+use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Hashing\HashManager;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
@@ -139,7 +139,7 @@ class SettingsController extends Controller
 
         // If only one locale is selected we assume the admin wants to
         // enforce one language on the website, hence we mass update all users.
-        if(count($settings['locale']) === 1) {
+        if (count($settings['locale']) === 1) {
             User::query()->update(['locale' => $settings['locale'][0]]);
         }
 

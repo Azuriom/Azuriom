@@ -1,8 +1,8 @@
 <?php
 
+use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
-use Azuriom\Support\SettingsRepository;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('add_active')) {
