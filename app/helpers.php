@@ -254,8 +254,8 @@ if (! function_exists('get_available_locales')) {
      */
     function get_available_locales()
     {
-        return get_available_locales_codes()->mapWithKeys(function (string $file) {
-            return [$file => trans('messages.lang', [], $file)];
+        return get_available_locales_codes()->mapWithKeys(function (string $locale) {
+            return [$locale => trans('messages.lang', [], $locale)];
         });
     }
 }
