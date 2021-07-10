@@ -89,7 +89,7 @@
 <footer class="text-white mt-auto py-4 text-center">
     <div class="copyright">
         @foreach (get_selected_locales_codes() as $locale)
-            <a href="/locale/{{$locale}}"><img src="{{asset("img/locales/$locale.png")}}" alt=""></a>
+            <a href="/locale/{{$locale}}"><img height="32" src="{{asset("img/locales/$locale.png")}}" alt=""></a>
         @endforeach
         <div class="container">
             {{ setting('copyright') }} | @lang('messages.copyright')
