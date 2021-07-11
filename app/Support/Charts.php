@@ -105,7 +105,7 @@ class Charts
         while ($date->isPast()) {
             $dates->put($date->format('Y-m'), 0);
 
-            $date = $date->addMonth();
+            $date = $date->addMonthNoOverflow();
         }
 
         $driver = $query->getConnection()->getDriverName();

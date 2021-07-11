@@ -33,18 +33,23 @@ trait HasMarkdown
         }
 
         if (! app()->isProduction()) {
-            return new HtmlString(Markdown::parse($text, $inlineOnly));
+            return new HtmlString($this->parseRawMarkdown($attribute, $text, $inlineOnly));
         }
 
         $cached = Cache::get($this->getMarkdownCacheKey(), []);
 
         if (! Arr::has($cached, $attribute)) {
-            $cached[$attribute] = Markdown::parse($text, $inlineOnly);
+            $cached[$attribute] = $this->parseRawMarkdown($attribute, $text, $inlineOnly);
 
             Cache::put($this->getMarkdownCacheKey(), $cached, now()->addMinutes(15));
         }
 
         return new HtmlString(Arr::get($cached, $attribute));
+    }
+
+    public function parseRawMarkdown(string $attribute, string $content, bool $inlineOnly = false)
+    {
+        return Markdown::parse($content, $inlineOnly);
     }
 
     protected function getMarkdownCacheKey()

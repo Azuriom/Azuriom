@@ -2,11 +2,11 @@
 
 # Azuriom
 
-[![Tests](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
+[![PHP CI](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
 [![Code Quality](https://img.shields.io/scrutinizer/quality/g/Azuriom/Azuriom?style=flat-square)](https://scrutinizer-ci.com/g/Azuriom/Azuriom/)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)
-[![Chat](https://img.shields.io/discord/625774284823986183?color=7289da&label=discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
+[![Chat](https://img.shields.io/discord/625774284823986183?color=5865f2&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
 
 **Azuriom** is the next generation game CMS, it's free and open-source, and is a modern, reliable, fast and secure alternative to existing CMS so you can have the best web experience possible.
 
@@ -34,6 +34,14 @@ You can find system requirements and installation guide on our [documentation](h
 ## Community
 
 You can ask for support and talk on our [Discord server](https://azuriom.com/discord).
+
+## Contributing
+
+Contributions are always welcome!
+
+See [the contribution guidelines](CONTRIBUTING.md) for ways to get started.
+
+Please adhere to this project's [code of conduct](CODE_OF_CONDUCT.md)`.
 
 ## Translations
 

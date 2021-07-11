@@ -49,6 +49,15 @@ class Server extends Model
         'data' => 'array',
     ];
 
+    public static function booted()
+    {
+        static::deleted(function (self $server) {
+            if (((int) setting('default-server')) === $server->id) {
+                Setting::updateSettings(['default-server' => null]);
+            }
+        });
+    }
+
     public function stat()
     {
         return $this->hasOne(ServerStat::class)
