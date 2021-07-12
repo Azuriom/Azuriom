@@ -2,6 +2,7 @@
 
 use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('add_active')) {
@@ -243,5 +244,41 @@ if (! function_exists('dark_theme')) {
     function dark_theme()
     {
         return request()->cookie('theme') === 'dark';
+    }
+}
+
+if (! function_exists('get_available_locales')) {
+    /**
+     * Get locales with their name
+     * ex: [ ['fr' => 'Français'], ['en' => 'English'] ].
+     */
+    function get_available_locales()
+    {
+        return get_available_locales_codes()->mapWithKeys(function (string $locale) {
+            return [$locale => trans('messages.lang', [], $locale)];
+        });
+    }
+}
+
+if (! function_exists('get_available_locales_codes')) {
+    /**
+     * Get availables locales within the ressources/lang folder
+     * ex: ['fr', 'en'].
+     */
+    function get_available_locales_codes()
+    {
+        return collect(File::directories(resource_path('lang')))->map(function (string $path) {
+            return basename($path);
+        });
+    }
+}
+
+if (! function_exists('get_selected_locales_codes')) {
+    /**
+     * Get the locales that admins offer on this website.
+     */
+    function get_selected_locales_codes()
+    {
+        return explode(',', setting('locale', 'en,fr'));
     }
 }
