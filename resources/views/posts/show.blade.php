@@ -49,7 +49,7 @@
         @foreach($post->comments as $comment)
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    @lang('messages.comments.author', ['user' => $comment->author->name, 'date' => format_date($comment->created_at, true)])
+                    @lang('messages.comments.author', ['user' => e($comment->author->name), 'date' => format_date($comment->created_at, true)])
                 </div>
                 <div class="card-body media">
                     <img class="d-flex mr-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">

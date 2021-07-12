@@ -350,6 +350,12 @@
                             </div>
                         </li>
 
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link" href="{{ route('profile.theme') }}" data-route="theme">
+                                <i class="fas fa-{{ dark_theme() ? 'sun' : 'moon' }} p-1" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-toggle="tooltip"></i>
+                            </a>
+                        </li>
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <li class="nav-item dropdown no-arrow">
@@ -362,10 +368,6 @@
                                 <a class="dropdown-item" href="{{ route('admin.users.edit', Auth::user()) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ trans('admin.nav.profile.profile') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('profile.theme') }}" data-route="theme">
-                                    <i class="fas fa-{{ dark_theme() ? 'sun' : 'moon' }} fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    {{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('home') }}">
                                     <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
