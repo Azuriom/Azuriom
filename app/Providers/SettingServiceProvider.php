@@ -45,6 +45,10 @@ class SettingServiceProvider extends ServiceProvider
     {
         $repo = $this->app->make(SettingsRepository::class);
 
+        if (! is_installed()) {
+            return;
+        }
+
         try {
             $settings = $this->loadSettings();
 
