@@ -2,21 +2,26 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Models\Setting;
-use Azuriom\Support\EnvEditor;
 use Exception;
-use Illuminate\Encryption\Encrypter;
+use Throwable;
+use RuntimeException;
+use Azuriom\Models\Setting;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+use Azuriom\Support\EnvEditor;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\View;
+use Azuriom\Extensions\UpdateManager;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
+use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Validation\ValidationException;
-use RuntimeException;
-use Throwable;
 
 class InstallController extends Controller
 {
@@ -42,13 +47,34 @@ class InstallController extends Controller
     ];
 
     protected $games = [
-        'minecraft' => 'Minecraft',
-        'gmod' => 'Garry\'s mod',
-        'ark' => 'ARK: Survival Evolved',
-        'rust' => 'Rust',
-        'fivem' => 'FiveM',
-        'csgo' => 'CS:GO',
-        'tf2' => 'Team Fortress 2',
+        'minecraft' => [
+            'name' => 'Minecraft',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+        ],
+        'gmod' => [
+            'name' => 'Garry\'s mod',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
+        ],
+        'ark' => [
+            'name' => 'ARK: Survival Evolved',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/ark.png',
+        ],
+        'csgo' => [
+            'name' => 'CS:GO',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/csgo.png',
+        ],
+        'tf2' => [
+            'name' => 'Team Fortress 2',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/tf2.svg',
+        ],
+        'rust' => [
+            'name' => 'Rust',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg'
+        ],
+        'fivem' => [
+            'name' => 'FiveM',
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
+        ],
     ];
 
     protected $hasRequirements;
@@ -74,6 +100,23 @@ class InstallController extends Controller
 
             return $next($request);
         });
+        
+        $this->games = array_merge($this->games, $this->getCommunityGames());
+    }
+
+    private function getCommunityGames()
+    {
+        //TODO: API for games with Cache
+        return [
+            'flyff' => [
+                'name' => 'Flyff',
+                'image' => '',
+            ],
+            'dofus129' => [
+                'name' => 'Dofus 1.29',
+                'image' => '',
+            ]
+        ];
     }
 
     public function showDatabase()
@@ -161,12 +204,20 @@ class InstallController extends Controller
 
     public function showGames()
     {
-        return view('install.games');
+        return view('install.games', ['games' => $this->games]);
     }
 
     public function showGame(string $game)
     {
         abort_if(! array_key_exists($game, $this->games), 404);
+
+        if($game === 'minecraft') {
+            return view('install.games.minecraft', [
+                'game' => $game,
+                'gameName' => 'Minecraft',
+                'locales' => self::SUPPORTED_LANGUAGES_NAMES,
+            ]);
+        }
 
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
@@ -176,11 +227,11 @@ class InstallController extends Controller
             ]);
         }
 
-        return view('install.games.minecraft', [
+        return view('install.games.other', [
             'game' => $game,
-            'gameName' => 'Minecraft',
+            'gameName' => $this->games[$game]['name'],
             'locales' => self::SUPPORTED_LANGUAGES_NAMES,
-        ]);
+        ]); 
     }
 
     public function setupGame(Request $request, string $game)
@@ -225,13 +276,15 @@ class InstallController extends Controller
 
             $name = $request->input('name');
 
-            $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
+            if($game === 'minecraft') {
+                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
 
-            if ($game === 'mc-online') {
-                $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
-
-                if ($gameId === null) {
-                    throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                if ($game === 'mc-online') {
+                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
+    
+                    if ($gameId === null) {
+                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    }
                 }
             }
         }
@@ -274,6 +327,14 @@ class InstallController extends Controller
             return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
                 'error' => utf8_encode($e->getMessage()),
             ]));
+        }
+        $communityGames = $this->getCommunityGames();
+        if(array_key_exists($game, $communityGames)) {
+            // $updateManager = app(UpdateManager::class);
+            // $updateManager->download($communityGames[$game], 'plugins/');
+            // $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+            // $pluginManager = app(PluginManager::class);
+            // $pluginManager->enable($game);
         }
 
         return view('install.success');
