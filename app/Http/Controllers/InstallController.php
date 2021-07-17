@@ -3,10 +3,12 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Setting;
+use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
 use Exception;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -20,19 +22,17 @@ use Throwable;
 
 class InstallController extends Controller
 {
-    // TODO move this ?
     public const TEMP_KEY = 'base64:hmU1T3OuvHdi5t1wULI8Xp7geI+JIWGog9pBCNxslY8=';
     public const MIN_PHP_VERSION = '7.3';
     public const REQUIRED_EXTENSIONS = [
         'bcmath', 'ctype', 'json', 'mbstring', 'openssl', 'PDO', 'tokenizer',
         'xml', 'xmlwriter', 'curl', 'fileinfo', 'zip',
     ];
-    public const SUPPORTED_LANGUAGES_NAMES = ['en' => 'English', 'fr' => 'Français'];
-    public const SUPPORTED_LANGUAGES = ['en', 'fr'];
-
-    protected $steamGames = [
-        'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2',
+    public const SUPPORTED_LANGUAGES_NAMES = [
+        'en' => 'English',
+        'fr' => 'Français',
     ];
+    public const SUPPORTED_LANGUAGES = ['en', 'fr'];
 
     protected $databaseDrivers = [
         'mysql' => 'MySQL/MariaDB',
@@ -41,6 +41,10 @@ class InstallController extends Controller
         'sqlsrv' => 'SQLServer',
     ];
 
+    // TODO dynamic games
+    protected $steamGames = [
+        'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2',
+    ];
     protected $games = [
         'minecraft' => 'Minecraft',
         'gmod' => 'Garry\'s mod',
@@ -85,7 +89,7 @@ class InstallController extends Controller
 
     public function database(Request $request)
     {
-        $envPath = base_path('.env');
+        $envPath = App::environmentFilePath();
 
         $this->validate($request, [
             'type' => ['required', Rule::in(array_keys($this->databaseDrivers))],
@@ -108,7 +112,7 @@ class InstallController extends Controller
 
                 File::copy(base_path('.env.example'), $envPath);
 
-                $result = EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType], $envPath);
+                $result = EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType]);
 
                 if ($result === false) {
                     throw new RuntimeException('Unable to write .env');
@@ -144,7 +148,7 @@ class InstallController extends Controller
                     'DB_DATABASE' => $database,
                     'DB_USERNAME' => $user,
                     'DB_PASSWORD' => $password,
-                ], $envPath);
+                ]);
 
                 if ($result === false) {
                     throw new RuntimeException('Unable to write .env');
@@ -243,7 +247,7 @@ class InstallController extends Controller
 
             Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
-            $user = \Azuriom\Models\User::create([
+            $user = User::create([
                 'name' => $name,
                 'email' => $request->input('email', 'admin@domain.ltd'),
                 'password' => Hash::make($request->input('password', Str::random(32))),
@@ -265,7 +269,7 @@ class InstallController extends Controller
                 'APP_KEY' => $key,
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
-            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []), base_path('.env'));
+            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
 
             if ($result === false) {
                 throw new RuntimeException('Unable to write .env');

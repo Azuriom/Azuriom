@@ -5,7 +5,7 @@ return [
 
     'welcome' => 'Azuriom is the <strong>next generation</strong> game CMS, it\'s <strong>free</strong> and <strong>open-source</strong>, and is a <strong>modern, reliable, fast and secure</strong> alternative to existing CMS so you can have the <strong>best web experience possible</strong>.',
 
-    'back' => 'Retour',
+    'back' => 'Back',
 
     'requirements' => [
         'php' => 'PHP :version or higher',

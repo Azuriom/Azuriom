@@ -3,6 +3,7 @@
 namespace Azuriom\Support;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class EnvEditor
@@ -12,9 +13,8 @@ class EnvEditor
      * Based on https://github.com/imliam/laravel-env-set-command.
      *
      * @param  array  $values
-     * @return bool success
-     *
-     * @throws \Exception if a key don't exists in the current environment file
+     * @param  string|null  $path
+     * @return bool
      */
     public static function updateEnv(array $values, string $path = null)
     {
@@ -28,7 +28,7 @@ class EnvEditor
                 throw new InvalidArgumentException("No value match the key '{$key}'");
             }
 
-            if (strpos($value, ' ') !== false) {
+            if (Str::contains($value, ' ')) {
                 $value = '"'.$value.'"';
             }
 

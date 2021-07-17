@@ -31,11 +31,6 @@ class EnsureInstalled
         // Set a temporary key during the installation
         config(['app.key' => InstallController::TEMP_KEY]);
 
-        config([
-            'app.env' => 'local',
-            'app.debug' => true,
-        ]);
-
         App::setLocale($this->getRequestLocale($request));
 
         if ($request->is('install/*', '_debugbar/*')) {
