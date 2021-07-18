@@ -231,16 +231,6 @@ class InstallController extends Controller
         abort_if(! array_key_exists($game, $this->games), 404);
 
         try {
-            $communityGames = $this->getCommunityGames();
-            if(array_key_exists($game, $communityGames)) {
-                // $updateManager = app(UpdateManager::class);
-                // $updateManager->download($communityGames[$game], 'plugins/');
-                // $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
-                // $pluginManager = app(PluginManager::class);
-                // $pluginManager->enable($game);
-                return view('install.success');
-            }
-
             if (in_array($game, $this->steamGames, true)) {
                 $this->validate($request, [
                     'key' => 'required',
@@ -270,7 +260,7 @@ class InstallController extends Controller
                 } catch (Exception $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } else {
+            } else if($game === 'minecraft'){
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
@@ -296,20 +286,6 @@ class InstallController extends Controller
 
             Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
-            $user = User::create([
-                'name' => $name,
-                'email' => $request->input('email', 'admin@domain.ltd'),
-                'password' => Hash::make($request->input('password', Str::random(32))),
-                'game_id' => $gameId ?? null,
-            ]);
-
-            $user->markEmailAsVerified();
-            $user->forceFill(['role_id' => 2])->save();
-
-            if (in_array($game, $this->steamGames, true)) {
-                Setting::updateSettings('register', false);
-            }
-
             EnvEditor::updateEnv([
                 'APP_LOCALE' => $request->input('locale'),
                 'APP_URL' => url('/'),
@@ -317,6 +293,31 @@ class InstallController extends Controller
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+
+            $communityGames = $this->getCommunityGames();
+            if(array_key_exists($game, $communityGames)) {
+                // $updateManager = app(UpdateManager::class);
+                // $updateManager->download($communityGames[$game], 'plugins/');
+                // $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                // $pluginManager = app(PluginManager::class);
+                // $pluginManager->enable($game);
+                return view('install.success');
+            } else {
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $request->input('email', 'admin@domain.ltd'),
+                    'password' => Hash::make($request->input('password', Str::random(32))),
+                    'game_id' => $gameId ?? null,
+                ]);
+    
+                $user->markEmailAsVerified();
+                $user->forceFill(['role_id' => 2])->save();
+    
+                if (in_array($game, $this->steamGames, true)) {
+                    Setting::updateSettings('register', false);
+                }
+            }
+
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
