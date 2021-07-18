@@ -256,6 +256,8 @@ class InstallController extends Controller
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+        } catch (ValidationException $e) {
+            throw $e;
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
                 'error' => utf8_encode($e->getMessage()),

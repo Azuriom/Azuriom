@@ -15,7 +15,7 @@ return [
         'function' => 'Fonction :function activée',
 
         'refresh' => 'Revérifier',
-        'success' => 'Votre serveur a les pré-requis pour installer Azuriom, vous pouvez continuer l\'installation !',
+        'success' => 'Azuriom est prêt a être configuré !',
         'missing' => 'Votre serveur n\'a pas les pré-requis nécessaires pour installer Azuriom.',
 
         'help' => [

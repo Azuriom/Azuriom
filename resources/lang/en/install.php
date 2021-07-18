@@ -15,7 +15,7 @@ return [
         'function' => 'Function :function enabled',
 
         'refresh' => 'Refresh requirements',
-        'success' => 'Your server has the prerequisites to install Azuriom, you can continue the installation !',
+        'success' => 'Azuriom is ready to be configured!',
         'missing' => 'Your server doesn\'t have the necessary requirements to install Azuriom.',
 
         'help' => [
