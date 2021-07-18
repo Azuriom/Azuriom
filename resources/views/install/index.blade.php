@@ -38,12 +38,10 @@
                                       title="{{ PHP_VERSION }}">
                                     {{ $phpVersion }}
                                 </span>
+                            @elseif($requirementStatus)
+                                <i class="fas fa-check text-success float-right"></i>
                             @else
-                                @if($requirementStatus)
-                                    <i class="fas fa-check text-success float-right"></i>
-                                @else
-                                    <i class="fas fa-times text-danger float-right"></i>
-                                @endif
+                                <i class="fas fa-times text-danger float-right"></i>
                             @endif
                         </div>
 

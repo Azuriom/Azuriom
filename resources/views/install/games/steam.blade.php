@@ -4,7 +4,7 @@
     <div class="form-group">
         <label for="steamProfile">{{ trans('install.game.steam.profile') }}</label>
 
-        <input id="steamProfile" type="url" class="form-control @error('url') is-invalid @enderror" name="url" placeholder="https://steamcommunity.com/profiles/****" required>
+        <input id="steamProfile" type="url" class="form-control @error('url') is-invalid @enderror" name="url" placeholder="https://steamcommunity.com/id/****" required value="{{ old('url') }}">
 
         @error('url')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -16,7 +16,7 @@
     <div class="form-group">
         <label for="steamKey">{{ trans('install.game.steam.key') }}</label>
 
-        <input id="steamKey" type="text" class="form-control @error('key') is-invalid @enderror" name="key" required>
+        <input id="steamKey" type="text" class="form-control @error('key') is-invalid @enderror" name="key" required value="{{ old('key') }}">
 
         @error('key')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

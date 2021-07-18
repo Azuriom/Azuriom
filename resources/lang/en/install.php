@@ -5,7 +5,7 @@ return [
 
     'welcome' => 'Azuriom is the <strong>next generation</strong> game CMS, it\'s <strong>free</strong> and <strong>open-source</strong>, and is a <strong>modern, reliable, fast and secure</strong> alternative to existing CMS so you can have the <strong>best web experience possible</strong>.',
 
-    'back' => 'Retour',
+    'back' => 'Back',
 
     'requirements' => [
         'php' => 'PHP :version or higher',
@@ -15,7 +15,7 @@ return [
         'function' => 'Function :function enabled',
 
         'refresh' => 'Refresh requirements',
-        'success' => 'Your server has the prerequisites to install Azuriom, you can continue the installation !',
+        'success' => 'Azuriom is ready to be configured!',
         'missing' => 'Your server doesn\'t have the necessary requirements to install Azuriom.',
 
         'help' => [
