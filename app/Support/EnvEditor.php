@@ -5,24 +5,28 @@ namespace Azuriom\Support;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use RuntimeException;
 
 class EnvEditor
 {
     /**
      * Edit values in the environment file
-     * Based on https://github.com/imliam/laravel-env-set-command.
+     * Based on https://github.com/imliam/laravel-env-set-command, under MIT license.
      *
      * @param  array  $values
      * @param  string|null  $path
-     * @return bool
      */
     public static function updateEnv(array $values, string $path = null)
     {
         $envPath = $path ?? App::environmentFilePath();
-        $contents = file_get_contents($envPath);
+        $content = file_get_contents($envPath);
+
+        if ($content === false) {
+            throw new RuntimeException('Unable to read .env file: '.$envPath);
+        }
 
         foreach ($values as $key => $value) {
-            $oldValue = self::getOldValue($contents, $key);
+            $oldValue = self::getOldValue($content, $key);
 
             if ($oldValue === null) {
                 throw new InvalidArgumentException("No value match the key '{$key}'");
@@ -32,10 +36,12 @@ class EnvEditor
                 $value = '"'.$value.'"';
             }
 
-            $contents = str_replace("{$key}={$oldValue}", "{$key}={$value}", $contents);
+            $content = str_replace("{$key}={$oldValue}", "{$key}={$value}", $content);
         }
 
-        return file_put_contents($envPath, $contents) !== false;
+        if (file_put_contents($envPath, $content) === false) {
+            throw new RuntimeException('Unable to write .env file: '.$envPath);
+        }
     }
 
     protected static function getOldValue(string $envContents, string $key)

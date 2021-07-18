@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use RuntimeException;
 use Throwable;
 
 class InstallController extends Controller
@@ -68,11 +67,7 @@ class InstallController extends Controller
         $this->hasRequirements = ! in_array(false, $this->requirements, true);
 
         $this->middleware(function (Request $request, callable $next) {
-            if (config('app.key') !== self::TEMP_KEY) {
-                return redirect()->home();
-            }
-
-            if (! $this->hasRequirements) {
+            if (config('app.key') !== self::TEMP_KEY || ! $this->hasRequirements) {
                 return redirect()->home();
             }
 
@@ -89,8 +84,6 @@ class InstallController extends Controller
 
     public function database(Request $request)
     {
-        $envPath = App::environmentFilePath();
-
         $this->validate($request, [
             'type' => ['required', Rule::in(array_keys($this->databaseDrivers))],
             'host' => ['required_unless:type,sqlite'],
@@ -100,6 +93,7 @@ class InstallController extends Controller
             'password' => ['nullable'],
         ]);
 
+        $envPath = App::environmentFilePath();
         $databaseType = $request->input('type');
 
         try {
@@ -112,48 +106,42 @@ class InstallController extends Controller
 
                 File::copy(base_path('.env.example'), $envPath);
 
-                $result = EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType]);
+                EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType]);
 
-                if ($result === false) {
-                    throw new RuntimeException('Unable to write .env');
-                }
-            } else {
-                $host = $request->input('host');
-                $port = $request->input('port');
-                $database = $request->input('database');
-                $user = $request->input('user');
-                $password = $request->input('password');
-
-                $key = 'database.connections.test.';
-
-                config([
-                    $key.'driver' => $databaseType,
-                    $key.'host' => $host,
-                    $key.'port' => $port,
-                    $key.'database' => $database,
-                    $key.'username' => $user,
-                    $key.'password' => $password,
-                ]);
-
-                DB::connection('test')->getPdo(); // Ensure connection
-
-                copy(base_path('.env.example'), $envPath);
-
-                $result = EnvEditor::updateEnv([
-                    'APP_ENV' => 'production',
-                    'APP_DEBUG' => 'false',
-                    'DB_CONNECTION' => $databaseType,
-                    'DB_HOST' => $host,
-                    'DB_PORT' => $port,
-                    'DB_DATABASE' => $database,
-                    'DB_USERNAME' => $user,
-                    'DB_PASSWORD' => $password,
-                ]);
-
-                if ($result === false) {
-                    throw new RuntimeException('Unable to write .env');
-                }
+                return redirect()->route('install.games');
             }
+
+            $host = $request->input('host');
+            $port = $request->input('port');
+            $database = $request->input('database');
+            $user = $request->input('user');
+            $password = $request->input('password');
+
+            $key = 'database.connections.test.';
+
+            config([
+                $key.'driver' => $databaseType,
+                $key.'host' => $host,
+                $key.'port' => $port,
+                $key.'database' => $database,
+                $key.'username' => $user,
+                $key.'password' => $password,
+            ]);
+
+            DB::connection('test')->getPdo(); // Ensure connection
+
+            copy(base_path('.env.example'), $envPath);
+
+            EnvEditor::updateEnv([
+                'APP_ENV' => 'production',
+                'APP_DEBUG' => 'false',
+                'DB_CONNECTION' => $databaseType,
+                'DB_HOST' => $host,
+                'DB_PORT' => $port,
+                'DB_DATABASE' => $database,
+                'DB_USERNAME' => $user,
+                'DB_PASSWORD' => $password,
+            ]);
 
             return redirect()->route('install.games');
         } catch (Throwable $t) {
@@ -191,56 +179,56 @@ class InstallController extends Controller
     {
         abort_if(! array_key_exists($game, $this->games), 404);
 
-        if (in_array($game, $this->steamGames, true)) {
-            $this->validate($request, [
-                'key' => 'required',
-                'url' => 'required',
-                'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
-            ]);
-
-            $profile = Http::get($request->input('url').'?xml=1')->body();
-
-            if (! Str::contains($profile, '<steamID64>')) {
-                throw ValidationException::withMessages(['url' => 'Invalid Steam profile URL.']);
-            }
-
-            preg_match('/<steamID64>(\d{17})<\/steamID64>/', $profile, $matches);
-
-            $gameId = $matches[1];
-            $steamKey = $request->input('key');
-
-            try {
-                $keyResponse = Http::get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?steamids={$gameId}&key={$steamKey}");
-                $name = $keyResponse->json('response.players.0.personaname');
-
-                if ($name === null) {
-                    throw new Exception('Invalid');
-                }
-            } catch (Exception $e) {
-                throw ValidationException::withMessages(['key' => 'Invalid Steam profile URL.']);
-            }
-        } else {
-            $this->validate($request, [
-                'name' => ['required', 'string', 'max:25'],
-                'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
-            ]);
-
-            $name = $request->input('name');
-
-            $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
-
-            if ($game === 'mc-online') {
-                $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
-
-                if ($gameId === null) {
-                    throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
-                }
-            }
-        }
-
         try {
+            if (in_array($game, $this->steamGames, true)) {
+                $this->validate($request, [
+                    'key' => 'required',
+                    'url' => 'required',
+                    'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
+                ]);
+
+                $profile = Http::get($request->input('url').'?xml=1')->body();
+
+                if (! Str::contains($profile, '<steamID64>')) {
+                    throw ValidationException::withMessages(['url' => 'Invalid Steam profile URL.']);
+                }
+
+                preg_match('/<steamID64>(\d{17})<\/steamID64>/', $profile, $matches);
+
+                $gameId = $matches[1];
+                $steamKey = $request->input('key');
+
+                try {
+                    $name = Http::get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?steamids={$gameId}&key={$steamKey}")
+                        ->throw()
+                        ->json('response.players.0.personaname');
+
+                    if ($name === null) {
+                        throw new Exception('Invalid Steam URL.');
+                    }
+                } catch (Exception $e) {
+                    throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
+                }
+            } else {
+                $this->validate($request, [
+                    'name' => ['required', 'string', 'max:25'],
+                    'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
+                ]);
+
+                $name = $request->input('name');
+                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
+
+                if ($game === 'mc-online') {
+                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
+
+                    if ($gameId === null) {
+                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    }
+                }
+            }
+
             Artisan::call('cache:clear');
 
             Artisan::call('migrate', ['--force' => true, '--seed' => true]);
@@ -261,19 +249,13 @@ class InstallController extends Controller
                 Setting::updateSettings('register', false);
             }
 
-            $key = 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher')));
-
-            $result = EnvEditor::updateEnv([
+            EnvEditor::updateEnv([
                 'APP_LOCALE' => $request->input('locale'),
                 'APP_URL' => url('/'),
-                'APP_KEY' => $key,
+                'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
-
-            if ($result === false) {
-                throw new RuntimeException('Unable to write .env');
-            }
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
                 'error' => utf8_encode($e->getMessage()),

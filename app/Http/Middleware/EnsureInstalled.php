@@ -6,8 +6,8 @@ use Azuriom\Http\Controllers\InstallController;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 class EnsureInstalled
 {
@@ -29,12 +29,20 @@ class EnsureInstalled
         Event::forget('composing: *');
 
         // Set a temporary key during the installation
-        config(['app.key' => InstallController::TEMP_KEY]);
+        config([
+            'app.key' => InstallController::TEMP_KEY,
+            'app.debug' => true,
+            'app.env' => 'local',
+        ]);
 
-        App::setLocale($this->getRequestLocale($request));
+        App::setLocale($locale = $this->getRequestLocale($request));
+
+        if (! is_writable(base_path())) {
+            return new Response('Missing write permission on '.base_path());
+        }
 
         if ($request->is('install/*', '_debugbar/*')) {
-            return $next($request);
+            return $this->addLocaleCookieToResponse($next($request), $locale);
         }
 
         return response()->view('install.index', [
@@ -50,8 +58,6 @@ class EnsureInstalled
         $locale = $request->input('locale');
 
         if (in_array($locale, InstallController::SUPPORTED_LANGUAGES, true)) {
-            Cookie::queue(cookie('azuriom_locale', $locale, 60));
-
             return $locale;
         }
 
@@ -60,5 +66,12 @@ class EnsureInstalled
         }
 
         return $request->getPreferredLanguage(InstallController::SUPPORTED_LANGUAGES);
+    }
+
+    protected function addLocaleCookieToResponse(Response $response, string $locale)
+    {
+        $response->headers->setCookie(cookie('azuriom_locale', $locale, 60 * 24));
+
+        return $response;
     }
 }

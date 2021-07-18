@@ -47,7 +47,7 @@ return [
 
         'warn' => 'Attention, une fois l\'installation terminée, il ne sera pas possible de changer sans réinstaller entièrement Azuriom !',
 
-        'install' => 'Install',
+        'install' => 'Installer',
 
         'user' => [
             'title' => 'Compte admin',

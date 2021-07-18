@@ -15,7 +15,7 @@
 
             <select name="locale" class="custom-select @error('locale') is-invalid @enderror" id="locale" required>
                 @foreach($locales as $localeId => $localeName)
-                    <option value="{{ $localeId }}" @if($localeId === old('locale')) selected @endif>{{ $localeName }}</option>
+                    <option value="{{ $localeId }}" @if($localeId === old('locale', app()->getLocale())) selected @endif>{{ $localeName }}</option>
                 @endforeach
             </select>
 
