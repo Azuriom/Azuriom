@@ -32,6 +32,25 @@ DB_USERNAME=[database user]
 DB_PASSWORD=[database password]
 ```
 
+Note : If you want to use MySQL with an external database instead of pgsql you will need to add the driver to the Dockerfile. 
+Edit `docker/php/Dockerfile` and replace 
+```
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql zip
+```
+by 
+```
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql zip
+```
+
+Change the owner for www-data
+`chown -R www-data *` OR make files writable for everybody (**unsecure**)
+
 Start the containers
 ```
 make run
@@ -70,3 +89,20 @@ You can down the containers with
 ```
 make stop
 ```
+
+Compile webpack assets with npm and Laravel mix
+Install  `npm install`
+Compile assets `npm run prod`
+If there is some error at this step in webpack.mix.js at the end there is a timeout, add more time to it
+For example 
+```javascript
+// Ugly fix for https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues/303
+setTimeout(() => {
+    const sbAdmin2Js = `${vendorPath}/sb-admin-2/js/sb-admin-2.min.js`;
+    const content = fs.readFileSync(sbAdmin2Js, 'utf8')
+        .replace('width()<480&&', 'width()<480&&false&&');
+
+    fs.writeFileSync(sbAdmin2Js, content, 'utf8');
+}, 5000);
+```
+
