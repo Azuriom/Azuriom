@@ -32,22 +32,6 @@ DB_USERNAME=[database user]
 DB_PASSWORD=[database password]
 ```
 
-Note : If you want to use MySQL with an external database instead of pgsql you will need to add the driver to the Dockerfile. 
-Edit `docker/php/Dockerfile` and replace 
-```
-# Install Postgre PDO
-RUN apt-get install -y libpq-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql zip
-```
-by 
-```
-# Install Postgre PDO
-RUN apt-get install -y libpq-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql zip
-```
-
 Change the owner for www-data
 `chown -R www-data *` OR make files writable for everybody (**unsecure**)
 
