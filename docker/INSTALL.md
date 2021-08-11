@@ -60,6 +60,19 @@ Create a new user as an administrator
 make create-admin
 ```
 
+Install npm dependencies and compile assets Laravel mix
+```
+npm install && npm run prod
+```
+
+_If there is some error at this step, edit `webpack.mix.js` and change the timeout at the bottom of this file, like this_
+```javascript
+setTimeout(() => {
+    //
+}, 10000); // change the value here
+```
+
+
 It's ready to be used on port 80!
 
 [Optional]
@@ -73,20 +86,3 @@ You can down the containers with
 ```
 make stop
 ```
-
-Compile webpack assets with npm and Laravel mix
-Install  `npm install`
-Compile assets `npm run prod`
-If there is some error at this step in webpack.mix.js at the end there is a timeout, add more time to it
-For example 
-```javascript
-// Ugly fix for https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues/303
-setTimeout(() => {
-    const sbAdmin2Js = `${vendorPath}/sb-admin-2/js/sb-admin-2.min.js`;
-    const content = fs.readFileSync(sbAdmin2Js, 'utf8')
-        .replace('width()<480&&', 'width()<480&&false&&');
-
-    fs.writeFileSync(sbAdmin2Js, content, 'utf8');
-}, 10000);
-```
-
