@@ -46,4 +46,4 @@ setTimeout(() => {
         .replace('width()<480&&', 'width()<480&&false&&');
 
     fs.writeFileSync(sbAdmin2Js, content, 'utf8');
-}, 1000);
+}, 5000);
