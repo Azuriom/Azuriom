@@ -256,7 +256,7 @@ class InstallController extends Controller
                 } catch (Exception $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } elseif ($game === 'minecraft'){
+            } elseif ($game === 'minecraft') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
