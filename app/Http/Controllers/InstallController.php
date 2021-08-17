@@ -2,27 +2,23 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
 use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
 use Exception;
-use Throwable;
-use RuntimeException;
-use Illuminate\Support\Str;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\View;
-use Azuriom\Extensions\UpdateManager;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Azuriom\Extensions\Plugin\PluginManager;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class InstallController extends Controller
 {
@@ -72,7 +68,7 @@ class InstallController extends Controller
         ],
         'rust' => [
             'name' => 'Rust',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg'
+            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg',
         ],
         'fivem' => [
             'name' => 'FiveM',
@@ -99,7 +95,7 @@ class InstallController extends Controller
 
             return $next($request);
         });
-        
+
         $this->games = array_merge($this->games, $this->getCommunityGames());
     }
 
@@ -114,7 +110,7 @@ class InstallController extends Controller
             'dofus129' => [
                 'name' => 'Dofus 1.29',
                 'image' => '',
-            ]
+            ],
         ];
     }
 
@@ -203,7 +199,7 @@ class InstallController extends Controller
     {
         abort_if(! array_key_exists($game, $this->games), 404);
 
-        if($game === 'minecraft') {
+        if ($game === 'minecraft') {
             return view('install.games.minecraft', [
                 'game' => $game,
                 'gameName' => 'Minecraft',
@@ -223,7 +219,7 @@ class InstallController extends Controller
             'game' => $game,
             'gameName' => $this->games[$game]['name'],
             'locales' => self::SUPPORTED_LANGUAGES_NAMES,
-        ]); 
+        ]);
     }
 
     public function setupGame(Request $request, string $game)
@@ -260,7 +256,7 @@ class InstallController extends Controller
                 } catch (Exception $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } else if($game === 'minecraft'){
+            } elseif ($game === 'minecraft'){
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
@@ -295,7 +291,7 @@ class InstallController extends Controller
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
 
             $communityGames = $this->getCommunityGames();
-            if(array_key_exists($game, $communityGames)) {
+            if (array_key_exists($game, $communityGames)) {
                 // $updateManager = app(UpdateManager::class);
                 // $updateManager->download($communityGames[$game], 'plugins/');
                 // $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
@@ -309,15 +305,14 @@ class InstallController extends Controller
                     'password' => Hash::make($request->input('password', Str::random(32))),
                     'game_id' => $gameId ?? null,
                 ]);
-    
+
                 $user->markEmailAsVerified();
                 $user->forceFill(['role_id' => 2])->save();
-    
+
                 if (in_array($game, $this->steamGames, true)) {
                     Setting::updateSettings('register', false);
                 }
             }
-
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
