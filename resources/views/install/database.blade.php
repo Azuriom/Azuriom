@@ -8,7 +8,7 @@
             <label for="type">{{ trans('install.database.type') }}</label>
             <select class="custom-select" id="type" name="type" data-toggle-select="database">
                 @foreach($databaseDrivers as $dbId => $dbName)
-                    <option value="{{ $dbId }}">{{ $dbName }}</option>
+                    <option value="{{ $dbId }}" @if($dbId === old('type')) selected @endif>{{ $dbName }}</option>
                 @endforeach
             </select>
         </div>

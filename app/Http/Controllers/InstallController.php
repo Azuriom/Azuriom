@@ -73,6 +73,12 @@ class InstallController extends Controller
 
             return $next($request);
         });
+
+        $this->middleware(function (Request $request, callable $next) {
+            return file_exists(App::environmentFilePath())
+                ? $next($request)
+                : redirect()->route('install.database');
+        })->only(['showGame', 'showGames', 'setupGame']);
     }
 
     public function showDatabase()

@@ -81,6 +81,11 @@ class UpdateManager
         return $this->fetch($force)['themes'] ?? [];
     }
 
+    public function getGames(bool $force = false)
+    {
+        return $this->fetch($force)['games'] ?? [];
+    }
+
     public function fetch(bool $force = false)
     {
         if ($this->updates !== null) {
