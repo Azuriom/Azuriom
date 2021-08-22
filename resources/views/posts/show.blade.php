@@ -15,7 +15,7 @@
         @if(!$post->isPublished())
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 {{ trans('messages.posts.not-published') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="{{ trans('messages.actions.close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -105,7 +105,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('messages.comments.delete-title') }}</h2>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="{{ trans('messages.actions.close') }}">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>

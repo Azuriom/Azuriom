@@ -106,7 +106,7 @@ class UpdateManager
 
     public function forceFetchUpdates(bool $cache = true)
     {
-        $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
+        $response = $this->prepareHttpRequest()->get('https://market.azuriom.com/api/updates');
 
         $updates = $response->throw()->json();
 
@@ -129,6 +129,10 @@ class UpdateManager
             $this->files->makeDirectory($updatesPath);
         }
 
+        if (! array_key_exists('file', $info)) {
+            throw new RuntimeException('No file available. If it\'s a paid extension, make sure you purchased it and verify the site key.');
+        }
+
         $dir = $updatesPath.$tempDir;
         $path = $dir.$info['file'];
 
@@ -145,7 +149,7 @@ class UpdateManager
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('The file hash do not match expected hash!');
+            throw new RuntimeException('The file hash do not match expected hash!');
         }
     }
 

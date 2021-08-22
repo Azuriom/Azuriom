@@ -21,7 +21,8 @@ class DatabaseConfigCommand extends Command
                         {--port= : The port of the database server}
                         {--database= : The database name}
                         {--username= : The username of the user}
-                        {--password= : The password of the user}';
+                        {--password= : The password of the user}
+                        {--force : Force the operation to run when in production}';
 
     /**
      * The console command description.

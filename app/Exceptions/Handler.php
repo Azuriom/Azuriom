@@ -122,7 +122,7 @@ class Handler extends ExceptionHandler
                 'exceptions' => $this->getExceptionReport($exception),
             ];
 
-            Http::post('https://azuriom.com/api/errors/report', $data);
+            Http::post('https://market.azuriom.com/api/errors/report', $data);
         } catch (Throwable $t) {
             //
         }

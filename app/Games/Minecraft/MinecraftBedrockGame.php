@@ -33,7 +33,7 @@ class MinecraftBedrockGame extends Game
     public function getUserUniqueId(string $name)
     {
         return Cache::remember("users.{$name}.xbox", now()->addMinutes(15), function () use ($name) {
-            $response = Http::get("https://xbox-api.azuriom.com/profiles/search/{$name}");
+            $response = Http::get("https://xbox-api.azuriom.com/search/{$name}");
 
             return $response->throw()->json('xuid');
         });
