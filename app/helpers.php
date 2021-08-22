@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Http\Controllers\InstallController;
 use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,15 @@ if (! function_exists('color_contrast')) {
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
         return ($yiq >= 128) ? 'black' : 'white';
+    }
+}
+
+if (! function_exists('is_installed')) {
+    function is_installed()
+    {
+        $key = config('app.key');
+
+        return ! empty($key) && $key !== InstallController::TEMP_KEY;
     }
 }
 
