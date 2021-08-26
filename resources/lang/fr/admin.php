@@ -486,19 +486,19 @@ return [
     ],
 
     'redirects' => [
-            'title' => 'Redirections',
-            'title-edit' => 'Édition de la redirection :redirect',
-            'title-create' => 'Création d\'une redirection',
+        'title' => 'Redirections',
+        'title-edit' => 'Édition de la redirection :redirect',
+        'title-create' => 'Création d\'une redirection',
 
-            'enable' => 'Activer la redirection',
-            'permanently' => 'Redirection permanente (code HTTP 301)',
-            'target' => 'Cible',
+        'enable' => 'Activer la redirection',
+        'permanently' => 'Redirection permanente (code HTTP 301)',
+        'target' => 'Cible',
 
-            'status' => [
-                    'created' => 'La redirection a été créée.',
-                    'updated' => 'La redirection a été mise à jour.',
-                    'deleted' => 'La redirection a été supprimée.',
-            ],
+        'status' => [
+                'created' => 'La redirection a été créée.',
+                'updated' => 'La redirection a été mise à jour.',
+                'deleted' => 'La redirection a été supprimée.',
+        ],
     ],
 
     'images' => [

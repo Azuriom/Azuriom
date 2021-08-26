@@ -17,7 +17,7 @@ class CustomRedirectRequest extends FormRequest
      * @var array
      */
     protected $checkboxes = [
-        'is_enabled', 'moved_permanently'
+        'is_enabled', 'moved_permanently',
     ];
 
     /**
@@ -31,7 +31,7 @@ class CustomRedirectRequest extends FormRequest
             'target' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('custom_redirects')->ignore($this->route('redirect'), 'slug')],
             'is_enabled' => ['filled', 'boolean'],
-            'moved_permanently' => ['filled', 'boolean']
+            'moved_permanently' => ['filled', 'boolean'],
         ];
     }
 }

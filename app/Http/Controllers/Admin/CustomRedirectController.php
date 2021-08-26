@@ -4,9 +4,7 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\CustomRedirectRequest;
-use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\CustomRedirect;
-use Azuriom\Models\Page;
 use Illuminate\Support\Str;
 
 class CustomRedirectController extends Controller

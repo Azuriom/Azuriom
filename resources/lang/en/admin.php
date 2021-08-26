@@ -502,7 +502,6 @@ return [
         ],
     ],
 
-
     'images' => [
         'title' => 'Images',
         'title-edit' => 'Edit image :image',
