@@ -1,7 +1,7 @@
 @csrf
 
 <div class="form-group">
-    <label for="titleInput">{{ trans('messages.fields.title') }}</label>
+    <label for="titleInput">{{ trans('admin.redirects.target') }}</label>
     <input type="text" class="form-control @error('target') is-invalid @enderror" id="titleInput" name="target" value="{{ old('target', $redirect->target ?? '') }}" required>
 
     @error('target')
