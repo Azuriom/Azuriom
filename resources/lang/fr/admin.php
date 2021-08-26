@@ -38,6 +38,7 @@ return [
         'content' => [
             'heading' => 'Contenu',
             'pages' => 'Pages',
+            'redirects' => 'Redirections',
             'posts' => 'Articles',
             'images' => 'Images',
         ],
@@ -427,6 +428,7 @@ return [
         'admin-images' => 'Voir et gérer les images',
         'admin-navbar' => 'Voir et gérer la navbar',
         'admin-pages' => 'Voir et gérer les pages',
+        'admin-redirects' => 'Voir et gérer les redirections',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
         'admin-users' => 'Voir et gérer les utilisateurs',
@@ -481,6 +483,22 @@ return [
             'updated' => 'La page a été mise à jour.',
             'deleted' => 'La page a été supprimée.',
         ],
+    ],
+
+    'redirects' => [
+            'title' => 'Redirections',
+            'title-edit' => 'Édition de la redirection :redirect',
+            'title-create' => 'Création d\'une redirection',
+
+            'enable' => 'Activer la redirection',
+            'permanently' => 'Redirection permanente (code HTTP 301)',
+            'target' => 'Cible',
+
+            'status' => [
+                    'created' => 'La redirection a été créée.',
+                    'updated' => 'La redirection a été mise à jour.',
+                    'deleted' => 'La redirection a été supprimée.',
+            ],
     ],
 
     'images' => [

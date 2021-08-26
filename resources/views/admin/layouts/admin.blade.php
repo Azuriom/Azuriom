@@ -153,6 +153,15 @@
                 <div class="sidebar-heading">{{ trans('admin.nav.content.heading') }}</div>
             @endcanany
 
+            @can('admin.redirects')
+                <div class="nav-item {{ add_active('admin.redirects.*') }}">
+                    <a class="nav-link" href="{{ route('admin.redirects.index') }}">
+                        <i class="fas fa-fw fa-file-alt"></i>
+                        <span>{{ trans('admin.nav.content.redirects') }}</span>
+                    </a>
+                </div>
+            @endcan
+
             @can('admin.pages')
                 <div class="nav-item {{ add_active('admin.pages.*') }}">
                     <a class="nav-link" href="{{ route('admin.pages.index') }}">
