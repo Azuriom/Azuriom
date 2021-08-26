@@ -495,9 +495,9 @@ return [
         'target' => 'Cible',
 
         'status' => [
-                'created' => 'La redirection a été créée.',
-                'updated' => 'La redirection a été mise à jour.',
-                'deleted' => 'La redirection a été supprimée.',
+            'created' => 'La redirection a été créée.',
+            'updated' => 'La redirection a été mise à jour.',
+            'deleted' => 'La redirection a été supprimée.',
         ],
     ],
 
