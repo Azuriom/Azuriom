@@ -26,9 +26,7 @@ class CustomRedirectController extends Controller
      */
     public function create()
     {
-        return view('admin.redirects.create', [
-            'pendingId' => old('pending_id', Str::uuid()),
-        ]);
+        return view('admin.redirects.create');
     }
 
     /**

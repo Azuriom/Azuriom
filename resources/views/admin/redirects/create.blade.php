@@ -6,7 +6,6 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.redirects.store') }}" method="POST">
-                <input type="hidden" name="pending_id" value="{{ $pendingId }}">
 
                 @include('admin.redirects._form')
 
