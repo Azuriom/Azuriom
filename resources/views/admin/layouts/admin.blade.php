@@ -156,7 +156,7 @@
             @can('admin.redirects')
                 <div class="nav-item {{ add_active('admin.redirects.*') }}">
                     <a class="nav-link" href="{{ route('admin.redirects.index') }}">
-                        <i class="fas fa-fw fa-file-alt"></i>
+                        <i class="fas fa-fw fa-directions"></i>
                         <span>{{ trans('admin.nav.content.redirects') }}</span>
                     </a>
                 </div>
