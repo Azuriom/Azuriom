@@ -4,13 +4,11 @@ use Azuriom\Http\Controllers\Auth\LoginController;
 use Azuriom\Http\Controllers\CustomUriController;
 use Azuriom\Http\Controllers\HomeController;
 use Azuriom\Http\Controllers\NotificationController;
-use Azuriom\Http\Controllers\PageController;
 use Azuriom\Http\Controllers\PostCommentController;
 use Azuriom\Http\Controllers\PostController;
 use Azuriom\Http\Controllers\PostLikeController;
 use Azuriom\Http\Controllers\ProfileController;
 use Azuriom\Http\Controllers\UserController;
-use Azuriom\Models\CustomRedirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
