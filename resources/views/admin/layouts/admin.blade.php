@@ -11,7 +11,7 @@
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('img/azuriom.png') }}">
+    <link rel="shortcut icon" href="{{ favicon() }}">
 
     <!-- Scripts -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}" defer></script>
