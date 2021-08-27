@@ -37,6 +37,7 @@ class CustomRedirectController extends Controller
     public function store(CustomRedirectRequest $request)
     {
         CustomRedirect::create($request->validated());
+
         return redirect()->route('admin.redirects.index')->with('success', trans('admin.redirect.status.created'));
     }
 
