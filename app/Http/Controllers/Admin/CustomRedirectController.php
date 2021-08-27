@@ -37,10 +37,7 @@ class CustomRedirectController extends Controller
      */
     public function store(CustomRedirectRequest $request)
     {
-        $customRedirect = CustomRedirect::create($request->validated());
-
-        $customRedirect->persistPendingAttachments($request->input('pending_id'));
-
+        CustomRedirect::create($request->validated());
         return redirect()->route('admin.redirects.index')->with('success', trans('admin.redirect.status.created'));
     }
 
