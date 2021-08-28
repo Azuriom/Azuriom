@@ -2,8 +2,8 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Models\Redirect;
 use Azuriom\Models\Page;
+use Azuriom\Models\Redirect;
 use Illuminate\Http\Request;
 
 class CustomUriController extends Controller

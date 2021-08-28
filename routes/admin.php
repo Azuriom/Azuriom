@@ -3,7 +3,6 @@
 use Azuriom\Http\Controllers\Admin\ActionLogController;
 use Azuriom\Http\Controllers\Admin\AdminController;
 use Azuriom\Http\Controllers\Admin\BanController;
-use Azuriom\Http\Controllers\Admin\RedirectController;
 use Azuriom\Http\Controllers\Admin\ImageController;
 use Azuriom\Http\Controllers\Admin\NavbarController;
 use Azuriom\Http\Controllers\Admin\PageAttachmentController;
@@ -11,6 +10,7 @@ use Azuriom\Http\Controllers\Admin\PageController;
 use Azuriom\Http\Controllers\Admin\PluginController;
 use Azuriom\Http\Controllers\Admin\PostAttachmentController;
 use Azuriom\Http\Controllers\Admin\PostController;
+use Azuriom\Http\Controllers\Admin\RedirectController;
 use Azuriom\Http\Controllers\Admin\RoleController;
 use Azuriom\Http\Controllers\Admin\ServerController;
 use Azuriom\Http\Controllers\Admin\SettingsController;
