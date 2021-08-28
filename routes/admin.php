@@ -3,7 +3,7 @@
 use Azuriom\Http\Controllers\Admin\ActionLogController;
 use Azuriom\Http\Controllers\Admin\AdminController;
 use Azuriom\Http\Controllers\Admin\BanController;
-use Azuriom\Http\Controllers\Admin\CustomRedirectController;
+use Azuriom\Http\Controllers\Admin\RedirectController;
 use Azuriom\Http\Controllers\Admin\ImageController;
 use Azuriom\Http\Controllers\Admin\NavbarController;
 use Azuriom\Http\Controllers\Admin\PageAttachmentController;
@@ -103,7 +103,7 @@ Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles
 Route::resource('bans', BanController::class)->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])->middleware('can:admin.users');
 
-Route::resource('redirects', CustomRedirectController::class)->except('show')->middleware('can:admin.redirects');
+Route::resource('redirects', RedirectController::class)->except('show')->middleware('can:admin.redirects');
 Route::resource('pages', PageController::class)->except('show')->middleware('can:admin.pages');
 Route::resource('posts', PostController::class)->except('show')->middleware('can:admin.posts');
 Route::resource('images', ImageController::class)->except('show')->middleware('can:admin.images');

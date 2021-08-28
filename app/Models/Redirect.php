@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @method static \Illuminate\Database\Eloquent\Builder enabled()
  */
-class CustomRedirect extends Model
+class Redirect extends Model
 {
     use Attachable;
     use Loggable;

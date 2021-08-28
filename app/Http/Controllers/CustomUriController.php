@@ -2,7 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Models\CustomRedirect;
+use Azuriom\Models\Redirect;
 use Azuriom\Models\Page;
 use Illuminate\Http\Request;
 
@@ -29,9 +29,9 @@ class CustomUriController extends Controller
         }
 
         /**
-         * @var CustomRedirect $redirect
+         * @var Redirect $redirect
          */
-        foreach (CustomRedirect::enabled()->get() as $redirect) {
+        foreach (Redirect::enabled()->get() as $redirect) {
             if ($request->is($redirect->slug)) {
                 return redirect($redirect->target, $redirect->moved_permanently ? 301 : 302);
             }

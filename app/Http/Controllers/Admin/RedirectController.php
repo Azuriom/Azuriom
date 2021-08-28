@@ -3,10 +3,10 @@
 namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Http\Requests\CustomRedirectRequest;
-use Azuriom\Models\CustomRedirect;
+use Azuriom\Http\Requests\RedirectRequest;
+use Azuriom\Models\Redirect;
 
-class CustomRedirectController extends Controller
+class RedirectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class CustomRedirectController extends Controller
      */
     public function index()
     {
-        return view('admin.redirects.index', ['redirects' => CustomRedirect::paginate(25)]);
+        return view('admin.redirects.index', ['redirects' => Redirect::paginate(25)]);
     }
 
     /**
@@ -31,12 +31,12 @@ class CustomRedirectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\CustomRedirectRequest  $request
+     * @param  \Azuriom\Http\Requests\RedirectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CustomRedirectRequest $request)
+    public function store(RedirectRequest $request)
     {
-        CustomRedirect::create($request->validated());
+        Redirect::create($request->validated());
 
         return redirect()->route('admin.redirects.index')->with('success', trans('admin.redirect.status.created'));
     }
@@ -44,10 +44,10 @@ class CustomRedirectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Azuriom\Models\CustomRedirect  $page
+     * @param  \Azuriom\Models\Redirect  $page
      * @return \Illuminate\Http\Response
      */
-    public function edit(CustomRedirect $redirect)
+    public function edit(Redirect $redirect)
     {
         return view('admin.redirects.edit', ['redirect' => $redirect]);
     }
@@ -55,11 +55,11 @@ class CustomRedirectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\CustomRedirectRequest  $request
-     * @param  \Azuriom\Models\CustomRedirect  $redirect
+     * @param  \Azuriom\Http\Requests\RedirectRequest  $request
+     * @param  \Azuriom\Models\Redirect  $redirect
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomRedirectRequest $request, CustomRedirect $redirect)
+    public function update(RedirectRequest $request, Redirect $redirect)
     {
         $redirect->update($request->validated());
 
@@ -69,12 +69,12 @@ class CustomRedirectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\CustomRedirect  $redirect
+     * @param  \Azuriom\Models\Redirect  $redirect
      * @return \Illuminate\Http\Response
      *
      * @throws \Exception
      */
-    public function destroy(CustomRedirect $redirect)
+    public function destroy(Redirect $redirect)
     {
         $redirect->delete();
 

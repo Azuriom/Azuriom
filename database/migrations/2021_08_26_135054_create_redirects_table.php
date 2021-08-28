@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomRedirectsTable extends Migration
+class CreateRedirectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCustomRedirectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('custom_redirects', function (Blueprint $table) {
+        Schema::create('redirects', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('slug')->unique();
@@ -30,6 +30,6 @@ class CreateCustomRedirectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_redirects');
+        Schema::dropIfExists('redirects');
     }
 }
