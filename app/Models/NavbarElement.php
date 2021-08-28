@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as ModelCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -184,13 +185,14 @@ class NavbarElement extends Model
     /**
      * Get or filter navbar elements for which current user has the right perm.
      *
-     * @param Collection<NavbarElement>|null if null elements will be queried from db
+     * @param Collection<NavbarElement>|null|NavbarElement[] if null elements will be queried from db
      * @return Collection
      */
     public static function withRightPerm($elements = null)
     {
         /** @var Collection $elements */
         $elements = $elements ?? NavbarElement::with('roles')->orderBy('position')->get();
+        $elements = ($elements instanceof ModelCollection) ? $elements : NavbarElement::hydrate($elements);
 
         foreach ($elements as $key => $element) {
             if (! $element->hasPerm($element->roles)) {
@@ -204,12 +206,13 @@ class NavbarElement extends Model
     /**
      * Test if a current user has the permission to see the element.
      *
-     * @param Role[]|null $roles If Null roles will be lazy loaded
+     * @param Role[]|null|Collection $roles If Null roles will be lazy loaded
      * @return bool
      */
     public function hasPerm($roles = null): bool
     {
-        $roles = $roles ?? $this->roles();
+        $roles = $roles ?? $this->roles()->get()->toArray();
+        $roles = is_array($roles) ? $roles : $roles->toArray();
 
         if (sizeof($roles) == 0) {
             return true;
