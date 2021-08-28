@@ -61,7 +61,7 @@ return [
         'short-description' => 'Description courte',
         'content' => 'Contenu',
         'role' => 'Rôle',
-        'role_that_can_view_this_element' => 'Rôles qui pourront voir cet élément (laissez vide pour autoriser tout le monde même, les visiteurs)',
+        'role_that_can_view_this_element' => 'Rôles qui pourront voir cet élément (laissez vide pour autoriser tout le monde, même les visiteurs)',
         'quantity' => 'Quantité',
         'money' => 'Argent',
         'color' => 'Couleur',
