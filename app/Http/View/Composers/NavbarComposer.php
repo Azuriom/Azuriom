@@ -17,7 +17,9 @@ class NavbarComposer
      */
     public function compose(View $view)
     {
-        $elements = $this->loadNavbarElements();
+        $elements = $this->loadNavbarElements()->filter(function (NavbarElement $element) {
+            return $element->hasPermission();
+        });
         $parentElements = $elements->whereNull('parent_id');
 
         foreach ($parentElements as $element) {
@@ -41,8 +43,10 @@ class NavbarComposer
         if ($elements instanceof ModelCollection) {
             // Not in cache yet
             Cache::put('navbar_elements', $elements->toArray(), now()->addDay());
+
+            return $elements;
         }
 
-        return NavbarElement::withRightPerm($elements);
+        return NavbarElement::hydrate($elements);
     }
 }

@@ -4,7 +4,6 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Collection as ModelCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -24,6 +23,7 @@ use Illuminate\Support\Str;
  *
  * @property \Azuriom\Models\NavbarElement|null $parent
  * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  */
 class NavbarElement extends Model
 {
@@ -183,52 +183,24 @@ class NavbarElement extends Model
     }
 
     /**
-     * Get or filter navbar elements for which current user has the right perm.
+     * Test if the current user has the permission to see this element.
      *
-     * @param Collection<NavbarElement>|null|NavbarElement[] if null elements will be queried from db
-     * @return Collection
-     */
-    public static function withRightPerm($elements = null)
-    {
-        /** @var Collection $elements */
-        $elements = $elements ?? NavbarElement::with('roles')->orderBy('position')->get();
-        $elements = ($elements instanceof ModelCollection) ? $elements : NavbarElement::hydrate($elements);
-
-        foreach ($elements as $key => $element) {
-            if (! $element->hasPerm($element->roles)) {
-                $elements->forget($key);
-            }
-        }
-
-        return $elements;
-    }
-
-    /**
-     * Test if a current user has the permission to see the element.
-     *
-     * @param Role[]|null|Collection $roles If Null roles will be lazy loaded
      * @return bool
      */
-    public function hasPerm($roles = null): bool
+    public function hasPermission()
     {
-        $roles = $roles ?? $this->roles()->get()->toArray();
-        $roles = is_array($roles) ? $roles : $roles->toArray();
+        $roles = $this->roles instanceof Collection ? $this->roles : collect($this->roles);
 
-        if (sizeof($roles) == 0) {
+        if ($roles->isEmpty()) {
             return true;
         }
 
-        if (Auth::guest() && ! sizeof($roles) == 0) {
+        if (Auth::guest()) {
             return false;
         }
 
-        // Check if the current user has a role that match one of the required for this navbarElement
-        if (sizeof(array_filter($roles, function ($role) {
-            return $role['id'] == Auth::user()->role_id;
-        }))) {
-            return true;
-        }
+        $user = Auth::user();
 
-        return false;
+        return $roles->contains('id', $user->role->id);
     }
 }

@@ -236,6 +236,7 @@ return [
         'title-edit' => 'Édition l\'élément de la navbar :element',
         'title-create' => 'Ajout d\'un élément dans la navbar',
 
+        'roles' => 'Rôles qui pourront voir cet élément (laissez vide pour autoriser tout le monde, même les visiteurs)',
         'dropdown-info' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
 
         'fields' => [

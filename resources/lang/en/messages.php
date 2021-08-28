@@ -61,7 +61,6 @@ return [
         'short-description' => 'Short Description',
         'content' => 'Content',
         'role' => 'Role',
-        'role_that_can_view_this_element' => 'Roles that will be able to see this element (let empty to allow everybody, even guests)',
         'quantity' => 'Quantity',
         'money' => 'Money',
         'color' => 'Color',

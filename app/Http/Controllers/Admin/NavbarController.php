@@ -75,7 +75,7 @@ class NavbarController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -106,7 +106,7 @@ class NavbarController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \Azuriom\Models\NavbarElement  $navbarElement
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function edit(NavbarElement $navbarElement)
     {
@@ -138,7 +138,9 @@ class NavbarController extends Controller
 
         $navbarElement->update($request->validated());
 
-        $navbarElement->roles()->sync($request->get('roles'));
+        $navbarElement->roles()->sync($request->input('roles'));
+
+        NavbarElement::clearCache();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.updated'));
