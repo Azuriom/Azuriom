@@ -41,6 +41,7 @@ return [
             'pages' => 'Pages',
             'posts' => 'Posts',
             'images' => 'Images',
+            'redirects' => 'Redirections',
         ],
 
         'extensions' => [
@@ -428,6 +429,7 @@ return [
         'admin-images' => 'View and manage images',
         'admin-navbar' => 'View and manage navbar',
         'admin-pages' => 'View and manage pages',
+        'admin-redirects' => 'View and manage redirections',
         'admin-posts' => 'View and manage posts',
         'admin-settings' => 'View and manage settings',
         'admin-users' => 'View and manage users',
@@ -481,6 +483,22 @@ return [
             'created' => 'The page has been created.',
             'updated' => 'This page has been updated.',
             'deleted' => 'This page has been deleted.',
+        ],
+    ],
+
+    'redirects' => [
+        'title' => 'Redirections',
+        'title-edit' => 'Editing redirection :redirect',
+        'title-create' => 'Creating redirection',
+
+        'enable' => 'Enable redirection',
+        'permanently' => 'Redirection permanent (code HTTP 301)',
+        'target' => 'Target',
+
+        'status' => [
+            'created' => 'The redirection has been created.',
+            'updated' => 'This redirection has been updated.',
+            'deleted' => 'This redirection has been deleted.',
         ],
     ],
 
