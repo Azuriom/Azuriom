@@ -22,6 +22,18 @@
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
+
+    <div class="form-group col-md-6">
+        <label for="rolesSelect">{{ trans('messages.fields.role_that_can_view_this_element') }}</label>
+        <select class="custom-select @error('roles') is-invalid @enderror" id="rolesSelect" name="roles[]" multiple>
+            @foreach($roles as $role)
+                <option value="{{ $role->id }}" @if(in_array($role->id, old('roles', isset($navbarElement) ? $navbarElement->roles()->pluck('roles.id')->toArray() : []) ?? [])) selected @endif>{{ $role->name }}</option>
+            @endforeach
+        </select>
+        @error('roles')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
 </div>
 
 <div data-nav-element="page" class="form-group d-none">

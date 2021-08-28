@@ -3,7 +3,9 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -81,6 +83,14 @@ class NavbarElement extends Model
     public function elements()
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('position');
+    }
+
+    /**
+     * Get roles attached to this navbar element
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 
     public function getLink()
@@ -169,5 +179,51 @@ class NavbarElement extends Model
     public static function clearCache()
     {
         Cache::forget('navbar_elements');
+    }
+
+    /**
+     * Get or filter navbar elements for which current user has the right perm
+     *
+     * @param Collection<NavbarElement>|null if null elements will be queried from db
+     * @return Collection
+     */
+    public static function withRightPerm($elements = null)
+    {
+        /** @var Collection $elements */
+        $elements = $elements ?? NavbarElement::with('roles')->orderBy('position')->get();
+
+        foreach ($elements as $key => $element) {
+            if (!$element->hasPerm($element->roles)) {
+                $elements->forget($key);
+            }
+        }
+
+        return $elements;
+    }
+
+    /**
+     * Test if a current user has the permission to see the element
+     *
+     * @param Role[]|null $roles If Null roles will be lazy loaded
+     * @return bool
+     */
+    public function hasPerm($roles = null): bool
+    {
+        $roles = $roles ?? $this->roles();
+
+        if (sizeof($roles) == 0) {
+            return true;
+        }
+
+        if (Auth::guest() && !sizeof($roles) == 0) {
+            return false;
+        }
+
+        // Check if the current user has a role that match one of the required for this navbarElement
+        if (sizeof(array_filter($roles, function ($role) {return $role['id'] == Auth::user()->role_id;}))) {
+            return true;
+        }
+
+        return false;
     }
 }
