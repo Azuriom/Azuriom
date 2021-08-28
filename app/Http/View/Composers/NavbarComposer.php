@@ -17,7 +17,9 @@ class NavbarComposer
      */
     public function compose(View $view)
     {
-        $elements = $this->loadNavbarElements();
+        $elements = $this->loadNavbarElements()->filter(function (NavbarElement $element) {
+            return $element->hasPermission();
+        });
         $parentElements = $elements->whereNull('parent_id');
 
         foreach ($parentElements as $element) {
@@ -35,7 +37,7 @@ class NavbarComposer
     protected function loadNavbarElements()
     {
         $elements = Cache::get('navbar_elements', function () {
-            return NavbarElement::orderBy('position')->get();
+            return NavbarElement::orderBy('position')->with('roles')->get();
         });
 
         if ($elements instanceof ModelCollection) {

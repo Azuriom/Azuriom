@@ -238,6 +238,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
+        'roles' => 'Roles that will be able to see this element (let empty to allow everybody, even guests)',
         'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [

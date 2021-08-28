@@ -50,6 +50,7 @@ class NavbarElementRequest extends FormRequest
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],
             'value' => ['sometimes'],
             'new_tab' => ['filled', 'boolean'],
+            'roles.*' => ['required', 'integer', 'exists:roles,id'],
         ];
     }
 

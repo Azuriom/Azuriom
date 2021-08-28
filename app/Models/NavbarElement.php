@@ -3,7 +3,9 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -21,6 +23,7 @@ use Illuminate\Support\Str;
  *
  * @property \Azuriom\Models\NavbarElement|null $parent
  * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  */
 class NavbarElement extends Model
 {
@@ -81,6 +84,14 @@ class NavbarElement extends Model
     public function elements()
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('position');
+    }
+
+    /**
+     * Get roles attached to this navbar element.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 
     public function getLink()
@@ -169,5 +180,27 @@ class NavbarElement extends Model
     public static function clearCache()
     {
         Cache::forget('navbar_elements');
+    }
+
+    /**
+     * Test if the current user has the permission to see this element.
+     *
+     * @return bool
+     */
+    public function hasPermission()
+    {
+        $roles = $this->roles instanceof Collection ? $this->roles : collect($this->roles);
+
+        if ($roles->isEmpty()) {
+            return true;
+        }
+
+        if (Auth::guest()) {
+            return false;
+        }
+
+        $user = Auth::user();
+
+        return $roles->contains('id', $user->role->id);
     }
 }

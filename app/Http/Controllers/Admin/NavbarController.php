@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\NavbarElementRequest;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Models\Role;
 use Illuminate\Http\Request;
 
 class NavbarController extends Controller
@@ -82,6 +83,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -113,6 +115,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -134,6 +137,10 @@ class NavbarController extends Controller
         }
 
         $navbarElement->update($request->validated());
+
+        $navbarElement->roles()->sync($request->input('roles'));
+
+        NavbarElement::clearCache();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.updated'));
