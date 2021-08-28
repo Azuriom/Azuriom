@@ -103,10 +103,10 @@ Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles
 Route::resource('bans', BanController::class)->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])->middleware('can:admin.users');
 
-Route::resource('redirects', RedirectController::class)->except('show')->middleware('can:admin.redirects');
 Route::resource('pages', PageController::class)->except('show')->middleware('can:admin.pages');
 Route::resource('posts', PostController::class)->except('show')->middleware('can:admin.posts');
 Route::resource('images', ImageController::class)->except('show')->middleware('can:admin.images');
+Route::resource('redirects', RedirectController::class)->except('show')->middleware('can:admin.redirects');
 
 Route::resource('pages.attachments', PageAttachmentController::class)->only('store');
 Route::resource('posts.attachments', PostAttachmentController::class)->only('store');

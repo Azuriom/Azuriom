@@ -15,11 +15,11 @@ class CreateRedirectsTable extends Migration
     {
         Schema::create('redirects', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('slug')->unique();
             $table->string('target');
             $table->boolean('moved_permanently')->default(false);
             $table->boolean('is_enabled')->default(true);
+            $table->timestamps();
         });
     }
 

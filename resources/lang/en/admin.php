@@ -39,9 +39,9 @@ return [
         'content' => [
             'heading' => 'Content',
             'pages' => 'Pages',
-            'redirects' => 'Redirections',
             'posts' => 'Posts',
             'images' => 'Images',
+            'redirects' => 'Redirections',
         ],
 
         'extensions' => [

@@ -1,7 +1,7 @@
 <?php
 
 use Azuriom\Http\Controllers\Auth\LoginController;
-use Azuriom\Http\Controllers\CustomUriController;
+use Azuriom\Http\Controllers\FallbackController;
 use Azuriom\Http\Controllers\HomeController;
 use Azuriom\Http\Controllers\NotificationController;
 use Azuriom\Http\Controllers\PostCommentController;
@@ -82,5 +82,4 @@ Route::prefix('news')->name('posts.')->group(function () {
 Route::resource('posts.comments', PostCommentController::class)
     ->middleware(['auth', 'verified'])->only(['store', 'destroy']);
 
-Route::get('/{slug}', [CustomUriController::class, 'get']);
-Route::get('/{page:slug}', [CustomUriController::class, 'get'])->where('page', '.*')->name('pages.show');
+Route::get('/{path}', [FallbackController::class, 'get'])->where('path', '.*');
