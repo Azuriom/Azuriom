@@ -86,7 +86,7 @@ class NavbarElement extends Model
     }
 
     /**
-     * Get roles attached to this navbar element
+     * Get roles attached to this navbar element.
      */
     public function roles()
     {
@@ -182,7 +182,7 @@ class NavbarElement extends Model
     }
 
     /**
-     * Get or filter navbar elements for which current user has the right perm
+     * Get or filter navbar elements for which current user has the right perm.
      *
      * @param Collection<NavbarElement>|null if null elements will be queried from db
      * @return Collection
@@ -193,7 +193,7 @@ class NavbarElement extends Model
         $elements = $elements ?? NavbarElement::with('roles')->orderBy('position')->get();
 
         foreach ($elements as $key => $element) {
-            if (!$element->hasPerm($element->roles)) {
+            if (! $element->hasPerm($element->roles)) {
                 $elements->forget($key);
             }
         }
@@ -202,7 +202,7 @@ class NavbarElement extends Model
     }
 
     /**
-     * Test if a current user has the permission to see the element
+     * Test if a current user has the permission to see the element.
      *
      * @param Role[]|null $roles If Null roles will be lazy loaded
      * @return bool
@@ -215,12 +215,14 @@ class NavbarElement extends Model
             return true;
         }
 
-        if (Auth::guest() && !sizeof($roles) == 0) {
+        if (Auth::guest() && ! sizeof($roles) == 0) {
             return false;
         }
 
         // Check if the current user has a role that match one of the required for this navbarElement
-        if (sizeof(array_filter($roles, function ($role) {return $role['id'] == Auth::user()->role_id;}))) {
+        if (sizeof(array_filter($roles, function ($role) {
+            return $role['id'] == Auth::user()->role_id;
+        }))) {
             return true;
         }
 

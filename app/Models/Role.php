@@ -55,7 +55,7 @@ class Role extends Model
     }
 
     /**
-     * Get navbar elements attached to this role
+     * Get navbar elements attached to this role.
      */
     public function navbarElements()
     {
