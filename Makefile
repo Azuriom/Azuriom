@@ -1,3 +1,5 @@
+.PHONY: run run-with-logs stop build run-build run-build-with-logs generate-key init-db symlink create-user create-admin artisan
+
 run:
 	docker-compose up -d
 
