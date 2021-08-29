@@ -10,10 +10,11 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">{{ trans('admin.redirects.target') }}</th>
-                        <th scope="col">{{ trans('messages.fields.slug') }}</th>
+                        <th scope="col">{{ trans('admin.redirects.source') }}</th>
+                        <th scope="col">{{ trans('admin.redirects.destination') }}</th>
+                        <th scope="col">{{ trans('admin.redirects.code') }}</th>
                         <th scope="col">{{ trans('messages.fields.enabled') }}</th>
-                        <th scope="col">{{ trans('admin.redirects.permanently') }}</th>
+                        <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -21,20 +22,18 @@
                     @foreach($redirects as $redirect)
                         <tr>
                             <th scope="row">{{ $redirect->id }}</th>
-                            <td>{{ $redirect->target }}</td>
                             <td>
-                                <a href="../{{ $redirect->slug }}" target="_blank" rel="noopener noreferrer">
-                                    {{ $redirect->slug }}
+                                <a href="{{ url($redirect->source) }}" target="_blank" rel="noopener noreferrer">
+                                    {{ $redirect->source }}
                                 </a>
+                            </td>
+                            <td>{{ $redirect->destination }}</td>
+                            <td>
+                                {{ $redirect->code }}
                             </td>
                             <td>
                                 <span class="badge badge-{{ $redirect->is_enabled ? 'success' : 'danger' }}">
                                     {{ trans_bool($redirect->is_enabled) }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge badge-{{ $redirect->moved_permanently ? 'success' : 'danger' }}">
-                                    {{ trans_bool($redirect->moved_permanently) }}
                                 </span>
                             </td>
                             <td>

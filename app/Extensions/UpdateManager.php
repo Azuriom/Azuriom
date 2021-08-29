@@ -111,9 +111,10 @@ class UpdateManager
 
     public function forceFetchUpdates(bool $cache = true)
     {
-        $response = $this->prepareHttpRequest()->get('https://market.azuriom.com/api/updates');
-
-        $updates = $response->throw()->json();
+        $updates = $this->prepareHttpRequest()
+            ->get('https://market.azuriom.com/api/updates')
+            ->throw()
+            ->json();
 
         if ($updates !== null) {
             $this->updates = $updates;
@@ -149,7 +150,10 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $this->prepareHttpRequest()->withOptions(['sink' => $path])->get($info['url']);
+        $this->prepareHttpRequest()
+            ->withOptions(['sink' => $path])
+            ->get($info['url'])
+            ->throw();
 
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
@@ -198,8 +202,7 @@ class UpdateManager
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        $request = Http::withHeaders([
-            'User-Agent' => $userAgent,
+        $request = Http::withUserAgent($userAgent)->withHeaders([
             'Azuriom-Version' => Azuriom::version(),
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),

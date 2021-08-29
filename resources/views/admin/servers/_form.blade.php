@@ -19,7 +19,6 @@
         <script>
             const azLinkPortInput = document.getElementById('azlinkPortInput');
             const verifyButton = document.getElementById('verifyAzLink');
-            const verifyButtonIcon = verifyButton.querySelector('.btn-spinner');
 
             if (azLinkPortInput) {
                 azLinkPortInput.addEventListener('input', function (e) {
@@ -35,7 +34,6 @@
 
             verifyButton.addEventListener('click', function () {
                 verifyButton.setAttribute('disabled', '');
-                verifyButtonIcon.classList.remove('d-none');
 
                 const formData = new FormData(document.getElementById('serverForm'));
                 formData.delete('_method');
@@ -47,7 +45,6 @@
                     createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
                 }).finally(function () {
                     verifyButton.removeAttribute('disabled');
-                    verifyButtonIcon.classList.add('d-none');
                 });
             });
         </script>
@@ -196,7 +193,7 @@
         @if(isset($server) && $server->isOnline())
             <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
                 <i class="fas fa-check"></i> {{ trans('admin.servers.actions.verify-connection') }}
-                <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
             </button>
         @endif
     </div>

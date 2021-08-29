@@ -27,10 +27,12 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
+        $page = $this->route('page');
+
         return [
             'title' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('pages')->ignore($this->page, 'slug')],
+            'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('pages')->ignore($page, 'slug')],
             'content' => ['required', 'string'],
             'is_enabled' => ['filled', 'boolean'],
         ];

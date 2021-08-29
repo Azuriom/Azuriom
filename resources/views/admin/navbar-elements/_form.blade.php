@@ -3,7 +3,7 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="nameInput">{{ trans('messages.fields.name') }}</label>
-        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->name ?? '') }}" required>
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ (string) old('name', $navbarElement->name ?? '') }}" required>
 
         @error('name')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -19,19 +19,6 @@
         </select>
 
         @error('type')
-        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-        @enderror
-    </div>
-
-    <div class="form-group col-md-6">
-        <label for="rolesSelect">{{ trans('admin.navbar-elements.roles') }}</label>
-        <select class="custom-select @error('roles') is-invalid @enderror" id="rolesSelect" name="roles[]" multiple>
-            @foreach($roles as $role)
-                <option value="{{ $role->id }}" @if(in_array($role->id, old('roles', isset($navbarElement) ? $navbarElement->roles()->pluck('roles.id')->toArray() : []))) selected @endif>{{ $role->name }}</option>
-            @endforeach
-        </select>
-
-        @error('roles')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
@@ -92,4 +79,26 @@
 <div class="form-group custom-control custom-switch">
     <input type="checkbox" class="custom-control-input" id="newTabSwitch" name="new_tab" @if($navbarElement->new_tab ?? false) checked @endif>
     <label class="custom-control-label" for="newTabSwitch">{{ trans('admin.navbar-elements.fields.new-tab') }}</label>
+</div>
+
+<div class="form-group mb-2">
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="restrictedSwitch" name="restricted" data-toggle="collapse" data-target="#rolesGroup" @if(isset($navbarElement) && $navbarElement->isRestricted()) checked @endif aria-describedby="adminInfo">
+        <label class="custom-control-label" for="restrictedSwitch">{{ trans('admin.navbar-elements.restrict') }}</label>
+    </div>
+</div>
+
+<div id="rolesGroup" class="{{ (isset($navbarElement) && $navbarElement->isRestricted()) ? 'show' : 'collapse' }}">
+    <div class="card card-body mb-2">
+        <div class="row">
+            @foreach($roles as $role)
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="form-group custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="role{{ $role->id }}" name="roles[]" value="{{ $role->id }}" @if(in_array($role->id, old('roles', isset($navbarElement) ? $navbarElement->roles->modelKeys() : []), true)) checked @endif>
+                        <label class="custom-control-label" for="role{{ $role->id }}">{{ $role->name }}</label>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </div>

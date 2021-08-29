@@ -7,6 +7,7 @@ use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
 use Exception;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -212,7 +213,7 @@ class InstallController extends Controller
                     if ($name === null) {
                         throw new Exception('Invalid Steam URL.');
                     }
-                } catch (Exception $e) {
+                } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
             } else {

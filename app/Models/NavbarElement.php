@@ -3,11 +3,11 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 /**
@@ -141,6 +141,11 @@ class NavbarElement extends Model
         }
     }
 
+    public function getNameAttribute(string $value)
+    {
+        return new HtmlString($value);
+    }
+
     public function getTypeValue(string $type)
     {
         return $this->type === $type ? $this->value : '';
@@ -149,6 +154,11 @@ class NavbarElement extends Model
     public function isDropdown()
     {
         return $this->type === 'dropdown';
+    }
+
+    public function isRestricted()
+    {
+        return ! $this->roles->isEmpty();
     }
 
     public function hasParent()
@@ -189,9 +199,7 @@ class NavbarElement extends Model
      */
     public function hasPermission()
     {
-        $roles = $this->roles instanceof Collection ? $this->roles : collect($this->roles);
-
-        if ($roles->isEmpty()) {
+        if (! $this->isRestricted()) {
             return true;
         }
 
@@ -199,8 +207,9 @@ class NavbarElement extends Model
             return false;
         }
 
+        /** @var \Azuriom\Models\User $user */
         $user = Auth::user();
 
-        return $roles->contains('id', $user->role->id);
+        return $user->isAdmin() || $this->roles->contains($user->role);
     }
 }

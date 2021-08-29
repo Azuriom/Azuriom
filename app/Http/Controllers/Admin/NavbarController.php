@@ -96,7 +96,9 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        NavbarElement::create($request->validated());
+        $element = NavbarElement::create($request->validated());
+
+        $element->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.created'));

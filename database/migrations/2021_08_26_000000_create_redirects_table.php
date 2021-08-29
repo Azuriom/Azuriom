@@ -15,9 +15,9 @@ class CreateRedirectsTable extends Migration
     {
         Schema::create('redirects', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('target');
-            $table->boolean('moved_permanently')->default(false);
+            $table->string('source')->unique();
+            $table->string('destination');
+            $table->unsignedInteger('code');
             $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });

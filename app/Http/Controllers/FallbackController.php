@@ -17,10 +17,11 @@ class FallbackController extends Controller
      */
     public function get(string $path)
     {
-        $redirect = Redirect::enabled()->firstWhere('slug', $path);
+        /** @var \Azuriom\Models\Redirect|null $redirect */
+        $redirect = Redirect::enabled()->firstWhere('source', $path);
 
         if ($redirect !== null) {
-            return redirect($redirect->target, $redirect->moved_permanently ? 301 : 302);
+            return redirect($redirect->destination, $redirect->code);
         }
 
         $page = Page::enabled()->where('slug', $path)->firstOrFail();

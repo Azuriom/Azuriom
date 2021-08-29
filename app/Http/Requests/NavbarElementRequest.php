@@ -31,9 +31,11 @@ class NavbarElementRequest extends FormRequest
     {
         $this->mergeCheckboxes();
 
-        $this->merge([
-            'value' => $this->getLinkValue(),
-        ]);
+        $this->merge(['value' => $this->getLinkValue()]);
+
+        if (! $this->filled('restricted')) {
+            $this->merge(['roles' => null]);
+        }
     }
 
     /**

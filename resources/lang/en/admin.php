@@ -238,7 +238,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
-        'roles' => 'Roles that will be able to see this element (let empty to allow everybody, even guests)',
+        'restrict' => 'Limit roles that will be able to see this element',
         'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [
@@ -250,6 +250,7 @@ return [
             'plugin' => 'Plugin',
             'dropdown' => 'Dropdown',
             'new-tab' => 'Open in new tab',
+            'roles' => 'Roles',
         ],
 
         'status' => [
@@ -493,8 +494,12 @@ return [
         'title-create' => 'Creating redirection',
 
         'enable' => 'Enable redirection',
-        'permanently' => 'Redirection permanent (code HTTP 301)',
-        'target' => 'Target',
+        'source' => 'Source',
+        'destination' => 'Destination',
+        'code' => 'Status code',
+
+        '301' => '301 - Permanent redirect',
+        '302' => '302 - Temporary redirect',
 
         'status' => [
             'created' => 'The redirection has been created.',
@@ -578,6 +583,7 @@ return [
         'subtitle-no-update' => 'No updates available',
 
         'update' => 'The version <code>:last-version</code> of Azuriom is available and you are on version <code>:version</code>.',
+        'changelog' => 'The changelog is available <a href=":url" target="_blank" rel="noopener noreferrer">here</a>.',
         'download' => 'The latest version of Azuriom is ready for download.',
         'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
 

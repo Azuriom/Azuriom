@@ -25,17 +25,25 @@ class MinecraftBedrockGame extends Game
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
-        return Arr::get($this->getUserProfile($user), 'gamerpic', function () {
-            return asset('img/user.png');
-        });
+        $params = '';
+
+        if ($size <= 424) {
+            // Xbox Live only supports 64x64, 208x208 and 424x424
+            $size = $size <= 64 ? 64 : ($size <= 208 ? 208 : 424);
+            $params = "&w={$size}&h={$size}";
+        }
+
+        $url = Arr::get($this->getUserProfile($user), 'gamerpic');
+
+        return $url !== null ? $url.$params : asset('img/user.png');
     }
 
     public function getUserUniqueId(string $name)
     {
         return Cache::remember("users.{$name}.xbox", now()->addMinutes(15), function () use ($name) {
-            $response = Http::get("https://xbox-api.azuriom.com/search/{$name}");
-
-            return $response->throw()->json('xuid');
+            return Http::get('https://xbox-api.azuriom.com/search/'.$name)
+                ->throw()
+                ->json('xuid');
         });
     }
 
@@ -56,9 +64,9 @@ class MinecraftBedrockGame extends Game
     public function getUserProfile(User $user)
     {
         return Cache::remember("users.{$user->id}.xbox", now()->addMinutes(15), function () use ($user) {
-            $response = Http::get('https://xbox-api.azuriom.com/profiles/'.$user->game_id);
-
-            return $response->json() ?? [];
+            return Http::get('https://xbox-api.azuriom.com/profiles/'.$user->game_id)
+                ->throw()
+                ->json() ?? [];
         });
     }
 

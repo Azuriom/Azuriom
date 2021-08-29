@@ -17,7 +17,7 @@ class RedirectRequest extends FormRequest
      * @var array
      */
     protected $checkboxes = [
-        'is_enabled', 'moved_permanently',
+        'is_enabled',
     ];
 
     /**
@@ -27,11 +27,13 @@ class RedirectRequest extends FormRequest
      */
     public function rules()
     {
+        $redirect = $this->route('redirect');
+
         return [
-            'target' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('redirects')->ignore($this->route('redirect'), 'slug')],
+            'source' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('redirects')->ignore($redirect, 'source')],
+            'destination' => ['required', 'string', 'max:255'],
+            'code' => ['required', 'in:301,302'],
             'is_enabled' => ['filled', 'boolean'],
-            'moved_permanently' => ['filled', 'boolean'],
         ];
     }
 }

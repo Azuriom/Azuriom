@@ -15,7 +15,7 @@ class RedirectController extends Controller
      */
     public function index()
     {
-        return view('admin.redirects.index', ['redirects' => Redirect::paginate(25)]);
+        return view('admin.redirects.index', ['redirects' => Redirect::paginate()]);
     }
 
     /**

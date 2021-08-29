@@ -237,7 +237,7 @@ return [
         'title-edit' => 'Édition l\'élément de la navbar :element',
         'title-create' => 'Ajout d\'un élément dans la navbar',
 
-        'roles' => 'Rôles qui pourront voir cet élément (laissez vide pour autoriser tout le monde, même les visiteurs)',
+        'restrict' => 'Restreindre la visibilité de cet élément à certain grades',
         'dropdown-info' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
 
         'fields' => [
@@ -249,6 +249,7 @@ return [
             'plugin' => 'Plugin',
             'dropdown' => 'Menu déroulant',
             'new-tab' => 'Ouvrir dans un nouvel onglet',
+            'roles' => 'Grades',
         ],
 
         'status' => [
@@ -492,8 +493,12 @@ return [
         'title-create' => 'Création d\'une redirection',
 
         'enable' => 'Activer la redirection',
-        'permanently' => 'Redirection permanente (code HTTP 301)',
-        'target' => 'Cible',
+        'source' => 'Source',
+        'destination' => 'Destination',
+        'code' => 'Code HTTP',
+
+        '301' => '301 - Redirection permanente',
+        '302' => '302 - Redirection temporaire',
 
         'status' => [
             'created' => 'La redirection a été créée.',
@@ -577,6 +582,7 @@ return [
         'subtitle-no-update' => 'Pas de mise à jour disponible',
 
         'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
+        'changelog' => 'Les notes de mise à jour sont disponibles <a href=":url" target="_blank" rel="noopener noreferrer">ici</a>.',
         'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
         'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
 

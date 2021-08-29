@@ -44,5 +44,5 @@
         <label class="custom-control-label" for="minecraftPremiumSwitch">{{ trans('install.game.minecraft.premium') }}</label>
     </div>
 
-    <small class="form-text text-danger">{{ trans('install.game.warn') }}</small>
+    <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
 @endsection

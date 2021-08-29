@@ -33,11 +33,9 @@
         }
 
         const saveButton = document.getElementById('save');
-        const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
         saveButton.addEventListener('click', function () {
             saveButton.setAttribute('disabled', '');
-            saveButtonIcon.classList.remove('d-none');
 
             axios.post('{{ route('admin.navbar-elements.update-order') }}', {
                 'order': serialize(sortable)
@@ -47,7 +45,6 @@
                 createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
             }).finally(function () {
                 saveButton.removeAttribute('disabled');
-                saveButtonIcon.classList.add('d-none');
             });
         });
     </script>
@@ -103,7 +100,7 @@
             @if(! $navbarElements->isEmpty())
                 <button type="button" class="btn btn-success" id="save">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
                 </button>
             @endif
 

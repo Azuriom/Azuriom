@@ -27,9 +27,9 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
     public function getUserUniqueId(string $name)
     {
         return Cache::remember('games.minecraft.uuid.'.$name, now()->addMinutes(30), function () use ($name) {
-            $response = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}");
-
-            $uuid = $response->throw()->json('id');
+            $uuid = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")
+                ->throw()
+                ->json('id');
 
             if ($uuid === null) {
                 throw new RuntimeException("No UUID for {$name}");
@@ -50,11 +50,11 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
             $uuid = str_replace('-', '', $user->game_id);
 
-            $response = Http::get("https://api.mojang.com/user/profiles/{$uuid}/names");
+            $profiles = Http::get("https://api.mojang.com/user/profiles/{$uuid}/names")
+                ->throw()
+                ->json();
 
-            $profile = Arr::last($response->throw()->json());
-
-            return Arr::get($profile, 'name');
+            return Arr::get(Arr::last($profiles), 'name');
         });
     }
 }

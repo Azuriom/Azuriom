@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
- * @property string $slug
- * @property string $target
- * @property bool $moved_permanently
+ * @property string $source
+ * @property string $destination
+ * @property int $code
  * @property bool $is_enabled
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -29,7 +29,7 @@ class Redirect extends Model
      * @var array
      */
     protected $fillable = [
-        'slug', 'target', 'moved_permanently', 'is_enabled',
+        'source', 'destination', 'code', 'is_enabled',
     ];
 
     /**
@@ -39,7 +39,6 @@ class Redirect extends Model
      */
     protected $casts = [
         'is_enabled' => 'boolean',
-        'moved_permanently' => 'boolean',
     ];
 
     /**

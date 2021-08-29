@@ -88,6 +88,7 @@ Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->gro
 
 Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(function () {
     Route::get('/', [UpdateController::class, 'index'])->name('index');
+    Route::get('/version', [UpdateController::class, 'version'])->name('version');
     Route::post('/fetch', [UpdateController::class, 'fetch'])->name('fetch');
     Route::post('/download', [UpdateController::class, 'download'])->name('download');
     Route::post('/install', [UpdateController::class, 'install'])->name('install');

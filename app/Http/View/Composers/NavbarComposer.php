@@ -3,7 +3,9 @@
 namespace Azuriom\Http\View\Composers;
 
 use Azuriom\Models\NavbarElement;
+use Azuriom\Models\Role;
 use Illuminate\Database\Eloquent\Collection as ModelCollection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -47,6 +49,9 @@ class NavbarComposer
             return $elements;
         }
 
-        return NavbarElement::hydrate($elements);
+        return NavbarElement::hydrate($elements)->each(function (NavbarElement $element) {
+            $element->setRelation('roles', Role::hydrate($element->roles));
+            $element->setRawAttributes(Arr::except($element->getAttributes(), 'roles'), true);
+        });
     }
 }
