@@ -7,7 +7,7 @@ use Azuriom\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PageRequest extends FormRequest
+class RedirectRequest extends FormRequest
 {
     use ConvertCheckbox;
 
@@ -27,13 +27,12 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        $page = $this->route('page');
+        $redirect = $this->route('redirect');
 
         return [
-            'title' => ['required', 'string', 'max:150'],
-            'description' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('pages')->ignore($page, 'slug')],
-            'content' => ['required', 'string'],
+            'source' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('redirects')->ignore($redirect, 'source')],
+            'destination' => ['required', 'string', 'max:255'],
+            'code' => ['required', 'in:301,302'],
             'is_enabled' => ['filled', 'boolean'],
         ];
     }

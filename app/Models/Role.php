@@ -55,6 +55,14 @@ class Role extends Model
     }
 
     /**
+     * Get navbar elements attached to this role.
+     */
+    public function navbarElements()
+    {
+        return $this->belongsToMany(NavbarElement::class);
+    }
+
+    /**
      * The permission that this role have.
      */
     public function permissions()

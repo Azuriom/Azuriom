@@ -4,8 +4,10 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 /**
@@ -21,6 +23,7 @@ use Illuminate\Support\Str;
  *
  * @property \Azuriom\Models\NavbarElement|null $parent
  * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  */
 class NavbarElement extends Model
 {
@@ -83,6 +86,14 @@ class NavbarElement extends Model
         return $this->hasMany(self::class, 'parent_id')->orderBy('position');
     }
 
+    /**
+     * Get roles attached to this navbar element.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public function getLink()
     {
         switch ($this->type) {
@@ -130,6 +141,11 @@ class NavbarElement extends Model
         }
     }
 
+    public function getNameAttribute(string $value)
+    {
+        return new HtmlString($value);
+    }
+
     public function getTypeValue(string $type)
     {
         return $this->type === $type ? $this->value : '';
@@ -138,6 +154,11 @@ class NavbarElement extends Model
     public function isDropdown()
     {
         return $this->type === 'dropdown';
+    }
+
+    public function isRestricted()
+    {
+        return ! $this->roles->isEmpty();
     }
 
     public function hasParent()
@@ -169,5 +190,26 @@ class NavbarElement extends Model
     public static function clearCache()
     {
         Cache::forget('navbar_elements');
+    }
+
+    /**
+     * Test if the current user has the permission to see this element.
+     *
+     * @return bool
+     */
+    public function hasPermission()
+    {
+        if (! $this->isRestricted()) {
+            return true;
+        }
+
+        if (Auth::guest()) {
+            return false;
+        }
+
+        /** @var \Azuriom\Models\User $user */
+        $user = Auth::user();
+
+        return $user->isAdmin() || $this->roles->contains($user->role);
     }
 }

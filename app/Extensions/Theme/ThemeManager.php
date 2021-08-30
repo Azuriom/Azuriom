@@ -6,6 +6,7 @@ use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
 use Azuriom\Support\Files;
+use Azuriom\Support\Optimizer;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
 use RuntimeException;
@@ -305,6 +306,8 @@ class ThemeManager extends ExtensionManager
 
         $updateManager->download($themeInfo, 'themes/');
         $updateManager->extract($themeInfo, $themeDir, 'themes/');
+
+        app(Optimizer::class)->clearViewCache();
 
         $this->createAssetsLink($theme);
     }

@@ -9,6 +9,7 @@ use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
 use Exception;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -95,6 +97,12 @@ class InstallController extends Controller
 
             return $next($request);
         });
+
+        $this->middleware(function (Request $request, callable $next) {
+            return file_exists(App::environmentFilePath())
+                ? $next($request)
+                : redirect()->route('install.database');
+        })->only(['showGame', 'showGames', 'setupGame']);
 
         $this->games = array_merge($this->games, $this->getCommunityGames());
     }
@@ -253,10 +261,10 @@ class InstallController extends Controller
                     if ($name === null) {
                         throw new Exception('Invalid Steam URL.');
                     }
-                } catch (Exception $e) {
+                } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } elseif ($game === 'minecraft') {
+            } else {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique

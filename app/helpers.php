@@ -216,13 +216,13 @@ if (! function_exists('theme_config')) {
     /**
      * Generate an asset path for the current theme.
      *
-     * @param  string  $key
+     * @param  string|null  $key
      * @param  mixed  $default
      * @return mixed
      */
-    function theme_config(string $key, $default = null)
+    function theme_config(string $key = null, $default = null)
     {
-        return config('theme.'.$key, $default);
+        return $key === null ? config('theme') : config('theme.'.$key, $default);
     }
 }
 

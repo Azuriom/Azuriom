@@ -41,6 +41,7 @@ return [
             'pages' => 'Pages',
             'posts' => 'Posts',
             'images' => 'Images',
+            'redirects' => 'Redirections',
         ],
 
         'extensions' => [
@@ -237,6 +238,7 @@ return [
         'title-edit' => 'Edit navbar element :element',
         'title-create' => 'Create navbar element',
 
+        'restrict' => 'Limit roles that will be able to see this element',
         'dropdown-info' => 'You can add elements to this dropdown when this element is saved.',
 
         'fields' => [
@@ -248,6 +250,7 @@ return [
             'plugin' => 'Plugin',
             'dropdown' => 'Dropdown',
             'new-tab' => 'Open in new tab',
+            'roles' => 'Roles',
         ],
 
         'status' => [
@@ -428,6 +431,7 @@ return [
         'admin-images' => 'View and manage images',
         'admin-navbar' => 'View and manage navbar',
         'admin-pages' => 'View and manage pages',
+        'admin-redirects' => 'View and manage redirections',
         'admin-posts' => 'View and manage posts',
         'admin-settings' => 'View and manage settings',
         'admin-users' => 'View and manage users',
@@ -481,6 +485,26 @@ return [
             'created' => 'The page has been created.',
             'updated' => 'This page has been updated.',
             'deleted' => 'This page has been deleted.',
+        ],
+    ],
+
+    'redirects' => [
+        'title' => 'Redirections',
+        'title-edit' => 'Editing redirection :redirect',
+        'title-create' => 'Creating redirection',
+
+        'enable' => 'Enable redirection',
+        'source' => 'Source',
+        'destination' => 'Destination',
+        'code' => 'Status code',
+
+        '301' => '301 - Permanent redirect',
+        '302' => '302 - Temporary redirect',
+
+        'status' => [
+            'created' => 'The redirection has been created.',
+            'updated' => 'This redirection has been updated.',
+            'deleted' => 'This redirection has been deleted.',
         ],
     ],
 
@@ -559,6 +583,7 @@ return [
         'subtitle-no-update' => 'No updates available',
 
         'update' => 'The version <code>:last-version</code> of Azuriom is available and you are on version <code>:version</code>.',
+        'changelog' => 'The changelog is available <a href=":url" target="_blank" rel="noopener noreferrer">here</a>.',
         'download' => 'The latest version of Azuriom is ready for download.',
         'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
 

@@ -7,7 +7,6 @@ use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -51,11 +50,6 @@ class SettingServiceProvider extends ServiceProvider
 
         try {
             $settings = $this->loadSettings();
-
-            // TODO 1.0: remove migration for old captcha configuration
-            if (array_key_exists('recaptcha-site-key', $settings)) {
-                $this->migrateOldSettings($settings);
-            }
 
             foreach ($settings as $name => $value) {
                 switch ($name) {
@@ -111,28 +105,5 @@ class SettingServiceProvider extends ServiceProvider
         return Cache::remember('settings', now()->addDay(), function () {
             return Setting::all()->pluck('value', 'name')->all();
         });
-    }
-
-    protected function migrateOldSettings(array $settings)
-    {
-        $siteKey = Arr::get($settings, 'recaptcha-site-key');
-        $secretKey = Arr::get($settings, 'recaptcha-secret-key');
-
-        if (empty($siteKey) || empty($secretKey)) {
-            Setting::updateSettings([
-                'recaptcha-site-key' => null,
-                'recaptcha-secret-key' => null,
-            ]);
-
-            return;
-        }
-
-        Setting::updateSettings([
-            'captcha.type' => 'recaptcha',
-            'captcha.site_key' => $siteKey,
-            'captcha.secret_key' => $secretKey,
-            'recaptcha-site-key' => null,
-            'recaptcha-secret-key' => null,
-        ]);
     }
 }

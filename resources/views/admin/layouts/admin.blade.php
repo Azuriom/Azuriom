@@ -11,7 +11,7 @@
     <title>@yield('title', 'Admin') | {{ site_name() }}</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('img/azuriom.png') }}">
+    <link rel="shortcut icon" href="{{ favicon() }}">
 
     <!-- Scripts -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}" defer></script>
@@ -147,7 +147,7 @@
                 </div>
             @endcan
 
-            @canany(['admin.pages', 'admin.posts', 'admin.images'])
+            @canany(['admin.pages', 'admin.posts', 'admin.images', 'admin.redirects'])
                 <hr class="sidebar-divider">
 
                 <div class="sidebar-heading">{{ trans('admin.nav.content.heading') }}</div>
@@ -176,6 +176,15 @@
                     <a class="nav-link" href="{{ route('admin.images.index') }}">
                         <i class="fas fa-fw fa-image"></i>
                         <span>{{ trans('admin.nav.content.images') }}</span>
+                    </a>
+                </div>
+            @endcan
+
+            @can('admin.redirects')
+                <div class="nav-item {{ add_active('admin.redirects.*') }}">
+                    <a class="nav-link" href="{{ route('admin.redirects.index') }}">
+                        <i class="fas fa-fw fa-directions"></i>
+                        <span>{{ trans('admin.nav.content.redirects') }}</span>
                     </a>
                 </div>
             @endcan
@@ -438,7 +447,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('admin.confirm-delete.title') }}</h2>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <button class="close" type="button" data-dismiss="modal" aria-label="{{ trans('messages.actions.close') }}">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>

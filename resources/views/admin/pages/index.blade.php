@@ -23,7 +23,7 @@
                             <th scope="row">{{ $page->id }}</th>
                             <td>{{ $page->title }}</td>
                             <td>
-                                <a href="{{ route('pages.show', $page) }}" target="_blank" rel="noopener noreferrer">
+                                <a href="{{ route('pages.show', $page->slug) }}" target="_blank" rel="noopener noreferrer">
                                     {{ $page->slug }}
                                 </a>
                             </td>

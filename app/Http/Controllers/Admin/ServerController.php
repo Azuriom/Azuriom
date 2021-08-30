@@ -79,6 +79,10 @@ class ServerController extends Controller
 
         $server->save();
 
+        if (Server::count() === 1) {
+            Setting::updateSettings('default-server', $server->id);
+        }
+
         if ($request->input('redirect') === 'edit') {
             return redirect()->route('admin.servers.edit', $server);
         }

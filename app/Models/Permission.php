@@ -22,6 +22,7 @@ class Permission extends Model
         'admin.images' => 'admin.permissions.admin-images',
         'admin.navbar' => 'admin.permissions.admin-navbar',
         'admin.pages' => 'admin.permissions.admin-pages',
+        'admin.redirects' => 'admin.permissions.admin-redirects',
         'admin.posts' => 'admin.permissions.admin-posts',
         'admin.settings' => 'admin.permissions.admin-settings',
         'admin.users' => 'admin.permissions.admin-users',
