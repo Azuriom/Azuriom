@@ -14,7 +14,7 @@
             @foreach ($games as $key => $game)
                 <div class="col-md-3">
                     <a href="{{ route('install.game', $key) }}">
-                        <img src="{{$game['image']}}" alt="{{$game['name']}}" class="img-fluid mb-1">
+                        <img src="{{$game['logo']}}" alt="{{$game['name']}}" class="img-fluid mb-1">
 
                         <p>{{$game['name']}}</p>
                     </a>

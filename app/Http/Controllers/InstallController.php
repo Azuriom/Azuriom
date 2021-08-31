@@ -50,31 +50,31 @@ class InstallController extends Controller
     protected $games = [
         'minecraft' => [
             'name' => 'Minecraft',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
         ],
         'gmod' => [
             'name' => 'Garry\'s mod',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
         ],
         'ark' => [
             'name' => 'ARK: Survival Evolved',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/ark.png',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/ark.png',
         ],
         'csgo' => [
             'name' => 'CS:GO',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/csgo.png',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/csgo.png',
         ],
         'tf2' => [
             'name' => 'Team Fortress 2',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/tf2.svg',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/tf2.svg',
         ],
         'rust' => [
             'name' => 'Rust',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg',
         ],
         'fivem' => [
             'name' => 'FiveM',
-            'image' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
         ],
     ];
 
@@ -106,20 +106,16 @@ class InstallController extends Controller
 
         $this->games = array_merge($this->games, $this->getCommunityGames());
     }
-
+    /**
+     * returns games keyed with `extention_id` and not the ressource id.
+     */
     private function getCommunityGames()
     {
-        //TODO: API for games with Cache
-        return [
-            'flyff' => [
-                'name' => 'Flyff',
-                'image' => '',
-            ],
-            'dofus129' => [
-                'name' => 'Dofus 1.29',
-                'image' => '',
-            ],
-        ];
+        $updateManager = app(UpdateManager::class);
+        $games =  $updateManager->getGames();
+        return array_combine(array_map(function($el) use ($games) {
+            return $games[$el]['extension_id'];
+        }, array_keys($games)), array_values($games));
     }
 
     public function showDatabase()
@@ -264,24 +260,6 @@ class InstallController extends Controller
                 } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } else {
-                $this->validate($request, [
-                    'name' => ['required', 'string', 'max:25'],
-                    'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                    'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
-                ]);
-
-                $name = $request->input('name');
-                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
-
-                if ($game === 'mc-online') {
-                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
-
-                    if ($gameId === null) {
-                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
-                    }
-                }
             }
 
             Artisan::call('cache:clear');
@@ -300,13 +278,35 @@ class InstallController extends Controller
 
             $communityGames = $this->getCommunityGames();
             if (array_key_exists($game, $communityGames)) {
-                // $updateManager = app(UpdateManager::class);
-                // $updateManager->download($communityGames[$game], 'plugins/');
-                // $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
-                // $pluginManager = app(PluginManager::class);
-                // $pluginManager->enable($game);
+
+                $updateManager = app(UpdateManager::class);
+                $pluginManager = app(PluginManager::class);
+
+                $pluginDir = $pluginManager->path($game);
+                $updateManager->download($communityGames[$game], 'plugins/');
+                $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                $pluginManager->enable($game);
+
                 return view('install.success');
-            } else {
+            } else if($game === 'minecraft') {
+                $this->validate($request, [
+                    'name' => ['required', 'string', 'max:25'],
+                    'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
+                ]);
+
+                $name = $request->input('name');
+                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
+
+                if ($game === 'mc-online') {
+                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
+
+                    if ($gameId === null) {
+                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    }
+                }
+                
                 $user = User::create([
                     'name' => $name,
                     'email' => $request->input('email', 'admin@domain.ltd'),
