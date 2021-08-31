@@ -112,8 +112,9 @@ class InstallController extends Controller
     private function getCommunityGames()
     {
         $updateManager = app(UpdateManager::class);
-        $games =  $updateManager->getGames();
-        return array_combine(array_map(function($el) use ($games) {
+        $games = $updateManager->getGames();
+
+        return array_combine(array_map(function ($el) use ($games) {
             return $games[$el]['extension_id'];
         }, array_keys($games)), array_values($games));
     }
@@ -278,7 +279,6 @@ class InstallController extends Controller
 
             $communityGames = $this->getCommunityGames();
             if (array_key_exists($game, $communityGames)) {
-
                 $updateManager = app(UpdateManager::class);
                 $pluginManager = app(PluginManager::class);
 
@@ -288,7 +288,7 @@ class InstallController extends Controller
                 $pluginManager->enable($game);
 
                 return view('install.success');
-            } else if($game === 'minecraft') {
+            } elseif ($game === 'minecraft') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
@@ -306,7 +306,7 @@ class InstallController extends Controller
                         throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
                     }
                 }
-                
+
                 $user = User::create([
                     'name' => $name,
                     'email' => $request->input('email', 'admin@domain.ltd'),
