@@ -106,6 +106,7 @@ class InstallController extends Controller
 
         $this->games = array_merge($this->games, $this->getCommunityGames());
     }
+
     /**
      * returns games keyed with `extention_id` and not the ressource id.
      */
