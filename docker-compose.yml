@@ -4,7 +4,7 @@ services:
         build: docker/nginx
         restart: always
         ports:
-            - '80:80'
+            - "${PORT-80}:80"
         volumes:
             - './:/usr/share/nginx/html'
     php-fpm:
@@ -12,11 +12,7 @@ services:
         restart: always
         volumes:
             - './:/usr/share/nginx/html'
-    composer:
-        image: 'composer:1.10'
-        command: install --ignore-platform-reqs
-        volumes:
-            - './:/app'
+
     database:
         image: 'postgres:12'
         restart: always

@@ -3,88 +3,95 @@
 Requirements:
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Make](https://en.wikipedia.org/wiki/Make_(software))
+- bash shell (usually already installed)
+- [git](https://git-scm.com/)
+
+# Dependencies installation example
+
+``` 
+apt update 
+apt install -y curl git make 
+curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
+curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+and enable docker on boot 
+`systemctl enable --now docker && service docker start`
 
 # Installation
 
-Clone the repository
+## Download Azuriom 
 ```
-git clone https://github.com/Azuriom/Azuriom.git
+mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 --branch v0.4.0 https://github.com/Azuriom/Azuriom.git .
 ```
 
-Go into the folder
+Go into the downloaded folder
 ```
 cd Azuriom
 ```
 
-Set rights on files & folders
-```
-chmod -R 755 storage bootstrap/cache resources/themes plugins
-```
+# Set rights on files & folders
+`chmod -R 755 storage bootstrap/cache resources/themes plugins`
 
-Change the owner to `www-data` (or make files writable for everybody but it's **unsecure**)
-```
-chown -R www-data *
-```
+# Change the owner to www-data
+`chown -R www-data *`
 
+## Setup `.env`
 Copy the `.env.example` to `.env` and set the database information like this:
 ```
-DB_CONNECTION=pgsql
+DB_CONNECTION=mysql
 DB_HOST=database
-DB_PORT=5432
+DB_PORT=3306
 DB_DATABASE=[database name]
 DB_USERNAME=[database user]
 DB_PASSWORD=[database password]
 ```
 
-Start the containers
+## Build everything
 ```
-make run
-```
-
-Generate the secret key
-```
-make generate-key
+./azuriom.sh build
 ```
 
-Database initialisation
+## Generate the secret key (only for new install)
 ```
-make init-db
-```
-
-Generate the symlink
-```
-make symlink
+./azuriom.sh laravel-generate-key
 ```
 
-Create a new user as an administrator
+## Database initialisation (only for new install)
 ```
-make create-admin
-```
-
-Install npm dependencies and compile assets Laravel mix
-```
-npm install && npm run prod
+./azuriom.sh laravel-init-db
 ```
 
-_If there is some error at this step, edit `webpack.mix.js` and change the timeout at the bottom of this file, like this_
-```javascript
-setTimeout(() => {
-    //
-}, 10000); // change the value here
+## Create a new user as an administrator
+```
+./azuriom.sh laravel-create-admin
 ```
 
+## Configure scheduled tasks
+```bash
+crontab -l > cron 
+echo "* * * * * cd /var/azuriom && make artisan schedule:run >> /dev/null 2>&1" >> cron
+crontab cron
+rm cron
+```
 
-It's ready to be used on port 80!
+# Start and stop
 
-[Optional]
-You can add the scheduler with this CRON entry
+## Start your services on default port 80
 ```
-* * * * * cd [Path to the CMS folder] && docker-compose exec php-fpm php artisan schedule:run >> /dev/null 2>&1
+./azuriom start
 ```
 
----
-You can down the containers with
+If you want to always start your container on a specific port, just add `PORT=8080` to your `.env` file
+
+## You can down the containers with
 ```
-make stop
+./azuriom stop
 ```
+
+## How to update Azuriom
+
+* `git pull` 
+* `./azuriom.sh build`
+* `./azuriom.sh laravel-clear-cache`
+* `./azuriom.sh laravel-migrate`
