@@ -197,7 +197,6 @@ class ProfileController extends Controller
 
     public function updateUsername(Request $request)
     {
-
         if (! Auth::user()->hasPermission('profile.change-own-username')) {
             abort(403);
         }
