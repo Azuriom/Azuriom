@@ -198,12 +198,12 @@ class ProfileController extends Controller
     public function updateUsername(Request $request)
     {
 
-        if (!Auth::user()->hasPermission('profile.change-own-username')) {
+        if (! Auth::user()->hasPermission('profile.change-own-username')) {
             abort(403);
         }
 
         $request->validate([
-            'name' => ['required', 'string', 'max:25', 'unique:users', new Username(), new GameAuth(),]
+            'name' => ['required', 'string', 'max:25', 'unique:users', new Username(), new GameAuth()],
         ]);
 
         $user = Auth::user();
