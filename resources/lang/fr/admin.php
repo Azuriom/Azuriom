@@ -422,6 +422,7 @@ return [
     ],
 
     'permissions' => [
+        'profile-change-own-username' => 'Changer son nom d\'utilisateur dans son profil',
         'create-comments' => 'Commenter un article',
         'delete-other-comments' => 'Supprimer un commentaire d\'un autre utilisateur',
         'maintenance-access' => 'Accéder au site pendant une maintenance',

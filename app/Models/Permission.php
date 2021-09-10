@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     private static $permissions = [
+        'profile.change-own-username' => 'admin.profile-change-own-username',
         'comments.create' => 'admin.permissions.create-comments',
         'comments.delete.other' => 'admin.permissions.delete-other-comments',
         'maintenance.access' => 'admin.permissions.maintenance-access',

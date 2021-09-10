@@ -5,6 +5,8 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
+use Azuriom\Rules\GameAuth;
+use Azuriom\Rules\Username;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
@@ -191,5 +193,23 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.money-transfer.success'));
+    }
+
+    public function updateUsername(Request $request)
+    {
+
+        if (!Auth::user()->hasPermission('profile.change-own-username')) {
+            abort(403);
+        }
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:25', 'unique:users', new Username(), new GameAuth(),]
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->input('name');
+        $user->save();
+
+        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
 }

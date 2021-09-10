@@ -51,6 +51,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
     Route::post('/theme', [ProfileController::class, 'theme'])->name('theme');
 
+    Route::post('/username', [ProfileController::class, 'updateUsername'])->name('username');
     Route::post('/email', [ProfileController::class, 'updateEmail'])->name('email');
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
 

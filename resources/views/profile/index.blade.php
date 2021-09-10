@@ -17,7 +17,18 @@
                     </div>
 
                     <div class="col-lx-10 col-md-9">
-                        <h1>{{ $user->name }}</h1>
+                        @can('profile.change-own-username')
+                            <form action="{{ route('profile.username') }}" method="POST" class="form-inline form-group">
+                                @csrf
+                                <input class="form-control mr-2 @error('name') is-invalid @enderror" name="name" type="text" value="{{ $user->name }}">
+                                <input type="submit" class="btn btn-primary">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </form>
+                        @else
+                            <h1>{{ $user->name }}</h1>
+                        @endcan
 
                         <ul>
                             <li>{{ trans('messages.profile.info.register', ['date' => format_date($user->created_at, true)]) }}</li>

@@ -423,6 +423,7 @@ return [
     ],
 
     'permissions' => [
+        'profile-change-own-username' => 'Change his own username on profile page',
         'create-comments' => 'Comment a post',
         'delete-other-comments' => 'Delete a post comment from another user',
         'maintenance-access' => 'Access the website during a maintenance',
