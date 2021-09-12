@@ -10,7 +10,7 @@ Requirements:
 
 ``` 
 apt update 
-apt install -y curl git make 
+apt install -y curl git software-properties-common curl apt-transport-https ca-certificates gnupg 
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
@@ -24,6 +24,8 @@ and enable docker on boot
 ```
 mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 --branch v0.4.0 https://github.com/Azuriom/Azuriom.git .
 ```
+where `v0.4.0` is the [latest release](https://github.com/Azuriom/Azuriom/releases/latest)
+
 
 Go into the downloaded folder
 ```
