@@ -284,9 +284,13 @@ class InstallController extends Controller
                 $pluginManager = app(PluginManager::class);
 
                 $pluginDir = $pluginManager->path($game);
-                $updateManager->download($communityGames[$game], 'plugins/');
-                $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
-                $pluginManager->enable($game);
+                try {
+                    $updateManager->download($communityGames[$game], 'plugins/');
+                    $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                    $pluginManager->enable($game);
+                } catch (\Throwable $th) {
+                    return redirect()->route('install.games')->with('error', $th->getMessage());
+                }
 
                 return view('install.success');
             } elseif ($game === 'minecraft') {
