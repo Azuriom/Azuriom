@@ -122,7 +122,7 @@
                 @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fas fa-exclamation-circle"></i>
-                        {{ session('error') }}
+                        {!! session('error') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="{{ trans('messages.actions.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
