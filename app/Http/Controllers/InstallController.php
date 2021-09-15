@@ -115,9 +115,7 @@ class InstallController extends Controller
         $updateManager = app(UpdateManager::class);
         $games = $updateManager->getGames();
 
-        return array_combine(array_map(function ($el) use ($games) {
-            return $games[$el]['extension_id'];
-        }, array_keys($games)), array_values($games));
+        return collect($games)->keyBy('extension_id')->all();
     }
 
     public function showDatabase()
