@@ -11,7 +11,6 @@ case $1 in
     bash "$0" composer-install
     bash "$0" npm-install
     bash "$0" npm-run-prod
-    bash "$0" npm-run-prod
     bash "$0" laravel-symlink
     docker-compose build
     ;;
