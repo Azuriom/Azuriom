@@ -36,20 +36,36 @@ cd Azuriom
 
 # Set rights on files & folders
 `chmod -R 755 storage bootstrap/cache resources/themes plugins`
+`chmod +x azuriom.sh`
 
 # Change the owner to www-data
 `chown -R www-data *`
 
 ## Setup `.env`
 Copy the `.env.example` to `.env` and set the database information like this:
+
+### Use an external database that uou setup on your own
+
 ```
 DB_CONNECTION=mysql
-DB_HOST=database
+DB_HOST=[IP adresse of your database. If you use a local database, set the public IP of your server (localhost or 12.7.0.0.1 won't work)]
 DB_PORT=3306
-DB_DATABASE=[database name]
-DB_USERNAME=[database user]
-DB_PASSWORD=[database password]
+DB_DATABASE=[database_name]
+DB_USERNAME=[database_user]
+DB_PASSWORD=[database_password]
 ```
+
+### Or use a database provided with docker
+
+```
+DB_CONNECTION=pgsql
+DB_HOST=database
+DB_PORT=5432
+DB_DATABASE=azuriom
+DB_USERNAME=azuriom
+DB_PASSWORD=[Here_A_Random_String]
+```
+
 
 ## Build everything
 ```
