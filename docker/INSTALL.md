@@ -6,13 +6,16 @@ Requirements:
 - bash shell (usually already installed)
 - [git](https://git-scm.com/)
 
+Note : All the following commands should be run as root
+
 # Dependencies installation example
 
 ``` 
 apt update 
-apt install -y curl git software-properties-common curl apt-transport-https ca-certificates gnupg 
+apt install -y curl git software-properties-common curl apt-transport-https ca-certificates gnupg tar
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
-curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/latest/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 ```
 
 and enable docker on boot 
