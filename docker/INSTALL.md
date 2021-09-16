@@ -25,9 +25,8 @@ and enable docker on boot
 
 ## Download Azuriom 
 ```
-mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 --branch v0.4.0 https://github.com/Azuriom/Azuriom.git .
+mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 https://github.com/Azuriom/Azuriom.git .
 ```
-where `v0.4.0` is the [latest release](https://github.com/Azuriom/Azuriom/releases/latest)
 
 
 Go into the downloaded folder
