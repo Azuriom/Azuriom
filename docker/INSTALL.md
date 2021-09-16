@@ -117,3 +117,21 @@ If you want to always start your container on a specific port, just add `PORT=80
 * `./azuriom.sh build`
 * `./azuriom.sh laravel-clear-cache`
 * `./azuriom.sh laravel-migrate`
+
+# More commands
+```
+Commands:
+   build                      Build the whole application.
+   start                      Start containers (require the whole application to be built)
+   docker-compose-build       Build containers
+   npm-install                Install npm dependencies
+   npm-run-prod               Compile assets (require npm dependencies to be installed)
+   composer-install           Install composer dependencies
+   laravel-generate-key       Generate laravel APP_KEY in .env file (used by laravel for data encryption)
+   laravel-init-db            Initiate database
+   laravel-migrate            Run migration (mostly used when updating to insert database changes)
+   laravel-symlink            Create a symlink (create a symlink public/storage -> storage/app/public)
+   laravel-create-admin       Create an admin user through CLI
+   laravel-clear-cache        Clear laravel cache
+   artisan <commands>         Run any artisan command (e.g. ./azuriom artisan cache:clear)
+```
