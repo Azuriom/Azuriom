@@ -182,7 +182,7 @@
                         @enderror
                     </div>
                 </div>
-
+                <!--
                 <div class="form-group">
                     <label for="siteKeyInput">{{ trans('admin.settings.index.site-key') }}</label>
                     <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">
@@ -193,7 +193,7 @@
 
                     <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site-key-label')</small>
                 </div>
-
+                -->
                 <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="userMoneySwitch" name="user_money_transfer" @if($userMoneyTransfer) checked @endif>
