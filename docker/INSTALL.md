@@ -39,7 +39,7 @@ cd Azuriom
 `chmod +x azuriom.sh`
 
 # Change the owner to www-data
-`useradd www-data` (if an error tell your that this user already exist no worries, just skip it)
+`useradd www-data` (if an error tell your that this user already exists no worries, just skip it)
 
 `chown -R www-data *`
 
