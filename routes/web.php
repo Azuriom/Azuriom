@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {return redirect('forum');})->name('home');
 Route::get('/maintenance', [HomeController::class, 'maintenance'])->name('maintenance');
 
 Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function () {
