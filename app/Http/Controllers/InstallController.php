@@ -109,7 +109,7 @@ class InstallController extends Controller
     }
 
     /**
-     * returns games keyed with `extention_id` and not the ressource id.
+     * Returns games keyed with `extention_id` and not the ressource id.
      */
     private function getCommunityGames()
     {
@@ -287,13 +287,13 @@ class InstallController extends Controller
                     $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
                     $pluginManager->enable($game);
 
-                    if (Route::has("$game.install.index")) {
-                        return redirect()->route("$game.install.index");
+                    if (Route::has("{$game}.install.index")) {
+                        return redirect()->route("{$game}.install.index");
                     } else {
-                        return redirect()->route('install.finish');
+                        return $this->finishInstall();
                     }
-                } catch (\Throwable $th) {
-                    return redirect()->route('install.games')->with('error', $th->getMessage());
+                } catch (Throwable $t) {
+                    return redirect()->route('install.games')->with('error', $t->getMessage());
                 }
             } elseif ($game === 'minecraft') {
                 $this->validate($request, [
