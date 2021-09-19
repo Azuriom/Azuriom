@@ -2,6 +2,8 @@
 
 namespace Azuriom\Http\Controllers;
 
+use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
 use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -46,13 +49,34 @@ class InstallController extends Controller
         'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2',
     ];
     protected $games = [
-        'minecraft' => 'Minecraft',
-        'gmod' => 'Garry\'s mod',
-        'ark' => 'ARK: Survival Evolved',
-        'rust' => 'Rust',
-        'fivem' => 'FiveM',
-        'csgo' => 'CS:GO',
-        'tf2' => 'Team Fortress 2',
+        'minecraft' => [
+            'name' => 'Minecraft',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+        ],
+        'gmod' => [
+            'name' => 'Garry\'s mod',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
+        ],
+        'ark' => [
+            'name' => 'ARK: Survival Evolved',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/ark.png',
+        ],
+        'csgo' => [
+            'name' => 'CS:GO',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/csgo.png',
+        ],
+        'tf2' => [
+            'name' => 'Team Fortress 2',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/tf2.svg',
+        ],
+        'rust' => [
+            'name' => 'Rust',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg',
+        ],
+        'fivem' => [
+            'name' => 'FiveM',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
+        ],
     ];
 
     protected $hasRequirements;
@@ -80,6 +104,19 @@ class InstallController extends Controller
                 ? $next($request)
                 : redirect()->route('install.database');
         })->only(['showGame', 'showGames', 'setupGame']);
+
+        $this->games = array_merge($this->games, $this->getCommunityGames());
+    }
+
+    /**
+     * Returns games keyed with `extention_id` and not the ressource id.
+     */
+    private function getCommunityGames()
+    {
+        $updateManager = app(UpdateManager::class);
+        $games = $updateManager->getGames();
+
+        return collect($games)->keyBy('extension_id')->all();
     }
 
     public function showDatabase()
@@ -160,12 +197,20 @@ class InstallController extends Controller
 
     public function showGames()
     {
-        return view('install.games');
+        return view('install.games', ['games' => $this->games]);
     }
 
     public function showGame(string $game)
     {
         abort_if(! array_key_exists($game, $this->games), 404);
+
+        if ($game === 'minecraft') {
+            return view('install.games.minecraft', [
+                'game' => $game,
+                'gameName' => 'Minecraft',
+                'locales' => self::SUPPORTED_LANGUAGES_NAMES,
+            ]);
+        }
 
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
@@ -175,9 +220,9 @@ class InstallController extends Controller
             ]);
         }
 
-        return view('install.games.minecraft', [
+        return view('install.games.other', [
             'game' => $game,
-            'gameName' => 'Minecraft',
+            'gameName' => $this->games[$game]['name'],
             'locales' => self::SUPPORTED_LANGUAGES_NAMES,
         ]);
     }
@@ -216,7 +261,42 @@ class InstallController extends Controller
                 } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } else {
+            }
+
+            Artisan::call('cache:clear');
+
+            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+
+            Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
+
+            EnvEditor::updateEnv([
+                'APP_LOCALE' => $request->input('locale'),
+                'APP_URL' => url('/'),
+                'MAIL_MAILER' => 'array',
+                'AZURIOM_GAME' => $game,
+            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+
+            $communityGames = $this->getCommunityGames();
+            if (array_key_exists($game, $communityGames)) {
+                $updateManager = app(UpdateManager::class);
+                $pluginManager = app(PluginManager::class);
+
+                $pluginDir = $pluginManager->path($game);
+
+                try {
+                    $updateManager->download($communityGames[$game], 'plugins/');
+                    $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                    $pluginManager->enable($game);
+
+                    if (Route::has("{$game}.install.index")) {
+                        return redirect()->route("{$game}.install.index");
+                    }
+
+                    return $this->finishInstall();
+                } catch (Throwable $t) {
+                    return redirect()->route('install.games')->with('error', $t->getMessage());
+                }
+            } elseif ($game === 'minecraft') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
@@ -234,35 +314,21 @@ class InstallController extends Controller
                         throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
                     }
                 }
+
+                $user = User::create([
+                    'name' => $name,
+                    'email' => $request->input('email', 'admin@domain.ltd'),
+                    'password' => Hash::make($request->input('password', Str::random(32))),
+                    'game_id' => $gameId ?? null,
+                ]);
+
+                $user->markEmailAsVerified();
+                $user->forceFill(['role_id' => 2])->save();
+
+                if (in_array($game, $this->steamGames, true)) {
+                    Setting::updateSettings('register', false);
+                }
             }
-
-            Artisan::call('cache:clear');
-
-            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
-
-            Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
-
-            $user = User::create([
-                'name' => $name,
-                'email' => $request->input('email', 'admin@domain.ltd'),
-                'password' => Hash::make($request->input('password', Str::random(32))),
-                'game_id' => $gameId ?? null,
-            ]);
-
-            $user->markEmailAsVerified();
-            $user->forceFill(['role_id' => 2])->save();
-
-            if (in_array($game, $this->steamGames, true)) {
-                Setting::updateSettings('register', false);
-            }
-
-            EnvEditor::updateEnv([
-                'APP_LOCALE' => $request->input('locale'),
-                'APP_URL' => url('/'),
-                'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
-                'MAIL_MAILER' => 'array',
-                'AZURIOM_GAME' => $game,
-            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
@@ -271,7 +337,7 @@ class InstallController extends Controller
             ]));
         }
 
-        return view('install.success');
+        return redirect()->route('install.finish');
     }
 
     public static function getRequirements()
@@ -312,5 +378,14 @@ class InstallController extends Controller
         }
 
         return PHP_VERSION;
+    }
+
+    public function finishInstall()
+    {
+        EnvEditor::updateEnv([
+            'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
+        ]);
+
+        return view('install.success');
     }
 }
