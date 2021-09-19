@@ -2,25 +2,26 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Extensions\Plugin\PluginManager;
-use Azuriom\Extensions\UpdateManager;
-use Azuriom\Models\Setting;
-use Azuriom\Models\User;
-use Azuriom\Support\EnvEditor;
 use Exception;
-use Illuminate\Encryption\Encrypter;
-use Illuminate\Http\Client\HttpClientException;
+use Throwable;
+use Azuriom\Models\User;
+use Azuriom\Models\Setting;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Artisan;
+use Azuriom\Support\EnvEditor;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+use Azuriom\Extensions\UpdateManager;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Validation\ValidationException;
-use Throwable;
+use Illuminate\Http\Client\HttpClientException;
 
 class InstallController extends Controller
 {
@@ -288,11 +289,15 @@ class InstallController extends Controller
                     $updateManager->download($communityGames[$game], 'plugins/');
                     $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
                     $pluginManager->enable($game);
+
+                    if (Route::has("$game.install.index")) {
+                        return redirect()->route("$game.install.index");
+                    } else {
+                        return view('install.success');
+                    }
                 } catch (\Throwable $th) {
                     return redirect()->route('install.games')->with('error', $th->getMessage());
                 }
-
-                return view('install.success');
             } elseif ($game === 'minecraft') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
