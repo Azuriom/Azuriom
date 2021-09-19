@@ -272,7 +272,6 @@ class InstallController extends Controller
             EnvEditor::updateEnv([
                 'APP_LOCALE' => $request->input('locale'),
                 'APP_URL' => url('/'),
-                'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
@@ -291,7 +290,7 @@ class InstallController extends Controller
                     if (Route::has("$game.install.index")) {
                         return redirect()->route("$game.install.index");
                     } else {
-                        return view('install.success');
+                        return redirect()->route('install.finish');
                     }
                 } catch (\Throwable $th) {
                     return redirect()->route('install.games')->with('error', $th->getMessage());
@@ -337,7 +336,7 @@ class InstallController extends Controller
             ]));
         }
 
-        return view('install.success');
+        return redirect()->route('install.finish');
     }
 
     public static function getRequirements()
@@ -378,5 +377,14 @@ class InstallController extends Controller
         }
 
         return PHP_VERSION;
+    }
+
+    public function finishInstall()
+    {
+        EnvEditor::updateEnv([
+            'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
+        ]);
+
+        return view('install.success');
     }
 }
