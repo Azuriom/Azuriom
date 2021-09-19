@@ -282,6 +282,7 @@ class InstallController extends Controller
                 $pluginManager = app(PluginManager::class);
 
                 $pluginDir = $pluginManager->path($game);
+
                 try {
                     $updateManager->download($communityGames[$game], 'plugins/');
                     $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
@@ -289,9 +290,9 @@ class InstallController extends Controller
 
                     if (Route::has("{$game}.install.index")) {
                         return redirect()->route("{$game}.install.index");
-                    } else {
-                        return $this->finishInstall();
                     }
+
+                    return $this->finishInstall();
                 } catch (Throwable $t) {
                     return redirect()->route('install.games')->with('error', $t->getMessage());
                 }
