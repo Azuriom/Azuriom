@@ -2,26 +2,26 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Exception;
-use Throwable;
-use Azuriom\Models\User;
+use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
+use Exception;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Http\Client\HttpClientException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Azuriom\Extensions\UpdateManager;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use Azuriom\Extensions\Plugin\PluginManager;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Client\HttpClientException;
+use Throwable;
 
 class InstallController extends Controller
 {
