@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon|null $deleted_at
- *
  * @property \Illuminate\Database\Eloquent\Model|\Azuriom\Models\Traits\Attachable $attachable
  */
 class Attachment extends Model

@@ -112,7 +112,7 @@ return [
             'copyright' => 'Copyright',
             'user-money-transfer' => 'Enable money transfer between users',
             'site-key' => 'Site key for azuriom.com',
-            'site-key-label' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
+            'site-key-label' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
         ],
 
         'security' => [

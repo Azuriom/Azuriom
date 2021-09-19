@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_admin
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\User[] $users
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Permission[] $permissions
  *

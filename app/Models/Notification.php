@@ -17,7 +17,6 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
  * @property \Carbon\Carbon|null $read_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\User $user
  * @property \Azuriom\Models\User|null $author
  */

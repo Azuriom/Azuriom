@@ -15,6 +15,7 @@ trait HasPlugin
      * The associated plugin name.
      *
      * @var string
+     *
      * @deprecated Use $plugin->id instead. Will be removed in Azuriom 1.0
      */
     // TODO 1.0: Remove deprecated variable
