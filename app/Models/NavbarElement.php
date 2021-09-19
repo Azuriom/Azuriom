@@ -20,7 +20,6 @@ use Illuminate\Support\Str;
  * @property bool $new_tab
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\NavbarElement|null $parent
  * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles

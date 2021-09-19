@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
