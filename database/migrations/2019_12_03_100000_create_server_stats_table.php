@@ -21,7 +21,7 @@ class CreateServerStatsTable extends Migration
             $table->unsignedDecimal('cpu')->nullable();
             $table->timestamps();
 
-            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
+            $table->foreign('server_id')->references('id')->on('servers')->cascadeOnDelete();
         });
     }
 

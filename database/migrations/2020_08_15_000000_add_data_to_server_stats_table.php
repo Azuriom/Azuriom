@@ -26,7 +26,7 @@ class AddDataToServerStatsTable extends Migration
                 $table->dropColumn(['tps', 'loaded_chunks', 'entities']);
             });
         } catch (Throwable $t) {
-            // ignore, SQLite doesn't support dropping columns without DBAL.
+            // ignore, SQLite doesn't have native support for dropping columns.
         }
     }
 
