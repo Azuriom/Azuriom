@@ -261,41 +261,6 @@ class InstallController extends Controller
                 } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            }
-
-            Artisan::call('cache:clear');
-
-            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
-
-            Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
-
-            EnvEditor::updateEnv([
-                'APP_LOCALE' => $request->input('locale'),
-                'APP_URL' => url('/'),
-                'MAIL_MAILER' => 'array',
-                'AZURIOM_GAME' => $game,
-            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
-
-            $communityGames = $this->getCommunityGames();
-            if (array_key_exists($game, $communityGames)) {
-                $updateManager = app(UpdateManager::class);
-                $pluginManager = app(PluginManager::class);
-
-                $pluginDir = $pluginManager->path($game);
-
-                try {
-                    $updateManager->download($communityGames[$game], 'plugins/');
-                    $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
-                    $pluginManager->enable($game);
-
-                    if (Route::has("{$game}.install.index")) {
-                        return redirect()->route("{$game}.install.index");
-                    }
-
-                    return $this->finishInstall();
-                } catch (Throwable $t) {
-                    return redirect()->route('install.games')->with('error', $t->getMessage());
-                }
             } elseif ($game === 'minecraft') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
@@ -314,20 +279,58 @@ class InstallController extends Controller
                         throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
                     }
                 }
+            }
 
-                $user = User::create([
-                    'name' => $name,
-                    'email' => $request->input('email', 'admin@domain.ltd'),
-                    'password' => Hash::make($request->input('password', Str::random(32))),
-                    'game_id' => $gameId ?? null,
-                ]);
+            Artisan::call('cache:clear');
 
-                $user->markEmailAsVerified();
-                $user->forceFill(['role_id' => 2])->save();
+            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
 
-                if (in_array($game, $this->steamGames, true)) {
-                    Setting::updateSettings('register', false);
+            Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
+
+            EnvEditor::updateEnv([
+                'APP_LOCALE' => $request->input('locale'),
+                'APP_URL' => url('/'),
+                'MAIL_MAILER' => 'array',
+                'AZURIOM_GAME' => $game,
+            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+
+            $communityGames = $this->getCommunityGames();
+
+            if (array_key_exists($game, $communityGames)) {
+                $updateManager = app(UpdateManager::class);
+                $pluginManager = app(PluginManager::class);
+
+                $pluginDir = $pluginManager->path($game);
+
+                try {
+                    $updateManager->download($communityGames[$game], 'plugins/');
+                    $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                    $pluginManager->enable($game);
+
+                    $description = $pluginManager->findDescription($game);
+
+                    if ($description !== null && isset($description->installRedirectPath)) {
+                        return redirect($description->installRedirectPath);
+                    }
+
+                    return $this->finishInstall();
+                } catch (Throwable $t) {
+                    return redirect()->route('install.games')->with('error', $t->getMessage());
                 }
+            }
+
+            $user = User::create([
+                'name' => $name,
+                'email' => $request->input('email', 'admin@domain.ltd'),
+                'password' => Hash::make($request->input('password', Str::random(32))),
+                'game_id' => $gameId ?? null,
+            ]);
+
+            $user->markEmailAsVerified();
+            $user->forceFill(['role_id' => 2])->save();
+
+            if (in_array($game, $this->steamGames, true)) {
+                Setting::updateSettings('register', false);
             }
         } catch (ValidationException $e) {
             throw $e;
@@ -338,6 +341,15 @@ class InstallController extends Controller
         }
 
         return redirect()->route('install.finish');
+    }
+
+    public function finishInstall()
+    {
+        EnvEditor::updateEnv([
+            'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
+        ]);
+
+        return view('install.success');
     }
 
     public static function getRequirements()
@@ -378,14 +390,5 @@ class InstallController extends Controller
         }
 
         return PHP_VERSION;
-    }
-
-    public function finishInstall()
-    {
-        EnvEditor::updateEnv([
-            'APP_KEY' => 'base64:'.base64_encode(Encrypter::generateKey(config('app.cipher'))),
-        ]);
-
-        return view('install.success');
     }
 }
