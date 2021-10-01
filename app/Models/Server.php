@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Cache;
  * @property array $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\ServerStat $stat
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerStat[] $stats
  * @property \Illuminate\Support\Collection|\Azuriom\Models\ServerCommand[] $commands
@@ -48,6 +47,15 @@ class Server extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public static function booted()
+    {
+        static::deleted(function (self $server) {
+            if (((int) setting('default-server')) === $server->id) {
+                Setting::updateSettings(['default-server' => null]);
+            }
+        });
+    }
 
     public function stat()
     {
@@ -163,6 +171,6 @@ class Server extends Model
      */
     public function scopePingable(Builder $query)
     {
-        return $query->where('type', '!=', 'mc-azlink');
+        return $query->where('type', '<>', 'mc-azlink');
     }
 }

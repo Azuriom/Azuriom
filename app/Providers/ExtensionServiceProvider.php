@@ -23,7 +23,7 @@ class ExtensionServiceProvider extends ServiceProvider
         $this->app->singleton(Themes::class);
         $this->app->alias(Themes::class, 'themes');
 
-        $this->app->make(Plugins::class)->loadPlugins($this->app);
+        $this->app->make(Plugins::class)->loadPlugins($this->app, ! is_installed());
     }
 
     /**
@@ -36,7 +36,7 @@ class ExtensionServiceProvider extends ServiceProvider
     {
         $theme = setting('theme');
 
-        if ($theme === null) {
+        if ($theme === null || ! is_installed()) {
             return;
         }
 

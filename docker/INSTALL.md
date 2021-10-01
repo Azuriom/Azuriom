@@ -22,6 +22,11 @@ Set rights on files & folders
 chmod -R 755 storage bootstrap/cache resources/themes plugins
 ```
 
+Change the owner to `www-data` (or make files writable for everybody but it's **unsecure**)
+```
+chown -R www-data *
+```
+
 Copy the `.env.example` to `.env` and set the database information like this:
 ```
 DB_CONNECTION=pgsql
@@ -56,6 +61,19 @@ Create a new user as an administrator
 ```
 make create-admin
 ```
+
+Install npm dependencies and compile assets Laravel mix
+```
+npm install && npm run prod
+```
+
+_If there is some error at this step, edit `webpack.mix.js` and change the timeout at the bottom of this file, like this_
+```javascript
+setTimeout(() => {
+    //
+}, 10000); // change the value here
+```
+
 
 It's ready to be used on port 80!
 

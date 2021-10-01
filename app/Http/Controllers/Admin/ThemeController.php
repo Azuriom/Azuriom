@@ -133,8 +133,12 @@ class ThemeController extends Controller
         return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.deleted'));
     }
 
-    public function edit(string $theme)
+    public function edit(Request $request, string $theme)
     {
+        if ($request->isXmlHttpRequest()) {
+            return response()->json(theme_config());
+        }
+
         $viewPath = $this->themes->path('config/config.blade.php', $theme);
 
         if (! $this->files->exists($viewPath)) {
@@ -161,6 +165,10 @@ class ThemeController extends Controller
             $validated = $this->validate($request, $this->files->getRequire($rulesPath));
 
             $this->themes->updateConfig($theme, $validated);
+
+            if ($request->isXmlHttpRequest()) {
+                return response()->json(['message' => 'admin.themes.status.config-updated']);
+            }
 
             return redirect()->route('admin.themes.index')->with(
                 'success',

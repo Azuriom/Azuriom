@@ -25,11 +25,10 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $last_login_ip
  * @property \Carbon\Carbon|null $last_login_at
  * @property string|null $google_2fa_secret
- * @property bool $is_deleted
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
+ * @property \Carbon\Carbon|null $deleted_at
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
@@ -74,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'money' => 'float',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-        'is_deleted' => 'boolean',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -175,9 +174,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->ban !== null;
     }
 
+    public function getIsDeletedAttribute()
+    {
+        return $this->isDeleted();
+    }
+
     public function isDeleted()
     {
-        return $this->is_deleted;
+        return $this->deleted_at !== null;
     }
 
     public function flushBanCache()

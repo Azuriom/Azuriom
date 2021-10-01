@@ -10,9 +10,6 @@
 # Mac
 .DS_Store
 
-# Azuriom
-public/assets/vendor
-
 # PHP CS Fixer
 .php_cs.cache
 

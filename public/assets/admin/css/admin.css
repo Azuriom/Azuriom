@@ -79,6 +79,14 @@ a.disabled,
     vertical-align: middle;
 }
 
+.btn:not(:disabled) .btn-spinner {
+    display: none;
+}
+
+.sidebar .nav-item .collapse.show {
+    z-index: 2;
+}
+
 /*
  * SortableJS
  */

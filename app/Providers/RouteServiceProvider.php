@@ -42,6 +42,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
 
+            if (! is_installed()) {
+                Route::prefix('install')
+                    ->name('install.')
+                    ->group(base_path('routes/install.php'));
+            }
+
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });

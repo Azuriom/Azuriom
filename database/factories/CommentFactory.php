@@ -24,7 +24,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->paragraph,
+            'content' => $this->faker->paragraph(),
             'author_id' => User::factory(),
             'post_id' => Post::factory(),
         ];

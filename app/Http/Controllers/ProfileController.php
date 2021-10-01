@@ -11,6 +11,7 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -63,7 +64,10 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        Auth::logoutOtherDevices($request->input('password'));
+        $password = $request->input('password');
+
+        $request->user()->update(['password' => Hash::make($password)]);
+        Auth::logoutOtherDevices($password);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }

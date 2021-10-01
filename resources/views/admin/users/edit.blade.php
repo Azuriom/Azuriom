@@ -221,7 +221,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 class="modal-title" id="banLabel">{{ trans('admin.users.ban-title', ['user' => $user->name]) }}</h2>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <button class="close" type="button" data-dismiss="modal" aria-label="{{ trans('messages.actions.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

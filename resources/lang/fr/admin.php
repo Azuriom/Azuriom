@@ -40,6 +40,7 @@ return [
             'pages' => 'Pages',
             'posts' => 'Articles',
             'images' => 'Images',
+            'redirects' => 'Redirections',
         ],
 
         'extensions' => [
@@ -110,7 +111,7 @@ return [
             'money' => 'Nom de la monnaie du site',
             'user-money-transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
             'site-key' => 'Clé de site pour azuriom.com',
-            'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
+            'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
         ],
 
         'security' => [
@@ -236,6 +237,7 @@ return [
         'title-edit' => 'Édition l\'élément de la navbar :element',
         'title-create' => 'Ajout d\'un élément dans la navbar',
 
+        'restrict' => 'Restreindre la visibilité de cet élément à certain grades',
         'dropdown-info' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
 
         'fields' => [
@@ -247,6 +249,7 @@ return [
             'plugin' => 'Plugin',
             'dropdown' => 'Menu déroulant',
             'new-tab' => 'Ouvrir dans un nouvel onglet',
+            'roles' => 'Grades',
         ],
 
         'status' => [
@@ -427,6 +430,7 @@ return [
         'admin-images' => 'Voir et gérer les images',
         'admin-navbar' => 'Voir et gérer la navbar',
         'admin-pages' => 'Voir et gérer les pages',
+        'admin-redirects' => 'Voir et gérer les redirections',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
         'admin-users' => 'Voir et gérer les utilisateurs',
@@ -480,6 +484,26 @@ return [
             'created' => 'La page a été créée.',
             'updated' => 'La page a été mise à jour.',
             'deleted' => 'La page a été supprimée.',
+        ],
+    ],
+
+    'redirects' => [
+        'title' => 'Redirections',
+        'title-edit' => 'Édition de la redirection :redirect',
+        'title-create' => 'Création d\'une redirection',
+
+        'enable' => 'Activer la redirection',
+        'source' => 'Source',
+        'destination' => 'Destination',
+        'code' => 'Code HTTP',
+
+        '301' => '301 - Redirection permanente',
+        '302' => '302 - Redirection temporaire',
+
+        'status' => [
+            'created' => 'La redirection a été créée.',
+            'updated' => 'La redirection a été mise à jour.',
+            'deleted' => 'La redirection a été supprimée.',
         ],
     ],
 
@@ -558,6 +582,7 @@ return [
         'subtitle-no-update' => 'Pas de mise à jour disponible',
 
         'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
+        'changelog' => 'Les notes de mise à jour sont disponibles <a href=":url" target="_blank" rel="noopener noreferrer">ici</a>.',
         'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
         'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
 

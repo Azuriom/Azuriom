@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
@@ -105,5 +106,13 @@ class UpdateController extends Controller
         ActionLog::log('updates.installed');
 
         return response()->noContent();
+    }
+
+    public function version()
+    {
+        return response()->json([
+            'azuriom' => Azuriom::version(),
+            'php' => PHP_VERSION,
+        ]);
     }
 }

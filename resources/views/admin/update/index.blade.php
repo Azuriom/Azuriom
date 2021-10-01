@@ -63,7 +63,10 @@
             @else
                 <h2>{{ trans('admin.update.subtitle-no-update') }}</h2>
 
-                <p>@lang('admin.update.up-to-date', ['version' => Azuriom::version()])</p>
+                <p>
+                    @lang('admin.update.up-to-date', ['version' => Azuriom::version()])
+                    @lang('admin.update.changelog', ['url' => 'https://github.com/Azuriom/Azuriom/releases'])
+                </p>
 
                 <form method="POST" action="{{ route('admin.update.fetch') }}">
                     @csrf

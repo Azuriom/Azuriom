@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.navbar-elements.title-edit', ['element' => $navbarElement->name]))
+@section('title', trans('admin.navbar-elements.title-edit', ['element' => $navbarElement->id]))
 
 @section('content')
     <div class="card shadow mb-4">
