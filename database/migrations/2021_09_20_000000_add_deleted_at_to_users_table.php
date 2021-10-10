@@ -15,6 +15,7 @@ class AddDeletedAtToUsersTable extends Migration
      */
     public function up()
     {
+        // TODO 1.0 remove old database schema support
         if (Schema::hasColumn('users', 'deleted_at')) {
             return;
         }
