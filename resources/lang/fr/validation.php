@@ -109,6 +109,7 @@ return [
     'prohibited' => 'Le champ :attribute ne peut pas être présent.',
     'prohibited_if' => 'Le champ :attribute ne peut pas être présent quand :other est :value.',
     'prohibited_unless' => 'Le champ :attribute ne peut pas être présent si :other n\'est pas dans :values.',
+    'prohibits' => 'Le champ :attribute empêche le champ :other d\'être présent.',
     'same' => 'Les champs :attribute et :other doivent être identiques.',
     'size' => [
         'numeric' => 'La valeur du champ :attribute doit être :size.',
