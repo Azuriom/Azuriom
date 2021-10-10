@@ -39,10 +39,12 @@
         <input name="password_confirmation" id="password-confirm" type="password" class="form-control" autocomplete="new-password" required>
     </div>
 
-    <div class="custom-control custom-switch">
-        <input name="minecraftPremium" type="checkbox" class="custom-control-input" id="minecraftPremiumSwitch">
-        <label class="custom-control-label" for="minecraftPremiumSwitch">{{ trans('install.game.minecraft.premium') }}</label>
-    </div>
+    @if($game !== 'mc-bedrock')
+        <div class="custom-control custom-switch">
+            <input name="minecraftPremium" type="checkbox" class="custom-control-input" id="minecraftPremiumSwitch">
+            <label class="custom-control-label" for="minecraftPremiumSwitch">{{ trans('install.game.minecraft.premium') }}</label>
+        </div>
+    @endif
 
     <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
 @endsection

@@ -38,7 +38,7 @@ class AdminController extends Controller
 
         return view('admin.dashboard', [
             'secure' => $request->secure() || ! $this->app->isProduction(),
-            'userCount' => User::whereNull('deleted_at', false)->count(),
+            'userCount' => User::whereNull('deleted_at')->count(),
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),

@@ -405,9 +405,11 @@ class PluginManager extends ExtensionManager
             return (array) $plugin;
         })->all();
 
-        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
+        if (is_installed()) {
+            $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
-        app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+            app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+        }
 
         return $plugins;
     }

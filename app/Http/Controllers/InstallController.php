@@ -52,6 +52,10 @@ class InstallController extends Controller
             'name' => 'Minecraft',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
         ],
+        'mc-bedrock' => [
+            'name' => 'Minecraft: Bedrock Edition',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+        ],
         'gmod' => [
             'name' => 'Garry\'s mod',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
@@ -211,6 +215,14 @@ class InstallController extends Controller
             ]);
         }
 
+        if ($game === 'mc-bedrock') {
+            return view('install.games.minecraft', [
+                'game' => $game,
+                'gameName' => 'Minecraft: Bedrock Edition',
+                'locales' => self::SUPPORTED_LANGUAGES_NAMES,
+            ]);
+        }
+
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
@@ -260,7 +272,7 @@ class InstallController extends Controller
                 } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } elseif ($game === 'minecraft') {
+            } elseif ($game === 'minecraft' || $game === 'mc-bedrock') {
                 $this->validate($request, [
                     'name' => ['required', 'string', 'max:25'],
                     'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
@@ -269,13 +281,21 @@ class InstallController extends Controller
                 ]);
 
                 $name = $request->input('name');
-                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
+                if ($game !== 'mc-bedrock') {
+                    $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
+                }
 
                 if ($game === 'mc-online') {
                     $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
 
                     if ($gameId === null) {
                         throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    }
+                } elseif ($game === 'mc-bedrock') {
+                    $gameId = Http::get("https://xbox-api.azuriom.com/search/{$name}")->json('xuid');
+
+                    if ($gameId === null) {
+                        throw ValidationException::withMessages(['name' => 'No XUID for this username.']);
                     }
                 }
             }
