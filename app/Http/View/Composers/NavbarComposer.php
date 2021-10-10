@@ -38,7 +38,7 @@ class NavbarComposer
 
     protected function loadNavbarElements()
     {
-        $elements = Cache::get('navbar_elements', function () {
+        $elements = Cache::get('navbar', function () {
             return NavbarElement::orderBy('position')->with('roles')->get();
         });
 
@@ -49,7 +49,7 @@ class NavbarComposer
                 $elementsToCache[$i]['name'] = json_encode($elements[$i]->getTranslations('name'));
             }
 
-            Cache::put('navbar_elements', $elementsToCache, now()->addDay());
+            Cache::put('navbar', $elementsToCache, now()->addDay());
 
             return $elements;
         }
