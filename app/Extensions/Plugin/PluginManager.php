@@ -77,7 +77,7 @@ class PluginManager extends ExtensionManager
         $this->userNavItems = collect();
     }
 
-    public function loadPlugins(Application $app)
+    public function loadPlugins(Application $app, bool $gamesOnly = false)
     {
         $plugins = $this->getPlugins();
 
@@ -89,7 +89,7 @@ class PluginManager extends ExtensionManager
 
         foreach ($plugins as $pluginId => $plugin) {
             try {
-                if (! isset($plugin->composer)) {
+                if (! isset($plugin->composer) || ($gamesOnly && ! isset($plugin->installRedirectPath))) {
                     continue;
                 }
 
@@ -405,9 +405,11 @@ class PluginManager extends ExtensionManager
             return (array) $plugin;
         })->all();
 
-        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
+        if (is_installed()) {
+            $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
-        app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+            app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+        }
 
         return $plugins;
     }

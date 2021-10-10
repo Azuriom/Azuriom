@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $locale
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\Post $post
  * @property \Azuriom\Models\User $author
  */

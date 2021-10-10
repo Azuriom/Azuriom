@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\NavbarElementRequest;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -83,6 +84,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -96,10 +98,12 @@ class NavbarController extends Controller
     public function store(NavbarElementRequest $request)
     {
         $data = $request->validated();
-        $navbar = new NavbarElement(Arr::except($data, 'translations'));
+        $element = new NavbarElement(Arr::except($data, 'translations'));
 
-        set_spatie_translations($navbar, $data['translations']);
-        $navbar->save();
+        set_spatie_translations($element, $data['translations']);
+        
+        $element->roles()->sync($request->input('roles'));
+        $element->save();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.created'));
@@ -118,6 +122,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -142,6 +147,10 @@ class NavbarController extends Controller
         set_spatie_translations($navbarElement, $data['translations']);
 
         $navbarElement->update(Arr::except($data, 'translations'));
+
+        $navbarElement->roles()->sync($request->input('roles'));
+
+        NavbarElement::clearCache();
 
         return redirect()->route('admin.navbar-elements.index')
             ->with('success', trans('admin.navbar-elements.status.updated'));

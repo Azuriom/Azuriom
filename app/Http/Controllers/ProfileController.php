@@ -5,14 +5,11 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -63,7 +60,10 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        Auth::logoutOtherDevices($request->input('password'));
+        $password = $request->input('password');
+
+        $request->user()->update(['password' => Hash::make($password)]);
+        Auth::logoutOtherDevices($password);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
@@ -85,9 +85,7 @@ class ProfileController extends Controller
         $google2fa = new Google2FA();
         $secret = $request->old('2fa_key', $google2fa->generateSecretKey());
         $qrCodeUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
-
-        $renderer = new ImageRenderer(new RendererStyle(246, 0), new SvgImageBackEnd());
-        $svg = Str::after((new Writer($renderer))->writeString($qrCodeUrl), '?>');
+        $svg = QrCodeRenderer::render($qrCodeUrl, 250);
 
         return view('profile.2fa', [
             'secretKey' => $secret,

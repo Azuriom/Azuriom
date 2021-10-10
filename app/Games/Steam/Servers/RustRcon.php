@@ -19,6 +19,7 @@ class RustRcon extends Query
             return [
                 'players' => Arr::get($info, 'Players'),
                 'max_players' => Arr::get($info, 'MaxPlayers'),
+                'ram' => Arr::get($info, 'Memory'),
                 'entities' => Arr::get($info, 'EntityCount'),
                 'framerate' => Arr::get($info, 'Framerate'),
             ];

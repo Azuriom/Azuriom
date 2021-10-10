@@ -30,8 +30,16 @@ class VerifyCaptcha
             ? $this->verifyHCaptcha($request, $secretKey)
             : $this->verifyReCaptcha($request, $secretKey);
 
-        if ($success) {
-            return $next($request);
+        return $success ? $next($request) : $this->sendFailedResponse($request);
+    }
+
+    protected function sendFailedResponse(Request $request)
+    {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'error' => 'captcha',
+                'message' => trans('messages.captcha'),
+            ], 423);
         }
 
         return redirect()->back()->with('error', trans('messages.captcha'))->withInput();

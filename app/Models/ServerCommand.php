@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $player_name
  * @property bool $need_online
  * @property string $command
- *
  * @property \Azuriom\Models\Server $server
  */
 class ServerCommand extends Model

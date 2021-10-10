@@ -81,6 +81,11 @@ class UpdateManager
         return $this->fetch($force)['themes'] ?? [];
     }
 
+    public function getGames(bool $force = false)
+    {
+        return $this->fetch($force)['games'] ?? [];
+    }
+
     public function fetch(bool $force = false)
     {
         if ($this->updates !== null) {
@@ -106,9 +111,10 @@ class UpdateManager
 
     public function forceFetchUpdates(bool $cache = true)
     {
-        $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
-
-        $updates = $response->throw()->json();
+        $updates = $this->prepareHttpRequest()
+            ->get('https://market.azuriom.com/api/updates')
+            ->throw()
+            ->json();
 
         if ($updates !== null) {
             $this->updates = $updates;
@@ -129,6 +135,10 @@ class UpdateManager
             $this->files->makeDirectory($updatesPath);
         }
 
+        if (! array_key_exists('file', $info)) {
+            throw new RuntimeException('No file available. If it\'s a paid extension, make sure you purchased it and verify the site key.');
+        }
+
         $dir = $updatesPath.$tempDir;
         $path = $dir.$info['file'];
 
@@ -140,12 +150,15 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $this->prepareHttpRequest()->withOptions(['sink' => $path])->get($info['url']);
+        $this->prepareHttpRequest()
+            ->withOptions(['sink' => $path])
+            ->get($info['url'])
+            ->throw();
 
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('The file hash do not match expected hash!');
+            throw new RuntimeException('The file hash do not match expected hash!');
         }
     }
 
@@ -189,8 +202,7 @@ class UpdateManager
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        $request = Http::withHeaders([
-            'User-Agent' => $userAgent,
+        $request = Http::withUserAgent($userAgent)->withHeaders([
             'Azuriom-Version' => Azuriom::version(),
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),

@@ -102,12 +102,10 @@ class SteamGame extends Game
         }
 
         return Cache::remember("users.{$user->id}.steam", now()->addMinutes(15), function () use ($user) {
-            $response = Http::get(self::USER_INFO_URL, [
+            return Http::get(self::USER_INFO_URL, [
                 'key' => config('services.steam.client_secret'),
                 'steamids' => $user->game_id,
-            ]);
-
-            return $response->throw()->json('response.players.0');
+            ])->throw()->json('response.players.0');
         });
     }
 

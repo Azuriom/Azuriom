@@ -31,9 +31,11 @@ class NavbarElementRequest extends FormRequest
     {
         $this->mergeCheckboxes();
 
-        $this->merge([
-            'value' => $this->getLinkValue(),
-        ]);
+        $this->merge(['value' => $this->getLinkValue()]);
+
+        if (! $this->filled('restricted')) {
+            $this->merge(['roles' => null]);
+        }
     }
 
     /**
@@ -45,12 +47,13 @@ class NavbarElementRequest extends FormRequest
     {
         return [
             'translations.*.locale' => ['required', 'string'],
-            'translations.*.name' => ['required', 'string', 'max:50'],
+            'translations.*.name' => ['required', 'string', 'max:100'],
             'type' => ['string', Rule::in(NavbarElement::types())],
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],
             'value' => ['sometimes'],
             'new_tab' => ['filled', 'boolean'],
+            'roles.*' => ['required', 'integer', 'exists:roles,id'],
         ];
     }
 

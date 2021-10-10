@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\Server $server
  */
 class ServerStat extends Model

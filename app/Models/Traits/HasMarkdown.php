@@ -42,7 +42,7 @@ trait HasMarkdown
                 return new HtmlString(Markdown::parse($text[$locale], $inlineOnly));
             }
 
-            return new HtmlString(Markdown::parse($text, $inlineOnly));
+            return new HtmlString($this->parseRawMarkdown($attribute, $text, $inlineOnly));
         }
         $markdownCacheKey = $this->getMarkdownCacheKey();
         if (is_array($text)) {
@@ -55,13 +55,18 @@ trait HasMarkdown
             if (is_array($text)) {
                 $cached[$attribute] = Markdown::parse($text[$locale], $inlineOnly);
             } else {
-                $cached[$attribute] = Markdown::parse($text, $inlineOnly);
+                $cached[$attribute] = $this->parseRawMarkdown($attribute, $text, $inlineOnly);
             }
 
             Cache::put($markdownCacheKey, $cached, now()->addMinutes(15));
         }
 
         return new HtmlString(Arr::get($cached, $attribute));
+    }
+
+    public function parseRawMarkdown(string $attribute, string $content, bool $inlineOnly = false)
+    {
+        return Markdown::parse($content, $inlineOnly);
     }
 
     protected function getMarkdownCacheKey()

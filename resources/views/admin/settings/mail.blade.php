@@ -7,10 +7,8 @@
         const sendTestMailButton = document.getElementById('sendTestMail');
 
         sendTestMailButton.addEventListener('click', function () {
-            const saveButtonIcon = sendTestMailButton.querySelector('.btn-spinner');
 
             sendTestMailButton.setAttribute('disabled', '');
-            saveButtonIcon.classList.remove('d-none');
 
             axios.post('{{ route('admin.settings.mail.send') }}')
                 .then(function (response) {
@@ -21,7 +19,6 @@
                 })
                 .finally(function () {
                     sendTestMailButton.removeAttribute('disabled');
-                    saveButtonIcon.classList.add('d-none');
                 });
         });
     </script>
@@ -50,7 +47,7 @@
 
                     <div class="form-group col-md-8">
                         <label for="fromAddressInput">{{ trans('admin.settings.mail.from-address') }}</label>
-                        <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}">
+                        <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}" required>
 
                         @error('from-address')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -143,7 +140,7 @@
                 <button type="button" class="btn btn-success" id="sendTestMail" data-mail-type="smtp sendmail">
                     <i class="fas fa-paper-plane"></i>
                     {{ trans('admin.settings.mail.send') }}
-                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
                 </button>
             </form>
         </div>

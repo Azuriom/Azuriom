@@ -27,12 +27,14 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+        $post = $this->route('post');
+
         return [
             'translations.*.locale' => ['required', Rule::in(get_available_locales_codes())],
             'translations.*.title' => ['required', 'string', 'max:150'],
             'translations.*.description' => ['required', 'string', 'max:255'],
             'translations.*.content' => ['required', 'string'],
-            'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($this->post, 'slug')],
+            'slug' => ['required', 'string', 'max:100', new Slug(), Rule::unique('posts')->ignore($post, 'slug')],
             'published_at' => ['required', 'date'],
             'is_pinned' => ['filled', 'boolean'],
             'image' => ['nullable', 'image'],

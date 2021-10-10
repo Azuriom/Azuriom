@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $post_id
  * @property int $author_id
  * @property \Carbon\Carbon $created_at
- *
  * @property \Azuriom\Models\Post $post
  * @property \Azuriom\Models\User $author
  */

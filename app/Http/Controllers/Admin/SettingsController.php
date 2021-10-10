@@ -217,6 +217,8 @@ class SettingsController extends Controller
             return $response->with('error', trans('admin.settings.performances.cache.status.clear-error'));
         }
 
+        app(Optimizer::class)->clearViewCache();
+
         return $response->with('success', trans('admin.settings.performances.cache.status.cleared'));
     }
 

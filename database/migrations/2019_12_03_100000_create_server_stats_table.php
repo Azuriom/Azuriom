@@ -19,9 +19,10 @@ class CreateServerStatsTable extends Migration
             $table->unsignedInteger('players');
             $table->unsignedInteger('ram')->nullable();
             $table->unsignedDecimal('cpu')->nullable();
+            $table->text('data')->nullable()->after('cpu');
             $table->timestamps();
 
-            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
+            $table->foreign('server_id')->references('id')->on('servers')->cascadeOnDelete();
         });
     }
 

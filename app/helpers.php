@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Http\Controllers\InstallController;
 use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,15 @@ if (! function_exists('color_contrast')) {
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
         return ($yiq >= 128) ? 'black' : 'white';
+    }
+}
+
+if (! function_exists('is_installed')) {
+    function is_installed()
+    {
+        $key = config('app.key');
+
+        return ! empty($key) && $key !== InstallController::TEMP_KEY;
     }
 }
 
@@ -206,13 +216,13 @@ if (! function_exists('theme_config')) {
     /**
      * Generate an asset path for the current theme.
      *
-     * @param  string  $key
+     * @param  string|null  $key
      * @param  mixed  $default
      * @return mixed
      */
-    function theme_config(string $key, $default = null)
+    function theme_config(string $key = null, $default = null)
     {
-        return config('theme.'.$key, $default);
+        return $key === null ? config('theme') : config('theme.'.$key, $default);
     }
 }
 

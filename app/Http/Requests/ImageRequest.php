@@ -15,10 +15,12 @@ class ImageRequest extends FormRequest
      */
     public function rules()
     {
+        $image = $this->route('image');
+
         return [
             'name' => ['required', 'string', 'max:50'],
             'slug' => ['required', 'string', 'max:100', new Slug()],
-            'image' => [Rule::requiredIf(! $this->image), 'nullable', 'image'],
+            'image' => [Rule::requiredIf($image === null), 'nullable', 'image'],
         ];
     }
 }

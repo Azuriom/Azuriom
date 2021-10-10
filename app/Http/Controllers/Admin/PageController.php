@@ -17,7 +17,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index', ['pages' => Page::paginate(25)]);
+        return view('admin.pages.index', ['pages' => Page::paginate()]);
     }
 
     /**

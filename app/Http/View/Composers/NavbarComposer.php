@@ -3,7 +3,9 @@
 namespace Azuriom\Http\View\Composers;
 
 use Azuriom\Models\NavbarElement;
+use Azuriom\Models\Role;
 use Illuminate\Database\Eloquent\Collection as ModelCollection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -17,7 +19,9 @@ class NavbarComposer
      */
     public function compose(View $view)
     {
-        $elements = $this->loadNavbarElements();
+        $elements = $this->loadNavbarElements()->filter(function (NavbarElement $element) {
+            return $element->hasPermission();
+        });
         $parentElements = $elements->whereNull('parent_id');
 
         foreach ($parentElements as $element) {
@@ -35,7 +39,7 @@ class NavbarComposer
     protected function loadNavbarElements()
     {
         $elements = Cache::get('navbar_elements', function () {
-            return NavbarElement::orderBy('position')->get();
+            return NavbarElement::orderBy('position')->with('roles')->get();
         });
 
         if ($elements instanceof ModelCollection) {
@@ -50,6 +54,9 @@ class NavbarComposer
             return $elements;
         }
 
-        return NavbarElement::hydrate($elements);
+        return NavbarElement::hydrate($elements)->each(function (NavbarElement $element) {
+            $element->setRelation('roles', Role::hydrate($element->roles));
+            $element->setRawAttributes(Arr::except($element->getAttributes(), 'roles'), true);
+        });
     }
 }

@@ -14,6 +14,7 @@ return [
     */
 
     'accepted' => 'Le champ :attribute doit être accepté.',
+    'accepted_if' => 'Le champ :attribute doit être accepté quand :other est :value.',
     'active_url' => 'Le champ :attribute n\'est pas une URL valide.',
     'after' => 'Le champ :attribute doit être une date après le :date.',
     'after_or_equal' => 'Le champ :attribute doit être une date après ou égale au :date.',
@@ -31,6 +32,7 @@ return [
     ],
     'boolean' => 'Le champ :attribute doit être vrai ou faux.',
     'confirmed' => 'Le champ de confirmation :attribute ne correspond pas.',
+    'current_password' => 'Le mot de passe est incorrect.',
     'date' => 'Le champ :attribute n\'est pas une date valide.',
     'date_equals' => 'La date :attribute doit être une date égale au :date.',
     'date_format' => 'La date :attribute ne correspond pas au format :format.',
@@ -104,6 +106,10 @@ return [
     'required_with_all' => 'Le champ :attribute est requis quand :values sont présents.',
     'required_without' => 'Le champ :attribute est requis quand :values n\'est pas présent.',
     'required_without_all' => 'Le champ :attribute est requis quand aucun de :values n\'est présent.',
+    'prohibited' => 'Le champ :attribute ne peut pas être présent.',
+    'prohibited_if' => 'Le champ :attribute ne peut pas être présent quand :other est :value.',
+    'prohibited_unless' => 'Le champ :attribute ne peut pas être présent si :other n\'est pas dans :values.',
+    'prohibits' => 'Le champ :attribute empêche le champ :other d\'être présent.',
     'same' => 'Les champs :attribute et :other doivent être identiques.',
     'size' => [
         'numeric' => 'La valeur du champ :attribute doit être :size.',
