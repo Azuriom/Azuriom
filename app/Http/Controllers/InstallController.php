@@ -226,7 +226,7 @@ class InstallController extends Controller
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
-                'gameName' => $this->games[$game],
+                'gameName' => $this->games[$game]['name'],
                 'locales' => self::SUPPORTED_LANGUAGES_NAMES,
             ]);
         }
