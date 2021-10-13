@@ -38,13 +38,13 @@ class NavbarComposer
 
     protected function loadNavbarElements()
     {
-        $elements = Cache::get('navbar', function () {
+        $elements = Cache::get(NavbarElement::CACHE_KEY, function () {
             return NavbarElement::orderBy('position')->with('roles')->get();
         });
 
         if ($elements instanceof ModelCollection) {
             // Not in cache yet
-            Cache::put('navbar', $elements->toArray(), now()->addDay());
+            Cache::put(NavbarElement::CACHE_KEY, $elements->toArray(), now()->addDay());
 
             return $elements;
         }

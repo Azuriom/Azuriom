@@ -26,6 +26,8 @@ use Illuminate\Support\Str;
  */
 class NavbarElement extends Model
 {
+    public const CACHE_KEY = 'navbar';
+
     /**
      * The navbar elements types.
      *
@@ -188,7 +190,7 @@ class NavbarElement extends Model
      */
     public static function clearCache()
     {
-        Cache::forget('navbar_elements');
+        Cache::forget(static::CACHE_KEY);
     }
 
     /**
