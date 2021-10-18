@@ -2,11 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
 use Azuriom\Support\Markdown;
+use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
+use Tests\TestCase;
 
 class MarkdownTest extends TestCase
 {
@@ -35,7 +36,7 @@ class MarkdownTest extends TestCase
             'external_image' => [
                 'internal_hosts' => ['127.0.0.1'],
                 'image_proxy' => 'https://images.weserv.nl/?url=%s',
-            ]
+            ],
         ]);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new ExternalImageExtension());
