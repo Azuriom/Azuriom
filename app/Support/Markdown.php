@@ -2,26 +2,26 @@
 
 namespace Azuriom\Support;
 
-use League\CommonMark\MarkdownConverter;
+use Azuriom\Support\CommonMark\BasicOnly\RemoveImageProcessor;
+use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
-use League\CommonMark\Extension\TaskList\TaskListExtension;
-use Azuriom\Support\CommonMark\BasicOnly\RemoveImageProcessor;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
-use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
-use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
+use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\MarkdownConverter;
 
 class Markdown
 {
     public static function parse(string $text, bool $basic = false)
     {
         $internalHosts = [str_replace(['http://', 'https://'], '', config('app.url'))];
-        
+
         $config = [
             'html_input' => 'escape',
             'allow_unsafe_links' => false,

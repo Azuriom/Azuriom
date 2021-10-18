@@ -2,8 +2,8 @@
 
 namespace Azuriom\Support\CommonMark\ExternalImage;
 
-use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class ExternalImageProcessor
