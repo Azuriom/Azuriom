@@ -2,9 +2,9 @@
 
 namespace Azuriom\Support\CommonMark\ExternalImage;
 
-use League\CommonMark\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class ExternalImageProcessor
 {
@@ -17,8 +17,8 @@ class ExternalImageProcessor
 
     public function __invoke(DocumentParsedEvent $e)
     {
-        $internalHosts = $this->environment->getConfig('external_image/internal_hosts', []);
-        $imageProxy = $this->environment->getConfig('external_image/image_proxy', '');
+        $internalHosts = $this->environment->getConfiguration()->get('external_image/internal_hosts', []);
+        $imageProxy = $this->environment->getConfiguration()->get('external_image/image_proxy', '');
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
