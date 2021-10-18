@@ -53,7 +53,7 @@ class Markdown
 
         $converter = new MarkdownConverter($environment);
 
-        return $converter->convertToHtml($text);
+        return $converter->convertToHtml($text)->getContent();
     }
 
     public static function parseRaw(string $text)
@@ -64,6 +64,6 @@ class Markdown
 
         $converter = new MarkdownConverter($environment);
 
-        return $converter->convertToHtml($text);
+        return $converter->convertToHtml($text)->getContent();
     }
 }
