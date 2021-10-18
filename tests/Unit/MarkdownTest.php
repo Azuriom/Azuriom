@@ -4,9 +4,9 @@ namespace Tests\Unit;
 
 use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
 use Azuriom\Support\Markdown;
-use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\MarkdownConverter;
 use Tests\TestCase;
 
 class MarkdownTest extends TestCase
