@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
-use Azuriom\Support\Markdown;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
 use Tests\TestCase;
+use Azuriom\Support\Markdown;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
 
 class MarkdownTest extends TestCase
 {
@@ -31,21 +31,21 @@ class MarkdownTest extends TestCase
         $localMarkdown = '![Azuriom](http://127.0.0.1/assets/img/logo.png)';
         $externalMarkdown = '![Azuriom](https://azuriom.com/assets/img/logo.png)';
 
-        $environment = Environment::createCommonMarkEnvironment();
-
-        $environment->addExtension(new ExternalImageExtension());
-
-        $converter = new CommonMarkConverter([
+        $environment = new Environment([
             'external_image' => [
                 'internal_hosts' => ['127.0.0.1'],
                 'image_proxy' => 'https://images.weserv.nl/?url=%s',
-            ],
-        ], $environment);
+            ]
+        ]);
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new ExternalImageExtension());
+
+        $converter = new MarkdownConverter($environment);
 
         $expectedLocal = "<p><img src=\"http://127.0.0.1/assets/img/logo.png\" alt=\"Azuriom\" /></p>\n";
         $expectedExternal = "<p><img data-original-src=\"https://azuriom.com/assets/img/logo.png\" src=\"https://images.weserv.nl/?url=https%3A%2F%2Fazuriom.com%2Fassets%2Fimg%2Flogo.png\" alt=\"Azuriom\" /></p>\n";
 
-        $this->assertSame($expectedLocal, $converter->convertToHtml($localMarkdown));
-        $this->assertSame($expectedExternal, $converter->convertToHtml($externalMarkdown));
+        $this->assertSame($expectedLocal, $converter->convertToHtml($localMarkdown)->getContent());
+        $this->assertSame($expectedExternal, $converter->convertToHtml($externalMarkdown)->getContent());
     }
 }
