@@ -6,11 +6,15 @@ use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Notifications\AlertNotificationChannel;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,5 +51,13 @@ class AppServiceProvider extends ServiceProvider
             'posts' => Post::class,
             'pages' => Page::class,
         ]);
+
+        Event::listen(function (Registered $event) {
+            $locales = get_selected_locales_codes();
+            $locale = request()->session()->get('locale', $request->getPreferredLanguage($locales));
+            app()->setLocale($locale);
+            $event->user->locale = $locale;
+            $event->user->save();
+        });
     }
 }
