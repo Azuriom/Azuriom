@@ -86,7 +86,7 @@ return [
         'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent-users' => 'Utilisateurs récents',
         'active-users' => 'Utilisateurs actifs',
-        'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
+        'emails-disabled' => 'L\'envoi des mails est désactivé. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
         'posts' => 'Articles',
         'pages' => 'Pages',
@@ -102,8 +102,8 @@ return [
             'site-description' => 'Description du site',
             'meta' => 'Mots-clés du site',
             'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
-            'favicon' => 'Favicon',
-            'background' => 'Background',
+            'favicon' => 'Icône du site',
+            'background' => 'Arrière-plan',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
@@ -675,6 +675,6 @@ return [
     'errors' => [
         'back' => 'Retour',
         '404' => 'Page Non Trouvée',
-        'info' => 'Il semblerait que vous avez trouvé un bug dans la matrice...',
+        'info' => 'Il semblerait que vous ayez trouvé un bug dans la matrice...',
     ],
 ];
