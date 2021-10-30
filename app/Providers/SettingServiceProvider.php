@@ -16,7 +16,7 @@ class SettingServiceProvider extends ServiceProvider
     /**
      * The settings that are encrypted for storage.
      *
-     * @var array
+     * @var string[]
      */
     protected $encrypted = [
         'mail.smtp.password',

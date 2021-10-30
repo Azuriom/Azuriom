@@ -114,6 +114,6 @@ class AuthController extends Controller
 
         $field = Str::contains($email, '@') ? 'email' : 'name';
 
-        return [$field => $email] + Arr::only($credentials, 'password');
+        return array_merge([$field => $email], Arr::only($credentials, 'password'));
     }
 }

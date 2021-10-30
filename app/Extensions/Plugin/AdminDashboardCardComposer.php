@@ -15,7 +15,7 @@ abstract class AdminDashboardCardComposer
      * - 'name' : The name of the card
      * - 'value' : The value of the card.
      *
-     * @return array
+     * @return array{color: string, icon: string, name: string, value: string}
      */
     abstract public function getCards();
 
@@ -29,6 +29,6 @@ abstract class AdminDashboardCardComposer
     {
         $cards = Arr::get($view, 'cards', []);
 
-        $view->with('cards', $this->getCards() + $cards);
+        $view->with('cards', array_merge($this->getCards(), $cards));
     }
 }

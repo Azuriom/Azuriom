@@ -16,7 +16,7 @@ class SettingsRepository
     /**
      * Create a repository instance.
      *
-     * @param  \Illuminate\Support\Collection  $settings
+     * @param  \Illuminate\Support\Collection|null  $settings
      */
     public function __construct(Collection $settings = null)
     {
@@ -29,7 +29,7 @@ class SettingsRepository
      * @param  string  $key
      * @return bool
      */
-    public function has($key)
+    public function has(string $key)
     {
         return $this->settings->has($key);
     }
@@ -37,11 +37,11 @@ class SettingsRepository
     /**
      * Get the specified settings.
      *
-     * @param  array|string  $key
+     * @param  string  $key
      * @param  mixed  $default
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return $this->settings->get($key, $default);
     }

@@ -47,7 +47,7 @@ abstract class ServerBridge
     /**
      * Send commands on the given server.
      *
-     * @param  array  $commands
+     * @param  string[]  $commands
      * @param  \Azuriom\Models\User|null  $user
      * @param  bool  $needConnected
      */
@@ -65,7 +65,7 @@ abstract class ServerBridge
     /**
      * Execute a command on the given server.
      *
-     * @param  array  $commands
+     * @param  string[]  $commands
      * @param  string|null  $playerName
      * @param  bool  $needConnected
      *
