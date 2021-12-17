@@ -109,15 +109,13 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function middleware($middleware, bool $before = false)
     {
-        $middlewares = is_array($middleware) ? $middleware : [$middleware];
-
         $kernel = $this->app->make(Kernel::class);
 
-        foreach ($middlewares as $middleware) {
+        foreach ((array) $middleware as $value) {
             if ($before) {
-                $kernel->prependMiddleware($middleware);
+                $kernel->prependMiddleware($value);
             } else {
-                $kernel->pushMiddleware($middleware);
+                $kernel->pushMiddleware($value);
             }
         }
     }

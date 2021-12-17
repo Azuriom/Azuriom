@@ -77,7 +77,7 @@ class ThemeManager extends ExtensionManager
     {
         Setting::updateSettings('theme', $theme);
 
-        Cache::forget('theme.config');
+        Cache::forget('theme.config.'.$theme);
 
         if ($theme) {
             $this->createAssetsLink($theme);
@@ -90,7 +90,7 @@ class ThemeManager extends ExtensionManager
 
         $this->files->put($this->path('config.json', $theme), $json);
 
-        Cache::put('theme.config', $config, now()->addDay());
+        Cache::put('theme.config.'.$theme, $config, now()->addDay());
     }
 
     /**
@@ -319,7 +319,7 @@ class ThemeManager extends ExtensionManager
 
     protected function loadConfig(string $theme)
     {
-        $themeConfig = Cache::remember('theme.config', now()->addDay(), function () use ($theme) {
+        $themeConfig = Cache::remember('theme.config.'.$theme, now()->addDay(), function () use ($theme) {
             return $this->readConfig($theme);
         });
 
