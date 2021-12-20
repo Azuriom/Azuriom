@@ -40,7 +40,7 @@ class DiscordWebhook implements Arrayable
     /**
      * Embedded rich content.
      *
-     * @var array|null
+     * @var \Azuriom\Support\Discord\Embed[]
      */
     protected $embeds = [];
 

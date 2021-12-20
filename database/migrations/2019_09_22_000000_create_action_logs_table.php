@@ -20,7 +20,7 @@ class CreateActionLogsTable extends Migration
             $table->unsignedInteger('target_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

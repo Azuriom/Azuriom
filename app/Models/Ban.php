@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon|null $removed_at
- *
  * @property \Azuriom\Models\User $user
  * @property \Azuriom\Models\User $author
  * @property \Azuriom\Models\User|null $remover

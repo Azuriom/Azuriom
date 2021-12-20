@@ -168,6 +168,8 @@ class UpdateManager
 
         app(Optimizer::class)->clear();
 
+        Cache::flush();
+
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
 

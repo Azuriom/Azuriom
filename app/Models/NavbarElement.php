@@ -20,13 +20,14 @@ use Illuminate\Support\Str;
  * @property bool $new_tab
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\NavbarElement|null $parent
  * @property \Illuminate\Support\Collection|\Azuriom\Models\NavbarElement[] $elements
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  */
 class NavbarElement extends Model
 {
+    public const CACHE_KEY = 'navbar';
+
     /**
      * The navbar elements types.
      *
@@ -189,7 +190,7 @@ class NavbarElement extends Model
      */
     public static function clearCache()
     {
-        Cache::forget('navbar_elements');
+        Cache::forget(static::CACHE_KEY);
     }
 
     /**

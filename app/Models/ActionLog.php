@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
  * @property array $data
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\User $user
  * @property \Illuminate\Database\Eloquent\Model|null $target
  */

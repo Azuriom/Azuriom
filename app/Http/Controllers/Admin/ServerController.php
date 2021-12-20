@@ -66,7 +66,9 @@ class ServerController extends Controller
     public function store(ServerRequest $request)
     {
         try {
-            $server = new Server($request->validated() + ['token' => Str::random(32)]);
+            $server = new Server(array_merge($request->validated(), [
+                'token' => Str::random(32),
+            ]));
 
             if (! $server->bridge()->verifyLink()) {
                 throw new RuntimeException('Unable to connect to the server');

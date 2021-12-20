@@ -46,10 +46,12 @@ abstract class ServerBridge
 
     /**
      * Send commands on the given server.
+     * Depending on the server ping, this may take a while (up to one second).
      *
-     * @param  array  $commands
+     * @param  string[]  $commands
      * @param  \Azuriom\Models\User|null  $user
      * @param  bool  $needConnected
+     * @return bool
      */
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
@@ -65,9 +67,10 @@ abstract class ServerBridge
     /**
      * Execute a command on the given server.
      *
-     * @param  array  $commands
+     * @param  string[]  $commands
      * @param  string|null  $playerName
      * @param  bool  $needConnected
+     *
      * @deprecated use sendCommands() instead
      */
     public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)

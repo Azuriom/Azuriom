@@ -32,7 +32,7 @@ class EnvEditor
                 throw new InvalidArgumentException("No value match the key '{$key}'");
             }
 
-            if (Str::contains($value, ' ')) {
+            if (Str::contains($value, [' ', '#'])) {
                 $value = '"'.$value.'"';
             }
 

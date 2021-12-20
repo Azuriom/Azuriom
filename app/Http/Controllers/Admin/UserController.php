@@ -27,7 +27,7 @@ class UserController extends Controller
         $search = $request->input('search');
 
         $users = User::with('ban')
-            ->where('is_deleted', false)
+            ->whereNull('deleted_at')
             ->when($search, function (Builder $query, string $search) {
                 $query->scopes(['search' => $search]);
             })->paginate();
@@ -174,7 +174,7 @@ class UserController extends Controller
             'google_2fa_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
-            'is_deleted' => true,
+            'deleted_at' => now(),
         ])->save();
 
         ActionLog::log('users.deleted', $user);

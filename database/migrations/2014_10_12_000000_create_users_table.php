@@ -27,9 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('last_login_ip', 45)->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->boolean('is_banned')->default(false);
-            $table->boolean('is_deleted')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

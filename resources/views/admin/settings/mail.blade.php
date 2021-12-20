@@ -47,7 +47,7 @@
 
                     <div class="form-group col-md-8">
                         <label for="fromAddressInput">{{ trans('admin.settings.mail.from-address') }}</label>
-                        <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}">
+                        <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}" required>
 
                         @error('from-address')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

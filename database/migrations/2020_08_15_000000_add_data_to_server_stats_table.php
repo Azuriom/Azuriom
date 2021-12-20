@@ -13,20 +13,21 @@ class AddDataToServerStatsTable extends Migration
      */
     public function up()
     {
+        // TODO 1.0 remove old database schema support
+        if (Schema::hasColumn('server_stats', 'data')) {
+            return;
+        }
+
         Schema::table('server_stats', function (Blueprint $table) {
             $table->text('data')->nullable()->after('cpu');
         });
-
-        if (! Schema::hasColumn('server_stats', 'tps')) {
-            return;
-        }
 
         try {
             Schema::table('server_stats', function (Blueprint $table) {
                 $table->dropColumn(['tps', 'loaded_chunks', 'entities']);
             });
         } catch (Throwable $t) {
-            // ignore, SQLite doesn't support dropping columns without DBAL.
+            // ignore, SQLite doesn't have native support for dropping columns.
         }
     }
 

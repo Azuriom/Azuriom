@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\Auth;
  * @property \Carbon\Carbon $published_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @property \Azuriom\Models\User $author
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes

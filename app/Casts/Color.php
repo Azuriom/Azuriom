@@ -15,7 +15,7 @@ class Color implements CastsAttributes
      * @param  array  $attributes
      * @return mixed
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, string $key, $value, array $attributes)
     {
         return "#{$value}";
     }
@@ -25,11 +25,11 @@ class Color implements CastsAttributes
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
-     * @param  array  $value
+     * @param  mixed  $value
      * @param  array  $attributes
      * @return mixed
      */
-    public function set($model, $key, $value, $attributes)
+    public function set($model, string $key, $value, array $attributes)
     {
         $color = str_replace('#', '', $value);
 

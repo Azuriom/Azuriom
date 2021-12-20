@@ -93,7 +93,7 @@ class ThemeController extends Controller
                 $this->themes->install($description->apiId);
 
                 if ($oldConfig !== null) {
-                    $newConfig = $this->themes->readConfig($theme);
+                    $newConfig = $this->themes->readConfig($theme) ?? [];
 
                     $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
                 }

@@ -14,7 +14,7 @@ class CreateRedirectsTable extends Migration
     public function up()
     {
         Schema::create('redirects', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('source')->unique();
             $table->string('destination');
             $table->unsignedInteger('code');

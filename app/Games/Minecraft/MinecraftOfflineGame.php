@@ -3,6 +3,7 @@
 namespace Azuriom\Games\Minecraft;
 
 use Azuriom\Models\User;
+use Illuminate\Support\Str;
 
 class MinecraftOfflineGame extends AbstractMinecraftGame
 {
@@ -18,7 +19,7 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
 
     public function getUserUniqueId(string $name)
     {
-        return null;
+        return Str::uuid();
     }
 
     public function getUserName(User $user)
