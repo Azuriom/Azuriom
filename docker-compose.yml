@@ -17,7 +17,7 @@ services:
         image: 'postgres:12'
         restart: always
         volumes:
-            - ${DOCKER_PGSQL_DATA-pgsql-data}:/var/lib/postgresql/data
+            - pgsql-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_DB=${DB_DATABASE}
