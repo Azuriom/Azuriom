@@ -378,6 +378,7 @@ class InstallController extends Controller
             'writable' => is_writable(base_path()),
             'function-symlink' => static::hasFunctionEnabled('symlink'),
             'rewrite' => ! defined('AZURIOM_NO_URL_REWRITE'),
+            '64bit' => PHP_INT_SIZE !== 4,
         ];
 
         foreach (static::REQUIRED_EXTENSIONS as $extension) {
