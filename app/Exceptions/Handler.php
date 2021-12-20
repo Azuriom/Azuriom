@@ -2,11 +2,7 @@
 
 namespace Azuriom\Exceptions;
 
-use Azuriom\Azuriom;
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
