@@ -83,7 +83,7 @@ class InstallController extends Controller
         'custom' => [
             'name' => 'Custom Game',
             'logo' => '/assets/img/azuriom.png',
-        ]
+        ],
     ];
 
     protected $hasRequirements;
