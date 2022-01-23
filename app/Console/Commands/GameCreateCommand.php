@@ -3,9 +3,9 @@
 namespace Azuriom\Console\Commands;
 
 use Azuriom\Support\EnvEditor;
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class GameCreateCommand extends Command
 {
@@ -78,7 +78,7 @@ class GameCreateCommand extends Command
             if (! $this->files->isDirectory($dir)) {
                 $this->files->makeDirectory($dir, 0755, true);
             }
-            
+
             $this->files->put($filePath, $fileContent);
         }
 

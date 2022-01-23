@@ -82,7 +82,7 @@ class InstallController extends Controller
         ],
         'custom' => [
             'name' => 'Custom Game',
-            'logo' => '/assets/img/azuriom.png'
+            'logo' => '/assets/img/azuriom.png',
         ]
     ];
 
@@ -317,8 +317,7 @@ class InstallController extends Controller
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
 
-            if ($game === 'custom') 
-            {
+            if ($game === 'custom') {
                 return redirect()->route('install.finish');
             }
 
