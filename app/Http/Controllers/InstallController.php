@@ -80,6 +80,10 @@ class InstallController extends Controller
             'name' => 'FiveM',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
         ],
+        'custom' => [
+            'name' => 'Custom Game',
+            'logo' => '/assets/img/azuriom.png'
+        ]
     ];
 
     protected $hasRequirements;
@@ -312,6 +316,11 @@ class InstallController extends Controller
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+
+            if ($game === 'custom') 
+            {
+                return redirect()->route('install.finish');
+            }
 
             $communityGames = $this->getCommunityGames();
 
