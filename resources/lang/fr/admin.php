@@ -128,6 +128,7 @@ return [
             'hash' => 'Algorithme de hachage',
             'hash-info' => 'Argon2id est l\'algorithme le plus sécurisé mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
             'hash-error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
+            'force_2fa' => 'Exiger l\'A2F pour l\'accès au panel admin',
         ],
 
         'performances' => [
@@ -225,6 +226,9 @@ return [
 
             'enable' => 'Activer la maintenance',
             'message' => 'Message de maintenance',
+            'global' => 'Activer la maintenance sur tout le site',
+            'paths' => 'URLs concernées par la maintenance',
+            'info' => 'Vous pouvez utiliser <code>/*</code> pour bloquer toutes les URLs commençant par le même préfixe. Par exemple <code>/news/*</code> va bloquer l\'accès à tous les articles.',
         ],
 
         'status' => [
@@ -676,5 +680,6 @@ return [
         'back' => 'Retour',
         '404' => 'Page Non Trouvée',
         'info' => 'Il semblerait que vous ayez trouvé un bug dans la matrice...',
+        '2fa' => 'Vous devez activer l\'authentification à deux facteurs pour avoir accès à cette page.',
     ],
 ];

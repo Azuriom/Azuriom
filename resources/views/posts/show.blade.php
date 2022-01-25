@@ -46,27 +46,29 @@
             </div>
         </div>
 
-        @foreach($post->comments as $comment)
-            <div class="card shadow-sm mb-3">
-                <div class="card-header">
-                    @lang('messages.comments.author', ['user' => e($comment->author->name), 'date' => format_date($comment->created_at, true)])
-                </div>
-                <div class="card-body media">
-                    <img class="d-flex mr-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
-                    <div class="media-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="content-body">
-                                {{ $comment->parseContent() }}
-                            </div>
+        <section id="comments">
+            @foreach($post->comments as $comment)
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">
+                        @lang('messages.comments.author', ['user' => e($comment->author->name), 'date' => format_date($comment->created_at, true)])
+                    </div>
+                    <div class="card-body media">
+                        <img class="d-flex mr-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
+                        <div class="media-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="content-body">
+                                    {{ $comment->parseContent() }}
+                                </div>
 
-                            @can('delete', $comment)
-                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
-                            @endif
+                                @can('delete', $comment)
+                                    <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </section>
 
         @can('create', \Azuriom\Models\Comment::class)
             <div class="card mt-4 shadow-sm">

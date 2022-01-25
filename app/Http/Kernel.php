@@ -52,6 +52,7 @@ class Kernel extends HttpKernel
             'auth',
             'can:admin.access',
             'verified',
+            \Azuriom\Http\Middleware\EnsureTwoFactorAuthEnabled::class,
         ],
     ];
 

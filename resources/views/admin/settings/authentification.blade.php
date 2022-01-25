@@ -115,6 +115,15 @@
                     <small id="hashInfo" class="form-text">{{ trans('admin.settings.security.hash-info') }}</small>
                 </div>
 
+                @if($canForce2fa)
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="force2faInput" name="force_2fa" @if($force2fa) checked @endif>
+                            <label class="custom-control-label" for="force2faInput">{{ trans('admin.settings.security.force_2fa') }}</label>
+                        </div>
+                    </div>
+                @endif
+
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 </button>

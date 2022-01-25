@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions;
 
 use Azuriom\Azuriom;
+use Azuriom\Models\User;
 use Azuriom\Support\Optimizer;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -164,6 +165,10 @@ class UpdateManager
 
     public function installUpdate(array $info)
     {
+        if (! is_writable(base_path())) {
+            throw new RuntimeException('Missing write permission on '.base_path());
+        }
+
         $this->extract($info, base_path());
 
         app(Optimizer::class)->clear();
@@ -209,6 +214,7 @@ class UpdateManager
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),
             'Azuriom-Game' => game()->id(),
+            'Azuriom-Users' => User::count(),
         ]);
 
         $siteKey = setting('site-key');

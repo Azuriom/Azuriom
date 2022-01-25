@@ -147,6 +147,8 @@ class SettingsController extends Controller
             $this->optimizer->reloadRoutesCache();
         }
 
+        $this->cache->forget('updates');
+
         return $response;
     }
 
@@ -176,7 +178,9 @@ class SettingsController extends Controller
             ],
         ]);
 
-        Setting::updateSettings($request->only('hash'));
+        Setting::updateSettings(array_merge($request->only('hash'), [
+            'admin.force_2fa' => $request->filled('force_2fa'),
+        ]));
 
         if ($request->filled('captcha')) {
             Setting::updateSettings([
@@ -303,6 +307,8 @@ class SettingsController extends Controller
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
             'captchaType' => old('captcha', setting('captcha.type')),
+            'force2fa' => setting('admin.force_2fa'),
+            'canForce2fa' => auth()->user()->hasTwoFactorAuth(),
         ]);
     }
 
@@ -358,8 +364,6 @@ class SettingsController extends Controller
             'users_email_verification' => $request->filled('users_email_verification'),
         ];
 
-        $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
-
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
             $mailSettings['users_email_verification'] = false;
@@ -394,7 +398,11 @@ class SettingsController extends Controller
      */
     public function maintenance()
     {
-        return view('admin.settings.maintenance');
+        return view('admin.settings.maintenance', [
+            'status' => setting('maintenance-status', false),
+            'message' => setting('maintenance-message'),
+            'paths' => setting('maintenance-paths'),
+        ]);
     }
 
     /**
@@ -411,7 +419,12 @@ class SettingsController extends Controller
             'maintenance-message' => ['nullable', 'string'],
         ]));
 
-        Setting::updateSettings('maintenance-status', $request->filled('maintenance-status'));
+        $paths = $request->filled('is_global') ? null : array_filter($request->input('paths'));
+
+        Setting::updateSettings([
+            'maintenance-status' => $request->filled('maintenance-status'),
+            'maintenance-paths' => empty($paths) ? null : $paths,
+        ]);
 
         return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
     }

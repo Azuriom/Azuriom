@@ -129,6 +129,7 @@ return [
             'hash' => 'Hash algorithm',
             'hash-info' => 'Argon2id is the most secure algorithm but it requires PHP 7.3 or higher. If you are running PHP 7.2 you should use Argon2i.',
             'hash-error' => 'This hash algorithm is not supported by your current PHP version.',
+            'force_2fa' => 'Require 2FA for admin panel access',
         ],
 
         'performances' => [
@@ -226,6 +227,9 @@ return [
 
             'enable' => 'Enable maintenance',
             'message' => 'Maintenance message',
+            'global' => 'Enable maintenance on all the website',
+            'paths' => 'Paths to block during maintenance',
+            'info' => 'You can use <code>/*</code> to block all pages beginning with the same path. For example, <code>/news/*</code> will block access to all news.',
         ],
 
         'status' => [
@@ -677,5 +681,6 @@ return [
         'back' => 'Back to Dashboard',
         '404' => 'Page Not Found',
         'info' => 'It looks like you found a glitch in the matrix...',
+        '2fa' => 'You must enable two-factor auth to access this page.',
     ],
 ];

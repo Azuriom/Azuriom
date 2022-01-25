@@ -51,6 +51,12 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
+        $blockedPaths = setting('maintenance-paths');
+
+        if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
+            return $next($request);
+        }
+
         return redirect()->route('maintenance');
     }
 }

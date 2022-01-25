@@ -6,22 +6,12 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Config\Repository as Config;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class SettingServiceProvider extends ServiceProvider
 {
-    /**
-     * The settings that are encrypted for storage.
-     *
-     * @var string[]
-     */
-    protected $encrypted = [
-        'mail.smtp.password',
-    ];
-
     /**
      * Register any application services.
      *
@@ -49,7 +39,7 @@ class SettingServiceProvider extends ServiceProvider
         $repo = $this->app->make(SettingsRepository::class);
 
         try {
-            $settings = $this->decryptSettings($this->loadSettings());
+            $settings = $this->loadSettings();
 
             foreach ($settings as $name => $value) {
                 $this->handleSpecialSettings($config, $name, $value);
@@ -70,25 +60,6 @@ class SettingServiceProvider extends ServiceProvider
         return Cache::remember('settings', now()->addDay(), function () {
             return Setting::all()->pluck('value', 'name')->all();
         });
-    }
-
-    protected function decryptSettings(array $settings)
-    {
-        foreach ($this->encrypted as $key) {
-            $value = $settings[$key] ?? null;
-
-            if ($value === null) {
-                continue;
-            }
-
-            try {
-                $settings[$key] = decrypt($value, false);
-            } catch (DecryptException $e) {
-                $settings[$key] = null;
-            }
-        }
-
-        return $settings;
     }
 
     protected function handleSpecialSettings(Config $config, string $name, $value)
