@@ -118,6 +118,8 @@ class ProfileController extends Controller
 
         $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
 
+        ActionLog::log('users.2fa.enabled', null, ['ip' => $request->ip()]);
+
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.enabled'));
     }
 
@@ -130,6 +132,8 @@ class ProfileController extends Controller
     public function disable2fa(Request $request)
     {
         $request->user()->update(['google_2fa_secret' => null]);
+
+        ActionLog::log('users.2fa.disabled', null, ['ip' => $request->ip()]);
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
     }

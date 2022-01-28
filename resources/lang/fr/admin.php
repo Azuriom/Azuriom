@@ -656,6 +656,10 @@ return [
             'updated' => 'Mise à jour de l\'utilisateur #:id',
             'deleted' => 'Suppression de l\'utilisateur #:id',
             'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
+
+            'login' => 'Nouvelle connexion réusssie depuis :ip (A2F: :2fa)',
+            '2fa-enabled' => 'Activation de l\'authentification à deux facteurs',
+            '2fa-disabled' => 'Désactivation de l\'authentification à deux facteurs',
         ],
 
         'settings' => [

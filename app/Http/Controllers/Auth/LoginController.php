@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Exception;
@@ -223,6 +224,11 @@ class LoginController extends Controller
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
         ])->save();
+
+        ActionLog::log('users.login', null, [
+            'ip' => $request->ip(),
+            '2fa' => $user->hasTwoFactorAuth() ? 'on' : 'off',
+        ]);
 
         try {
             $name = game()->getUserName($user);

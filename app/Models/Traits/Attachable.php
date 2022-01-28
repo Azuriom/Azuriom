@@ -99,6 +99,6 @@ trait Attachable
 
     public function getAttachmentsPath()
     {
-        return $this->getTable().'/attachments';
+        return Str::replace('_', '/', $this->getTable()).'/attachments';
     }
 }

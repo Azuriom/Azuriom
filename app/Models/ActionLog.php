@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,10 +16,30 @@ use Illuminate\Support\Facades\Auth;
  * @property \Carbon\Carbon $updated_at
  * @property \Azuriom\Models\User $user
  * @property \Illuminate\Database\Eloquent\Model|null $target
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder onlyGlobal()
  */
 class ActionLog extends Model
 {
     private static $actions = [
+        'users.login' => [
+            'global' => false,
+            'icon' => 'sign-in-alt',
+            'color' => 'info',
+            'message' => 'admin.logs.users.login',
+        ],
+        'users.2fa.enabled' => [
+            'global' => false,
+            'icon' => 'user-lock',
+            'color' => 'success',
+            'message' => 'admin.logs.users.2fa-enabled',
+        ],
+        'users.2fa.disabled' => [
+            'global' => false,
+            'icon' => 'user-lock',
+            'color' => 'warning',
+            'message' => 'admin.logs.users.2fa-disabled',
+        ],
         'users.transfer' => [
             'icon' => 'exchange-alt',
             'color' => 'info',
@@ -190,5 +211,21 @@ class ActionLog extends Model
         foreach ($keys as $key => $value) {
             self::$actions[$key] = $value;
         }
+    }
+
+    /**
+     * Scope a query to only include global logs.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOnlyGlobal(Builder $query)
+    {
+        $nonGlobals = collect(static::$actions)
+            ->where('global', '===', false)
+            ->keys()
+            ->all();
+
+        return $query->whereNotIn('action', $nonGlobals);
     }
 }

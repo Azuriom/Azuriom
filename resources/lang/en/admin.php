@@ -657,6 +657,10 @@ return [
             'updated' => 'Updated user #:id',
             'deleted' => 'Deleted user #:id',
             'transfer' => 'Send money :money to user #:id',
+
+            'login' => 'Successful login from :ip (2FA: :2fa)',
+            '2fa-enabled' => 'Enabled two-factor authentication',
+            '2fa-disabled' => 'Disabled two-factor authentication',
         ],
 
         'settings' => [
