@@ -64,6 +64,9 @@
         ]
     },
     "config": {
+        "allow-plugins": {
+            "funkjedi/composer-include-files": true
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
