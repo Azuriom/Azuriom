@@ -6,6 +6,9 @@ use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Azuriom\Models\User>
+ */
 class UserFactory extends Factory
 {
     /**

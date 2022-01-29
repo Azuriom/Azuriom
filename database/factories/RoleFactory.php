@@ -5,6 +5,9 @@ namespace Database\Factories;
 use Azuriom\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Azuriom\Models\Role>
+ */
 class RoleFactory extends Factory
 {
     /**

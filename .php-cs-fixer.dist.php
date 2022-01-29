@@ -7,7 +7,7 @@ $finder = Finder::create()
     ->in(__DIR__.'/app')
     ->in(__DIR__.'/config')
     ->in(__DIR__.'/database')
-    ->in(__DIR__.'/resources/lang')
+    ->in(__DIR__ . '/lang')
     ->in(__DIR__.'/routes');
 
 return (new Config())
@@ -29,6 +29,7 @@ return (new Config())
         'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],
         'native_constant_invocation' => false,
         'native_function_invocation' => false,
+        'new_with_braces' => false,
         'no_empty_comment' => false,
         'no_extra_blank_lines' => true,
         'no_superfluous_phpdoc_tags' => false,

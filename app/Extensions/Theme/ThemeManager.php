@@ -196,11 +196,6 @@ class ThemeManager extends ExtensionManager
             return null;
         }
 
-        // TODO 1.0: remove support for legacy extensions without id
-        if (! isset($json->id)) {
-            $json->id = $theme;
-        }
-
         // The theme folder must be the theme id
         return $theme === $json->id ? $json : null;
     }

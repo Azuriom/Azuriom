@@ -8,7 +8,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        php-version: ['7.3', '7.4', '8.0', '8.1']
+        php-version: ['8.0', '8.1']
 
     name: PHP ${{ matrix.php-version }}
 

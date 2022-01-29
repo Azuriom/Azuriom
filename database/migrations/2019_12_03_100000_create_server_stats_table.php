@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServerStatsTable extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -35,4 +34,4 @@ class CreateServerStatsTable extends Migration
     {
         Schema::dropIfExists('server_stats');
     }
-}
+};

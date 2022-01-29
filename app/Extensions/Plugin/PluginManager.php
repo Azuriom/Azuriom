@@ -93,11 +93,6 @@ class PluginManager extends ExtensionManager
                     continue;
                 }
 
-                // TODO 1.0: remove support for legacy extensions without id
-                if (! isset($plugin->id)) {
-                    $plugin->id = $pluginId;
-                }
-
                 $this->autoloadPlugin($pluginId, $composer, $plugin->composer);
 
                 $providers = array_map(function ($provider) use ($app) {
@@ -210,11 +205,6 @@ class PluginManager extends ExtensionManager
 
         if ($json === null) {
             return null;
-        }
-
-        // TODO 1.0: remove support for legacy extensions without id
-        if (! isset($json->id)) {
-            $json->id = $plugin;
         }
 
         // The plugin folder must be the plugin id

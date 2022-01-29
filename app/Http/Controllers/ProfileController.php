@@ -37,7 +37,7 @@ class ProfileController extends Controller
     public function updateEmail(Request $request)
     {
         $this->validate($request, [
-            'email_confirm_pass' => ['required', 'password'],
+            'email_confirm_pass' => ['required', 'current_password'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
@@ -56,7 +56,7 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password_confirm_pass' => ['required', 'password'],
+            'password_confirm_pass' => ['required', 'current_password'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
@@ -89,7 +89,6 @@ class ProfileController extends Controller
 
         return view('profile.2fa', [
             'secretKey' => $secret,
-            'qrCodeUrl' => 'data:image/svg+xml,'.rawurlencode($svg), // TODO remove in Azuriom 1.0
             'qrCode' => new HtmlString($svg),
         ]);
     }

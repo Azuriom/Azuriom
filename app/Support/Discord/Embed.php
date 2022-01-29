@@ -228,11 +228,11 @@ class Embed implements Arrayable
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'timestamp' => optional($this->timestamp)->toAtomString(),
+            'timestamp' => $this->timestamp?->toAtomString(),
             'color' => $this->color,
-            'footer' => optional($this->footer)->toArray(),
-            'thumbnail' => optional($this->thumbnail)->toArray(),
-            'author' => optional($this->author)->toArray(),
+            'footer' => $this->footer?->toArray(),
+            'thumbnail' => $this->thumbnail?->toArray(),
+            'author' => $this->author?->toArray(),
             'fields' => array_map(function (EmbedField $field) {
                 return $field->toArray();
             }, $this->fields),

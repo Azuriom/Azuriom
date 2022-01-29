@@ -4,7 +4,6 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
-use Illuminate\Support\Str;
 use RuntimeException;
 
 abstract class ServerBridge
@@ -65,20 +64,6 @@ abstract class ServerBridge
     }
 
     /**
-     * Execute a command on the given server.
-     *
-     * @param  string[]  $commands
-     * @param  string|null  $playerName
-     * @param  bool  $needConnected
-     *
-     * @deprecated use sendCommands() instead
-     */
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
-    {
-        $this->sendCommands($commands, User::firstWhere('name', $playerName), $needConnected);
-    }
-
-    /**
      * Return if the server can execute commands.
      *
      * @return bool
@@ -93,10 +78,10 @@ abstract class ServerBridge
     public function replacePlaceholders(string $command, User $user = null)
     {
         if ($user === null) {
-            return Str::of($command);
+            return str($command);
         }
 
-        return Str::of($command)
+        return str($command)
             ->replace('{player}', $user->name)
             ->replace('{name}', $user->name);
     }

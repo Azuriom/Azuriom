@@ -13,7 +13,7 @@
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@simonwep/pickr": "^1.8.0",
         "autosize": "^4.0.2",
-        "axios": "^0.21",
+        "axios": "^0.25",
         "bootstrap": "^4.6.0",
         "chart.js": "^2.9.4",
         "clipboard": "^2.0.6",

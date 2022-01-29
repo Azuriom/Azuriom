@@ -159,7 +159,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64)
     {
-        /* @noinspection PhpDeprecationInspection */
         return game()->getAvatarUrl($this, $size);
     }
 
@@ -187,12 +186,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function flushBanCache()
     {
         Cache::forget("users.{$this->id}.banned");
-    }
-
-    /** @deprecated use isBanned() */
-    public function getIsBannedAttribute()
-    {
-        return $this->isBanned();
     }
 
     public function hasPermission($permission)
