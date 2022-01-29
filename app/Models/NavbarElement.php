@@ -122,8 +122,8 @@ class NavbarElement extends Model
             'dropdown' => $this->elements
                 ->contains(
                     function (self $element) {
-                    return ! $element->isDropdown() && $element->isCurrent();
-                }
+                        return ! $element->isDropdown() && $element->isCurrent();
+                    }
                 ),
             default => false,
         };

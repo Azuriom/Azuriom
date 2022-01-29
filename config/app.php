@@ -195,7 +195,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Azuriom' => Azuriom\Azuriom::class,
     ])->toArray(),
 
 ];

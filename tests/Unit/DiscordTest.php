@@ -6,7 +6,7 @@ use Azuriom\Support\Discord\DiscordWebhook;
 use Azuriom\Support\Discord\Embed;
 use Carbon\Carbon;
 use InvalidArgumentException;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class DiscordTest extends TestCase
 {
