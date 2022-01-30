@@ -79,17 +79,18 @@ class ProfileController extends Controller
     public function show2fa(Request $request)
     {
         if ($request->user()->hasTwoFactorAuth()) {
-            return redirect()->route('profile.index');
+            return view('profile.2fa.index', ['user' => $request->user()]);
         }
 
         $google2fa = new Google2FA();
-        $secret = $request->old('2fa_key', $google2fa->generateSecretKey());
+        $secret = $request->session()->get('2fa.secret', $google2fa->generateSecretKey());
         $qrCodeUrl = $google2fa->getQRCodeUrl(site_name(), $request->user()->email, $secret);
-        $svg = QrCodeRenderer::render($qrCodeUrl, 250);
 
-        return view('profile.2fa', [
-            'secretKey' => $secret,
-            'qrCode' => new HtmlString($svg),
+        $request->session()->put('2fa.secret', $secret);
+
+        return view('profile.2fa.enable', [
+            'secret' => $secret,
+            'qrCode' => new HtmlString(QrCodeRenderer::render($qrCodeUrl, 250)),
         ]);
     }
 
@@ -105,21 +106,28 @@ class ProfileController extends Controller
     public function enable2fa(Request $request)
     {
         $this->validate($request, [
-            '2fa_key' => ['required', 'string', 'min:8'],
             'code' => ['required', 'string'],
         ]);
 
-        $code = str_replace(' ', '', $request->input('code'));
+        if ($request->user()->hasTwoFactorAuth()) {
+            return redirect()->route('profile.2fa.index');
+        }
 
-        if (! (new Google2FA())->verifyKey($request->input('2fa_key'), $code)) {
+        $code = str_replace(' ', '', $request->input('code'));
+        $secret = $request->session()->get('2fa.secret');
+
+        if (! $secret || ! (new Google2FA())->verifyKey($secret, $code)) {
             throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
         }
 
-        $request->user()->update(['google_2fa_secret' => $request->input('2fa_key')]);
+        $request->user()->forceFill([
+            'two_factor_secret' => $secret,
+            'two_factor_recovery_codes' => $request->user()->generateRecoveryCodes(),
+        ])->save();
 
         ActionLog::log('users.2fa.enabled', null, ['ip' => $request->ip()]);
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.enabled'));
+        return redirect()->route('profile.2fa.index');
     }
 
     /**
@@ -130,7 +138,12 @@ class ProfileController extends Controller
      */
     public function disable2fa(Request $request)
     {
-        $request->user()->update(['google_2fa_secret' => null]);
+        $request->user()->forceFill([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+        ])->save();
+
+        $request->session()->remove('2fa.secret');
 
         ActionLog::log('users.2fa.disabled', null, ['ip' => $request->ip()]);
 

@@ -140,7 +140,7 @@ class UserController extends Controller
 
     public function disable2fa(User $user)
     {
-        $user->update(['google_2fa_secret' => null]);
+        $user->update(['two_factor_secret' => null]);
 
         ActionLog::log('users.updated', $user);
 
@@ -171,7 +171,7 @@ class UserController extends Controller
             'role_id' => Role::defaultRoleId(),
             'game_id' => null,
             'access_token' => null,
-            'google_2fa_secret' => null,
+            'two_factor_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
             'deleted_at' => now(),
@@ -184,7 +184,7 @@ class UserController extends Controller
 
     protected function validateRole(User $user, Role $role, User $target = null)
     {
-        if (! $user->isAdmin() && $role->power > $user->role->power || $target && $target->role->power > $user->role->power) {
+        if (($target && $user->role->power < $target->role->power) || (! $user->isAdmin() && $user->role->power < $role->power)) {
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.status.unauthorized'),
             ]);

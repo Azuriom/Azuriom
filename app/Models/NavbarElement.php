@@ -121,9 +121,7 @@ class NavbarElement extends Model
             'plugin' => $request->routeIs(Str::beforeLast($this->value, '.').'.*'),
             'dropdown' => $this->elements
                 ->contains(
-                    function (self $element) {
-                        return ! $element->isDropdown() && $element->isCurrent();
-                    }
+                    fn (self $element) => ! $element->isDropdown() && $element->isCurrent()
                 ),
             default => false,
         };

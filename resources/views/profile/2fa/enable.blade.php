@@ -14,12 +14,12 @@
                     {{ $qrCode }}
                 </div>
 
-                <p>@lang('messages.profile.2fa.secret', ['secret' => $secretKey])</p>
+                <p>@lang('messages.profile.2fa.secret', ['secret' => $secret])</p>
 
-                <form method="POST">
+                <form method="POST" action="{{ route('profile.2fa.enable') }}">
                     @csrf
 
-                    <input type="hidden" name="2fa_key" value="{{ $secretKey }}">
+                    <input type="hidden" name="2fa_key" value="{{ $secret }}">
 
                     <div class="form-group">
                         <label for="codeInput">{{ trans('messages.profile.2fa.code') }}</label>
