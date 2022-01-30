@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\InteractsWithMoney;
 use Azuriom\Models\Traits\Searchable;
+use Azuriom\Models\Traits\TwoFactorAuthenticatable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -24,7 +25,8 @@ use Illuminate\Support\Facades\Cache;
  * @property string|null $access_token
  * @property string|null $last_login_ip
  * @property \Carbon\Carbon|null $last_login_at
- * @property string|null $google_2fa_secret
+ * @property string|null $two_factor_secret
+ * @property string[]|null $two_factor_recovery_codes
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -45,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use InteractsWithMoney;
     use Notifiable;
     use Searchable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -52,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'google_2fa_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'two_factor_secret',
     ];
 
     /**
@@ -61,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'access_token', 'last_login_ip', 'google_2fa_secret',
+        'password', 'remember_token', 'access_token', 'last_login_ip', 'two_factor_secret',
     ];
 
     /**
@@ -71,6 +74,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'money' => 'float',
+        'two_factor_recovery_codes' => 'array',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
@@ -195,6 +199,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->isBanned();
     }
 
+    /** @deprecated use two_factor_secret */
+    public function getGoogle2faSecretAttribute()
+    {
+        return $this->two_factor_secret;
+    }
+
     public function hasPermission($permission)
     {
         return $this->role->hasPermission($permission);
@@ -202,7 +212,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasTwoFactorAuth()
     {
-        return $this->google_2fa_secret !== null;
+        return $this->two_factor_secret !== null;
     }
 
     public function hasAdminAccess()

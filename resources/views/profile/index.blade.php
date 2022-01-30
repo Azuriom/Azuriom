@@ -29,15 +29,13 @@
                         </ul>
 
                         @if($user->hasTwoFactorAuth())
-                            <form action="{{ route('profile.2fa.disable') }}" method="POST">
-                                @csrf
-
-                                <button type="submit" class="btn btn-danger">
-                                    {{ trans('messages.profile.2fa.disable') }}
-                                </button>
-                            </form>
+                            <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">
+                                {{ trans('messages.profile.2fa.manage') }}
+                            </a>
                         @else
-                            <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">{{ trans('messages.profile.2fa.enable') }}</a>
+                            <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">
+                                {{ trans('messages.profile.2fa.enable') }}
+                            </a>
                         @endif
                     </div>
                 </div>

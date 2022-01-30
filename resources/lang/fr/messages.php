@@ -138,11 +138,13 @@ return [
         '2fa' => [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
+            'manage' => 'Gérer l\'A2F',
             'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Authy, 1Password, ou Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
             'title' => 'Activation de l\'authentification à deux facteurs',
+            'codes' => 'Afficher les codes de récupération',
             'code' => 'Code',
-            'enabled' => 'Authentification à deux facteurs activée.',
+            'enabled' => 'L\'authentification à deux facteurs est activée. N\'oubliez pas de sauvegarder vos codes de récupération!',
             'disabled' => 'Authentification à deux facteurs désactivée.',
         ],
 

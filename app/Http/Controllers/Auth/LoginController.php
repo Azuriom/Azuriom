@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
-use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends Controller
 {
@@ -197,9 +196,9 @@ class LoginController extends Controller
 
         /** @var \Azuriom\Models\User $user */
         $user = User::findOrFail($request->session()->get('login.2fa.id'));
-        $code = str_replace(' ', '', $request->input('code'));
+        $code = $request->input('code');
 
-        if (! (new Google2FA())->verifyKey($user->google_2fa_secret, $code)) {
+        if (! $user->isValidTwoFactorCode($code)) {
             $request->session()->keep('login.2fa');
 
             throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
@@ -208,6 +207,10 @@ class LoginController extends Controller
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));
 
         $request->session()->remove('login.2fa');
+
+        if ($user->isValidRecoveryCode($code)) {
+            $user->replaceRecoveryCode($code);
+        }
 
         return $this->sendLoginResponse($request);
     }
