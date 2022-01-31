@@ -48,11 +48,11 @@ abstract class ServerBridge
      * Depending on the server ping, this may take a while (up to one second).
      *
      * @param  string[]  $commands
-     * @param  \Azuriom\Models\User|null  $user
+     * @param  \Azuriom\Models\User  $user
      * @param  bool  $needConnected
      * @return bool
      */
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         if (! $this->canExecuteCommand()) {
             report(new RuntimeException('Command cannot be executed with this link.'));

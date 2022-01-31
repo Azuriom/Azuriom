@@ -51,7 +51,7 @@ class ChartsTest extends TestCase
         }
 
         $expected = collect([1, 0, 2, 0, 1, 1])->mapWithKeys(function (int $count, int $i) {
-            return [today()->subMonths(5 - $i)->translatedFormat('F Y') => $count];
+            return [today()->subMonthsWithNoOverflow(5 - $i)->translatedFormat('F Y') => $count];
         })->all();
 
         $this->assertSame($expected, Charts::countByMonths(User::query(), null, 6)->all());

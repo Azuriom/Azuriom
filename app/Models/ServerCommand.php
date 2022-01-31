@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $server_id
- * @property string $player_name
+ * @property int $user_id
  * @property bool $need_online
  * @property string $command
  * @property \Azuriom\Models\Server $server
@@ -20,7 +20,7 @@ class ServerCommand extends Model
      * @var array
      */
     protected $fillable = [
-        'player_name', 'need_online', 'command',
+        'user_id', 'need_online', 'command',
     ];
 
     /**
@@ -29,5 +29,10 @@ class ServerCommand extends Model
     public function server()
     {
         return $this->belongsTo(Server::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
