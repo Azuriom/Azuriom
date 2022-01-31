@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature\Models;
 
 use Azuriom\Models\Post;
 use Azuriom\Models\User;

@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Api;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Server;
 use Azuriom\Models\ServerCommand;
+use Azuriom\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -36,8 +37,11 @@ class ServerController extends Controller
             'entities' => $request->json('worlds.entities'),
         ], $request->json('full', false));
 
+        $usersIds = User::whereIn('name', $players)->get()->modelsKeys();
+
         $commands = $server->commands()
-            ->whereIn('player_name', $players)
+            ->with('user')
+            ->whereIn('user_id', $usersIds)
             ->orWhere('need_online', false)
             ->limit(100)
             ->get();
@@ -45,7 +49,7 @@ class ServerController extends Controller
         if (! $commands->isEmpty()) {
             ServerCommand::whereIn('id', $commands->modelKeys())->delete();
 
-            $commands = $commands->groupBy('player_name')
+            $commands = $commands->groupBy('user.name')
                 ->map(function (Collection $serverCommands) {
                     return $serverCommands->pluck('command');
                 });
