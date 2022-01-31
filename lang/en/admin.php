@@ -24,6 +24,7 @@ return [
                 'auth' => 'Authentication',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
+                'social' => 'Social links',
             ],
             'navbar' => 'Navbar',
             'servers' => 'Servers',
@@ -266,6 +267,12 @@ return [
 
             'not-empty' => 'You cannot delete dropdown with elements.',
         ],
+    ],
+
+    'social-links' => [
+        'title' => 'Social links',
+        'title-edit' => 'Edit social link :link',
+        'title-create' => 'Add social link',
     ],
 
     'servers' => [

@@ -72,6 +72,7 @@ return [
         'price' => 'Prix',
         'icon' => 'Icône',
         'server' => 'Serveur',
+        'value' => 'Valeur',
     ],
 
     'range' => [
@@ -84,8 +85,10 @@ return [
     'yes' => 'Oui',
     'no' => 'Non',
     'unknown' => 'Inconnu(e)',
+    'autre' => 'Autre',
     'none' => 'Aucun(e)',
     'copied' => 'Copié',
+    'fontawesome' => 'Vous pouvez avoir la liste des icônes disponibles sur <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
 
     'home' => 'Accueil',
     'welcome' => 'Bienvenue sur :name',

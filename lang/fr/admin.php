@@ -23,6 +23,7 @@ return [
                 'seo' => 'SEO',
                 'mail' => 'Mail',
                 'maintenance' => 'Maintenance',
+                'social' => 'Réseaux sociaux',
             ],
             'navbar' => 'Navigation',
             'servers' => 'Serveurs',
@@ -265,6 +266,12 @@ return [
 
             'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant contenant des éléments.',
         ],
+    ],
+
+    'social-links' => [
+        'title' => 'Réseaux sociaux',
+        'title-edit' => 'Édition du réseau social :link',
+        'title-create' => 'Ajouter un réseau social',
     ],
 
     'servers' => [

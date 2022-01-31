@@ -74,22 +74,37 @@
             @endcanany
 
             @can('admin.settings')
-                <div class="nav-item {{ add_active('admin.settings.*') }}">
-                    <a class="nav-link {{ Route::is('admin.settings.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
+                <div class="nav-item {{ add_active('admin.settings.*', 'admin.social-links.*') }}">
+                    <a class="nav-link {{ Route::is('admin.settings.*', 'admin.social-links.*') ? '' : 'collapsed'}}" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
                         <i class="fas fa-fw fa-cogs"></i>
                         <span>{{ trans('admin.nav.settings.heading') }}</span>
                     </a>
-                    <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
+                    <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*', 'admin.social-links.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
-                            <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">{{ trans('admin.nav.settings.settings.global') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">{{ trans('admin.nav.settings.settings.seo') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">
+                                {{ trans('admin.nav.settings.settings.global') }}
+                            </a>
+                            <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">
+                                {{ trans('admin.nav.settings.settings.seo') }}
+                            </a>
                             @if(! oauth_login())
-                                <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">{{ trans('admin.nav.settings.settings.auth') }}</a>
-                                <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">{{ trans('admin.nav.settings.settings.mail') }}</a>
+                                <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">
+                                    {{ trans('admin.nav.settings.settings.auth') }}
+                                </a>
+                                <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">
+                                    {{ trans('admin.nav.settings.settings.mail') }}
+                                </a>
                             @endif
-                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">{{ trans('admin.nav.settings.settings.performances') }}</a>
-                            <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">{{ trans('admin.nav.settings.settings.maintenance') }}</a>
+                            <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">
+                                {{ trans('admin.nav.settings.settings.performances') }}
+                            </a>
+                            <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">
+                                {{ trans('admin.nav.settings.settings.maintenance') }}
+                            </a>
+                            <a class="collapse-item {{ add_active('admin.social-links.*') }}" href="{{ route('admin.social-links.index') }}">
+                                {{ trans('admin.nav.settings.settings.social') }}
+                            </a>
                         </div>
                     </div>
                 </div>

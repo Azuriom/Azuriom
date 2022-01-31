@@ -87,7 +87,13 @@
 <footer class="text-white mt-auto py-4 text-center">
     <div class="copyright">
         <div class="container">
-            {{ setting('copyright') }} | @lang('messages.copyright')
+            <p>{{ setting('copyright') }} | @lang('messages.copyright')</p>
+
+            @foreach(social_links() as $link)
+                <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer" class="mx-1">
+                    <i class="{{ $link->icon }} fa-2x" style="color: {{ $link->color }}"></i>
+                </a>
+            @endforeach
         </div>
     </div>
 </footer>
