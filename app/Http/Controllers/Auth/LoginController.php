@@ -208,9 +208,7 @@ class LoginController extends Controller
 
         $request->session()->remove('login.2fa');
 
-        if ($user->isValidRecoveryCode($code)) {
-            $user->replaceRecoveryCode($code);
-        }
+        $user->replaceRecoveryCode($code);
 
         return $this->sendLoginResponse($request);
     }

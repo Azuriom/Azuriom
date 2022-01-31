@@ -7,7 +7,6 @@ use Azuriom\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 
 class AzLink extends ServerBridge
 {

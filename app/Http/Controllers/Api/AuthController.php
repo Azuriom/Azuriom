@@ -20,9 +20,9 @@ class AuthController extends Controller
         $this->middleware(function (Request $request, callable $next) {
             if (! setting('auth-api', false)) {
                 return response()->json([
-                    'status' => false,
+                    'status' => 'error',
                     'message' => 'Auth API is not enabled',
-                ], 422);
+                ], 400);
             }
 
             return $next($request);
@@ -33,7 +33,7 @@ class AuthController extends Controller
      * Authenticate the user and get the access token.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\Support\Responsable
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         if (! Auth::validate($this->credentials($credentials))) {
             return response()->json([
-                'status' => false,
+                'status' => 'error',
                 'message' => 'Invalid credentials',
             ], 422);
         }
@@ -54,7 +54,31 @@ class AuthController extends Controller
         $user = Auth::getLastAttempted();
 
         if ($user->isBanned()) {
-            return response()->json(['status' => false, 'message' => 'User banned'], 422);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User banned',
+            ], 403);
+        }
+
+        if ($user->hasTwoFactorAuth()) {
+            $code = $request->input('code');
+
+            if (empty($code)) {
+                return response()->json([
+                    'status' => 'pending',
+                    'reason' => '2fa',
+                    'message' => 'Missing 2FA code',
+                ], 422);
+            }
+
+            if (! $user->isValidTwoFactorCode($code)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid 2FA code',
+                ], 422);
+            }
+
+            $user->replaceRecoveryCode($code);
         }
 
         if ($user->game_id === null) {
@@ -70,7 +94,7 @@ class AuthController extends Controller
      * Get the profile of the user by his access token.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\Support\Responsable
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -81,11 +105,17 @@ class AuthController extends Controller
         $user = User::firstWhere('access_token', $request->input('access_token'));
 
         if ($user === null) {
-            return response()->json(['status' => false, 'message' => 'Invalid token'], 422);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid token',
+            ], 401);
         }
 
         if ($user->isBanned()) {
-            return response()->json(['status' => false, 'message' => 'User banned'], 422);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User banned',
+            ], 403);
         }
 
         return new AuthenticatedUserResource($user);
@@ -95,7 +125,7 @@ class AuthController extends Controller
      * Invalidate the access token if it exists.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -105,7 +135,7 @@ class AuthController extends Controller
 
         User::where('access_token', $request->input('access_token'))->update(['access_token' => null]);
 
-        return response()->json(['status' => true]);
+        return response()->json(['status' => 'success']);
     }
 
     protected function credentials(array $credentials)
