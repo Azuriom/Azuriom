@@ -51,6 +51,10 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
     {
         $this->registerMiddlewares();
 
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/azuriom_DummyId.php', 'azuriom_DummyId'
+        );
+
         GameServiceProvider::registerGames(['DummyId' => DummyPluginGame::class]);
     }
 
@@ -75,7 +79,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
         $this->registerUserNavigation();
 
-        //
+        // you can access custom config like that :
+        // $value = config('azuriom_DummyId.custom_config');
     }
 
     /**
