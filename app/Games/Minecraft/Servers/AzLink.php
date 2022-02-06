@@ -7,7 +7,6 @@ use Azuriom\Models\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 
 class AzLink extends ServerBridge
 {
@@ -29,14 +28,10 @@ class AzLink extends ServerBridge
 
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
-        if ($user === null) {
-            throw new RuntimeException('Unknown user');
-        }
-
         foreach ($commands as $command) {
             $this->server->commands()->create([
                 'command' => $command,
-                'user_id' => $user->id,
+                'user_id' => optional($user)->id,
                 'need_online' => $needConnected,
             ]);
         }

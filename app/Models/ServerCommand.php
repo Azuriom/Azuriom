@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $server_id
- * @property int $user_id
+ * @property int|null $user_id
  * @property bool $need_online
  * @property string $command
  * @property \Azuriom\Models\Server $server
+ * @property \Azuriom\Models\User|null $user
  */
 class ServerCommand extends Model
 {

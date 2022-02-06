@@ -41,8 +41,6 @@ class AddUserIdToServerCommandsTable extends Migration
             $command->user_id = $userId;
 
             return (array) $command;
-        })->filter(function ($command) {
-            return $command['user_id'] !== null;
         })->all();
 
         DB::table('server_commands')->insert($mappedCommands);
