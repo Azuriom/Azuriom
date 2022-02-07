@@ -18,8 +18,10 @@ curl -L "https://github.com/docker/compose/releases/download/latest/docker-compo
 chmod +x /usr/local/bin/docker-compose
 ```
 
-and enable docker on boot 
-`systemctl enable --now docker && service docker start`
+And enable Docker on boot 
+```
+systemctl enable --now docker && service docker start
+```
 
 # Installation
 
@@ -28,17 +30,18 @@ and enable docker on boot
 mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 https://github.com/Azuriom/Azuriom.git .
 ```
 
-
 Go into the downloaded folder
 ```
 cd Azuriom
 ```
 
-# Set rights on files & folders
-`chmod -R o+rw storage bootstrap/cache resources/themes plugins`
-`chmod +x azuriom.sh`
+## Set rights on files & folders
+```
+chmod -R o+rw storage bootstrap/cache resources/themes plugins
+chmod +x azuriom.sh
+```
 
-# Change the owner to www-data
+## Change the owner to www-data
 `useradd www-data` (if an error tell your that this user already exists no worries, just skip it)
 
 `chown -R www-data:www-data *`
@@ -50,7 +53,7 @@ Copy the `.env.example` to `.env` and set the database information like this:
 
 ```
 DB_CONNECTION=mysql
-DB_HOST=[IP adresse of your database. If you use a local database, set the public IP of your server (localhost or 12.7.0.0.1 won't work)]
+DB_HOST=[IP adresse of your database. If you use a local database, set the public IP of your server (localhost or 127.0.0.1 won't work)]
 DB_PORT=3306
 DB_DATABASE=[database_name]
 DB_USERNAME=[database_user]
