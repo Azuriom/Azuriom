@@ -42,9 +42,13 @@ chmod +x azuriom.sh
 ```
 
 ## Change the owner to www-data
-`useradd www-data` (if an error tell your that this user already exists no worries, just skip it)
-
-`chown -R www-data:www-data *`
+If the `www-data` user doesn't exists, you need to add it (if an error tell your that this user already exists no worries, just skip it) :  
+```
+useradd www-data
+```
+```
+chown -R www-data:www-data *
+```
 
 ## Setup `.env`
 Copy the `.env.example` to `.env` and set the database information like this:
