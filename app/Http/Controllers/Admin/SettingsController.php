@@ -264,8 +264,6 @@ class SettingsController extends Controller
     public function seo()
     {
         return view('admin.settings.seo', [
-            'htmlHead' => setting('html-head'),
-            'htmlBody' => setting('html-body'),
             'welcomePopup' => setting('welcome-popup'),
         ]);
     }
@@ -281,8 +279,6 @@ class SettingsController extends Controller
     public function updateSeo(Request $request)
     {
         $settings = $this->validate($request, [
-            'html-head' => ['nullable', 'string'],
-            'html-body' => ['nullable', 'string'],
             'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
         ]);
 

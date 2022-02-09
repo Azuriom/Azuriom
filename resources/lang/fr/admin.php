@@ -178,10 +178,7 @@ return [
         'seo' => [
             'title' => 'Paramètres SEO',
 
-            'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
-            'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
-
-            'html-code-info' => 'Exemple: Bannière cookies, Google Analytics, etc',
+            'html' => 'Vous pouvez inclure de l\'HTML dans le <code>&lt;head&gt;</code> ou <code>&lt;body&gt;</code> de toutes les pages (par ex. pour une bannière à cookies) en créant un fichier <code>head.blade.php</code> ou <code>body.blade.php</code> dans le dossier <code>resources/views/custom/</code>.',
 
             'welcome-popup' => [
                 'enable' => 'Activer le popup de bienvenue ?',

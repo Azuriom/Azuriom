@@ -8,24 +8,8 @@
             <form action="{{ route('admin.settings.seo.update') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="htmlHeadArea">{{ trans('admin.settings.seo.html-head-code') }}</label>
-                    <textarea class="form-control @error('html-head') is-invalid @enderror" id="htmlHeadArea" name="html-head" rows="4">{{ old('html-head', $htmlHead) }}</textarea>
-
-                    @error('html-head')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="htmlBodyArea">{{ trans('admin.settings.seo.html-body-code') }}</label>
-                    <textarea class="form-control @error('html-body') is-invalid @enderror" id="htmlBodyArea" name="html-body" aria-describedby="htmlBodyInfo" rows="4">{{ old('html-body', $htmlBody) }}</textarea>
-
-                    @error('html-body')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-
-                    <small id="htmlBodyInfo" class="form-text">{{ trans('admin.settings.seo.html-code-info') }}</small>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> @lang('admin.settings.seo.html')
                 </div>
 
                 <div class="form-group custom-control custom-switch">
