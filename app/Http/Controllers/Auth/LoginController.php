@@ -128,18 +128,24 @@ class LoginController extends Controller
             return $request->expectsJson() ? response()->noContent() : redirect($this->redirectPath());
         }
 
+        $user->update([
+            'name' => $userProfile->getNickname() ?? $userProfile->getName(),
+            'avatar' => $userProfile->getAvatar(),
+        ]);
+
         return $this->loginUser($request, $user);
     }
 
-    protected function registerUser(Request $request, SocialUser $userProfile)
+    protected function registerUser(Request $request, SocialUser $user)
     {
         $socialiteDriver = game()->getSocialiteDriverName();
 
         return User::forceCreate([
-            'name' => $userProfile->getNickname() ?? $userProfile->getName(),
-            'email' => "{$userProfile->getId()}@{$socialiteDriver}.oauth",
+            'name' => $user->getNickname() ?? $user->getName(),
+            'email' => "{$user->getId()}@{$socialiteDriver}.oauth",
+            'avatar' => $user->getAvatar(),
             'password' => Hash::make(Str::random(32)),
-            'game_id' => (string) $userProfile->getId(),
+            'game_id' => (string) $user->getId(),
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
         ]);
@@ -232,6 +238,10 @@ class LoginController extends Controller
             'ip' => $request->ip(),
             '2fa' => $user->hasTwoFactorAuth() ? 'on' : 'off',
         ]);
+
+        if (game()->loginWithOAuth()) {
+            return;
+        }
 
         try {
             $name = game()->getUserName($user);

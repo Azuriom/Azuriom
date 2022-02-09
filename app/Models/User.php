@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Cache;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string|null $avatar
  * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
@@ -55,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'two_factor_secret',
+        'name', 'email', 'avatar', 'password', 'money', 'role_id', 'game_id', 'access_token', 'two_factor_secret',
     ];
 
     /**
@@ -163,8 +164,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64)
     {
-        /* @noinspection PhpDeprecationInspection */
-        return game()->getAvatarUrl($this, $size);
+        return $this->avatar ?? game()->getAvatarUrl($this, $size);
     }
 
     public function isBanned(bool $useCache = false)
