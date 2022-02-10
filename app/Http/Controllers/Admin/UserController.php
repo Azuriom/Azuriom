@@ -107,9 +107,11 @@ class UserController extends Controller
         }
 
         $user->fill(Arr::except($request->validated(), 'password'));
+        $passwordChanged = false;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
+            $passwordChanged = true;
         }
 
         $role = Role::find($request->input('role'));
@@ -118,6 +120,10 @@ class UserController extends Controller
 
         $user->role()->associate($role);
         $user->save();
+
+        if ($passwordChanged) {
+            event(new \Illuminate\Auth\Events\PasswordReset($user));
+        }
 
         ActionLog::log('users.updated', $user);
 
