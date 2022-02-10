@@ -79,12 +79,14 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="availablePlugins">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
+                            <th scope="col">{{ trans('messages.fields.downloads') }}</th>
+                            <th scope="col">{{ trans('messages.fields.likes') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
@@ -99,6 +101,8 @@
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
+                                <td>{{ $plugin['downloads'] }} <i class="ml-2 fas fa-download text-success"></i></td>
+                                <td>{{ $plugin['likes'] }} <i class="ml-2 fas fa-heart text-danger"></i></td>
                                 <td>
                                     @if($plugin['premium'] && ! $plugin['purchased'])
                                         <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">

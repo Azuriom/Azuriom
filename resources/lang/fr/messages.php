@@ -72,6 +72,8 @@ return [
         'price' => 'Prix',
         'icon' => 'Icône',
         'server' => 'Serveur',
+        'downloads' => 'Téléchargements',
+        'likes' => 'Mentions J\'aime'
     ],
 
     'range' => [

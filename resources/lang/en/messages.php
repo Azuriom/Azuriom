@@ -72,6 +72,8 @@ return [
         'price' => 'Price',
         'icon' => 'Icon',
         'server' => 'Server',
+        'downloads' => 'Downloads',
+        'likes' => 'Likes',
     ],
 
     'range' => [
