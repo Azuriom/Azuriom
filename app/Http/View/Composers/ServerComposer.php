@@ -26,7 +26,7 @@ class ServerComposer
         }
 
         if (self::$server === null) {
-            $serverId = setting('default-server');
+            $serverId = setting('servers.default');
 
             if ($serverId) {
                 self::$server = Server::find($serverId);

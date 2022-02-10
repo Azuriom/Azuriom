@@ -51,8 +51,8 @@ class Server extends Model
     public static function booted()
     {
         static::deleted(function (self $server) {
-            if (((int) setting('default-server')) === $server->id) {
-                Setting::updateSettings(['default-server' => null]);
+            if (((int) setting('servers.default')) === $server->id) {
+                Setting::updateSettings(['servers.default' => null]);
             }
         });
     }

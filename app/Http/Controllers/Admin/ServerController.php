@@ -24,7 +24,7 @@ class ServerController extends Controller
     {
         return view('admin.servers.index', [
             'servers' => Server::with('stat')->get(),
-            'defaultServerId' => (int) setting('default-server'),
+            'defaultServerId' => (int) setting('servers.default'),
         ]);
     }
 
@@ -42,7 +42,7 @@ class ServerController extends Controller
             'server' => ['nullable', Rule::exists('servers', 'id')],
         ]);
 
-        Setting::updateSettings('default-server', $request->input('server'));
+        Setting::updateSettings('servers.default', $request->input('server'));
 
         return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
     }
@@ -82,7 +82,7 @@ class ServerController extends Controller
         $server->save();
 
         if (Server::count() === 1) {
-            Setting::updateSettings('default-server', $server->id);
+            Setting::updateSettings('servers.default', $server->id);
         }
 
         if ($request->input('redirect') === 'edit') {

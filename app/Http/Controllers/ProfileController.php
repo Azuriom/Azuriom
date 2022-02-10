@@ -163,7 +163,7 @@ class ProfileController extends Controller
 
     public function transferMoney(Request $request)
     {
-        abort_if(! setting('user_money_transfer'), 403);
+        abort_if(! setting('users.money_transfer'), 403);
 
         $this->validate($request, [
             'name' => ['required', 'exists:users,name'],

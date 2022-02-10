@@ -39,7 +39,7 @@ class CheckForMaintenanceSettings
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! setting('maintenance-status', false)) {
+        if (! setting('maintenance.enabled', false)) {
             return $next($request);
         }
 
@@ -51,7 +51,7 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
-        $blockedPaths = setting('maintenance-paths');
+        $blockedPaths = setting('maintenance.paths');
 
         if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
             return $next($request);

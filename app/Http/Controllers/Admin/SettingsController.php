@@ -105,7 +105,7 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'money' => setting('money'),
             'siteKey' => setting('site-key'),
-            'userMoneyTransfer' => setting('user_money_transfer'),
+            'userMoneyTransfer' => setting('users.money_transfer'),
         ]);
     }
 
@@ -299,7 +299,6 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
-            'minecraftVerification' => setting('game-type') === 'mc-online',
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
             'captchaType' => old('captcha', setting('captcha.type')),
@@ -395,9 +394,9 @@ class SettingsController extends Controller
     public function maintenance()
     {
         return view('admin.settings.maintenance', [
-            'status' => setting('maintenance-status', false),
-            'message' => setting('maintenance-message'),
-            'paths' => setting('maintenance-paths'),
+            'status' => setting('maintenance.enabled', false),
+            'message' => setting('maintenance.message'),
+            'paths' => setting('maintenance.paths'),
         ]);
     }
 
@@ -411,15 +410,16 @@ class SettingsController extends Controller
      */
     public function updateMaintenance(Request $request)
     {
-        Setting::updateSettings($this->validate($request, [
+        $this->validate($request, [
             'maintenance-message' => ['nullable', 'string'],
-        ]));
+        ]);
 
         $paths = $request->filled('is_global') ? null : array_filter($request->input('paths'));
 
         Setting::updateSettings([
-            'maintenance-status' => $request->filled('maintenance-status'),
-            'maintenance-paths' => empty($paths) ? null : $paths,
+            'maintenance.enabled' => $request->filled('maintenance-status'),
+            'maintenance.message' => $request->input('maintenance-message'),
+            'maintenance.paths' => empty($paths) ? null : $paths,
         ]);
 
         return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));

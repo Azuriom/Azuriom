@@ -28,7 +28,7 @@ class Setting extends Model
      * @var string[]
      */
     private const JSON_ENCODED = [
-        'maintenance-paths',
+        'maintenance.paths',
     ];
 
     /**

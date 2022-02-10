@@ -92,7 +92,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
+        if (setting('maintenance.enabled', false) && ! $user->can('maintenance.access')) {
             return $this->sendMaintenanceResponse($request);
         }
 

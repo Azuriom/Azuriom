@@ -139,7 +139,7 @@
                     </div>
                 </div>
 
-                @if(setting('user_money_transfer'))
+                @if(setting('users.money_transfer'))
                     <div class="col-md-6">
                         <div class="card shadow-sm mb-4">
                             <div class="card-header">{{ trans('messages.profile.money-transfer.title') }}</div>

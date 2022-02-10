@@ -144,7 +144,7 @@ class Role extends Model
      */
     public static function defaultRoleId()
     {
-        return (int) setting('role.default', 1);
+        return (int) setting('roles.default', 1);
     }
 
     /**

@@ -25,7 +25,7 @@ class RoleSeeder extends Seeder
         ]);
 
         if ($defaultRole->id !== 1) {
-            Setting::updateSettings('role.default', $defaultRole->id);
+            Setting::updateSettings('roles.default', $defaultRole->id);
         }
 
         Role::create([

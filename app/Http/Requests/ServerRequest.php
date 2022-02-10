@@ -31,6 +31,8 @@ class ServerRequest extends FormRequest
      * Get the validated data from the request.
      *
      * @return array
+     * @param mixed|null $key
+     * @param mixed|null $default
      */
     public function validated($key = null, $default = null)
     {
