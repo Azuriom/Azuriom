@@ -79,7 +79,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table" id="availablePlugins">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
