@@ -32,7 +32,7 @@ class ServerRequest extends FormRequest
      *
      * @return array
      */
-    public function validated()
+    public function validated($key = null, $default = null)
     {
         $data = null;
         $type = $this->input('type');
