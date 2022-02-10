@@ -49,9 +49,9 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group @if(oauth_login()) d-none @endif">
+                                <div class="form-group">
                                     <label for="emailInput">{{ trans('auth.email') }}</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email) }}" required @if($user->isDeleted()) disabled @endif>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @if(! oauth_login()) required @endif @if($user->isDeleted()) disabled @endif>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -141,7 +141,7 @@
                         </div>
                     @endif
 
-                    @if(! oauth_login())
+                    @if($user->email !== null)
                         <form action="{{ route('admin.users.verify', $user) }}" method="POST">
                             @csrf
 

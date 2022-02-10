@@ -7,6 +7,7 @@ use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
+use Closure;
 use Composer\Autoload\ClassLoader;
 use Composer\Semver\Semver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -332,21 +333,21 @@ class PluginManager extends ExtensionManager
         return null;
     }
 
-    public function addRouteDescription(array $items)
+    public function addRouteDescription(Closure|array $items)
     {
         foreach ($items as $key => $value) {
             $this->routeDescriptions->put($key, $value);
         }
     }
 
-    public function addAdminNavItem(array $items)
+    public function addAdminNavItem(Closure|array $items)
     {
         foreach ($items as $key => $value) {
             $this->adminNavItems->put($key, $value);
         }
     }
 
-    public function addUserNavItem(array $items)
+    public function addUserNavItem(Closure|array $items)
     {
         foreach ($items as $key => $value) {
             $this->userNavItems->put($key, $value);
@@ -358,7 +359,7 @@ class PluginManager extends ExtensionManager
      */
     public function getRouteDescriptions()
     {
-        return $this->routeDescriptions;
+        return $this->routeDescriptions->map(fn($value) => value($value));
     }
 
     /**
@@ -366,7 +367,7 @@ class PluginManager extends ExtensionManager
      */
     public function getAdminNavItems()
     {
-        return $this->adminNavItems;
+        return $this->adminNavItems->map(fn($value) => value($value));
     }
 
     /**
@@ -374,7 +375,7 @@ class PluginManager extends ExtensionManager
      */
     public function getUserNavItems()
     {
-        return $this->userNavItems;
+        return $this->userNavItems->map(fn($value) => value($value));
     }
 
     public function cachePlugins(array $enabledPlugins = null)

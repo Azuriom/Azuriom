@@ -92,10 +92,10 @@
                                 <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">
                                     {{ trans('admin.nav.settings.settings.auth') }}
                                 </a>
-                                <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">
-                                    {{ trans('admin.nav.settings.settings.mail') }}
-                                </a>
                             @endif
+                            <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">
+                                {{ trans('admin.nav.settings.settings.mail') }}
+                            </a>
                             <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">
                                 {{ trans('admin.nav.settings.settings.performances') }}
                             </a>
@@ -240,12 +240,14 @@
                         <div class="nav-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
                             <a class="nav-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-toggle="collapse" data-target="#collapse{{ ucfirst($navId) }}" aria-expanded="true" aria-controls="collapse{{ ucfirst($navId) }}">
                                 <i class="fa-fw {{ $navItem['icon'] }}"></i>
-                                <span>{{ trans($navItem['name']) }}</span>
+                                <span>{{ $navItem['name'] }}</span>
                             </a>
                             <div id="collapse{{ ucfirst($navId) }}" class="collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
                                     @foreach($navItem['items'] ?? [] as $route => $name)
-                                        <a class="collapse-item {{ add_active(str_replace('index', '*', $route)) }}" href="{{ route($route) }}">{{ trans($name) }}</a>
+                                        <a class="collapse-item {{ add_active(str_replace('index', '*', $route)) }}" href="{{ route($route) }}">
+                                            {{ $name }}
+                                        </a>
                                     @endforeach
                                 </div>
                             </div>
@@ -254,7 +256,7 @@
                         <div class="nav-item {{ add_active($navItem['route']) }}">
                             <a class="nav-link" href="{{ route($navItem['route']) }}">
                                 <i class="fa-fw {{ $navItem['icon'] }}"></i>
-                                <span>{{ trans($navItem['name']) }}</span>
+                                <span>{{ $navItem['name'] }}</span>
                             </a>
                         </div>
                     @endif

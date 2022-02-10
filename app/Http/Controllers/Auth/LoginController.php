@@ -81,10 +81,10 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
 
-        return $this->loginUser($request, $user);
+        return $this->loginUser($request, $user, false);
     }
 
-    protected function loginUser(Request $request, User $user)
+    protected function loginUser(Request $request, User $user, bool $verify2fa = true)
     {
         if ($user->isBanned()) {
             throw ValidationException::withMessages([
@@ -96,7 +96,7 @@ class LoginController extends Controller
             return $this->sendMaintenanceResponse($request);
         }
 
-        if ($user->hasTwoFactorAuth()) {
+        if ($verify2fa && $user->hasTwoFactorAuth()) {
             return $this->redirectTo2fa($request, $user);
         }
 
@@ -142,7 +142,7 @@ class LoginController extends Controller
 
         return User::forceCreate([
             'name' => $user->getNickname() ?? $user->getName(),
-            'email' => "{$user->getId()}@{$socialiteDriver}.oauth",
+            'email' => $user->getEmail(),
             'avatar' => $user->getAvatar(),
             'password' => Hash::make(Str::random(32)),
             'game_id' => (string) $user->getId(),
@@ -244,7 +244,7 @@ class LoginController extends Controller
         try {
             $name = game()->getUserName($user);
 
-            if ($name !== null && $name !== $user->name) {
+            if ($name !== null) {
                 $user->update(['name' => $name]);
             }
         } catch (Exception $e) {

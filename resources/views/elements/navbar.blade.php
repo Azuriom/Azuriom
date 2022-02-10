@@ -59,7 +59,7 @@
 
                             @foreach(plugins()->getUserNavItems() ?? [] as $navId => $navItem)
                                 <a class="dropdown-item" href="{{ route($navItem['route']) }}">
-                                    {{ trans($navItem['name']) }}
+                                    {{ $navItem['name'] }}
                                 </a>
                             @endforeach
 

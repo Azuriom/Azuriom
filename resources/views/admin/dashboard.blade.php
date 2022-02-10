@@ -12,7 +12,7 @@
         </div>
     @endif
 
-    @if(config('mail.default') === 'array' && ! oauth_login())
+    @if(config('mail.default') === 'array')
         <div class="alert alert-warning shadow-sm" role="alert">
             <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])
         </div>
@@ -108,8 +108,12 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ trans($card['name']) }}</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $card['value'] }}</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {{ $card['name'] }}
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ $card['value'] }}
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="{{ $card['icon'] }} fa-2x text-gray-300"></i>

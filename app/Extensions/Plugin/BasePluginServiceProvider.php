@@ -94,17 +94,23 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function registerRouteDescriptions()
     {
-        $this->app['plugins']->addRouteDescription($this->routeDescriptions());
+        $this->app['plugins']->addRouteDescription(function () {
+            return $this->routeDescriptions();
+        });
     }
 
     protected function registerAdminNavigation()
     {
-        $this->app['plugins']->addAdminNavItem($this->adminNavigation());
+        $this->app['plugins']->addAdminNavItem(function () {
+            return $this->adminNavigation();
+        });
     }
 
     protected function registerUserNavigation()
     {
-        $this->app['plugins']->addUserNavItem($this->userNavigation());
+        $this->app['plugins']->addUserNavItem(function () {
+            return $this->userNavigation();
+        });
     }
 
     protected function middleware($middleware, bool $before = false)
