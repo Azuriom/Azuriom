@@ -1,10 +1,6 @@
-@if($htmlScriptsHead = setting('html-head')) @push('scripts')
-    {!! $htmlScriptsHead !!}
-@endpush @endif
+@push('scripts')@includeIf('custom.footer')@endpush
 
-@if($htmlScriptsBody = setting('html-body')) @push('footer-scripts')
-    {!! $htmlScriptsBody !!}
-@endpush @endif
+@push('footer-scripts')@includeIf('custom.body')@endpush
 
 @if($keywords = setting('keywords')) @push('meta')
     <meta name="keywords" content="{{ $keywords }}">

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('server_commands', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('server_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->boolean('need_online')->default(false);
             $table->text('command');
             $table->timestamps();

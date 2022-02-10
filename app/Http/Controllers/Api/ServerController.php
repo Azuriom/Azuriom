@@ -20,9 +20,7 @@ class ServerController extends Controller
     public function fetch(Request $request)
     {
         $server = Server::find($request->input('server-id'));
-
         $players = Arr::pluck($request->json('players', []), 'name', 'uuid');
-
         $cpuUsage = $request->json('system.cpu');
         $ramUsage = $request->json('system.ram');
         $tps = $request->json('worlds.tps');
@@ -37,7 +35,7 @@ class ServerController extends Controller
             'entities' => $request->json('worlds.entities'),
         ], $request->json('full', false));
 
-        $usersIds = User::whereIn('name', $players)->get()->modelsKeys();
+        $usersIds = User::whereIn('name', $players)->get()->modelKeys();
 
         $commands = $server->commands()
             ->with('user')

@@ -122,6 +122,20 @@ class PluginCreateCommand extends Command
                     "{$namespace}\\" => 'src/',
                 ],
             ],
+            'replace' => [
+                'guzzlehttp/guzzle' => '*',
+                'guzzlehttp/promises' => '*',
+                'guzzlehttp/psr7' => '*',
+                'monolog/monolog' => '*',
+                'nesbot/carbon' => '*',
+                'psr/container' => '*',
+                'psr/event-dispatcher' => '*',
+                'psr/http-client' => '*',
+                'psr/http-factory' => '*',
+                'psr/http-message' => '*',
+                'psr/log' => '*',
+                'psr/simple-cache' => '*',
+            ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

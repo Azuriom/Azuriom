@@ -6,6 +6,7 @@ use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
+use Azuriom\Models\Image;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
@@ -145,7 +146,10 @@ class ThemeController extends Controller
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.no-config'));
         }
 
-        return view()->file($viewPath, ['theme' => $theme]);
+        return view()->file($viewPath, [
+            'theme' => $theme,
+            'images' => Image::all(),
+        ]);
     }
 
     /**

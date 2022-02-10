@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="col-md-3 text-center">
-                                <img src="{{ $user->getAvatar(256) }}" alt="{{ $user->name }}" class="rounded mb-3" height="150">
+                                <img src="{{ $user->getAvatar(256) }}" alt="{{ $user->name }}" class="rounded img-fluid mb-3" height="150">
                             </div>
                         </div>
 

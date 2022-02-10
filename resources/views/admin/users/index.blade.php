@@ -8,7 +8,7 @@
             <label for="searchInput" class="sr-only">{{ trans('messages.actions.search') }}</label>
 
             <div class="input-group">
-                <input type="text" class="form-control" id="searchInput" name="search" value="{{ $search ?? '' }}" placeholder="{{ trans('messages.actions.search') }}">
+                <input type="search" class="form-control" id="searchInput" name="search" value="{{ $search ?? '' }}" placeholder="{{ trans('messages.actions.search') }}">
 
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">
