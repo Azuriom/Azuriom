@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('avatar')->nullable()->after('email');
+            $table->string('avatar')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id')->default(1);
             $table->unsignedDecimal('money', 14)->default(0);

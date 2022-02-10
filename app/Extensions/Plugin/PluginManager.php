@@ -359,7 +359,7 @@ class PluginManager extends ExtensionManager
      */
     public function getRouteDescriptions()
     {
-        return $this->routeDescriptions->map(fn($value) => value($value));
+        return $this->routeDescriptions->map(fn ($value) => value($value));
     }
 
     /**
@@ -367,7 +367,7 @@ class PluginManager extends ExtensionManager
      */
     public function getAdminNavItems()
     {
-        return $this->adminNavItems->map(fn($value) => value($value));
+        return $this->adminNavItems->map(fn ($value) => value($value));
     }
 
     /**
@@ -375,7 +375,7 @@ class PluginManager extends ExtensionManager
      */
     public function getUserNavItems()
     {
-        return $this->userNavItems->map(fn($value) => value($value));
+        return $this->userNavItems->map(fn ($value) => value($value));
     }
 
     public function cachePlugins(array $enabledPlugins = null)
