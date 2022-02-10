@@ -64,6 +64,7 @@ class ProfileController extends Controller
 
         $request->user()->update(['password' => Hash::make($password)]);
         Auth::logoutOtherDevices($password);
+        event(new \Illuminate\Auth\Events\PasswordReset($request->user()));
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }
