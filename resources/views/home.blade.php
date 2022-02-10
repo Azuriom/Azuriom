@@ -16,6 +16,10 @@
     </div>
 
     <div class="container">
+        @if($message)
+            <p class="text-center">{{ $message }}</p>
+        @endif
+
         <div class="row">
             @foreach($posts as $post)
                 <div class="col-md-6">

@@ -8,6 +8,15 @@
             <form action="{{ route('admin.settings.seo.update') }}" method="POST">
                 @csrf
 
+                <div class="form-group">
+                    <label for="homeMessage">{{ trans('admin.settings.seo.home-message') }}</label>
+                    <textarea class="form-control html-editor @error('home-message') is-invalid @enderror" id="homeMessage" name="home-message" rows="5">{{ old('home-message', $homeMessage) }}</textarea>
+
+                    @error('home-message')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
                 <div class="alert alert-info">
                     <i class="fas fa-info-circle"></i> @lang('admin.settings.seo.html')
                 </div>

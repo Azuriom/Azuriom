@@ -6,7 +6,7 @@
     <meta name="keywords" content="{{ $keywords }}">
 @endpush @endif
 
-@if(($welcomePopup = setting('welcome-popup')) && ! session()->has('welcome_popup'))
+@if(($welcomePopup = setting('welcome_alert')) && ! session()->has('welcome_popup'))
     @push('footer-scripts')
         <!-- Modal -->
         <div class="modal fade" id="welcomePopupModal" tabindex="-1" role="dialog" aria-labelledby="welcomePopupLabel" aria-hidden="true">

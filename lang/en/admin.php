@@ -182,6 +182,8 @@ return [
 
             'html' => 'You can include HTML in the <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> of all pages (e.g. for cookie banner or website analytics) by creating a file named <code>head.blade.php</code> or <code>body.blade.php</code> in the <code>resources/views/custom/</code> folder.',
 
+            'home-message' => 'Home message',
+
             'welcome-popup' => [
                 'enable' => 'Enable welcome popup?',
                 'message' => 'Welcome Popup Message',

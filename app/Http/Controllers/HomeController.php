@@ -20,7 +20,10 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        return view('home', ['posts' => $posts]);
+        return view('home', [
+            'message' => setting('home_message'),
+            'posts' => $posts,
+        ]);
     }
 
     public function maintenance(Request $request)

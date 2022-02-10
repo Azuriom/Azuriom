@@ -264,7 +264,8 @@ class SettingsController extends Controller
     public function seo()
     {
         return view('admin.settings.seo', [
-            'welcomePopup' => setting('welcome-popup'),
+            'homeMessage' => setting('home_message'),
+            'welcomePopup' => setting('welcome_alert'),
         ]);
     }
 
@@ -278,15 +279,19 @@ class SettingsController extends Controller
      */
     public function updateSeo(Request $request)
     {
-        $settings = $this->validate($request, [
+        $this->validate($request, [
+            'home-message' => ['nullable', 'string'],
             'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
         ]);
 
-        if (! $request->filled('enable_welcome_popup')) {
-            $settings['welcome-popup'] = null;
-        }
+        $alert = $request->filled('enable_welcome_popup')
+            ? $request->input('welcome-popup')
+            : null;
 
-        Setting::updateSettings($settings);
+        Setting::updateSettings([
+            'home_message' => $request->input('home-message'),
+            'welcome_alert' => $alert,
+        ]);
 
         ActionLog::log('settings.updated');
 

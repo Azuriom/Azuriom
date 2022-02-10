@@ -104,6 +104,7 @@ class SettingServiceProvider extends ServiceProvider
             'maintenance-status' => 'maintenance.enabled',
             'maintenance-message' => 'maintenance.message',
             'maintenance-paths' => 'maintenance.paths',
+            'welcome-popup' => 'welcome_alert',
             'user_money_transfer' => 'users.money_transfer',
         ];
 
@@ -114,7 +115,7 @@ class SettingServiceProvider extends ServiceProvider
                 unset($settings[$oldKey]);
                 $settings[$newKey] = $value;
 
-                Setting::where('name', $oldKey)->update(['name']);
+                Setting::where('name', $oldKey)->delete();
                 Setting::updateOrCreate(['name' => $newKey], ['value' => $value]);
             }
         }
