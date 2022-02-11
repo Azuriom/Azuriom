@@ -12,32 +12,32 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="conditionsInput">{{ trans('admin.settings.auth.conditions-url') }}</label>
+                    <label for="conditionsInput">{{ trans('admin.settings.auth.conditions') }}</label>
                     <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}" aria-describedby="conditionsLabel">
 
                     @error('conditions')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small id="conditionsLabel" class="form-text">{{ trans('admin.settings.auth.conditions-info') }}</small>
+                    <small id="conditionsLabel" class="form-text">{{ trans('admin.settings.auth.conditions_info') }}</small>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="registerInput" name="register" @if($register) checked @endif aria-describedby="registerInput">
-                        <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.auth.enable-user-registration') }}</label>
+                        <label class="custom-control-label" for="registerInput">{{ trans('admin.settings.auth.registration') }}</label>
                     </div>
 
-                    <small id="registerInput" class="form-text">{{ trans('admin.settings.auth.enable-user-registration-label') }}</small>
+                    <small id="registerInput" class="form-text">{{ trans('admin.settings.auth.registration_info') }}</small>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif aria-describedby="authApiInfo">
-                        <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.auth.auth-api') }}</label>
+                        <label class="custom-control-label" for="authApiInput">{{ trans('admin.settings.auth.api') }}</label>
                     </div>
 
-                    <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.auth-api-label')</small>
+                    <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.api_info')</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">
@@ -72,7 +72,7 @@
                     <div class="card card-body mb-2">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="siteKeyInput">{{ trans('admin.settings.security.captcha.site-key') }}</label>
+                                <label for="siteKeyInput">{{ trans('admin.settings.security.captcha.site_key') }}</label>
                                 <input type="text" class="form-control @error('site_key') is-invalid @enderror" id="siteKeyInput" name="site_key" value="{{ old('captcha.site_key', setting('captcha.site_key', '')) }}">
 
                                 @error('site_key')
@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="form-group col-md-6 mb-0">
-                                <label for="secretKeyInput">{{ trans('admin.settings.security.captcha.secret-key') }}</label>
+                                <label for="secretKeyInput">{{ trans('admin.settings.security.captcha.secret_key') }}</label>
                                 <input type="text" class="form-control @error('secret_key') is-invalid @enderror" id="secretKeyInput" name="secret_key" value="{{ old('secret_key', setting('captcha.secret_key', '')) }}">
 
                                 @error('secret_key')
@@ -102,7 +102,7 @@
 
                 <div class="form-group">
                     <label for="hashSelect">{{ trans('admin.settings.security.hash') }}</label>
-                    <select class="custom-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required aria-describedby="hashInfo">
+                    <select class="custom-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required>
                         @foreach($hashAlgorithms as $hash => $hashName)
                             <option value="{{ $hash }}" @if($currentHash === $hash) selected @endif>{{ $hashName }}</option>
                         @endforeach
@@ -111,8 +111,6 @@
                     @error('hash')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
-
-                    <small id="hashInfo" class="form-text">{{ trans('admin.settings.security.hash-info') }}</small>
                 </div>
 
                 @if($canForce2fa)

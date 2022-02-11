@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.images.title-edit', ['image' => $image->name]))
+@section('title', trans('admin.images.edit', ['image' => $image->name]))
 
 @section('content')
     <div class="card shadow mb-4">

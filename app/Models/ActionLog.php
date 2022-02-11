@@ -32,13 +32,13 @@ class ActionLog extends Model
             'global' => false,
             'icon' => 'user-lock',
             'color' => 'success',
-            'message' => 'admin.logs.users.2fa-enabled',
+            'message' => 'admin.logs.users.2fa.enabled',
         ],
         'users.2fa.disabled' => [
             'global' => false,
             'icon' => 'user-lock',
             'color' => 'warning',
-            'message' => 'admin.logs.users.2fa-disabled',
+            'message' => 'admin.logs.users.2fa.disabled',
         ],
         'users.transfer' => [
             'icon' => 'exchange-alt',

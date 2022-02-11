@@ -207,7 +207,7 @@ class LoginController extends Controller
         if (! $user->isValidTwoFactorCode($code)) {
             $request->session()->keep('login.2fa');
 
-            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
+            throw ValidationException::withMessages(['code' => trans('auth.2fa.invalid')]);
         }
 
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));

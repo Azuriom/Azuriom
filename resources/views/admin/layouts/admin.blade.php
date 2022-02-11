@@ -81,29 +81,29 @@
                     </a>
                     <div id="collapseSettings" class="collapse {{ Route::is('admin.settings.*', 'admin.social-links.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">{{ trans('admin.nav.settings.settings.settings') }}</h6>
+                            <h6 class="collapse-header">{{ trans('admin.nav.settings.settings') }}</h6>
                             <a class="collapse-item {{ add_active('admin.settings.index') }}" href="{{ route('admin.settings.index') }}">
-                                {{ trans('admin.nav.settings.settings.global') }}
+                                {{ trans('admin.nav.settings.global') }}
                             </a>
                             <a class="collapse-item {{ add_active('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">
-                                {{ trans('admin.nav.settings.settings.seo') }}
+                                {{ trans('admin.nav.settings.seo') }}
                             </a>
                             @if(! oauth_login())
                                 <a class="collapse-item {{ add_active('admin.settings.auth') }}" href="{{ route('admin.settings.auth') }}">
-                                    {{ trans('admin.nav.settings.settings.auth') }}
+                                    {{ trans('admin.nav.settings.auth') }}
                                 </a>
                             @endif
                             <a class="collapse-item {{ add_active('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">
-                                {{ trans('admin.nav.settings.settings.mail') }}
+                                {{ trans('admin.nav.settings.mail') }}
                             </a>
                             <a class="collapse-item {{ add_active('admin.settings.performance') }}" href="{{ route('admin.settings.performance') }}">
-                                {{ trans('admin.nav.settings.settings.performances') }}
+                                {{ trans('admin.nav.settings.performances') }}
                             </a>
                             <a class="collapse-item {{ add_active('admin.settings.maintenance') }}" href="{{ route('admin.settings.maintenance') }}">
-                                {{ trans('admin.nav.settings.settings.maintenance') }}
+                                {{ trans('admin.nav.settings.maintenance') }}
                             </a>
                             <a class="collapse-item {{ add_active('admin.social-links.*') }}" href="{{ route('admin.social-links.index') }}">
-                                {{ trans('admin.nav.settings.settings.social') }}
+                                {{ trans('admin.nav.settings.social') }}
                             </a>
                         </div>
                     </div>
@@ -397,7 +397,7 @@
                                 </a>
                                 <a class="dropdown-item" href="{{ route('home') }}">
                                     <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    {{ trans('admin.nav.back-website') }}
+                                    {{ trans('admin.nav.back') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">
@@ -463,12 +463,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('admin.confirm-delete.title') }}</h2>
+                <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('admin.delete.title') }}</h2>
                 <button class="close" type="button" data-dismiss="modal" aria-label="{{ trans('messages.actions.close') }}">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">{{ trans('admin.confirm-delete.description') }}</div>
+            <div class="modal-body">{{ trans('admin.delete.description') }}</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">
                     <i class="fas fa-arrow-left"></i> {{ trans('messages.actions.cancel') }}</button>

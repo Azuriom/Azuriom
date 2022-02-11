@@ -40,15 +40,15 @@
     </div>
 </div>
 
-<h3>{{ trans('admin.roles.permissions') }}</h3>
+<h3>{{ trans('messages.fields.permissions') }}</h3>
 
 <div class="form-group mb-2">
     <div class="custom-control custom-switch">
         <input type="checkbox" class="custom-control-input" id="adminSwitch" name="is_admin" data-toggle="collapse" data-target="#permissionsGroup" @if($role->is_admin ?? false) checked @endif aria-describedby="adminInfo">
-        <label class="custom-control-label" for="adminSwitch">{{ trans('admin.roles.perm-admin.label') }}</label>
+        <label class="custom-control-label" for="adminSwitch">{{ trans('admin.roles.admin') }}</label>
     </div>
 
-    <small id="adminInfo" class="form-text text-info">{{ trans('admin.roles.perm-admin.info') }}</small>
+    <small id="adminInfo" class="form-text text-info">{{ trans('admin.roles.admin_info') }}</small>
 </div>
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">

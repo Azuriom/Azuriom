@@ -33,11 +33,11 @@
         <div class="card-body">
 
             @if($hasUpdate)
-                <h2>{{ trans('admin.update.subtitle-update') }}</h2>
+                <h2>{{ trans('admin.update.has_update') }}</h2>
 
                 <div class="alert alert-warning mt-3" role="alert">
                     <i class="fas fa-exclamation-triangle"></i>
-                    {{ trans('admin.update.backup-info') }}
+                    {{ trans('admin.update.backup') }}
                 </div>
 
                 <p>@lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])</p>
@@ -47,7 +47,7 @@
 
                     <button type="button" class="btn btn-success" data-update-route="{{ route('admin.update.install') }}">
                         <i class="fas fa-download"></i>
-                        {{ trans('admin.update.actions.install') }}
+                        {{ trans('messages.actions.install') }}
                         <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
                 @else
@@ -55,16 +55,16 @@
 
                     <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
                         <i class="fas fa-cloud-download-alt"></i>
-                        {{ trans('admin.update.actions.download') }}
+                        {{ trans('messages.actions.download') }}
                         <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
                 @endif
 
             @else
-                <h2>{{ trans('admin.update.subtitle-no-update') }}</h2>
+                <h2>{{ trans('admin.update.no_update') }}</h2>
 
                 <p>
-                    @lang('admin.update.up-to-date', ['version' => Azuriom::version()])
+                    @lang('admin.update.latest_version', ['version' => Azuriom::version()])
                     @lang('admin.update.changelog', ['url' => 'https://github.com/Azuriom/Azuriom/releases'])
                 </p>
 
@@ -72,7 +72,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sync"></i> {{ trans('admin.update.actions.check') }}
+                        <i class="fas fa-sync"></i> {{ trans('admin.update.check') }}
                     </button>
                 </form>
             @endif

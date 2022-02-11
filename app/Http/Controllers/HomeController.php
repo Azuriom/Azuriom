@@ -36,7 +36,7 @@ class HomeController extends Controller
             return redirect()->home();
         }
 
-        $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance-message'));
+        $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
 
         return view('maintenance', ['maintenanceMessage' => $maintenanceMessage]);
     }

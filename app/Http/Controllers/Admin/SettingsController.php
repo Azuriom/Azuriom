@@ -141,7 +141,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
+        $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.updated'));
 
         if (setting('register', true) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();
@@ -172,7 +172,7 @@ class SettingsController extends Controller
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
                     if (! $this->isHashSupported($value)) {
-                        $fail(trans('admin.settings.security.hash-error'));
+                        $fail(trans('admin.settings.security.hash_error'));
                     }
                 },
             ],
@@ -198,7 +198,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
     }
 
     public function performance()
@@ -218,26 +218,23 @@ class SettingsController extends Controller
         $response = redirect()->route('admin.settings.performance');
 
         if (! $this->cache->flush()) {
-            return $response->with('error', trans('admin.settings.performances.cache.status.clear-error'));
+            return $response->with('error', trans('admin.settings.performances.cache.error'));
         }
 
         app(Optimizer::class)->clearViewCache();
 
-        return $response->with('success', trans('admin.settings.performances.cache.status.cleared'));
+        return $response->with('success', trans('messages.status.success'));
     }
 
     public function enableAdvancedCache()
     {
         $redirect = redirect()->route('admin.settings.performance');
-        $cacheStatus = $this->optimizer->isEnabled();
 
         if (! $this->optimizer->cache()) {
-            return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
+            return $redirect->with('error', trans('admin.settings.performances.boost.error'));
         }
 
-        $message = trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled'));
-
-        return $redirect->with('success', $message);
+        return $redirect->with('success', trans('messages.status.success'));
     }
 
     public function disableAdvancedCache()
@@ -245,7 +242,7 @@ class SettingsController extends Controller
         $this->optimizer->clear();
 
         return redirect()->route('admin.settings.performance')
-            ->with('success', trans('admin.settings.performances.boost.status.disabled'));
+            ->with('success', trans('messages.status.success'));
     }
 
     public function linkStorage()
@@ -258,7 +255,7 @@ class SettingsController extends Controller
         Files::relativeLink($target, $link);
 
         return redirect()->route('admin.settings.performance')
-            ->with('success', trans('messages.status-success'));
+            ->with('success', trans('messages.status.success'));
     }
 
     public function seo()
@@ -295,7 +292,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.updated'));
     }
 
     public function auth()
@@ -325,7 +322,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
     }
 
     /**
@@ -375,7 +372,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.updated'));
     }
 
     public function sendTestMail(Request $request)
@@ -384,7 +381,7 @@ class SettingsController extends Controller
             $request->user()->notify(new TestMail());
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+                'message' => trans('messages.status.error', ['error' => $e->getMessage()]),
             ], 500);
         }
 
@@ -427,7 +424,7 @@ class SettingsController extends Controller
             'maintenance.paths' => empty($paths) ? null : $paths,
         ]);
 
-        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.updated'));
     }
 
     protected function getAvailableLocales()

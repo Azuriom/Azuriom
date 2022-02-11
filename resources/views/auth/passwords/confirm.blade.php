@@ -10,7 +10,7 @@
                     <div class="card-header">{{ trans('auth.passwords.confirm') }}</div>
 
                     <div class="card-body">
-                        {{ trans('auth.need-confirm') }}
+                        {{ trans('auth.confirmation') }}
 
                         <form method="POST" action="{{ route('password.confirm') }}">
                             @csrf
@@ -36,7 +36,7 @@
                                     </button>
 
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                         {{ trans('auth.forgot-password') }}
+                                         {{ trans('auth.forgot_password') }}
                                     </a>
                                 </div>
                             </div>

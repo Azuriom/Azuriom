@@ -29,7 +29,7 @@
                         <th scope="col">{{ trans('auth.name') }}</th>
                         <th scope="col">{{ oauth_login() ? game()->trans('id') : trans('auth.email') }}</th>
                         <th scope="col">{{ trans('messages.fields.role') }}</th>
-                        <th scope="col">{{ trans('admin.users.fields.register-date') }}</th>
+                        <th scope="col">{{ trans('admin.users.registered') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>
                     </thead>
@@ -41,12 +41,12 @@
                                 {{ $user->id }}
 
                                 @if($user->isDeleted())
-                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.info.deleted') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.deleted') }}" data-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
-                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.info.admin') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.admin') }}" data-toggle="tooltip"></i>
                                 @endif
                                 @if($user->isBanned())
-                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.banned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td @if($user->isDeleted()) class="text-strikethrough" @endif>

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.navbar-elements.title'))
+@section('title', trans('admin.navbar_elements.title'))
 
 @push('footer-scripts')
     <script src="{{ asset('vendor/sortablejs/Sortable.min.js') }}"></script>

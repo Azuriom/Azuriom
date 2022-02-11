@@ -29,42 +29,46 @@ return [
     'name' => 'Username',
     'email' => 'Email Address',
     'password' => 'Password',
-    'confirm-password' => 'Confirm Password',
-    'current-password' => 'Current password',
+    'confirm_password' => 'Confirm Password',
+    'current_password' => 'Current password',
 
     'conditions' => 'I accept the <a href=":url" target="_blank">conditions</a>.',
 
-    '2fa-code' => 'Two Factor Auth Code',
-    '2fa-invalid' => 'Invalid code',
+    '2fa' => [
+        'code' => 'Two Factor Auth Code',
+        'invalid' => 'Invalid code',
+    ],
 
     'suspended' => 'This account is suspended.',
 
     'maintenance' => 'The website is under maintenance.',
 
-    'remember-me' => 'Remember Me',
-    'forgot-password' => 'Forgot Your Password?',
+    'remember' => 'Remember Me',
+    'forgot_password' => 'Forgot Your Password?',
 
-    'verify-sent' => 'A fresh verification link has been sent to your email address.',
-    'verify-check' => 'Before proceeding, please check your email for a verification link.',
-    'verify-request' => 'If you did not receive the email you can request another.',
-    'verify-resend' => 'Resend mail',
+    'verification' => [
+        'sent' => 'A fresh verification link has been sent to your email address.',
+        'check' => 'Before proceeding, please check your email for a verification link.',
+        'request' => 'If you did not receive the email you can request another.',
+        'resend' => 'Resend mail',
+    ],
 
-    'need-confirm' => 'Please confirm your password before continuing.',
+    'confirmation' => 'Please confirm your password before continuing.',
 
     'mail' => [
         'reset' => [
             'subject' => 'Reset Password Notification',
-            'line-1' => 'You are receiving this email because we received a password reset request for your account.',
+            'line1' => 'You are receiving this email because we received a password reset request for your account.',
             'action' => 'Reset Password',
-            'line-2' => 'This password reset link will expire in :count minutes.',
-            'line-3' => 'If you did not request a password reset, no further action is required.',
+            'line2' => 'This password reset link will expire in :count minutes.',
+            'line3' => 'If you did not request a password reset, no further action is required.',
         ],
 
         'verify' => [
             'subject' => 'Verify Email Address',
-            'line-1' => 'Please click the button below to verify your email address.',
+            'line1' => 'Please click the button below to verify your email address.',
             'action' => 'Verify Email Address',
-            'line-2' => 'If you did not create an account, no further action is required.',
+            'line2' => 'If you did not create an account, no further action is required.',
         ],
     ],
 ];

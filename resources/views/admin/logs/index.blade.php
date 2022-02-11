@@ -39,7 +39,7 @@
                 @csrf
 
                 <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> {{ trans('admin.logs.actions.clear') }}
+                    <i class="fas fa-trash"></i> {{ trans('admin.logs.clear') }}
                 </button>
             </form>
         </div>

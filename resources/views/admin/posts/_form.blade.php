@@ -24,7 +24,7 @@
     <label for="imageInput">{{ trans('messages.fields.image') }}</label>
     <div class="custom-file">
         <input type="file" class="custom-file-input  @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="imagePreview">
-        <label class="custom-file-label" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
+        <label class="custom-file-label" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose_file') }}</label>
 
         @error('image')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -58,14 +58,14 @@
 </div>
 
 <div class="form-group">
-    <label for="publishedInput">{{ trans('admin.posts.fields.published-at') }}</label>
+    <label for="publishedInput">{{ trans('admin.posts.published_at') }}</label>
     <input type="text" class="form-control date-picker @error('published_at') is-invalid @enderror" id="publishedInput" name="published_at" value="{{ old('published_at', $post->published_at ?? now()) }}" required aria-describedby="publishedInfo">
 
     @error('published_at')
     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
     @enderror
 
-    <small id="publishedInfo" class="form-text">{{ trans('admin.posts.published-info') }}</small>
+    <small id="publishedInfo" class="form-text">{{ trans('admin.posts.published_info') }}</small>
 </div>
 
 <div class="form-group custom-control custom-switch">

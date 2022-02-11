@@ -5,14 +5,14 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.current.title') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.current') }}</h6>
         </div>
         <div class="card-body">
             @if($current)
                 <h3 class="h5">{{ $current->name }}</h3>
                 <ul>
-                    <li>{{ trans('admin.themes.current.author', ['author' => implode(', ', $current->authors)]) }}</li>
-                    <li>{{ trans('admin.themes.current.version', ['version' => $current->version]) }}</li>
+                    <li>{{ trans('admin.themes.author', ['author' => implode(', ', $current->authors)]) }}</li>
+                    <li>{{ trans('admin.themes.version', ['version' => $current->version]) }}</li>
                 </ul>
 
                 <form action="{{ route('admin.themes.change') }}" method="POST" class="d-inline-block">
@@ -20,12 +20,12 @@
 
                     @if($currentHasConfig)
                         <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}">
-                            <i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}
+                            <i class="fas fa-wrench"></i> {{ trans('admin.themes.config') }}
                         </a>
                     @endif
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}
+                        <i class="fas fa-times"></i> {{ trans('admin.themes.disable') }}
                     </button>
                 </form>
                 @if($themesUpdates->has($currentPath))

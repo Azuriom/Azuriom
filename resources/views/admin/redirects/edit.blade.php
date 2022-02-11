@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.redirects.title-edit', ['redirect' => $redirect->slug]))
+@section('title', trans('admin.redirects.edit', ['redirect' => $redirect->slug]))
 
 @section('content')
     <div class="card shadow mb-4">

@@ -47,7 +47,7 @@
                                     <input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="custom-control-label" for="remember">
-                                        {{ trans('auth.remember-me') }}
+                                        {{ trans('auth.remember') }}
                                     </label>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ trans('auth.forgot-password') }}
+                                        {{ trans('auth.forgot_password') }}
                                     </a>
                                 @endif
                             </div>

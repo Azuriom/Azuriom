@@ -43,14 +43,14 @@ if (! function_exists('is_installed')) {
 if (! function_exists('format_date')) {
     function format_date(Carbon $date, bool $fullTime = false)
     {
-        return $date->translatedFormat(trans('messages.date'.($fullTime ? '-full' : '')));
+        return $date->translatedFormat(trans('messages.date.'.($fullTime ? 'full' : 'default')));
     }
 }
 
 if (! function_exists('format_date_compact')) {
     function format_date_compact(Carbon $date)
     {
-        return $date->format(trans('messages.date-compact'));
+        return $date->format(trans('messages.date.compact'));
     }
 }
 

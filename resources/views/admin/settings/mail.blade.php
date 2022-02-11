@@ -33,7 +33,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="mailerSelect">{{ trans('admin.settings.mail.driver') }}</label>
+                        <label for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
                         <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type" aria-describedby="mailerInfo">
                             <option value="" @if(config('mail.default') === 'array') selected @endif>{{ trans('messages.none') }}</option>
@@ -42,11 +42,11 @@
                             @endforeach
                         </select>
 
-                        <small id="mailerInfo" class="form-text">@lang('admin.settings.mail.driver-info')</small>
+                        <small id="mailerInfo" class="form-text">@lang('admin.settings.mail.mailer_info')</small>
                     </div>
 
                     <div class="form-group col-md-8">
-                        <label for="fromAddressInput">{{ trans('admin.settings.mail.from-address') }}</label>
+                        <label for="fromAddressInput">{{ trans('admin.settings.mail.from') }}</label>
                         <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}" required>
 
                         @error('from-address')
@@ -119,17 +119,17 @@
 
 
                 <div class="alert alert-warning d-none" role="alert" data-mail-type="sendmail">
-                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail-warn') }}
+                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail') }}
                 </div>
 
                 <div class="alert alert-warning d-none" role="alert" data-mail-type="undefined">
-                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled-warn') }}
+                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
                 </div>
 
                 <div class="form-group" data-mail-type="smtp sendmail">
                     <div class="form-group custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
-                        <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.enable-users-verification') }}</label>
+                        <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.verification') }}</label>
                     </div>
                 </div>
 

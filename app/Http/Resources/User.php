@@ -20,7 +20,7 @@ class User extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'role' => new RoleResource($this->role),
-            'registered_at' => $this->created_at->toIso8601String(),
+            'registered' => $this->created_at->toIso8601String(),
         ];
     }
 }

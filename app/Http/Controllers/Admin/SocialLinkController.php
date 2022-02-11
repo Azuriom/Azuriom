@@ -36,7 +36,7 @@ class SocialLinkController extends Controller
         }
 
         return response()->json([
-            'message' => trans('messages.status-success'),
+            'message' => trans('messages.status.success'),
         ]);
     }
 
@@ -61,7 +61,7 @@ class SocialLinkController extends Controller
         SocialLink::create($request->validated());
 
         return redirect()->route('admin.social-links.index')
-            ->with('success', trans('messages.status-success'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -90,7 +90,7 @@ class SocialLinkController extends Controller
         $socialLink->update($request->validated());
 
         return redirect()->route('admin.social-links.index')
-            ->with('success', trans('messages.status-success'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -104,6 +104,6 @@ class SocialLinkController extends Controller
         $socialLink->delete();
 
         return redirect()->route('admin.social-links.index')
-            ->with('success', trans('messages.status-success'));
+            ->with('success', trans('messages.status.success'));
     }
 }

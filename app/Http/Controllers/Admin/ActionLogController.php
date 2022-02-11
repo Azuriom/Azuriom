@@ -33,6 +33,6 @@ class ActionLogController extends Controller
     {
         ActionLog::whereDate('created_at', '<', now()->subDays(15))->delete();
 
-        return redirect()->route('admin.logs.index')->with('success', trans('admin.logs.status.cleared'));
+        return redirect()->route('admin.logs.index')->with('success', trans('admin.logs.cleared'));
     }
 }

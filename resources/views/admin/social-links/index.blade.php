@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.social-links.title'))
+@section('title', trans('admin.social_links.title'))
 
 @push('footer-scripts')
     @push('footer-scripts')

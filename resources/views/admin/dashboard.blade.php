@@ -5,23 +5,25 @@
 @section('content')
     @if(! $secure)
         <div id="notHttpsAlert" class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.https-warning') }}
+            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.http') }}
         </div>
         <div id="proxyAlert" class="alert alert-info shadow-sm d-none" role="alert">
-            <i class="fas fa-info-circle"></i> {{ trans('admin.dashboard.proxy-warning') }}
+            <i class="fas fa-info-circle"></i> {{ trans('admin.dashboard.cloudflare') }}
         </div>
     @endif
 
     @if(config('mail.default') === 'array')
         <div class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails-disabled', ['url' => route('admin.settings.mail')])
+            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails', ['url' => route('admin.settings.mail')])
         </div>
     @endif
 
     @if($newVersion !== null)
         <div class="alert alert-info shadow-sm" role="alert">
-            <i class="fas fa-plus"></i> {{ trans('admin.dashboard.new-update', ['version' => $newVersion]) }}.
-            <a href="{{ route('admin.update.index') }}">{{ trans('admin.update.actions.install') }}</a>.
+            <i class="fas fa-plus"></i> {{ trans('admin.dashboard.update', ['version' => $newVersion]) }}.
+            <a href="{{ route('admin.update.index') }}">
+                {{ trans('messages.actions.install') }}
+            </a>.
         </div>
     @endif
 
@@ -130,7 +132,7 @@
         <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent-users') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.recent_users') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="tab-content mb-3">
@@ -166,7 +168,7 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.active-users') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.dashboard.active_users') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-pie pt-4 pb-2">
@@ -197,8 +199,8 @@
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/js/charts.js') }}"></script>
     <script>
-        createLineChart('newUsersPerMonthsChart', @json($newUsersPerMonths), '{{ trans('admin.dashboard.recent-users') }}');
-        createLineChart('newUsersPerDaysChart', @json($newUsersPerDays), '{{ trans('admin.dashboard.recent-users') }}');
+        createLineChart('newUsersPerMonthsChart', @json($newUsersPerMonths), '{{ trans('admin.dashboard.recent_users') }}');
+        createLineChart('newUsersPerDaysChart', @json($newUsersPerDays), '{{ trans('admin.dashboard.recent_users') }}');
         createPieChart('activeUsersChart', @json($activeUsers));
     </script>
 

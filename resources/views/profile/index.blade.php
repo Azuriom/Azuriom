@@ -49,18 +49,18 @@
         @if($user->email !== null && ! $user->hasVerifiedEmail())
             @if (session('resent'))
                 <div class="alert alert-success mb-4" role="alert">
-                    {{ trans('auth.verify-sent') }}
+                    {{ trans('auth.verification.sent') }}
                 </div>
             @endif
 
             <div class="alert alert-warning mb-4" role="alert">
-                <p>{{ trans('messages.profile.not-verified') }}</p>
-                <p>{{ trans('auth.verify-request') }}</p>
+                <p>{{ trans('messages.profile.email_verification') }}</p>
+                <p>{{ trans('auth.verification.request') }}</p>
 
                 <form method="POST" action="{{ route('verification.resend') }}">
                     @csrf
                     <button type="submit" class="btn btn-primary">
-                        {{ trans('auth.verify-resend') }}
+                        {{ trans('auth.verification.resend') }}
                     </button>
                 </form>
             </div>
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
-                    <div class="card-header">{{ trans('messages.profile.change-email') }}</div>
+                    <div class="card-header">{{ trans('messages.profile.change_email') }}</div>
                     <div class="card-body">
                         <form action="{{ route('profile.email') }}" method="POST">
                             @csrf
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="emailConfirmPassInput">{{ trans('auth.current-password') }}</label>
+                                <label for="emailConfirmPassInput">{{ trans('auth.current_password') }}</label>
                                 <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
 
                                 @error('email_confirm_pass')
@@ -103,13 +103,13 @@
             @if(! oauth_login())
                 <div class="col-md-6">
                     <div class="card shadow-sm mb-4">
-                        <div class="card-header">{{ trans('messages.profile.change-password') }}</div>
+                        <div class="card-header">{{ trans('messages.profile.change_password') }}</div>
                         <div class="card-body">
                             <form action="{{ route('profile.password') }}" method="POST">
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="passwordConfirmPassInput">{{ trans('auth.current-password') }}</label>
+                                    <label for="passwordConfirmPassInput">{{ trans('auth.current_password') }}</label>
                                     <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
 
                                     @error('password_confirm_pass')
@@ -127,7 +127,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="confirmPasswordInput">{{ trans('auth.confirm-password') }}</label>
+                                    <label for="confirmPasswordInput">{{ trans('auth.confirm_password') }}</label>
                                     <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
                                 </div>
 
@@ -142,7 +142,7 @@
                 @if(setting('users.money_transfer'))
                     <div class="col-md-6">
                         <div class="card shadow-sm mb-4">
-                            <div class="card-header">{{ trans('messages.profile.money-transfer.title') }}</div>
+                            <div class="card-header">{{ trans('messages.profile.money_transfer.title') }}</div>
                             <div class="card-body">
                                 <form action="{{ route('profile.transfer-money') }}" method="POST">
                                     @csrf

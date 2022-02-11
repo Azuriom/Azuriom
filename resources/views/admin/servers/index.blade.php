@@ -20,7 +20,7 @@
                         @endforeach
                     </select>
 
-                    <small id="serverLabel" class="form-text">{{ trans('admin.servers.default-info') }}</small>
+                    <small id="serverLabel" class="form-text">{{ trans('admin.servers.default_info') }}</small>
 
                     @error('server')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -45,7 +45,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
-                        <th scope="col">{{ trans('admin.servers.fields.address') }}</th>
+                        <th scope="col">{{ trans('messages.fields.address') }}</th>
                         <th scope="col">{{ trans('messages.fields.status') }}</th>
                         <th scope="col">{{ trans('messages.fields.type') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>

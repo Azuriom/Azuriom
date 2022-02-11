@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.images.title-create'))
+@section('title', trans('admin.images.create'))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -38,7 +38,7 @@
                     <label for="imageInput">{{ trans('messages.fields.image') }}</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
-                        <label class="custom-file-label" for="customFile" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
+                        <label class="custom-file-label" for="customFile" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose_file') }}</label>
 
                         @error('image')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

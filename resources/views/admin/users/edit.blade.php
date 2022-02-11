@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.users.title-edit', ['user' => $user->name]))
+@section('title', trans('admin.users.edit', ['user' => $user->name]))
 
 @section('content')
     @if($user->isDeleted())
@@ -21,7 +21,7 @@
                 @csrf
 
                 <button type="submit" class="btn btn-warning">
-                    <i class="fas fa-ban"></i> {{ trans('admin.users.actions.unban') }}
+                    <i class="fas fa-ban"></i> {{ trans('admin.users.unban') }}
                 </button>
             </form>
         </div>
@@ -31,7 +31,7 @@
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.edit-profile') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.edit_profile') }}</h6>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('admin.users.update', $user) }}" method="POST">
@@ -110,12 +110,12 @@
                         @if (! $user->isDeleted() && ! $user->is(Auth::user()))
                             @if(! $user->isBanned())
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#banModal" @if($user->isAdmin()) disabled @endif>
-                                    <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
+                                    <i class="fas fa-ban"></i> {{ trans('admin.users.ban') }}
                                 </button>
                             @endif
 
                             <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger @if($user->isAdmin()) disabled @endif" @if(!$user->isAdmin()) data-confirm="delete" @endif>
-                                <i class="fas fa-trash"></i> {{ trans('admin.users.actions.delete') }}
+                                <i class="fas fa-trash"></i> {{ trans('admin.users.delete') }}
                             </a>
                         @endif
                     </form>
@@ -126,17 +126,17 @@
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.user-info') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.users.info') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="registerInput">{{ trans('admin.users.fields.register-date') }}</label>
+                        <label for="registerInput">{{ trans('admin.users.registered') }}</label>
                         <input type="text" class="form-control" id="registerInput" value="{{ format_date_compact($user->created_at) }}" disabled>
                     </div>
 
                     @if($user->last_login_at)
                         <div class="form-group">
-                            <label for="lastLoginInput">{{ trans('admin.users.fields.last-login') }}</label>
+                            <label for="lastLoginInput">{{ trans('admin.users.last_login') }}</label>
                             <input type="text" class="form-control" id="lastLoginInput" value="{{ format_date_compact($user->last_login_at) }}" disabled>
                         </div>
                     @endif
@@ -146,7 +146,7 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="emailVerifiedInput">{{ trans('admin.users.fields.email-verified') }}</label>
+                                <label for="emailVerifiedInput">{{ trans('admin.users.email.verified') }}</label>
 
                                 @if($user->hasVerifiedEmail())
                                     <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
@@ -156,7 +156,7 @@
 
                                         @if(! $user->isDeleted())
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.actions.verify-email') }}</button>
+                                                <button class="btn btn-outline-success" type="submit">{{ trans('admin.users.email.verify') }}</button>
                                             </div>
                                         @endif
                                     </div>
@@ -169,7 +169,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="2faInput">{{ trans('admin.users.fields.2fa') }}</label>
+                            <label for="2faInput">{{ trans('admin.users.2fa.title') }}</label>
 
                             @if(! $user->hasTwoFactorAuth())
                                 <input type="text" class="form-control text-danger" id="2faInput" value="{{ trans('messages.no') }}" disabled>
@@ -178,7 +178,7 @@
                                     <input type="text" class="form-control text-success" id="2faInput" value="{{ trans('messages.yes') }}" disabled>
 
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-danger" type="submit">{{ trans('admin.users.actions.disable-2fa') }}</button>
+                                        <button class="btn btn-outline-danger" type="submit">{{ trans('admin.users.2fa.disable') }}</button>
                                     </div>
                                 </div>
                             @endif
@@ -186,7 +186,7 @@
                     </form>
 
                     <div class="form-group">
-                        <label for="addressInput">{{ trans('admin.users.fields.ip') }}</label>
+                        <label for="addressInput">{{ trans('admin.users.ip') }}</label>
                         <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
                     </div>
 
@@ -218,7 +218,7 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="reasonInput">{{ trans('admin.bans.fields.reason') }}</label>
+                                <label for="reasonInput">{{ trans('admin.bans.reason') }}</label>
                                 <input type="text" class="form-control @error('reason') is-invalid @enderror" id="reasonInput" name="reason" required>
 
                                 @error('reason')
@@ -229,7 +229,7 @@
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
 
                             <button class="btn btn-danger" type="submit">
-                                <i class="fas fa-ban"></i> {{ trans('admin.users.actions.ban') }}
+                                <i class="fas fa-ban"></i> {{ trans('admin.users.ban') }}
                             </button>
                         </form>
                     </div>

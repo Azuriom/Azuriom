@@ -57,7 +57,7 @@
                                         <i class="fas fa-star text-info" title="{{ trans('admin.roles.info.default') }}" data-toggle="tooltip"></i>
                                     @endif
                                     @if($role->is_admin)
-                                        <i class="fas fa-crown text-warning" title="{{ trans('admin.roles.info.admin') }}" data-toggle="tooltip"></i>
+                                        <i class="fas fa-crown text-warning" title="{{ trans('admin.roles.admin') }}" data-toggle="tooltip"></i>
                                     @endif
                                 </span>
                                 <span>

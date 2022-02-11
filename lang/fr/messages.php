@@ -4,11 +4,11 @@ return [
 
     'lang' => 'Français',
 
-    'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
-
-    'date' => 'j F Y',
-    'date-full' => 'j F Y \à G:i',
-    'date-compact' => 'd/m/Y \à G:i',
+    'date' => [
+        'default' => 'j F Y',
+        'full' => 'j F Y \à G:i',
+        'compact' => 'd/m/Y \à G:i',
+    ],
 
     'nav' => [
         'toggle' => 'Afficher/Masquer la navbar',
@@ -27,8 +27,9 @@ return [
         'save' => 'Sauvegarder',
         'continue' => 'Continuer',
         'browse' => 'Parcourir',
-        'choose-file' => 'Choisir le fichier',
+        'choose_file' => 'Choisir le fichier',
         'download' => 'Télécharger',
+        'install' => 'Installer',
         'upload' => 'Uploader',
         'cancel' => 'Annuler',
         'enable' => 'Activer',
@@ -58,7 +59,7 @@ return [
         'type' => 'Type',
         'file' => 'Fichier',
         'description' => 'Description',
-        'short-description' => 'Description courte',
+        'short_description' => 'Description courte',
         'content' => 'Contenu',
         'role' => 'Rôle',
         'quantity' => 'Quantité',
@@ -73,6 +74,15 @@ return [
         'icon' => 'Icône',
         'server' => 'Serveur',
         'value' => 'Valeur',
+        'published_at' => 'Publié le',
+        'permissions' => 'Permissions',
+        'address' => 'Adresse',
+        'port' => 'Port',
+    ],
+
+    'status' => [
+        'success' => 'L\'action a été effectuée avec succès !',
+        'error' => 'Une erreur est survenue: :error',
     ],
 
     'range' => [
@@ -89,15 +99,15 @@ return [
     'none' => 'Aucun(e)',
     'copied' => 'Copié',
     'fontawesome' => 'Vous pouvez avoir la liste des icônes disponibles sur <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
+    'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
     'home' => 'Accueil',
     'welcome' => 'Bienvenue sur :name',
 
-    'maintenance' => 'Maintenance',
-    'maintenance-message' => 'Le site est actuellement en maintenance.',
-
-    'status-success' => 'L\'action a été effectuée avec succès !',
-    'status-error' => 'Une erreur est survenue: :error',
+    'maintenance' => [
+        'title' => 'Maintenance',
+        'message' => 'Le site est actuellement en maintenance.',
+    ],
 
     'theme' => [
         'light' => 'Thème clair',
@@ -124,11 +134,10 @@ return [
 
     'profile' => [
         'title' => 'Mon Profil',
-        'change-email' => 'Changer l\'adresse email',
-        'change-password' => 'Changer le mot de passe',
+        'change_email' => 'Changer l\'adresse email',
+        'change_password' => 'Changer le mot de passe',
 
-        'not-verified' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
-
+        'email_verification' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
         'updated' => 'Votre profil a été mis à jour.',
 
         'info' => [
@@ -151,12 +160,10 @@ return [
             'disabled' => 'Authentification à deux facteurs désactivée.',
         ],
 
-        'email-not-verified' => 'Votre adresse email n\'est pas vérifiée, veuillez vérifier si vous avez reçu un lien de vérification. Si vous ne l\'avez pas reçu, vous pouvez le renvoyer.',
-
-        'money-transfer' => [
+        'money_transfer' => [
             'title' => 'Transfert d\'argent',
             'self' => 'Vous ne pouvez pas vous envoyer d\'argent à vous même.',
-            'not-enough' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
+            'balance' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
             'success' => 'L\'argent a été envoyé avec succès.',
             'notification' => ':user vous a envoyé :money.',
         ],
@@ -165,7 +172,7 @@ return [
     'posts' => [
         'posts' => 'Articles',
         'posted' => 'Posté le :date par :user',
-        'not-published' => 'Cet article n\'est pas encore publié.',
+        'unpublished' => 'Cet article n\'est pas encore publié.',
         'read' => 'Lire la suite',
     ],
 
@@ -173,9 +180,9 @@ return [
         'create' => 'Laisser un commentaire',
         'guest' => 'Vous devez être connecté pour laisser un commentaire.',
         'author' => '<strong>:user</strong> a commenté le :date',
-        'your-comment' => 'Votre commentaire',
-        'delete-title' => 'Supprimer ?',
-        'delete-description' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+        'content' => 'Votre commentaire',
+        'delete' => 'Supprimer ?',
+        'delete_confirm' => 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
     ],
 
     'likes' => 'J\'aimes : :count',

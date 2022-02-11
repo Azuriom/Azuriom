@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.roles.title-edit', ['role' => $role->name]))
+@section('title', trans('admin.roles.edit', ['role' => $role->name]))
 
 @section('content')
     <div class="card shadow mb-4">

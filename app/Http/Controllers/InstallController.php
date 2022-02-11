@@ -192,7 +192,7 @@ class InstallController extends Controller
 
             return redirect()->route('install.games');
         } catch (Throwable $t) {
-            return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
+            return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => utf8_encode($t->getMessage()),
             ]));
         }
@@ -354,7 +354,7 @@ class InstallController extends Controller
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
+            return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => utf8_encode($e->getMessage()),
             ]));
         }

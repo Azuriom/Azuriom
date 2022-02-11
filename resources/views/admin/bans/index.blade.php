@@ -11,8 +11,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ trans('messages.fields.user') }}</th>
-                        <th scope="col">{{ trans('admin.bans.fields.banned-by') }}</th>
-                        <th scope="col">{{ trans('admin.bans.fields.reason') }}</th>
+                        <th scope="col">{{ trans('admin.bans.by') }}</th>
+                        <th scope="col">{{ trans('admin.bans.reason') }}</th>
                         <th scope="col">{{ trans('messages.fields.date') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
                     </tr>

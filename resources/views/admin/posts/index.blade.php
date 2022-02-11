@@ -25,7 +25,7 @@
                             <th scope="row">
                                 {{ $post->id }}
                                 @if($post->is_pinned)
-                                    <i class="fas fa-thumbtack text-primary rotate-45" title="{{ trans('admin.posts.info.pinned') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-thumbtack text-primary rotate-45" title="{{ trans('admin.posts.pinned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>{{ $post->title }}</td>

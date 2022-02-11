@@ -14,7 +14,7 @@
     <div class="container content post">
         @if(!$post->isPublished())
             <div class="alert alert-info alert-dismissible fade show" role="alert">
-                {{ trans('messages.posts.not-published') }}
+                {{ trans('messages.posts.unpublished') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="{{ trans('messages.actions.close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -80,7 +80,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="content">{{ trans('messages.comments.your-comment') }}</label>
+                            <label for="content">{{ trans('messages.comments.content') }}</label>
                             <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="4" required></textarea>
 
                             @error('content')
@@ -106,12 +106,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('messages.comments.delete-title') }}</h2>
+                    <h2 class="modal-title" id="confirmDeleteLabel">{{ trans('messages.comments.delete') }}</h2>
                     <button class="close" type="button" data-dismiss="modal" aria-label="{{ trans('messages.actions.close') }}">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">{{ trans('messages.comments.delete-description') }}</div>
+                <div class="modal-body">{{ trans('messages.comments.delete_confirm') }}</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
 

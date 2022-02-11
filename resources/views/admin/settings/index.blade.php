@@ -26,7 +26,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-5">
-                        <label for="nameInput">{{ trans('admin.settings.index.site-name') }}</label>
+                        <label for="nameInput">{{ trans('admin.settings.index.name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', site_name()) }}" required>
 
                         @error('name')
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group col-md-7">
-                        <label for="urlInput">{{ trans('admin.settings.index.site-url') }}</label>
+                        <label for="urlInput">{{ trans('admin.settings.index.url') }}</label>
                         <input type="url" class="form-control @error('url') is-invalid @enderror" id="urlInput" name="url" value="{{ old('url', config('app.url')) }}" required>
 
                         @error('url')
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="descriptionInput">{{ trans('admin.settings.index.site-description') }}</label>
+                    <label for="descriptionInput">{{ trans('admin.settings.index.description') }}</label>
                     <input type="text" class="form-control @error('description') is-invalid @enderror" id="descriptionInput" name="description" value="{{ old('description', setting('description')) }}">
 
                     @error('description')
@@ -61,7 +61,7 @@
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.index.meta-info') }}</small>
+                    <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.index.meta_info') }}</small>
                 </div>
 
                 <div class="form-row">
@@ -184,20 +184,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="siteKeyInput">{{ trans('admin.settings.index.site-key') }}</label>
+                    <label for="siteKeyInput">{{ trans('admin.settings.index.site_key') }}</label>
                     <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">
 
                     @error('site-key')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site-key-label')</small>
+                    <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site_key_info')</small>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="userMoneySwitch" name="user_money_transfer" @if($userMoneyTransfer) checked @endif>
-                        <label class="custom-control-label" for="userMoneySwitch">{{ trans('admin.settings.index.user-money-transfer') }}</label>
+                        <label class="custom-control-label" for="userMoneySwitch">{{ trans('admin.settings.index.user_money_transfer') }}</label>
                     </div>
                 </div>
 

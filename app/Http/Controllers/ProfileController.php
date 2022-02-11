@@ -117,7 +117,7 @@ class ProfileController extends Controller
         $secret = $request->session()->get('2fa.secret');
 
         if (! $secret || ! (new Google2FA())->verifyKey($secret, $code)) {
-            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
+            throw ValidationException::withMessages(['code' => trans('auth.2fa.invalid')]);
         }
 
         $request->user()->forceFill([
@@ -177,13 +177,13 @@ class ProfileController extends Controller
 
         if ($user->is($receiver)) {
             throw ValidationException::withMessages([
-                'name' => trans('messages.profile.money-transfer.self'),
+                'name' => trans('messages.profile.money_transfer.self'),
             ]);
         }
 
         if ($user->money < $money) {
             throw ValidationException::withMessages([
-                'money' => trans('messages.profile.money-transfer.not-enough'),
+                'money' => trans('messages.profile.money_transfer.balance'),
             ]);
         }
 
@@ -192,7 +192,7 @@ class ProfileController extends Controller
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 
-        $notification = (new AlertNotification(trans('messages.profile.money-transfer.notification', [
+        $notification = (new AlertNotification(trans('messages.profile.money_transfer.notification', [
             'user' => $user->name,
             'money' => format_money($money),
         ])))->from($user);
@@ -200,6 +200,6 @@ class ProfileController extends Controller
         $receiver->notifications()->create($notification->toArray());
 
         return redirect()->route('profile.index')
-            ->with('success', trans('messages.profile.money-transfer.success'));
+            ->with('success', trans('messages.profile.money_transfer.success'));
     }
 }
