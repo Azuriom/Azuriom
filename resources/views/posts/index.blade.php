@@ -13,7 +13,8 @@
                         @endif
                         <div class="card-body">
                             <h3 class="card-title">
-                                <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
+                                <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
+                            </h3>
                             <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
                             <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
                         </div>

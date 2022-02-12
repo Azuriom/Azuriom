@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -21,8 +21,8 @@
                         <tr>
                             <th scope="row">{{ $log->id }}</th>
                             <td>{{ $log->user->name }}</td>
-                            <td>
-                                <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                            <td class="text-{{ $log->getActionFormat()['color'] }}">
+                                <i class="fa-fw fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
                                 {{ $log->getActionMessage() }}
                             </td>
                             <td>{{ format_date_compact($log->created_at) }}</td>

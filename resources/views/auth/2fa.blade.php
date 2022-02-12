@@ -13,8 +13,8 @@
                     <form method="POST" action="{{ route('login.2fa') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="code" class="col-md-4 col-form-label text-md-right">{{ trans('auth.2fa.code') }}</label>
+                        <div class="mb-3 row">
+                            <label class="form-label" for="code" class="col-md-4 col-form-label text-md-right">{{ trans('auth.2fa.code') }}</label>
 
                             <div class="col-md-6">
                                 <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" required>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="mb-3 row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ trans('auth.login') }}

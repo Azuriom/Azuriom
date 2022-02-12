@@ -10,8 +10,8 @@
             <form action="{{ route('admin.settings.maintenance.update') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="maintenanceArea">{{ trans('admin.settings.maintenance.message') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="maintenanceArea">{{ trans('admin.settings.maintenance.message') }}</label>
                     <textarea class="form-control html-editor @error('maintenance-message') is-invalid @enderror" id="maintenanceArea" name="maintenance-message" rows="5">{{ old('maintenance-message', $message) }}</textarea>
 
                     @error('maintenance-message')
@@ -19,15 +19,15 @@
                     @enderror
                 </div>
 
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="maintenance-status" @if($status) checked @endif>
-                    <label class="custom-control-label" for="enableSwitch">{{ trans('admin.settings.maintenance.enable') }}</label>
+                <div class="mb-3 form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="enableSwitch" name="maintenance-status" @if($status) checked @endif>
+                    <label class="form-check-label" for="enableSwitch">{{ trans('admin.settings.maintenance.enable') }}</label>
                 </div>
 
-                <div class="form-group mb-2">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="globalSwitch" name="is_global" data-toggle="collapse" data-target="#pathsGroup" @if($paths === null) checked @endif>
-                        <label class="custom-control-label" for="globalSwitch">
+                <div class="mb-3 mb-2">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="globalSwitch" name="is_global" data-bs-toggle="collapse" data-bs-target="#pathsGroup" @if($paths === null) checked @endif>
+                        <label class="form-check-label" for="globalSwitch">
                             {{ trans('admin.settings.maintenance.global') }}
                         </label>
                     </div>

@@ -31,11 +31,11 @@
             <form action="{{ route('admin.settings.mail.update') }}" method="POST">
                 @csrf
 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
+                <div class="row g-3">
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
-                        <select class="custom-select" id="mailerSelect" name="mailer" data-toggle-select="mail-type" aria-describedby="mailerInfo">
+                        <select class="form-control" id="mailerSelect" name="mailer" data-bs-toggle-select="mail-type" aria-describedby="mailerInfo">
                             <option value="" @if(config('mail.default') === 'array') selected @endif>{{ trans('messages.none') }}</option>
                             @foreach($mailers as $mailer => $mailerName)
                                 <option value="{{ $mailer }}" @if(config('mail.default') === $mailer) selected @endif>{{ $mailerName }}</option>
@@ -45,8 +45,8 @@
                         <small id="mailerInfo" class="form-text">@lang('admin.settings.mail.mailer_info')</small>
                     </div>
 
-                    <div class="form-group col-md-8">
-                        <label for="fromAddressInput">{{ trans('admin.settings.mail.from') }}</label>
+                    <div class="mb-3 col-md-8">
+                        <label class="form-label" for="fromAddressInput">{{ trans('admin.settings.mail.from') }}</label>
                         <input type="email" class="form-control @error('from-address') is-invalid @enderror" id="fromAddressInput" name="from-address" value="{{ old('from-address', config('mail.from.address')) }}" required>
 
                         @error('from-address')
@@ -56,9 +56,9 @@
                 </div>
 
                 <div data-mail-type="smtp">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
+                    <div class="row g-3">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
                             <input type="text" class="form-control @error('smtp-host') is-invalid @enderror" id="smtpHostInput" name="smtp-host" value="{{ old('smtp-host', $smtpConfig['host']) }}" required>
 
                             @error('smtp-host')
@@ -66,8 +66,8 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="smtpPortInput">{{ trans('admin.settings.mail.smtp.port') }}</label>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="smtpPortInput">{{ trans('admin.settings.mail.smtp.port') }}</label>
                             <input type="number" min="1" max="65535" class="form-control @error('smtp-port') is-invalid @enderror" id="smtpPortInput" name="smtp-port" value="{{ old('smtp-port', $smtpConfig['port']) }}" required>
 
                             @error('smtp-port')
@@ -75,10 +75,10 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
 
-                            <select class="custom-select" id="smtpEncryptionSelect" name="smtp-encryption">
+                            <select class="form-control" id="smtpEncryptionSelect" name="smtp-encryption">
                                 <option value="" @if(config('mail.encryption') === null) selected @endif>{{ trans('messages.none') }}</option>
 
                                 @foreach($encryptionTypes as $encryption => $encryptionName)
@@ -88,9 +88,9 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="smtpUsernameInput">{{ trans('admin.settings.mail.smtp.username') }}</label>
+                    <div class="row g-3">
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="smtpUsernameInput">{{ trans('admin.settings.mail.smtp.username') }}</label>
                             <input type="text" class="form-control @error('smtp-username') is-invalid @enderror" id="smtpUsernameInput" name="smtp-username" value="{{ old('smtp-username', $smtpConfig['username']) }}">
 
                             @error('smtp-username')
@@ -98,16 +98,14 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label" for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
 
-                            <div class="input-group">
-                                <input type="password" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password', $smtpConfig['password']) }}">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-primary" data-password-toggle="smtpPasswordInput">
-                                        <i class="fas fa-eye-slash"></i>
-                                    </button>
-                                </div>
+                            <div class="input-group has-validation" x-data="{toggle: false}">
+                                <input :type="toggle ? 'text' : 'password'" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password', $smtpConfig['password']) }}">
+                                <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
+                                    <i class="fas" :class="toggle ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                </button>
 
                                 @error('smtp-password')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -126,10 +124,10 @@
                     <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
                 </div>
 
-                <div class="form-group" data-mail-type="smtp sendmail">
-                    <div class="form-group custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
-                        <label class="custom-control-label" for="verificationSwitch">{{ trans('admin.settings.mail.verification') }}</label>
+                <div class="mb-3" data-mail-type="smtp sendmail">
+                    <div class="mb-3 form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
+                        <label class="form-check-label" for="verificationSwitch">{{ trans('admin.settings.mail.verification') }}</label>
                     </div>
                 </div>
 

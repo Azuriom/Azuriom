@@ -15,9 +15,7 @@
         @if(!$post->isPublished())
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 {{ trans('messages.posts.unpublished') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ trans('messages.actions.close') }}">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" aria-label="Close"></button>
             </div>
         @endif
 
@@ -52,9 +50,9 @@
                     <div class="card-header">
                         @lang('messages.comments.author', ['user' => e($comment->author->name), 'date' => format_date($comment->created_at, true)])
                     </div>
-                    <div class="card-body media">
-                        <img class="d-flex mr-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
-                        <div class="media-body">
+                    <div class="card-body d-flex">
+                        <img class="flex-shrink-0 d-flex me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
+                        <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="content-body">
                                     {{ $comment->parseContent() }}
@@ -79,8 +77,8 @@
                     <form action="{{ route('posts.comments.store', $post) }}" method="POST">
                         @csrf
 
-                        <div class="form-group">
-                            <label for="content">{{ trans('messages.comments.content') }}</label>
+                        <div class="mb-3">
+                            <label class="form-label" for="content">{{ trans('messages.comments.content') }}</label>
                             <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="4" required></textarea>
 
                             @error('content')
@@ -88,7 +86,9 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">{{ trans('messages.actions.comment') }}</button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ trans('messages.actions.comment') }}
+                        </button>
                     </form>
                 </div>
             </div>

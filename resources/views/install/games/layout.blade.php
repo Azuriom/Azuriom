@@ -10,10 +10,10 @@
 
         <h2>{{ $gameName }}</h2>
 
-        <div class="form-group mb-4">
-            <label for="locale">{{ trans('install.game.locale') }}</label>
+        <div class="mb-3 mb-4">
+            <label class="form-label" for="locale">{{ trans('install.game.locale') }}</label>
 
-            <select name="locale" class="custom-select @error('locale') is-invalid @enderror" id="locale" required>
+            <select name="locale" class="form-select @error('locale') is-invalid @enderror" id="locale" required>
                 @foreach($locales as $localeId => $localeName)
                     <option value="{{ $localeId }}" @if($localeId === old('locale', app()->getLocale())) selected @endif>{{ $localeName }}</option>
                 @endforeach

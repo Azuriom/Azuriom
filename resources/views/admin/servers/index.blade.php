@@ -5,15 +5,15 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.servers.default') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.servers.default') }}</h5>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('admin.servers.change-default') }}">
                 @csrf
 
-                <div class="form-group">
-                    <label for="serverSelect">{{ trans('admin.servers.default') }}</label>
-                    <select class="custom-select @error('server') is-invalid @enderror" id="serverSelect" name="server" aria-describedby="serverLabel">
+                <div class="mb-3">
+                    <label class="form-label" for="serverSelect">{{ trans('admin.servers.default') }}</label>
+                    <select class="form-select @error('server') is-invalid @enderror" id="serverSelect" name="server" aria-describedby="serverLabel">
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)
                             <option value="{{ $server->id }}" @if($defaultServerId === $server->id) selected @endif>{{ $server->name }}</option>
@@ -36,11 +36,11 @@
 
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.servers.title') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.servers.title') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -58,22 +58,22 @@
                             <th scope="row">
                                 {{ $server->id }}
                                 @if($server->id === $defaultServerId)
-                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-certificate text-primary" title="{{ trans('admin.servers.default') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>{{ $server->name }}</td>
                             <td>{{ $server->fullAddress() }}</td>
                             <td>
                                 @if($server->isOnline())
-                                    <span class="badge badge-success">{{ trans_choice('admin.servers.players', $server->getOnlinePlayers()) }}</span>
+                                    <span class="badge bg-success">{{ trans_choice('admin.servers.players', $server->getOnlinePlayers()) }}</span>
                                 @else
-                                    <span class="badge badge-danger">{{ trans('admin.servers.offline') }}</span>
+                                    <span class="badge bg-danger">{{ trans('admin.servers.offline') }}</span>
                                 @endif
                             </td>
                             <td>{{ trans('admin.servers.type.'.$server->type) }}</td>
                             <td>
-                                <a href="{{ route('admin.servers.edit', $server) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.servers.destroy', $server) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.servers.edit', $server) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.servers.destroy', $server) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach

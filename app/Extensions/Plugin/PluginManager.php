@@ -335,23 +335,17 @@ class PluginManager extends ExtensionManager
 
     public function addRouteDescription(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->routeDescriptions->put($key, $value);
-        }
+        $this->routeDescriptions->add($items);
     }
 
     public function addAdminNavItem(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->adminNavItems->put($key, $value);
-        }
+        $this->adminNavItems->add($items);
     }
 
     public function addUserNavItem(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->userNavItems->put($key, $value);
-        }
+        $this->userNavItems->add($items);
     }
 
     /**
@@ -359,7 +353,7 @@ class PluginManager extends ExtensionManager
      */
     public function getRouteDescriptions()
     {
-        return $this->routeDescriptions->map(fn ($value) => value($value));
+        return $this->routeDescriptions->flatMap(fn ($value) => value($value));
     }
 
     /**
@@ -367,7 +361,7 @@ class PluginManager extends ExtensionManager
      */
     public function getAdminNavItems()
     {
-        return $this->adminNavItems->map(fn ($value) => value($value));
+        return $this->adminNavItems->flatMap(fn ($value) => value($value));
     }
 
     /**
@@ -375,7 +369,7 @@ class PluginManager extends ExtensionManager
      */
     public function getUserNavItems()
     {
-        return $this->userNavItems->map(fn ($value) => value($value));
+        return $this->userNavItems->flatMap(fn ($value) => value($value));
     }
 
     public function cachePlugins(array $enabledPlugins = null)

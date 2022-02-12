@@ -2,9 +2,7 @@
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fas fa-check-circle"></i>
         {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="{{ trans('messages.actions.close') }}">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" aria-label="Close"></button>
     </div>
 @endif
 

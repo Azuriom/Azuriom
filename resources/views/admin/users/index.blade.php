@@ -4,17 +4,17 @@
 
 @section('content')
     <form class="form-inline mb-3" action="{{ route('admin.users.index') }}" method="GET">
-        <div class="form-group mb-2">
-            <label for="searchInput" class="sr-only">{{ trans('messages.actions.search') }}</label>
+        <div class="mb-3 mb-2">
+            <label class="visually-hidden" for="searchInput">
+                {{ trans('messages.actions.search') }}
+            </label>
 
             <div class="input-group">
                 <input type="search" class="form-control" id="searchInput" name="search" value="{{ $search ?? '' }}" placeholder="{{ trans('messages.actions.search') }}">
 
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
             </div>
         </div>
     </form>
@@ -22,7 +22,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -41,22 +41,22 @@
                                 {{ $user->id }}
 
                                 @if($user->isDeleted())
-                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.deleted') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.deleted') }}" data-bs-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
-                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.admin') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.admin') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                                 @if($user->isBanned())
-                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.banned') }}" data-toggle="tooltip"></i>
+                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.banned') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                             </th>
-                            <td @if($user->isDeleted()) class="text-strikethrough" @endif>
+                            <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
                                 {{ $user->name }}
                             </td>
-                            <td @if($user->isDeleted()) class="text-strikethrough" @endif>
+                            <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
                                 {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
                             </td>
                             <td>
-                                <span class="badge badge-label" style="{{ $user->role->getBadgeStyle() }}">
+                                <span class="badge" style="{{ $user->role->getBadgeStyle() }}">
                                     {{ $user->role->name }}
                                 </span>
                             </td>
@@ -64,7 +64,7 @@
                                 {{ format_date($user->created_at) }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
                     @endforeach

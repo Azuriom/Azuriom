@@ -1,6 +1,6 @@
 function createLineChart(elementId, data, labelName) {
-    Chart.defaults.global.defaultFontFamily = 'Nunito';
-    Chart.defaults.global.defaultFontColor = '#858796';
+    Chart.defaults.global.defaultFontFamily = 'Chart.defaults.global.defaultFontFamily = "\'Inter\', \'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif";';
+    Chart.defaults.global.defaultFontColor = '#6c757d';
 
     new Chart(document.getElementById(elementId), {
         type: 'line',
@@ -24,64 +24,54 @@ function createLineChart(elementId, data, labelName) {
         },
         options: {
             maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    time: {
-                        unit: 'date'
-                    },
-                    gridLines: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    ticks: {
-                        maxTicksLimit: 7
-                    },
-                }],
-                yAxes: [{
-                    ticks: {
-                        maxTicksLimit: 5,
-                        padding: 10,
-                    },
-                    gridLines: {
-                        color: "rgb(234, 236, 244)",
-                        zeroLineColor: "rgb(234, 236, 244)",
-                        drawBorder: false,
-                        borderDash: [2],
-                        zeroLineBorderDash: [2],
-                    },
-                }],
-            },
             legend: {
                 display: false
             },
             tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                intersect: false,
-                mode: 'index',
-                caretPadding: 10,
+                intersect: false
+            },
+            hover: {
+                intersect: true
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            },
+            scales: {
+                xAxes: [{
+                    reverse: true,
+                    gridLines: {
+                        color: "rgba(0,0,0,0.0)"
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1000
+                    },
+                    display: true,
+                    borderDash: [3, 3],
+                    gridLines: {
+                        color: "rgba(0,0,0,0.0)",
+                        fontColor: "#fff"
+                    }
+                }]
             }
         }
     });
 }
 
 function createPieChart(elementId, data) {
-    Chart.defaults.global.defaultFontFamily = 'Nunito';
-    Chart.defaults.global.defaultFontColor = '#858796';
+    Chart.defaults.global.defaultFontFamily = 'Chart.defaults.global.defaultFontFamily = "\'Inter\', \'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif";';
+    Chart.defaults.global.defaultFontColor = '#6c757d';
 
     new Chart(document.getElementById(elementId), {
         type: 'doughnut',
         data: {
             labels: Object.keys(data),
             datasets: [{
+                borderWidth: 5,
+                borderColor: '#fff',
                 data: Object.values(data),
                 backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e9aa0b'],
                 hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#f4b619'],
@@ -89,6 +79,7 @@ function createPieChart(elementId, data) {
             }],
         },
         options: {
+            responsive: !window.MSInputMethodContext,
             maintainAspectRatio: false,
             tooltips: {
                 backgroundColor: '#fff',
@@ -101,9 +92,9 @@ function createPieChart(elementId, data) {
                 caretPadding: 10,
             },
             legend: {
-                display: false,
+                display: false
             },
-            cutoutPercentage: 60,
-        },
+            cutoutPercentage: 70
+        }
     });
 }

@@ -5,11 +5,11 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.installed') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.plugins.installed') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
@@ -35,7 +35,7 @@
                             <td>{{ implode(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
-                                <span class="badge badge-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">
+                                <span class="badge bg-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">
                                     {{ trans_bool(plugins()->isEnabled($path)) }}
                                 </span>
                             </td>
@@ -75,11 +75,11 @@
     @if(! $availablePlugins->isEmpty())
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.available') }}</h6>
+                <h5 class="card-title mb-0">{{ trans('admin.plugins.available') }}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>

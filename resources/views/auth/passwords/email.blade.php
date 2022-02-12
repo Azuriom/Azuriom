@@ -19,8 +19,8 @@
                     <form method="POST" action="{{ route('password.email') }}" id="captcha-form">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ trans('auth.email') }}</label>
+                        <div class="mb-3 row">
+                            <label class="form-label" for="email" class="col-md-4 col-form-label text-md-right">{{ trans('auth.email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -35,7 +35,7 @@
 
                         @include('elements.captcha', ['center' => true])
 
-                        <div class="form-group row mb-0">
+                        <div class="mb-3 row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ trans('auth.passwords.send') }}

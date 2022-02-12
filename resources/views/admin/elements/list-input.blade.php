@@ -13,9 +13,9 @@
         });
 
         document.getElementById('{{ $name }}-add-button').addEventListener('click', function () {
-            let input = '<div class="input-group mb-2"><input type="text" name="{{ $name }}[]" class="form-control"><div class="input-group-append">';
+            let input = '<div class="input-group mb-2"><input type="text" name="{{ $name }}[]" class="form-control">';
             input += '<button class="btn btn-outline-danger {{ $name }}-remove" type="button"><i class="fas fa-times"></i></button>';
-            input += '</div></div>';
+            input += '</div>';
 
             const newElement = document.createElement('div');
             newElement.innerHTML = input;
@@ -32,18 +32,16 @@
     @forelse($values ?? [] as $value)
         <div class="input-group mb-2">
             <input type="text" class="form-control" name="{{ $name }}[]" value="{{ $value }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-danger {{ $name }}-remove" type="button"><i class="fas fa-times"></i>
-                </button>
-            </div>
+            <button class="btn btn-outline-danger {{ $name }}-remove" type="button">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     @empty
         <div class="input-group mb-2">
             <input type="text" class="form-control" name="{{ $name }}[]" placeholder="{{ $placeholder ?? '' }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-danger {{ $name }}-remove" type="button"><i class="fas fa-times"></i>
-                </button>
-            </div>
+            <button class="btn btn-outline-danger {{ $name }}-remove" type="button">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     @endforelse
 </div>

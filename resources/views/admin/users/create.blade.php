@@ -8,8 +8,8 @@
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="nameInput">{{ trans('auth.name') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                     @error('name')
@@ -17,8 +17,8 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="emailInput">{{ trans('auth.email') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email') }}" required>
 
                     @error('email')
@@ -26,8 +26,8 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="passwordInput">{{ trans('auth.password') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="passwordInput">{{ trans('auth.password') }}</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
 
                     @error('password')
@@ -35,9 +35,9 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                    <select class="custom-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role">
+                <div class="mb-3">
+                    <label class="form-label" for="roleSelect">{{ trans('messages.fields.role') }}</label>
+                    <select class="form-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role">
                         @foreach($roles as $role)
                             <option @if(old('role') == $role->id) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach

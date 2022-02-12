@@ -135,7 +135,7 @@ class UserController extends Controller
         ActionLog::log('users.updated', $user);
 
         return redirect()->route('admin.users.edit', $user)
-            ->with('success', trans('admin.users.status.email.verify_success'));
+            ->with('success', trans('admin.users.email.verify_success'));
     }
 
     public function disable2fa(User $user)

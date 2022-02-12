@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.current') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.themes.current') }}</h5>
         </div>
         <div class="card-body">
             @if($current)
@@ -45,11 +45,11 @@
 
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.installed') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.themes.installed') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
@@ -106,11 +106,11 @@
     @if(! $availableThemes->isEmpty())
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.available') }}</h6>
+                <h5 class="card-title mb-0">{{ trans('admin.themes.available') }}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>

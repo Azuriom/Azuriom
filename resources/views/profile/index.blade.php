@@ -74,8 +74,8 @@
                         <form action="{{ route('profile.email') }}" method="POST">
                             @csrf
 
-                            <div class="form-group">
-                                <label for="emailInput">{{ trans('auth.email') }}</label>
+                            <div class="mb-3">
+                                <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" required>
 
                                 @error('email')
@@ -83,8 +83,8 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label for="emailConfirmPassInput">{{ trans('auth.current_password') }}</label>
+                            <div class="mb-3">
+                                <label class="form-label" for="emailConfirmPassInput">{{ trans('auth.current_password') }}</label>
                                 <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
 
                                 @error('email_confirm_pass')
@@ -108,8 +108,8 @@
                             <form action="{{ route('profile.password') }}" method="POST">
                                 @csrf
 
-                                <div class="form-group">
-                                    <label for="passwordConfirmPassInput">{{ trans('auth.current_password') }}</label>
+                                <div class="mb-3">
+                                    <label class="form-label" for="passwordConfirmPassInput">{{ trans('auth.current_password') }}</label>
                                     <input type="password" class="form-control @error('password_confirm_pass') is-invalid @enderror" id="passwordConfirmPassInput" name="password_confirm_pass" required>
 
                                     @error('password_confirm_pass')
@@ -117,8 +117,8 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="passwordInput">{{ trans('auth.password') }}</label>
+                                <div class="mb-3">
+                                    <label class="form-label" for="passwordInput">{{ trans('auth.password') }}</label>
                                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" required>
 
                                     @error('password')
@@ -126,8 +126,8 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="confirmPasswordInput">{{ trans('auth.confirm_password') }}</label>
+                                <div class="mb-3">
+                                    <label class="form-label" for="confirmPasswordInput">{{ trans('auth.confirm_password') }}</label>
                                     <input type="password" class="form-control" id="confirmPasswordInput" name="password_confirmation" required>
                                 </div>
 
@@ -147,8 +147,8 @@
                                 <form action="{{ route('profile.transfer-money') }}" method="POST">
                                     @csrf
 
-                                    <div class="form-group">
-                                        <label for="nameInput">{{ trans('auth.name') }}</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                                         @error('name')
@@ -156,8 +156,8 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="moneyInput">{{ trans('messages.fields.money') }}</label>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="moneyInput">{{ trans('messages.fields.money') }}</label>
                                         <input type="number" placeholder="0.00" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money') }}" required>
 
                                         @error('money')

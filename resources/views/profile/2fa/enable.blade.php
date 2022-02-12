@@ -21,8 +21,8 @@
 
                     <input type="hidden" name="2fa_key" value="{{ $secret }}">
 
-                    <div class="form-group">
-                        <label for="codeInput">{{ trans('messages.profile.2fa.code') }}</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="codeInput">{{ trans('messages.profile.2fa.code') }}</label>
                         <input type="text" class="form-control @error('code') is-invalid @enderror " id="codeInput" name="code" placeholder="123 456">
 
                         @error('code')

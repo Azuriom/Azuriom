@@ -8,8 +8,8 @@
             <form action="{{ route('admin.settings.seo.update') }}" method="POST">
                 @csrf
 
-                <div class="form-group">
-                    <label for="homeMessage">{{ trans('admin.settings.seo.home_message') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="homeMessage">{{ trans('admin.settings.seo.home_message') }}</label>
                     <textarea class="form-control html-editor @error('home-message') is-invalid @enderror" id="homeMessage" name="home-message" rows="5">{{ old('home-message', $homeMessage) }}</textarea>
 
                     @error('home-message')
@@ -21,15 +21,15 @@
                     <i class="fas fa-info-circle"></i> @lang('admin.settings.seo.html')
                 </div>
 
-                <div class="form-group custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="welcomePopupSwitch" name="enable_welcome_popup" data-toggle="collapse" data-target="#welcomePopup" @if($welcomePopup) checked @endif>
-                    <label class="custom-control-label" for="welcomePopupSwitch">{{ trans('admin.settings.seo.welcome_alert.enable') }}</label>
+                <div class="mb-3 form-check form-switch">
+                    <input type="checkbox" class="form-check-input" id="welcomePopupSwitch" name="enable_welcome_popup" data-bs-toggle="collapse" data-bs-target="#welcomePopup" @if($welcomePopup) checked @endif>
+                    <label class="form-check-label" for="welcomePopupSwitch">{{ trans('admin.settings.seo.welcome_alert.enable') }}</label>
                 </div>
 
                 <div id="welcomePopup" class="{{ $welcomePopup ? 'show' : 'collapse' }}">
                     <div class="card card-body mb-3">
-                        <div class="form-group mb-0">
-                            <label for="welcomePopupArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
+                        <div class="mb-3 mb-0">
+                            <label class="form-label" for="welcomePopupArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
                             <textarea class="form-control @error('welcome-popup') is-invalid @enderror" id="welcomePopupArea" name="welcome-popup" aria-describedby="welcomePopupInfo" rows="5">{{ old('welcome-popup', $welcomePopup) }}</textarea>
 
                             @error('welcome-popup')

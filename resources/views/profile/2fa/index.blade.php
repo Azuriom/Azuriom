@@ -12,7 +12,7 @@
 
                 @if($user->two_factor_recovery_codes !== null)
                     <p>
-                        <a data-toggle="collapse" href="#codesCollapse" role="button" aria-expanded="false" aria-controls="codesCollapse">
+                        <a data-bs-toggle="collapse" href="#codesCollapse" role="button" aria-expanded="false" aria-controls="codesCollapse">
                             {{ trans('messages.profile.2fa.codes') }}
                         </a>
                     </p>

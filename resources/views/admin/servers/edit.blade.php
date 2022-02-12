@@ -7,13 +7,13 @@
         <div class="card-body">
             <h5>{{ trans('messages.fields.status') }}:
                 @if($server->isOnline())
-                    <span class="badge badge-success">{{ trans_choice('admin.servers.players', $server->getOnlinePlayers()) }}</span>
+                    <span class="badge bg-success">{{ trans_choice('admin.servers.players', $server->getOnlinePlayers()) }}</span>
                 @else
-                    <span class="badge badge-danger">{{ trans('admin.servers.offline') }}</span>
+                    <span class="badge bg-danger">{{ trans('admin.servers.offline') }}</span>
                 @endif
             </h5>
 
-            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm">
+            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm" x-data="{type: '{{ $server->type }}'}">
                 @method('PUT')
 
                 @include('admin.servers._form')

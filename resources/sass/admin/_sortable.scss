@@ -1,0 +1,43 @@
+.sortable {
+    margin: 0;
+    padding-top: 0.6em;
+
+   .sortable {
+        padding-left: 2.8em;
+    }
+}
+
+.sortable-item {
+    display: block;
+    position: relative;
+    margin: 0 0 0.9em;
+    padding: 0;
+    min-height: 20px;
+
+    .card {
+        border: 1px solid #ccc;
+    }
+}
+
+.sortable-dropdown {
+    margin-bottom: 0.3rem;
+
+    .sortable-item {
+        margin-bottom: 0.6em;
+    }
+}
+
+.sortable-handle {
+    padding: 0.5em;
+    box-sizing: border-box;
+    cursor: move;
+
+    &:hover {
+        color: #2ea8e5;
+    }
+}
+
+.sortable-ghost .card {
+    background: #f2fbff;
+    border: 1px dashed #b6bcbf;
+}
