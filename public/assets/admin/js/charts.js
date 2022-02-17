@@ -1,7 +1,4 @@
 function createLineChart(elementId, data, labelName) {
-    Chart.defaults.global.defaultFontFamily = 'Chart.defaults.global.defaultFontFamily = "\'Inter\', \'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif";';
-    Chart.defaults.global.defaultFontColor = '#6c757d';
-
     new Chart(document.getElementById(elementId), {
         type: 'line',
         data: {
@@ -62,9 +59,6 @@ function createLineChart(elementId, data, labelName) {
 }
 
 function createPieChart(elementId, data) {
-    Chart.defaults.global.defaultFontFamily = 'Chart.defaults.global.defaultFontFamily = "\'Inter\', \'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif";';
-    Chart.defaults.global.defaultFontColor = '#6c757d';
-
     new Chart(document.getElementById(elementId), {
         type: 'doughnut',
         data: {

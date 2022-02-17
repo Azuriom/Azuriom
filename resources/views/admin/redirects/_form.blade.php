@@ -25,10 +25,10 @@
     <div class="mb-3 col-md-6">
         <label class="form-label" for="codeSelect">{{ trans('admin.redirects.code') }}</label>
         <select class="form-select @error('code') is-invalid @enderror" id="codeSelect" name="code" required>
-            <option value="301" @if(($redirect->code ?? 0) === 301) selected @endif>
+            <option value="301" @selected(($redirect->code ?? 0) === 301)>
                 {{ trans('admin.redirects.301') }}
             </option>
-            <option value="302" @if(($redirect->code ?? 0) === 302) selected @endif>
+            <option value="302" @selected(($redirect->code ?? 0) === 302)>
                 {{ trans('admin.redirects.302') }}
             </option>
         </select>

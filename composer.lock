@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8ee50c53e30a10a66693e174c550cae",
+    "content-hash": "863f2f789746c7894006106793240c05",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5628,6 +5628,81 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.4"
             },
             "time": "2021-12-08T09:12:39+00:00"
+        },
+        {
+            "name": "truckersmp/steam-socialite",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TruckersMP/Steam-Socialite.git",
+                "reference": "9cfbb1815af8af90f9d57c8a0e30ebde8c2a12ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TruckersMP/Steam-Socialite/zipball/9cfbb1815af8af90f9d57c8a0e30ebde8c2a12ae",
+                "reference": "9cfbb1815af8af90f9d57c8a0e30ebde8c2a12ae",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.5|^7.0",
+                "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/http": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "laravel/socialite": "^4.4|^5.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TruckersMP\\SteamSocialite\\SteamSocialiteProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TruckersMP\\SteamSocialite\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ShawnCZek",
+                    "email": "shawnczek@truckersmp.com",
+                    "homepage": "https://github.com/shawnczek",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Ben Sherred",
+                    "email": "ratcho@truckersmp.com",
+                    "homepage": "https://github.com/bensherred",
+                    "role": "Web Developer"
+                }
+            ],
+            "description": "Laravel Socialite provider for Steam OpenID.",
+            "homepage": "https://truckersmp.com",
+            "keywords": [
+                "OpenId",
+                "laravel",
+                "socialite",
+                "steam"
+            ],
+            "support": {
+                "issues": "https://github.com/TruckersMP/Steam-Socialite/issues",
+                "source": "https://github.com/TruckersMP/Steam-Socialite/tree/v1.4.0"
+            },
+            "time": "2022-02-13T09:46:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

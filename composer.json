@@ -22,6 +22,7 @@
         "symfony/filesystem": "^6.0",
         "textalk/websocket": "^1.5",
         "thedudeguy/rcon": "^1.0",
+        "truckersmp/steam-socialite": "^1.4",
         "xpaw/php-source-query-class": "^2.1"
     },
     "require-dev": {

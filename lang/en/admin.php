@@ -524,6 +524,12 @@ return [
             'deleted' => 'Deleted image #:id',
         ],
 
+        'redirects' => [
+            'created' => 'Created redirection #:id',
+            'updated' => 'Updated redirection #:id',
+            'deleted' => 'Deleted redirection #:id',
+        ],
+
         'roles' => [
             'created' => 'Created role #:id',
             'updated' => 'Updated role #:id',

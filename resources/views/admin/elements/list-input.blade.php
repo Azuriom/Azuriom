@@ -2,7 +2,7 @@
     <script>
         const addListener = function(el) {
             el.addEventListener('click', function () {
-                const element = el.parentNode.parentNode;
+                const element = el.parentNode;
 
                 element.parentNode.removeChild(element);
             });

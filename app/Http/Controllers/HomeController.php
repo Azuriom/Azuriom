@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
 
 class HomeController extends Controller
 {
@@ -38,6 +39,8 @@ class HomeController extends Controller
 
         $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
 
-        return view('maintenance', ['maintenanceMessage' => $maintenanceMessage]);
+        return view('maintenance', [
+            'maintenanceMessage' => new HtmlString($maintenanceMessage),
+        ]);
     }
 }

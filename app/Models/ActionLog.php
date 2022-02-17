@@ -104,6 +104,7 @@ class ActionLog extends Model
             Role::class,
             Server::class,
             Image::class,
+            Redirect::class,
             User::class,
         ], 'admin.logs');
     }
@@ -208,8 +209,8 @@ class ActionLog extends Model
     {
         $keys = is_array($key) ? $key : [$key => $value];
 
-        foreach ($keys as $key => $value) {
-            self::$actions[$key] = $value;
+        foreach ($keys as $actionKey => $actionValue) {
+            self::$actions[$actionKey] = $actionValue;
         }
     }
 

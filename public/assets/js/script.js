@@ -1,13 +1,20 @@
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-$('[data-toggle="tooltip"]').tooltip();
-
-$('[data-confirm="delete"]').on('click', function (e) {
-    e.preventDefault();
-
-    $('#confirmDeleteForm').attr('action', $(this).attr('href'));
-    $('#confirmDeleteModal').modal('show');
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+    new bootstrap.Tooltip(el)
 });
+
+document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
+    el.addEventListener('click', function (ev) {
+        ev.preventDefault();
+
+        const url = el.getAttribute('href');
+
+        document.getElementById('confirmDeleteForm').setAttribute('action', url);
+        new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+    })
+});
+
 
 /*
  * Logout
@@ -91,9 +98,9 @@ if (readNotificationsBtn) {
 
         axios.post(readNotificationsBtn.href)
             .then(function () {
-                $('#notifications').remove();
-                $('#notificationsCounter').remove();
-                $('#noNotificationsLabel').removeClass('d-none');
+                document.getElementById('notificationsCounter').remove();
+                document.getElementById('notifications').remove();
+                document.getElementById('noNotificationsLabel').classList.remove('d-none');
             })
             .catch(function () {
                 notificationsSpinner.classList.add('d-none');

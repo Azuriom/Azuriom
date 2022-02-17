@@ -67,7 +67,9 @@
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required x-model="type">
             @foreach($types as $type)
-                <option value="{{ $type }}" @if($type === old('type', $server->type ?? '')) selected @endif>{{ trans('admin.servers.type.'.$type) }}</option>
+                <option value="{{ $type }}" @selected($type === old('type', $server->type ?? ''))>
+                    {{ trans('admin.servers.type.'.$type) }}
+                </option>
             @endforeach
         </select>
 

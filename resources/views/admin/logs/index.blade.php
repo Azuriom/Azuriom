@@ -20,7 +20,11 @@
                     @foreach($logs as $log)
                         <tr>
                             <th scope="row">{{ $log->id }}</th>
-                            <td>{{ $log->user->name }}</td>
+                            <td>
+                                <a href="{{ route('admin.users.edit', $log->user) }}">
+                                    {{ $log->user->name }}
+                                </a>
+                            </td>
                             <td class="text-{{ $log->getActionFormat()['color'] }}">
                                 <i class="fa-fw fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
                                 {{ $log->getActionMessage() }}

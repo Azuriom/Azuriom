@@ -36,9 +36,13 @@
                         <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
                         <select class="form-control" id="mailerSelect" name="mailer" data-bs-toggle-select="mail-type" aria-describedby="mailerInfo">
-                            <option value="" @if(config('mail.default') === 'array') selected @endif>{{ trans('messages.none') }}</option>
+                            <option value="" @selected(config('mail.default') === 'array')>
+                                {{ trans('messages.none') }}
+                            </option>
                             @foreach($mailers as $mailer => $mailerName)
-                                <option value="{{ $mailer }}" @if(config('mail.default') === $mailer) selected @endif>{{ $mailerName }}</option>
+                                <option value="{{ $mailer }}" @selected(config('mail.default') === $mailer)>
+                                    {{ $mailerName }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -79,10 +83,14 @@
                             <label class="form-label" for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
 
                             <select class="form-control" id="smtpEncryptionSelect" name="smtp-encryption">
-                                <option value="" @if(config('mail.encryption') === null) selected @endif>{{ trans('messages.none') }}</option>
+                                <option value="" @selected(config('mail.encryption') === null)>
+                                    {{ trans('messages.none') }}
+                                </option>
 
                                 @foreach($encryptionTypes as $encryption => $encryptionName)
-                                    <option value="{{ $encryption }}" @if($smtpConfig['encryption'] === $encryption) selected @endif>{{ $encryptionName }}</option>
+                                    <option value="{{ $encryption }}" @selected($smtpConfig['encryption'] === $encryption)>
+                                        {{ $encryptionName }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

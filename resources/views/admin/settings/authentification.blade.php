@@ -59,8 +59,12 @@
                     <label class="form-label" for="captchaSelect">{{ trans('admin.settings.security.captcha.title') }}</label>
                     <select class="form-select @error('captcha') is-invalid @enderror" id="captchaSelect" name="captcha" data-bs-toggle-select="captcha-type">
                         <option value="">{{ trans('messages.none') }}</option>
-                        <option value="hcaptcha" @if($captchaType === 'hcaptcha') selected @endif>hCaptcha</option>
-                        <option value="recaptcha" @if($captchaType === 'recaptcha') selected @endif>reCaptcha</option>
+                        <option value="hcaptcha" @selected($captchaType === 'hcaptcha')>
+                            hCaptcha
+                        </option>
+                        <option value="recaptcha" @selected($captchaType === 'recaptcha')>
+                            reCaptcha
+                        </option>
                     </select>
 
                     @error('captcha')
@@ -104,7 +108,9 @@
                     <label class="form-label" for="hashSelect">{{ trans('admin.settings.security.hash') }}</label>
                     <select class="form-select @error('hash') is-invalid @enderror" id="hashSelect" name="hash" required>
                         @foreach($hashAlgorithms as $hash => $hashName)
-                            <option value="{{ $hash }}" @if($currentHash === $hash) selected @endif>{{ $hashName }}</option>
+                            <option value="{{ $hash }}" @selected($currentHash === $hash)>
+                                {{ $hashName }}
+                            </option>
                         @endforeach
                     </select>
 

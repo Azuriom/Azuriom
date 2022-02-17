@@ -106,6 +106,8 @@ class SettingServiceProvider extends ServiceProvider
             'maintenance-paths' => 'maintenance.paths',
             'welcome-popup' => 'welcome_alert',
             'user_money_transfer' => 'users.money_transfer',
+            'shop.use-site-money' => 'shop.use_site_money',
+            'shop.month-goal' => 'shop.month_goal',
         ];
 
         foreach ($migrations as $oldKey => $newKey) {

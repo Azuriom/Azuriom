@@ -3,7 +3,7 @@
         <!-- Counter - Notifications -->
         <i class="fas fa-bell fa-fw"></i>
         @if(! $notifications->isEmpty())
-            <span class="badge badge-danger" id="notificationsCounter">{{ $notifications->count() }}</span>
+            <span class="badge bg-danger" id="notificationsCounter">{{ $notifications->count() }}</span>
         @endif
     </a>
 

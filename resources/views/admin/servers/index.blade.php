@@ -16,7 +16,9 @@
                     <select class="form-select @error('server') is-invalid @enderror" id="serverSelect" name="server" aria-describedby="serverLabel">
                         <option value="">{{ trans('messages.none') }}</option>
                         @foreach($servers as $server)
-                            <option value="{{ $server->id }}" @if($defaultServerId === $server->id) selected @endif>{{ $server->name }}</option>
+                            <option value="{{ $server->id }}" @selected($defaultServerId === $server->id)>
+                                {{ $server->name }}
+                            </option>
                         @endforeach
                     </select>
 

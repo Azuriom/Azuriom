@@ -14,7 +14,7 @@
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-bs-toggle-select="nav-element">
             @foreach($types as $type)
-                <option value="{{ $type }}" @if($type === old('type', $navbarElement->type ?? '')) selected @endif>{{ trans('admin.navbar_elements.fields.'.$type) }}</option>
+                <option value="{{ $type }}" @selected($type === old('type', $navbarElement->type ?? ''))>{{ trans('admin.navbar_elements.fields.'.$type) }}</option>
             @endforeach
         </select>
 
@@ -28,7 +28,7 @@
     <label class="form-label" for="pageSelect">{{ trans('admin.navbar_elements.fields.page') }}</label>
     <select class="form-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
         @foreach($pages as $page)
-            <option value="{{ $page->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('page') === $page->slug)) selected @endif>{{ $page->title }}</option>
+            <option value="{{ $page->id }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('page') === $page->slug))>{{ $page->title }}</option>
         @endforeach
     </select>
 
@@ -41,7 +41,7 @@
     <label class="form-label" for="postSelect">{{ trans('admin.navbar_elements.fields.post') }}</label>
     <select class="form-select @error('post') is-invalid @enderror" id="postSelect" name="post">
         @foreach($posts as $post)
-            <option value="{{ $post->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('post') === $post->slug)) selected @endif>{{ $post->title }}</option>
+            <option value="{{ $post->id }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('post') === $post->slug))>{{ $post->title }}</option>
         @endforeach
     </select>
 
@@ -63,7 +63,7 @@
     <label class="form-label" for="pluginSelect">{{ trans('messages.fields.link') }}</label>
     <select class="form-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
         @foreach($pluginRoutes as $route => $name)
-            <option value="{{ $route  }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route)) selected @endif>{{ trans($name) }}</option>
+            <option value="{{ $route  }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route))>{{ trans($name) }}</option>
         @endforeach
     </select>
 

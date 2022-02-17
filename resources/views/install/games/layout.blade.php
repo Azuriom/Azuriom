@@ -15,7 +15,7 @@
 
             <select name="locale" class="form-select @error('locale') is-invalid @enderror" id="locale" required>
                 @foreach($locales as $localeId => $localeName)
-                    <option value="{{ $localeId }}" @if($localeId === old('locale', app()->getLocale())) selected @endif>{{ $localeName }}</option>
+                    <option value="{{ $localeId }}" @selected($localeId === old('locale', app()->getLocale()))>{{ $localeName }}</option>
                 @endforeach
             </select>
 

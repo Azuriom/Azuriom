@@ -35,7 +35,7 @@
 
                 <div id="pathsGroup" class="{{ $paths === null ? 'collapse' : 'show' }}">
                     <div class="card card-body mb-2">
-                        <label>{{ trans('admin.settings.maintenance.paths') }}</label>
+                        <label class="form-label">{{ trans('admin.settings.maintenance.paths') }}</label>
 
                         @include('admin.elements.list-input', ['name' => 'paths', 'values' => $paths, 'placeholder' => 'news/*'])
 

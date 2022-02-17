@@ -7,11 +7,11 @@
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-bs-toggle-select="social-type">
             @foreach($types as $type => $typeName)
-                <option value="{{ $type }}" @if($type === old('type', $link->type ?? '')) selected @endif>
+                <option value="{{ $type }}" @selected($type === old('type', $link->type ?? ''))>
                     {{ $typeName }}
                 </option>
             @endforeach
-            <option value="other" @if(old('type', $link->type ?? '') === 'other') selected @endif>
+            <option value="other" @selected(old('type', $link->type ?? '') === 'other')>
                 {{ trans('messages.other') }}
             </option>
         </select>

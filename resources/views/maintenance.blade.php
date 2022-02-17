@@ -11,7 +11,7 @@
 
                     <div class="card-body">
                         <div class="card-text user-html-content">
-                            {!! $maintenanceMessage !!}
+                            {{ $maintenanceMessage }}
                         </div>
                     </div>
                 </div>

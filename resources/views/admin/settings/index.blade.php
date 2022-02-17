@@ -56,12 +56,12 @@
                                 <i class="fas fa-upload"></i>
                             </a>
                             <select class="form-select @error('icon') is-invalid @enderror" id="imageSelect" x-model="icon" name="icon">
-                                <option value="" @if(!$icon) selected @endif>
+                                <option value="" @selected(!$icon)>
                                     {{ trans('messages.none') }}
                                 </option>
 
                                 @foreach($images as $image)
-                                    <option value="{{ $image->file }}" @if($image->file === $icon) selected @endif>
+                                    <option value="{{ $image->file }}" @selected($image->file === $icon)>
                                         {{ $image->name }}
                                     </option>
                                 @endforeach
@@ -84,12 +84,12 @@
                                 <i class="fas fa-upload"></i>
                             </a>
                             <select class="form-select @error('logo') is-invalid @enderror" id="logoSelect" x-model="logo" name="logo">
-                                <option value="" @if(!$logo) selected @endif>
+                                <option value="" @selected(!$logo)>
                                     {{ trans('messages.none') }}
                                 </option>
 
                                 @foreach($images as $image)
-                                    <option value="{{ $image->file }}" @if($image->file === $logo) selected @endif>
+                                    <option value="{{ $image->file }}" @selected($image->file === $logo)>
                                         {{ $image->name }}
                                     </option>
                                 @endforeach
@@ -113,11 +113,11 @@
                             <i class="fas fa-upload"></i>
                         </a>
                         <select class="form-select @error('background') is-invalid @enderror" id="imageSelect" x-model="background" name="background">
-                            <option value="" @if(!$background) selected @endif>
+                            <option value="" @selected(!$background)>
                                 {{ trans('messages.none') }}
                             </option>
                             @foreach($images as $image)
-                                <option value="{{ $image->file }}" @if($image->file === $background) selected @endif>
+                                <option value="{{ $image->file }}" @selected($image->file === $background)>
                                     {{ $image->name }}
                                 </option>
                             @endforeach
@@ -138,7 +138,9 @@
                         <label class="form-label" for="timezoneSelect">{{ trans('admin.settings.index.timezone') }}</label>
                         <select class="form-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
                             @foreach($timezones as $timezone)
-                                <option value="{{ $timezone }}" @if($timezone === $currentTimezone) selected @endif>{{ $timezone }}</option>
+                                <option value="{{ $timezone }}" @selected($timezone === $currentTimezone)>
+                                    {{ $timezone }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -151,7 +153,9 @@
                         <label class="form-label" for="localeSelect">{{ trans('admin.settings.index.locale') }}</label>
                         <select class="form-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
                             @foreach($locales as $localeCode => $localeName)
-                                <option value="{{ $localeCode }}" @if($localeCode === app()->getLocale()) selected @endif>{{ $localeName }}</option>
+                                <option value="{{ $localeCode }}" @selected($localeCode === app()->getLocale())>
+                                    {{ $localeName }}
+                                </option>
                             @endforeach
                         </select>
 

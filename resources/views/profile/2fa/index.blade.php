@@ -20,7 +20,7 @@
                     <div class="collapse" id="codesCollapse">
                         <div class="card card-body mb-4">
                             <ul class="list-columns-2 mb-0">
-                                @foreach($user->two_factor_recovery_codes as $code)
+                                @foreach($user->two_factor_recovery_codes ?? [] as $code)
                                     <li>
                                         <samp>{{ $code }}</samp>
                                     </li>
