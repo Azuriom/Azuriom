@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.social-links.update', $link) }}" method="POST">
+            <form action="{{ route('admin.social-links.update', $link) }}" method="POST" x-data="{ type: '{{ $link->type }}' }">
                 @method('PUT')
 
                 @include('admin.social-links._form')

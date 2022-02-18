@@ -12,7 +12,7 @@
 
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-bs-toggle-select="nav-element">
+        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required x-model="type">
             @foreach($types as $type)
                 <option value="{{ $type }}" @selected($type === old('type', $navbarElement->type ?? ''))>{{ trans('admin.navbar_elements.fields.'.$type) }}</option>
             @endforeach
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div data-nav-element="page" class="mb-3 d-none">
+<div x-show="type === 'page'" class="mb-3">
     <label class="form-label" for="pageSelect">{{ trans('admin.navbar_elements.fields.page') }}</label>
     <select class="form-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
         @foreach($pages as $page)
@@ -37,7 +37,7 @@
     @enderror
 </div>
 
-<div data-nav-element="post" class="mb-3 d-none">
+<div x-show="type === 'post'" class="mb-3">
     <label class="form-label" for="postSelect">{{ trans('admin.navbar_elements.fields.post') }}</label>
     <select class="form-select @error('post') is-invalid @enderror" id="postSelect" name="post">
         @foreach($posts as $post)
@@ -50,7 +50,7 @@
     @enderror
 </div>
 
-<div data-nav-element="link" class="mb-3 d-none">
+<div x-show="type === 'link'" class="mb-3">
     <label class="form-label" for="linkInput">{{ trans('messages.fields.link') }}</label>
     <input type="text" class="form-control @error('link') is-invalid @enderror" id="linkInput" name="link" value="{{ old('link', (isset($navbarElement) ? $navbarElement->getTypeValue('link') : '')) }}">
 
@@ -59,7 +59,7 @@
     @enderror
 </div>
 
-<div data-nav-element="plugin" class="mb-3 d-none">
+<div x-show="type === 'plugin'" class="mb-3">
     <label class="form-label" for="pluginSelect">{{ trans('messages.fields.link') }}</label>
     <select class="form-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
         @foreach($pluginRoutes as $route => $name)
@@ -72,7 +72,7 @@
     @enderror
 </div>
 
-<div data-nav-element="dropdown" class="d-none">
+<div x-show="type === 'dropdown'" class="d-none">
     <small class="form-text text-info mb-3">{{ trans('admin.navbar_elements.dropdown') }}</small>
 </div>
 

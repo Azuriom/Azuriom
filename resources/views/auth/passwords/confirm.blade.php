@@ -3,47 +3,42 @@
 @section('title', trans('auth.passwords.confirm'))
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ trans('auth.passwords.confirm') }}</div>
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-6">
+        <h1>{{ trans('auth.passwords.confirm') }}</h1>
 
-                    <div class="card-body">
-                        {{ trans('auth.confirmation') }}
+        <div class="card">
+            <div class="card-body">
+                <p>{{ trans('auth.confirmation') }}</p>
 
-                        <form method="POST" action="{{ route('password.confirm') }}">
-                            @csrf
+                <form method="POST" action="{{ route('password.confirm') }}">
+                    @csrf
 
-                            <div class="mb-3 row">
-                                <label class="form-label" for="password" class="col-md-4 col-form-label text-md-right">{{ trans('auth.password') }}</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">{{ trans('auth.password') }}</label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ trans('auth.passwords.confirm') }}
-                                    </button>
-
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                         {{ trans('auth.forgot_password') }}
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                </div>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary">
+                            {{ trans('auth.passwords.confirm') }}
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{{ route('password.request') }}">
+                            {{ trans('auth.forgot_password') }}
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 @endsection

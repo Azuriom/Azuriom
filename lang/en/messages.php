@@ -153,7 +153,7 @@ return [
             'manage' => 'Manage 2FA',
             'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy, 1Password or Google Authenticator.',
             'secret' => 'Secret key: :secret',
-            'title' => 'Enable Two-Factor Authentication',
+            'title' => 'Two-Factor Authentication',
             'codes' => 'Show recovery codes',
             'code' => 'Code',
             'enabled' => 'Two-Factor Authentication is currently enabled. Don\'t forget to save your recovery codes!',

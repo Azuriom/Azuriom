@@ -423,7 +423,7 @@ class PluginManager extends ExtensionManager
             });
     }
 
-    public function getPluginToUpdate(bool $force = false)
+    public function getPluginsToUpdate(bool $force = false)
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
@@ -459,7 +459,6 @@ class PluginManager extends ExtensionManager
         }
 
         $updateManager->download($pluginInfo, 'plugins/');
-
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);

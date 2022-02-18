@@ -52,12 +52,12 @@
             <h5 class="card-title mb-0">{{ trans('admin.settings.security.title') }}</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.settings.security.update') }}" method="POST">
+            <form action="{{ route('admin.settings.security.update') }}" method="POST" x-data="{ type: '{{ $captchaType }}' }">
                 @csrf
 
                 <div class="mb-3">
                     <label class="form-label" for="captchaSelect">{{ trans('admin.settings.security.captcha.title') }}</label>
-                    <select class="form-select @error('captcha') is-invalid @enderror" id="captchaSelect" name="captcha" data-bs-toggle-select="captcha-type">
+                    <select class="form-select @error('captcha') is-invalid @enderror" id="captchaSelect" name="captcha" x-model="type">
                         <option value="">{{ trans('messages.none') }}</option>
                         <option value="hcaptcha" @selected($captchaType === 'hcaptcha')>
                             hCaptcha
@@ -72,7 +72,7 @@
                     @enderror
                 </div>
 
-                <div data-captcha-type="recaptcha hcaptcha">
+                <div x-show="type === 'hcaptcha' || type === 'recaptcha'">
                     <div class="card card-body mb-2">
                         <div class="row g-3">
                             <div class="mb-3 col-md-6">

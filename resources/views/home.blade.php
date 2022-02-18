@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('title', trans('messages.home'))
 
-@section('content')
+@section('app')
     <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat">
         <h1 class="mb-4">{{ trans('messages.welcome', ['name' => site_name()]) }}</h1>
 
@@ -15,7 +15,7 @@
         @endif
     </div>
 
-    <div class="container">
+    <div class="container content">
         @if($message)
             <p class="text-center">{{ $message }}</p>
         @endif

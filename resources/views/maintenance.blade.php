@@ -3,17 +3,13 @@
 @section('title', trans('messages.maintenance.title'))
 
 @section('content')
-    <div class="container content">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ trans('messages.maintenance.title') }}</div>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h1>{{ trans('messages.maintenance.title') }}</h1>
 
-                    <div class="card-body">
-                        <div class="card-text user-html-content">
-                            {{ $maintenanceMessage }}
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    {{ $maintenanceMessage }}
                 </div>
             </div>
         </div>

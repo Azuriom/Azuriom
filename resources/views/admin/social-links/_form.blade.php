@@ -5,7 +5,7 @@
 <div class="row g-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-bs-toggle-select="social-type">
+        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required x-model="type">
             @foreach($types as $type => $typeName)
                 <option value="{{ $type }}" @selected($type === old('type', $link->type ?? ''))>
                     {{ $typeName }}
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div data-social-type="other" class="mb-3 d-none">
+<div x-show="type === 'other'" class="mb-3">
     <div class="row g-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="titleInput">{{ trans('messages.fields.title') }}</label>

@@ -28,14 +28,14 @@
     <div class="card shadow mb-4">
         <div class="card-body">
 
-            <form action="{{ route('admin.settings.mail.update') }}" method="POST">
+            <form action="{{ route('admin.settings.mail.update') }}" method="POST" x-data="{ type: '{{ config('mail.default') }}' }">
                 @csrf
 
                 <div class="row g-3">
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
-                        <select class="form-control" id="mailerSelect" name="mailer" data-bs-toggle-select="mail-type" aria-describedby="mailerInfo">
+                        <select class="form-control" id="mailerSelect" name="mailer" x-model="type" aria-describedby="mailerInfo">
                             <option value="" @selected(config('mail.default') === 'array')>
                                 {{ trans('messages.none') }}
                             </option>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div data-mail-type="smtp">
+                <div x-show="type === 'smtp'">
                     <div class="row g-3">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
@@ -124,11 +124,11 @@
                 </div>
 
 
-                <div class="alert alert-warning d-none" role="alert" data-mail-type="sendmail">
+                <div class="alert alert-warning d-none" role="alert" x-if="type === 'sendmail'">
                     <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail') }}
                 </div>
 
-                <div class="alert alert-warning d-none" role="alert" data-mail-type="undefined">
+                <div class="alert alert-warning d-none" role="alert" x-if="!type'">
                     <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
                 </div>
 

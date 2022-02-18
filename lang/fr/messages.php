@@ -153,7 +153,7 @@ return [
             'manage' => 'Gérer l\'A2F',
             'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme Authy, 1Password, ou Google Authenticator.',
             'secret' => 'Clé secrète: :secret',
-            'title' => 'Activation de l\'authentification à deux facteurs',
+            'title' => 'Authentification à deux facteurs',
             'codes' => 'Afficher les codes de récupération',
             'code' => 'Code',
             'enabled' => 'L\'authentification à deux facteurs est activée. N\'oubliez pas de sauvegarder vos codes de récupération!',

@@ -208,6 +208,11 @@
                             <a class="sidebar-link" href="{{ route('admin.plugins.index') }}">
                                 <i class="fas fa-fw fa-puzzle-piece"></i>
                                 <span>{{ trans('admin.nav.extensions.plugins') }}</span>
+                                @if(($pluginsUpdates ?? 0) > 0)
+                                    <span class="sidebar-badge badge bg-danger">
+                                        {{ $pluginsUpdates }}
+                                    </span>
+                                @endif
                             </a>
                         </li>
                     @endcan
@@ -217,6 +222,11 @@
                             <a class="sidebar-link" href="{{ route('admin.themes.index') }}">
                                 <i class="fas fa-fw fa-paint-brush"></i>
                                 <span>{{ trans('admin.nav.extensions.themes') }}</span>
+                                @if(($themesUpdates ?? 0) > 0)
+                                    <span class="sidebar-badge badge bg-danger">
+                                        {{ $themesUpdates }}
+                                    </span>
+                                @endif
                             </a>
                         </li>
                     @endcan

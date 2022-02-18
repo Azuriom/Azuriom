@@ -161,6 +161,8 @@ class UpdateManager
 
             throw new RuntimeException('The file hash do not match expected hash!');
         }
+
+        Cache::forget('updates_counts');
     }
 
     public function installUpdate(array $info)

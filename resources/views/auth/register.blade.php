@@ -3,97 +3,79 @@
 @section('title', trans('auth.register'))
 
 @section('content')
-<div class="container content">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ trans('auth.register') }}</div>
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-6">
+        <h1>{{ trans('auth.register') }}</h1>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" id="captcha-form">
-                        @csrf
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ route('register') }}" id="captcha-form">
+                    @csrf
 
-                        <div class="mb-3 row">
-                            <label class="form-label" for="name" class="col-md-4 col-form-label text-md-right">{{ trans('auth.name') }}</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">{{ trans('auth.name') }}</label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
 
-                                @error('name')
+                    <div class="mb-3">
+                        <label class="form-label" for="email">{{ trans('auth.email') }}</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">{{ trans('auth.password') }}</label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password-confirm">{{ trans('auth.confirm_password') }}</label>
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+
+                    @if($conditions !== null)
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" @checked(old('conditions'))>
+
+                                <label class="form-check-label" for="conditions">
+                                    @lang('auth.conditions', ['url' => $conditions])
+                                </label>
+
+                                @error('conditions')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
+                    @endif
 
-                        <div class="mb-3 row">
-                            <label class="form-label" for="email" class="col-md-4 col-form-label text-md-right">{{ trans('auth.email') }}</label>
+                    @include('elements.captcha', ['center' => true])
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label class="form-label" for="password" class="col-md-4 col-form-label text-md-right">{{ trans('auth.password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label class="form-label" for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ trans('auth.confirm-password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        @if($conditions !== null)
-                            <div class="mb-3 row">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" {{ old('conditions') ? 'checked' : '' }}>
-
-                                        <label class="custom-control-label" for="conditions">
-                                            @lang('auth.conditions', ['url' => $conditions])
-                                        </label>
-
-                                        @error('conditions')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
-                        @include('elements.captcha', ['center' => true])
-
-                        <div class="mb-3 row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ trans('auth.register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            {{ trans('auth.register') }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

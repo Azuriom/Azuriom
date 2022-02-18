@@ -28,7 +28,7 @@
         <script>
             window.addEventListener('load', function () {
                 setTimeout(function () {
-                    $('#welcomePopupModal').modal('show');
+                    new bootstrap.Modal(document.getElementById('#welcomePopupModal')).show();
                 }, 500);
             });
         </script>
