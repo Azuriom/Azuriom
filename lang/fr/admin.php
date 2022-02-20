@@ -442,6 +442,7 @@ return [
         'available' => 'Plugins disponibles',
 
         'requirements' => [
+            'api' => 'Ce plugin n\'est pas encore compatible avec Azuriom 1.0',
             'azuriom' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
             'game' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
             'plugin' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',

@@ -46,7 +46,7 @@ class MarkdownTest extends TestCase
         $expectedLocal = "<p><img src=\"http://127.0.0.1/assets/img/logo.png\" alt=\"Azuriom\" /></p>\n";
         $expectedExternal = "<p><img data-original-src=\"https://azuriom.com/assets/img/logo.png\" src=\"https://images.weserv.nl/?url=https%3A%2F%2Fazuriom.com%2Fassets%2Fimg%2Flogo.png\" alt=\"Azuriom\" /></p>\n";
 
-        $this->assertSame($expectedLocal, $converter->convertToHtml($localMarkdown)->getContent());
-        $this->assertSame($expectedExternal, $converter->convertToHtml($externalMarkdown)->getContent());
+        $this->assertSame($expectedLocal, $converter->convert($localMarkdown)->getContent());
+        $this->assertSame($expectedExternal, $converter->convert($externalMarkdown)->getContent());
     }
 }

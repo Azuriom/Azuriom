@@ -16,14 +16,15 @@ use ZipArchive;
 
 class UpdateManager
 {
-    protected $updates;
+    /**
+     * The cached updates.
+     */
+    protected ?array $updates = null;
 
     /**
-     * The file instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
+     * The filesystem instance.
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Create a new UpdateManager instance.

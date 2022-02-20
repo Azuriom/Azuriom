@@ -14,6 +14,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
@@ -22,45 +23,35 @@ class PluginManager extends ExtensionManager
 {
     /**
      * The enabled plugins.
-     *
-     * @var array
      */
-    protected $plugins = [];
+    protected array $plugins = [];
 
     /**
      * The plugins/ directory.
-     *
-     * @var string
      */
-    protected $pluginsPath;
+    protected string $pluginsPath;
 
     /**
      * The plugins/ public directory for assets.
      *
      * @var string
      */
-    protected $pluginsPublicPath;
+    protected string $pluginsPublicPath;
 
     /**
      * The plugins route descriptions.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $routeDescriptions;
+    protected Collection $routeDescriptions;
 
     /**
      * The admin panel navigation.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $adminNavItems;
+    protected Collection $adminNavItems;
 
     /**
      * The user navigation.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $userNavItems;
+    protected Collection $userNavItems;
 
     /**
      * Create a new PluginManager instance.
@@ -303,6 +294,10 @@ class PluginManager extends ExtensionManager
     public function getMissingRequirements(string $plugin)
     {
         $description = $this->findDescription($plugin);
+
+        if (($description->azuriom_api ?? null) !== '1.0.0') {
+            return 'api';
+        }
 
         if (! isset($description->dependencies)) {
             return null;

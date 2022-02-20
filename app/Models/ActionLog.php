@@ -167,7 +167,7 @@ class ActionLog extends Model
         return self::create([
             'user_id' => Auth::id(),
             'action' => $action,
-            'target_id' => $target ? $target->getKey() : null,
+            'target_id' => $target?->getKey(),
             'data' => $data ?: null,
         ]);
     }

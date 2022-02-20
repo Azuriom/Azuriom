@@ -9,7 +9,7 @@ trait HasPlugin
      *
      * @var mixed
      */
-    protected $plugin;
+    protected mixed $plugin;
 
     public function bindPlugin($plugin)
     {

@@ -67,17 +67,17 @@ class PluginController extends Controller
                     ]));
             }
 
-            $requirements = $this->plugins->getMissingRequirements($plugin);
+            $missing = $this->plugins->getMissingRequirements($plugin);
 
-            if ($requirements === 'azuriom') {
+            if ($missing === 'azuriom' || $missing === 'api') {
                 return redirect()->route('admin.plugins.index')
-                    ->with('error', trans('admin.plugins.requirements.azuriom'));
+                    ->with('error', trans('admin.plugins.requirements.'.$missing));
             }
 
-            if ($requirements !== null) {
+            if ($missing !== null) {
                 return redirect()->route('admin.plugins.index')
                     ->with('error', trans('admin.plugins.requirements.plugin', [
-                        'plugin' => $requirements,
+                        'plugin' => $missing,
                     ]));
             }
 

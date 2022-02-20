@@ -3,7 +3,7 @@
 @section('title', trans('messages.home'))
 
 @section('app')
-    <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat">
+    <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat; height: 500px">
         <h1 class="mb-4">{{ trans('messages.welcome', ['name' => site_name()]) }}</h1>
 
         @if($server && $server->isOnline())
@@ -17,13 +17,17 @@
 
     <div class="container content">
         @if($message)
-            <p class="text-center">{{ $message }}</p>
+            <div class="card mb-4">
+                <div class="card-body">
+                    {{ $message }}
+                </div>
+            </div>
         @endif
 
         <div class="row">
             @foreach($posts as $post)
                 <div class="col-md-6">
-                    <div class="post-preview card mb-3 shadow-sm">
+                    <div class="post-preview card mb-3">
                         @if($post->hasImage())
                             <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="card-img-top">
                         @endif
@@ -42,16 +46,3 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-    <style>
-        .home-background {
-            height: 500px;
-        }
-
-        .discord-widget {
-            border: none;
-            width: 100%;
-        }
-    </style>
-@endpush

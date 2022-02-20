@@ -76,7 +76,7 @@ class AlertNotification implements Arrayable
         return [
             'level' => $this->level,
             'content' => $this->content,
-            'author_id' => $this->from ? $this->from->id : null,
+            'author_id' => $this->from?->id,
             'link' => $this->link,
         ];
     }

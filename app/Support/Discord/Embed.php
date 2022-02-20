@@ -7,6 +7,7 @@ use Azuriom\Support\Discord\Embeds\EmbedField;
 use Azuriom\Support\Discord\Embeds\EmbedFooter;
 use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -19,28 +20,28 @@ class Embed implements Arrayable
      *
      * @var string|null
      */
-    protected $title;
+    protected ?string $title;
 
     /**
      * Description of embed.
      *
      * @var string|null
      */
-    protected $description;
+    protected ?string $description;
 
     /**
      * Url of embed.
      *
      * @var string|null
      */
-    protected $url;
+    protected ?string $url;
 
     /**
      * Timestamp of embed content.
      *
      * @var \Carbon\CarbonInterface|null
      */
-    protected $timestamp;
+    protected ?CarbonInterface $timestamp;
 
     /**
      * Color code of the embed.
@@ -54,28 +55,28 @@ class Embed implements Arrayable
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter|null
      */
-    protected $footer;
+    protected ?EmbedFooter $footer;
 
     /**
      * Thumbnail information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedThumbnail|null
      */
-    protected $thumbnail;
+    protected ?EmbedThumbnail $thumbnail;
 
     /**
      * Author information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedAuthor|null
      */
-    protected $author;
+    protected ?EmbedAuthor $author;
 
     /**
      * Fields information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter[]|null
      */
-    protected $fields = [];
+    protected ?array $fields = [];
 
     /**
      * Create a new message instance.

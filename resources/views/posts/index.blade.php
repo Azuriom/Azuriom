@@ -6,7 +6,7 @@
     <div class="row">
         @foreach($posts as $post)
             <div class="col-md-6">
-                <div class="post-preview card my-2 shadow-sm">
+                <div class="post-preview card my-2">
                     @if($post->hasImage())
                         <img src="{{ $post->imageUrl() }}" class="card-img-top" alt="{{ $post->title }}">
                     @endif

@@ -22,7 +22,7 @@
         <img class="img-fluid rounded mb-3" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
     @endif
 
-    <div class="card shadow-sm mb-4">
+    <div class="card mb-4">
         <div class="card-body">
             <h1 class="card-title">{{ $post->title }}</h1>
 
@@ -47,7 +47,7 @@
 
     <section id="comments">
         @foreach($post->comments as $comment)
-            <div class="card shadow-sm mb-3">
+            <div class="card mb-3">
                 <div class="card-body d-flex">
                     <img class="flex-shrink-0 d-flex me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
                     <div class="flex-grow-1">
@@ -71,7 +71,7 @@
     </section>
 
     @can('create', \Azuriom\Models\Comment::class)
-        <div class="card mt-4 shadow-sm">
+        <div class="card mt-4">
             <div class="card-body">
                 <h3 class="card-title">
                     {{ trans('messages.comments.create') }}

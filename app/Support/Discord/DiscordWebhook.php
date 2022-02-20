@@ -14,35 +14,35 @@ class DiscordWebhook implements Arrayable
      *
      * @var string|null
      */
-    protected $content;
+    protected ?string $content;
 
     /**
      * Override the default username of the webhook.
      *
      * @var string|null
      */
-    protected $username;
+    protected ?string $username;
 
     /**
      * Override the default avatar of the webhook.
      *
      * @var string|null
      */
-    protected $avatarUrl;
+    protected ?string $avatarUrl;
 
     /**
      * Whether or not this is a TTS message.
      *
      * @var bool|null
      */
-    protected $tts;
+    protected ?bool $tts;
 
     /**
      * Embedded rich content.
      *
      * @var \Azuriom\Support\Discord\Embed[]
      */
-    protected $embeds = [];
+    protected array $embeds = [];
 
     private function __construct(string $content = null)
     {

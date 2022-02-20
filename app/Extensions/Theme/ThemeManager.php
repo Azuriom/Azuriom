@@ -15,24 +15,18 @@ class ThemeManager extends ExtensionManager
 {
     /**
      * The current theme if set.
-     *
-     * @var string|null
      */
-    protected $currentTheme;
+    protected ?string $currentTheme;
 
     /**
-     * The themes/ directory.
-     *
-     * @var string
+     * The themes directory.
      */
-    protected $themesPath;
+    protected string $themesPath;
 
     /**
-     * The themes/ public directory for assets.
-     *
-     * @var string
+     * The themes public directory for assets.
      */
-    protected $themesPublicPath;
+    protected string $themesPublicPath;
 
     /**
      * Create a new ThemeManager instance.
