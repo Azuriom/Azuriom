@@ -6,9 +6,20 @@ use Azuriom\Games\Game;
 use Azuriom\Games\Minecraft\Servers\AzLink;
 use Azuriom\Games\Minecraft\Servers\Ping;
 use Azuriom\Games\Minecraft\Servers\Rcon;
+use Azuriom\Socialite\Minecraft\MinecraftProvider;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 abstract class AbstractMinecraftGame extends Game
 {
+    public function __construct()
+    {
+        MinecraftProvider::$notFoundCallback = function () {
+            return new HttpResponseException(
+                redirect()->home()->with('error', trans('game.minecraft.missing'))
+            );
+        };
+    }
+
     public function name()
     {
         return 'Minecraft';

@@ -23,6 +23,16 @@ class MinecraftBedrockGame extends Game
         return 'mc-bedrock';
     }
 
+    public function loginWithOAuth()
+    {
+        return true;
+    }
+
+    public function getSocialiteDriverName()
+    {
+        return 'xbox';
+    }
+
     public function getAvatarUrl(User $user, int $size = 64)
     {
         $params = '';

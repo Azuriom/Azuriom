@@ -35,4 +35,10 @@ return [
         'client_secret' => env('STEAM_KEY'),
         'redirect' => '/user/login/callback',
     ],
+
+    'microsoft' => [
+        'client_id' => env('MICROSOFT_CLIENT_SECRET'),
+        'client_secret' => env('MICROSOFT_CLIENT_ID'),
+        'redirect' => '/user/login/callback',
+    ],
 ];

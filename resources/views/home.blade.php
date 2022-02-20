@@ -16,6 +16,8 @@
     </div>
 
     <div class="container content">
+        @include('elements.session-alerts')
+
         @if($message)
             <div class="card mb-4">
                 <div class="card-body">

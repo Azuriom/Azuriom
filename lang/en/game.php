@@ -8,6 +8,7 @@ return [
 
     'minecraft' => [
         'id' => 'UUID',
+        'missing' => 'This Xbox account doesn\'t have a Minecraft profile.',
         'commands' => 'You can use <code>{name}</code> for the player username and <code>{uuid}</code> for the player UUID',
     ],
 

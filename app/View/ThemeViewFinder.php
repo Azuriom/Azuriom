@@ -21,7 +21,7 @@ class ThemeViewFinder extends FileViewFinder
         }
 
         try {
-            // Try to find the view in the theme..
+            // Try to find the view in the theme.
             return $this->findInPaths("vendor.{$namespace}.{$view}", $this->paths);
         } catch (InvalidArgumentException $e) {
             // Nothing found, fallback to the default view

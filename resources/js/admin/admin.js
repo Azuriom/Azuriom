@@ -1,4 +1,3 @@
-// AdminKit (required)
 import '@adminkit/core/src/js/modules/bootstrap';
 import '@adminkit/core/src/js/modules/sidebar';
 import '@adminkit/core/src/js/modules/theme';
@@ -61,29 +60,53 @@ document.querySelectorAll('[data-image-preview]').forEach(function (el) {
     });
 });
 
+window.createAlert = function (color, message, dismiss) {
+    const button = dismiss ? ' <button type="button" class="btn-close" aria-label="Close"></button>' : '';
+    let icon;
+
+    switch (color) {
+        case 'success':
+            icon = 'check-circle';
+            break;
+        case 'danger':
+            icon = 'exclamation-circle';
+            break;
+        case 'info':
+            icon = 'info-circle';
+            break;
+    }
+
+    icon = icon ? '<i class="fas fa-' + icon + '"></i> ' : '';
+
+    document.getElementById('status-message').innerHTML
+        = '<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>';
+}
+
 const readNotifications = document.getElementById('readNotifications');
 let readingNotifications = false;
 
-readNotifications.addEventListener('click', function (ev) {
-    ev.preventDefault();
+if (readNotifications) {
+    readNotifications.addEventListener('click', function (ev) {
+        ev.preventDefault();
 
-    if (readingNotifications) {
-        return;
-    }
+        if (readingNotifications) {
+            return;
+        }
 
-    readingNotifications = true;
+        readingNotifications = true;
 
-    readNotifications.querySelector('.loader').classList.remove('d-none');
+        readNotifications.querySelector('.loader').classList.remove('d-none');
 
-    axios.post(readNotifications.getAttribute('href'))
-        .then(function () {
-            document.getElementById('notificationsCounter').remove();
-            document.getElementById('notifications').remove();
-            document.getElementById('noNotificationsLabel').classList.remove('d-none');
-        })
-        .catch(function () {
-            readNotifications.querySelector('.loader').classList.add('d-none');
+        axios.post(readNotifications.getAttribute('href'))
+            .then(function () {
+                document.getElementById('notificationsCounter').remove();
+                document.getElementById('notifications').remove();
+                document.getElementById('noNotificationsLabel').classList.remove('d-none');
+            })
+            .catch(function () {
+                readNotifications.querySelector('.loader').classList.add('d-none');
 
-            readingNotifications = false;
-        });
-});
+                readingNotifications = false;
+            });
+    });
+}
