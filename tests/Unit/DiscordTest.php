@@ -45,6 +45,7 @@ class DiscordTest extends TestCase
                     'color' => 7506394,
                     'footer' => [
                         'text' => 'The footer text',
+                        'icon_url' => null,
                     ],
                     'thumbnail' => null,
                     'author' => [

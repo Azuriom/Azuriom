@@ -20,56 +20,56 @@ class Embed implements Arrayable
      *
      * @var string|null
      */
-    protected ?string $title;
+    protected ?string $title = null;
 
     /**
      * Description of embed.
      *
      * @var string|null
      */
-    protected ?string $description;
+    protected ?string $description = null;
 
     /**
      * Url of embed.
      *
      * @var string|null
      */
-    protected ?string $url;
+    protected ?string $url = null;
 
     /**
      * Timestamp of embed content.
      *
      * @var \Carbon\CarbonInterface|null
      */
-    protected ?CarbonInterface $timestamp;
+    protected ?CarbonInterface $timestamp = null;
 
     /**
      * Color code of the embed.
      *
      * @var int|null
      */
-    protected $color;
+    protected ?int $color = null;
 
     /**
      * Footer information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter|null
      */
-    protected ?EmbedFooter $footer;
+    protected ?EmbedFooter $footer = null;
 
     /**
      * Thumbnail information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedThumbnail|null
      */
-    protected ?EmbedThumbnail $thumbnail;
+    protected ?EmbedThumbnail $thumbnail = null;
 
     /**
      * Author information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedAuthor|null
      */
-    protected ?EmbedAuthor $author;
+    protected ?EmbedAuthor $author = null;
 
     /**
      * Fields information.

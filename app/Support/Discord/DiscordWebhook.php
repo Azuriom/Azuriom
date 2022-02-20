@@ -14,28 +14,28 @@ class DiscordWebhook implements Arrayable
      *
      * @var string|null
      */
-    protected ?string $content;
+    protected ?string $content = null;
 
     /**
      * Override the default username of the webhook.
      *
      * @var string|null
      */
-    protected ?string $username;
+    protected ?string $username = null;
 
     /**
      * Override the default avatar of the webhook.
      *
      * @var string|null
      */
-    protected ?string $avatarUrl;
+    protected ?string $avatarUrl = null;
 
     /**
      * Whether or not this is a TTS message.
      *
      * @var bool|null
      */
-    protected ?bool $tts;
+    protected ?bool $tts = null;
 
     /**
      * Embedded rich content.
