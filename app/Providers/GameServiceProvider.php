@@ -48,7 +48,7 @@ class GameServiceProvider extends ServiceProvider
     {
         $this->registerSocialiteProviders();
 
-        $gameType = config('azuriom.game');
+        $gameType = config('azuriom.game') ?? '';
         $game = Arr::get(static::$games, $gameType, FallbackGame::class);
 
         if (is_string($game)) {

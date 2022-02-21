@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -273,37 +274,39 @@ class InstallController extends Controller
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
             } elseif ($game === 'minecraft' || $game === 'mc-bedrock') {
+                if ($game !== 'mc-bedrock') {
+                    $game = $request->input('oauth') ? 'mc-online' : 'mc-offline';
+                }
+
                 $this->validate($request, [
-                    'name' => ['required', 'string', 'max:25'],
-                    'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'name' => ['required_if:oauth,0', 'nullable', 'max:25'],
+                    'email' => ['required_if:oauth,0', 'nullable', 'email', 'max:50'], // TODO ensure unique
+                    'password' => ['required_if:oauth,0', 'nullable', 'min:8', 'confirmed'],
                     'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
                 ]);
 
                 $name = $request->input('name');
-                if ($game !== 'mc-bedrock') {
-                    $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
-                }
 
                 if ($game === 'mc-online') {
-                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
+                    $gameId = $request->input('uuid');
+                    $response = Http::get("https://api.mojang.com/user/profiles/{$gameId}/names");
 
-                    if ($gameId === null) {
-                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    if (! $response->successful() || ! ($name = Arr::get(Arr::last($response->json()), 'name'))) {
+                        throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID.']);
                     }
                 } elseif ($game === 'mc-bedrock') {
-                    $gameId = Http::get("https://xbox-api.azuriom.com/search/{$name}")->json('xuid');
+                    $gameId = $request->input('xuid');
+                    $name = Http::get("https://xbox-api.azuriom.com/profiles/{$gameId}")
+                        ->json('gamertag');
 
-                    if ($gameId === null) {
-                        throw ValidationException::withMessages(['name' => 'No XUID for this username.']);
+                    if ($name === null) {
+                        throw ValidationException::withMessages(['xuid' => 'Invalid Xbox XUID.']);
                     }
                 }
             }
 
             Artisan::call('cache:clear');
-
             Artisan::call('migrate', ['--force' => true, '--seed' => true]);
-
             Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
             EnvEditor::updateEnv([
@@ -340,7 +343,7 @@ class InstallController extends Controller
 
             $user = User::create([
                 'name' => $name,
-                'email' => $request->input('email', 'admin@domain.ltd'),
+                'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password', Str::random(32))),
                 'game_id' => $gameId ?? null,
             ]);
@@ -348,7 +351,7 @@ class InstallController extends Controller
             $user->markEmailAsVerified();
             $user->forceFill(['role_id' => 2])->save();
 
-            if (in_array($game, $this->steamGames, true)) {
+            if ($game !== 'mc-offline') {
                 Setting::updateSettings('register', false);
             }
         } catch (ValidationException $e) {

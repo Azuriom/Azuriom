@@ -60,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Activer la vérification des pseudos avec Minecraft.net',
+            'premium' => 'Utiliser la connexion avec un compte Microsoft (plus sécurisé mais nécessite d\'avoir acheter Minecraft)',
         ],
 
         'steam' => [
