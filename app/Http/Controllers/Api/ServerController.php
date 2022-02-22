@@ -81,7 +81,7 @@ class ServerController extends Controller
         }
 
         User::forceCreate(array_merge(Arr::except($data, 'ip'), [
-            'email' => $request->input('email') ?? $name.'@login.oauth',
+            'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),

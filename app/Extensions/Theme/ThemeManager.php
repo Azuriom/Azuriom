@@ -16,7 +16,7 @@ class ThemeManager extends ExtensionManager
     /**
      * The current theme if set.
      */
-    protected ?string $currentTheme;
+    protected ?string $currentTheme = null;
 
     /**
      * The themes directory.
@@ -43,7 +43,7 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Load and enable the given theme.
-     * Currently this method can only be call once.
+     * Currently, this method can only be call once.
      *
      * @param  string  $theme
      */

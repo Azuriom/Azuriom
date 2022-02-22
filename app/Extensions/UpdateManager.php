@@ -217,7 +217,7 @@ class UpdateManager
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),
             'Azuriom-Game' => game()->id(),
-            'Azuriom-Users' => User::count(),
+            'Azuriom-Users' => is_installed() ? User::count() : 0,
         ]);
 
         $siteKey = setting('site-key');

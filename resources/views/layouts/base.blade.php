@@ -39,7 +39,8 @@
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     @stack('styles')
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -57,13 +58,9 @@
             margin-bottom: 3rem;
         }
 
-        .user-html-content img {
+        img {
             max-width: 100%;
             height: auto;
-        }
-
-        footer {
-            background: #232323;
         }
     </style>
 </head>
@@ -77,7 +74,7 @@
     @yield('app')
 </div>
 
-<footer class="text-white mt-auto py-4 text-center">
+<footer class="text-center text-white bg-dark mt-auto py-4">
     <div class="copyright">
         <div class="container">
             <p>{{ setting('copyright') }} | @lang('messages.copyright')</p>

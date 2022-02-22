@@ -7,7 +7,7 @@
                 {{ trans('install.game.minecraft.premium') }}
             </label>
 
-            <select name="oauth" class="form-select" id="oauth" data-toggle-select="oauth" required>
+            <select name="oauth" class="form-select @error('oauth') is-invalid @enderror" id="oauth" data-toggle-select="oauth" required>
                 <option value=""></option>
                 <option value="1" @selected(old('oauth') === '1')>
                     {{ trans('messages.yes') }}
@@ -16,6 +16,10 @@
                     {{ trans('messages.no') }}
                 </option>
             </select>
+
+            @error('oauth')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
         </div>
 
         <h3>{{ trans('install.game.user.title') }}</h3>
