@@ -80,8 +80,9 @@
             <p>{{ setting('copyright') }} | @lang('messages.copyright')</p>
 
             @foreach(social_links() as $link)
-                <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer" class="btn">
-                    <i class="{{ $link->icon }} fa-2x" style="color: {{ $link->color }}"></i>
+                <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"
+                   class="d-inline-block mx-1 p-2 rounded-circle" style="background: {{ $link->color }}">
+                    <i class="{{ $link->icon }} fa-lg fa-fw text-white"></i>
                 </a>
             @endforeach
         </div>

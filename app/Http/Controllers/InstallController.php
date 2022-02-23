@@ -288,7 +288,7 @@ class InstallController extends Controller
                 $name = $request->input('name');
 
                 if ($game === 'mc-online') {
-                    $gameId = $request->input('uuid');
+                    $gameId = Str::replace('-', '', $request->input('uuid', ''));
                     $response = Http::get("https://api.mojang.com/user/profiles/{$gameId}/names");
 
                     if (! $response->successful() || ! ($name = Arr::get(Arr::last($response->json()), 'name'))) {

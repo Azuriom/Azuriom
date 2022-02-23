@@ -3,6 +3,8 @@
 @section('title', trans('messages.posts.posts'))
 
 @section('content')
+    <h1>{{ trans('messages.posts.posts') }}</h1>
+
     <div class="row">
         @foreach($posts as $post)
             <div class="col-md-6">

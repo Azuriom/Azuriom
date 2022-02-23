@@ -17,17 +17,17 @@ use Illuminate\Support\Facades\Cache;
  * @property int $id
  * @property string $name
  * @property string|null $email
- * @property string|null $avatar
  * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
  * @property float $money
  * @property string|null $game_id
+ * @property string|null $avatar
  * @property string|null $access_token
- * @property string|null $last_login_ip
- * @property \Carbon\Carbon|null $last_login_at
  * @property string|null $two_factor_secret
  * @property string[]|null $two_factor_recovery_codes
+ * @property string|null $last_login_ip
+ * @property \Carbon\Carbon|null $last_login_at
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'avatar', 'password', 'money', 'role_id', 'game_id', 'access_token', 'two_factor_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar', 'access_token', 'two_factor_secret',
     ];
 
     /**

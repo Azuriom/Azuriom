@@ -103,7 +103,7 @@ class SocialLink extends Model
         return $properties['color'] ?? '';
     }
 
-    public function setColorAttribute(string $value)
+    public function setColorAttribute($value)
     {
         $this->setProperty('color', $value);
     }
@@ -117,12 +117,12 @@ class SocialLink extends Model
         return $this->properties['icon'] ?? '';
     }
 
-    public function setIconAttribute(string $value)
+    public function setIconAttribute($value)
     {
         $this->setProperty('icon', $value);
     }
 
-    private function setProperty(string $key, string $value)
+    private function setProperty(string $key, ?string $value)
     {
         if ($this->type !== 'other') {
             $this->properties = null;

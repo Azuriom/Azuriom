@@ -18,15 +18,15 @@
         </div>
     @endif
 
+    <h1>{{ $post->title }}</h1>
+
     @if($post->hasImage())
         <img class="img-fluid rounded mb-3" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
     @endif
 
     <div class="card mb-4">
         <div class="card-body">
-            <h1 class="card-title">{{ $post->title }}</h1>
-
-            <div class="card-text user-html-content">
+            <div class="card-text">
                 {!! $post->content !!}
             </div>
 

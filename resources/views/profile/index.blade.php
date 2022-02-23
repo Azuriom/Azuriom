@@ -11,13 +11,13 @@
                 <div class="col-xl-2 col-md-3 text-center">
                     <img src="{{ $user->getAvatar(150) }}" class="rounded mb-3 img-fluid" alt="{{ $user->name }}">
 
-                    <h2 class="h4 mb-0">
+                    <h3 class="h5 mb-0">
                         <span class="badge" style="{{ $user->role->getBadgeStyle() }}; vertical-align: middle">{{ $user->role->name }}</span>
-                    </h2>
+                    </h3>
                 </div>
 
                 <div class="col-lx-10 col-md-9">
-                    <h1>{{ $user->name }}</h1>
+                    <h2>{{ $user->name }}</h2>
 
                     <ul>
                         <li>{{ trans('messages.profile.info.register', ['date' => format_date($user->created_at, true)]) }}</li>

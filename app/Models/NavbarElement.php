@@ -115,7 +115,7 @@ class NavbarElement extends Model
         return match ($this->type) {
             'home' => $request->routeIs('home'),
             'link' => $request->is($this->value),
-            'page' => $request->routeIs('pages.show') && $request->route('page.slug') === $this->value,
+            'page' => $request->routeIs('pages.show') && $request->route('path') === $this->value,
             'post' => $request->routeIs('posts.show') && $request->route('post.slug') === $this->value,
             'posts' => $request->routeIs('posts.*'),
             'plugin' => $request->routeIs(Str::beforeLast($this->value, '.').'.*'),
