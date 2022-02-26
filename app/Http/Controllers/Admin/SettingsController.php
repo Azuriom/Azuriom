@@ -141,7 +141,8 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.updated'));
+        $response = redirect()->route('admin.settings.index')
+            ->with('success', trans('admin.settings.updated'));
 
         if (setting('register', true) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();

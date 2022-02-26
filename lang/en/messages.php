@@ -101,6 +101,8 @@ return [
     'fontawesome' => 'You can find the list of available icons on <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
 
     'home' => 'Home',
+    'servers' => 'Servers',
+    'news' => 'News',
     'welcome' => 'Welcome on :name',
     'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
@@ -128,6 +130,8 @@ return [
     ],
 
     'server' => [
+        'join' => 'Join',
+        'total' => ':count/:max player|:count/:max online players',
         'online' => ':count online player|:count online players',
         'offline' => 'The server is currently offline.',
     ],

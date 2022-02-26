@@ -277,7 +277,7 @@ class ThemeManager extends ExtensionManager
     {
         $description = $this->findDescription($theme);
 
-        return (($description->azuriom_api ?? null) !== '1.0.0');
+        return ($description->azuriom_api ?? null) !== '1.0.0';
     }
 
     public function install($themeId)

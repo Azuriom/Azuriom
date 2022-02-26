@@ -251,6 +251,10 @@ return [
         'default' => 'Default server',
         'default_info' => 'The number of players connected from the default server will be displayed on the site if the current theme supports it.',
 
+        'home_display' => 'Display this server on the homepage',
+        'url' => 'Join button URL',
+        'url_info' => 'Leave empty to display server address. Can be a link to download the game/launcher or a URL to join the server like <code>steam://connect/&lt;ip&gt;</code>.',
+
         'ping_info' => 'The ping link doesn\'t need a plugin, but you can\'t execute commands with it.',
         'query_info' => 'With query link, it\'s not possible to execute commands on the server.',
 

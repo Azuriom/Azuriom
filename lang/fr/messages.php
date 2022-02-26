@@ -102,7 +102,10 @@ return [
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
     'home' => 'Accueil',
+    'servers' => 'Serveurs',
+    'news' => 'Nouveautés',
     'welcome' => 'Bienvenue sur :name',
+    'offline' => 'Hors-ligne',
 
     'maintenance' => [
         'title' => 'Maintenance',
@@ -128,6 +131,8 @@ return [
     ],
 
     'server' => [
+        'join' => 'Rejoindre',
+        'total' => ':count/:max connecté|:count/:max connectés',
         'online' => ':count joueur en ligne|:count joueurs en ligne',
         'offline' => 'Le serveur est actuellement éteint.',
     ],

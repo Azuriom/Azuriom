@@ -251,6 +251,10 @@ return [
         'default' => 'Serveur par défaut',
         'default_info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
 
+        'home_display' => 'Afficher ce serveur sur la page d\'accueil',
+        'url' => 'URL du bouton pour rejoindre le serveur',
+        'url_info' => 'Laisser vide pour afficher l\'adresse du serveur. Peut par exemple être un lien pour télécharger le jeu/launcher ou une URL pour rejoindre le serveur comme <code>steam://connect/&lt;ip&gt;</code>.',
+
         'ping_info' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
         'query_info' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
 

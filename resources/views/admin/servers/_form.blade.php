@@ -32,21 +32,23 @@
                 });
             }
 
-            verifyButton.addEventListener('click', function () {
-                verifyButton.setAttribute('disabled', '');
+            if (verifyButton) {
+                verifyButton.addEventListener('click', function () {
+                    verifyButton.setAttribute('disabled', '');
 
-                const formData = new FormData(document.getElementById('serverForm'));
-                formData.delete('_method');
+                    const formData = new FormData(document.getElementById('serverForm'));
+                    formData.delete('_method');
 
-                axios.post('{{ route('admin.servers.verify-azlink', $server) }}', formData)
-                    .then(function (json) {
-                        createAlert('success', json.data.message, true);
-                    }).catch(function (error) {
-                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
-                }).finally(function () {
-                    verifyButton.removeAttribute('disabled');
+                    axios.post('{{ route('admin.servers.verify-azlink', $server) }}', formData)
+                        .then(function (json) {
+                            createAlert('success', json.data.message, true);
+                        }).catch(function (error) {
+                        createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+                    }).finally(function () {
+                        verifyButton.removeAttribute('disabled');
+                    });
                 });
-            });
+            }
         </script>
     @endisset
 @endpush
@@ -227,4 +229,19 @@
             <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
         </button>
     @endisset
+</div>
+
+<div class="mb-3 form-check form-switch">
+    <input type="checkbox" class="form-check-input" id="displaySwitch" name="home_display" @checked($server->home_display ?? true)>
+    <label class="form-check-label" for="displaySwitch">{{ trans('admin.servers.home_display') }}</label>
+</div>
+
+<div class="mb-3">
+    <label class="form-label" for="urlInput">{{ trans('admin.servers.url') }}</label>
+    <input type="url" class="form-control @error('join_url') is-invalid @enderror" id="urlInput" name="join_url" value="{{ old('join_url', $server->join_url ?? '') }}">
+
+    @error('join_url')
+    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+    @enderror
+    <label class="form-text">@lang('admin.servers.url_info')</label>
 </div>

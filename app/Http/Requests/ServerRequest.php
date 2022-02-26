@@ -2,12 +2,24 @@
 
 namespace Azuriom\Http\Requests;
 
+use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\Server;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ServerRequest extends FormRequest
 {
+    use ConvertCheckbox;
+
+    /**
+     * The checkboxes attributes.
+     *
+     * @var array
+     */
+    protected $checkboxes = [
+        'home_display',
+    ];
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,6 +36,8 @@ class ServerRequest extends FormRequest
             'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
+            'join_url' => ['sometimes', 'nullable', 'url', 'max:100'],
+            'home_display' => ['filled', 'boolean'],
         ];
     }
 
