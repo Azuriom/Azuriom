@@ -39,6 +39,7 @@ class EmbedFooter implements Arrayable
     {
         return [
             'text' => $this->text,
+            'icon_url' => $this->iconUrl,
         ];
     }
 }

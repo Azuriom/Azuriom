@@ -104,6 +104,7 @@ class ActionLog extends Model
             Role::class,
             Server::class,
             Image::class,
+            Redirect::class,
             User::class,
         ], 'admin.logs');
     }

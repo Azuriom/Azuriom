@@ -9,14 +9,14 @@ class EmbedThumbnail implements Arrayable
     /**
      * Source url of thumbnail (only supports http(s) and attachments).
      *
-     * @var string|null
+     * @var string
      */
     protected $url;
 
     /**
      * Create a new thumbnail instance.
      *
-     * @param  string|null  $url
+     * @param  string  $url
      */
     public function __construct(string $url)
     {

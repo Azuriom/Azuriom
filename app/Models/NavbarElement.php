@@ -125,7 +125,7 @@ class NavbarElement extends Model
             case 'link':
                 return $request->is($this->value);
             case 'page':
-                return $request->routeIs('pages.show') && $request->route('page.slug') === $this->value;
+                return $request->routeIs('pages.show') && $request->route('path') === $this->value;
             case 'post':
                 return $request->routeIs('posts.show') && $request->route('post.slug') === $this->value;
             case 'posts':

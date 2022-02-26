@@ -24,7 +24,7 @@ class AddUserIdToServerCommandsTable extends Migration
 
         Schema::drop('server_commands');
 
-        require __DIR__.'/2019_12_06_000000_create_server_commands_table.php';
+        require_once __DIR__.'/2019_12_06_000000_create_server_commands_table.php';
         (new CreateServerCommandsTable())->up();
 
         $usersNames = $commands->groupBy('player_name')->keys()->all();

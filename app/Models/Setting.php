@@ -85,7 +85,7 @@ class Setting extends Model
         }
 
         if (in_array($this->name, self::JSON_ENCODED, true)) {
-            $this->attributes['value'] = $value;
+            $this->attributes['value'] = json_encode($value);
 
             return;
         }

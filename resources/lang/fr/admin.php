@@ -637,6 +637,12 @@ return [
             'deleted' => 'Suppression de l\'image #:id',
         ],
 
+        'redirects' => [
+            'created' => 'Création de la redirection #:id',
+            'updated' => 'Mise à jour de la redirection #:id',
+            'deleted' => 'Suppression de la redirection #:id',
+        ],
+
         'roles' => [
             'created' => 'Création du grade #:id',
             'updated' => 'Mise à jour du grade #:id',
