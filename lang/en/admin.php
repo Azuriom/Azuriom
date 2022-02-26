@@ -466,6 +466,7 @@ return [
         'installed' => 'Installed themes',
         'available' => 'Available themes',
         'no-enabled' => 'You don\'t have any themes enabled.',
+        'legacy' => 'This theme is not updated yet for Azuriom 1.0.',
 
         'config' => 'Edit config',
         'disable' => 'Disable theme',

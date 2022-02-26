@@ -100,7 +100,7 @@ class Setting extends Model
      * @param  mixed  $value
      * @return void
      */
-    public static function updateSettings($key, $value = null)
+    public static function updateSettings(string|array $key, mixed $value = null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
 

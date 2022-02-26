@@ -2,13 +2,17 @@
 
 namespace Azuriom\Socialite\Xbox;
 
+use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Two\AbstractProvider;
+use Laravel\Socialite\Two\InvalidStateException;
 use Laravel\Socialite\Two\User;
 
 class XboxProvider extends AbstractProvider
 {
+    public static ?Closure $notFoundCallback = null;
+
     protected $scopes = ['XboxLive.signin'];
 
     protected $scopeSeparator = ' ';
@@ -68,8 +72,13 @@ class XboxProvider extends AbstractProvider
             ],
             'RelyingParty' => $relying,
             'TokenType' => 'JWT',
-        ])->throw();
+        ]);
 
-        return "XBL3.0 x={$userHash};{$response->json('Token')}";
+        if ($response->status() === 401 && $response->json('XErr') === 2148916238) {
+            throw value(static::$notFoundCallback)
+                ?? new InvalidStateException('No Minecraft profile for this account.');
+        }
+
+        return "XBL3.0 x={$userHash};{$response->throw()->json('Token')}";
     }
 }

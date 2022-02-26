@@ -189,6 +189,11 @@ class ThemeController extends Controller
             return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.invalid'));
         }
 
+        if ($this->themes->isLegacy($theme)) {
+            return redirect()->route('admin.themes.index')
+                ->with('error', trans('admin.themes.legacy'));
+        }
+
         $this->themes->changeTheme($theme);
 
         ActionLog::log('themes.changed');

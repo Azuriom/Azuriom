@@ -466,6 +466,7 @@ return [
         'installed' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
+        'legacy' => 'Ce thème n\'est pas encore compatible avec Azuriom 1.0',
 
         'config' => 'Configurer',
         'disable' => 'Désactiver le thème',

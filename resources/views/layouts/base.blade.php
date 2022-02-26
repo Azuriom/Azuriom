@@ -49,6 +49,10 @@
             flex-direction: column;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         #app {
             flex-shrink: 0;
         }

@@ -273,6 +273,13 @@ class ThemeManager extends ExtensionManager
         });
     }
 
+    public function isLegacy(string $theme)
+    {
+        $description = $this->findDescription($theme);
+
+        return (($description->azuriom_api ?? null) !== '1.0.0');
+    }
+
     public function install($themeId)
     {
         $updateManager = app(UpdateManager::class);

@@ -1,7 +1,7 @@
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
-    new bootstrap.Tooltip(el)
+    new bootstrap.Tooltip(el);
 });
 
 document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
