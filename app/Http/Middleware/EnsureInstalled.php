@@ -50,6 +50,7 @@ class EnsureInstalled
             'compatible' => ! in_array(false, InstallController::getRequirements(), true),
             'phpVersion' => InstallController::parsePhpVersion(),
             'minPhpVersion' => InstallController::MIN_PHP_VERSION,
+            'base' => base_path(),
         ]);
     }
 
