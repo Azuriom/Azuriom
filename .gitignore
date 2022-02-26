@@ -11,7 +11,7 @@
 .DS_Store
 
 # PHP CS Fixer
-.php_cs.cache
+.php-cs-fixer.cache
 
 # Laravel
 /node_modules

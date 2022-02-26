@@ -45,6 +45,7 @@ return [
     'distinct' => 'Le champ :attribute a une valeur en double.',
     'email' => 'Le champ :attribute doit être une adresse email valide.',
     'ends_with' => 'Le champ :attribute doit se terminer par l\'une des valeurs suivantes : :values',
+    'enum' => 'Le champ :attribute sélectionné est invalide.',
     'exists' => 'Le champ :attribute sélectionné est invalide.',
     'file' => 'Le champ :attribute doit être un fichier.',
     'filled' => 'Le champ :attribute doit avoir une valeur.',
@@ -80,6 +81,7 @@ return [
         'string' => 'Le texte :attribute doit contenir au plus :value caractères.',
         'array' => 'Le tableau :attribute doit contenir au plus :value éléments.',
     ],
+    'mac_address' => 'Le champ :attribute doit être une adresse MAC valide.',
     'max' => [
         'numeric' => 'La valeur du champ :attribute ne peut être supérieure à :max.',
         'file' => 'La taille du fichier de :attribute ne peut pas dépasser :max kilooctets.',
@@ -106,6 +108,7 @@ return [
     'prohibits' => 'Le champ :attribute empêche le champ :other d\'être présent.',
     'regex' => 'Le format du champ :attribute est invalide.',
     'required' => 'Le champ :attribute est requis.',
+    'required_array_keys' => 'Le champ :attribute doit contenir une entrée pour: :values.',
     'required_if' => 'Le champ :attribute est requis quand la valeur de :other est :value.',
     'required_unless' => 'Le champ :attribute est requis sauf si :other est :values.',
     'required_with' => 'Le champ :attribute est requis quand :values est présent.',
