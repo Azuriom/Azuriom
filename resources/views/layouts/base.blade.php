@@ -85,6 +85,7 @@
 
             @foreach(social_links() as $link)
                 <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"
+                   data-bs-toggle="tooltip"
                    class="d-inline-block mx-1 p-2 rounded-circle" style="background: {{ $link->color }}">
                     <i class="{{ $link->icon }} fa-lg fa-fw text-white"></i>
                 </a>

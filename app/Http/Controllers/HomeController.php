@@ -3,8 +3,6 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\HtmlString;
 
 class HomeController extends Controller
 {
@@ -24,23 +22,6 @@ class HomeController extends Controller
         return view('home', [
             'message' => setting('home_message'),
             'posts' => $posts,
-        ]);
-    }
-
-    public function maintenance(Request $request)
-    {
-        if (! setting('maintenance.enabled', false)) {
-            return redirect()->home();
-        }
-
-        if ($request->user() !== null && $request->user()->can('maintenance.access')) {
-            return redirect()->home();
-        }
-
-        $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
-
-        return view('maintenance', [
-            'maintenanceMessage' => new HtmlString($maintenanceMessage),
         ]);
     }
 }

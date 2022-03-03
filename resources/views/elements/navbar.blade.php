@@ -40,12 +40,16 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ trans('auth.login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">
+                            {{ trans('auth.login') }}
+                        </a>
                     </li>
 
                     @if(Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ trans('auth.register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">
+                                {{ trans('auth.register') }}
+                            </a>
                         </li>
                     @endif
                 @else

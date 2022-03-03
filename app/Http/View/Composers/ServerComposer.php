@@ -22,7 +22,7 @@ class ServerComposer
      */
     public function compose(View $view)
     {
-        if (Route::is('admin.*')) {
+        if (Route::is('admin.*') || Route::is('*.admin.*')) {
             $view->with('server', Arr::get($view, 'server'));
 
             return;

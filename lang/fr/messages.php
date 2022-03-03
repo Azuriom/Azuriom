@@ -98,7 +98,7 @@ return [
     'autre' => 'Autre',
     'none' => 'Aucun(e)',
     'copied' => 'Copié',
-    'fontawesome' => 'Vous pouvez avoir la liste des icônes disponibles sur <a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
+    'fontawesome' => 'Vous pouvez avoir la liste des icônes disponibles sur <a href="https://fontawesome.com/v5/search?m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
     'copyright' => 'Propulsé par <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
     'home' => 'Accueil',
