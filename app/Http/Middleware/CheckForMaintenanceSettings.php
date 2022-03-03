@@ -65,8 +65,8 @@ class CheckForMaintenanceSettings
     {
         $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
 
-        return view('maintenance', [
+        return response()->view('maintenance', [
             'maintenanceMessage' => new HtmlString($maintenanceMessage),
-        ]);
+        ], 503);
     }
 }

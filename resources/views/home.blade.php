@@ -81,29 +81,31 @@
             </div>
         @endif
 
-        <h2 class="text-center">
-            {{ trans('messages.news') }}
-        </h2>
+        @if(! $posts->isEmpty())
+            <h2 class="text-center">
+                {{ trans('messages.news') }}
+            </h2>
 
-        <div class="row">
-            @foreach($posts as $post)
-                <div class="col-md-6">
-                    <div class="post-preview card mb-3">
-                        @if($post->hasImage())
-                            <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="card-img-top">
-                        @endif
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
-                            <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
-                            <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
+            <div class="row">
+                @foreach($posts as $post)
+                    <div class="col-md-6">
+                        <div class="post-preview card mb-3">
+                            @if($post->hasImage())
+                                <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="card-img-top">
+                            @endif
+                            <div class="card-body">
+                                <h3 class="card-title">
+                                    <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
+                                <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
+                                <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 @endsection

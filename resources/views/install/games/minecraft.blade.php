@@ -20,6 +20,8 @@
             @error('oauth')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
+
+            <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
         </div>
 
         <h3>{{ trans('install.game.user.title') }}</h3>
@@ -86,6 +88,4 @@
             </div>
         </div>
     @endif
-
-    <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
 @endsection
