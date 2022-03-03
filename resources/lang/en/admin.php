@@ -226,7 +226,7 @@ return [
             'message' => 'Maintenance message',
             'global' => 'Enable maintenance on all the website',
             'paths' => 'Paths to block during maintenance',
-            'info' => 'You can use <code>/*</code> to block all pages beginning with the same path. For example, <code>/news/*</code> will block access to all news.',
+            'info' => 'You can use <code>/*</code> to block all pages beginning with the same path. For example, <code>news/*</code> will block access to all news.',
         ],
 
         'status' => [

@@ -225,7 +225,7 @@ return [
             'message' => 'Message de maintenance',
             'global' => 'Activer la maintenance sur tout le site',
             'paths' => 'URLs concernées par la maintenance',
-            'info' => 'Vous pouvez utiliser <code>/*</code> pour bloquer toutes les URLs commençant par le même préfixe. Par exemple <code>/news/*</code> va bloquer l\'accès à tous les articles.',
+            'info' => 'Vous pouvez utiliser <code>/*</code> pour bloquer toutes les URLs commençant par le même préfixe. Par exemple <code>news/*</code> va bloquer l\'accès à tous les articles.',
         ],
 
         'status' => [

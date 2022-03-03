@@ -57,6 +57,13 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
-        return redirect()->route('maintenance');
+        return $this->renderMaintenancePage();
+    }
+
+    protected function renderMaintenancePage()
+    {
+        $message = setting('maintenance-message', trans('messages.maintenance-message'));
+
+        return response()->view('maintenance', ['maintenanceMessage' => $message], 503);
     }
 }

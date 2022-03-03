@@ -36,7 +36,7 @@
                             @if($requirement === 'php')
                                 <span class="float-right text-{{ $requirementStatus ? 'success' : 'danger' }}"
                                       title="{{ PHP_VERSION }}">
-                                    {{ $phpVersion }}
+                                    {{ $v = $phpVersion }}
                                 </span>
                             @elseif($requirementStatus)
                                 <i class="fas fa-check text-success float-right"></i>
@@ -45,17 +45,18 @@
                             @endif
                         </div>
 
-                        @if(!$requirementStatus)
+                        @if(!$requirementStatus && $requirement !== 'php' && $requirement !== '64bit')
                             <div class="col-md-12 px-4 mt-2">
                                 <i class="fas fa-info-circle text-primary mr-1"></i>
                                 @if(Str::startsWith($requirement, 'extension-'))
-                                    @lang('install.requirements.extension', [
-                                        'command' => "apt install curl php${v}-mysql php${v}-pgsql php${v}-sqlite php${v}-bcmath php${v}-mbstring php${v}-xml php${v}-curl php${v}-zip php${v}-gd",
+                                    @lang('install.requirements.help.extension', [
+                                        'extension' => Str::replace('extension-', '', $requirement),
+                                        'command' => "apt install curl php{$v}-mysql php{$v}-pgsql php{$v}-sqlite php{$v}-bcmath php{$v}-mbstring php{$v}-xml php{$v}-curl php{$v}-zip php{$v}-gd",
                                     ])
                                 @elseif(Str::startsWith($requirement, 'function-'))
                                     @lang('install.requirements.help.function')
                                 @elseif($requirement === 'writable')
-                                    @lang('install.requirements.help.writable', ['command' => "chmod -R 755 ${base} && chown -R www-data:www-data ${base}"])
+                                    @lang('install.requirements.help.writable', ['command' => "chmod -R 755 {$base} && chown -R www-data:www-data {$base}"])
                                 @else
                                     @lang('install.requirements.help.'.$requirement)
                                 @endif
