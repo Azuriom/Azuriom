@@ -93,9 +93,17 @@
                         @foreach($availablePlugins as $plugin)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
                                         {{ $plugin['name'] }}
                                     </a>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-download"></i> {{ $plugin['downloads'] }}
+                                    </span>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-heart"></i> {{ $plugin['likes'] }}
+                                    </span>
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
