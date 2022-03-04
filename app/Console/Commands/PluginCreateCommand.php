@@ -74,7 +74,16 @@ class PluginCreateCommand extends Command
 
         $sourcePath = __DIR__.'/stubs/plugin';
 
-        foreach ($this->files->allFiles($sourcePath, true) as $file) {
+        $this->copyFiles($sourcePath, $path, $id, $studlyName, $namespace);
+
+        $this->info('Plugin created successfully.');
+
+        return 0;
+    }
+
+    protected function copyFiles(string $source, string $path, string $id, string $studlyName, string $namespace)
+    {
+        foreach ($this->files->allFiles($source, true) as $file) {
             $fileContent = $this->replace($file->getContents(), $studlyName, $id, $namespace);
             $filePath = $this->replace($file->getRelativePathname(), $studlyName, $id, $namespace);
             $filePath = $path.'/'.str_replace('.stub', '.php', $filePath);
@@ -87,10 +96,6 @@ class PluginCreateCommand extends Command
 
             $this->files->put($filePath, $fileContent);
         }
-
-        $this->info('Plugin created successfully.');
-
-        return 0;
     }
 
     private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace)
