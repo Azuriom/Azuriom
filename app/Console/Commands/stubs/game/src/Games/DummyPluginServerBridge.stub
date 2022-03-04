@@ -9,7 +9,7 @@ class DummyPluginServerBridge extends ServerBridge
 {
     public function verifyLink()
     {
-        // any mechanism to verify that your game is working
+        // Any mechanism to verify that your game is working
         // Database, Socket, HTTP Request, RCON Protocol etc...
         return true;
     }
@@ -21,7 +21,7 @@ class DummyPluginServerBridge extends ServerBridge
 
     public function getServerData()
     {
-        // any mechanism to get data about your game
+        // Any mechanism to get data about your game
         // Database, Socket, HTTP Request, RCON Protocol etc...
         return [
             'players' => 0,
@@ -33,7 +33,7 @@ class DummyPluginServerBridge extends ServerBridge
 
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
-        // any mechanism to send a command to you server
-        // Database, Socket, HTTP Request, RCON Protocol etc...
+        // Any mechanism to send a command to you server :
+        // database, socket, HTTP request, RCON protocol etc...
     }
 }

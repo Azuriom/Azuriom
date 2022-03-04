@@ -3,11 +3,10 @@
 namespace Azuriom\Console\Commands;
 
 use Azuriom\Support\EnvEditor;
-use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
-class GameCreateCommand extends Command
+class GameCreateCommand extends PluginCreateCommand
 {
     /**
      * The name and signature of the console command.
@@ -36,7 +35,7 @@ class GameCreateCommand extends Command
      */
     public function __construct(Filesystem $files)
     {
-        parent::__construct();
+        parent::__construct($files);
 
         $this->files = $files;
     }
@@ -68,25 +67,11 @@ class GameCreateCommand extends Command
 
         $sourcePath = __DIR__.'/stubs/game';
 
-        foreach ($this->files->allFiles($sourcePath, true) as $file) {
-            $fileContent = $this->replace($file->getContents(), $studlyName, $id, $namespace);
-            $filePath = $this->replace($file->getRelativePathname(), $studlyName, $id, $namespace);
-            $filePath = $path.'/'.str_replace('.stub', '.php', $filePath);
-
-            $dir = dirname($filePath);
-
-            if (! $this->files->isDirectory($dir)) {
-                $this->files->makeDirectory($dir, 0755, true);
-            }
-
-            $this->files->put($filePath, $fileContent);
-        }
+        $this->copyFiles($sourcePath, $path, $id, $studlyName, $namespace);
 
         EnvEditor::updateEnv([
             'AZURIOM_GAME' => $id,
         ]);
-
-        $this->info('Game created successfully.');
 
         return 0;
     }
