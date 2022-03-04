@@ -85,8 +85,6 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.downloads') }}</th>
-                            <th scope="col">{{ trans('messages.fields.likes') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
@@ -95,14 +93,20 @@
                         @foreach($availablePlugins as $plugin)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
                                         {{ $plugin['name'] }}
                                     </a>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-download"></i> {{ $plugin['downloads'] }}
+                                    </span>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-heart"></i> {{ $plugin['likes'] }}
+                                    </span>
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
-                                <td>{{ $plugin['downloads'] }} <i class="ml-2 fas fa-download text-success"></i></td>
-                                <td>{{ $plugin['likes'] }} <i class="ml-2 fas fa-heart text-danger"></i></td>
                                 <td>
                                     @if($plugin['premium'] && ! $plugin['purchased'])
                                         <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">

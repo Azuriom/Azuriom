@@ -126,9 +126,17 @@
                         @foreach($availableThemes as $theme)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
                                         {{ $theme['name'] }}
                                     </a>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-download"></i> {{ $theme['downloads'] }}
+                                    </span>
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-heart"></i> {{ $theme['likes'] }}
+                                    </span>
                                 </th>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
