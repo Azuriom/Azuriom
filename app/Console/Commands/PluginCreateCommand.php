@@ -90,7 +90,7 @@ class PluginCreateCommand extends Command
 
             $dir = dirname($filePath);
 
-            if (!$this->files->isDirectory($dir)) {
+            if (! $this->files->isDirectory($dir)) {
                 $this->files->makeDirectory($dir, 0755, true);
             }
 
