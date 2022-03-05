@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -107,11 +108,9 @@ class UserController extends Controller
         }
 
         $user->fill(Arr::except($request->validated(), 'password'));
-        $passwordChanged = false;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
-            $passwordChanged = true;
         }
 
         $role = Role::find($request->input('role'));
@@ -121,8 +120,8 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        if ($passwordChanged) {
-            event(new \Illuminate\Auth\Events\PasswordReset($user));
+        if ($user->wasChanged('password')) {
+            event(new PasswordReset($user));
         }
 
         ActionLog::log('users.updated', $user);
