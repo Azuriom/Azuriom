@@ -6,6 +6,7 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
 use Azuriom\Support\QrCodeRenderer;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,9 +62,11 @@ class ProfileController extends Controller
         ]);
 
         $password = $request->input('password');
+        $user = $request->user();
 
-        $request->user()->update(['password' => Hash::make($password)]);
+        $user->update(['password' => Hash::make($password)]);
         Auth::logoutOtherDevices($password);
+        event(new PasswordReset($user));
 
         return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
     }

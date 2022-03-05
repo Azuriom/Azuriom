@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -118,6 +119,10 @@ class UserController extends Controller
 
         $user->role()->associate($role);
         $user->save();
+
+        if ($user->wasChanged('password')) {
+            event(new PasswordReset($user));
+        }
 
         ActionLog::log('users.updated', $user);
 
