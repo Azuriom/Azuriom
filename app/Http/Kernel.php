@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
         \Azuriom\Http\Middleware\EnsureInstalled::class,
         // \Azuriom\Http\Middleware\TrustHosts::class,
         \Azuriom\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
         \Azuriom\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Azuriom\Http\Middleware\TrimStrings::class,
