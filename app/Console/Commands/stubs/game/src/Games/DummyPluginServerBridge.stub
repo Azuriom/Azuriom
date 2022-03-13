@@ -1,0 +1,39 @@
+<?php
+
+namespace DummyNamespace\Games;
+
+use Azuriom\Games\ServerBridge;
+use Azuriom\Models\User;
+
+class DummyPluginServerBridge extends ServerBridge
+{
+    public function verifyLink()
+    {
+        // Any mechanism to verify that your game is working
+        // Database, Socket, HTTP Request, RCON Protocol etc...
+        return true;
+    }
+
+    public function canExecuteCommand()
+    {
+        return true;
+    }
+
+    public function getServerData()
+    {
+        // Any mechanism to get data about your game
+        // Database, Socket, HTTP Request, RCON Protocol etc...
+        return [
+            'players' => 0,
+            'max_players' => 0,
+            // you can add as much data as you want, it is cached by the CMS
+            // if you return null, the server will be considered offline
+        ];
+    }
+
+    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    {
+        // Any mechanism to send a command to you server :
+        // database, socket, HTTP request, RCON protocol etc...
+    }
+}

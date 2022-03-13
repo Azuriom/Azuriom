@@ -1,4 +1,4 @@
-@push('scripts')@includeIf('custom.footer')@endpush
+@push('scripts')@includeIf('custom.head')@endpush
 
 @push('footer-scripts')@includeIf('custom.body')@endpush
 

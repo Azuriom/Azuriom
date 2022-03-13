@@ -1,0 +1,42 @@
+<?php
+
+namespace DummyNamespace\Games;
+
+use Azuriom\Games\Game;
+use Azuriom\Models\User;
+use DummyNamespace\Games\DummyPluginServerBridge;
+
+class DummyPluginGame extends Game
+{
+    public function name()
+    {
+        return 'DummyPlugin';
+    }
+
+    public function id()
+    {
+        return 'DummyId';
+    }
+
+    public function getAvatarUrl(User $user, int $size = 64)
+    {
+        return 'https://www.gravatar.com/avatar/'.md5($user->email).'?d=mp&s='.$size;
+    }
+
+    public function getUserUniqueId(string $name)
+    {
+        return null;
+    }
+
+    public function getUserName(User $user)
+    {
+        return $user->name;
+    }
+
+    public function getSupportedServers()
+    {
+        return [
+            'DummyId-server' => DummyPluginServerBridge::class,
+        ];
+    }
+}
