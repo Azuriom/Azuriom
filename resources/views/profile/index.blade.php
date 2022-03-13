@@ -182,7 +182,20 @@
                     </div>
                 </div>
             @endif
+
+            @foreach($cards ?? [] as $card)
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">
+                                {{ $card['name'] }}
+                            </h2>
+
+                            @include($card['view'])
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     @endif
 @endsection
-
