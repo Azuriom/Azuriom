@@ -47,7 +47,7 @@
 
                         @if(!$requirementStatus && $requirement !== 'php' && $requirement !== '64bit')
                             <div class="col-md-12 px-4 mt-2">
-                                <i class="bi bi-info-circle text-primary mr-1"></i>
+                                <i class="bi bi-info-circle text-primary me-1"></i>
                                 @if(Str::startsWith($requirement, 'extension-'))
                                     @lang('install.requirements.help.extension', [
                                         'extension' => Str::replace('extension-', '', $requirement),

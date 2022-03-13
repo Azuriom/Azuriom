@@ -136,7 +136,7 @@
             <div class="input-group has-validation" v-scope="{toggle: false}">
                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
-                    <i class="fas" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
+                    <i class="bi" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
                 </button>
 
                 @error('rcon-password')

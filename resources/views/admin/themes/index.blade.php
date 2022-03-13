@@ -116,8 +116,6 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.downloads') }}</th>
-                            <th scope="col">{{ trans('messages.fields.likes') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
@@ -126,22 +124,20 @@
                         @foreach($availableThemes as $theme)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
+                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer" class="me-2">
                                         {{ $theme['name'] }}
                                     </a>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-download"></i> {{ $theme['downloads'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-download"></i> {{ $theme['downloads'] }}
                                     </span>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-heart"></i> {{ $theme['likes'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-heart"></i> {{ $theme['likes'] }}
                                     </span>
                                 </th>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
-                                <td>{{ $theme['downloads'] }} <i class="ml-2 fas fa-download text-success"></i></td>
-                                <td>{{ $theme['likes'] }} <i class="ml-2 fas fa-heart text-danger"></i></td>
                                 <td>
                                     @if($theme['premium'] && ! $theme['purchased'])
                                         <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">

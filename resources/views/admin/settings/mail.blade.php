@@ -112,7 +112,7 @@
                             <div class="input-group has-validation" v-scope="{toggle: false}">
                                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password', $smtpConfig['password']) }}">
                                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
-                                    <i class="fas" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
+                                    <i class="bi" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
                                 </button>
 
                                 @error('smtp-password')
