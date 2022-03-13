@@ -5,7 +5,7 @@
         @csrf
 
         <a href="{{ route('install.games') }}" class="btn btn-secondary mb-3">
-            <i class="fas fa-arrow-left"></i> {{ trans('install.back') }}
+            <i class="bi bi-arrow-left"></i> {{ trans('install.back') }}
         </a>
 
         <h2>{{ $gameName }}</h2>
@@ -28,7 +28,7 @@
 
         <div class="text-center">
             <button type="submit" class="btn btn-primary">
-                {{ trans('install.game.install') }} <i class="fas fa-check"></i>
+                {{ trans('install.game.install') }} <i class="bi bi-check-lg"></i>
             </button>
         </div>
     </form>

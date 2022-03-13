@@ -111,7 +111,7 @@ class SocialLink extends Model
     public function getIconAttribute()
     {
         if ($this->type !== 'other') {
-            return 'fab fa-'.$this->type;
+            return 'bi bi-'.$this->type;
         }
 
         return $this->properties['icon'] ?? '';

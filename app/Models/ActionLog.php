@@ -24,54 +24,54 @@ class ActionLog extends Model
     private static $actions = [
         'users.login' => [
             'global' => false,
-            'icon' => 'sign-in-alt',
+            'icon' => 'box-arrow-in-right',
             'color' => 'info',
             'message' => 'admin.logs.users.login',
         ],
         'users.2fa.enabled' => [
             'global' => false,
-            'icon' => 'user-lock',
+            'icon' => 'shield-check',
             'color' => 'success',
             'message' => 'admin.logs.users.2fa.enabled',
         ],
         'users.2fa.disabled' => [
             'global' => false,
-            'icon' => 'user-lock',
+            'icon' => 'shield-exclamation',
             'color' => 'warning',
             'message' => 'admin.logs.users.2fa.disabled',
         ],
         'users.transfer' => [
-            'icon' => 'exchange-alt',
+            'icon' => 'arrow-left-right',
             'color' => 'info',
             'message' => 'admin.logs.users.transfer',
         ],
         'settings.updated' => [
-            'icon' => 'sync',
+            'icon' => 'arrow-repeat',
             'color' => 'warning',
             'message' => 'admin.logs.settings.updated',
         ],
         'theme.changed' => [
-            'icon' => 'sync',
+            'icon' => 'arrow-repeat',
             'color' => 'warning',
             'message' => 'admin.logs.themes.changed',
         ],
         'updates.installed' => [
-            'icon' => 'sync',
+            'icon' => 'arrow-repeat',
             'color' => 'warning',
             'message' => 'admin.logs.updates.installed',
         ],
         'plugins.enabled' => [
-            'icon' => 'plus',
+            'icon' => 'plus-lg',
             'color' => 'success',
             'message' => 'admin.logs.plugins.enabled',
         ],
         'plugins.disabled' => [
-            'icon' => 'minus',
+            'icon' => 'dash-lg',
             'color' => 'danger',
             'message' => 'admin.logs.plugins.disabled',
         ],
         'themes.changed' => [
-            'icon' => 'plus',
+            'icon' => 'plus-lg',
             'color' => 'success',
             'message' => 'admin.logs.themes.changed',
         ],
@@ -137,7 +137,7 @@ class ActionLog extends Model
     public function getActionFormat()
     {
         return self::$actions[$this->action] ?? [
-            'icon' => 'question',
+            'icon' => 'question-lg',
             'color' => 'muted',
             'message' => $this->action,
         ];
@@ -184,21 +184,21 @@ class ActionLog extends Model
         $table = str_replace('_', '-', (new $class())->getTable());
 
         self::$actions[$table.'.created'] = [
-            'icon' => 'plus',
+            'icon' => 'plus-lg',
             'color' => 'success',
             'message' => "{$transPrefix}.{$table}.created",
             'model' => $class,
         ];
 
         self::$actions[$table.'.updated'] = [
-            'icon' => 'sync',
+            'icon' => 'arrow-repeat',
             'color' => 'warning',
             'message' => "{$transPrefix}.{$table}.updated",
             'model' => $class,
         ];
 
         self::$actions[$table.'.deleted'] = [
-            'icon' => 'minus',
+            'icon' => 'dash-lg',
             'color' => 'danger',
             'message' => "{$transPrefix}.{$table}.deleted",
             'model' => $class,

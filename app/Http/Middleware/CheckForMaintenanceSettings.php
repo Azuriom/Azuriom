@@ -5,6 +5,7 @@ namespace Azuriom\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class CheckForMaintenanceSettings
 {
@@ -52,7 +53,11 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
-        $blockedPaths = setting('maintenance.paths');
+        $blockedPaths = array_map(function (string $path) {
+            return Str::endsWith($path, '/*')
+                ? Str::replaceLast('/*', '*', $path)
+                : $path;
+        }, setting('maintenance-paths'));
 
         if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
             return $next($request);

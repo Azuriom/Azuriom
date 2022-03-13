@@ -22,7 +22,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,600,800&display=swap" rel="stylesheet">
-    <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/icons.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('vendor/admin.css') }}" rel="stylesheet">
@@ -52,7 +52,7 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-item {{ add_active('admin.dashboard') }}">
                         <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
-                            <i class="fas fa-fw fa-tachometer-alt"></i> {{ trans('admin.nav.dashboard') }}
+                            <i class="bi bi-speedometer"></i> {{ trans('admin.nav.dashboard') }}
                         </a>
                     </li>
 
@@ -65,7 +65,7 @@
                     @can('admin.settings')
                         <li class="sidebar-item {{ add_active('admin.settings.*', 'admin.social-links.*') }}">
                             <a class="sidebar-link {{ Route::is('admin.settings.*', 'admin.social-links.*') ? '' : 'collapsed'}}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
-                                <i class="fas fa-fw fa-cogs"></i>
+                                <i class="bi bi-gear"></i>
                                 <span>{{ trans('admin.nav.settings.heading') }}</span>
                             </a>
                             <ul id="collapseSettings" class="sidebar-dropdown list-unstyled collapse {{ Route::is('admin.settings.*', 'admin.social-links.*') ? 'show' : ''}}" data-parent="#accordionSidebar">
@@ -112,7 +112,7 @@
                     @can('admin.navbar')
                         <li class="sidebar-item {{ add_active('admin.navbar-elements.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.navbar-elements.index') }}">
-                                <i class="fas fa-fw fa-bars"></i>
+                                <i class="bi bi-list"></i>
                                 <span>{{ trans('admin.nav.settings.navbar') }}</span>
                             </a>
                         </li>
@@ -121,7 +121,7 @@
                     @can('admin.servers')
                         <li class="sidebar-item {{ add_active('admin.servers.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.servers.index') }}">
-                                <i class="fas fa-fw fa-server"></i>
+                                <i class="bi bi-hdd-network"></i>
                                 <span>{{ trans('admin.nav.settings.servers') }}</span>
                             </a>
                         </li>
@@ -135,7 +135,7 @@
                     @can('admin.users')
                         <li class="sidebar-item {{ add_active('admin.users.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.users.index') }}">
-                                <i class="fas fa-fw fa-users"></i>
+                                <i class="bi bi-people"></i>
                                 <span>{{ trans('admin.nav.users.users') }}</span>
                             </a>
                         </li>
@@ -144,7 +144,7 @@
                     @can('admin.roles')
                         <li class="sidebar-item {{ add_active('admin.roles.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.roles.index') }}">
-                                <i class="fas fa-fw fa-user-tag"></i>
+                                <i class="bi bi-person-badge"></i>
                                 <span>{{ trans('admin.nav.users.roles') }}</span>
                             </a>
                         </li>
@@ -153,7 +153,7 @@
                     @can('admin.users')
                         <li class="sidebar-item {{ add_active('admin.bans.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.bans.index') }}">
-                                <i class="fas fa-fw fa-user-times"></i>
+                                <i class="bi bi-person-x"></i>
                                 <span>{{ trans('admin.nav.users.bans') }}</span>
                             </a>
                         </li>
@@ -166,7 +166,7 @@
                     @can('admin.pages')
                         <li class="sidebar-item {{ add_active('admin.pages.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.pages.index') }}">
-                                <i class="fas fa-fw fa-file-alt"></i>
+                                <i class="bi bi-file-earmark"></i>
                                 <span>{{ trans('admin.nav.content.pages') }}</span>
                             </a>
                         </li>
@@ -175,7 +175,7 @@
                     @can('admin.posts')
                         <li class="sidebar-item {{ add_active('admin.posts.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.posts.index') }}">
-                                <i class="fas fa-fw fa-newspaper"></i>
+                                <i class="bi bi-newspaper"></i>
                                 <span>{{ trans('admin.nav.content.posts') }}</span>
                             </a>
                         </li>
@@ -184,7 +184,7 @@
                     @can('admin.images')
                         <li class="sidebar-item {{ add_active('admin.images.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.images.index') }}">
-                                <i class="fas fa-fw fa-image"></i>
+                                <i class="bi bi-image"></i>
                                 <span>{{ trans('admin.nav.content.images') }}</span>
                             </a>
                         </li>
@@ -193,7 +193,7 @@
                     @can('admin.redirects')
                         <li class="sidebar-item {{ add_active('admin.redirects.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.redirects.index') }}">
-                                <i class="fas fa-fw fa-directions"></i>
+                                <i class="bi bi-signpost"></i>
                                 <span>{{ trans('admin.nav.content.redirects') }}</span>
                             </a>
                         </li>
@@ -206,7 +206,7 @@
                     @can('admin.plugins')
                         <li class="sidebar-item {{ add_active('admin.plugins.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.plugins.index') }}">
-                                <i class="fas fa-fw fa-puzzle-piece"></i>
+                                <i class="bi bi-puzzle"></i>
                                 <span>{{ trans('admin.nav.extensions.plugins') }}</span>
                                 @if(($pluginsUpdates ?? 0) > 0)
                                     <span class="sidebar-badge badge bg-danger">
@@ -220,7 +220,7 @@
                     @can('admin.themes')
                         <li class="sidebar-item {{ add_active('admin.themes.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.themes.index') }}">
-                                <i class="fas fa-fw fa-paint-brush"></i>
+                                <i class="bi bi-brush"></i>
                                 <span>{{ trans('admin.nav.extensions.themes') }}</span>
                                 @if(($themesUpdates ?? 0) > 0)
                                     <span class="sidebar-badge badge bg-danger">
@@ -240,7 +240,7 @@
                             @if($navItem['type'] ?? '' === 'dropdown')
                                 <li class="sidebar-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
                                     <a class="sidebar-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-bs-toggle="collapse" data-bs-target="#collapse{{ ucfirst($navId) }}" aria-expanded="true" aria-controls="collapse{{ ucfirst($navId) }}">
-                                        <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                        <i class="{{ $navItem['icon'] }}"></i>
                                         <span>{{ $navItem['name'] }}</span>
                                     </a>
                                     <ul id="collapse{{ ucfirst($navId) }}" class="sidebar-dropdown list-unstyled collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
@@ -256,7 +256,7 @@
                             @else
                                 <li class="sidebar-item {{ add_active($navItem['route']) }}">
                                     <a class="sidebar-link" href="{{ route($navItem['route']) }}">
-                                        <i class="fa-fw {{ $navItem['icon'] }}"></i>
+                                        <i class="{{ $navItem['icon'] }}"></i>
                                         <span>{{ $navItem['name'] }}</span>
                                     </a>
                                 </li>
@@ -271,7 +271,7 @@
                     @can('admin.update')
                         <li class="sidebar-item {{ add_active('admin.update.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.update.index') }}">
-                                <i class="fas fa-fw fa-cloud-download-alt"></i>
+                                <i class="bi bi-cloud-download"></i>
                                 <span>{{ trans('admin.nav.other.update') }}</span>
                             </a>
                         </li>
@@ -280,7 +280,7 @@
                     @can('admin.logs')
                         <li class="sidebar-item {{ add_active('admin.logs.*') }}">
                             <a class="sidebar-link" href="{{ route('admin.logs.index') }}">
-                                <i class="fas fa-fw fa-history"></i>
+                                <i class="bi bi-clock-history"></i>
                                 <span>{{ trans('admin.nav.other.logs') }}</span>
                             </a>
                         </li>
@@ -301,12 +301,12 @@
                 <div class="navbar-collapse collapse">
                     <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
                         <a href="https://azuriom.com/discord" class="btn btn-outline-primary mx-1" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-question-circle"></i>
+                            <i class="bi bi-question-circle"></i>
                             {{ trans('admin.nav.support') }}
                         </a>
 
                         <a href="https://azuriom.com/docs" class="btn btn-outline-secondary mx-1" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-book"></i>
+                            <i class="bi bi-journal"></i>
                             {{ trans('admin.nav.documentation') }}
                         </a>
                     </div>
@@ -317,7 +317,7 @@
                             @can('admin.update')
                                 <li class="nav-item">
                                     <a class="nav-icon text-info" href="{{ route('admin.update.index') }}">
-                                        <i class="fas fa-cloud-download-alt"></i>
+                                        <i class="bi bi-cloud-download-alt"></i>
                                     </a>
                                 </li>
                             @endcan
@@ -327,7 +327,7 @@
                             <a class="nav-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="position-relative">
                                     <!-- Counter - Notifications -->
-                                    <i class="fas fa-bell fa-xs fa-fw"></i>
+                                    <i class="bi bi-bell small"></i>
                                     @if(! $notifications->isEmpty())
                                         <span class="indicator" id="notificationsCounter">{{ $notifications->count() }}</span>
                                     @endif
@@ -347,7 +347,7 @@
                                                 <div class="row g-0 align-items-center">
                                                     <div class="col-2 text-{{ $notification->level }}">
                                                         <span class="d-inline-block rounded-circle border border-{{ $notification->level }}">
-                                                            <i class="fas fa-{{ $notification->icon() }} fa-fw m-2"></i>
+                                                            <i class="bi bi-{{ $notification->icon() }} m-2"></i>
                                                         </span>
                                                     </div>
                                                     <div class="col-10">
@@ -372,14 +372,14 @@
                                 @endif
 
                                 <div id="noNotificationsLabel" class="dropdown-menu-footer text-success @if(! $notifications->isEmpty()) d-none @endif">
-                                    <i class="fas fa-check"></i> {{ trans('messages.notifications.empty') }}
+                                    <i class="bi bi-check-lg"></i> {{ trans('messages.notifications.empty') }}
                                 </div>
                             </div>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('profile.theme') }}" class="nav-icon" data-route="theme">
-                                <i class="fas fa-xs fa-fw fa-{{ dark_theme() ? 'sun' : 'moon' }}" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
+                                <i class="bi bi-{{ dark_theme() ? 'sun' : 'moon' }} small" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
                             </a>
                         </li>
 
@@ -393,16 +393,16 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.users.edit', Auth::user()) }}">
-                                    <i class="fas fa-user fa-sm fa-fw me-1"></i>
+                                    <i class="bi bi-person-circle me-1"></i>
                                     {{ trans('admin.nav.profile.profile') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('home') }}">
-                                    <i class="fas fa-home fa-sm fa-fw me-1"></i>
+                                    <i class="bi bi-house me-1"></i>
                                     {{ trans('admin.nav.back') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-route="logout">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-1"></i>
+                                    <i class="bi bi-box-arrow-right me-1"></i>
                                     {{ trans('auth.logout') }}
                                 </a>
                             </div>
@@ -434,13 +434,15 @@
                             <div class="modal-body">{{ trans('admin.delete.description') }}</div>
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                                    <i class="fas fa-arrow-left"></i> {{ trans('messages.actions.cancel') }}</button>
+                                    <i class="bi bi-x-lg"></i> {{ trans('messages.actions.cancel') }}
+                                </button>
                                 <form id="confirmDeleteForm" method="POST">
                                     @method('DELETE')
                                     @csrf
 
                                     <button class="btn btn-danger" type="submit">
-                                        <i class="fas fa-exclamation-triangle"></i> {{ trans('messages.actions.delete') }}</button>
+                                        <i class="bi bi-exclamation-triangle"></i> {{ trans('messages.actions.delete') }}
+                                    </button>
                                 </form>
                             </div>
                         </div>

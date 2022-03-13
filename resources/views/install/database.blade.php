@@ -64,7 +64,7 @@
 
         <div class="text-center">
             <button type="submit" class="btn btn-primary">
-                {{ trans('messages.actions.continue') }} <i class="fas fa-arrow-right"></i>
+                {{ trans('messages.actions.continue') }} <i class="bi bi-arrow-right"></i>
             </button>
         </div>
     </form>

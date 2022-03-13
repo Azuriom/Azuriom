@@ -13,7 +13,7 @@
                 <input type="search" class="form-control" id="searchInput" name="search" value="{{ $search ?? '' }}" placeholder="{{ trans('messages.actions.search') }}">
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search fa-sm"></i>
+                    <i class="bi bi-search"></i>
                 </button>
             </div>
         </div>
@@ -41,12 +41,12 @@
                                 {{ $user->id }}
 
                                 @if($user->isDeleted())
-                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.deleted') }}" data-bs-toggle="tooltip"></i>
+                                    <i class="bi bi-person-x text-dark" title="{{ trans('admin.users.deleted') }}" data-bs-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
-                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.admin') }}" data-bs-toggle="tooltip"></i>
+                                    <i class="bi bi-trophy text-warning" title="{{ trans('admin.users.admin') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                                 @if($user->isBanned())
-                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.banned') }}" data-bs-toggle="tooltip"></i>
+                                    <i class="bi bi-slash-circle text-danger" title="{{ trans('admin.users.banned') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
@@ -64,7 +64,7 @@
                                 {{ format_date($user->created_at) }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -76,7 +76,7 @@
             {{ $users->withQueryString()->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.users.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

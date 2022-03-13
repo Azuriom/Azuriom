@@ -14,7 +14,7 @@
                         @csrf
 
                         <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-times"></i> {{ trans('admin.settings.performances.cache.clear') }}
+                            <i class="bi bi-x-lg"></i> {{ trans('admin.settings.performances.cache.clear') }}
                         </button>
                     </form>
                 </div>
@@ -24,7 +24,7 @@
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <h4 class="card-title">{{ trans('admin.settings.performances.boost.title') }} <i class="text-primary fas fa-rocket"></i></h4>
+                    <h4 class="card-title">{{ trans('admin.settings.performances.boost.title') }} <i class="text-primary bi bi-lightning"></i></h4>
                     <p class="card-subtitle">{{ trans('admin.settings.performances.boost.description') }}</p>
                     <small>{{ trans('admin.settings.performances.boost.info') }}</small>
 
@@ -39,11 +39,11 @@
 
                         @if($cacheStatus)
                             <button class="btn btn-primary">
-                                <i class="fas fa-sync"></i> {{ trans('admin.settings.performances.boost.reload') }}
+                                <i class="bi bi-arrow-repeat"></i> {{ trans('admin.settings.performances.boost.reload') }}
                             </button>
                         @else
                             <button class="btn btn-primary">
-                                <i class="fas fa-check"></i> {{ trans('admin.settings.performances.boost.enable') }}
+                                <i class="bi bi-check-lg"></i> {{ trans('admin.settings.performances.boost.enable') }}
                             </button>
                         @endif
                     </form>
@@ -53,7 +53,7 @@
                             @csrf
 
                             <button class="btn btn-warning">
-                                <i class="fas fa-times"></i> {{ trans('admin.settings.performances.boost.disable') }}
+                                <i class="bi bi-x-lg"></i> {{ trans('admin.settings.performances.boost.disable') }}
                             </button>
                         </form>
                     @endif

@@ -46,12 +46,12 @@
                         <div class="card">
                             <div class="card-body d-flex justify-content-between">
                                 <span>
-                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                    <i class="bi bi-arrows-move sortable-handle"></i>
                                     {{ $link->title }}
                                 </span>
                                 <span>
-                                    <a href="{{ route('admin.social-links.edit', $link) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.social-links.destroy', $link) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.social-links.edit', $link) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ route('admin.social-links.destroy', $link) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                 </span>
                             </div>
                         </div>
@@ -61,13 +61,13 @@
 
             @if(! $links->isEmpty())
                 <button type="button" class="btn btn-success" id="save">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                     <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
                 </button>
             @endif
 
             <a class="btn btn-primary" href="{{ route('admin.social-links.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

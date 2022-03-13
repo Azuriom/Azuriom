@@ -3,13 +3,12 @@ import '@adminkit/core/src/js/modules/sidebar';
 import '@adminkit/core/src/js/modules/theme';
 
 import axios from 'axios'
-import alpinejs from 'alpinejs'
+import { createApp } from 'petite-vue'
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = axios;
-window.alpinejs = alpinejs;
 
-alpinejs.start();
+createApp().mount();
 
 document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
     new bootstrap.Tooltip(el)

@@ -33,7 +33,7 @@
     @stack('scripts')
 
     <!-- Fonts -->
-    <link href="{{ asset('vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/icons.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -87,7 +87,7 @@
                 <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"
                    data-bs-toggle="tooltip"
                    class="d-inline-block mx-1 p-2 rounded-circle" style="background: {{ $link->color }}">
-                    <i class="{{ $link->icon }} fa-lg fa-fw text-white"></i>
+                    <i class="{{ $link->icon }} text-white"></i>
                 </a>
             @endforeach
         </div>

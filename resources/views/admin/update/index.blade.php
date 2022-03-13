@@ -36,7 +36,7 @@
                 <h2>{{ trans('admin.update.has_update') }}</h2>
 
                 <div class="alert alert-warning mt-3" role="alert">
-                    <i class="fas fa-exclamation-triangle"></i>
+                    <i class="bi bi-exclamation-triangle"></i>
                     {{ trans('admin.update.backup') }}
                 </div>
 
@@ -46,7 +46,7 @@
                     <p>{{ trans('admin.update.install') }}</p>
 
                     <button type="button" class="btn btn-success" data-update-route="{{ route('admin.update.install') }}">
-                        <i class="fas fa-download"></i>
+                        <i class="bi bi-download"></i>
                         {{ trans('messages.actions.install') }}
                         <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
@@ -54,7 +54,7 @@
                     <p>{{ trans('admin.update.download') }}</p>
 
                     <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
-                        <i class="fas fa-cloud-download-alt"></i>
+                        <i class="bi bi-cloud-download-alt"></i>
                         {{ trans('messages.actions.download') }}
                         <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>
@@ -72,7 +72,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sync"></i> {{ trans('admin.update.check') }}
+                        <i class="bi bi-arrow-repeat"></i> {{ trans('admin.update.check') }}
                     </button>
                 </form>
             @endif

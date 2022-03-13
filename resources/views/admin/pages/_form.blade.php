@@ -20,7 +20,7 @@
 
 <div class="mb-3">
     <label class="form-label" for="slugInput">{{ trans('messages.fields.slug') }}</label>
-    <div class="input-group has-validation">
+    <div class="input-group @error('slug') has-validation @enderror">
         <span class="input-group-text">{{ url('/') }}/</span>
         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug', $page->slug ?? '') }}" required>
 

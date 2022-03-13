@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i> @lang('admin.settings.seo.html')
+                    <i class="bi bi-info-circle"></i> @lang('admin.settings.seo.html')
                 </div>
 
                 <div class="mb-3 form-check form-switch">
@@ -42,7 +42,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
             </form>
         </div>

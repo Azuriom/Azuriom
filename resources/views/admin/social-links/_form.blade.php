@@ -5,7 +5,7 @@
 <div class="row g-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required x-model="type">
+        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
             @foreach($types as $type => $typeName)
                 <option value="{{ $type }}" @selected($type === old('type', $link->type ?? ''))>
                     {{ $typeName }}
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div x-show="type === 'other'" class="mb-3">
+<div v-show="type === 'other'" class="mb-3">
     <div class="row g-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="titleInput">{{ trans('messages.fields.title') }}</label>
@@ -45,17 +45,17 @@
         <div class="mb-3 col-md-4">
             <label class="form-label" for="iconInput">{{ trans('messages.fields.icon') }}</label>
 
-            <div class="input-group has-validation">
-                <span class="input-group-text"><i class="{{ $link->icon ?? 'fas fa-comments' }} fa-fw"></i></span>
+            <div class="input-group @error('icon') has-validation @enderror">
+                <span class="input-group-text"><i class="{{ $link->icon ?? 'bi bi-chat' }}"></i></span>
 
-                <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $link->icon ?? '') }}" placeholder="fas fa-comments" aria-labelledby="iconLabel">
+                <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $link->icon ?? '') }}" placeholder="bi bi-chat" aria-labelledby="iconLabel">
 
                 @error('icon')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
             </div>
 
-            <small id="iconLabel" class="form-text">@lang('messages.fontawesome')</small>
+            <small id="iconLabel" class="form-text">@lang('messages.icons')</small>
         </div>
 
         <div class="mb-3 col-md-4">

@@ -20,12 +20,12 @@
 
                     @if($currentHasConfig)
                         <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}">
-                            <i class="fas fa-wrench"></i> {{ trans('admin.themes.config') }}
+                            <i class="bi bi-sliders"></i> {{ trans('admin.themes.config') }}
                         </a>
                     @endif
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-times"></i> {{ trans('admin.themes.disable') }}
+                        <i class="bi bi-x-lg"></i> {{ trans('admin.themes.disable') }}
                     </button>
                 </form>
                 @if($themesUpdates->has($currentPath))
@@ -33,7 +33,7 @@
                         @csrf
 
                         <button type="submit" class="btn btn-info">
-                            <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
+                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
                         </button>
                     </form>
                 @endif
@@ -78,18 +78,18 @@
                                     @csrf
 
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}
+                                        <i class="bi bi-check-lg"></i> {{ trans('messages.actions.enable') }}
                                     </button>
                                 </form>
                                 <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
-                                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                                 </a>
                                 @if($themesUpdates->has($path))
                                     <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
                                         @csrf
 
                                         <button type="submit" class="btn btn-info btn-sm">
-                                            <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
+                                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
                                         </button>
                                     </form>
                                 @endif
@@ -133,14 +133,14 @@
                                 <td>
                                     @if($theme['premium'] && ! $theme['purchased'])
                                         <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
-                                            <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
+                                            <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
                                         </a>
                                     @else
                                         <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
                                             @csrf
 
                                             <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                                <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
                                             </button>
                                         </form>
                                     @endif
@@ -156,7 +156,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-sync"></i> {{ trans('messages.actions.reload') }}
+                        <i class="bi bi-arrow-repeat"></i> {{ trans('messages.actions.reload') }}
                     </button>
                 </form>
             </div>

@@ -1,9 +1,9 @@
-.rotate-45 {
-    transform: rotate(45deg);
-}
-
 .cursor-copy {
     cursor: copy;
+}
+
+.bi::before {
+    font-size: 1.1em;
 }
 
 a.disabled,
@@ -36,6 +36,14 @@ a.disabled,
 
 .btn:not(:disabled) .btn-spinner {
     display: none;
+}
+
+.bi.small::before {
+    font-size: 0.85em;
+}
+
+.stat .bi::before {
+    font-size: 1.5em;
 }
 
 /*

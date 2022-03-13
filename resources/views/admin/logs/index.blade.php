@@ -26,7 +26,7 @@
                                 </a>
                             </td>
                             <td class="text-{{ $log->getActionFormat()['color'] }}">
-                                <i class="fa-fw fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                <i class="bi bi-{{ $log->getActionFormat()['icon'] }}"></i>
                                 {{ $log->getActionMessage() }}
                             </td>
                             <td>{{ format_date_compact($log->created_at) }}</td>
@@ -43,7 +43,7 @@
                 @csrf
 
                 <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> {{ trans('admin.logs.clear') }}
+                    <i class="bi bi-trash"></i> {{ trans('admin.logs.clear') }}
                 </button>
             </form>
         </div>

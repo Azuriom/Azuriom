@@ -31,11 +31,12 @@ mix.disableSuccessNotifications()
     .setPublicPath('public/assets/')
     .sass('resources/sass/admin/admin.scss', `${vendorPath}/admin.css`)
     .js('resources/js/admin/admin.js', `${vendorPath}/admin.js`)
+    .sass('node_modules/bootstrap-icons/font/bootstrap-icons.scss', `${vendorPath}/bootstrap-icons/icons.min.css`)
+    .copyDirectory('node_modules/bootstrap-icons/font/fonts', `${vendorPath}/bootstrap-icons/fonts`)
     .copyDirectory('node_modules/tinymce', `${vendorPath}/tinymce`)
     .copyDirectory('node_modules/flatpickr/dist/*.css', `${vendorPath}/flatpickr/css`)
     .copyDirectory('node_modules/flatpickr/dist/*.js', `${vendorPath}/flatpickr/js`)
-    .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`);
-
-for (const path of ['css', 'js', 'sprites', 'webfonts']) {
-    mix.copyDirectory(`node_modules/@fortawesome/fontawesome-free/${path}`, `${vendorPath}/fontawesome/${path}`);
-}
+    .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`)
+    .options({
+        processCssUrls: false
+    });

@@ -5,22 +5,22 @@
 @section('content')
     @if(! $secure)
         <div id="notHttpsAlert" class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-exclamation-circle"></i> {{ trans('admin.dashboard.http') }}
+            <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.dashboard.http') }}
         </div>
         <div id="proxyAlert" class="alert alert-info shadow-sm d-none" role="alert">
-            <i class="fas fa-info-circle"></i> {{ trans('admin.dashboard.cloudflare') }}
+            <i class="bi bi-info-circle"></i> {{ trans('admin.dashboard.cloudflare') }}
         </div>
     @endif
 
     @if(config('mail.default') === 'array')
         <div class="alert alert-warning shadow-sm" role="alert">
-            <i class="fas fa-info-circle"></i> @lang('admin.dashboard.emails', ['url' => route('admin.settings.mail')])
+            <i class="bi bi-info-circle"></i> @lang('admin.dashboard.emails', ['url' => route('admin.settings.mail')])
         </div>
     @endif
 
     @if($newVersion !== null)
         <div class="alert alert-info shadow-sm" role="alert">
-            <i class="fas fa-plus"></i> {{ trans('admin.dashboard.update', ['version' => $newVersion]) }}.
+            <i class="bi bi-plus-lg"></i> {{ trans('admin.dashboard.update', ['version' => $newVersion]) }}.
             <a href="{{ route('admin.update.index') }}">
                 {{ trans('messages.actions.install') }}
             </a>.
@@ -46,7 +46,7 @@
 
                         <div class="col-auto">
                             <div class="stat text-primary">
-                                <i class="fas fa-users"></i>
+                                <i class="bi bi-people"></i>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 
                         <div class="col-auto">
                             <div class="stat text-primary">
-                                <i class="fas fa-newspaper"></i>
+                                <i class="bi bi-newspaper"></i>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
 
                         <div class="col-auto">
                             <div class="stat text-primary">
-                                <i class="fas fa-file-alt"></i>
+                                <i class="bi bi-file-earmark"></i>
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
 
                         <div class="col-auto">
                             <div class="stat text-primary">
-                                <i class="fas fa-image"></i>
+                                <i class="bi bi-image"></i>
                             </div>
                         </div>
                     </div>
@@ -186,16 +186,16 @@
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="me-1">
-                            <i class="fas fa-circle text-primary"></i> {{ now()->subDay()->longAbsoluteDiffForHumans() }}
+                            <i class="bi bi-circle-fill text-primary"></i> {{ now()->subDay()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="me-1">
-                            <i class="fas fa-circle text-success"></i> {{ now()->subWeek()->longAbsoluteDiffForHumans() }}
+                            <i class="bi bi-circle-fill text-success"></i> {{ now()->subWeek()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="me-1">
-                            <i class="fas fa-circle text-info"></i> {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
+                            <i class="bi bi-circle-fill text-info"></i> {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
                         </span>
                         <span class="me-1">
-                            <i class="fas fa-circle text-warning"></i> + {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
+                            <i class="bi bi-circle-fill text-warning"></i> + {{ now()->subMonth()->longAbsoluteDiffForHumans() }}
                         </span>
                     </div>
                 </div>

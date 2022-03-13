@@ -5,11 +5,11 @@
 @section('content')
     @if($user->isDeleted())
         <div class="alert alert-warning" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
+            <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.users.alert-deleted') }}
         </div>
     @elseif($user->isBanned())
         <div class="alert alert-warning shadow" role="alert">
-            <h5><i class="fas fa-exclamation-circle"></i> {{ trans('admin.users.alert-banned.title') }}</h5>
+            <h5><i class="bi bi-exclamation-triangle"></i> {{ trans('admin.users.alert-banned.title') }}</h5>
             <ul>
                 <li>{{ trans('admin.users.alert-banned.banned-by', ['author' => $user->ban->author->name]) }}</li>
                 <li>{{ trans('admin.users.alert-banned.reason', ['reason' => $user->ban->reason]) }}</li>
@@ -21,7 +21,7 @@
                 @csrf
 
                 <button type="submit" class="btn btn-warning">
-                    <i class="fas fa-ban"></i> {{ trans('admin.users.unban') }}
+                    <i class="bi bi-slash-circle"></i> {{ trans('admin.users.unban') }}
                 </button>
             </form>
         </div>
@@ -101,18 +101,18 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary" @if($user->isDeleted()) disabled @endif>
-                            <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                            <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                         </button>
 
                         @if (! $user->isDeleted() && ! $user->isAdmin() && ! $user->is(Auth::user()))
                             @if(! $user->isBanned())
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#banModal">
-                                    <i class="fas fa-ban"></i> {{ trans('admin.users.ban') }}
+                                    <i class="bi bi-slash-circle"></i> {{ trans('admin.users.ban') }}
                                 </button>
                             @endif
 
                             <a href="{{ route('admin.users.destroy', $user) }}" class="btn btn-danger" data-confirm="delete">
-                                <i class="fas fa-trash"></i> {{ trans('admin.users.delete') }}
+                                <i class="bi bi-trash"></i> {{ trans('admin.users.delete') }}
                             </a>
                         @endif
                     </form>
@@ -226,7 +226,7 @@
                             </button>
 
                             <button class="btn btn-danger" type="submit">
-                                <i class="fas fa-ban"></i> {{ trans('admin.users.ban') }}
+                                <i class="bi bi-slash-circle"></i> {{ trans('admin.users.ban') }}
                             </button>
                         </form>
                     </div>
@@ -256,7 +256,7 @@
                             <tr>
                                 <th scope="row">{{ $log->id }}</th>
                                 <td>
-                                    <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-fw fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                    <i class="text-{{ $log->getActionFormat()['color'] }} bi bi-{{ $log->getActionFormat()['icon'] }}"></i>
                                     {{ $log->getActionMessage() }}
                                 </td>
                                 <td>{{ format_date_compact($log->created_at) }}</td>

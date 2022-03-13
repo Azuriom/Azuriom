@@ -2,7 +2,7 @@
 
 <div class="mb-3">
     <label class="form-label" for="sourceInput">{{ trans('admin.redirects.source') }}</label>
-    <div class="input-group has-validation">
+    <div class="input-group @error('source') has-validation @enderror">
         <span class="input-group-text">{{ url('/') }}/</span>
         <input type="text" class="form-control @error('source') is-invalid @enderror" id="sourceInput" name="source" value="{{ old('source', $redirect->source ?? '') }}" required>
 

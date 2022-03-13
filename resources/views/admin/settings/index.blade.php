@@ -49,13 +49,13 @@
                 </div>
 
                 <div class="row g-3">
-                    <div class="mb-3 col-md-6" x-data="{ icon: '{{ $icon ?? '' }}' }">
+                    <div class="mb-3 col-md-6" v-scope="{ icon: '{{ $icon ?? '' }}' }">
                         <label class="form-label" for="imageSelect">{{ trans('admin.settings.index.favicon') }}</label>
                         <div class="input-group mb-3">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-upload"></i>
+                                <i class="bi bi-upload"></i>
                             </a>
-                            <select class="form-select @error('icon') is-invalid @enderror" id="imageSelect" x-model="icon" name="icon">
+                            <select class="form-select @error('icon') is-invalid @enderror" id="imageSelect" v-model="icon" name="icon">
                                 <option value="" @selected(!$icon)>
                                     {{ trans('messages.none') }}
                                 </option>
@@ -68,22 +68,20 @@
                             </select>
                         </div>
 
-                        <template x-if="icon">
-                            <img :src="'{{ image_url() }}/' + icon" class="img-fluid rounded img-preview-sm" alt="Favicon">
-                        </template>
+                        <img v-if="icon" :src="icon ? '{{ image_url() }}/' + icon : '#'" class="img-fluid rounded img-preview-sm" alt="Favicon">
 
                         @error('icon')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-md-6" x-data="{ logo: '{{ $logo ?? '' }}' }">
+                    <div class="mb-3 col-md-6" v-scope="{ logo: '{{ $logo ?? '' }}' }">
                         <label class="form-label" for="logoSelect">{{ trans('admin.settings.index.logo') }}</label>
                         <div class="input-group mb-3">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-upload"></i>
+                                <i class="bi bi-upload"></i>
                             </a>
-                            <select class="form-select @error('logo') is-invalid @enderror" id="logoSelect" x-model="logo" name="logo">
+                            <select class="form-select @error('logo') is-invalid @enderror" id="logoSelect" v-model="logo" name="logo">
                                 <option value="" @selected(!$logo)>
                                     {{ trans('messages.none') }}
                                 </option>
@@ -96,9 +94,7 @@
                             </select>
                         </div>
 
-                        <template x-if="logo">
-                            <img :src="'{{ image_url() }}/' + logo" class="img-fluid rounded img-preview-sm" alt="Logo">
-                        </template>
+                        <img v-if="logo" :src="logo ? '{{ image_url() }}/' + logo : '#'" class="img-fluid rounded img-preview-sm" alt="Logo">
 
                         @error('logo')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -106,13 +102,13 @@
                     </div>
                 </div>
 
-                <div class="mb-3"  x-data="{ background: '{{ $background ?? '' }}' }">
+                <div class="mb-3"  v-scope="{ background: '{{ $background ?? '' }}' }">
                     <label class="form-label" for="imageSelect">{{ trans('admin.settings.index.background') }}</label>
                     <div class="input-group mb-3">
                         <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-upload"></i>
+                            <i class="bi bi-upload"></i>
                         </a>
-                        <select class="form-select @error('background') is-invalid @enderror" id="imageSelect" x-model="background" name="background">
+                        <select class="form-select @error('background') is-invalid @enderror" id="imageSelect" v-model="background" name="background">
                             <option value="" @selected(!$background)>
                                 {{ trans('messages.none') }}
                             </option>
@@ -124,9 +120,7 @@
                         </select>
                     </div>
 
-                    <template x-if="background">
-                        <img :src="'{{ image_url() }}/' + background" class="img-fluid rounded img-preview-sm" alt="Background">
-                    </template>
+                    <img :src="background ? '{{ image_url() }}/' + background : ''" class="img-fluid rounded img-preview-sm" alt="Background">
 
                     @error('background')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -204,7 +198,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
             </form>
         </div>

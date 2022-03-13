@@ -10,7 +10,7 @@
                     <p>@yield('message')</p>
 
                     <a href="{{ route('home') }}" class="btn btn-primary">
-                        <i class="fas fa-home"></i> {{ trans('errors.home') }}
+                        <i class="bi bi-house"></i> {{ trans('errors.home') }}
                     </a>
                 </div>
             </div>

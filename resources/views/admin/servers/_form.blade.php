@@ -67,7 +67,7 @@
 
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required x-model="type">
+        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
             @foreach($types as $type)
                 <option value="{{ $type }}" @selected($type === old('type', $server->type ?? ''))>
                     {{ trans('admin.servers.type.'.$type) }}
@@ -101,13 +101,13 @@
     </div>
 </div>
 
- <div x-show="type === 'mc-ping'" class="mb-3">
+ <div v-show="type === 'mc-ping'" class="mb-3">
     <div class="alert alert-info" role="alert">
-        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.ping_info') }}
+        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.ping_info') }}
     </div>
 </div>
 
-<div x-show="type === 'source-query' || type === 'source-rcon'">
+<div v-show="type === 'source-query' || type === 'source-rcon'">
     <div class="row g-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="querySourcePortInput">{{ trans('admin.servers.query_port') }}</label>
@@ -122,21 +122,21 @@
     </div>
 </div>
 
-<div x-show="type === 'source-query'" class="mb-3 d-none">
+<div v-show="type === 'source-query'" class="mb-3">
     <div class="alert alert-info" role="alert">
-        <i class="fas fa-info-circle"></i> {{ trans('admin.servers.query_info') }}
+        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.query_info') }}
     </div>
 </div>
 
-<div x-show="type.includes('rcon')">
+<div v-show="type.includes('rcon')">
     <div class="row g-3">
         <div class="mb-3 col-md-8">
             <label class="form-label" for="rconPasswordInput">{{ trans('admin.servers.rcon_password') }}</label>
 
-            <div class="input-group has-validation" x-data="{toggle: false}">
+            <div class="input-group has-validation" v-scope="{toggle: false}">
                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
-                    <i class="fas" :class="toggle ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    <i class="fas" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
                 </button>
 
                 @error('rcon-password')
@@ -158,7 +158,7 @@
     </div>
 </div>
 
-<div x-show="type === 'mc-azlink'">
+<div v-show="type === 'mc-azlink'">
     <div class="mb-3 form-check form-switch">
         <input type="checkbox" class="form-check-input" id="hasPingSwitch" name="azlink-ping" data-bs-toggle="collapse" data-bs-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? false)) checked @endisset aria-describedby="pingInfo">
         <label class="form-check-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.ping') }}</label>
@@ -184,7 +184,7 @@
                 </div>
 
                 <div class="alert alert-info mb-0" role="alert">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="bi bi-info-circle"></i>
                     {{ trans('admin.servers.azlink.port_command') }}
                     <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
                         <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
@@ -194,7 +194,7 @@
 
         @if(isset($server) && $server->isOnline())
             <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
-                <i class="fas fa-check"></i> {{ trans('admin.servers.verify') }}
+                <i class="bi bi-check-lg"></i> {{ trans('admin.servers.verify') }}
                 <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
             </button>
         @endif
@@ -204,7 +204,7 @@
         <div class="mb-3">
             @if($server->isOnline())
                 <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="bi bi-info-circle"></i>
                     {{ trans('admin.servers.azlink.command') }}
                     <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
                     .
@@ -226,7 +226,7 @@
         </div>
     @else
         <button type="submit" name="redirect" value="edit" class="btn btn-success mb-2">
-            <i class="fas fa-arrow-right"></i> {{ trans('messages.actions.continue') }}
+            <i class="bi bi-arrow-right"></i> {{ trans('messages.actions.continue') }}
         </button>
     @endisset
 </div>

@@ -39,11 +39,11 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
                 <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete">
-                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                 </a>
             </form>
         </div>

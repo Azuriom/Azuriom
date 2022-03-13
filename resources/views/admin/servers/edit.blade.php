@@ -13,17 +13,17 @@
                 @endif
             </h5>
 
-            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm" x-data="{type: '{{ $server->type }}'}">
+            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm" v-scope="{type: '{{ $server->type }}'}">
                 @method('PUT')
 
                 @include('admin.servers._form')
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
                 <a href="{{ route('admin.servers.destroy', $server) }}" class="btn btn-danger" data-confirm="delete">
-                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                 </a>
             </form>
         </div>

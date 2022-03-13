@@ -28,14 +28,14 @@
     <div class="card shadow mb-4">
         <div class="card-body">
 
-            <form action="{{ route('admin.settings.mail.update') }}" method="POST" x-data="{ type: '{{ config('mail.default') }}' }">
+            <form action="{{ route('admin.settings.mail.update') }}" method="POST" v-scope="{ type: '{{ str_replace('array', '', config('mail.default')) }}' }">
                 @csrf
 
                 <div class="row g-3">
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
-                        <select class="form-control" id="mailerSelect" name="mailer" x-model="type" aria-describedby="mailerInfo">
+                        <select class="form-control" id="mailerSelect" name="mailer" v-model="type" aria-describedby="mailerInfo">
                             <option value="" @selected(config('mail.default') === 'array')>
                                 {{ trans('messages.none') }}
                             </option>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div x-show="type === 'smtp'">
+                <div v-show="type === 'smtp'">
                     <div class="row g-3">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
@@ -109,10 +109,10 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
 
-                            <div class="input-group has-validation" x-data="{toggle: false}">
+                            <div class="input-group has-validation" v-scope="{toggle: false}">
                                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password', $smtpConfig['password']) }}">
                                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
-                                    <i class="fas" :class="toggle ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    <i class="fas" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>
                                 </button>
 
                                 @error('smtp-password')
@@ -124,12 +124,12 @@
                 </div>
 
 
-                <div class="alert alert-warning d-none" role="alert" x-if="type === 'sendmail'">
-                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail') }}
+                <div v-if="type === 'sendmail'" class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail') }}
                 </div>
 
-                <div class="alert alert-warning d-none" role="alert" x-if="!type'">
-                    <i class="fas fa-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
+                <div v-if="!type" class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
                 </div>
 
                 <div class="mb-3" data-mail-type="smtp sendmail">
@@ -140,11 +140,11 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
                 <button type="button" class="btn btn-success" id="sendTestMail" data-mail-type="smtp sendmail">
-                    <i class="fas fa-paper-plane"></i>
+                    <i class="bi bi-send"></i>
                     {{ trans('admin.settings.mail.send') }}
                     <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
                 </button>

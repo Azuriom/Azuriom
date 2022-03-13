@@ -11,7 +11,7 @@ abstract class AdminDashboardCardComposer
      * Get the cards to add to the admin dashboard.
      * Each card should contains:
      * - 'color' : A Bootstrap color (e.g: success)
-     * - 'icon' : A FontAwesome 5 icon (e.g: fas fa-rocket)
+     * - 'icon' : A Bootstrap icon (e.g: bi bi-chat)
      * - 'name' : The name of the card
      * - 'value' : The value of the card.
      *

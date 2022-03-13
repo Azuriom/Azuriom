@@ -31,7 +31,7 @@
                             <td>{{ format_date_compact($ban->created_at) }}</td>
                             <td>
                                 @if(! $ban->trashed())
-                                    <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.users.bans.destroy', [$ban->user, $ban]) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                 @else
                                     <i>{{ trans('admin.bans.removed', ['user' => $ban->remover->name ?? '???', 'date' => format_date_compact($ban->removed_at)]) }}</i>
                                 @endif

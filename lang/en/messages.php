@@ -98,7 +98,7 @@ return [
     'other' => 'Other',
     'none' => 'None',
     'copied' => 'Copied',
-    'fontawesome' => 'You can find the list of available icons on <a href="https://fontawesome.com/v5/search?m=free" target="_blank" rel="noopener noreferrer">FontAwesome</a>.',
+    'icons' => 'You can find the list of available icons on <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>.',
 
     'home' => 'Home',
     'servers' => 'Servers',

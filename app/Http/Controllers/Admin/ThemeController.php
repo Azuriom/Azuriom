@@ -91,6 +91,8 @@ class ThemeController extends Controller
             if ($description !== null && isset($description->apiId)) {
                 $oldConfig = $this->themes->readConfig($theme);
 
+                $this->themes->delete($theme);
+
                 $this->themes->install($description->apiId);
 
                 if ($oldConfig !== null) {
