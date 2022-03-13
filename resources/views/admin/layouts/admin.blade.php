@@ -306,7 +306,7 @@
                         </a>
 
                         <a href="https://azuriom.com/docs" class="btn btn-outline-secondary mx-1" target="_blank" rel="noopener noreferrer">
-                            <i class="bi bi-journal"></i>
+                            <i class="bi bi-journals"></i>
                             {{ trans('admin.nav.documentation') }}
                         </a>
                     </div>
