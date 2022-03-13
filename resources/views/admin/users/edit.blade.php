@@ -201,9 +201,9 @@
             <div class="col-md-6">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ $card['name'] }}</h6>
+                        <h5 class="card-title mb-0">{{ $card['name'] }}</h5>
                     </div>
-                    <div class="card-body">            
+                    <div class="card-body">
                         @include($card['view'])
                     </div>
                 </div>
