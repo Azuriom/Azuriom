@@ -35,6 +35,8 @@ class SocialLinkController extends Controller
             SocialLink::whereKey($link)->update(['position' => $position++]);
         }
 
+        SocialLink::clearCache();
+
         return response()->json([
             'message' => trans('messages.status.success'),
         ]);
