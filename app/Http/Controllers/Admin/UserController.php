@@ -46,7 +46,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create', ['roles' => Role::all()]);
+        return view('admin.users.create', [
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
@@ -87,7 +89,7 @@ class UserController extends Controller
 
         return view('admin.users.edit', [
             'user' => $user->load('ban'),
-            'roles' => Role::all(),
+            'roles' => Role::orderByDesc('power')->get(),
             'logs' => $logs,
         ]);
     }

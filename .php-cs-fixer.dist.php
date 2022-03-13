@@ -8,7 +8,7 @@ $finder = Finder::create()
     ->in(__DIR__.'/config')
     ->in(__DIR__.'/database/factories')
     ->in(__DIR__.'/database/seeders')
-    ->in(__DIR__ .'/lang')
+    ->in(__DIR__.'/resources/lang')
     ->in(__DIR__.'/routes')
     ->in(__DIR__.'/tests');
 

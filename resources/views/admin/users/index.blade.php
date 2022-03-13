@@ -75,9 +75,11 @@
 
             {{ $users->withQueryString()->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.users.create') }}">
-                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
-            </a>
+            @if(! oauth_login())
+                <a class="btn btn-primary" href="{{ route('admin.users.create') }}">
+                    <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
+                </a>
+            @endif
         </div>
     </div>
 @endsection
