@@ -9,8 +9,11 @@ use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\FiveMGame;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
+use Azuriom\Socialite\Minecraft\AzuriomMinecraftProvider;
+use Azuriom\Socialite\Xbox\AzuriomXboxProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory;
 
 class GameServiceProvider extends ServiceProvider
 {
@@ -43,7 +46,9 @@ class GameServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $gameType = config('azuriom.game') ?? setting('game-type', 'mc-offline');
+        $this->registerSocialiteProviders();
+
+        $gameType = config('azuriom.game') ?? '';
         $game = Arr::get(static::$games, $gameType, FallbackGame::class);
 
         if (is_string($game)) {
@@ -53,6 +58,23 @@ class GameServiceProvider extends ServiceProvider
         }
 
         $this->app->instance('game', $game);
+    }
+
+    protected function registerSocialiteProviders()
+    {
+        $socialite = $this->app->make(Factory::class);
+
+        $socialite->extend('xbox', function ($app) use ($socialite) {
+            $config = $app['config']['services.microsoft'];
+
+            return $socialite->buildProvider(AzuriomXboxProvider::class, $config);
+        });
+
+        $socialite->extend('minecraft', function ($app) use ($socialite) {
+            $config = $app['config']['services.microsoft'];
+
+            return $socialite->buildProvider(AzuriomMinecraftProvider::class, $config);
+        });
     }
 
     public static function registerGames(array $games)

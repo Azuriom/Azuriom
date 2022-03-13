@@ -6,22 +6,12 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Config\Repository as Config;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class SettingServiceProvider extends ServiceProvider
 {
-    /**
-     * The settings that are encrypted for storage.
-     *
-     * @var array
-     */
-    protected $encrypted = [
-        'mail.smtp.password',
-    ];
-
     /**
      * Register any application services.
      *
@@ -49,7 +39,9 @@ class SettingServiceProvider extends ServiceProvider
         $repo = $this->app->make(SettingsRepository::class);
 
         try {
-            $settings = $this->decryptSettings($this->loadSettings());
+            $settings = $this->loadSettings();
+
+            $this->migrateSettings($settings);
 
             foreach ($settings as $name => $value) {
                 $this->handleSpecialSettings($config, $name, $value);
@@ -70,25 +62,6 @@ class SettingServiceProvider extends ServiceProvider
         return Cache::remember('settings', now()->addDay(), function () {
             return Setting::all()->pluck('value', 'name')->all();
         });
-    }
-
-    protected function decryptSettings(array $settings)
-    {
-        foreach ($this->encrypted as $key) {
-            $value = $settings[$key] ?? null;
-
-            if ($value === null) {
-                continue;
-            }
-
-            try {
-                $settings[$key] = decrypt($value, false);
-            } catch (DecryptException $e) {
-                $settings[$key] = null;
-            }
-        }
-
-        return $settings;
     }
 
     protected function handleSpecialSettings(Config $config, string $name, $value)
@@ -120,6 +93,33 @@ class SettingServiceProvider extends ServiceProvider
             $key = str_replace('mail.smtp', 'mail.mailers.smtp', $name);
 
             $config->set($key, $value);
+        }
+    }
+
+    protected function migrateSettings(array &$settings)
+    {
+        $migrations = [
+            'default-server' => 'servers.default',
+            'role.default' => 'roles.default',
+            'maintenance-status' => 'maintenance.enabled',
+            'maintenance-message' => 'maintenance.message',
+            'maintenance-paths' => 'maintenance.paths',
+            'welcome-popup' => 'welcome_alert',
+            'user_money_transfer' => 'users.money_transfer',
+            'shop.use-site-money' => 'shop.use_site_money',
+            'shop.month-goal' => 'shop.month_goal',
+        ];
+
+        foreach ($migrations as $oldKey => $newKey) {
+            $value = $settings[$oldKey] ?? null;
+
+            if ($value !== null) {
+                unset($settings[$oldKey]);
+                $settings[$newKey] = $value;
+
+                Setting::where('name', $oldKey)->delete();
+                Setting::updateOrCreate(['name' => $newKey], ['value' => $value]);
+            }
         }
     }
 }

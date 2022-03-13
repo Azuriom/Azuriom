@@ -15,15 +15,15 @@ return [
         'dashboard' => 'Tableau de bord',
         'settings' => [
             'heading' => 'Paramètres',
-            'settings' => [
-                'settings' => 'Paramètres',
-                'global' => 'Général',
-                'security' => 'Sécurité',
-                'performances' => 'Performances',
-                'seo' => 'SEO',
-                'mail' => 'Mail',
-                'maintenance' => 'Maintenance',
-            ],
+            'settings' => 'Paramètres',
+            'global' => 'Général',
+            'security' => 'Sécurité',
+            'performances' => 'Performances',
+            'seo' => 'SEO',
+            'auth' => 'Authentification',
+            'mail' => 'Mail',
+            'maintenance' => 'Maintenance',
+            'social' => 'Réseaux sociaux',
             'navbar' => 'Navigation',
             'servers' => 'Serveurs',
         ],
@@ -59,13 +59,12 @@ return [
             'profile' => 'Profil',
         ],
 
-        'back-website' => 'Retour au site',
-
+        'back' => 'Retour au site',
         'support' => 'Support',
         'documentation' => 'Documentation',
     ],
 
-    'confirm-delete' => [
+    'delete' => [
         'title' => 'Supprimer ?',
         'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
     ],
@@ -81,37 +80,38 @@ return [
     'dashboard' => [
         'title' => 'Panel administrateur',
 
-        'new-update' => 'Une nouvelle version d\'Azuriom est disponible : :version',
-        'https-warning' => 'Votre site n\'utilise pas le protocole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
-        'proxy-warning' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
-        'recent-users' => 'Utilisateurs récents',
-        'active-users' => 'Utilisateurs actifs',
-        'emails-disabled' => 'L\'envoie des mails est désactivés. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
         'users' => 'Utilisateurs',
         'posts' => 'Articles',
         'pages' => 'Pages',
         'images' => 'Images',
+
+        'update' => 'Une nouvelle version d\'Azuriom est disponible : :version',
+        'http' => 'Votre site n\'utilise pas le protocole https, il est recommandé de l\'activer et de le forcer pour améliorer la sécurité de votre site.',
+        'cloudflare' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
+        'recent_users' => 'Utilisateurs récents',
+        'active_users' => 'Utilisateurs actifs',
+        'emails' => 'L\'envoi des mails est désactivé. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
     ],
 
     'settings' => [
         'index' => [
             'title' => 'Paramètres généraux',
 
-            'site-name' => 'Nom du site',
-            'site-url' => 'URL du site',
-            'site-description' => 'Description du site',
+            'name' => 'Nom du site',
+            'url' => 'URL du site',
+            'description' => 'Description du site',
             'meta' => 'Mots-clés du site',
-            'meta-info' => 'Les mots-clés doivent être séparés par une virgule.',
-            'favicon' => 'Favicon',
-            'background' => 'Background',
+            'meta_info' => 'Les mots-clés doivent être séparés par une virgule.',
+            'favicon' => 'Icône du site',
+            'background' => 'Arrière-plan',
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
             'copyright' => 'Copyright',
             'money' => 'Nom de la monnaie du site',
-            'user-money-transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
-            'site-key' => 'Clé de site pour azuriom.com',
-            'site-key-label' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
+            'user_money_transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
+            'site_key' => 'Clé de site pour azuriom.com',
+            'site_key_info' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
         ],
 
         'security' => [
@@ -119,15 +119,15 @@ return [
 
             'captcha' => [
                 'title' => 'Captcha (protection anti bot)',
-                'site-key' => 'Clé du site',
-                'secret-key' => 'Clé secrète',
-                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur la site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
-                'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur la site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
+                'site_key' => 'Clé du site',
+                'secret_key' => 'Clé secrète',
+                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur le site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+                'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur le site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
             ],
 
             'hash' => 'Algorithme de hachage',
-            'hash-info' => 'Argon2id est l\'algorithme le plus sécurisé mais il nécessite PHP 7.3 ou plus. Si vous utilisez PHP 7.2, vous devriez utiliser Argon2i.',
-            'hash-error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
+            'hash_error' => 'Cet algorithme n\'est pas supporté par votre version de PHP.',
+            'force_2fa' => 'Exiger l\'A2F pour l\'accès au panel admin',
         ],
 
         'performances' => [
@@ -135,16 +135,9 @@ return [
 
             'cache' => [
                 'title' => 'Vider le cache',
+                'clear' => 'Vider le cache',
                 'description' => 'Permet de vider le cache du site.',
-
-                'status' => [
-                    'cleared' => 'Le cache a bien été vidé.',
-                    'clear-error' => 'Une erreur est survenue en vidant le cache.',
-                ],
-
-                'actions' => [
-                    'clear' => 'Vider le cache',
-                ],
+                'error' => 'Une erreur est survenue en vidant le cache.',
             ],
 
             'boost' => [
@@ -152,37 +145,25 @@ return [
                 'description' => 'AzBoost permet d\'améliorer les performances de votre site en ajoutant un nouveau système de cache unique.',
                 'info' => 'Si vous avez des problèmes après l\'installation d\'une extension vous pouvez recharger AzBoost.',
 
-                'current' => [
-                    'status' => 'AzBoost est actuellement :status.',
-                    'enabled' => '<span class="text-success">activé</span>',
-                    'disabled' => '<span class="text-danger">désactivé</span>',
-                ],
+                'enable' => 'Activer AzBoost',
+                'disable' => 'Désactiver AzBoost',
+                'reload' => 'Recharger AzBoost',
 
-                'status' => [
-                    'enabled' => 'AzBoost a été activé.',
-                    'disabled' => 'AzBoost a été désactivé.',
-                    'reloaded' => 'AzBoost a été rechargé.',
+                'status' => 'AzBoost est actuellement :status.',
+                'enabled' => 'activé',
+                'disabled' => 'désactivé',
 
-                    'enable-error' => 'Une erreur est survenue en activant AzBoost.',
-                ],
-
-                'actions' => [
-                    'enable' => 'Activer AzBoost',
-                    'disable' => 'Désactiver AzBoost',
-                    'reload' => 'Recharger AzBoost',
-                ],
+                'error' => 'Une erreur est survenue en activant AzBoost.',
             ],
         ],
 
         'seo' => [
             'title' => 'Paramètres SEO',
 
-            'html-head-code' => 'Code HTML à inclure dans le <head> de toutes les pages.',
-            'html-body-code' => 'Code HTML à inclure dans le <body> de toutes les pages.',
+            'html' => 'Vous pouvez inclure de l\'HTML dans le <code>&lt;head&gt;</code> ou <code>&lt;body&gt;</code> de toutes les pages (par ex. pour une bannière à cookies) en créant un fichier <code>head.blade.php</code> ou <code>body.blade.php</code> dans le dossier <code>resources/views/custom/</code>.',
+            'home_message' => 'Message de la page d\'accueil',
 
-            'html-code-info' => 'Exemple: Bannière cookies, Google Analytics, etc',
-
-            'welcome-popup' => [
+            'welcome_alert' => [
                 'enable' => 'Activer le popup de bienvenue ?',
                 'message' => 'Message du popup de bienvenue',
                 'info' => 'Ce popup sera affiché lors de la première visite d\'un utilisateur sur le site.',
@@ -192,22 +173,21 @@ return [
         'auth' => [
             'title' => 'Authentification',
 
-            'conditions-url' => 'Lien des CGU',
-            'conditions-info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
-            'enable-user-registration' => 'Activer l\'inscription des utilisateurs',
-            'enable-user-registration-label' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
-            'auth-api' => 'Activer l\'API auth',
-            'auth-api-label' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
-            'minecraft-verification' => 'Activer la vérification des pseudos Minecraft avec minecraft.net',
+            'conditions' => 'Lien des CGU',
+            'conditions_info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
+            'registration' => 'Activer l\'inscription des utilisateurs',
+            'registration_info' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
+            'api' => 'Activer l\'API auth',
+            'api_info' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
         ],
 
         'mail' => [
             'title' => 'Paramètres Mail',
-            'from-address' => 'Adresse Email utilisée pour envoyer les emails.',
-            'driver' => 'Type Mail',
-            'driver-info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoi des emails. Vous pouvez trouver plus d\'informations sur l\'envoi des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
-            'disabled-warn' => 'Lorsque l\'envoi des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
-            'sendmail-warn' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
+            'from' => 'Adresse Email utilisée pour envoyer les emails.',
+            'mailer' => 'Type Mail',
+            'mailer_info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoi des emails. Vous pouvez trouver plus d\'informations sur l\'envoi des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'disabled' => 'Lorsque l\'envoi des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
+            'sendmail' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
@@ -215,7 +195,7 @@ return [
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
-            'enable-users-verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
+            'verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
             'send' => 'Envoyer un mail de test',
             'sent' => 'Le mail de test a bien été envoyé.',
         ],
@@ -225,20 +205,21 @@ return [
 
             'enable' => 'Activer la maintenance',
             'message' => 'Message de maintenance',
+            'global' => 'Activer la maintenance sur tout le site',
+            'paths' => 'URLs concernées par la maintenance',
+            'info' => 'Vous pouvez utiliser <code>/*</code> pour bloquer toutes les URLs commençant par le même préfixe. Par exemple <code>/news/*</code> va bloquer l\'accès à tous les articles.',
         ],
 
-        'status' => [
-            'updated' => 'Les paramètres ont été mis à jour.',
-        ],
+        'updated' => 'Les paramètres ont été mis à jour.',
     ],
 
-    'navbar-elements' => [
+    'navbar_elements' => [
         'title' => 'Navbar',
-        'title-edit' => 'Édition l\'élément de la navbar :element',
-        'title-create' => 'Ajout d\'un élément dans la navbar',
+        'edit' => 'Édition l\'élément de la navbar :element',
+        'create' => 'Ajout d\'un élément dans la navbar',
 
         'restrict' => 'Restreindre la visibilité de cet élément à certain grades',
-        'dropdown-info' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
+        'dropdown' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
 
         'fields' => [
             'home' => 'Page d\'accueil',
@@ -252,74 +233,62 @@ return [
             'roles' => 'Grades',
         ],
 
-        'status' => [
-            'nav-updated' => 'Navigation mise à jour',
+        'updated' => 'Navigation mise à jour',
+        'not_empty' => 'Vous ne pouvez pas supprimer un menu déroulant contenant des éléments.',
+    ],
 
-            'created' => 'Élément de la navbar créé.',
-            'updated' => 'Élément de le navbar mis à jour.',
-            'deleted' => 'Élément de la navbar supprimé.',
-
-            'not-empty' => 'Vous ne pouvez pas supprimer un menu déroulant contenant des éléments.',
-        ],
+    'social_links' => [
+        'title' => 'Réseaux sociaux',
+        'edit' => 'Édition du réseau social :link',
+        'create' => 'Ajouter un réseau social',
     ],
 
     'servers' => [
         'title' => 'Serveurs',
-        'title-edit' => 'Édition du serveur :server',
-        'title-create' => 'Ajout d\'un serveur',
+        'edit' => 'Édition du serveur :server',
+        'create' => 'Ajout d\'un serveur',
 
         'default' => 'Serveur par défaut',
-        'default-info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
+        'default_info' => 'Le nombre de joueurs connectés du serveur par défaut sera affiché sur le site si le thème actuel le supporte.',
 
-        'ping-no-commands' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
-        'query-no-commands' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
+        'home_display' => 'Afficher ce serveur sur la page d\'accueil',
+        'url' => 'URL du bouton pour rejoindre le serveur',
+        'url_info' => 'Laisser vide pour afficher l\'adresse du serveur. Peut par exemple être un lien pour télécharger le jeu/launcher ou une URL pour rejoindre le serveur comme <code>steam://connect/&lt;ip&gt;</code>.',
 
-        'query-port-info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
+        'ping_info' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
+        'query_info' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
 
-        'fields' => [
-            'address' => 'Adresse',
-            'port' => 'Port',
+        'query_port_info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 
-            'rcon-password' => 'Mot de passe Rcon',
-            'rcon-port' => 'Port Rcon',
-            'query-port' => 'Port Source Query',
+        'verify' => 'Vérifier la connexion',
 
-            'azlink-port' => 'Port AzLink',
-        ],
-
-        'actions' => [
-            'verify-connection' => 'Vérifier la connexion',
-        ],
+        'rcon_password' => 'Mot de passe Rcon',
+        'rcon_port' => 'Port Rcon',
+        'query_port' => 'Port Source Query',
 
         'azlink' => [
+            'port' => 'Port AzLink',
+
             'link' => 'Pour lier votre serveur Minecraft à votre site Web en utilisant AzLink vous devez:',
-            'link-1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
-            'link-2' => 'Redémarrer votre serveur.',
-            'link-3' => 'Exécuter cette commande sur votre serveur: ',
+            'link1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
+            'link2' => 'Redémarrer votre serveur.',
+            'link3' => 'Exécuter cette commande sur votre serveur: ',
 
-            'link-info' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
-            'port-info' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
+            'command' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
+            'port_command' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
+            'ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
+            'ping_info' => 'Lorsque les commandes instantanées ne sont pas activées, les commandes seront exécutées avec un délai de 30 secondes à 1 minute.',
+            'custom_port' => 'Utiliser un port AzLink personnalisé',
 
-            'enable-ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
-            'ping-info' => 'Lorsque les commandes instantanées ne sont pas activées, les commandes seront exécutées avec un délai de 30 secondes à 1 minute.',
-            'custom-port' => 'Utiliser un port AzLink personnalisé',
+            'error' => 'La connexion au serveur a échoué, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
+            'badresponse' => 'La connexion au serveur a échoué (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
         ],
 
         'players' => ':count joueur|:count joueurs',
         'offline' => 'Hors-ligne',
 
-        'status' => [
-            'created' => 'Le serveur a été ajouté.',
-            'updated' => 'Le serveur a été mis à jour.',
-            'deleted' => 'Le serveur a été supprimé.',
-
-            'connect-success' => 'La connexion au serveur a été effectuée avec succès !',
-            'connect-error' => 'La connexion au serveur a échouée: :error',
-
-            'not-azlink' => 'Ce serveur n\'est pas connecté via AzLink.',
-            'azlink-connect' => 'La connexion au serveur a échoué, l\'adresse et/ou le port sont incorrects, ou le port est fermé.',
-            'azlink-badresponse' => 'La connexion au serveur a échoué (code :code), le token est invalide ou le serveur est mal configuré. Vous pouvez refaire la commande de link pour y remédier.',
-        ],
+        'connected' => 'La connexion au serveur a été effectuée avec succès !',
+        'error' => 'La connexion au serveur a échouée: :error',
 
         'type' => [
             'mc-ping' => 'Minecraft Ping',
@@ -338,30 +307,20 @@ return [
 
     'users' => [
         'title' => 'Utilisateurs',
-        'title-edit' => 'Édition de l\'utilisateur :user',
-        'title-create' => 'Création d\'un utilisateur',
+        'edit' => 'Édition de l\'utilisateur :user',
+        'create' => 'Création d\'un utilisateur',
 
-        'fields' => [
-            'register-date' => 'Inscrit le',
-            'email-verified' => 'Adresse Email vérifiée',
-            'last-login' => 'Dernière connexion',
-            '2fa' => 'Authentification à deux facteurs',
-            'ip' => 'Adresse IP',
-        ],
+        'registered' => 'Inscrit le',
+        'last_login' => 'Dernière connexion',
+        'ip' => 'Adresse IP',
 
-        'info' => [
-            'admin' => 'Admin',
-            'banned' => 'Banni',
-            'deleted' => 'Supprimé',
-        ],
+        'admin' => 'Admin',
+        'banned' => 'Banni',
+        'deleted' => 'Supprimé',
 
-        'actions' => [
-            'ban' => 'Bannir',
-            'unban' => 'Débannir',
-            'delete' => 'Supprimer',
-            'verify-email' => 'Vérifier l\'adresse email',
-            'disable-2fa' => 'Désactiver l\'A2F',
-        ],
+        'ban' => 'Bannir',
+        'unban' => 'Débannir',
+        'delete' => 'Supprimer',
 
         'alert-deleted' => 'Cet utilisateur a été supprimé, il ne peut pas être édité.',
         'alert-banned' => [
@@ -371,21 +330,26 @@ return [
             'date' => 'Date: :date',
         ],
 
-        'edit-profile' => 'Éditer le profil',
+        'edit_profile' => 'Éditer le profil',
 
-        'user-info' => 'Informations de l\'utilisateur',
+        'info' => 'Informations de l\'utilisateur',
 
         'ban-title' => 'Bannir :user',
         'ban-description' => 'Êtes-vous sûr de vouloir bannir cet utilisateur ?',
 
+        '2fa' => [
+            'title' => 'Authentification à deux facteurs',
+            'disable' => 'Désactiver l\'A2F',
+            'disabled' => 'L\'authentification à deux facteurs a été désactivée',
+        ],
+
+        'email' => [
+            'verify' => 'Vérifier l\'adresse email',
+            'verified' => 'Adresse Email vérifiée',
+            'verify_success' => 'L\'adresse Email a été vérifiée',
+        ],
+
         'status' => [
-            'created' => 'L\'utilisateur a été créé.',
-            'updated' => 'L\'utilisateur a été mis à jour.',
-            'deleted' => 'L\'utilisateur a été supprimé.',
-
-            'email-verified' => 'L\'adresse Email a été vérifiée',
-            '2fa-disabled' => 'L\'authentification à deux facteurs a été désactivée',
-
             'banned' => 'Utilisateur banni',
             'unbanned' => 'Utilisateur débanni',
         ],
@@ -393,32 +357,19 @@ return [
 
     'roles' => [
         'title' => 'Grades',
-        'title-edit' => 'Édition du grade :role',
-        'title-create' => 'Création d\'un grade',
+        'edit' => 'Édition du grade :role',
+        'create' => 'Création d\'un grade',
 
-        'permissions' => 'Permissions',
-        'perm-admin' => [
-            'label' => 'Administrateur',
-            'info' => 'Lorsque le grade est administrateur, il a toutes les permissions.',
-        ],
+        'default' => 'Grade par défaut',
+        'admin' => 'Administrateur',
+        'admin_info' => 'Lorsque le grade est administrateur, il a toutes les permissions.',
 
-        'info' => [
-            'default' => 'Grade par défaut',
-            'admin' => 'Grade Administrateur',
-        ],
-
-        'status' => [
-            'power-updated' => 'Les grades ont été mis à jour.',
-            'created' => 'Le grade a été créé.',
-            'updated' => 'Le grade a été mis à jour.',
-            'deleted' => 'Le grade a été supprimé.',
-
-            'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
-            'add-admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
-            'remove-admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
-            'permanent-role' => 'Ce grade ne peut pas être supprimé.',
-            'own-role' => 'Vous ne pouvez pas supprimer votre grade.',
-        ],
+        'updated' => 'Les grades ont été mis à jour.',
+        'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
+        'add_admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
+        'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
+        'delete_default' => 'Ce grade ne peut pas être supprimé.',
+        'delete_own' => 'Vous ne pouvez pas supprimer votre grade.',
     ],
 
     'permissions' => [
@@ -441,56 +392,33 @@ return [
     'bans' => [
         'title' => 'Bannissements',
 
-        'fields' => [
-            'banned-by' => 'Banni par',
-            'reason' => 'Raison',
-        ],
-
+        'by' => 'Banni par',
+        'reason' => 'Raison',
         'removed' => 'Supprimé le :date par :user',
     ],
 
     'posts' => [
         'title' => 'Articles',
-        'title-edit' => 'Édition de l\'article :post',
-        'title-create' => 'Création d\'un article',
+        'edit' => 'Édition de l\'article :post',
+        'create' => 'Création d\'un article',
 
-        'published-info' => 'Cet article ne sera visible de façon publique qu\'à partir de cette date.',
-
-        'fields' => [
-            'published-at' => 'Publié le',
-        ],
-
+        'published_info' => 'Cet article ne sera visible de façon publique qu\'à partir de cette date.',
         'pin' => 'Épingler cet article',
-
-        'status' => [
-            'created' => 'L\'article a été créé.',
-            'updated' => 'L\'article a été mis à jour.',
-            'deleted' => 'L\'article a été supprimé.',
-        ],
-
-        'info' => [
-            'pinned' => 'Épinglé',
-        ],
+        'pinned' => 'Épinglé',
     ],
 
     'pages' => [
         'title' => 'Pages',
-        'title-edit' => 'Édition de la page :page',
-        'title-create' => 'Création d\'une page',
+        'edit' => 'Édition de la page :page',
+        'create' => 'Création d\'une page',
 
         'enable' => 'Activer la page',
-
-        'status' => [
-            'created' => 'La page a été créée.',
-            'updated' => 'La page a été mise à jour.',
-            'deleted' => 'La page a été supprimée.',
-        ],
     ],
 
     'redirects' => [
         'title' => 'Redirections',
-        'title-edit' => 'Édition de la redirection :redirect',
-        'title-create' => 'Création d\'une redirection',
+        'edit' => 'Édition de la redirection :redirect',
+        'create' => 'Création d\'une redirection',
 
         'enable' => 'Activer la redirection',
         'source' => 'Source',
@@ -499,24 +427,12 @@ return [
 
         '301' => '301 - Redirection permanente',
         '302' => '302 - Redirection temporaire',
-
-        'status' => [
-            'created' => 'La redirection a été créée.',
-            'updated' => 'La redirection a été mise à jour.',
-            'deleted' => 'La redirection a été supprimée.',
-        ],
     ],
 
     'images' => [
         'title' => 'Images',
-        'title-edit' => 'Édition de l\'image :image',
-        'title-create' => 'Upload une image',
-
-        'status' => [
-            'created' => 'L\'image a été créée.',
-            'updated' => 'L\'image a été mise à jour.',
-            'deleted' => 'L\'image a été supprimée.',
-        ],
+        'edit' => 'Édition de l\'image :image',
+        'create' => 'Upload une image',
     ],
 
     'extensions' => [
@@ -529,94 +445,72 @@ return [
         'installed' => 'Plugins installés',
         'available' => 'Plugins disponibles',
 
-        'azuriom-requirement' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
-        'game-requirement' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
-        'plugin-requirement' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',
-
-        'status' => [
-            'reloaded' => 'Les plugins ont été rechargés.',
-            'enabled' => 'Le plugin a été activé.',
-            'disabled' => 'Le plugin a été désactivé.',
-            'updated' => 'Le plugin a été mis à jour.',
-            'installed' => 'Le plugin a été installé.',
-            'deleted' => 'Le plugin a été supprimé.',
-
-            'error-delete' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
+        'requirements' => [
+            'api' => 'Ce plugin n\'est pas encore compatible avec Azuriom 1.0',
+            'azuriom' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
+            'game' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
+            'plugin' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',
         ],
+
+        'reloaded' => 'Les plugins ont été rechargés.',
+        'enabled' => 'Le plugin a été activé.',
+        'disabled' => 'Le plugin a été désactivé.',
+        'updated' => 'Le plugin a été mis à jour.',
+        'installed' => 'Le plugin a été installé.',
+        'deleted' => 'Le plugin a été supprimé.',
+        'delete_enabled' => 'Le plugin doit être désactivé avant de pouvoir être supprimé.',
     ],
 
     'themes' => [
         'title' => 'Thèmes',
 
-        'current' => [
-            'title' => 'Thème actuel',
-            'author' => 'Auteur: :author',
-            'version' => 'Version: :version',
-        ],
+        'current' => 'Thème actuel',
+        'author' => 'Auteur: :author',
+        'version' => 'Version: :version',
         'installed' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
+        'legacy' => 'Ce thème n\'est pas encore compatible avec Azuriom 1.0',
 
-        'actions' => [
-            'edit-config' => 'Configurer',
-            'disable' => 'Désactiver le thème',
-        ],
+        'config' => 'Configurer',
+        'disable' => 'Désactiver le thème',
 
-        'status' => [
-            'reloaded' => 'Les thèmes ont été rechargés.',
-            'no-config' => 'Ce thème n\'a pas de configuration.',
-            'config-updated' => 'La configuration du thème a été mise à jour.',
-            'invalid' => 'Ce thème n\'est pas valide (le nom du dossier du thème doit être l\'id du thème).',
-            'updated' => 'Le thème a été mis à jour.',
-            'installed' => 'Le thème a été installé.',
-            'deleted' => 'Le thème a été supprimé.',
-
-            'error-delete' => 'Vous ne pouvez pas supprimer le thème actif.',
-        ],
+        'reloaded' => 'Les thèmes ont été rechargés.',
+        'no_config' => 'Ce thème n\'a pas de configuration.',
+        'config_updated' => 'La configuration du thème a été mise à jour.',
+        'invalid' => 'Ce thème n\'est pas valide (le nom du dossier du thème doit être l\'id du thème).',
+        'updated' => 'Le thème a été mis à jour.',
+        'installed' => 'Le thème a été installé.',
+        'deleted' => 'Le thème a été supprimé.',
+        'delete_current' => 'Vous ne pouvez pas supprimer le thème actif.',
     ],
 
     'update' => [
         'title' => 'Mise à jour',
 
-        'subtitle-update' => 'Mise à jour disponible',
-        'subtitle-no-update' => 'Pas de mise à jour disponible',
+        'has_update' => 'Mise à jour disponible',
+        'no_update' => 'Pas de mise à jour disponible',
+        'check' => 'Vérifier les mises à jour',
 
         'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
         'changelog' => 'Les notes de mise à jour sont disponibles <a href=":url" target="_blank" rel="noopener noreferrer">ici</a>.',
         'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
         'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
 
-        'backup-info' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
+        'backup' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
 
-        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
+        'latest_version' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
+        'latest' => 'Vous utilisez la dernière version d\'Azuriom.',
 
-        'status' => [
-            'download-success' => 'La dernière version d\'Azuriom a été téléchargée, vous pouvez maintenant l\'installer.',
-            'install-success' => 'La dernière version d\'Azuriom a été installée avec succès.',
-
-            'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom.',
-            'error-fetch' => 'Une erreur s\'est produite lors de la vérification de la mise à jour: :error',
-            'error-download' => 'Une erreur s\'est produite lors du téléchargement de la mise à jour: :error',
-            'error-install' => 'Une erreur s\'est produite lors de l\'installation de la mise à jour: :error',
-        ],
-
-        'actions' => [
-            'check' => 'Vérifier les mises à jour',
-            'install' => 'Installer',
-            'download' => 'Télécharger',
-        ],
+        'downloaded' => 'La dernière version d\'Azuriom a été téléchargée, vous pouvez maintenant l\'installer.',
+        'installed' => 'La dernière version d\'Azuriom a été installée avec succès.',
     ],
 
     'logs' => [
         'title' => 'Logs',
 
-        'actions' => [
-            'clear' => 'Supprimer les anciens logs (+15 jours)',
-        ],
-
-        'status' => [
-            'cleared' => 'Les anciens logs ont été supprimés.',
-        ],
+        'clear' => 'Supprimer les anciens logs (+15 jours)',
+        'cleared' => 'Les anciens logs ont été supprimés.',
 
         'pages' => [
             'created' => 'Création de la page #:id',
@@ -636,6 +530,12 @@ return [
             'deleted' => 'Suppression de l\'image #:id',
         ],
 
+        'redirects' => [
+            'created' => 'Création de la redirection #:id',
+            'updated' => 'Mise à jour de la redirection #:id',
+            'deleted' => 'Suppression de la redirection #:id',
+        ],
+
         'roles' => [
             'created' => 'Création du grade #:id',
             'updated' => 'Mise à jour du grade #:id',
@@ -652,6 +552,12 @@ return [
             'updated' => 'Mise à jour de l\'utilisateur #:id',
             'deleted' => 'Suppression de l\'utilisateur #:id',
             'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
+
+            'login' => 'Nouvelle connexion réusssie depuis :ip (A2F: :2fa)',
+            '2fa' => [
+                'enabled' => 'Activation de l\'authentification à deux facteurs',
+                'disabled' => 'Désactivation de l\'authentification à deux facteurs',
+            ],
         ],
 
         'settings' => [
@@ -675,6 +581,7 @@ return [
     'errors' => [
         'back' => 'Retour',
         '404' => 'Page Non Trouvée',
-        'info' => 'Il semblerait que vous avez trouvé un bug dans la matrice...',
+        'info' => 'Il semblerait que vous ayez trouvé un bug dans la matrice...',
+        '2fa' => 'Vous devez activer l\'authentification à deux facteurs pour avoir accès à cette page.',
     ],
 ];

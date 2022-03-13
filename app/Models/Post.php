@@ -118,7 +118,7 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to only include posted posts.
+     * Scope a query to only include published posts.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder

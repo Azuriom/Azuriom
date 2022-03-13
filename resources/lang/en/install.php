@@ -13,6 +13,7 @@ return [
         'rewrite' => 'URL rewrite enabled',
         'extension' => 'Extension :extension',
         'function' => 'Function :function enabled',
+        '64bit' => '64-bit PHP',
 
         'refresh' => 'Refresh requirements',
         'success' => 'Azuriom is ready to be configured!',
@@ -59,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Enabling username verification with Minecraft.net',
+            'premium' => 'Login with Microsoft account (most secure but requires to have purchased Minecraft) ',
         ],
 
         'steam' => [

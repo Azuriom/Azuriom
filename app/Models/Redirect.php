@@ -2,7 +2,6 @@
 
 namespace Azuriom\Models;
 
-use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Redirect extends Model
 {
-    use Attachable;
     use Loggable;
 
     /**

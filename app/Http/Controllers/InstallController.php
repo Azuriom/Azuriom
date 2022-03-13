@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ use Throwable;
 class InstallController extends Controller
 {
     public const TEMP_KEY = 'base64:hmU1T3OuvHdi5t1wULI8Xp7geI+JIWGog9pBCNxslY8=';
-    public const MIN_PHP_VERSION = '7.3';
+    public const MIN_PHP_VERSION = '8.0';
     public const REQUIRED_EXTENSIONS = [
         'bcmath', 'ctype', 'json', 'mbstring', 'openssl', 'PDO', 'tokenizer',
         'xml', 'xmlwriter', 'curl', 'fileinfo', 'zip',
@@ -52,6 +53,10 @@ class InstallController extends Controller
             'name' => 'Minecraft',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
         ],
+        'mc-bedrock' => [
+            'name' => 'Minecraft: Bedrock Edition',
+            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+        ],
         'gmod' => [
             'name' => 'Garry\'s mod',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
@@ -75,6 +80,10 @@ class InstallController extends Controller
         'fivem' => [
             'name' => 'FiveM',
             'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
+        ],
+        'custom' => [
+            'name' => 'Custom Game',
+            'logo' => '/assets/img/azuriom.png',
         ],
     ];
 
@@ -188,7 +197,7 @@ class InstallController extends Controller
 
             return redirect()->route('install.games');
         } catch (Throwable $t) {
-            return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
+            return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => utf8_encode($t->getMessage()),
             ]));
         }
@@ -211,10 +220,18 @@ class InstallController extends Controller
             ]);
         }
 
+        if ($game === 'mc-bedrock') {
+            return view('install.games.minecraft', [
+                'game' => $game,
+                'gameName' => 'Minecraft: Bedrock Edition',
+                'locales' => self::SUPPORTED_LANGUAGES_NAMES,
+            ]);
+        }
+
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
-                'gameName' => $this->games[$game],
+                'gameName' => $this->games[$game]['name'],
                 'locales' => self::SUPPORTED_LANGUAGES_NAMES,
             ]);
         }
@@ -260,30 +277,40 @@ class InstallController extends Controller
                 } catch (HttpClientException $e) {
                     throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
                 }
-            } elseif ($game === 'minecraft') {
+            } elseif ($game === 'minecraft' || $game === 'mc-bedrock') {
+                if ($game !== 'mc-bedrock') {
+                    $game = $request->input('oauth') ? 'mc-online' : 'mc-offline';
+                }
+
                 $this->validate($request, [
-                    'name' => ['required', 'string', 'max:25'],
-                    'email' => ['required', 'string', 'email', 'max:50'], // TODO ensure unique
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'name' => ['required_if:oauth,0', 'nullable', 'max:25'],
+                    'email' => ['required_if:oauth,0', 'nullable', 'email', 'max:50'], // TODO ensure unique
+                    'password' => ['required_if:oauth,0', 'nullable', 'min:8', 'confirmed'],
                     'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
                 ]);
 
                 $name = $request->input('name');
-                $game = $request->filled('minecraftPremium') ? 'mc-online' : 'mc-offline';
 
                 if ($game === 'mc-online') {
-                    $gameId = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")->json('id');
+                    $gameId = Str::replace('-', '', $request->input('uuid', ''));
+                    $response = Http::get("https://api.mojang.com/user/profiles/{$gameId}/names");
 
-                    if ($gameId === null) {
-                        throw ValidationException::withMessages(['name' => 'No UUID for this username.']);
+                    if (! $response->successful() || ! ($name = Arr::get(Arr::last($response->json()), 'name'))) {
+                        throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID.']);
+                    }
+                } elseif ($game === 'mc-bedrock') {
+                    $gameId = $request->input('xuid');
+                    $name = Http::get("https://xbox-api.azuriom.com/profiles/{$gameId}")
+                        ->json('gamertag');
+
+                    if ($name === null) {
+                        throw ValidationException::withMessages(['xuid' => 'Invalid Xbox XUID.']);
                     }
                 }
             }
 
             Artisan::call('cache:clear');
-
             Artisan::call('migrate', ['--force' => true, '--seed' => true]);
-
             Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
             EnvEditor::updateEnv([
@@ -292,6 +319,10 @@ class InstallController extends Controller
                 'MAIL_MAILER' => 'array',
                 'AZURIOM_GAME' => $game,
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
+
+            if ($game === 'custom') {
+                return redirect()->route('install.finish');
+            }
 
             $communityGames = $this->getCommunityGames();
 
@@ -320,7 +351,7 @@ class InstallController extends Controller
 
             $user = User::create([
                 'name' => $name,
-                'email' => $request->input('email', 'admin@domain.ltd'),
+                'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password', Str::random(32))),
                 'game_id' => $gameId ?? null,
             ]);
@@ -328,13 +359,13 @@ class InstallController extends Controller
             $user->markEmailAsVerified();
             $user->forceFill(['role_id' => 2])->save();
 
-            if (in_array($game, $this->steamGames, true)) {
+            if ($game !== 'mc-offline') {
                 Setting::updateSettings('register', false);
             }
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('messages.status-error', [
+            return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => utf8_encode($e->getMessage()),
             ]));
         }
@@ -358,6 +389,7 @@ class InstallController extends Controller
             'writable' => is_writable(base_path()),
             'function-symlink' => static::hasFunctionEnabled('symlink'),
             'rewrite' => ! defined('AZURIOM_NO_URL_REWRITE'),
+            '64bit' => PHP_INT_SIZE !== 4,
         ];
 
         foreach (static::REQUIRED_EXTENSIONS as $extension) {

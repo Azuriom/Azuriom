@@ -1,0 +1,129 @@
+<?php
+
+namespace DummyNamespace\Providers;
+
+use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
+use Azuriom\Providers\GameServiceProvider;
+use DummyNamespace\Games\DummyPluginGame;
+
+class DummyPluginServiceProvider extends BasePluginServiceProvider
+{
+    /**
+     * The plugin's global HTTP middleware stack.
+     *
+     * @var array
+     */
+    protected $middleware = [
+        // \DummyNamespace\Middleware\ExampleMiddleware::class,
+    ];
+
+    /**
+     * The plugin's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [];
+
+    /**
+     * The plugin's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        // 'example' => \DummyNamespace\Middleware\ExampleRouteMiddleware::class,
+    ];
+
+    /**
+     * The policy mappings for this plugin.
+     *
+     * @var array
+     */
+    protected $policies = [
+        // User::class => UserPolicy::class,
+    ];
+
+    /**
+     * Register any plugin services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->registerMiddlewares();
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../config/azuriom_DummyId.php', 'azuriom_DummyId'
+        );
+
+        GameServiceProvider::registerGames(['DummyId' => DummyPluginGame::class]);
+    }
+
+    /**
+     * Bootstrap any plugin services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // $this->registerPolicies();
+
+        $this->loadViews();
+
+        $this->loadTranslations();
+
+        $this->loadMigrations();
+
+        $this->registerRouteDescriptions();
+
+        $this->registerAdminNavigation();
+
+        $this->registerUserNavigation();
+
+        // you can access custom config like that :
+        // $value = config('azuriom_DummyId.custom_config');
+    }
+
+    /**
+     * Returns the routes that should be able to be added to the navbar.
+     *
+     * @return array
+     */
+    protected function routeDescriptions()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Return the admin navigations routes to register in the dashboard.
+     *
+     * @return array
+     */
+    protected function adminNavigation()
+    {
+        return [
+            'DummyId' => [
+                'name' => 'DummyPlugin',
+                'type' => 'dropdown',
+                'route' => 'DummyId.admin.*',
+                'icon' => '', // any FontAwesome icons
+                'items' => [
+                    'DummyId.admin.index' => 'My DummyPlugin admin index',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Return the user navigations routes to register in the user menu.
+     *
+     * @return array
+     */
+    protected function userNavigation()
+    {
+        return [
+            //
+        ];
+    }
+}

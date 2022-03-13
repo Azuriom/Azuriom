@@ -7,7 +7,7 @@
         <p>{{ trans('install.success.success') }}</p>
 
         <a href="{{ route('home') }}" class="btn btn-primary mb-3">
-            {{ trans('install.success.go') }} <i class="fas fa-bolt"></i>
+            {{ trans('install.success.go') }} <i class="bi bi-lightning"></i>
         </a>
 
         <p>@lang('install.success.support')</p>

@@ -16,6 +16,16 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         return 'mc-online';
     }
 
+    public function loginWithOAuth()
+    {
+        return true;
+    }
+
+    public function getSocialiteDriverName()
+    {
+        return 'minecraft';
+    }
+
     public function getAvatarUrl(User $user, int $size = 64)
     {
         // Fallback to MHF_Steve if the user don't have an uuid

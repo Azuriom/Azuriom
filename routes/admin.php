@@ -14,6 +14,7 @@ use Azuriom\Http\Controllers\Admin\RedirectController;
 use Azuriom\Http\Controllers\Admin\RoleController;
 use Azuriom\Http\Controllers\Admin\ServerController;
 use Azuriom\Http\Controllers\Admin\SettingsController;
+use Azuriom\Http\Controllers\Admin\SocialLinkController;
 use Azuriom\Http\Controllers\Admin\ThemeController;
 use Azuriom\Http\Controllers\Admin\UpdateController;
 use Azuriom\Http\Controllers\Admin\UserController;
@@ -96,6 +97,9 @@ Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(
 
 Route::resource('navbar-elements', NavbarController::class)->except('show')->middleware('can:admin.navbar');
 Route::post('/navbar-elements/order', [NavbarController::class, 'updateOrder'])->name('navbar-elements.update-order')->middleware('can:admin.navbar');
+
+Route::resource('social-links', SocialLinkController::class)->except('show');
+Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
 
 Route::resource('users', UserController::class)->except('show')->middleware('can:admin.users');
 Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');

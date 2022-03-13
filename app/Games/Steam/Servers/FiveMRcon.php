@@ -7,7 +7,7 @@ use Azuriom\Models\User;
 
 class FiveMRcon extends FiveMStatus
 {
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         $rcon = $this->connectRcon();
 

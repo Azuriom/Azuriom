@@ -2,7 +2,7 @@
 
 namespace Azuriom\Support;
 
-use Illuminate\Contracts\Console\Kernel as Console;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 
@@ -10,26 +10,20 @@ class Optimizer
 {
     /**
      * The application instance.
-     *
-     * @var \Illuminate\Contracts\Foundation\Application
      */
-    protected $app;
+    protected Application $app;
 
     /**
      * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * The Artisan application instance.
-     *
-     * @var \Illuminate\Contracts\Console\Kernel
      */
-    protected $artisan;
+    protected Kernel $artisan;
 
-    public function __construct(Application $app, Filesystem $files, Console $artisan)
+    public function __construct(Application $app, Filesystem $files, Kernel $artisan)
     {
         $this->app = $app;
         $this->files = $files;

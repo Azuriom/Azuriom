@@ -11,21 +11,21 @@ class EmbedAuthor implements Arrayable
      *
      * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * URL of author.
      *
      * @var string|null
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * URL of author icon (only supports http(s) and attachments).
      *
      * @var string|null
      */
-    protected $iconUrl;
+    protected ?string $iconUrl = null;
 
     /**
      * Create a new author instance.

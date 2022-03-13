@@ -18,6 +18,7 @@ return [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => 'https',
     ],
 
     'postmark' => [
@@ -33,6 +34,12 @@ return [
     'steam' => [
         'client_id' => null,
         'client_secret' => env('STEAM_KEY'),
+        'redirect' => '/user/login/callback',
+    ],
+
+    'microsoft' => [
+        'client_id' => env('MICROSOFT_CLIENT_SECRET'),
+        'client_secret' => env('MICROSOFT_CLIENT_ID'),
         'redirect' => '/user/login/callback',
     ],
 ];

@@ -9,10 +9,8 @@ abstract class ExtensionManager
 {
     /**
      * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Create a new ExtensionManager instance.

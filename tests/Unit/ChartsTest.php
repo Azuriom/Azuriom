@@ -30,7 +30,7 @@ class ChartsTest extends TestCase
             return [format_date(today()->subDays(7 - $i)) => $count];
         })->all();
 
-        $this->assertEquals($expected, Charts::countByDays(User::query())->all());
+        $this->assertSame($expected, Charts::countByDays(User::query())->all());
     }
 
     public function testMonthlyChart()
@@ -51,9 +51,9 @@ class ChartsTest extends TestCase
         }
 
         $expected = collect([1, 0, 2, 0, 1, 1])->mapWithKeys(function (int $count, int $i) {
-            return [today()->subMonths(5 - $i)->translatedFormat('F Y') => $count];
+            return [today()->subMonthsWithNoOverflow(5 - $i)->translatedFormat('F Y') => $count];
         })->all();
 
-        $this->assertEquals($expected, Charts::countByMonths(User::query(), null, 6)->all());
+        $this->assertSame($expected, Charts::countByMonths(User::query(), null, 6)->all());
     }
 }

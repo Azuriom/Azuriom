@@ -20,7 +20,7 @@ class Username implements Rule
             return true;
         }
 
-        return preg_match('/^[A-Za-z0-9_*]+$/', $value);
+        return preg_match('/^[A-Za-z0-9_*.]+$/', $value);
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServerStatsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -19,6 +19,7 @@ class CreateServerStatsTable extends Migration
             $table->unsignedInteger('players');
             $table->unsignedInteger('ram')->nullable();
             $table->unsignedDecimal('cpu')->nullable();
+            $table->text('data')->nullable();
             $table->timestamps();
 
             $table->foreign('server_id')->references('id')->on('servers')->cascadeOnDelete();
@@ -34,4 +35,4 @@ class CreateServerStatsTable extends Migration
     {
         Schema::dropIfExists('server_stats');
     }
-}
+};

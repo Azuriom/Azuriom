@@ -2,11 +2,7 @@
 
 namespace Azuriom\Exceptions;
 
-use Azuriom\Azuriom;
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ViewErrorBag;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -16,7 +12,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
         //
@@ -25,7 +21,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $dontFlash = [
         'current_password',
@@ -40,9 +36,7 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Exception $e) {
-            $this->reportException($e);
-        });
+        //
     }
 
     /**
@@ -94,54 +88,5 @@ class Handler extends ExceptionHandler
             // Even the fallback rendering failed, we will just render with Symfony
             return $this->convertExceptionToResponse($e);
         }
-    }
-
-    /**
-     * Report the exception to Azuriom to provide quick fix of errors.
-     *
-     * @param  \Throwable  $exception
-     */
-    protected function reportException(Throwable $exception)
-    {
-        if (config('app.debug') || app()->runningInConsole()) {
-            return;
-        }
-
-        try {
-            if (RateLimiter::tooManyAttempts('errors', 1)) {
-                return;
-            }
-
-            RateLimiter::hit('errors');
-
-            $data = [
-                'version' => Azuriom::version(),
-                'php_version' => PHP_VERSION,
-                'url' => request()->url(),
-                'method' => request()->method(),
-                'exceptions' => $this->getExceptionReport($exception),
-            ];
-
-            Http::post('https://market.azuriom.com/api/errors/report', $data);
-        } catch (Throwable $t) {
-            //
-        }
-    }
-
-    protected function getExceptionReport(Throwable $exception)
-    {
-        $exceptions = collect([]);
-
-        do {
-            $exceptions->push([
-                'message' => $exception->getMessage(),
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
-                'trace' => $exception->getTraceAsString(),
-                'class' => get_class($exception),
-            ]);
-        } while ($exception = $exception->getPrevious());
-
-        return $exceptions;
     }
 }

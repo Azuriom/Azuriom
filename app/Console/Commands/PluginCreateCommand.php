@@ -74,7 +74,16 @@ class PluginCreateCommand extends Command
 
         $sourcePath = __DIR__.'/stubs/plugin';
 
-        foreach ($this->files->allFiles($sourcePath, true) as $file) {
+        $this->copyFiles($sourcePath, $path, $id, $studlyName, $namespace);
+
+        $this->info('Plugin created successfully.');
+
+        return 0;
+    }
+
+    protected function copyFiles(string $source, string $path, string $id, string $studlyName, string $namespace)
+    {
+        foreach ($this->files->allFiles($source, true) as $file) {
             $fileContent = $this->replace($file->getContents(), $studlyName, $id, $namespace);
             $filePath = $this->replace($file->getRelativePathname(), $studlyName, $id, $namespace);
             $filePath = $path.'/'.str_replace('.stub', '.php', $filePath);
@@ -87,10 +96,6 @@ class PluginCreateCommand extends Command
 
             $this->files->put($filePath, $fileContent);
         }
-
-        $this->info('Plugin created successfully.');
-
-        return 0;
     }
 
     private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace)
@@ -104,11 +109,12 @@ class PluginCreateCommand extends Command
             'authors' => [
                 $this->option('author'),
             ],
+            'azuriom_api' => '1.0.0',
             'providers' => [
                 "\\{$namespace}\\Providers\\{$className}ServiceProvider",
                 "\\{$namespace}\\Providers\\RouteServiceProvider",
             ],
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        ], JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     private function createComposerJson(string $path, string $id, string $namespace)
@@ -121,6 +127,20 @@ class PluginCreateCommand extends Command
                 'psr-4' => [
                     "{$namespace}\\" => 'src/',
                 ],
+            ],
+            'replace' => [
+                'guzzlehttp/guzzle' => '*',
+                'guzzlehttp/promises' => '*',
+                'guzzlehttp/psr7' => '*',
+                'monolog/monolog' => '*',
+                'nesbot/carbon' => '*',
+                'psr/container' => '*',
+                'psr/event-dispatcher' => '*',
+                'psr/http-client' => '*',
+                'psr/http-factory' => '*',
+                'psr/http-message' => '*',
+                'psr/log' => '*',
+                'psr/simple-cache' => '*',
             ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }

@@ -1,48 +1,91 @@
 @extends('install.games.layout')
 
 @section('game')
-    <h3>{{ trans('install.game.user.title') }}</h3>
+    @if($game !== 'mc-bedrock')
+        <div class="mb-3">
+            <label class="form-label" for="oauth">
+                {{ trans('install.game.minecraft.premium') }}
+            </label>
 
-    <div class="form-group">
-        <label for="name">{{ trans('install.game.user.name') }}</label>
+            <select name="oauth" class="form-select @error('oauth') is-invalid @enderror" id="oauth" data-toggle-select="oauth" required>
+                <option value=""></option>
+                <option value="1" @selected(old('oauth') === '1')>
+                    {{ trans('messages.yes') }}
+                </option>
+                <option value="0" @selected(old('oauth') === '0')>
+                    {{ trans('messages.no') }}
+                </option>
+            </select>
 
-        <input name="name" id="name" type="text" class="form-control @error('name') is-invalid @enderror" autocomplete="name" required value="{{ old('name', '') }}">
+            @error('oauth')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
 
-        @error('name')
-        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-        @enderror
-    </div>
+            <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
+        </div>
 
-    <div class="form-group">
-        <label for="email">{{ trans('install.game.user.email') }}</label>
+        <h3>{{ trans('install.game.user.title') }}</h3>
 
-        <input name="email" id="email" type="email" class="form-control @error('email') is-invalid @enderror" autocomplete="email" required value="{{ old('email', '') }}">
+        <div data-oauth="1">
+            <div class="mb-3">
+                <label class="form-label" for="uuid">Minecraft UUID</label>
 
-        @error('email')
-        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-        @enderror
-    </div>
+                <input name="uuid" id="uuid" type="text" class="form-control @error('uuid') is-invalid @enderror" value="{{ old('uuid', '') }}">
 
-    <div class="form-group">
-        <label for="password">{{ trans('install.game.user.password') }}</label>
+                @error('uuid')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
+        </div>
 
-        <input name="password" id="password" type="password" class="form-control @error('password') is-invalid @enderror" autocomplete="new-password" required>
+        <div data-oauth="0">
+            <div class="mb-3">
+                <label class="form-label" for="name">{{ trans('install.game.user.name') }}</label>
 
-        @error('password')
-        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-        @enderror
-    </div>
+                <input name="name" id="name" type="text" class="form-control @error('name') is-invalid @enderror" autocomplete="name" value="{{ old('name', '') }}">
 
-    <div class="form-group">
-        <label for="password-confirm">{{ trans('install.game.user.password_confirm') }}</label>
+                @error('name')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
 
-        <input name="password_confirmation" id="password-confirm" type="password" class="form-control" autocomplete="new-password" required>
-    </div>
+            <div class="mb-3">
+                <label class="form-label" for="email">{{ trans('install.game.user.email') }}</label>
 
-    <div class="custom-control custom-switch">
-        <input name="minecraftPremium" type="checkbox" class="custom-control-input" id="minecraftPremiumSwitch">
-        <label class="custom-control-label" for="minecraftPremiumSwitch">{{ trans('install.game.minecraft.premium') }}</label>
-    </div>
+                <input name="email" id="email" type="email" class="form-control @error('email') is-invalid @enderror" autocomplete="email" value="{{ old('email', '') }}">
 
-    <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
+                @error('email')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="password">{{ trans('install.game.user.password') }}</label>
+
+                <input name="password" id="password" type="password" class="form-control @error('password') is-invalid @enderror" autocomplete="new-password">
+
+                @error('password')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="password-confirm">{{ trans('install.game.user.password_confirm') }}</label>
+
+                <input name="password_confirmation" id="password-confirm" type="password" class="form-control" autocomplete="new-password">
+            </div>
+        </div>
+    @else
+        <div data-game="mc-bedrock">
+            <div class="mb-3">
+                <label class="form-label" for="xuid">Xbox Live XUID</label>
+
+                <input name="xuid" id="xuid" type="text" class="form-control @error('xuid') is-invalid @enderror" value="{{ old('xuid', '') }}">
+
+                @error('xuid')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                @enderror
+            </div>
+        </div>
+    @endif
 @endsection

@@ -11,14 +11,14 @@ class EmbedFooter implements Arrayable
      *
      * @var string
      */
-    protected $text;
+    protected string $text;
 
     /**
      * URL of footer icon (only supports http(s) and attachments).
      *
      * @var string|null
      */
-    protected $iconUrl;
+    protected ?string $iconUrl = null;
 
     /**
      * Create a new footer instance.
@@ -39,6 +39,7 @@ class EmbedFooter implements Arrayable
     {
         return [
             'text' => $this->text,
+            'icon_url' => $this->iconUrl,
         ];
     }
 }

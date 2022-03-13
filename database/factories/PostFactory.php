@@ -6,6 +6,9 @@ use Azuriom\Models\Post;
 use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Azuriom\Models\Post>
+ */
 class PostFactory extends Factory
 {
     /**
@@ -18,7 +21,7 @@ class PostFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function definition()
     {

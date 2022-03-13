@@ -24,7 +24,7 @@ class ServerController extends Controller
     {
         return view('admin.servers.index', [
             'servers' => Server::with('stat')->get(),
-            'defaultServerId' => (int) setting('default-server'),
+            'defaultServerId' => (int) setting('servers.default'),
         ]);
     }
 
@@ -42,9 +42,9 @@ class ServerController extends Controller
             'server' => ['nullable', Rule::exists('servers', 'id')],
         ]);
 
-        Setting::updateSettings('default-server', $request->input('server'));
+        Setting::updateSettings('servers.default', $request->input('server'));
 
-        return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
+        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -66,13 +66,15 @@ class ServerController extends Controller
     public function store(ServerRequest $request)
     {
         try {
-            $server = new Server($request->validated() + ['token' => Str::random(32)]);
+            $server = new Server(array_merge($request->validated(), [
+                'token' => Str::random(32),
+            ]));
 
             if (! $server->bridge()->verifyLink()) {
                 throw new RuntimeException('Unable to connect to the server');
             }
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.error', [
                 'error' => $e->getMessage(),
             ]));
         }
@@ -80,14 +82,14 @@ class ServerController extends Controller
         $server->save();
 
         if (Server::count() === 1) {
-            Setting::updateSettings('default-server', $server->id);
+            Setting::updateSettings('servers.default', $server->id);
         }
 
         if ($request->input('redirect') === 'edit') {
             return redirect()->route('admin.servers.edit', $server);
         }
 
-        return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.created'));
+        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -120,20 +122,20 @@ class ServerController extends Controller
                 throw new RuntimeException('Unable to connect to the server');
             }
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.status.connect-error', [
+            return redirect()->back()->withInput()->with('error', trans('admin.servers.error', [
                 'error' => $e->getMessage(),
             ]));
         }
         $server->save();
 
-        return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.updated'));
+        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
     }
 
     public function verifyAzLink(ServerRequest $request, Server $server)
     {
         if ($server->type !== 'mc-azlink') {
             return response()->json([
-                'message' => trans('admin.servers.status.not-azlink'),
+                'message' => 'This server isn\'t using AzLink',
             ], 422);
         }
 
@@ -144,22 +146,22 @@ class ServerController extends Controller
 
             if (! $response->successful()) {
                 return response()->json([
-                    'message' => trans('admin.servers.status.azlink-badresponse', [
+                    'message' => trans('admin.servers.azlink.badresponse', [
                         'code' => $response->status(),
                     ]),
                 ], 422);
             }
 
             return response()->json([
-                'message' => trans('admin.servers.status.connect-success'),
+                'message' => trans('admin.servers.connected'),
             ]);
         } catch (ConnectionException $e) {
             return response()->json([
-                'message' => trans('admin.servers.status.azlink-connect'),
+                'message' => trans('admin.servers.azlink.error'),
             ], 422);
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+                'message' => trans('messages.status.error', ['error' => $e->getMessage()]),
             ], 422);
         }
     }
@@ -176,6 +178,6 @@ class ServerController extends Controller
     {
         $server->delete();
 
-        return redirect()->route('admin.servers.index')->with('success', trans('admin.servers.status.deleted'));
+        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
     }
 }

@@ -13,6 +13,7 @@ return [
         'rewrite' => 'Réécriture d\'URL activée',
         'extension' => 'Extension :extension',
         'function' => 'Fonction :function activée',
+        '64bit' => 'PHP 64-bit',
 
         'refresh' => 'Revérifier',
         'success' => 'Azuriom est prêt a être configuré !',
@@ -59,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Activer la vérification des pseudos avec Minecraft.net',
+            'premium' => 'Utiliser la connexion avec un compte Microsoft (plus sécurisé mais nécessite d\'avoir acheter Minecraft)',
         ],
 
         'steam' => [

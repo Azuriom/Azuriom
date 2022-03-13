@@ -40,11 +40,11 @@ class Charts
     public static function aggregateByDays(Builder $query, string $function, string $group, string $column = null, int $days = 7)
     {
         $start = today()->subDays($days);
-        $result = static::rawAggregateByDays($query, $start, $function, $group, $column);
 
-        return $result->mapWithKeys(function ($value, string $date) {
-            return [format_date(Carbon::createFromFormat('!Y-m-d', $date)) => $value];
-        });
+        return static::rawAggregateByDays($query, $start, $function, $group, $column)
+            ->mapWithKeys(function ($value, string $date) {
+                return [format_date(Carbon::createFromFormat('!Y-m-d', $date)) => $value];
+            });
     }
 
     public static function rawAggregateByDays(Builder $query, Carbon $start, string $function, string $group, ?string $column)
@@ -124,17 +124,12 @@ class Charts
 
     protected static function getDatabaseRawQuery(string $driver, string $column)
     {
-        switch ($driver) {
-            case 'mysql':
-                return "date_format({$column}, '%Y-%m')";
-            case 'sqlite':
-                return "strftime('%Y-%m', {$column})";
-            case 'pgsql':
-                return "to_char({$column}, 'YYYY-MM')";
-            case 'sqlsrv':
-                return "FORMAT({$column}, 'yyyy-MM')";
-            default:
-                throw new RuntimeException('Unsupported database driver: '.$driver);
-        }
+        return match ($driver) {
+            'mysql' => "date_format({$column}, '%Y-%m')",
+            'sqlite' => "strftime('%Y-%m', {$column})",
+            'pgsql' => "to_char({$column}, 'YYYY-MM')",
+            'sqlsrv' => "FORMAT({$column}, 'yyyy-MM')",
+            default => throw new RuntimeException('Unsupported database driver: '.$driver),
+        };
     }
 }

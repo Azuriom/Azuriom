@@ -17,7 +17,7 @@ trait Searchable
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $search
-     * @param  array|string|null  $columns
+     * @param  string[]|string|null  $columns
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch(Builder $query, string $search, $columns = null)

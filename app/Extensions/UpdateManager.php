@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions;
 
 use Azuriom\Azuriom;
+use Azuriom\Models\User;
 use Azuriom\Support\Optimizer;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -15,14 +16,15 @@ use ZipArchive;
 
 class UpdateManager
 {
-    protected $updates;
+    /**
+     * The cached updates.
+     */
+    protected ?array $updates = null;
 
     /**
-     * The file instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
+     * The filesystem instance.
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Create a new UpdateManager instance.
@@ -160,13 +162,21 @@ class UpdateManager
 
             throw new RuntimeException('The file hash do not match expected hash!');
         }
+
+        Cache::forget('updates_counts');
     }
 
     public function installUpdate(array $info)
     {
+        if (! is_writable(base_path())) {
+            throw new RuntimeException('Missing write permission on '.base_path());
+        }
+
         $this->extract($info, base_path());
 
         app(Optimizer::class)->clear();
+
+        Cache::flush();
 
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
@@ -207,6 +217,7 @@ class UpdateManager
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),
             'Azuriom-Game' => game()->id(),
+            'Azuriom-Users' => is_installed() ? User::count() : 0,
         ]);
 
         $siteKey = setting('site-key');

@@ -30,7 +30,10 @@ class RustRcon extends Query
 
     public function verifyLink()
     {
-        $this->sendCommands(['status']);
+        $this->sendCommands(['status'], new User([
+            'name' => 'Test',
+            'game_id' => 'O',
+        ]));
 
         return true;
     }
@@ -45,7 +48,7 @@ class RustRcon extends Query
         return true;
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         $rcon = $this->connectWebRcon();
 
