@@ -8,7 +8,7 @@ use Thedudeguy\Rcon as MinecraftRcon;
 
 trait RconTrait
 {
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         $rcon = $this->connectRcon();
 

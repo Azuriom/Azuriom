@@ -60,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Enabling username verification with Minecraft.net',
+            'premium' => 'Login with Microsoft account (most secure but requires to have purchased Minecraft) ',
         ],
 
         'steam' => [

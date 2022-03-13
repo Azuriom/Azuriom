@@ -4,11 +4,11 @@ return [
 
     'lang' => 'English',
 
-    'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
-
-    'date' => 'F j, Y',
-    'date-full' => 'F j, Y \a\t g:i A',
-    'date-compact' => 'm/d/Y \a\t g:i A',
+    'date' => [
+        'default' => 'F j, Y',
+        'full' => 'F j, Y \a\t g:i A',
+        'compact' => 'm/d/Y \a\t g:i A',
+    ],
 
     'nav' => [
         'toggle' => 'Toggle navigation',
@@ -27,8 +27,9 @@ return [
         'save' => 'Save',
         'continue' => 'Continue',
         'browse' => 'Browse',
-        'choose-file' => 'Choose file',
+        'choose_file' => 'Choose file',
         'download' => 'Download',
+        'install' => 'Install',
         'upload' => 'Upload',
         'cancel' => 'Cancel',
         'enable' => 'Enable',
@@ -58,7 +59,7 @@ return [
         'type' => 'Type',
         'file' => 'File',
         'description' => 'Description',
-        'short-description' => 'Short Description',
+        'short_description' => 'Short Description',
         'content' => 'Content',
         'role' => 'Role',
         'quantity' => 'Quantity',
@@ -72,6 +73,16 @@ return [
         'price' => 'Price',
         'icon' => 'Icon',
         'server' => 'Server',
+        'value' => 'Value',
+        'published_at' => 'Published at',
+        'permissions' => 'Permissions',
+        'address' => 'Address',
+        'port' => 'Port',
+    ],
+
+    'status' => [
+        'success' => 'The action was successfully completed!',
+        'error' => 'An error occurred: :error',
     ],
 
     'range' => [
@@ -84,17 +95,21 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'unknown' => 'Unknown',
+    'other' => 'Other',
     'none' => 'None',
     'copied' => 'Copied',
+    'icons' => 'You can find the list of available icons on <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>.',
 
     'home' => 'Home',
+    'servers' => 'Servers',
+    'news' => 'News',
     'welcome' => 'Welcome on :name',
+    'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
 
-    'maintenance' => 'Maintenance',
-    'maintenance-message' => 'The website is currently under maintenance.',
-
-    'status-success' => 'The action was successfully completed!',
-    'status-error' => 'An error occurred: :error',
+    'maintenance' => [
+        'title' => 'Maintenance',
+        'message' => 'The website is currently under maintenance.',
+    ],
 
     'theme' => [
         'light' => 'Light theme',
@@ -115,17 +130,18 @@ return [
     ],
 
     'server' => [
+        'join' => 'Join',
+        'total' => ':count/:max player|:count/:max online players',
         'online' => ':count online player|:count online players',
         'offline' => 'The server is currently offline.',
     ],
 
     'profile' => [
         'title' => 'My Profile',
-        'change-email' => 'Change Email Address',
-        'change-password' => 'Change Password',
+        'change_email' => 'Change Email Address',
+        'change_password' => 'Change Password',
 
-        'not-verified' => 'Your email is not verified, please check your email for a verification link.',
-
+        'email_verification' => 'Your email is not verified, please check your email for a verification link.',
         'updated' => 'Your profile has been updated.',
 
         'info' => [
@@ -141,19 +157,17 @@ return [
             'manage' => 'Manage 2FA',
             'info' => 'Scan the QR code above with an two-factor authentication app on your phone like Authy, 1Password or Google Authenticator.',
             'secret' => 'Secret key: :secret',
-            'title' => 'Enable Two-Factor Authentication',
+            'title' => 'Two-Factor Authentication',
             'codes' => 'Show recovery codes',
             'code' => 'Code',
             'enabled' => 'Two-Factor Authentication is currently enabled. Don\'t forget to save your recovery codes!',
             'disabled' => 'Two-Factor Authentication disabled.',
         ],
 
-        'email-not-verified' => 'Your email is not verified, please check your email for a verification link. If you did not receive the email you can resend it',
-
-        'money-transfer' => [
+        'money_transfer' => [
             'title' => 'Money transfer',
             'self' => 'You can\'t send money to yourself.',
-            'not-enough' => 'You don\'t have enough money to make this transfer.',
+            'balance' => 'You don\'t have enough money to make this transfer.',
             'success' => 'The money was successfully sent.',
             'notification' => ':user sent you :money.',
         ],
@@ -162,7 +176,7 @@ return [
     'posts' => [
         'posts' => 'Posts',
         'posted' => 'Posted on :date by :user',
-        'not-published' => 'This post is not published yet.',
+        'unpublished' => 'This post is not published yet.',
         'read' => 'Read more',
     ],
 
@@ -170,9 +184,9 @@ return [
         'create' => 'Leave a comment',
         'guest' => 'You must be logged in to leave a comment.',
         'author' => '<strong>:user</strong> commented on :date',
-        'your-comment' => 'Your comment',
-        'delete-title' => 'Delete?',
-        'delete-description' => 'Are you sure you want to delete this comment?',
+        'content' => 'Your comment',
+        'delete' => 'Delete?',
+        'delete_confirm' => 'Are you sure you want to delete this comment?',
     ],
 
     'likes' => 'Likes: :count',

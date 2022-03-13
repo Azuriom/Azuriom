@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -31,8 +31,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.images.edit', $image) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('admin.images.destroy', $image) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -44,7 +44,7 @@
             {{ $images->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.images.create') }}">
-                <i class="fas fa-upload"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-upload"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

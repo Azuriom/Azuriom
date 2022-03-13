@@ -4,6 +4,7 @@ namespace Azuriom\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class CheckForMaintenanceSettings
@@ -40,7 +41,7 @@ class CheckForMaintenanceSettings
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! setting('maintenance-status', false)) {
+        if (! setting('maintenance.enabled', false)) {
             return $next($request);
         }
 
@@ -62,13 +63,15 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
-        return $this->renderMaintenancePage();
+        return $this->renderMaintenanceView();
     }
 
-    protected function renderMaintenancePage()
+    protected function renderMaintenanceView()
     {
-        $message = setting('maintenance-message', trans('messages.maintenance-message'));
+        $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
 
-        return response()->view('maintenance', ['maintenanceMessage' => $message], 503);
+        return response()->view('maintenance', [
+            'maintenanceMessage' => new HtmlString($maintenanceMessage),
+        ], 503);
     }
 }

@@ -3,7 +3,7 @@
 namespace Azuriom\Support\CommonMark\BasicOnly;
 
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class RemoveImageProcessor
 {

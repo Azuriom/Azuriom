@@ -6,7 +6,7 @@
     <meta name="keywords" content="{{ $keywords }}">
 @endpush @endif
 
-@if(($welcomePopup = setting('welcome-popup')) && ! session()->has('welcome_popup'))
+@if(($welcomePopup = setting('welcome_alert')) && ! session()->has('welcome_popup'))
     @push('footer-scripts')
         <!-- Modal -->
         <div class="modal fade" id="welcomePopupModal" tabindex="-1" role="dialog" aria-labelledby="welcomePopupLabel" aria-hidden="true">
@@ -14,9 +14,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="welcomePopupLabel">{{ site_name() }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         {!! $welcomePopup !!}
@@ -28,7 +26,7 @@
         <script>
             window.addEventListener('load', function () {
                 setTimeout(function () {
-                    $('#welcomePopupModal').modal('show');
+                    new bootstrap.Modal(document.getElementById('welcomePopupModal')).show();
                 }, 500);
             });
         </script>

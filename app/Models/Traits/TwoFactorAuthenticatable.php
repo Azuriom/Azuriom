@@ -18,9 +18,11 @@ trait TwoFactorAuthenticatable
     {
         $codes = $this->two_factor_recovery_codes;
 
-        $this->forceFill([
-            'two_factor_recovery_codes' => array_diff($codes, [$code]),
-        ])->save();
+        if (in_array($code, $codes, true)) {
+            $this->forceFill([
+                'two_factor_recovery_codes' => array_diff($codes, [$code]),
+            ])->save();
+        }
     }
 
     /**

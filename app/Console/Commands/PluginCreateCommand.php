@@ -109,11 +109,12 @@ class PluginCreateCommand extends Command
             'authors' => [
                 $this->option('author'),
             ],
+            'azuriom_api' => '1.0.0',
             'providers' => [
                 "\\{$namespace}\\Providers\\{$className}ServiceProvider",
                 "\\{$namespace}\\Providers\\RouteServiceProvider",
             ],
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        ], JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     private function createComposerJson(string $path, string $id, string $namespace)

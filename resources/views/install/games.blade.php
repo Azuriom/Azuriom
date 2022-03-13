@@ -4,7 +4,7 @@
     <div id="gameSelect" class="text-center">
         <div class="text-left">
             <a href="{{ route('install.database') }}" class="btn btn-secondary mb-3">
-                <i class="fas fa-arrow-left"></i> {{ trans('install.back') }}
+                <i class="bi bi-arrow-left"></i> {{ trans('install.back') }}
             </a>
         </div>
 

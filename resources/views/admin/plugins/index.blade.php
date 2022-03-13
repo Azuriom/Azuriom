@@ -5,11 +5,11 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.installed') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.plugins.installed') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
@@ -35,7 +35,7 @@
                             <td>{{ implode(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
-                                <span class="badge badge-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">
+                                <span class="badge bg-{{ plugins()->isEnabled($path) ? 'success' : 'danger' }}">
                                     {{ trans_bool(plugins()->isEnabled($path)) }}
                                 </span>
                             </td>
@@ -44,12 +44,12 @@
                                     @csrf
 
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-{{ plugins()->isEnabled($path)  ? 'times' : 'check' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
+                                        <i class="bi bi-{{ plugins()->isEnabled($path)  ? 'x-lg' : 'check-lg' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
                                     </button>
                                 </form>
                                 @if(! plugins()->isEnabled($path))
                                     <a href="{{ route('admin.plugins.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
-                                        <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                                        <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                                     </a>
                                 @endif
                                 @if($pluginsUpdates->has($path))
@@ -57,7 +57,7 @@
                                         @csrf
 
                                         <button type="submit" class="btn btn-info btn-sm">
-                                            <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
+                                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
                                         </button>
                                     </form>
                                 @endif
@@ -75,11 +75,11 @@
     @if(! $availablePlugins->isEmpty())
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.plugins.available') }}</h6>
+                <h5 class="card-title mb-0">{{ trans('admin.plugins.available') }}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
@@ -93,16 +93,16 @@
                         @foreach($availablePlugins as $plugin)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
+                                    <a href="{{ $plugin['info_url'] }}" target="_blank" rel="noopener noreferrer" class="me-2">
                                         {{ $plugin['name'] }}
                                     </a>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-download"></i> {{ $plugin['downloads'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-download"></i> {{ $plugin['downloads'] }}
                                     </span>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-heart"></i> {{ $plugin['likes'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-heart"></i> {{ $plugin['likes'] }}
                                     </span>
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
@@ -110,14 +110,14 @@
                                 <td>
                                     @if($plugin['premium'] && ! $plugin['purchased'])
                                         <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
-                                            <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
+                                            <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
                                         </a>
                                     @else
                                         <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
                                             @csrf
 
                                             <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                                <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
                                             </button>
                                         </form>
                                     @endif
@@ -133,7 +133,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-sync"></i> {{ trans('messages.actions.reload') }}
+                        <i class="bi bi-arrow-repeat"></i> {{ trans('messages.actions.reload') }}
                     </button>
                 </form>
             </div>

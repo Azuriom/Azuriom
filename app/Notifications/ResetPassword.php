@@ -25,10 +25,10 @@ class ResetPassword extends Notification
 
         return (new MailMessage())
             ->subject(trans('auth.mail.reset.subject'))
-            ->line(trans('auth.mail.reset.line-1'))
+            ->line(trans('auth.mail.reset.line1'))
             ->action(trans('auth.mail.reset.action'), $url)
-            ->line(trans('auth.mail.reset.line-2', ['count' => $expire]))
-            ->line(trans('auth.mail.reset.line-3'));
+            ->line(trans('auth.mail.reset.line2', ['count' => $expire]))
+            ->line(trans('auth.mail.reset.line3'));
     }
 
     /**

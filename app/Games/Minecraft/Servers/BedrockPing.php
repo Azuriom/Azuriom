@@ -29,7 +29,7 @@ class BedrockPing extends ServerBridge
         return true;
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         report(new RuntimeException('Command cannot be executed with ping link.'));
     }

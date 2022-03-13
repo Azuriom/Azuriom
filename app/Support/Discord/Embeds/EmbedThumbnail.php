@@ -11,7 +11,7 @@ class EmbedThumbnail implements Arrayable
      *
      * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Create a new thumbnail instance.

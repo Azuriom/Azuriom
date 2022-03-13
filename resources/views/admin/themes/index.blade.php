@@ -5,14 +5,14 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.current.title') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.themes.current') }}</h5>
         </div>
         <div class="card-body">
             @if($current)
                 <h3 class="h5">{{ $current->name }}</h3>
                 <ul>
-                    <li>{{ trans('admin.themes.current.author', ['author' => implode(', ', $current->authors)]) }}</li>
-                    <li>{{ trans('admin.themes.current.version', ['version' => $current->version]) }}</li>
+                    <li>{{ trans('admin.themes.author', ['author' => implode(', ', $current->authors)]) }}</li>
+                    <li>{{ trans('admin.themes.version', ['version' => $current->version]) }}</li>
                 </ul>
 
                 <form action="{{ route('admin.themes.change') }}" method="POST" class="d-inline-block">
@@ -20,12 +20,12 @@
 
                     @if($currentHasConfig)
                         <a class="btn btn-primary" href="{{ route('admin.themes.edit', $currentPath) }}">
-                            <i class="fas fa-wrench"></i> {{ trans('admin.themes.actions.edit-config') }}
+                            <i class="bi bi-sliders"></i> {{ trans('admin.themes.config') }}
                         </a>
                     @endif
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-times"></i> {{ trans('admin.themes.actions.disable') }}
+                        <i class="bi bi-x-lg"></i> {{ trans('admin.themes.disable') }}
                     </button>
                 </form>
                 @if($themesUpdates->has($currentPath))
@@ -33,7 +33,7 @@
                         @csrf
 
                         <button type="submit" class="btn btn-info">
-                            <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
+                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
                         </button>
                     </form>
                 @endif
@@ -45,11 +45,11 @@
 
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.installed') }}</h6>
+            <h5 class="card-title mb-0">{{ trans('admin.themes.installed') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
@@ -78,18 +78,18 @@
                                     @csrf
 
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-check"></i> {{ trans('messages.actions.enable') }}
+                                        <i class="bi bi-check-lg"></i> {{ trans('messages.actions.enable') }}
                                     </button>
                                 </form>
                                 <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
-                                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                                 </a>
                                 @if($themesUpdates->has($path))
                                     <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
                                         @csrf
 
                                         <button type="submit" class="btn btn-info btn-sm">
-                                            <i class="fas fa-download"></i> {{ trans('messages.actions.update') }}
+                                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
                                         </button>
                                     </form>
                                 @endif
@@ -106,18 +106,16 @@
     @if(! $availableThemes->isEmpty())
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">{{ trans('admin.themes.available') }}</h6>
+                <h5 class="card-title mb-0">{{ trans('admin.themes.available') }}</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.downloads') }}</th>
-                            <th scope="col">{{ trans('messages.fields.likes') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
@@ -126,33 +124,31 @@
                         @foreach($availableThemes as $theme)
                             <tr>
                                 <th scope="row">
-                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer" class="mr-2">
+                                    <a href="{{ $theme['info_url'] }}" target="_blank" rel="noopener noreferrer" class="me-2">
                                         {{ $theme['name'] }}
                                     </a>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-download"></i> {{ $theme['downloads'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-download"></i> {{ $theme['downloads'] }}
                                     </span>
 
-                                    <span class="badge badge-secondary">
-                                        <i class="fas fa-heart"></i> {{ $theme['likes'] }}
+                                    <span class="badge bg-secondary text-white">
+                                        <i class="bi bi-heart"></i> {{ $theme['likes'] }}
                                     </span>
                                 </th>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
-                                <td>{{ $theme['downloads'] }} <i class="ml-2 fas fa-download text-success"></i></td>
-                                <td>{{ $theme['likes'] }} <i class="ml-2 fas fa-heart text-danger"></i></td>
                                 <td>
                                     @if($theme['premium'] && ! $theme['purchased'])
                                         <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
-                                            <i class="fas fa-shopping-cart"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
+                                            <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
                                         </a>
                                     @else
                                         <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
                                             @csrf
 
                                             <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-download"></i> {{ trans('messages.actions.download') }}
+                                                <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
                                             </button>
                                         </form>
                                     @endif
@@ -168,7 +164,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-warning">
-                        <i class="fas fa-sync"></i> {{ trans('messages.actions.reload') }}
+                        <i class="bi bi-arrow-repeat"></i> {{ trans('messages.actions.reload') }}
                     </button>
                 </form>
             </div>

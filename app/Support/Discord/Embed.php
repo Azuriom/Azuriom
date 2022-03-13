@@ -7,6 +7,7 @@ use Azuriom\Support\Discord\Embeds\EmbedField;
 use Azuriom\Support\Discord\Embeds\EmbedFooter;
 use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -19,63 +20,63 @@ class Embed implements Arrayable
      *
      * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * Description of embed.
      *
      * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * Url of embed.
      *
      * @var string|null
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * Timestamp of embed content.
      *
      * @var \Carbon\CarbonInterface|null
      */
-    protected $timestamp;
+    protected ?CarbonInterface $timestamp = null;
 
     /**
      * Color code of the embed.
      *
      * @var int|null
      */
-    protected $color;
+    protected ?int $color = null;
 
     /**
      * Footer information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter|null
      */
-    protected $footer;
+    protected ?EmbedFooter $footer = null;
 
     /**
      * Thumbnail information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedThumbnail|null
      */
-    protected $thumbnail;
+    protected ?EmbedThumbnail $thumbnail = null;
 
     /**
      * Author information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedAuthor|null
      */
-    protected $author;
+    protected ?EmbedAuthor $author = null;
 
     /**
      * Fields information.
      *
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter[]|null
      */
-    protected $fields = [];
+    protected ?array $fields = [];
 
     /**
      * Create a new message instance.
@@ -228,11 +229,11 @@ class Embed implements Arrayable
             'title' => $this->title,
             'description' => $this->description,
             'url' => $this->url,
-            'timestamp' => optional($this->timestamp)->toAtomString(),
+            'timestamp' => $this->timestamp?->toAtomString(),
             'color' => $this->color,
-            'footer' => optional($this->footer)->toArray(),
-            'thumbnail' => optional($this->thumbnail)->toArray(),
-            'author' => optional($this->author)->toArray(),
+            'footer' => $this->footer?->toArray(),
+            'thumbnail' => $this->thumbnail?->toArray(),
+            'author' => $this->author?->toArray(),
             'fields' => array_map(function (EmbedField $field) {
                 return $field->toArray();
             }, $this->fields),

@@ -7,6 +7,9 @@ use Azuriom\Models\Post;
 use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Azuriom\Models\Like>
+ */
 class LikeFactory extends Factory
 {
     /**
@@ -19,7 +22,7 @@ class LikeFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function definition()
     {

@@ -18,7 +18,7 @@ class Setting extends Model
      *
      * @var string[]
      */
-    private const ENCRYPTED = [
+    private static array $encrypted = [
         'mail.smtp.password',
     ];
 
@@ -27,8 +27,8 @@ class Setting extends Model
      *
      * @var string[]
      */
-    private const JSON_ENCODED = [
-        'maintenance-paths',
+    private static array $jsonEncoded = [
+        'maintenance.paths',
     ];
 
     /**
@@ -53,7 +53,7 @@ class Setting extends Model
             return null;
         }
 
-        if (in_array($this->name, self::ENCRYPTED, true)) {
+        if (in_array($this->name, self::$encrypted, true)) {
             try {
                 return decrypt($value, false);
             } catch (DecryptException $e) {
@@ -61,7 +61,7 @@ class Setting extends Model
             }
         }
 
-        if (in_array($this->name, self::JSON_ENCODED, true)) {
+        if (in_array($this->name, self::$jsonEncoded, true)) {
             $decoded = json_decode($value, true);
 
             return json_last_error() === JSON_ERROR_NONE ? $decoded : null;
@@ -78,14 +78,14 @@ class Setting extends Model
             return;
         }
 
-        if (in_array($this->name, self::ENCRYPTED, true)) {
+        if (in_array($this->name, self::$encrypted, true)) {
             $this->attributes['value'] = encrypt($value, false);
 
             return;
         }
 
-        if (in_array($this->name, self::JSON_ENCODED, true)) {
-            $this->attributes['value'] = json_encode($value);
+        if (in_array($this->name, self::$jsonEncoded, true)) {
+            $this->attributes['value'] = $value;
 
             return;
         }
@@ -100,7 +100,7 @@ class Setting extends Model
      * @param  mixed  $value
      * @return void
      */
-    public static function updateSettings($key, $value = null)
+    public static function updateSettings(string|array $key, mixed $value = null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
 

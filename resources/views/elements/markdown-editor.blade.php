@@ -8,7 +8,6 @@
         const easyMde = new EasyMDE({
             element: document.querySelector('.markdown-editor'),
 
-            autoDownloadFontAwesome: false,
             promptURLs: true,
             spellChecker: false,
 

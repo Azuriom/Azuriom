@@ -56,7 +56,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::prefix('2fa')->name('2fa.')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
 
-        Route::post('/', [ProfileController::class, 'enable2fa'])->name('enable');
+        Route::post('/enable', [ProfileController::class, 'enable2fa'])->name('enable');
         Route::post('/disable', [ProfileController::class, 'disable2fa'])->name('disable');
     });
 

@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.images.title-create'))
+@section('title', trans('admin.images.create'))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -8,8 +8,8 @@
             <form action="{{ route('admin.images.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group">
-                    <label for="nameInput">{{ trans('messages.fields.name') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
                     @error('name')
@@ -17,16 +17,12 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">{{ image_url() }}/</div>
-                        </div>
+                <div class="mb-3">
+                    <label class="form-label" for="slugInput">{{ trans('messages.fields.slug') }}</label>
+                    <div class="input-group @error('slug') has-validation @enderror">
+                        <span class="input-group-text">{{ image_url() }}/</span>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug') }}" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">.(jpg|png|gif|svg|webp)</div>
-                        </div>
+                        <span class="input-group-text">.(jpg|png|gif|svg|webp)</span>
 
                         @error('slug')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -34,22 +30,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="imageInput">{{ trans('messages.fields.image') }}</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
-                        <label class="custom-file-label" for="customFile" data-browse="{{ trans('messages.actions.browse') }}">{{ trans('messages.actions.choose-file') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="imageInput">{{ trans('messages.fields.image') }}</label>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
 
-                        @error('image')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-                    </div>
+                    @error('image')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
 
                     <img src="#" class="mt-2 img-fluid rounded img-preview d-none" alt="Image" id="filePreview">
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
             </form>
         </div>

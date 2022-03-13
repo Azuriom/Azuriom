@@ -1,8 +1,11 @@
 <?php
 
 use Azuriom\Http\Controllers\InstallController;
+use Azuriom\Models\SocialLink;
 use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('add_active')) {
@@ -40,14 +43,14 @@ if (! function_exists('is_installed')) {
 if (! function_exists('format_date')) {
     function format_date(Carbon $date, bool $fullTime = false)
     {
-        return $date->translatedFormat(trans('messages.date'.($fullTime ? '-full' : '')));
+        return $date->translatedFormat(trans('messages.date.'.($fullTime ? 'full' : 'default')));
     }
 }
 
 if (! function_exists('format_date_compact')) {
     function format_date_compact(Carbon $date)
     {
-        return $date->format(trans('messages.date-compact'));
+        return $date->format(trans('messages.date.compact'));
     }
 }
 
@@ -119,6 +122,15 @@ if (! function_exists('image_url')) {
     function image_url(string $name = '/')
     {
         return url(Storage::disk('public')->url('img/'.$name));
+    }
+}
+
+if (! function_exists('social_links')) {
+    function social_links()
+    {
+        return Cache::remember(SocialLink::CACHE_KEY, now()->addDay(), function () {
+            return SocialLink::orderBy('position')->get();
+        });
     }
 }
 

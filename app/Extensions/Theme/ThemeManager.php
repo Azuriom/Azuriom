@@ -15,24 +15,18 @@ class ThemeManager extends ExtensionManager
 {
     /**
      * The current theme if set.
-     *
-     * @var string|null
      */
-    protected $currentTheme;
+    protected ?string $currentTheme = null;
 
     /**
-     * The themes/ directory.
-     *
-     * @var string
+     * The themes directory.
      */
-    protected $themesPath;
+    protected string $themesPath;
 
     /**
-     * The themes/ public directory for assets.
-     *
-     * @var string
+     * The themes public directory for assets.
      */
-    protected $themesPublicPath;
+    protected string $themesPublicPath;
 
     /**
      * Create a new ThemeManager instance.
@@ -49,7 +43,7 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Load and enable the given theme.
-     * Currently this method can only be call once.
+     * Currently, this method can only be call once.
      *
      * @param  string  $theme
      */
@@ -196,11 +190,6 @@ class ThemeManager extends ExtensionManager
             return null;
         }
 
-        // TODO 1.0: remove support for legacy extensions without id
-        if (! isset($json->id)) {
-            $json->id = $theme;
-        }
-
         // The theme folder must be the theme id
         return $theme === $json->id ? $json : null;
     }
@@ -282,6 +271,13 @@ class ThemeManager extends ExtensionManager
 
             return version_compare($themes[$id]['version'], $theme->version, '>');
         });
+    }
+
+    public function isLegacy(string $theme)
+    {
+        $description = $this->findDescription($theme);
+
+        return ($description->azuriom_api ?? null) !== '1.0.0';
     }
 
     public function install($themeId)

@@ -21,7 +21,7 @@ class FallbackGame extends Game
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
-        return 'https://www.gravatar.com/avatar/'.md5($user->email).'?d=mp&s='.$size;
+        return 'https://www.gravatar.com/avatar/'.md5($user->email ?? '').'?d=mp&s='.$size;
     }
 
     public function getUserUniqueId(string $name)

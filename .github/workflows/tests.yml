@@ -8,7 +8,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        php-version: ['7.3', '7.4', '8.0', '8.1']
+        php-version: ['8.0', '8.1']
 
     name: PHP ${{ matrix.php-version }}
 
@@ -21,7 +21,7 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: azuriom
         ports:
-          - 3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:

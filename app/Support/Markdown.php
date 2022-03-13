@@ -4,22 +4,40 @@ namespace Azuriom\Support;
 
 use Azuriom\Support\CommonMark\BasicOnly\RemoveImageProcessor;
 use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\MarkdownConverter;
 
 class Markdown
 {
     public static function parse(string $text, bool $basic = false)
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $internalHosts = [str_replace(['http://', 'https://'], '', config('app.url'))];
+
+        $config = [
+            'html_input' => 'escape',
+            'allow_unsafe_links' => false,
+            'max_nesting_level' => 10,
+            'external_link' => [
+                'internal_hosts' => $internalHosts,
+                'open_in_new_window' => true,
+            ],
+            'external_image' => [
+                'internal_hosts' => $internalHosts,
+                'image_proxy' => 'https://images.weserv.nl/?url=%s',
+            ],
+        ];
+
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());
         $environment->addExtension(new StrikethroughExtension());
@@ -33,32 +51,19 @@ class Markdown
             $environment->addExtension(new TaskListExtension());
         }
 
-        $internalHosts = [str_replace(['http://', 'https://'], '', config('app.url'))];
+        $converter = new MarkdownConverter($environment);
 
-        $converter = new CommonMarkConverter([
-            'html_input' => 'escape',
-            'allow_unsafe_links' => false,
-            'max_nesting_level' => 10,
-            'external_link' => [
-                'internal_hosts' => $internalHosts,
-                'open_in_new_window' => true,
-            ],
-            'external_image' => [
-                'internal_hosts' => $internalHosts,
-                'image_proxy' => 'https://images.weserv.nl/?url=%s',
-            ],
-        ], $environment);
-
-        return $converter->convertToHtml($text);
+        return $converter->convert($text)->getContent();
     }
 
     public static function parseRaw(string $text)
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new GithubFlavoredMarkdownExtension());
 
-        $converter = new CommonMarkConverter([], $environment);
+        $converter = new MarkdownConverter($environment);
 
-        return $converter->convertToHtml($text);
+        return $converter->convert($text)->getContent();
     }
 }

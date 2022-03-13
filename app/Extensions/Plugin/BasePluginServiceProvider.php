@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions\Plugin;
 
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,14 +16,14 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $middleware = [];
+    protected array $middleware = [];
 
     /**
      * The plugin's route middleware groups.
      *
      * @var array
      */
-    protected $middlewareGroups = [];
+    protected array $middlewareGroups = [];
 
     /**
      * The plugin's route middleware.
@@ -31,21 +32,21 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $routeMiddleware = [];
+    protected array $routeMiddleware = [];
 
     /**
      * The policy mappings for this plugin.
      *
      * @var array
      */
-    protected $policies = [];
+    protected array $policies = [];
 
     /**
      * The router instance.
      *
-     * @var \Illuminate\Routing\Router
+     * @var \Illuminate\Routing\Router|null
      */
-    protected $router;
+    protected Router|null $router;
 
     /**
      * Register any plugin services.
@@ -94,17 +95,23 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function registerRouteDescriptions()
     {
-        $this->app['plugins']->addRouteDescription($this->routeDescriptions());
+        $this->app['plugins']->addRouteDescription(function () {
+            return $this->routeDescriptions();
+        });
     }
 
     protected function registerAdminNavigation()
     {
-        $this->app['plugins']->addAdminNavItem($this->adminNavigation());
+        $this->app['plugins']->addAdminNavItem(function () {
+            return $this->adminNavigation();
+        });
     }
 
     protected function registerUserNavigation()
     {
-        $this->app['plugins']->addUserNavItem($this->userNavigation());
+        $this->app['plugins']->addUserNavItem(function () {
+            return $this->userNavigation();
+        });
     }
 
     protected function middleware($middleware, bool $before = false)
@@ -120,7 +127,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function middlewareGroup($name, $middleware = null)
+    protected function middlewareGroup(string|array $name, $middleware = null)
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
@@ -129,7 +136,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function routeMiddleware($name, $middleware = null)
+    protected function routeMiddleware(string|array $name, $middleware = null)
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 

@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -32,13 +32,13 @@
                                 {{ $redirect->code }}
                             </td>
                             <td>
-                                <span class="badge badge-{{ $redirect->is_enabled ? 'success' : 'danger' }}">
+                                <span class="badge bg-{{ $redirect->is_enabled ? 'success' : 'danger' }}">
                                     {{ trans_bool($redirect->is_enabled) }}
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.redirects.edit', $redirect) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.redirects.destroy', $redirect) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.redirects.edit', $redirect) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('admin.redirects.destroy', $redirect) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -50,7 +50,7 @@
             {{ $redirects->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.redirects.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

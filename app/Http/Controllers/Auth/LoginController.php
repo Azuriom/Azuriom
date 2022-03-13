@@ -81,10 +81,10 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
 
-        return $this->loginUser($request, $user);
+        return $this->loginUser($request, $user, false);
     }
 
-    protected function loginUser(Request $request, User $user)
+    protected function loginUser(Request $request, User $user, bool $verify2fa = true)
     {
         if ($user->isBanned()) {
             throw ValidationException::withMessages([
@@ -92,11 +92,11 @@ class LoginController extends Controller
             ]);
         }
 
-        if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
+        if (setting('maintenance.enabled', false) && ! $user->can('maintenance.access')) {
             return $this->sendMaintenanceResponse($request);
         }
 
-        if ($user->hasTwoFactorAuth()) {
+        if ($verify2fa && $user->hasTwoFactorAuth()) {
             return $this->redirectTo2fa($request, $user);
         }
 
@@ -142,7 +142,7 @@ class LoginController extends Controller
 
         return User::forceCreate([
             'name' => $user->getNickname() ?? $user->getName(),
-            'email' => "{$user->getId()}@{$socialiteDriver}.oauth",
+            'email' => $user->getEmail(),
             'avatar' => $user->getAvatar(),
             'password' => Hash::make(Str::random(32)),
             'game_id' => (string) $user->getId(),
@@ -207,16 +207,14 @@ class LoginController extends Controller
         if (! $user->isValidTwoFactorCode($code)) {
             $request->session()->keep('login.2fa');
 
-            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
+            throw ValidationException::withMessages(['code' => trans('auth.2fa.invalid')]);
         }
 
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));
 
         $request->session()->remove('login.2fa');
 
-        if ($user->isValidRecoveryCode($code)) {
-            $user->replaceRecoveryCode($code);
-        }
+        $user->replaceRecoveryCode($code);
 
         return $this->sendLoginResponse($request);
     }
@@ -246,7 +244,7 @@ class LoginController extends Controller
         try {
             $name = game()->getUserName($user);
 
-            if ($name !== null && $name !== $user->name) {
+            if ($name !== null) {
                 $user->update(['name' => $name]);
             }
         } catch (Exception $e) {

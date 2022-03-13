@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Cache;
  * @property int|null $port
  * @property string $type
  * @property string|null $token
+ * @property string|null $join_url
  * @property array $data
+ * @property bool $home_display
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Azuriom\Models\ServerStat $stat
@@ -36,7 +38,7 @@ class Server extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'address', 'port', 'token', 'type', 'data',
+        'name', 'address', 'port', 'token', 'join_url', 'type', 'data', 'home_display',
     ];
 
     /**
@@ -46,13 +48,14 @@ class Server extends Model
      */
     protected $casts = [
         'data' => 'array',
+        'home_display' => 'bool',
     ];
 
     public static function booted()
     {
         static::deleted(function (self $server) {
-            if (((int) setting('default-server')) === $server->id) {
-                Setting::updateSettings(['default-server' => null]);
+            if (((int) setting('servers.default')) === $server->id) {
+                Setting::updateSettings(['servers.default' => null]);
             }
         });
     }
@@ -101,6 +104,22 @@ class Server extends Model
     public function getMaxPlayers()
     {
         return $this->getData('max_players');
+    }
+
+    public function getPlayersPercents()
+    {
+        $max = $this->getMaxPlayers();
+
+        if ($max <= 0) {
+            return 100;
+        }
+
+        return min(($this->getOnlinePlayers() / $max) * 100, 100);
+    }
+
+    public function joinUrl()
+    {
+        return $this->join_url;
     }
 
     public function updateData(array $data = null, bool $full = false)

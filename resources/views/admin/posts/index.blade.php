@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -25,7 +25,7 @@
                             <th scope="row">
                                 {{ $post->id }}
                                 @if($post->is_pinned)
-                                    <i class="fas fa-thumbtack text-primary rotate-45" title="{{ trans('admin.posts.info.pinned') }}" data-toggle="tooltip"></i>
+                                    <i class="bi bi-pin-angle text-primary" title="{{ trans('admin.posts.pinned') }}" data-bs-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td>{{ $post->title }}</td>
@@ -40,8 +40,8 @@
                             </td>
                             <td>{{ format_date($post->published_at)  }}</td>
                             <td>
-                                <a href="{{ route('admin.posts.edit', $post) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.posts.edit', $post) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('admin.posts.destroy', $post) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -53,7 +53,7 @@
             {{ $posts->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.posts.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

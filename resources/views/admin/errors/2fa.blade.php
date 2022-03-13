@@ -10,7 +10,7 @@
         <p class="h4">{{ trans('admin.errors.2fa') }}</p>
 
         <a href="{{ route('profile.2fa.index') }}" class="btn btn-primary">
-            <i class="fas fa-user-lock"></i> {{ trans('messages.actions.enable') }}
+            <i class="bi bi-shield-check"></i> {{ trans('messages.actions.enable') }}
         </a>
     </div>
 @endsection

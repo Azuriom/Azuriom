@@ -7,11 +7,11 @@ use Illuminate\Support\Collection;
 class SettingsRepository
 {
     /**
-     * All of the settings.
+     * All the settings.
      *
      * @var \Illuminate\Support\Collection
      */
-    protected $settings;
+    protected Collection $settings;
 
     /**
      * Create a repository instance.
@@ -38,10 +38,10 @@ class SettingsRepository
      * Get the specified settings.
      *
      * @param  string  $key
-     * @param  mixed  $default
+     * @param  mixed|null  $default
      * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, mixed $default = null)
     {
         return $this->settings->get($key, $default);
     }
@@ -50,15 +50,15 @@ class SettingsRepository
      * Set a given configuration value.
      *
      * @param  array|string  $key
-     * @param  mixed  $value
+     * @param  mixed|null  $value
      * @return void
      */
-    public function set($key, $value = null)
+    public function set(array|string $key, mixed $value = null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
 
-        foreach ($keys as $key => $value) {
-            $this->settings->put($key, $value);
+        foreach ($keys as $name => $val) {
+            $this->settings->put($name, $val);
         }
     }
 }

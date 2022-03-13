@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.images.title-edit', ['image' => $image->name]))
+@section('title', trans('admin.images.edit', ['image' => $image->name]))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -9,8 +9,8 @@
                 @method('PATCH')
                 @csrf
 
-                <div class="form-group">
-                    <label for="nameInput">{{ trans('messages.fields.name') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $image->name) }}" required>
 
                     @error('name')
@@ -18,16 +18,12 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">{{ image_url() }}/</div>
-                        </div>
+                <div class="mb-3">
+                    <label class="form-label" for="slugInput">{{ trans('messages.fields.slug') }}</label>
+                    <div class="input-group @error('slug') has-validation @enderror">
+                        <span class="input-group-text">{{ image_url() }}/</span>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug', $image->getSlug()) }}" required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">.{{ $image->getExtension() }}</div>
-                        </div>
+                        <span class="input-group-text">.{{ $image->getExtension() }}</span>
 
                         @error('slug')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -35,19 +31,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="textArea">{{ trans('messages.fields.image') }}</label>
+                <div class="mb-3">
+                    <label class="form-label" for="textArea">{{ trans('messages.fields.image') }}</label>
 
                     <div>
                         <img src="{{ $image->url() }}" class="img-fluid rounded img-preview" alt="{{ $image->name }}">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
                 <a href="{{ route('admin.images.destroy', $image) }}" class="btn btn-danger" data-confirm="delete">
-                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                 </a>
             </form>
         </div>
