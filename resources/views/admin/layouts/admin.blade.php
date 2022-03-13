@@ -22,7 +22,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,600,800&display=swap" rel="stylesheet">
-    <link href="{{ asset('vendor/bootstrap-icons/icons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('vendor/admin.css') }}" rel="stylesheet">

@@ -35,10 +35,6 @@ class SocialLink extends Model
             'title' => 'YouTube',
             'color' => '#ff0000',
         ],
-        'teamspeak' => [
-            'title' => 'TeamSpeak',
-            'color' => '#2580c3',
-        ],
         'steam' => [
             'title' => 'Steam',
             'color' => '#111d2e',

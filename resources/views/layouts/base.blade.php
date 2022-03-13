@@ -33,7 +33,7 @@
     @stack('scripts')
 
     <!-- Fonts -->
-    <link href="{{ asset('vendor/bootstrap-icons/icons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
