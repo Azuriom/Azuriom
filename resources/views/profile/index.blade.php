@@ -86,14 +86,16 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="emailConfirmPassInput">{{ trans('auth.current_password') }}</label>
-                            <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
+                        @if(! oauth_login())
+                            <div class="mb-3">
+                                <label class="form-label" for="emailConfirmPassInput">{{ trans('auth.current_password') }}</label>
+                                <input type="password" class="form-control @error('email_confirm_pass') is-invalid @enderror" id="emailConfirmPassInput" name="email_confirm_pass" required>
 
-                            @error('email_confirm_pass')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
-                        </div>
+                                @error('email_confirm_pass')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        @endif
 
                         <button type="submit" class="btn btn-primary">
                             {{ trans('messages.actions.update') }}

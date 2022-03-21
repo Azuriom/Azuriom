@@ -162,25 +162,27 @@
                         </form>
                     @endif
 
-                    <form action="{{ route('admin.users.2fa', $user) }}" method="POST">
-                        @csrf
+                    @if(! oauth_login())
+                        <form action="{{ route('admin.users.2fa', $user) }}" method="POST">
+                            @csrf
 
-                        <div class="mb-3">
-                            <label class="form-label" for="2faInput">{{ trans('admin.users.2fa.title') }}</label>
+                            <div class="mb-3">
+                                <label class="form-label" for="2faInput">{{ trans('admin.users.2fa.title') }}</label>
 
-                            @if(! $user->hasTwoFactorAuth())
-                                <input type="text" class="form-control text-danger" id="2faInput" value="{{ trans('messages.no') }}" disabled>
-                            @else
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control text-success" id="2faInput" value="{{ trans('messages.yes') }}" disabled>
+                                @if(! $user->hasTwoFactorAuth())
+                                    <input type="text" class="form-control text-danger" id="2faInput" value="{{ trans('messages.no') }}" disabled>
+                                @else
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-success" id="2faInput" value="{{ trans('messages.yes') }}" disabled>
 
-                                    <button class="btn btn-outline-danger" type="submit">
-                                        {{ trans('admin.users.2fa.disable') }}
-                                    </button>
-                                </div>
-                            @endif
-                        </div>
-                    </form>
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            {{ trans('admin.users.2fa.disable') }}
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                        </form>
+                    @endif
 
                     <div class="mb-3">
                         <label class="form-label" for="addressInput">{{ trans('admin.users.ip') }}</label>

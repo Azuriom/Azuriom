@@ -47,6 +47,7 @@ class AuthController extends Controller
         if (! Auth::validate($this->credentials($credentials))) {
             return response()->json([
                 'status' => 'error',
+                'reason' => 'invalid_credentials',
                 'message' => 'Invalid credentials',
             ], 422);
         }
@@ -56,6 +57,7 @@ class AuthController extends Controller
         if ($user->isBanned()) {
             return response()->json([
                 'status' => 'error',
+                'reason' => 'user_banned',
                 'message' => 'User banned',
             ], 403);
         }
@@ -74,6 +76,7 @@ class AuthController extends Controller
             if (! $user->isValidTwoFactorCode($code)) {
                 return response()->json([
                     'status' => 'error',
+                    'reason' => 'invalid_2fa',
                     'message' => 'Invalid 2FA code',
                 ], 422);
             }

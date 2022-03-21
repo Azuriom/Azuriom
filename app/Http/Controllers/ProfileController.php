@@ -38,7 +38,9 @@ class ProfileController extends Controller
     public function updateEmail(Request $request)
     {
         $this->validate($request, [
-            'email_confirm_pass' => ['required', 'current_password'],
+            'email_confirm_pass' => oauth_login()
+                ? ['sometimes', 'nullable']
+                : ['required', 'current_password'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 

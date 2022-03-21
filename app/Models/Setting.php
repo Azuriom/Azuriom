@@ -47,7 +47,7 @@ class Setting extends Model
         'name', 'value',
     ];
 
-    public function getValueAttribute(string $value)
+    public function getValueAttribute(?string $value)
     {
         if ($value === null) {
             return null;
@@ -56,7 +56,7 @@ class Setting extends Model
         if (in_array($this->name, self::$encrypted, true)) {
             try {
                 return decrypt($value, false);
-            } catch (DecryptException $e) {
+            } catch (DecryptException) {
                 return null;
             }
         }
@@ -85,7 +85,7 @@ class Setting extends Model
         }
 
         if (in_array($this->name, self::$jsonEncoded, true)) {
-            $this->attributes['value'] = $value;
+            $this->attributes['value'] = json_encode($value);
 
             return;
         }
@@ -104,14 +104,14 @@ class Setting extends Model
     {
         $keys = is_array($key) ? $key : [$key => $value];
 
-        foreach ($keys as $key => $value) {
-            if ($value !== null) {
-                self::updateOrCreate(['name' => $key], ['value' => $value]);
+        foreach ($keys as $name => $val) {
+            if ($val !== null) {
+                self::updateOrCreate(['name' => $name], ['value' => $val]);
             } else {
-                self::where('name', $key)->delete();
+                self::where('name', $name)->delete();
             }
 
-            setting()->set($key, $value);
+            setting()->set($name, $val);
         }
 
         Cache::forget('settings');

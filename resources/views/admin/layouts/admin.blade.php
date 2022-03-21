@@ -299,7 +299,7 @@
                 </a>
 
                 <div class="navbar-collapse collapse">
-                    <div class="d-none d-sm-inline-block form-inline me-auto my-2 my-md-0 mw-100">
+                    <div class="d-none d-sm-inline-block">
                         <a href="https://azuriom.com/discord" class="btn btn-outline-primary mx-1" target="_blank" rel="noopener noreferrer">
                             <i class="bi bi-question-circle"></i>
                             {{ trans('admin.nav.support') }}

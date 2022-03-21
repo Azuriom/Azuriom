@@ -60,7 +60,7 @@ document.querySelectorAll('[data-image-preview]').forEach(function (el) {
 });
 
 window.createAlert = function (color, message, dismiss) {
-    const button = dismiss ? ' <button type="button" class="btn-close" aria-label="Close"></button>' : '';
+    const button = dismiss ? ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' : '';
     let icon;
 
     switch (color) {
@@ -75,7 +75,7 @@ window.createAlert = function (color, message, dismiss) {
             break;
     }
 
-    icon = icon ? '<i class="fas fa-' + icon + '"></i> ' : '';
+    icon = icon ? '<i class="bi bi-' + icon + '"></i> ' : '';
 
     document.getElementById('status-message').innerHTML
         = '<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>';

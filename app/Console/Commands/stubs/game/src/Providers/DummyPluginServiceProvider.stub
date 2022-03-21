@@ -107,7 +107,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
                 'name' => 'DummyPlugin',
                 'type' => 'dropdown',
                 'route' => 'DummyId.admin.*',
-                'icon' => '', // any FontAwesome icons
+                'icon' => '', // an icon from Bootstrap Icons
                 'items' => [
                     'DummyId.admin.index' => 'My DummyPlugin admin index',
                 ],

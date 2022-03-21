@@ -74,9 +74,15 @@ class XboxProvider extends AbstractProvider
             'TokenType' => 'JWT',
         ]);
 
-        if ($response->status() === 401 && $response->json('XErr') === 2148916238) {
-            throw value(static::$notFoundCallback)
-                ?? new InvalidStateException('No Minecraft profile for this account.');
+        if ($response->status() === 401) {
+            $code = $response->json('XErr');
+
+            if ($code === 2148916233) {
+                throw value(static::$notFoundCallback)
+                    ?? new InvalidStateException('No Xbox profile for this account.');
+            }
+
+            throw new InvalidStateException('Invalid Xbox response: '.$code);
         }
 
         return "XBL3.0 x={$userHash};{$response->throw()->json('Token')}";

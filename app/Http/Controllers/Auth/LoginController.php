@@ -138,8 +138,6 @@ class LoginController extends Controller
 
     protected function registerUser(Request $request, SocialUser $user)
     {
-        $socialiteDriver = game()->getSocialiteDriverName();
-
         return User::forceCreate([
             'name' => $user->getNickname() ?? $user->getName(),
             'email' => $user->getEmail(),
