@@ -37,14 +37,21 @@ class ServerController extends Controller
             'entities' => $request->json('worlds.entities'),
         ], $request->json('full', false));
 
-        $usersIds = User::whereIn('name', $players)->get()->modelKeys();
-
+        $users = User::whereIn('name', $players)->get();
         $commands = $server->commands()
             ->with('user')
-            ->whereIn('user_id', $usersIds)
+            ->whereIn('user_id', $users->modelKeys())
             ->orWhere('need_online', false)
             ->limit(100)
             ->get();
+        $usersData = $users->map(function (User $user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'uid' => $user->game_id,
+                'money' => $user->money,
+            ];
+        });
 
         if (! $commands->isEmpty()) {
             ServerCommand::whereIn('id', $commands->modelKeys())->delete();
@@ -57,6 +64,7 @@ class ServerController extends Controller
 
         return response()->json([
             'commands' => $commands,
+            'users' => $usersData,
             'retry' => $commands->count() > 100,
         ]);
     }
