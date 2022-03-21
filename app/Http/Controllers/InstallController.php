@@ -51,39 +51,39 @@ class InstallController extends Controller
     protected $games = [
         'minecraft' => [
             'name' => 'Minecraft',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+            'logo' => 'assets/img/games/minecraft.png',
         ],
         'mc-bedrock' => [
             'name' => 'Minecraft: Bedrock Edition',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/minecraft.png',
+            'logo' => 'assets/img/games/minecraft.png',
         ],
         'gmod' => [
             'name' => 'Garry\'s mod',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/gmod.svg',
+            'logo' => 'assets/img/games/gmod.svg',
         ],
         'ark' => [
             'name' => 'ARK: Survival Evolved',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/ark.png',
+            'logo' => 'assets/img/games/ark.png',
         ],
         'csgo' => [
             'name' => 'CS:GO',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/csgo.png',
+            'logo' => 'assets/img/games/csgo.png',
         ],
         'tf2' => [
             'name' => 'Team Fortress 2',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/tf2.svg',
+            'logo' => 'assets/img/games/tf2.svg',
         ],
         'rust' => [
             'name' => 'Rust',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/rust.svg',
+            'logo' => 'assets/img/games/rust.svg',
         ],
         'fivem' => [
             'name' => 'FiveM',
-            'logo' => 'https://azuriom.com/install/assets/v0.2.4/img/fivem.svg',
+            'logo' => 'assets/img/games/fivem.svg',
         ],
         'custom' => [
             'name' => 'Custom Game',
-            'logo' => '/assets/img/azuriom.png',
+            'logo' => 'assets/img/azuriom.png',
         ],
     ];
 
