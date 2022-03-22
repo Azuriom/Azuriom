@@ -115,7 +115,7 @@
             </div>
             <div class="modal-body">{{ trans('messages.comments.delete_confirm') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{{ trans('messages.actions.cancel') }}</button>
 
                 <form id="confirmDeleteForm" method="POST">
                     @method('DELETE')

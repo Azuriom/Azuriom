@@ -433,7 +433,7 @@
                             </div>
                             <div class="modal-body">{{ trans('admin.delete.description') }}</div>
                             <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
                                     <i class="bi bi-x-lg"></i> {{ trans('messages.actions.cancel') }}
                                 </button>
                                 <form id="confirmDeleteForm" method="POST">
