@@ -30,7 +30,8 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
     public function getUserUniqueId(string $name)
     {
         $factory = new UuidFactory();
-        $factory->setNameGenerator(new class implements NameGeneratorInterface {
+        $factory->setNameGenerator(new class implements NameGeneratorInterface
+        {
             public function generate(UuidInterface $ns, string $name, string $hashAlgorithm): string
             {
                 return md5($name, true);
