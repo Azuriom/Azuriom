@@ -17,6 +17,6 @@ return [
     'sent' => 'Poslali jsme vám e-mailem odkaz k obnovení hesla!',
     'throttled' => 'Vyčkejte prosím před dalším pokusem.',
     'token' => 'Token k obnovení hesla je neplatný.',
-    'user' => "Nepodařilo se nám najít uživatele se zadanou e-mailovou adresou.",
+    'user' => 'Nepodařilo se nám najít uživatele se zadanou e-mailovou adresou.',
 
 ];

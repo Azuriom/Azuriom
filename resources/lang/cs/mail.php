@@ -17,7 +17,7 @@ return [
 
     'regards' => 'S pozdravem,',
 
-    'link' => "Pokud máte problémy s kliknutím na tlačítko \":actionText\", zkopírujte a vložte URL níže do vašeho webového prohlížeče: [:displayableActionUrl](:actionURL)",
+    'link' => 'Pokud máte problémy s kliknutím na tlačítko ":actionText", zkopírujte a vložte URL níže do vašeho webového prohlížeče: [:displayableActionUrl](:actionURL)',
 
     'copyright' => '&copy; :year :name. Všechna práva vyhrazena.',
 
