@@ -346,6 +346,7 @@ return [
         'email' => [
             'verify' => 'Vérifier l\'adresse email',
             'verified' => 'Adresse Email vérifiée',
+            'date' => 'Oui, le :date',
             'verify_success' => 'L\'adresse Email a été vérifiée',
         ],
 

@@ -4,7 +4,10 @@ namespace Azuriom\Games\Minecraft;
 
 use Azuriom\Models\User;
 use Closure;
-use Illuminate\Support\Str;
+use Ramsey\Uuid\Generator\NameGeneratorInterface;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\UuidInterface;
 
 class MinecraftOfflineGame extends AbstractMinecraftGame
 {
@@ -26,7 +29,16 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
 
     public function getUserUniqueId(string $name)
     {
-        return Str::uuid();
+        $factory = new UuidFactory();
+        $factory->setNameGenerator(new class implements NameGeneratorInterface {
+            public function generate(UuidInterface $ns, string $name, string $hashAlgorithm): string
+            {
+                return md5($name, true);
+            }
+        });
+        $uuid = $factory->uuid3(Uuid::NIL, 'OfflinePlayer:'.$name)->toString();
+
+        return str_replace('-', '', $uuid);
     }
 
     public function getUserName(User $user)

@@ -340,6 +340,7 @@ return [
         'email' => [
             'verify' => 'Verify email',
             'verified' => 'Email Address verified',
+            'date' => 'Yes, at :date',
             'verify_success' => 'The Email Address has been verified.',
         ],
 

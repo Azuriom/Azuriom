@@ -146,7 +146,8 @@
                                 <label class="form-label" for="emailVerifiedInput">{{ trans('admin.users.email.verified') }}</label>
 
                                 @if($user->hasVerifiedEmail())
-                                    <input type="text" class="form-control text-success" id="emailVerifiedInput" value="{{ trans('messages.yes') }}" disabled>
+                                    <input type="text" class="form-control text-success" id="emailVerifiedInput"
+                                           value="{{ trans('admin.users.email.date', ['date' => format_date_compact($user->email_verified_at)]) }}" disabled>
                                 @else
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control text-danger" id="emailVerifiedInput" value="{{ trans('messages.no') }}" disabled>
