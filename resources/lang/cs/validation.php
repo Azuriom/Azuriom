@@ -94,7 +94,6 @@ return [
     'not_in' => 'Zvolená hodnota :attribute není platná.',
     'not_regex' => 'Formát hodnoty :attribute je neplatný.',
     'numeric' => ':attribute musí být číslo.',
-    'password' => 'Heslo je nesprávné.',
     'present' => ':attribute je vyžadováno.',
     'regex' => 'Formát hodnoty :attribute je neplatný.',
     'required' => 'Pole :attribute je vyžadováno.',

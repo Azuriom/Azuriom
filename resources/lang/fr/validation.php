@@ -99,7 +99,6 @@ return [
     'not_in' => 'Le champ :attribute sélectionné n\'est pas valide.',
     'not_regex' => 'Le format du champ :attribute n\'est pas valide.',
     'numeric' => 'Le champ :attribute doit être un nombre.',
-    'password' => 'Le mot de passe est incorrect.',
     'present' => 'Le champ :attribute doit être présent.',
     'prohibited' => 'Le champ :attribute ne peut pas être présent.',
     'prohibited_if' => 'Le champ :attribute ne peut pas être présent quand :other est :value.',
