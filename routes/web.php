@@ -53,7 +53,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::post('/email', [ProfileController::class, 'updateEmail'])->name('email');
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
 
-    Route::prefix('2fa')->name('2fa.')->group(function () {
+    Route::prefix('2fa')->name('2fa.')->middleware('password.confirm')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
 
         Route::post('/enable', [ProfileController::class, 'enable2fa'])->name('enable');

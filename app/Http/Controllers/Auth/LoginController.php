@@ -81,7 +81,7 @@ class LoginController extends Controller
             return $this->sendFailedLoginResponse($request);
         }
 
-        return $this->loginUser($request, $user, false);
+        return $this->loginUser($request, $user);
     }
 
     protected function loginUser(Request $request, User $user, bool $verify2fa = true)
@@ -133,7 +133,7 @@ class LoginController extends Controller
             'avatar' => $userProfile->getAvatar(),
         ]);
 
-        return $this->loginUser($request, $user);
+        return $this->loginUser($request, $user, false);
     }
 
     protected function registerUser(Request $request, SocialUser $user)
