@@ -17,7 +17,7 @@ return [
 
     'regards' => 'С уважением,',
 
-    'link' => "Если у вас возникли проблемы с нажатием кнопки \":actionText\", скопируйте и вставьте ссылку ниже в ваш браузер: [:displayableActionUrl](:actionURL)",
+    'link' => 'Если у вас возникли проблемы с нажатием кнопки \":actionText\", скопируйте и вставьте ссылку ниже в ваш браузер: [:displayableActionUrl](:actionURL)',
 
     'copyright' => '&copy; :year :name. Все права защищены.',
 
