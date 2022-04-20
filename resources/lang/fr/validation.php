@@ -99,6 +99,13 @@ return [
     'not_in' => 'Le champ :attribute sélectionné n\'est pas valide.',
     'not_regex' => 'Le format du champ :attribute n\'est pas valide.',
     'numeric' => 'Le champ :attribute doit être un nombre.',
+    'password' => [
+        'mixed' => 'Le champ :attribute doit contenir au moins une lettre majuscule et une lettre minuscule.',
+        'letters' => 'Le champ :attribute doit contenir au moins une lettre.',
+        'symbols' => 'Le champ :attribute doit contenir au moins un caractère spécial.',
+        'numbers' => 'Le champ :attribute doit contenir au moins un nombre.',
+        'uncompromised' => 'Le champ :attribute est présent dans une fuite de données, merci d\'en choisir un différent.',
+    ],
     'present' => 'Le champ :attribute doit être présent.',
     'prohibited' => 'Le champ :attribute ne peut pas être présent.',
     'prohibited_if' => 'Le champ :attribute ne peut pas être présent quand :other est :value.',
