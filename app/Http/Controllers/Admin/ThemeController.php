@@ -6,6 +6,7 @@ use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
+use Azuriom\Models\Image;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
@@ -74,12 +75,12 @@ class ThemeController extends Controller
         try {
             app(UpdateManager::class)->forceFetchUpdates();
         } catch (Exception $e) {
-            return $response->with('error', trans('messages.status-error', [
+            return $response->with('error', trans('messages.status.error', [
                 'error' => $e->getMessage(),
             ]));
         }
 
-        return $response->with('success', trans('admin.themes.status.reloaded'));
+        return $response->with('success', trans('admin.themes.reloaded'));
     }
 
     public function update(string $theme)
@@ -90,10 +91,12 @@ class ThemeController extends Controller
             if ($description !== null && isset($description->apiId)) {
                 $oldConfig = $this->themes->readConfig($theme);
 
+                $this->themes->delete($theme);
+
                 $this->themes->install($description->apiId);
 
                 if ($oldConfig !== null) {
-                    $newConfig = $this->themes->readConfig($theme);
+                    $newConfig = $this->themes->readConfig($theme) ?? [];
 
                     $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
                 }
@@ -101,12 +104,12 @@ class ThemeController extends Controller
         } catch (Throwable $t) {
             report($t);
 
-            return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
+            return redirect()->route('admin.themes.index')->with('error', trans('messages.status.error', [
                 'error' => $t->getMessage(),
             ]));
         }
 
-        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.installed'));
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.installed'));
     }
 
     public function download(string $themeId)
@@ -114,34 +117,41 @@ class ThemeController extends Controller
         try {
             $this->themes->install($themeId);
         } catch (Throwable $t) {
-            return redirect()->route('admin.themes.index')->with('error', trans('messages.status-error', [
+            return redirect()->route('admin.themes.index')->with('error', trans('messages.status.error', [
                 'error' => $t->getMessage(),
             ]));
         }
 
-        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.installed'));
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.installed'));
     }
 
     public function delete(string $theme)
     {
         if ($this->themes->currentTheme() === $theme) {
-            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.error-delete'));
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.delete_current'));
         }
 
         $this->themes->delete($theme);
 
-        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.deleted'));
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.deleted'));
     }
 
-    public function edit(string $theme)
+    public function edit(Request $request, string $theme)
     {
+        if ($request->isXmlHttpRequest()) {
+            return response()->json(theme_config());
+        }
+
         $viewPath = $this->themes->path('config/config.blade.php', $theme);
 
         if (! $this->files->exists($viewPath)) {
-            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.no-config'));
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.no_config'));
         }
 
-        return view()->file($viewPath, ['theme' => $theme]);
+        return view()->file($viewPath, [
+            'theme' => $theme,
+            'images' => Image::all(),
+        ]);
     }
 
     /**
@@ -162,9 +172,13 @@ class ThemeController extends Controller
 
             $this->themes->updateConfig($theme, $validated);
 
+            if ($request->isXmlHttpRequest()) {
+                return response()->json(['message' => 'admin.themes.config_updated']);
+            }
+
             return redirect()->route('admin.themes.index')->with(
                 'success',
-                trans('admin.themes.status.config-updated')
+                trans('admin.themes.config_updated')
             );
         } catch (FileNotFoundException $e) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
@@ -174,13 +188,18 @@ class ThemeController extends Controller
     public function changeTheme($theme = null)
     {
         if ($theme !== null && $this->themes->findDescription($theme) === null) {
-            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.status.invalid'));
+            return redirect()->route('admin.themes.index')->with('error', trans('admin.themes.invalid'));
+        }
+
+        if ($theme !== null && $this->themes->isLegacy($theme)) {
+            return redirect()->route('admin.themes.index')
+                ->with('error', trans('admin.themes.legacy'));
         }
 
         $this->themes->changeTheme($theme);
 
         ActionLog::log('themes.changed');
 
-        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.status.updated'));
+        return redirect()->route('admin.themes.index')->with('success', trans('admin.themes.updated'));
     }
 }

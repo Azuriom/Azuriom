@@ -4,15 +4,11 @@
 @section('description', $page->description)
 
 @section('content')
-    <div class="container content page">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h1>{{ $page->title }}</h1>
+    <h1>{{ $page->title }}</h1>
 
-                <div class="card-text user-html-content">
-                    {!! $page->content !!}
-                </div>
-            </div>
+    <div class="card">
+        <div class="card-body">
+            {!! $page->content !!}
         </div>
     </div>
 @endsection

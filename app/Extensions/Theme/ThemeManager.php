@@ -6,6 +6,7 @@ use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Models\Setting;
 use Azuriom\Support\Files;
+use Azuriom\Support\Optimizer;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Cache;
 use RuntimeException;
@@ -14,24 +15,18 @@ class ThemeManager extends ExtensionManager
 {
     /**
      * The current theme if set.
-     *
-     * @var string|null
      */
-    protected $currentTheme;
+    protected ?string $currentTheme = null;
 
     /**
-     * The themes/ directory.
-     *
-     * @var string
+     * The themes directory.
      */
-    protected $themesPath;
+    protected string $themesPath;
 
     /**
-     * The themes/ public directory for assets.
-     *
-     * @var string
+     * The themes public directory for assets.
      */
-    protected $themesPublicPath;
+    protected string $themesPublicPath;
 
     /**
      * Create a new ThemeManager instance.
@@ -48,7 +43,7 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Load and enable the given theme.
-     * Currently this method can only be call once.
+     * Currently, this method can only be call once.
      *
      * @param  string  $theme
      */
@@ -76,7 +71,7 @@ class ThemeManager extends ExtensionManager
     {
         Setting::updateSettings('theme', $theme);
 
-        Cache::forget('theme.config');
+        Cache::forget('theme.config.'.$theme);
 
         if ($theme) {
             $this->createAssetsLink($theme);
@@ -89,7 +84,7 @@ class ThemeManager extends ExtensionManager
 
         $this->files->put($this->path('config.json', $theme), $json);
 
-        Cache::put('theme.config', $config, now()->addDay());
+        Cache::put('theme.config.'.$theme, $config, now()->addDay());
     }
 
     /**
@@ -195,11 +190,6 @@ class ThemeManager extends ExtensionManager
             return null;
         }
 
-        // TODO 1.0: remove support for legacy extensions without id
-        if (! isset($json->id)) {
-            $json->id = $theme;
-        }
-
         // The theme folder must be the theme id
         return $theme === $json->id ? $json : null;
     }
@@ -283,6 +273,13 @@ class ThemeManager extends ExtensionManager
         });
     }
 
+    public function isLegacy(string $theme)
+    {
+        $description = $this->findDescription($theme);
+
+        return ($description->azuriom_api ?? null) !== '1.0.0';
+    }
+
     public function install($themeId)
     {
         $updateManager = app(UpdateManager::class);
@@ -306,6 +303,8 @@ class ThemeManager extends ExtensionManager
         $updateManager->download($themeInfo, 'themes/');
         $updateManager->extract($themeInfo, $themeDir, 'themes/');
 
+        app(Optimizer::class)->clearViewCache();
+
         $this->createAssetsLink($theme);
     }
 
@@ -316,7 +315,7 @@ class ThemeManager extends ExtensionManager
 
     protected function loadConfig(string $theme)
     {
-        $themeConfig = Cache::remember('theme.config', now()->addDay(), function () use ($theme) {
+        $themeConfig = Cache::remember('theme.config.'.$theme, now()->addDay(), function () use ($theme) {
             return $this->readConfig($theme);
         });
 

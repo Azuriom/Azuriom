@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -20,9 +20,13 @@
                     @foreach($logs as $log)
                         <tr>
                             <th scope="row">{{ $log->id }}</th>
-                            <td>{{ $log->user->name }}</td>
                             <td>
-                                <i class="text-{{ $log->getActionFormat()['color'] }} fas fa-{{ $log->getActionFormat()['icon'] }}"></i>
+                                <a href="{{ route('admin.users.edit', $log->user) }}">
+                                    {{ $log->user->name }}
+                                </a>
+                            </td>
+                            <td class="text-{{ $log->getActionFormat()['color'] }}">
+                                <i class="bi bi-{{ $log->getActionFormat()['icon'] }}"></i>
                                 {{ $log->getActionMessage() }}
                             </td>
                             <td>{{ format_date_compact($log->created_at) }}</td>
@@ -39,7 +43,7 @@
                 @csrf
 
                 <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> {{ trans('admin.logs.actions.clear') }}
+                    <i class="bi bi-trash"></i> {{ trans('admin.logs.clear') }}
                 </button>
             </form>
         </div>

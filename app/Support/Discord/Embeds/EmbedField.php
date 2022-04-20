@@ -11,21 +11,21 @@ class EmbedField implements Arrayable
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Value of the field.
      *
      * @var string
      */
-    protected $value;
+    protected string $value;
 
     /**
      * Whether or not this field should display inline.
      *
      * @var bool|null
      */
-    protected $inline;
+    protected ?bool $inline;
 
     /**
      * Create a new field instance.

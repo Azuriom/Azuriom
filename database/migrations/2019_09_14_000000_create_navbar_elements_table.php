@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNavbarElementsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateNavbarElementsTable extends Migration
             $table->string('name');
             $table->string('value');
             $table->unsignedInteger('position')->default(0);
-            $table->enum('type', ['home', 'link', 'page', 'post', 'posts', 'plugin', 'dropdown']);
+            $table->string('type');
             $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('new_tab')->default(false);
 
@@ -35,4 +35,4 @@ class CreateNavbarElementsTable extends Migration
     {
         Schema::dropIfExists('navbar_elements');
     }
-}
+};

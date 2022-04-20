@@ -16,7 +16,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index', ['pages' => Page::paginate(25)]);
+        return view('admin.pages.index', ['pages' => Page::paginate()]);
     }
 
     /**
@@ -43,7 +43,7 @@ class PageController extends Controller
 
         $page->persistPendingAttachments($request->input('pending_id'));
 
-        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.created'));
+        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -68,7 +68,7 @@ class PageController extends Controller
     {
         $page->update($request->validated());
 
-        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.updated'));
+        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -83,6 +83,6 @@ class PageController extends Controller
     {
         $page->delete();
 
-        return redirect()->route('admin.pages.index')->with('success', trans('admin.pages.status.deleted'));
+        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
     }
 }

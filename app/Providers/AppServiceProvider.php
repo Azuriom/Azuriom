@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         //  database versions (MySQL < 5.7.7 & MariaDB < 10.2)?
         Schema::defaultStringLength(191);
 
-        Relation::morphMap([
+        Relation::enforceMorphMap([
             'posts' => Post::class,
             'pages' => Page::class,
         ]);

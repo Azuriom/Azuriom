@@ -2,9 +2,9 @@
 
 namespace Azuriom\Support\CommonMark\ExternalImage;
 
-use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Inline\Element\Image;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class ExternalImageProcessor
 {
@@ -17,8 +17,8 @@ class ExternalImageProcessor
 
     public function __invoke(DocumentParsedEvent $e)
     {
-        $internalHosts = $this->environment->getConfig('external_image/internal_hosts', []);
-        $imageProxy = $this->environment->getConfig('external_image/image_proxy', '');
+        $internalHosts = $this->environment->getConfiguration()->get('external_image/internal_hosts', []);
+        $imageProxy = $this->environment->getConfiguration()->get('external_image/image_proxy', '');
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {
@@ -33,7 +33,7 @@ class ExternalImageProcessor
                 }
 
                 if (self::hostMatches($host, $internalHosts)) {
-                    $image->data['external'] = false;
+                    $image->data->set('external', false);
                     continue;
                 }
 
@@ -45,8 +45,8 @@ class ExternalImageProcessor
 
     private function markImageAsExternal(Image $image, string $imageProxy)
     {
-        $image->data['external'] = true;
-        $image->data['attributes']['data-original-src'] = $image->getUrl();
+        $image->data->set('external', true);
+        $image->data->set('attributes.data-original-src', $image->getUrl());
 
         if (! empty($imageProxy)) {
             $image->setUrl(str_replace('%s', rawurlencode($image->getUrl()), $imageProxy));

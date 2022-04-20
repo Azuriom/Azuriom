@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Azuriom\Models\Role;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class CastsTest extends TestCase
 {

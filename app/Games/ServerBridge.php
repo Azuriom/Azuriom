@@ -4,7 +4,6 @@ namespace Azuriom\Games;
 
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
-use Illuminate\Support\Str;
 use RuntimeException;
 
 abstract class ServerBridge
@@ -46,12 +45,14 @@ abstract class ServerBridge
 
     /**
      * Send commands on the given server.
+     * Depending on the server ping, this may take a while (up to one second).
      *
-     * @param  array  $commands
-     * @param  \Azuriom\Models\User|null  $user
+     * @param  string[]  $commands
+     * @param  \Azuriom\Models\User  $user
      * @param  bool  $needConnected
+     * @return bool
      */
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         if (! $this->canExecuteCommand()) {
             report(new RuntimeException('Command cannot be executed with this link.'));
@@ -60,19 +61,6 @@ abstract class ServerBridge
         }
 
         throw new RuntimeException('The sendCommands() method must be implemented.');
-    }
-
-    /**
-     * Execute a command on the given server.
-     *
-     * @param  array  $commands
-     * @param  string|null  $playerName
-     * @param  bool  $needConnected
-     * @deprecated use sendCommands() instead
-     */
-    public function executeCommands(array $commands, ?string $playerName, bool $needConnected = false)
-    {
-        $this->sendCommands($commands, User::firstWhere('name', $playerName), $needConnected);
     }
 
     /**
@@ -90,10 +78,10 @@ abstract class ServerBridge
     public function replacePlaceholders(string $command, User $user = null)
     {
         if ($user === null) {
-            return Str::of($command);
+            return str($command);
         }
 
-        return Str::of($command)
+        return str($command)
             ->replace('{player}', $user->name)
             ->replace('{name}', $user->name);
     }

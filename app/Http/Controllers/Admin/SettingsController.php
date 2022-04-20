@@ -105,7 +105,7 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'money' => setting('money'),
             'siteKey' => setting('site-key'),
-            'userMoneyTransfer' => setting('user_money_transfer'),
+            'userMoneyTransfer' => setting('users.money_transfer'),
         ]);
     }
 
@@ -149,11 +149,14 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        $response = redirect()->route('admin.settings.index')->with('success', trans('admin.settings.status.updated'));
+        $response = redirect()->route('admin.settings.index')
+            ->with('success', trans('admin.settings.updated'));
 
         if (setting('register', true) !== $request->filled('register')) {
             $this->optimizer->reloadRoutesCache();
         }
+
+        $this->cache->forget('updates');
 
         return $response;
     }
@@ -178,13 +181,15 @@ class SettingsController extends Controller
             'hash' => [
                 'required', 'string', Rule::in($hash), function ($attribute, $value, $fail) {
                     if (! $this->isHashSupported($value)) {
-                        $fail(trans('admin.settings.security.hash-error'));
+                        $fail(trans('admin.settings.security.hash_error'));
                     }
                 },
             ],
         ]);
 
-        Setting::updateSettings($request->only('hash'));
+        Setting::updateSettings(array_merge($request->only('hash'), [
+            'admin.force_2fa' => $request->filled('force_2fa'),
+        ]));
 
         if ($request->filled('captcha')) {
             Setting::updateSettings([
@@ -202,7 +207,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
     }
 
     public function performance()
@@ -222,24 +227,23 @@ class SettingsController extends Controller
         $response = redirect()->route('admin.settings.performance');
 
         if (! $this->cache->flush()) {
-            return $response->with('error', trans('admin.settings.performances.cache.status.clear-error'));
+            return $response->with('error', trans('admin.settings.performances.cache.error'));
         }
 
-        return $response->with('success', trans('admin.settings.performances.cache.status.cleared'));
+        app(Optimizer::class)->clearViewCache();
+
+        return $response->with('success', trans('messages.status.success'));
     }
 
     public function enableAdvancedCache()
     {
         $redirect = redirect()->route('admin.settings.performance');
-        $cacheStatus = $this->optimizer->isEnabled();
 
         if (! $this->optimizer->cache()) {
-            return $redirect->with('error', trans('admin.settings.performances.boost.status.enable-error'));
+            return $redirect->with('error', trans('admin.settings.performances.boost.error'));
         }
 
-        $message = trans('admin.settings.performances.boost.status.'.($cacheStatus ? 'reloaded' : 'enabled'));
-
-        return $redirect->with('success', $message);
+        return $redirect->with('success', trans('messages.status.success'));
     }
 
     public function disableAdvancedCache()
@@ -247,7 +251,7 @@ class SettingsController extends Controller
         $this->optimizer->clear();
 
         return redirect()->route('admin.settings.performance')
-            ->with('success', trans('admin.settings.performances.boost.status.disabled'));
+            ->with('success', trans('messages.status.success'));
     }
 
     public function linkStorage()
@@ -260,15 +264,14 @@ class SettingsController extends Controller
         Files::relativeLink($target, $link);
 
         return redirect()->route('admin.settings.performance')
-            ->with('success', trans('messages.status-success'));
+            ->with('success', trans('messages.status.success'));
     }
 
     public function seo()
     {
         return view('admin.settings.seo', [
-            'htmlHead' => setting('html-head'),
-            'htmlBody' => setting('html-body'),
-            'welcomePopup' => setting('welcome-popup'),
+            'homeMessage' => setting('home_message'),
+            'welcomePopup' => setting('welcome_alert'),
         ]);
     }
 
@@ -282,21 +285,23 @@ class SettingsController extends Controller
      */
     public function updateSeo(Request $request)
     {
-        $settings = $this->validate($request, [
-            'html-head' => ['nullable', 'string'],
-            'html-body' => ['nullable', 'string'],
+        $this->validate($request, [
+            'home-message' => ['nullable', 'string'],
             'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
         ]);
 
-        if (! $request->filled('enable_welcome_popup')) {
-            $settings['welcome-popup'] = null;
-        }
+        $alert = $request->filled('enable_welcome_popup')
+            ? $request->input('welcome-popup')
+            : null;
 
-        Setting::updateSettings($settings);
+        Setting::updateSettings([
+            'home_message' => $request->input('home-message'),
+            'welcome_alert' => $alert,
+        ]);
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.updated'));
     }
 
     public function auth()
@@ -305,10 +310,11 @@ class SettingsController extends Controller
             'conditions' => setting('conditions'),
             'register' => setting('register', true),
             'authApi' => setting('auth-api', false),
-            'minecraftVerification' => setting('game-type') === 'mc-online',
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
             'captchaType' => old('captcha', setting('captcha.type')),
+            'force2fa' => setting('admin.force_2fa'),
+            'canForce2fa' => auth()->user()->hasTwoFactorAuth(),
         ]);
     }
 
@@ -325,7 +331,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
     }
 
     /**
@@ -364,8 +370,6 @@ class SettingsController extends Controller
             'users_email_verification' => $request->filled('users_email_verification'),
         ];
 
-        $mailSettings['smtp-password'] = encrypt($mailSettings['smtp-password'], false);
-
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
             $mailSettings['users_email_verification'] = false;
@@ -377,7 +381,7 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.status.updated'));
+        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.updated'));
     }
 
     public function sendTestMail(Request $request)
@@ -386,7 +390,7 @@ class SettingsController extends Controller
             $request->user()->notify(new TestMail());
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('messages.status-error', ['error' => $e->getMessage()]),
+                'message' => trans('messages.status.error', ['error' => $e->getMessage()]),
             ], 500);
         }
 
@@ -400,7 +404,11 @@ class SettingsController extends Controller
      */
     public function maintenance()
     {
-        return view('admin.settings.maintenance');
+        return view('admin.settings.maintenance', [
+            'status' => setting('maintenance.enabled', false),
+            'message' => setting('maintenance.message'),
+            'paths' => setting('maintenance.paths'),
+        ]);
     }
 
     /**
@@ -413,13 +421,19 @@ class SettingsController extends Controller
      */
     public function updateMaintenance(Request $request)
     {
-        Setting::updateSettings($this->validate($request, [
+        $this->validate($request, [
             'maintenance-message' => ['nullable', 'string'],
-        ]));
+        ]);
 
-        Setting::updateSettings('maintenance-status', $request->filled('maintenance-status'));
+        $paths = $request->filled('is_global') ? null : array_filter($request->input('paths'));
 
-        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.status.updated'));
+        Setting::updateSettings([
+            'maintenance.enabled' => $request->filled('maintenance-status'),
+            'maintenance.message' => $request->input('maintenance-message'),
+            'maintenance.paths' => empty($paths) ? null : $paths,
+        ]);
+
+        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.updated'));
     }
 
     protected function isHashSupported(string $algo)

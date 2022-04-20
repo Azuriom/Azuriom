@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBansTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -22,9 +22,9 @@ class CreateBansTable extends Migration
             $table->unsignedInteger('remover_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('remover_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('remover_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
@@ -37,4 +37,4 @@ class CreateBansTable extends Migration
     {
         Schema::dropIfExists('bans');
     }
-}
+};

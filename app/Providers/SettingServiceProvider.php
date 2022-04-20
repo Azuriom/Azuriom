@@ -6,23 +6,12 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\SettingsRepository;
 use Exception;
 use Illuminate\Config\Repository as Config;
-use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class SettingServiceProvider extends ServiceProvider
 {
-    /**
-     * The settings that are encrypted for storage.
-     *
-     * @var array
-     */
-    protected $encrypted = [
-        'mail.smtp.password',
-    ];
-
     /**
      * Register any application services.
      *
@@ -43,53 +32,19 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function boot(Config $config)
     {
+        if (! is_installed()) {
+            return;
+        }
+
         $repo = $this->app->make(SettingsRepository::class);
 
         try {
             $settings = $this->loadSettings();
 
-            // TODO 1.0: remove migration for old captcha configuration
-            if (array_key_exists('recaptcha-site-key', $settings)) {
-                $this->migrateOldSettings($settings);
-            }
+            $this->migrateSettings($settings);
 
             foreach ($settings as $name => $value) {
-                switch ($name) {
-                    case 'name':
-                        $config->set('mail.from.name', $value);
-                        break;
-                    case 'locale':
-                        $this->app->setLocale($value);
-                        break;
-                    case 'timezone':
-                        date_default_timezone_set($value);
-                    // no break
-                    case 'url':
-                        $config->set('app.'.$name, $value);
-                        break;
-                    case 'hash':
-                        if ($config->get('hashing.driver') !== $value) {
-                            $config->set('hashing.driver', $value);
-                        }
-                        break;
-                    case 'mail.mailer':
-                        $config->set('mail.default', $value);
-                        break;
-                }
-
-                if (in_array($name, $this->encrypted, true)) {
-                    try {
-                        $value = decrypt($value, false);
-                    } catch (DecryptException $e) {
-                        $value = null;
-                    }
-                }
-
-                if (Str::startsWith($name, 'mail.')) {
-                    $key = str_replace('mail.smtp', 'mail.mailers.smtp', $name);
-
-                    $config->set($key, $value);
-                }
+                $this->handleSpecialSettings($config, $name, $value);
             }
 
             $repo->set($settings);
@@ -109,26 +64,62 @@ class SettingServiceProvider extends ServiceProvider
         });
     }
 
-    protected function migrateOldSettings(array $settings)
+    protected function handleSpecialSettings(Config $config, string $name, $value)
     {
-        $siteKey = Arr::get($settings, 'recaptcha-site-key');
-        $secretKey = Arr::get($settings, 'recaptcha-secret-key');
-
-        if (empty($siteKey) || empty($secretKey)) {
-            Setting::updateSettings([
-                'recaptcha-site-key' => null,
-                'recaptcha-secret-key' => null,
-            ]);
-
-            return;
+        switch ($name) {
+            case 'name':
+                $config->set('mail.from.name', $value);
+                break;
+            case 'locale':
+                $this->app->setLocale($value);
+                break;
+            case 'timezone':
+                date_default_timezone_set($value);
+            // no break
+            case 'url':
+                $config->set('app.'.$name, $value);
+                break;
+            case 'hash':
+                if ($config->get('hashing.driver') !== $value) {
+                    $config->set('hashing.driver', $value);
+                }
+                break;
+            case 'mail.mailer':
+                $config->set('mail.default', $value);
+                break;
         }
 
-        Setting::updateSettings([
-            'captcha.type' => 'recaptcha',
-            'captcha.site_key' => $siteKey,
-            'captcha.secret_key' => $secretKey,
-            'recaptcha-site-key' => null,
-            'recaptcha-secret-key' => null,
-        ]);
+        if (Str::startsWith($name, 'mail.')) {
+            $key = str_replace('mail.smtp', 'mail.mailers.smtp', $name);
+
+            $config->set($key, $value);
+        }
+    }
+
+    protected function migrateSettings(array &$settings)
+    {
+        $migrations = [
+            'default-server' => 'servers.default',
+            'role.default' => 'roles.default',
+            'maintenance-status' => 'maintenance.enabled',
+            'maintenance-message' => 'maintenance.message',
+            'maintenance-paths' => 'maintenance.paths',
+            'welcome-popup' => 'welcome_alert',
+            'user_money_transfer' => 'users.money_transfer',
+            'shop.use-site-money' => 'shop.use_site_money',
+            'shop.month-goal' => 'shop.month_goal',
+        ];
+
+        foreach ($migrations as $oldKey => $newKey) {
+            $value = $settings[$oldKey] ?? null;
+
+            if ($value !== null) {
+                unset($settings[$oldKey]);
+                $settings[$newKey] = $value;
+
+                Setting::where('name', $oldKey)->delete();
+                Setting::updateOrCreate(['name' => $newKey], ['value' => $value]);
+            }
+        }
     }
 }

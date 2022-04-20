@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\InteractsWithMoney;
 use Azuriom\Models\Traits\Searchable;
+use Azuriom\Models\Traits\TwoFactorAuthenticatable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -15,21 +16,22 @@ use Illuminate\Support\Facades\Cache;
 /**
  * @property int $id
  * @property string $name
- * @property string $email
+ * @property string|null $email
  * @property \Carbon\Carbon|null $email_verified_at
  * @property string $password
  * @property int $role_id
  * @property float $money
  * @property string|null $game_id
+ * @property string|null $avatar
  * @property string|null $access_token
+ * @property string|null $two_factor_secret
+ * @property string[]|null $two_factor_recovery_codes
  * @property string|null $last_login_ip
  * @property \Carbon\Carbon|null $last_login_at
- * @property string|null $google_2fa_secret
- * @property bool $is_deleted
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
+ * @property \Carbon\Carbon|null $deleted_at
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
@@ -46,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use InteractsWithMoney;
     use Notifiable;
     use Searchable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -53,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'access_token', 'google_2fa_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar', 'access_token', 'two_factor_secret',
     ];
 
     /**
@@ -62,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'access_token', 'last_login_ip', 'google_2fa_secret',
+        'password', 'remember_token', 'access_token', 'last_login_ip', 'two_factor_secret',
     ];
 
     /**
@@ -72,9 +75,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'money' => 'float',
+        'two_factor_recovery_codes' => 'array',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-        'is_deleted' => 'boolean',
+        'deleted_at' => 'datetime',
     ];
 
     /**
@@ -160,8 +164,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64)
     {
-        /* @noinspection PhpDeprecationInspection */
-        return game()->getAvatarUrl($this, $size);
+        return $this->avatar ?? game()->getAvatarUrl($this, $size);
     }
 
     public function isBanned(bool $useCache = false)
@@ -175,20 +178,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->ban !== null;
     }
 
+    public function getIsDeletedAttribute()
+    {
+        return $this->isDeleted();
+    }
+
     public function isDeleted()
     {
-        return $this->is_deleted;
+        return $this->deleted_at !== null;
     }
 
     public function flushBanCache()
     {
         Cache::forget("users.{$this->id}.banned");
-    }
-
-    /** @deprecated use isBanned() */
-    public function getIsBannedAttribute()
-    {
-        return $this->isBanned();
     }
 
     public function hasPermission($permission)
@@ -198,7 +200,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasTwoFactorAuth()
     {
-        return $this->google_2fa_secret !== null;
+        return $this->two_factor_secret !== null;
     }
 
     public function hasAdminAccess()

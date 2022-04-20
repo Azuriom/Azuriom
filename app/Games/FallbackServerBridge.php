@@ -16,12 +16,12 @@ class FallbackServerBridge extends ServerBridge
         return false;
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         foreach ($commands as $command) {
             $this->server->commands()->create([
                 'command' => $command,
-                'user_id' => $user->name ?? null,
+                'user_id' => $user->id,
                 'need_online' => $needConnected,
             ]);
         }

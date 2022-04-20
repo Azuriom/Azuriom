@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use Azuriom\Rules\Color;
 use Azuriom\Rules\Slug;
-use Azuriom\Rules\Username;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Validator;
@@ -40,25 +39,10 @@ class RulesTest extends TestCase
         }
     }
 
-    public function testUsernameRule()
-    {
-        $validNames = ['Hello', 'Hello1234', 'Hello_1234', '*Hello'];
-        $invalidNames = ['H€llo', 'hello@world', 'Hello#World'];
-
-        foreach ($validNames as $name) {
-            $this->assertTrue($this->validateRule($name, new Username()));
-        }
-
-        foreach ($invalidNames as $name) {
-            $this->assertFalse($this->validateRule($name, new Username()));
-        }
-    }
-
     protected function validateRule($value, $rules)
     {
         $translator = new Translator(new ArrayLoader(), 'en');
-        $validator = new Validator($translator, ['x' => $value], ['x' => $rules]);
 
-        return $validator->passes();
+        return (new Validator($translator, ['x' => $value], ['x' => $rules]))->passes();
     }
 }

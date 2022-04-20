@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Exception;
@@ -14,7 +15,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Laravel\Socialite\Facades\Socialite;
-use PragmaRX\Google2FA\Google2FA;
 
 class LoginController extends Controller
 {
@@ -84,7 +84,7 @@ class LoginController extends Controller
         return $this->loginUser($request, $user);
     }
 
-    protected function loginUser(Request $request, User $user)
+    protected function loginUser(Request $request, User $user, bool $verify2fa = true)
     {
         if ($user->isBanned()) {
             throw ValidationException::withMessages([
@@ -92,11 +92,11 @@ class LoginController extends Controller
             ]);
         }
 
-        if (setting('maintenance-status', false) && ! $user->can('maintenance.access')) {
+        if (setting('maintenance.enabled', false) && ! $user->can('maintenance.access')) {
             return $this->sendMaintenanceResponse($request);
         }
 
-        if ($user->hasTwoFactorAuth()) {
+        if ($verify2fa && $user->hasTwoFactorAuth()) {
             return $this->redirectTo2fa($request, $user);
         }
 
@@ -128,18 +128,22 @@ class LoginController extends Controller
             return $request->expectsJson() ? response()->noContent() : redirect($this->redirectPath());
         }
 
-        return $this->loginUser($request, $user);
+        $user->update([
+            'name' => $userProfile->getNickname() ?? $userProfile->getName(),
+            'avatar' => $userProfile->getAvatar(),
+        ]);
+
+        return $this->loginUser($request, $user, false);
     }
 
-    protected function registerUser(Request $request, SocialUser $userProfile)
+    protected function registerUser(Request $request, SocialUser $user)
     {
-        $socialiteDriver = game()->getSocialiteDriverName();
-
         return User::forceCreate([
-            'name' => $userProfile->getNickname() ?? $userProfile->getName(),
-            'email' => "{$userProfile->getId()}@{$socialiteDriver}.oauth",
+            'name' => $user->getNickname() ?? $user->getName(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
             'password' => Hash::make(Str::random(32)),
-            'game_id' => (string) $userProfile->getId(),
+            'game_id' => (string) $user->getId(),
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
         ]);
@@ -196,17 +200,19 @@ class LoginController extends Controller
 
         /** @var \Azuriom\Models\User $user */
         $user = User::findOrFail($request->session()->get('login.2fa.id'));
-        $code = str_replace(' ', '', $request->input('code'));
+        $code = $request->input('code');
 
-        if (! (new Google2FA())->verifyKey($user->google_2fa_secret, $code)) {
+        if (! $user->isValidTwoFactorCode($code)) {
             $request->session()->keep('login.2fa');
 
-            throw ValidationException::withMessages(['code' => trans('auth.2fa-invalid')]);
+            throw ValidationException::withMessages(['code' => trans('auth.2fa.invalid')]);
         }
 
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));
 
         $request->session()->remove('login.2fa');
+
+        $user->replaceRecoveryCode($code);
 
         return $this->sendLoginResponse($request);
     }
@@ -224,10 +230,19 @@ class LoginController extends Controller
             'last_login_at' => now(),
         ])->save();
 
+        ActionLog::log('users.login', null, [
+            'ip' => $request->ip(),
+            '2fa' => $user->hasTwoFactorAuth() ? 'on' : 'off',
+        ]);
+
+        if (game()->loginWithOAuth()) {
+            return;
+        }
+
         try {
             $name = game()->getUserName($user);
 
-            if ($name !== null && $name !== $user->name) {
+            if ($name !== null) {
                 $user->update(['name' => $name]);
             }
         } catch (Exception $e) {
@@ -247,7 +262,7 @@ class LoginController extends Controller
 
         $field = Str::contains($username, '@') ? $this->username() : 'name';
 
-        return [$field => $username] + $request->only('password');
+        return array_merge([$field => $username], $request->only('password'));
     }
 
     /**

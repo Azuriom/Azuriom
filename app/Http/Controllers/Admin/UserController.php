@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -27,7 +28,7 @@ class UserController extends Controller
         $search = $request->input('search');
 
         $users = User::with('ban')
-            ->where('is_deleted', false)
+            ->whereNull('deleted_at')
             ->when($search, function (Builder $query, string $search) {
                 $query->scopes(['search' => $search]);
             })->paginate();
@@ -45,7 +46,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create', ['roles' => Role::all()]);
+        return view('admin.users.create', [
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
@@ -68,7 +71,7 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        return redirect()->route('admin.users.index')->with('success', trans('admin.users.status.created'));
+        return redirect()->route('admin.users.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -86,7 +89,7 @@ class UserController extends Controller
 
         return view('admin.users.edit', [
             'user' => $user->load('ban'),
-            'roles' => Role::all(),
+            'roles' => Role::orderByDesc('power')->get(),
             'logs' => $logs,
         ]);
     }
@@ -119,9 +122,13 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
+        if ($user->wasChanged('password')) {
+            event(new PasswordReset($user));
+        }
+
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.index')->with('success', trans('admin.users.status.updated'));
+        return redirect()->route('admin.users.index')->with('success', trans('messages.status.success'));
     }
 
     public function verifyEmail(User $user)
@@ -135,16 +142,16 @@ class UserController extends Controller
         ActionLog::log('users.updated', $user);
 
         return redirect()->route('admin.users.edit', $user)
-            ->with('success', trans('admin.users.status.email-verified'));
+            ->with('success', trans('admin.users.email.verify_success'));
     }
 
     public function disable2fa(User $user)
     {
-        $user->update(['google_2fa_secret' => null]);
+        $user->update(['two_factor_secret' => null]);
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.2fa-disabled'));
+        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.2fa.disabled'));
     }
 
     /**
@@ -171,22 +178,22 @@ class UserController extends Controller
             'role_id' => Role::defaultRoleId(),
             'game_id' => null,
             'access_token' => null,
-            'google_2fa_secret' => null,
+            'two_factor_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
-            'is_deleted' => true,
+            'deleted_at' => now(),
         ])->save();
 
         ActionLog::log('users.deleted', $user);
 
-        return redirect()->route('admin.users.index', $user)->with('success', trans('admin.users.status.deleted'));
+        return redirect()->route('admin.users.index', $user)->with('success', trans('messages.status.success'));
     }
 
     protected function validateRole(User $user, Role $role, User $target = null)
     {
-        if (! $user->isAdmin() && $role->power > $user->role->power || $target && $target->role->power > $user->role->power) {
+        if (($target && $user->role->power < $target->role->power) || (! $user->isAdmin() && $user->role->power < $role->power)) {
             throw ValidationException::withMessages([
-                'role_id' => trans('admin.roles.status.unauthorized'),
+                'role_id' => trans('admin.roles.unauthorized'),
             ]);
         }
     }

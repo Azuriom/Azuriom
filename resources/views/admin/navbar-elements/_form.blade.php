@@ -1,20 +1,20 @@
 @csrf
 
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="nameInput">{{ trans('messages.fields.name') }}</label>
-        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->name ?? '') }}" required>
+<div class="row g-3">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ (string) old('name', $navbarElement->name ?? '') }}" required>
 
         @error('name')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
     </div>
 
-    <div class="form-group col-md-6">
-        <label for="typeSelect">{{ trans('messages.fields.type') }}</label>
-        <select class="custom-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required data-toggle-select="nav-element">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
+        <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
             @foreach($types as $type)
-                <option value="{{ $type }}" @if($type === old('type', $navbarElement->type ?? '')) selected @endif>{{ trans('admin.navbar-elements.fields.'.$type) }}</option>
+                <option value="{{ $type }}" @selected($type === old('type', $navbarElement->type ?? ''))>{{ trans('admin.navbar_elements.fields.'.$type) }}</option>
             @endforeach
         </select>
 
@@ -24,11 +24,11 @@
     </div>
 </div>
 
-<div data-nav-element="page" class="form-group d-none">
-    <label for="pageSelect">{{ trans('admin.navbar-elements.fields.page') }}</label>
-    <select class="custom-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
+<div v-show="type === 'page'" class="mb-3">
+    <label class="form-label" for="pageSelect">{{ trans('admin.navbar_elements.fields.page') }}</label>
+    <select class="form-select @error('page') is-invalid @enderror" id="pageSelect" name="page">
         @foreach($pages as $page)
-            <option value="{{ $page->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('page') === $page->slug)) selected @endif>{{ $page->title }}</option>
+            <option value="{{ $page->id }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('page') === $page->slug))>{{ $page->title }}</option>
         @endforeach
     </select>
 
@@ -37,11 +37,11 @@
     @enderror
 </div>
 
-<div data-nav-element="post" class="form-group d-none">
-    <label for="postSelect">{{ trans('admin.navbar-elements.fields.post') }}</label>
-    <select class="custom-select @error('post') is-invalid @enderror" id="postSelect" name="post">
+<div v-show="type === 'post'" class="mb-3">
+    <label class="form-label" for="postSelect">{{ trans('admin.navbar_elements.fields.post') }}</label>
+    <select class="form-select @error('post') is-invalid @enderror" id="postSelect" name="post">
         @foreach($posts as $post)
-            <option value="{{ $post->id }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('post') === $post->slug)) selected @endif>{{ $post->title }}</option>
+            <option value="{{ $post->id }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('post') === $post->slug))>{{ $post->title }}</option>
         @endforeach
     </select>
 
@@ -50,8 +50,8 @@
     @enderror
 </div>
 
-<div data-nav-element="link" class="form-group d-none">
-    <label for="linkInput">{{ trans('messages.fields.link') }}</label>
+<div v-show="type === 'link'" class="mb-3">
+    <label class="form-label" for="linkInput">{{ trans('messages.fields.link') }}</label>
     <input type="text" class="form-control @error('link') is-invalid @enderror" id="linkInput" name="link" value="{{ old('link', (isset($navbarElement) ? $navbarElement->getTypeValue('link') : '')) }}">
 
     @error('link')
@@ -59,11 +59,11 @@
     @enderror
 </div>
 
-<div data-nav-element="plugin" class="form-group d-none">
-    <label for="pluginSelect">{{ trans('messages.fields.link') }}</label>
-    <select class="custom-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
+<div v-show="type === 'plugin'" class="mb-3">
+    <label class="form-label" for="pluginSelect">{{ trans('messages.fields.link') }}</label>
+    <select class="form-select @error('plugin') is-invalid @enderror" id="pluginSelect" name="plugin">
         @foreach($pluginRoutes as $route => $name)
-            <option value="{{ $route  }}" @if(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route)) selected @endif>{{ trans($name) }}</option>
+            <option value="{{ $route  }}" @selected(isset($navbarElement) && ($navbarElement->getTypeValue('plugin') === $route))>{{ trans($name) }}</option>
         @endforeach
     </select>
 
@@ -72,11 +72,33 @@
     @enderror
 </div>
 
-<div data-nav-element="dropdown" class="d-none">
-    <small class="form-text text-info mb-3">{{ trans('admin.navbar-elements.dropdown-info') }}</small>
+<div v-show="type === 'dropdown'">
+    <small class="form-text text-info mb-3">{{ trans('admin.navbar_elements.dropdown') }}</small>
 </div>
 
-<div class="form-group custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="newTabSwitch" name="new_tab" @if($navbarElement->new_tab ?? false) checked @endif>
-    <label class="custom-control-label" for="newTabSwitch">{{ trans('admin.navbar-elements.fields.new-tab') }}</label>
+<div class="mb-3 form-check form-switch">
+    <input type="checkbox" class="form-check-input" id="newTabSwitch" name="new_tab" @if($navbarElement->new_tab ?? false) checked @endif>
+    <label class="form-check-label" for="newTabSwitch">{{ trans('admin.navbar_elements.fields.new-tab') }}</label>
+</div>
+
+<div class="mb-3 mb-2">
+    <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @if(isset($navbarElement) && $navbarElement->isRestricted()) checked @endif aria-describedby="adminInfo">
+        <label class="form-check-label" for="restrictedSwitch">{{ trans('admin.navbar_elements.restrict') }}</label>
+    </div>
+</div>
+
+<div id="rolesGroup" class="{{ (isset($navbarElement) && $navbarElement->isRestricted()) ? 'show' : 'collapse' }}">
+    <div class="card card-body mb-2">
+        <div class="row">
+            @foreach($roles as $role)
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="role{{ $role->id }}" name="roles[]" value="{{ $role->id }}" @if(in_array($role->id, old('roles', isset($navbarElement) ? $navbarElement->roles->modelKeys() : []), true)) checked @endif>
+                        <label class="form-check-label" for="role{{ $role->id }}">{{ $role->name }}</label>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </div>

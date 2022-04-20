@@ -4,6 +4,8 @@ namespace Azuriom\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class CheckForMaintenanceSettings
 {
@@ -39,7 +41,7 @@ class CheckForMaintenanceSettings
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! setting('maintenance-status', false)) {
+        if (! setting('maintenance.enabled', false)) {
             return $next($request);
         }
 
@@ -51,6 +53,25 @@ class CheckForMaintenanceSettings
             return $next($request);
         }
 
-        return redirect()->route('maintenance');
+        $blockedPaths = array_map(function (string $path) {
+            return Str::endsWith($path, '/*')
+                ? Str::replaceLast('/*', '*', $path)
+                : $path;
+        }, setting('maintenance.paths', []));
+
+        if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
+            return $next($request);
+        }
+
+        return $this->renderMaintenanceView();
+    }
+
+    protected function renderMaintenanceView()
+    {
+        $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
+
+        return response()->view('maintenance', [
+            'maintenanceMessage' => new HtmlString($maintenanceMessage),
+        ], 503);
     }
 }

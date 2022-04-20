@@ -5,7 +5,6 @@ namespace Azuriom\Http\Middleware;
 use Azuriom\Models\Server;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class VerifyServerToken
 {
@@ -20,11 +19,6 @@ class VerifyServerToken
     {
         $token = $request->header('Azuriom-Link-Token');
 
-        // TODO 1.0: remove legacy token support
-        if ($token === null) {
-            $token = $this->getLegacyToken($request);
-        }
-
         abort_if($token === null, 401, 'No server key provided.');
 
         $server = Server::firstWhere('token', $token);
@@ -34,22 +28,5 @@ class VerifyServerToken
         $request->merge(['server-id' => $server->id]);
 
         return $next($request);
-    }
-
-    protected function getLegacyToken(Request $request)
-    {
-        $token = $request->bearerToken();
-
-        if ($token !== null) {
-            return $token;
-        }
-
-        $header = $request->header('Authorization');
-
-        if ($header === null || ! Str::startsWith($header, 'Basic ')) {
-            return null;
-        }
-
-        return base64_decode(Str::substr($header, 6), true);
     }
 }

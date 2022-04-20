@@ -50,7 +50,7 @@ class PostController extends Controller
 
         $post->persistPendingAttachments($request->input('pending_id'));
 
-        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.created'));
+        return redirect()->route('admin.posts.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -79,7 +79,7 @@ class PostController extends Controller
 
         $post->update(Arr::except($request->validated(), 'image'));
 
-        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.updated'));
+        return redirect()->route('admin.posts.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -94,6 +94,6 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', trans('admin.posts.status.deleted'));
+        return redirect()->route('admin.posts.index')->with('success', trans('messages.status.success'));
     }
 }

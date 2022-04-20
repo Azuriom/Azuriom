@@ -11,7 +11,7 @@ class Rcon extends Query
         return $this->connect(true)->GetInfo() !== null;
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         $query = $this->connect(true);
 

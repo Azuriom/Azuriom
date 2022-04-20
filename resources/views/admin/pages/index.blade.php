@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -23,18 +23,18 @@
                             <th scope="row">{{ $page->id }}</th>
                             <td>{{ $page->title }}</td>
                             <td>
-                                <a href="{{ route('pages.show', $page) }}" target="_blank" rel="noopener noreferrer">
+                                <a href="{{ route('pages.show', $page->slug) }}" target="_blank" rel="noopener noreferrer">
                                     {{ $page->slug }}
                                 </a>
                             </td>
                             <td>
-                                <span class="badge badge-{{ $page->is_enabled ? 'success' : 'danger' }}">
+                                <span class="badge bg-{{ $page->is_enabled ? 'success' : 'danger' }}">
                                     {{ trans_bool($page->is_enabled) }}
                                 </span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a href="{{ route('admin.pages.destroy', $page) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin.pages.edit', $page) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('admin.pages.destroy', $page) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -46,7 +46,7 @@
             {{ $pages->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.pages.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

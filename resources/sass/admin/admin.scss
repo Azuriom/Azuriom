@@ -1,0 +1,46 @@
+// Variables
+@import "~@adminkit/core/src/scss/1-variables/app";
+
+$font-size-base: 0.9rem;
+$font-size-sm: $font-size-base * .875;
+$font-size-lg: $font-size-base * 1.05;
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// Theme mixins
+@import "~@adminkit/core/src/scss/2-mixins/button";
+
+// Theme components
+@import "~@adminkit/core/src/scss/3-components/avatar";
+@import "~@adminkit/core/src/scss/3-components/buttons";
+@import "~@adminkit/core/src/scss/3-components/card";
+@import "~@adminkit/core/src/scss/3-components/chart";
+@import "~@adminkit/core/src/scss/3-components/content";
+@import "~@adminkit/core/src/scss/3-components/dropdown";
+@import "~@adminkit/core/src/scss/3-components/feather";
+@import "~@adminkit/core/src/scss/3-components/footer";
+@import "~@adminkit/core/src/scss/3-components/hamburger";
+@import "~@adminkit/core/src/scss/3-components/list-group";
+@import "~@adminkit/core/src/scss/3-components/main";
+@import "~@adminkit/core/src/scss/3-components/navbar";
+@import "~@adminkit/core/src/scss/3-components/reboot";
+@import "~@adminkit/core/src/scss/3-components/sidebar";
+@import "~@adminkit/core/src/scss/3-components/sizing";
+@import "~@adminkit/core/src/scss/3-components/stat";
+@import "~@adminkit/core/src/scss/3-components/tables";
+@import "~@adminkit/core/src/scss/3-components/type";
+@import "~@adminkit/core/src/scss/3-components/wrapper";
+
+// Theme utilities
+@import "~@adminkit/core/src/scss/4-utilities/cursors";
+
+// 3rd party plugins
+@import "~simplebar/dist/simplebar";
+
+// 3rd party plugin styles
+@import "~@adminkit/core/src/scss/5-vendor/simplebar";
+
+// Custom CSS
+@import "_sortable";
+@import "_custom";

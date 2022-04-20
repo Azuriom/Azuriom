@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommentsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -20,8 +20,8 @@ class CreateCommentsTable extends Migration
             $table->text('content');
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
         });
     }
 
@@ -34,4 +34,4 @@ class CreateCommentsTable extends Migration
     {
         Schema::dropIfExists('comments');
     }
-}
+};

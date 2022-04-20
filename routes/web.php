@@ -1,9 +1,9 @@
 <?php
 
 use Azuriom\Http\Controllers\Auth\LoginController;
+use Azuriom\Http\Controllers\FallbackController;
 use Azuriom\Http\Controllers\HomeController;
 use Azuriom\Http\Controllers\NotificationController;
-use Azuriom\Http\Controllers\PageController;
 use Azuriom\Http\Controllers\PostCommentController;
 use Azuriom\Http\Controllers\PostController;
 use Azuriom\Http\Controllers\PostLikeController;
@@ -24,7 +24,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/maintenance', [HomeController::class, 'maintenance'])->name('maintenance');
 
 Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function () {
     Auth::routes([
@@ -54,10 +53,10 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::post('/email', [ProfileController::class, 'updateEmail'])->name('email');
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
 
-    Route::prefix('2fa')->name('2fa.')->group(function () {
+    Route::prefix('2fa')->name('2fa.')->middleware('password.confirm')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
 
-        Route::post('/', [ProfileController::class, 'enable2fa'])->name('enable');
+        Route::post('/enable', [ProfileController::class, 'enable2fa'])->name('enable');
         Route::post('/disable', [ProfileController::class, 'disable2fa'])->name('disable');
     });
 
@@ -82,5 +81,6 @@ Route::prefix('news')->name('posts.')->group(function () {
 Route::resource('posts.comments', PostCommentController::class)
     ->middleware(['auth', 'verified'])->only(['store', 'destroy']);
 
-Route::get('/{page:slug}', [PageController::class, 'show'])->where('page', '.*')->name('pages.show');
 Route::get('/locale/{locale}', [HomeController::class, 'locale']);
+
+Route::get('/{path}', [FallbackController::class, 'get'])->where('path', '.*')->name('pages.show');

@@ -18,7 +18,7 @@ const fs = require('fs');
 const vendorPath = 'public/assets/vendor';
 
 const vendorDependencies = [
-    'autosize', 'axios', 'bootstrap', 'chart.js', 'clipboard', 'easymde', 'jquery', '@simonwep/pickr:pickr',
+    'autosize', 'axios', 'bootstrap', 'chart.js', 'clipboard', 'easymde', '@simonwep/pickr:pickr',
 ];
 
 for (const name of vendorDependencies) {
@@ -27,23 +27,16 @@ for (const name of vendorDependencies) {
     mix.copyDirectory(`node_modules/${split[0]}/dist`, `${vendorPath}/${split[1]}`);
 }
 
-mix.setPublicPath('public/assets/')
+mix.disableSuccessNotifications()
+    .setPublicPath('public/assets/')
+    .sass('resources/sass/admin/admin.scss', `${vendorPath}/admin.css`)
+    .js('resources/js/admin/admin.js', `${vendorPath}/admin.js`)
+    .sass('node_modules/bootstrap-icons/font/bootstrap-icons.scss', `${vendorPath}/bootstrap-icons/bootstrap-icons.css`)
+    .copyDirectory('node_modules/bootstrap-icons/font/fonts', `${vendorPath}/bootstrap-icons/fonts`)
     .copyDirectory('node_modules/tinymce', `${vendorPath}/tinymce`)
-    .copyDirectory('node_modules/startbootstrap-sb-admin-2/css', `${vendorPath}/sb-admin-2/css`)
-    .copyDirectory('node_modules/startbootstrap-sb-admin-2/js', `${vendorPath}/sb-admin-2/js`)
     .copyDirectory('node_modules/flatpickr/dist/*.css', `${vendorPath}/flatpickr/css`)
     .copyDirectory('node_modules/flatpickr/dist/*.js', `${vendorPath}/flatpickr/js`)
-    .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`);
-
-for (const path of ['css', 'js', 'sprites', 'webfonts']) {
-    mix.copyDirectory(`node_modules/@fortawesome/fontawesome-free/${path}`, `${vendorPath}/fontawesome/${path}`);
-}
-
-// Ugly fix for https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues/303
-setTimeout(() => {
-    const sbAdmin2Js = `${vendorPath}/sb-admin-2/js/sb-admin-2.min.js`;
-    const content = fs.readFileSync(sbAdmin2Js, 'utf8')
-        .replace('width()<480&&', 'width()<480&&false&&');
-
-    fs.writeFileSync(sbAdmin2Js, content, 'utf8');
-}, 1000);
+    .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`)
+    .options({
+        processCssUrls: false
+    });

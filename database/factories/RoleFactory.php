@@ -5,6 +5,9 @@ namespace Database\Factories;
 use Azuriom\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Azuriom\Models\Role>
+ */
 class RoleFactory extends Factory
 {
     /**
@@ -17,7 +20,7 @@ class RoleFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function definition()
     {
@@ -30,7 +33,7 @@ class RoleFactory extends Factory
     /**
      * Indicate that the role is admin.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return static
      */
     public function admin()
     {

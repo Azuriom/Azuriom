@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
@@ -43,13 +44,13 @@ class UpdateController extends Controller
         try {
             $this->updates->forceFetchUpdates();
         } catch (Exception $e) {
-            return $response->with('error', trans('admin.update.status.error-fetch', [
+            return $response->with('error', trans('messages.status.error', [
                 'error' => $e->getMessage(),
             ]));
         }
 
         if (! $this->updates->hasUpdate(true)) {
-            return $response->with('success', trans('admin.update.status.up-to-date'));
+            return $response->with('success', trans('admin.update.latest'));
         }
 
         return $response;
@@ -61,7 +62,7 @@ class UpdateController extends Controller
 
         if (! $this->updates->hasUpdate()) {
             return response()->json([
-                'message' => trans('admin.update.status.up-to-date'),
+                'message' => trans('admin.update.latest'),
             ]);
         }
 
@@ -69,13 +70,13 @@ class UpdateController extends Controller
             $this->updates->download($update);
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('admin.update.status.error-download', [
+                'message' => trans('message.status-error', [
                     'error' => $e->getMessage(),
                 ]),
             ], 422);
         }
 
-        $request->session()->flash('success', trans('admin.update.status.download-success'));
+        $request->session()->flash('success', trans('admin.update.downloaded'));
 
         return response()->noContent();
     }
@@ -86,7 +87,7 @@ class UpdateController extends Controller
 
         if (! $this->updates->hasUpdate()) {
             return response()->json([
-                'message' => trans('admin.update.status.up-to-date'),
+                'message' => trans('admin.update.latest'),
             ]);
         }
 
@@ -94,16 +95,24 @@ class UpdateController extends Controller
             $this->updates->installUpdate($update);
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('admin.update.status.error-install', [
+                'message' => trans('messages.status.error', [
                     'error' => $e->getMessage(),
                 ]),
             ], 422);
         }
 
-        $request->session()->flash('success', trans('admin.update.status.install-success'));
+        $request->session()->flash('success', trans('admin.update.installed'));
 
         ActionLog::log('updates.installed');
 
         return response()->noContent();
+    }
+
+    public function version()
+    {
+        return response()->json([
+            'azuriom' => Azuriom::version(),
+            'php' => PHP_VERSION,
+        ]);
     }
 }

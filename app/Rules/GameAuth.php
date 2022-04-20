@@ -34,6 +34,6 @@ class GameAuth implements Rule
      */
     public function message()
     {
-        return trans('validation.game-auth', ['game' => game()->name()]);
+        return trans('validation.game_auth', ['game' => game()->name()]);
     }
 }

@@ -6,8 +6,13 @@ return [
         'commands' => 'You can use <code>{name}</code> for the player username, <code>{steam_id}</code> for the player SteamID 64 and <code>{steam_id_32}</code> for the player SteamID 32.',
     ],
 
+    'xbox' => [
+        'missing' => 'This Microsoft account doesn\'t have a Xbox profile.',
+    ],
+
     'minecraft' => [
         'id' => 'UUID',
+        'missing' => 'This Xbox account doesn\'t have a Minecraft profile.',
         'commands' => 'You can use <code>{name}</code> for the player username and <code>{uuid}</code> for the player UUID',
     ],
 

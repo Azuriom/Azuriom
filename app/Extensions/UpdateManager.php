@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions;
 
 use Azuriom\Azuriom;
+use Azuriom\Models\User;
 use Azuriom\Support\Optimizer;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -15,14 +16,15 @@ use ZipArchive;
 
 class UpdateManager
 {
-    protected $updates;
+    /**
+     * The cached updates.
+     */
+    protected ?array $updates = null;
 
     /**
-     * The file instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
+     * The filesystem instance.
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Create a new UpdateManager instance.
@@ -81,6 +83,11 @@ class UpdateManager
         return $this->fetch($force)['themes'] ?? [];
     }
 
+    public function getGames(bool $force = false)
+    {
+        return $this->fetch($force)['games'] ?? [];
+    }
+
     public function fetch(bool $force = false)
     {
         if ($this->updates !== null) {
@@ -106,9 +113,10 @@ class UpdateManager
 
     public function forceFetchUpdates(bool $cache = true)
     {
-        $response = $this->prepareHttpRequest()->get('https://azuriom.com/api/updates');
-
-        $updates = $response->throw()->json();
+        $updates = $this->prepareHttpRequest()
+            ->get('https://market.azuriom.com/api/updates')
+            ->throw()
+            ->json();
 
         if ($updates !== null) {
             $this->updates = $updates;
@@ -129,6 +137,10 @@ class UpdateManager
             $this->files->makeDirectory($updatesPath);
         }
 
+        if (! array_key_exists('file', $info)) {
+            throw new RuntimeException('No file available. If it\'s a paid extension, make sure you purchased it and verify the site key.');
+        }
+
         $dir = $updatesPath.$tempDir;
         $path = $dir.$info['file'];
 
@@ -140,20 +152,31 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $this->prepareHttpRequest()->withOptions(['sink' => $path])->get($info['url']);
+        $this->prepareHttpRequest()
+            ->withOptions(['sink' => $path])
+            ->get($info['url'])
+            ->throw();
 
         if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
-            throw new Exception('The file hash do not match expected hash!');
+            throw new RuntimeException('The file hash do not match expected hash!');
         }
+
+        Cache::forget('updates_counts');
     }
 
     public function installUpdate(array $info)
     {
+        if (! is_writable(base_path())) {
+            throw new RuntimeException('Missing write permission on '.base_path());
+        }
+
         $this->extract($info, base_path());
 
         app(Optimizer::class)->clear();
+
+        Cache::flush();
 
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
@@ -189,12 +212,12 @@ class UpdateManager
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        $request = Http::withHeaders([
-            'User-Agent' => $userAgent,
+        $request = Http::withUserAgent($userAgent)->withHeaders([
             'Azuriom-Version' => Azuriom::version(),
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),
             'Azuriom-Game' => game()->id(),
+            'Azuriom-Users' => is_installed() ? User::count() : 0,
         ]);
 
         $siteKey = setting('site-key');

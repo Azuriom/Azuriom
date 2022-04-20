@@ -7,12 +7,14 @@ use Azuriom\Extensions\ExtensionManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
+use Closure;
 use Composer\Autoload\ClassLoader;
 use Composer\Semver\Semver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
@@ -21,45 +23,35 @@ class PluginManager extends ExtensionManager
 {
     /**
      * The enabled plugins.
-     *
-     * @var array
      */
-    protected $plugins = [];
+    protected array $plugins = [];
 
     /**
      * The plugins/ directory.
-     *
-     * @var string
      */
-    protected $pluginsPath;
+    protected string $pluginsPath;
 
     /**
      * The plugins/ public directory for assets.
      *
      * @var string
      */
-    protected $pluginsPublicPath;
+    protected string $pluginsPublicPath;
 
     /**
      * The plugins route descriptions.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $routeDescriptions;
+    protected Collection $routeDescriptions;
 
     /**
      * The admin panel navigation.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $adminNavItems;
+    protected Collection $adminNavItems;
 
     /**
      * The user navigation.
-     *
-     * @var \Illuminate\Support\Collection
      */
-    protected $userNavItems;
+    protected Collection $userNavItems;
 
     /**
      * Create a new PluginManager instance.
@@ -77,7 +69,7 @@ class PluginManager extends ExtensionManager
         $this->userNavItems = collect();
     }
 
-    public function loadPlugins(Application $app)
+    public function loadPlugins(Application $app, bool $gamesOnly = false)
     {
         $plugins = $this->getPlugins();
 
@@ -89,13 +81,8 @@ class PluginManager extends ExtensionManager
 
         foreach ($plugins as $pluginId => $plugin) {
             try {
-                if (! isset($plugin->composer)) {
+                if (! isset($plugin->composer) || ($gamesOnly && ! isset($plugin->installRedirectPath))) {
                     continue;
-                }
-
-                // TODO 1.0: remove support for legacy extensions without id
-                if (! isset($plugin->id)) {
-                    $plugin->id = $pluginId;
                 }
 
                 $this->autoloadPlugin($pluginId, $composer, $plugin->composer);
@@ -212,11 +199,6 @@ class PluginManager extends ExtensionManager
             return null;
         }
 
-        // TODO 1.0: remove support for legacy extensions without id
-        if (! isset($json->id)) {
-            $json->id = $plugin;
-        }
-
         // The plugin folder must be the plugin id
         if ($plugin !== $json->id) {
             return null;
@@ -313,6 +295,10 @@ class PluginManager extends ExtensionManager
     {
         $description = $this->findDescription($plugin);
 
+        if (($description->azuriom_api ?? null) !== '1.0.0') {
+            return 'api';
+        }
+
         if (! isset($description->dependencies)) {
             return null;
         }
@@ -342,25 +328,19 @@ class PluginManager extends ExtensionManager
         return null;
     }
 
-    public function addRouteDescription(array $items)
+    public function addRouteDescription(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->routeDescriptions->put($key, $value);
-        }
+        $this->routeDescriptions->add($items);
     }
 
-    public function addAdminNavItem(array $items)
+    public function addAdminNavItem(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->adminNavItems->put($key, $value);
-        }
+        $this->adminNavItems->add($items);
     }
 
-    public function addUserNavItem(array $items)
+    public function addUserNavItem(Closure|array $items)
     {
-        foreach ($items as $key => $value) {
-            $this->userNavItems->put($key, $value);
-        }
+        $this->userNavItems->add($items);
     }
 
     /**
@@ -368,7 +348,7 @@ class PluginManager extends ExtensionManager
      */
     public function getRouteDescriptions()
     {
-        return $this->routeDescriptions;
+        return $this->routeDescriptions->flatMap(fn ($value) => value($value));
     }
 
     /**
@@ -376,7 +356,7 @@ class PluginManager extends ExtensionManager
      */
     public function getAdminNavItems()
     {
-        return $this->adminNavItems;
+        return $this->adminNavItems->flatMap(fn ($value) => value($value));
     }
 
     /**
@@ -384,7 +364,7 @@ class PluginManager extends ExtensionManager
      */
     public function getUserNavItems()
     {
-        return $this->userNavItems;
+        return $this->userNavItems->flatMap(fn ($value) => value($value));
     }
 
     public function cachePlugins(array $enabledPlugins = null)
@@ -405,9 +385,11 @@ class PluginManager extends ExtensionManager
             return (array) $plugin;
         })->all();
 
-        $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
+        if (is_installed()) {
+            $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
 
-        app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+            app(Optimizer::class)->removeFileFromOPCache($this->getCachedPluginsPath());
+        }
 
         return $plugins;
     }
@@ -436,7 +418,7 @@ class PluginManager extends ExtensionManager
             });
     }
 
-    public function getPluginToUpdate(bool $force = false)
+    public function getPluginsToUpdate(bool $force = false)
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
@@ -472,7 +454,6 @@ class PluginManager extends ExtensionManager
         }
 
         $updateManager->download($pluginInfo, 'plugins/');
-
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);

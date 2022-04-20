@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLikesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,8 +18,8 @@ class CreateLikesTable extends Migration
             $table->unsignedInteger('post_id');
             $table->unsignedInteger('author_id');
 
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
         });
     }
 
@@ -32,4 +32,4 @@ class CreateLikesTable extends Migration
     {
         Schema::dropIfExists('likes');
     }
-}
+};

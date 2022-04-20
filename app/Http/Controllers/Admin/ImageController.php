@@ -25,7 +25,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return view('admin.images.index', ['images' => Image::paginate(25)]);
+        return view('admin.images.index', ['images' => Image::paginate()]);
     }
 
     /**
@@ -63,7 +63,7 @@ class ImageController extends Controller
             'type' => $mimeType,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.created'));
+        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -101,7 +101,7 @@ class ImageController extends Controller
             'file' => $fileName,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.updated'));
+        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -118,7 +118,7 @@ class ImageController extends Controller
 
         $image->delete();
 
-        return redirect()->route('admin.images.index')->with('success', trans('admin.images.status.deleted'));
+        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
     }
 
     protected function getImagesPath(string $fileName)

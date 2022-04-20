@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.navbar-elements.title'))
+@section('title', trans('admin.navbar_elements.title'))
 
 @push('footer-scripts')
     <script src="{{ asset('vendor/sortablejs/Sortable.min.js') }}"></script>
@@ -33,11 +33,9 @@
         }
 
         const saveButton = document.getElementById('save');
-        const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
         saveButton.addEventListener('click', function () {
             saveButton.setAttribute('disabled', '');
-            saveButtonIcon.classList.remove('d-none');
 
             axios.post('{{ route('admin.navbar-elements.update-order') }}', {
                 'order': serialize(sortable)
@@ -47,7 +45,6 @@
                 createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
             }).finally(function () {
                 saveButton.removeAttribute('disabled');
-                saveButtonIcon.classList.add('d-none');
             });
         });
     </script>
@@ -62,16 +59,16 @@
                         <div class="card">
                             <div class="card-body d-flex justify-content-between">
                                 <span>
-                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                    <i class="bi bi-arrows-move sortable-handle"></i>
                                     {{ $navbarElement->name }}
 
                                     @if($navbarElement->isDropdown())
-                                        <i class="ml-2 fas fa-bars"></i>
+                                        <i class="ml-2 bi bi-list"></i>
                                     @endif
                                 </span>
                                 <span>
-                                    <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.navbar-elements.edit', $navbarElement) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ route('admin.navbar-elements.destroy', $navbarElement) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                 </span>
                             </div>
                         </div>
@@ -83,12 +80,12 @@
                                         <div class="card">
                                             <div class="card-body d-flex justify-content-between">
                                                 <span>
-                                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                                    <i class="bi bi-arrows-move sortable-handle"></i>
                                                     {{ $childElement->name }}
                                                 </span>
                                                 <span>
-                                                    <a href="{{ route('admin.navbar-elements.edit', $childElement) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{ route('admin.navbar-elements.destroy', $childElement) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                                    <a href="{{ route('admin.navbar-elements.edit', $childElement) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="{{ route('admin.navbar-elements.destroy', $childElement) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                             </span>
                                             </div>
                                         </div>
@@ -102,13 +99,13 @@
 
             @if(! $navbarElements->isEmpty())
                 <button type="button" class="btn btn-success" id="save">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-                    <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
                 </button>
             @endif
 
             <a class="btn btn-primary" href="{{ route('admin.navbar-elements.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

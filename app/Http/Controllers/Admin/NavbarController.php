@@ -7,6 +7,7 @@ use Azuriom\Http\Requests\NavbarElementRequest;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Models\Role;
 use Illuminate\Http\Request;
 
 class NavbarController extends Controller
@@ -67,7 +68,7 @@ class NavbarController extends Controller
         NavbarElement::clearCache();
 
         return response()->json([
-            'message' => trans('admin.navbar-elements.status.nav-updated'),
+            'message' => trans('admin.navbar_elements.updated'),
         ]);
     }
 
@@ -82,6 +83,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -94,10 +96,12 @@ class NavbarController extends Controller
      */
     public function store(NavbarElementRequest $request)
     {
-        NavbarElement::create($request->validated());
+        $element = NavbarElement::create($request->validated());
+
+        $element->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.navbar-elements.index')
-            ->with('success', trans('admin.navbar-elements.status.created'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -113,6 +117,7 @@ class NavbarController extends Controller
             'types' => NavbarElement::types(),
             'pages' => Page::enabled()->get(),
             'posts' => Post::published()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
             'pluginRoutes' => plugins()->getRouteDescriptions(),
         ]);
     }
@@ -135,8 +140,12 @@ class NavbarController extends Controller
 
         $navbarElement->update($request->validated());
 
+        $navbarElement->roles()->sync($request->input('roles'));
+
+        NavbarElement::clearCache();
+
         return redirect()->route('admin.navbar-elements.index')
-            ->with('success', trans('admin.navbar-elements.status.updated'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -151,12 +160,12 @@ class NavbarController extends Controller
     {
         if ($navbarElement->isDropdown() && ! $navbarElement->elements->isEmpty()) {
             return redirect()->route('admin.navbar-elements.index')
-                ->with('error', trans('admin.navbar-elements.status.not-empty'));
+                ->with('error', trans('admin.navbar_elements.not_empty'));
         }
 
         $navbarElement->delete();
 
         return redirect()->route('admin.navbar-elements.index')
-            ->with('success', trans('admin.navbar-elements.status.deleted'));
+            ->with('success', trans('messages.status.success'));
     }
 }

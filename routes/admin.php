@@ -10,9 +10,11 @@ use Azuriom\Http\Controllers\Admin\PageController;
 use Azuriom\Http\Controllers\Admin\PluginController;
 use Azuriom\Http\Controllers\Admin\PostAttachmentController;
 use Azuriom\Http\Controllers\Admin\PostController;
+use Azuriom\Http\Controllers\Admin\RedirectController;
 use Azuriom\Http\Controllers\Admin\RoleController;
 use Azuriom\Http\Controllers\Admin\ServerController;
 use Azuriom\Http\Controllers\Admin\SettingsController;
+use Azuriom\Http\Controllers\Admin\SocialLinkController;
 use Azuriom\Http\Controllers\Admin\ThemeController;
 use Azuriom\Http\Controllers\Admin\UpdateController;
 use Azuriom\Http\Controllers\Admin\UserController;
@@ -87,6 +89,7 @@ Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->gro
 
 Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(function () {
     Route::get('/', [UpdateController::class, 'index'])->name('index');
+    Route::get('/version', [UpdateController::class, 'version'])->name('version');
     Route::post('/fetch', [UpdateController::class, 'fetch'])->name('fetch');
     Route::post('/download', [UpdateController::class, 'download'])->name('download');
     Route::post('/install', [UpdateController::class, 'install'])->name('install');
@@ -94,6 +97,9 @@ Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(
 
 Route::resource('navbar-elements', NavbarController::class)->except('show')->middleware('can:admin.navbar');
 Route::post('/navbar-elements/order', [NavbarController::class, 'updateOrder'])->name('navbar-elements.update-order')->middleware('can:admin.navbar');
+
+Route::resource('social-links', SocialLinkController::class)->except('show');
+Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
 
 Route::resource('users', UserController::class)->except('show')->middleware('can:admin.users');
 Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');
@@ -105,6 +111,7 @@ Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])-
 Route::resource('pages', PageController::class)->except('show')->middleware('can:admin.pages');
 Route::resource('posts', PostController::class)->except('show')->middleware('can:admin.posts');
 Route::resource('images', ImageController::class)->except('show')->middleware('can:admin.images');
+Route::resource('redirects', RedirectController::class)->except('show')->middleware('can:admin.redirects');
 
 Route::resource('pages.attachments', PageAttachmentController::class)->only('store');
 Route::resource('posts.attachments', PostAttachmentController::class)->only('store');

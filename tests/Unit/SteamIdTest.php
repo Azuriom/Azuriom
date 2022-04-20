@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Azuriom\Games\Steam\SteamID;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SteamIdTest extends TestCase
 {
