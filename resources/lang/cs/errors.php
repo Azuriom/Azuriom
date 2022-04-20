@@ -38,10 +38,4 @@ return [
     'fallback' => [
         'message' => 'Došlo k chybě. Zkuste to prosím znovu.',
     ],
-
-    'install' => [
-        'welcome' => 'Vítejte',
-        'title' => 'Azuriom není nainstalován',
-        'message' => 'Pro jeho instalaci následujte kroky v naší dokumentaci.',
-    ],
 ];

@@ -4,11 +4,11 @@ return [
 
     'lang' => 'Čeština',
 
-    'copyright' => 'Běží na <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriomu</a>.',
-
-    'date' => 'j. F Y',
-    'date-full' => 'j. F Y \v G:i',
-    'date-compact' => 'd. m. Y \v G:i',
+    'date' => [
+        'default' => 'j. F Y',
+        'full' => 'j. F Y \v G:i',
+        'compact' => 'd. m. Y \v G:i',
+    ],
 
     'nav' => [
         'toggle' => 'Přepnout navigaci',
@@ -27,8 +27,9 @@ return [
         'save' => 'Uložit',
         'continue' => 'Pokračovat',
         'browse' => 'Procházet',
-        'choose-file' => 'Vybrat soubor',
+        'choose_file' => 'Vybrat soubor',
         'download' => 'Stáhnout',
+        'install' => 'Nainstalovat',
         'upload' => 'Nahrát',
         'cancel' => 'Zrušit',
         'enable' => 'Povolit',
@@ -58,7 +59,7 @@ return [
         'type' => 'Typ',
         'file' => 'Soubor',
         'description' => 'Popis',
-        'short-description' => 'Krátký popis',
+        'short_description' => 'Krátký popis',
         'content' => 'Obsah',
         'role' => 'Role',
         'quantity' => 'Množství',
@@ -72,6 +73,16 @@ return [
         'price' => 'Cena',
         'icon' => 'Ikona',
         'server' => 'Server',
+        'value' => 'Hodnota',
+        'published_at' => 'Zveřejněno',
+        'permissions' => 'Oprávnění',
+        'address' => 'Adresa',
+        'port' => 'Port',
+    ],
+
+    'status' => [
+        'success' => 'Akce byla úspěšně dokončena!',
+        'error' => 'Došlo k chybě: :error',
     ],
 
     'range' => [
@@ -84,17 +95,21 @@ return [
     'yes' => 'Ano',
     'no' => 'Ne',
     'unknown' => 'Neznámé',
+    'other' => 'Ostatní',
     'none' => 'Žádný',
     'copied' => 'Zkopírováno',
+    'icons' => 'Seznam dostupných ikon naleznete na <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>.',
 
     'home' => 'Domů',
+    'servers' => 'Servery',
+    'news' => 'Novinky',
     'welcome' => 'Vítejte na :name',
+    'copyright' => 'Běží na <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriomu</a>.',
 
-    'maintenance' => 'Údržba',
-    'maintenance-message' => 'Na webu momentálně probíhá údržba.',
-
-    'status-success' => 'Akce byla úspěšně dokončena!',
-    'status-error' => 'Došlo k chybě: :error',
+    'maintenance' => [
+        'title' => 'Údržba',
+        'message' => 'Na webu momentálně probíhá údržba.',
+    ],
 
     'theme' => [
         'light' => 'Světlý motiv',
@@ -115,17 +130,18 @@ return [
     ],
 
     'server' => [
+        'join' => 'Připojit se',
+        'total' => ':count/:max hráč|:count/:max online hráčů',
         'online' => ':count hráč online|:count hráčů online',
         'offline' => 'Server je momentálně offline.',
     ],
 
     'profile' => [
         'title' => 'Můj profil',
-        'change-email' => 'Změnit e-mailovou adresu',
-        'change-password' => 'Změnit heslo',
+        'change_email' => 'Změnit e-mailovou adresu',
+        'change_password' => 'Změnit heslo',
 
-        'not-verified' => 'Váš e-mail není ověřen, zkontrolujte prosím svůj e-mail pro odkaz k ověření.',
-
+        'email_verification' => 'Váš e-mail není ověřen, zkontrolujte prosím svůj e-mail pro odkaz k ověření.',
         'updated' => 'Váš profil byl upraven.',
 
         'info' => [
@@ -138,20 +154,20 @@ return [
         '2fa' => [
             'enable' => 'Povolit 2FA',
             'disable' => 'Zakázat 2FA',
+            'manage' => 'Spravovat 2FA',
             'info' => 'Naskenujte výše uvedený QR kód s aplikací k dvoufázovému ověřování na vašem telefonu, jako je Authy, 1Password nebo Google Authenticator.',
             'secret' => 'Tajný klíč: :secret',
-            'title' => 'Povolit dvoufázové ověřování',
+            'title' => 'Dvoufázové ověřování',
+            'codes' => 'Zobrazit záložní kódy',
             'code' => 'Kód',
-            'enabled' => 'Dvoufázové ověřování povoleno.',
+            'enabled' => 'Dvoufázové ověřování je momentálně povoleno. Nezapomeňte si uložit vaše obnovovací kódy!',
             'disabled' => 'Dvoufázové ověřování je zakázáno.',
         ],
 
-        'email-not-verified' => 'Váš e-mail není ověřen, zkontrolujte svou e-mailovou schránku pro ověřovací odkaz. Pokud jste neobdrželi e-mail, můžete jej nechat znovu odeslat',
-
-        'money-transfer' => [
+        'money_transfer' => [
             'title' => 'Převod peněz',
             'self' => 'Nemůžete poslat peníze sami sobě.',
-            'not-enough' => 'Nemáte dost peněz pro tento převod.',
+            'balance' => 'Nemáte dost peněz pro tento převod.',
             'success' => 'Peníze úspěšně odeslány.',
             'notification' => ':user vám poslal :money.',
         ],
@@ -160,7 +176,7 @@ return [
     'posts' => [
         'posts' => 'Příspěvky',
         'posted' => 'Zveřejněno :date uživatelem :user',
-        'not-published' => 'Tento příspěvek ještě nebyl zveřejněn.',
+        'unpublished' => 'Tento příspěvek ještě nebyl zveřejněn.',
         'read' => 'Přečíst více',
     ],
 
@@ -168,9 +184,9 @@ return [
         'create' => 'Zanechat komentář',
         'guest' => 'Pro zanechání komentáře musíte být přihlášeni.',
         'author' => '<strong>:user</strong> komentoval :date',
-        'your-comment' => 'Váš komentář',
-        'delete-title' => 'Odstranit?',
-        'delete-description' => 'Opravdu chcete odstranit tento komentář?',
+        'content' => 'Váš komentář',
+        'delete' => 'Odstranit?',
+        'delete_confirm' => 'Opravdu chcete odstranit tento komentář?',
     ],
 
     'likes' => 'Líbí se mi: :count',

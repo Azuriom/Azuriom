@@ -15,16 +15,15 @@ return [
         'dashboard' => 'Nástěnka',
         'settings' => [
             'heading' => 'Nastavení',
-            'settings' => [
-                'settings' => 'Nastavení',
-                'global' => 'Globální',
-                'security' => 'Zabezpečení',
-                'performances' => 'Výkon',
-                'seo' => 'SEO',
-                'auth' => 'Přihlašování',
-                'mail' => 'E-maily',
-                'maintenance' => 'Údržba',
-            ],
+            'settings' => 'Nastavení',
+            'global' => 'Globální',
+            'security' => 'Zabezpečení',
+            'performances' => 'Výkon',
+            'seo' => 'SEO',
+            'auth' => 'Přihlašování',
+            'mail' => 'E-maily',
+            'maintenance' => 'Údržba',
+            'social' => 'Sociální sítě',
             'navbar' => 'Navigace',
             'servers' => 'Servery',
         ],
@@ -41,6 +40,7 @@ return [
             'pages' => 'Stránky',
             'posts' => 'Příspěvky',
             'images' => 'Obrázky',
+            'redirects' => 'Přesměrování',
         ],
 
         'extensions' => [
@@ -59,13 +59,12 @@ return [
             'profile' => 'Profil',
         ],
 
-        'back-website' => 'Zpět na web',
-
+        'back' => 'Zpět na web',
         'support' => 'Podpora',
         'documentation' => 'Dokumentace',
     ],
 
-    'confirm-delete' => [
+    'delete' => [
         'title' => 'Odstranit?',
         'description' => 'Opravdu to chcete odstranit? Tato akce je nevratná!',
     ],
@@ -81,27 +80,28 @@ return [
     'dashboard' => [
         'title' => 'Nástěnka',
 
-        'new-update' => 'Je dostupná nová verze Azuriomu: :version',
-        'https-warning' => 'Váš web nepoužívá https, měli byste jej povolit a vynutit pro bezpečnost vás i ostatních uživatelů.',
-        'proxy-warning' => 'Pokud používáte Cloudflare, měli byste si nainstalovat doplněk Cloudflare Support.',
-        'recent-users' => 'Poslední uživatelé',
-        'active-users' => 'Aktivní uživatelé',
-        'emails-disabled' => 'E-maily jsou zakázány. Pokud uživatel zapomene své heslo, nebude si jej moci obnovit. E-maily můžete povolit v <a href=":url">nastavení e-mailů</a>.',
         'users' => 'Uživatelé',
         'posts' => 'Příspěvky',
         'pages' => 'Stránky',
         'images' => 'Obrázky',
+
+        'update' => 'Je dostupná nová verze Azuriomu: :version',
+        'http' => 'Váš web nepoužívá https, měli byste jej povolit a vynutit pro bezpečnost vás i ostatních uživatelů.',
+        'cloudflare' => 'Pokud používáte Cloudflare, měli byste si nainstalovat doplněk Cloudflare Support.',
+        'recent_users' => 'Poslední uživatelé',
+        'active_users' => 'Aktivní uživatelé',
+        'emails' => 'E-maily jsou zakázány. Pokud uživatel zapomene své heslo, nebude si jej moci obnovit. E-maily můžete povolit v <a href=":url">nastavení e-mailů</a>.',
     ],
 
     'settings' => [
         'index' => [
             'title' => 'Globální nastavení',
 
-            'site-name' => 'Název webu',
-            'site-url' => 'URL webu',
-            'site-description' => 'Popis webu',
+            'name' => 'Název webu',
+            'url' => 'URL webu',
+            'description' => 'Popis webu',
             'meta' => 'Meta klíčová slova',
-            'meta-info' => 'Klíčová slova musí být oddělena čárkou.',
+            'meta_info' => 'Klíčová slova musí být oddělena čárkou.',
             'favicon' => 'Favikona',
             'background' => 'Pozadí',
             'logo' => 'Logo',
@@ -109,9 +109,9 @@ return [
             'locale' => 'Jazyk',
             'money' => 'Název měny webu',
             'copyright' => 'Copyright',
-            'user-money-transfer' => 'Povolit převod peněz mezi uživateli',
-            'site-key' => 'Klíč webu pro azuriom.com',
-            'site-key-label' => 'Klíč webu azuriom.com je vyžadován pro instalaci prémiových doplňků zakoupených v obchodě. Váš klíč získáte na vašem <a href="https://azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profilu</a>.',
+            'user_money_transfer' => 'Povolit převod peněz mezi uživateli',
+            'site_key' => 'Klíč webu pro azuriom.com',
+            'site_key_info' => 'Klíč webu azuriom.com je vyžadován pro instalaci prémiových doplňků zakoupených v obchodě. Váš klíč získáte na vašem <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profilu</a>.',
         ],
 
         'security' => [
@@ -119,15 +119,15 @@ return [
 
             'captcha' => [
                 'title' => 'Captcha',
-                'site-key' => 'Klíč webu',
-                'secret-key' => 'Tajný klíč',
+                'site_key' => 'Klíč webu',
+                'secret_key' => 'Tajný klíč',
                 'recaptcha' => 'Klíče reCAPTCHA získáte <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">webu Google reCAPTCHA</a>. Musíte použít reCAPTCHA <strong>v2 viditelné</strong> klíče.',
                 'hcaptcha' => 'Klíče hCaptcha získáte na <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer"> webu hCaptcha</a>.',
             ],
 
             'hash' => 'Šifrovací algoritmus',
-            'hash-info' => 'Argon2id je nejbezpečnější algoritmus, ale vyžaduje PHP 7.3 nebo vyšší. Pokud používáte PHP 7.2, měli byste použít Argon2i.',
-            'hash-error' => 'Tento šifrovací algoritmus není podporován vaší aktuální verzí PHP.',
+            'hash_error' => 'Tento šifrovací algoritmus není podporován vaší aktuální verzí PHP.',
+            'force_2fa' => 'Vyžadovat 2FA pro přístup do panelu',
         ],
 
         'performances' => [
@@ -135,16 +135,9 @@ return [
 
             'cache' => [
                 'title' => 'Vymazat mezipaměť',
+                'clear' => 'Vymazat mezipaměť',
                 'description' => 'Vymazat mezipaměť webu.',
-
-                'status' => [
-                    'cleared' => 'Mezipaměť byla úspěšně vymazána.',
-                    'clear-error' => 'Při mazání mezipaměti se vyskytla chyba.',
-                ],
-
-                'actions' => [
-                    'clear' => 'Vymazat mezipaměť',
-                ],
+                'error' => 'Při mazání mezipaměti se vyskytla chyba.',
             ],
 
             'boost' => [
@@ -152,37 +145,25 @@ return [
                 'description' => 'AzBoost zlepší výkon vašeho webu přidáním další exkluzivní vrstvy mezipaměti.',
                 'info' => 'Pokud máte po povolení rozšíření nějaké problémy, měli byste znovu načíst mezipaměť.',
 
-                'current' => [
-                    'status' => 'AzBoost je momentálně :status.',
-                    'enabled' => '<span class="text-success">povolen</span>',
-                    'disabled' => '<span class="text-danger">zakázán</span>',
-                ],
+                'enable' => 'Povolit AzBoost',
+                'disable' => 'Zakázat AzBoost',
+                'reload' => 'Znovu načíst AzBoost',
 
-                'status' => [
-                    'enabled' => 'AzBoost je nyní povolen.',
-                    'disabled' => 'AzBoost je nyní zakázán.',
-                    'reloaded' => 'AzBoost byl znovu načten.',
+                'status' => 'AzBoost je momentálně :status.',
+                'enabled' => 'povolen',
+                'disabled' => 'zakázán',
 
-                    'enable-error' => 'Chyba při povolování AzBoost.',
-                ],
-
-                'actions' => [
-                    'enable' => 'Povolit AzBoost',
-                    'disable' => 'Zakázat AzBoost',
-                    'reload' => 'Znovu načíst AzBoost',
-                ],
+                'error' => 'Chyba při povolování AzBoost.',
             ],
         ],
 
         'seo' => [
             'title' => 'Nastavení SEO',
 
-            'html-head-code' => 'HTML kód pro zahrnutí do <head> všech stránek.',
-            'html-body-code' => 'HTML kód pro zahrnutí do <body> všech stránek.',
+            'html' => 'Do <code>&lt;záhlaví&gt;</code> nebo <code>&lt;těla&gt;</code> všech stránek můžete zahrnout kód HTML (například pro cookie banner nebo analytika webu) vytvořením souboru pojmenovaného <code>head.blade.php</code> nebo <code>body.blade.php</code> ve složce <code>resources/views/custom/</code>.',
+            'home_message' => 'Zpráva na domovské obrazovce',
 
-            'html-code-info' => 'Např.: cookie banner, Google Analytics atd.',
-
-            'welcome-popup' => [
+            'welcome_alert' => [
                 'enable' => 'Povolit uvítací vyskakovací okno?',
                 'message' => 'Zpráva uvítacího okna',
                 'info' => 'Toto vyskakovací okno bude zobrazeno, když uživatel poprvé navštíví web.',
@@ -192,22 +173,21 @@ return [
         'auth' => [
             'title' => 'Přihlašování',
 
-            'conditions-url' => 'URL podmínek',
-            'conditions-info' => 'Uživatelé budou muset přijmout tyto podmínky při registraci.',
-            'enable-user-registration' => 'Povolit registraci uživatelů',
-            'enable-user-registration-label' => 'Může být stále možné zaregistrovat se pomocí pluginů.',
-            'auth-api' => 'Povolit přihlašovací API',
-            'auth-api-label' => 'Tato API umožňuje přidání vlastního přihlašování na váš herní server. Pro Minecraft servery používající launcher můžete použít <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pro jednoduchou a rychlou integraci.',
-            'minecraft-verification' => 'Povolit ověřování Minecraftových uživatelských jmen pomocí minecraft.net',
+            'conditions' => 'URL podmínek',
+            'conditions_info' => 'Uživatelé budou muset přijmout tyto podmínky při registraci.',
+            'registration' => 'Povolit registraci uživatelů',
+            'registration_info' => 'Může být stále možné zaregistrovat se pomocí pluginů.',
+            'api' => 'Povolit přihlašovací API',
+            'api_info' => 'Tato API umožňuje přidání vlastního přihlašování na váš herní server. Pro Minecraft servery používající launcher můžete použít <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pro jednoduchou a rychlou integraci.',
         ],
 
         'mail' => [
             'title' => 'Nastavení e-mailů',
-            'from-address' => 'E-mailová adresa používaná k odesílání e-mailů.',
-            'driver' => 'Typ e-mailu',
-            'driver-info' => 'Azuriom podporuje SMTP a Sendmail pro odesílání e-mailů. Více informací naleznete v naší <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">dokumentaci</a>.',
-            'disabled-warn' => 'Když jsou e-maily zakázány, uživatelé si nebudou moci obnovit své heslo, pokud ho zapomenou.',
-            'sendmail-warn' => 'Použití Sendmailu není doporučeno a měli byste namísto toho používat SMTP server, pokud je to možné.',
+            'from' => 'E-mailová adresa používaná k odesílání e-mailů.',
+            'mailer' => 'Typ e-mailu',
+            'mailer_info' => 'Azuriom podporuje SMTP a Sendmail pro odesílání e-mailů. Více informací naleznete v naší <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">dokumentaci</a>.',
+            'disabled' => 'Když jsou e-maily zakázány, uživatelé si nebudou moci obnovit své heslo, pokud ho zapomenou.',
+            'sendmail' => 'Použití Sendmailu není doporučeno a měli byste namísto toho používat SMTP server, pokud je to možné.',
             'smtp' => [
                 'host' => 'Adresa SMTP hostitele',
                 'port' => 'Port SMTP hostitele',
@@ -215,7 +195,7 @@ return [
                 'username' => 'Uživatelské jméno SMTP serveru',
                 'password' => 'Heslo SMTP serveru',
             ],
-            'enable-users-verification' => 'Povolit ověřování uživatelských e-mailových adres',
+            'verification' => 'Povolit ověřování uživatelských e-mailových adres',
             'send' => 'Poslat testovací email',
             'sent' => 'Testovací e-mail byl úspěšně odeslán.',
         ],
@@ -225,19 +205,21 @@ return [
 
             'enable' => 'Povolit údržbu',
             'message' => 'Zpráva údržby',
+            'global' => 'Povolit údržbu na celém webu',
+            'paths' => 'Cesty k zablokování během údržby',
+            'info' => 'K blokování všech stránek začínajících stejnou cestou můžete použít <code>/*</code>. Například <code>/news/*</code> zablokuje přístup ke všem novinkám.',
         ],
 
-        'status' => [
-            'updated' => 'Nastavení byla aktualizována.',
-        ],
+        'updated' => 'Nastavení byla aktualizována.',
     ],
 
-    'navbar-elements' => [
+    'navbar_elements' => [
         'title' => 'Navigace',
-        'title-edit' => 'Upravit prvek navigace :element',
-        'title-create' => 'Vytvořit prvek navigace',
+        'edit' => 'Upravit prvek navigace :element',
+        'create' => 'Vytvořit prvek navigace',
 
-        'dropdown-info' => 'Po uložení tohoto prvku můžete přidávat další prvky do rozbalovací nabídky.',
+        'restrict' => 'Omezit role, které mohou vidět tento prvek',
+        'dropdown' => 'Po uložení tohoto prvku můžete přidávat další prvky do rozbalovací nabídky.',
 
         'fields' => [
             'home' => 'Domů',
@@ -248,76 +230,65 @@ return [
             'plugin' => 'Doplněk',
             'dropdown' => 'Rozbalovací nabídka',
             'new-tab' => 'Otevírat v nové kartě',
+            'roles' => 'Role',
         ],
 
-        'status' => [
-            'nav-updated' => 'Navigace aktualizována.',
+        'updated' => 'Navigace aktualizována.',
+        'not_empty' => 'Nemůžete odstranit rozbalovací nabídku s prvky.',
+    ],
 
-            'created' => 'Prvek navigace byl vytvořen.',
-            'updated' => 'Prvek navigace byl upraven.',
-            'deleted' => 'Prvek navigace byl odstraněn.',
-
-            'not-empty' => 'Nemůžete odstranit rozbalovací nabídku s prvky.',
-        ],
+    'social_links' => [
+        'title' => 'Sociální sítě',
+        'edit' => 'Upravit odkaz na sociální síť :link',
+        'create' => 'Přidat odkaz na sociální síť',
     ],
 
     'servers' => [
         'title' => 'Servery',
-        'title-edit' => 'Úprava serveru :server',
-        'title-create' => 'Přidat server',
+        'edit' => 'Upravit server :server',
+        'create' => 'Přidat server',
 
         'default' => 'Výchozí server',
-        'default-info' => 'Počet připojených hráčů na výchozí server bude zobrazen na webu, pokud jej aktuální téma podporuje.',
+        'default_info' => 'Počet připojených hráčů na výchozí server bude zobrazen na webu, pokud jej aktuální téma podporuje.',
 
-        'ping-no-commands' => 'Ping nepotřebuje plugin, ale nemůžete pomocí něj vykonávat příkazy.',
-        'query-no-commands' => 'S query není možné vykonávat příkazy na serveru.',
+        'home_display' => 'Zobrazit tento server na domovské stránce',
+        'url' => 'Adresa URL tlačítka připojení se',
+        'url_info' => 'Ponechte prázdné pro zobrazení adresy serveru. Může být odkaz ke stažení hry/launcheru nebo URL k připojení na server, jako <code>steam://connect/&lt;ip&gt;</code>.',
 
-        'query-port-info' => 'Může být prázdné, pokud je to stejné jako port hry.',
+        'ping_info' => 'Ping nepotřebuje plugin, ale nemůžete pomocí něj vykonávat příkazy.',
+        'query_info' => 'S query není možné vykonávat příkazy na serveru.',
 
-        'fields' => [
-            'address' => 'Adresa',
-            'port' => 'Port',
+        'query_port_info' => 'Může být prázdné, pokud je to stejné jako port hry.',
 
-            'rcon-password' => 'Heslo RCON',
-            'rcon-port' => 'Port RCON',
-            'query-port' => 'Port zdrojové query',
+        'verify' => 'Ověřit spojení',
 
-            'azlink-port' => 'Port AzLink',
-        ],
-
-        'actions' => [
-            'verify-connection' => 'Ověřit spojení',
-        ],
+        'rcon_password' => 'Heslo RCON',
+        'rcon_port' => 'Port RCON',
+        'query_port' => 'Port zdrojové query',
 
         'azlink' => [
+            'port' => 'Port AzLink',
+
             'link' => 'Pro propojení vašeho webu pomocí AzLink:',
-            'link-1' => '<a href="https://azuriom.com/azlink">Stáhněte si plugin AzLink</a> a nainstalujte jej na svůj server.',
-            'link-2' => 'Restartovat server.',
-            'link-3' => 'Vykonat tento příkaz na serveru: ',
+            'link1' => '<a href="https://azuriom.com/azlink">Stáhněte si plugin AzLink</a> a nainstalujte jej na svůj server.',
+            'link2' => 'Restartovat server.',
+            'link3' => 'Vykonat tento příkaz na serveru: ',
 
-            'link-info' => 'Minecraft server s vaším webem můžete propojit pomocí následujícího příkazu: ',
-            'port-info' => 'Pokud používáte jiný port AzLink než výchozí, musíte jej nastavit příkazem: ',
+            'command' => 'Minecraft server s vaším webem můžete propojit pomocí následujícího příkazu: ',
+            'port_command' => 'Pokud používáte jiný port AzLink než výchozí, musíte jej nastavit příkazem: ',
+            'ping' => 'Povolit okamžité příkazy (vyžaduje otevřený port na serveru)',
+            'ping_info' => 'Pokud nejsou okamžité příkazy povoleny, budou příkazy vykonávány se zpožděním od 30 sekund do 1 minuty.',
+            'custom_port' => 'Použít vlastní port AzLink',
 
-            'enable-ping' => 'Povolit okamžité příkazy (vyžaduje otevřený port na serveru)',
-            'ping-info' => 'Pokud nejsou okamžité příkazy povoleny, budou příkazy vykonávány se zpožděním od 30 sekund do 1 minuty.',
-            'custom-port' => 'Použít vlastní port AzLink',
+            'error' => 'Spojení se serverem selhalo, adresa a/nebo port jsou nesprávné, nebo je port uzavřen.',
+            'badresponse' => 'Spojení se serverem selhalo (kód :code), token je neplatný, nebo je server špatně nakonfigurován. Pro opravení znovu vykonejte příkaz spojení.',
         ],
 
         'players' => ':count hráč|:count hráčů',
         'offline' => 'Offline',
 
-        'status' => [
-            'created' => 'Server byl přidán.',
-            'updated' => 'Server byl upraven.',
-            'deleted' => 'Server byl odstraněn.',
-
-            'connect-success' => 'Spojení se serverem úspěšně navázáno!',
-            'connect-error' => 'Spojení se serverem selhalo: :error',
-
-            'not-azlink' => 'Tento server není spojen pomocí AzLink.',
-            'azlink-connect' => 'Spojení se serverem selhalo, adresa a/nebo port jsou nesprávné, nebo je port uzavřen.',
-            'azlink-badresponse' => 'Spojení se serverem selhalo (kód :code), token je neplatný, nebo je server špatně nakonfigurován. Pro opravení znovu vykonejte příkaz spojení.',
-        ],
+        'connected' => 'Spojení se serverem úspěšně navázáno!',
+        'error' => 'Spojení se serverem selhalo: :error',
 
         'type' => [
             'mc-ping' => 'Minecraft Ping',
@@ -336,30 +307,20 @@ return [
 
     'users' => [
         'title' => 'Uživatelé',
-        'title-edit' => 'Úprava uživatele :user',
-        'title-create' => 'Vytvořit uživatele',
+        'edit' => 'Úprava uživatele :user',
+        'create' => 'Vytvořit uživatele',
 
-        'fields' => [
-            'register-date' => 'Zaregistrován',
-            'last-login' => 'Poslední přihlášení',
-            'email-verified' => 'E-mailová adresa ověřena',
-            '2fa' => 'Dvoufázové ověřování',
-            'ip' => 'IP adresa',
-        ],
+        'registered' => 'Zaregistrován',
+        'last_login' => 'Poslední přihlášení',
+        'ip' => 'IP adresa',
 
-        'info' => [
-            'admin' => 'Správce',
-            'banned' => 'Zabanován',
-            'deleted' => 'Odstraněn',
-        ],
+        'admin' => 'Správce',
+        'banned' => 'Zabanován',
+        'deleted' => 'Odstraněn',
 
-        'actions' => [
-            'ban' => 'Zabanovat',
-            'unban' => 'Odbanovat',
-            'delete' => 'Odstranit',
-            'verify-email' => 'Ověřit e-mail',
-            'disable-2fa' => 'Zakázat 2FA',
-        ],
+        'ban' => 'Zabanovat',
+        'unban' => 'Odbanovat',
+        'delete' => 'Odstranit',
 
         'alert-deleted' => 'Tento uživatel je odstraněn, nemůže být upraven.',
         'alert-banned' => [
@@ -369,21 +330,26 @@ return [
             'date' => 'Datum: :date',
         ],
 
-        'edit-profile' => 'Upravit profil',
+        'edit_profile' => 'Upravit profil',
 
-        'user-info' => 'Informace o uživateli',
+        'info' => 'Informace o uživateli',
 
         'ban-title' => 'Zabanovat uživatele :user',
         'ban-description' => 'Opravdu chcete zabanovat tohoto uživatele?',
 
+        'email' => [
+            'verify' => 'Ověřit e-mail',
+            'verified' => 'E-mailová adresa ověřena',
+            'verify_success' => 'E-mailová adresa byla ověřena.',
+        ],
+
+        '2fa' => [
+            'title' => 'Dvoufázové ověřování',
+            'disable' => 'Zakázat 2FA',
+            'disabled' => 'Dvoufázové ověřování bylo zakázáno.',
+        ],
+
         'status' => [
-            'created' => 'Uživatel byl vytvořen.',
-            'updated' => 'Uživatel byl upraven.',
-            'deleted' => 'Uživatel byl odstraněn.',
-
-            'email-verified' => 'E-mailová adresa byla ověřena.',
-            '2fa-disabled' => 'Dvoufázové ověřování bylo zakázáno.',
-
             'banned' => 'Uživatel je nyní zabanován.',
             'unbanned' => 'Uživatel byl odbanován.',
         ],
@@ -391,32 +357,19 @@ return [
 
     'roles' => [
         'title' => 'Role',
-        'title-edit' => 'Úprava role :role',
-        'title-create' => 'Vytvořit roli',
+        'edit' => 'Úprava role :role',
+        'create' => 'Vytvořit roli',
 
-        'permissions' => 'Oprávnění',
-        'perm-admin' => [
-            'label' => 'Správce',
-            'info' => 'Když je skupina správce, bude mít všechna oprávnění.',
-        ],
+        'default' => 'Výchozí',
+        'admin' => 'Správce',
+        'admin_info' => 'Když je skupina správce, bude mít všechna oprávnění.',
 
-        'info' => [
-            'default' => 'Výchozí',
-            'admin' => 'Správce',
-        ],
-
-        'status' => [
-            'power-updated' => 'Role byly aktualizovány.',
-            'created' => 'Role byla vytvořena.',
-            'updated' => 'Role byla aktualizována.',
-            'deleted' => 'Role byla odstraněna.',
-
-            'unauthorized' => 'Tato role je vyšší než vaše vlastní role.',
-            'add-admin' => 'Nemůžete dát roli oprávnění ke správě.',
-            'remove-admin' => 'Nemůžete vaší roli odebrat oprávnění ke správě.',
-            'permanent-role' => 'Tato role nemůže být odstraněna.',
-            'own-role' => 'Nemůžete odstranit vaší roli.',
-        ],
+        'updated' => 'Role byly aktualizovány.',
+        'unauthorized' => 'Tato role je vyšší než vaše vlastní role.',
+        'add_admin' => 'Nemůžete dát roli oprávnění ke správě.',
+        'remove_admin' => 'Nemůžete vaší roli odebrat oprávnění ke správě.',
+        'delete_default' => 'Tato role nemůže být odstraněna.',
+        'delete_own' => 'Nemůžete odstranit vaší roli.',
     ],
 
     'permissions' => [
@@ -428,6 +381,7 @@ return [
         'admin-images' => 'Zobrazit a spravovat obrázky',
         'admin-navbar' => 'Zobrazit a spravovat navigaci',
         'admin-pages' => 'Zobrazit a spravovat stránky',
+        'admin-redirects' => 'Zobrazit a spravovat přesměrování',
         'admin-posts' => 'Zobrazit a spravovat příspěvky',
         'admin-settings' => 'Zobrazit a spravovat nastavení',
         'admin-users' => 'Zobrazit a spravovat uživatele',
@@ -438,62 +392,47 @@ return [
     'bans' => [
         'title' => 'Bany',
 
-        'fields' => [
-            'banned-by' => 'Zabanován uživatelem',
-            'reason' => 'Důvod',
-        ],
-
+        'by' => 'Zabanován uživatelem',
+        'reason' => 'Důvod',
         'removed' => 'Zrušeno :date uživatelem :user',
     ],
 
     'posts' => [
         'title' => 'Příspěvky',
-        'title-edit' => 'Upravit příspěvek :post',
-        'title-create' => 'Vytvořit příspěvek',
+        'edit' => 'Upravit příspěvek :post',
+        'create' => 'Vytvořit příspěvek',
 
-        'published-info' => 'Tento příspěvek nebude veřejně viditelný do tohoto data.',
-
-        'fields' => [
-            'published-at' => 'Zveřejněno',
-        ],
-
+        'published_info' => 'Tento příspěvek nebude veřejně viditelný do tohoto data.',
         'pin' => 'Připnout tento příspěvek',
-
-        'status' => [
-            'created' => 'Příspěvek byl vytvořen.',
-            'updated' => 'Příspěvek byl upraven.',
-            'deleted' => 'Příspěvek byl odstraněn.',
-        ],
-
-        'info' => [
-            'pinned' => 'Připnuto',
-        ],
+        'pinned' => 'Připnuto',
     ],
 
     'pages' => [
         'title' => 'Stránky',
-        'title-edit' => 'Úprava stránky :page',
-        'title-create' => 'Vytvořit stránku',
+        'edit' => 'Úprava stránky :page',
+        'create' => 'Vytvořit stránku',
 
         'enable' => 'Povolit stránku',
+    ],
 
-        'status' => [
-            'created' => 'Stránka byla vytvořena.',
-            'updated' => 'Stránka byla upravena.',
-            'deleted' => 'Stránka byla odstraněna.',
-        ],
+    'redirects' => [
+        'title' => 'Přesměrování',
+        'edit' => 'Úprava přesměrování :redirect',
+        'create' => 'Tvorba přesměrování',
+
+        'enable' => 'Povolit přesměrování',
+        'source' => 'Zdroj',
+        'destination' => 'Cíl',
+        'code' => 'Stavový kód',
+
+        '301' => '301 - Trvalé přesměrování',
+        '302' => '302 - Dočasné přesměrování',
     ],
 
     'images' => [
         'title' => 'Obrázky',
-        'title-edit' => 'Úprava obrázku :image',
-        'title-create' => 'Nahrát obrázek',
-
-        'status' => [
-            'created' => 'Obrázek byl vytvořen.',
-            'updated' => 'Obrázek byl upraven.',
-            'deleted' => 'Obrázek byl odstraněn.',
-        ],
+        'edit' => 'Úprava obrázku :image',
+        'create' => 'Nahrát obrázek',
     ],
 
     'extensions' => [
@@ -506,93 +445,72 @@ return [
         'installed' => 'Nainstalované doplňky',
         'available' => 'Dostupné doplňky',
 
-        'azuriom-requirement' => 'Tento doplněk není kompatibilní s vaší verzí Azuriomu.',
-        'game-requirement' => 'Tento doplněk není kompatibilní s hrou :game.',
-        'plugin-requirement' => 'Doplněk ":plugin" nemá verzi nebo není jeho verze kompatibilní s tímto doplňkem.',
-
-        'status' => [
-            'reloaded' => 'Doplňky byly znovu načteny.',
-            'enabled' => 'Doplněk byl povolen.',
-            'disabled' => 'Doplněk byl zakázán.',
-            'updated' => 'Doplněk byl upraven.',
-            'installed' => 'Doplněk byl nainstalován.',
-            'deleted' => 'Doplněk byl odstraněn.',
-
-            'error-delete' => 'Před odstraněním musí být doplněk odstraněn.',
+        'requirements' => [
+            'api' => 'Tento doplněk ještě nebyl aktualizován pro Azuriom 1.0.',
+            'azuriom' => 'Tento doplněk není kompatibilní s vaší verzí Azuriomu.',
+            'game' => 'Tento doplněk není kompatibilní s hrou :game.',
+            'plugin' => 'Doplněk ":plugin" nemá verzi nebo není jeho verze kompatibilní s tímto doplňkem.',
         ],
+
+        'reloaded' => 'Doplňky byly znovu načteny.',
+        'enabled' => 'Doplněk byl povolen.',
+        'disabled' => 'Doplněk byl zakázán.',
+        'updated' => 'Doplněk byl upraven.',
+        'installed' => 'Doplněk byl nainstalován.',
+        'deleted' => 'Doplněk byl odstraněn.',
+        'delete_enabled' => 'Před odstraněním musí být doplněk zakázán.',
     ],
 
     'themes' => [
         'title' => 'Témata',
 
-        'current' => [
-            'title' => 'Aktuální téma',
-            'author' => 'Autor: :author',
-            'version' => 'Verze: :version',
-        ],
+        'current' => 'Aktuální téma',
+        'author' => 'Autor: :author',
+        'version' => 'Verze: :version',
         'installed' => 'Nainstalovaná témata',
         'available' => 'Dostupná témata',
         'no-enabled' => 'Nemáte povolena žádná témata.',
+        'legacy' => 'Toto téma ještě nebylo aktualizováno pro Azuriom 1.0.',
 
-        'actions' => [
-            'edit-config' => 'Upravit nastavení',
-            'disable' => 'Zakázat téma',
-        ],
+        'config' => 'Upravit nastavení',
+        'disable' => 'Zakázat téma',
 
-        'status' => [
-            'reloaded' => 'Témata byla znovu načtena.',
-            'no-config' => 'Toto téma nemá nastavení.',
-            'config-updated' => 'Nastavení tématu byla aktualizována.',
-            'invalid' => 'Toto téma je neplatné (název složky tématu musí být ID tématu).',
-            'updated' => 'Téma bylo upraveno.',
-            'installed' => 'Téma bylo nainstalováno.',
-            'deleted' => 'Téma bylo odstraněno.',
-
-            'error-delete' => 'Nemůžete odstranit aktuální téma.',
-        ],
+        'reloaded' => 'Témata byla znovu načtena.',
+        'no_config' => 'Toto téma nemá nastavení.',
+        'config_updated' => 'Nastavení tématu byla aktualizována.',
+        'invalid' => 'Toto téma je neplatné (název složky tématu musí být ID tématu).',
+        'updated' => 'Téma bylo upraveno.',
+        'installed' => 'Téma bylo nainstalováno.',
+        'deleted' => 'Téma bylo odstraněno.',
+        'delete_current' => 'Nemůžete odstranit aktuální téma.',
     ],
 
     'update' => [
         'title' => 'Aktualizace',
 
-        'subtitle-update' => 'Dostupná aktualizace',
-        'subtitle-no-update' => 'Žádné dostupné aktualizace',
+        'has_update' => 'Dostupná aktualizace',
+        'no_update' => 'Žádné dostupné aktualizace',
+        'check' => 'Zkontrolovat aktualizace',
 
         'update' => 'Je dostupná verze <code>:last-version</code> a vy používáte verzi <code>:version</code>.',
+        'changelog' => 'Seznam změn lze nalézt <a href=":url" target="_blank" rel="noopener noreferrer">zde</a>.',
         'download' => 'Nejnovější verze Azuriomu je připravena ke stažení.',
         'install' => 'Nejnovější verze Azuriomu byla stažena a je připravena k instalaci.',
 
-        'backup-info' => 'Před aktualizací Azuriomu byste měli zálohovat svůj web!',
+        'backup' => 'Před aktualizací Azuriomu byste měli zálohovat svůj web!',
 
-        'up-to-date' => 'Používáte nejnovější verzi Azuriomu: <code>:version</code>.',
+        'latest_version' => 'Používáte nejnovější verzi Azuriomu: <code>:version</code>.',
+        'latest' => 'Používáte nejnovější verzi Azuriomu.',
 
-        'status' => [
-            'download-success' => 'Nejnovější verze byla stažena a je připravena k instalaci.',
-            'install-success' => 'Aktualizace byla úspěšně nainstalována.',
-
-            'up-to-date' => 'Používáte nejnovější verzi Azuriomu.',
-            'error-fetch' => 'Při načítání aktualizací došlo k chybě: :error',
-            'error-download' => 'Při stahování došlo k chybě: :error',
-            'error-install' => 'Při instalaci došlo k chybě: :error',
-        ],
-
-        'actions' => [
-            'check' => 'Zkontrolovat aktualizace',
-            'install' => 'Nainstalovat',
-            'download' => 'Stáhnout',
-        ],
+        'downloaded' => 'Nejnovější verze byla stažena a je připravena k instalaci.',
+        'installed' => 'Aktualizace byla úspěšně nainstalována.',
     ],
 
     'logs' => [
         'title' => 'Protokoly',
 
-        'actions' => [
-            'clear' => 'Vymazat staré protokoly (15d+)',
-        ],
-
-        'status' => [
-            'cleared' => 'Staré záznamy byly odstraněny.',
-        ],
+        'clear' => 'Vymazat staré protokoly (15d+)',
+        'cleared' => 'Staré protokoly byly odstraněny.',
 
         'pages' => [
             'created' => 'Vytvořena stránka #:id',
@@ -612,6 +530,12 @@ return [
             'deleted' => 'Odstraněn obrázek #:id',
         ],
 
+        'redirects' => [
+            'created' => 'Přesměrování č. :id vytvořeno',
+            'updated' => 'Přesměrování č. :id aktualizováno',
+            'deleted' => 'Přesměrování č. :id odstraněno',
+        ],
+
         'roles' => [
             'created' => 'Vytvořena role #:id',
             'updated' => 'Upravena role #:id',
@@ -628,6 +552,12 @@ return [
             'updated' => 'Upraven uživatel #:id',
             'deleted' => 'Odstraněn uživatel #:id',
             'transfer' => 'Posláno :money peněz uživateli #:id',
+
+            'login' => 'Úspěšné přihlášení z IP adresy :ip (2FA: :2fa)',
+            '2fa' => [
+                'enabled' => 'Povoleno dvoufázové ověřování',
+                'disabled' => 'Zakázáno dvoufázové ověřování',
+            ],
         ],
 
         'settings' => [
@@ -652,5 +582,6 @@ return [
         'back' => 'Zpět na nástěnku',
         '404' => 'Stránka nenalezena',
         'info' => 'Vypadá to, že jste našli chybu v matrixu...',
+        '2fa' => 'Pro přístup na tuto stránku musíte povolit dvoufázové ověřování.',
     ],
 ];
