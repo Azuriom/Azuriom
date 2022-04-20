@@ -55,6 +55,10 @@ class ExternalImageProcessor
 
     private static function hostMatches(string $host, $compareTo)
     {
+        if (str_starts_with($host, '/')) {
+            return true;
+        }
+
         foreach ((array) $compareTo as $c) {
             if (strncmp($c, '/', 1) === 0) {
                 if (preg_match($c, $host)) {

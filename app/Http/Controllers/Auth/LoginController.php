@@ -84,7 +84,7 @@ class LoginController extends Controller
         return $this->loginUser($request, $user);
     }
 
-    protected function loginUser(Request $request, User $user, bool $verify2fa = true)
+    protected function loginUser(Request $request, User $user, bool $isOauth = false)
     {
         if ($user->isBanned()) {
             throw ValidationException::withMessages([
@@ -96,11 +96,11 @@ class LoginController extends Controller
             return $this->sendMaintenanceResponse($request);
         }
 
-        if ($verify2fa && $user->hasTwoFactorAuth()) {
+        if (! $isOauth && $user->hasTwoFactorAuth()) {
             return $this->redirectTo2fa($request, $user);
         }
 
-        $this->guard()->login($user, $request->filled('remember'));
+        $this->guard()->login($user, $isOauth || $request->filled('remember'));
 
         return $this->sendLoginResponse($request);
     }
@@ -133,7 +133,7 @@ class LoginController extends Controller
             'avatar' => $userProfile->getAvatar(),
         ]);
 
-        return $this->loginUser($request, $user, false);
+        return $this->loginUser($request, $user, true);
     }
 
     protected function registerUser(Request $request, SocialUser $user)

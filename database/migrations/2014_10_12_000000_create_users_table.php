@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('role_id')->default(1);
             $table->unsignedDecimal('money', 14)->default(0);
             $table->string('game_id')->nullable();
-            $table->string('avatar')->nullable();
+            $table->text('avatar')->nullable();
             $table->string('access_token')->nullable();
             $table->string('two_factor_secret')->nullable();
             $table->string('two_factor_recovery_codes')->nullable();

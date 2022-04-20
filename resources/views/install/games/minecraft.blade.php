@@ -80,7 +80,7 @@
             <div class="mb-3">
                 <label class="form-label" for="xuid">Xbox Live XUID</label>
 
-                <input name="xuid" id="xuid" type="text" class="form-control @error('xuid') is-invalid @enderror" value="{{ old('xuid', '') }}">
+                <input name="xuid" id="xuid" type="text" class="form-control @error('xuid') is-invalid @enderror" placeholder="0123456789012345" value="{{ old('xuid', '') }}">
 
                 @error('xuid')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

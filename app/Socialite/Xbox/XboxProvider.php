@@ -13,6 +13,10 @@ class XboxProvider extends AbstractProvider
 {
     public static ?Closure $notFoundCallback = null;
 
+    protected $parameters = [
+        'prompt' => 'select_account',
+    ];
+
     protected $scopes = ['XboxLive.signin'];
 
     protected $scopeSeparator = ' ';

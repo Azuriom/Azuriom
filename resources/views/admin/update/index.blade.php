@@ -54,7 +54,7 @@
                     <p>{{ trans('admin.update.download') }}</p>
 
                     <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
-                        <i class="bi bi-cloud-download-alt"></i>
+                        <i class="bi bi-cloud-download"></i>
                         {{ trans('messages.actions.download') }}
                         <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                     </button>

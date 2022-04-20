@@ -15,6 +15,7 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
@@ -365,6 +366,10 @@ class SettingsController extends Controller
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
             $mailSettings['users_email_verification'] = false;
+        }
+
+        if (Arr::get($mailSettings, 'smtp-password') === null) {
+            unset($mailSettings['smtp-password']);
         }
 
         foreach ($mailSettings as $key => $value) {
