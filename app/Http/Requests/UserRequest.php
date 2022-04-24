@@ -5,6 +5,7 @@ namespace Azuriom\Http\Requests;
 use Azuriom\Rules\Username;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class UserRequest extends FormRequest
                 oauth_login() ? 'nullable' : 'required',
                 'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
             ],
-            'password' => [Rule::requiredIf($user === null), 'nullable', 'string', 'min:8'],
+            'password' => [Rule::requiredIf($user === null), 'nullable', Password::default()],
             'money' => ['filled', 'numeric', 'min:0'],
             'role' => ['required', 'integer', 'exists:roles,id'],
         ];

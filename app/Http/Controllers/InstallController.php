@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -285,7 +286,7 @@ class InstallController extends Controller
                 $this->validate($request, [
                     'name' => ['required_if:oauth,0', 'nullable', 'max:25'],
                     'email' => ['required_if:oauth,0', 'nullable', 'email', 'max:50'], // TODO ensure unique
-                    'password' => ['required_if:oauth,0', 'nullable', 'min:8', 'confirmed'],
+                    'password' => ['required_if:oauth,0', 'nullable', 'confirmed', Password::default()],
                     'locale' => [Rule::in(static::SUPPORTED_LANGUAGES)],
                 ]);
 
