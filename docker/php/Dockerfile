@@ -11,7 +11,7 @@ RUN apt-get install -y libpq-dev \
 
 RUN apt-get clean
 
-RUN docker-php-ext-install intl opcache bcmath mbstring tokenizer ctype json xml curl
+RUN docker-php-ext-install intl opcache bcmath
 
 COPY custom.ini $PHP_INI_DIR/conf.d/
 
