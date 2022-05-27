@@ -108,14 +108,14 @@ rm cron
 
 ## Start your services on default port 80
 ```
-./azuriom start
+./azuriom.sh start
 ```
 
 If you want to always start your container on a specific port, just add `PORT=8080` to your `.env` file
 
 ## You can down the containers with
 ```
-./azuriom stop
+./azuriom.sh stop
 ```
 
 ## How to update Azuriom
