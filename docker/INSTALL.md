@@ -48,7 +48,7 @@ If the `www-data` user doesn't exists, you need to add it (if an error tell your
 useradd www-data
 ```
 ```
-chown -R www-data:www-data *
+chown -R www-data:www-data /var/azuriom
 ```
 
 ## Setup `.env`
