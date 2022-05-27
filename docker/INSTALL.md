@@ -10,11 +10,17 @@ Note : All the following commands should be run as root
 
 # Dependencies installation example
 
+## Install docker
 ``` 
 apt update 
 apt install -y curl git software-properties-common curl apt-transport-https ca-certificates gnupg tar
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
-curl -L "https://github.com/docker/compose/releases/download/latest/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+## Install docker-compose
+Check latest version [here](https://github.com/docker/compose/releases) and replace `2.5.1` 
+``` 
+curl -L "https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -28,11 +34,6 @@ systemctl enable --now docker && service docker start
 ## Download Azuriom 
 ```
 mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 https://github.com/Azuriom/Azuriom.git .
-```
-
-Go into the downloaded folder
-```
-cd Azuriom
 ```
 
 ## Set rights on files & folders
