@@ -81,6 +81,12 @@ DB_PASSWORD=[Here_A_Random_String]
 ./azuriom.sh build
 ```
 
+## Start your services 
+`php-fpm` needs to be started so others commands using it can run
+```
+./azuriom.sh start
+```
+
 ## Generate the secret key (only for new install)
 ```
 ./azuriom.sh laravel-generate-key
