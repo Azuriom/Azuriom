@@ -10,11 +10,29 @@ Note : All the following commands should be run as root
 
 # Dependencies installation example
 
+## Install docker
 ``` 
 apt update 
 apt install -y curl git software-properties-common curl apt-transport-https ca-certificates gnupg tar
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
-curl -L "https://github.com/docker/compose/releases/download/latest/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+## Install docker-compose 
+
+### Install docker-compose plugin using APT packet manager
+
+```
+apt-get update
+apt-get install docker-compose-plugin
+```
+This command install docker-compose as a docker plugin.
+You then need to create an alias `docker-compose` that point to `docker compose` command. 
+`alias docker-compose='docker compose'`
+
+### **OR** Standalone binary
+Check latest version [here](https://github.com/docker/compose/releases) and replace `2.5.1` 
+``` 
+curl -L "https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -30,11 +48,6 @@ systemctl enable --now docker && service docker start
 mkdir -p /var/azuriom && cd /var/azuriom && git clone --depth 1 https://github.com/Azuriom/Azuriom.git .
 ```
 
-Go into the downloaded folder
-```
-cd Azuriom
-```
-
 ## Set rights on files & folders
 ```
 chmod -R o+rw storage bootstrap/cache resources/themes plugins
@@ -47,7 +60,7 @@ If the `www-data` user doesn't exists, you need to add it (if an error tell your
 useradd www-data
 ```
 ```
-chown -R www-data:www-data *
+chown -R www-data:www-data /var/azuriom
 ```
 
 ## Setup `.env`
@@ -81,6 +94,12 @@ DB_PASSWORD=[Here_A_Random_String]
 ./azuriom.sh build
 ```
 
+## Start your services 
+`php-fpm` needs to be started so others commands using it can run
+```
+./azuriom.sh start
+```
+
 ## Generate the secret key (only for new install)
 ```
 ./azuriom.sh laravel-generate-key
@@ -108,14 +127,14 @@ rm cron
 
 ## Start your services on default port 80
 ```
-./azuriom start
+./azuriom.sh start
 ```
 
 If you want to always start your container on a specific port, just add `PORT=8080` to your `.env` file
 
 ## You can down the containers with
 ```
-./azuriom stop
+./azuriom.sh stop
 ```
 
 ## How to update Azuriom
