@@ -17,7 +17,19 @@ apt install -y curl git software-properties-common curl apt-transport-https ca-c
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash 
 ```
 
-## Install docker-compose
+## Install docker-compose 
+
+### Install docker-compose plugin using APT packet manager
+
+```
+apt-get update
+apt-get install docker-compose-plugin
+```
+This command install docker-compose as a docker plugin.
+You then need to create an alias `docker-compose` that point to `docker compose` command. 
+`alias docker-compose='docker compose'`
+
+### **OR** Standalone binary
 Check latest version [here](https://github.com/docker/compose/releases) and replace `2.5.1` 
 ``` 
 curl -L "https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
