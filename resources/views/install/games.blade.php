@@ -12,6 +12,7 @@
 
         <div class="row justify-content-center mb-3">
             @foreach ($games as $key => $game)
+                @if($key !== 'custom')
                 <div class="col-md-3">
                     <a href="{{ route('install.game', $key) }}">
                         <img src="{{ url($game['logo']) }}" alt="{{ $game['name'] }}" class="img-fluid rounded mb-1">
@@ -19,6 +20,7 @@
                         <p>{{ $game['name'] }}</p>
                     </a>
                 </div>
+                @endif
             @endforeach
         </div>
 
