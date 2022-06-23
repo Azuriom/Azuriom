@@ -3,10 +3,9 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
 
 class ResetPasswordController extends Controller
 {
