@@ -229,8 +229,7 @@ return [
             'posts' => 'Seznam příspěvků',
             'plugin' => 'Doplněk',
             'dropdown' => 'Rozbalovací nabídka',
-            'new-tab' => 'Otevírat v nové kartě',
-            'roles' => 'Role',
+            'new_tab' => 'Otevírat v nové kartě',
         ],
 
         'updated' => 'Navigace aktualizována.',

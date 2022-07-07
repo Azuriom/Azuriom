@@ -198,6 +198,7 @@ return [
             'verification' => 'Enable user email address verification',
             'send' => 'Send a test email',
             'sent' => 'The test mail has been successfully sent.',
+            'missing' => 'No email address has been specified on your account.',
         ],
 
         'maintenance' => [
@@ -229,8 +230,7 @@ return [
             'posts' => 'Posts list',
             'plugin' => 'Plugin',
             'dropdown' => 'Dropdown',
-            'new-tab' => 'Open in new tab',
-            'roles' => 'Roles',
+            'new_tab' => 'Open in new tab',
         ],
 
         'updated' => 'Navbar updated.',
@@ -443,7 +443,7 @@ return [
     'plugins' => [
         'title' => 'Plugins',
 
-        'installed' => 'Installed plugins',
+        'list' => 'Installed plugins',
         'available' => 'Available plugins',
 
         'requirements' => [
@@ -468,7 +468,7 @@ return [
         'current' => 'Current theme',
         'author' => 'Author: :author',
         'version' => 'Version: :version',
-        'installed' => 'Installed themes',
+        'list' => 'Installed themes',
         'available' => 'Available themes',
         'no-enabled' => 'You don\'t have any themes enabled.',
         'legacy' => 'This theme is not updated yet for Azuriom 1.0.',

@@ -60,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Utiliser la connexion avec un compte Microsoft (plus sécurisé mais nécessite d\'avoir acheter Minecraft)',
+            'premium' => 'Utiliser la connexion avec un compte Microsoft (plus sécurisé mais nécessite d\'avoir acheté Minecraft)',
         ],
 
         'steam' => [

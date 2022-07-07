@@ -9,6 +9,8 @@ use Illuminate\Support\Arr;
 
 class RustRcon extends Query
 {
+    use SteamBridge;
+
     private const DEFAULT_RCON_PORT = 28016;
 
     public function getServerData()
@@ -53,7 +55,7 @@ class RustRcon extends Query
         $rcon = $this->connectWebRcon();
 
         foreach ($commands as $command) {
-            $rcon->sendCommand($this->replacePlaceholders($command, $user));
+            $rcon->sendCommand($this->replaceSteamPlaceholders($command, $user));
         }
     }
 

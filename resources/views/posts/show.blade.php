@@ -49,7 +49,7 @@
             <div class="card mb-3">
                 <div class="card-body d-flex">
                     <div class="flex-shrink-0">
-                        <img class="me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" height="55">
+                        <img class="me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" style="height: 60px">
                     </div>
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between align-items-center">

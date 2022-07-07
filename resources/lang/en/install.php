@@ -60,7 +60,7 @@ return [
         ],
 
         'minecraft' => [
-            'premium' => 'Login with Microsoft account (most secure but requires to have purchased Minecraft) ',
+            'premium' => 'Login with Microsoft account (most secure but requires to have purchased Minecraft)',
         ],
 
         'steam' => [

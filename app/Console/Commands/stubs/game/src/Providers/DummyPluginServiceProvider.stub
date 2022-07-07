@@ -49,7 +49,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      */
     public function register()
     {
-        $this->registerMiddlewares();
+        // $this->registerMiddleware();
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/azuriom_DummyId.php', 'azuriom_DummyId'

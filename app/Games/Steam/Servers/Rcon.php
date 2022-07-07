@@ -6,6 +6,8 @@ use Azuriom\Models\User;
 
 class Rcon extends Query
 {
+    use SteamBridge;
+
     public function verifyLink()
     {
         return $this->connect(true)->GetInfo() !== null;
@@ -16,7 +18,7 @@ class Rcon extends Query
         $query = $this->connect(true);
 
         foreach ($commands as $command) {
-            $query->Rcon($this->replacePlaceholders($command, $user));
+            $query->Rcon($this->replaceSteamPlaceholders($command, $user));
         }
     }
 

@@ -58,6 +58,11 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         //
     }
 
+    protected function registerMiddleware()
+    {
+        $this->registerMiddlewares();
+    }
+
     protected function registerMiddlewares()
     {
         $this->middleware($this->middleware);

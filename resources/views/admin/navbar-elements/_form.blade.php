@@ -78,7 +78,7 @@
 
 <div class="mb-3 form-check form-switch">
     <input type="checkbox" class="form-check-input" id="newTabSwitch" name="new_tab" @if($navbarElement->new_tab ?? false) checked @endif>
-    <label class="form-check-label" for="newTabSwitch">{{ trans('admin.navbar_elements.fields.new-tab') }}</label>
+    <label class="form-check-label" for="newTabSwitch">{{ trans('admin.navbar_elements.fields.new_tab') }}</label>
 </div>
 
 <div class="mb-3 mb-2">

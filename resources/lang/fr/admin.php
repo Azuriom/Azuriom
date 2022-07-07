@@ -107,8 +107,8 @@ return [
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
-            'copyright' => 'Copyright',
             'money' => 'Nom de la monnaie du site',
+            'copyright' => 'Copyright',
             'user_money_transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
             'site_key' => 'Clé de site pour azuriom.com',
             'site_key_info' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
@@ -198,6 +198,7 @@ return [
             'verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
             'send' => 'Envoyer un mail de test',
             'sent' => 'Le mail de test a bien été envoyé.',
+            'missing' => 'Aucune adresse email n\'a été renseignée sur votre compte',
         ],
 
         'maintenance' => [
@@ -229,8 +230,7 @@ return [
             'posts' => 'Liste des articles',
             'plugin' => 'Plugin',
             'dropdown' => 'Menu déroulant',
-            'new-tab' => 'Ouvrir dans un nouvel onglet',
-            'roles' => 'Grades',
+            'new_tab' => 'Ouvrir dans un nouvel onglet',
         ],
 
         'updated' => 'Navigation mise à jour',
@@ -337,17 +337,17 @@ return [
         'ban-title' => 'Bannir :user',
         'ban-description' => 'Êtes-vous sûr de vouloir bannir cet utilisateur ?',
 
-        '2fa' => [
-            'title' => 'Authentification à deux facteurs',
-            'disable' => 'Désactiver l\'A2F',
-            'disabled' => 'L\'authentification à deux facteurs a été désactivée',
-        ],
-
         'email' => [
             'verify' => 'Vérifier l\'adresse email',
             'verified' => 'Adresse Email vérifiée',
             'date' => 'Oui, le :date',
             'verify_success' => 'L\'adresse Email a été vérifiée',
+        ],
+
+        '2fa' => [
+            'title' => 'Authentification à deux facteurs',
+            'disable' => 'Désactiver l\'A2F',
+            'disabled' => 'L\'authentification à deux facteurs a été désactivée',
         ],
 
         'status' => [
@@ -443,7 +443,7 @@ return [
     'plugins' => [
         'title' => 'Plugins',
 
-        'installed' => 'Plugins installés',
+        'list' => 'Plugins installés',
         'available' => 'Plugins disponibles',
 
         'requirements' => [
@@ -468,7 +468,7 @@ return [
         'current' => 'Thème actuel',
         'author' => 'Auteur: :author',
         'version' => 'Version: :version',
-        'installed' => 'Thèmes installés',
+        'list' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
         'legacy' => 'Ce thème n\'est pas encore compatible avec Azuriom 1.0',

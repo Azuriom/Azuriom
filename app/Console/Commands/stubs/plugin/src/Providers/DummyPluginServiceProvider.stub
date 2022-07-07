@@ -47,7 +47,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      */
     public function register()
     {
-        $this->registerMiddlewares();
+        // $this->registerMiddleware();
 
         //
     }

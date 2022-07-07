@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h5 class="card-title mb-0">{{ trans('admin.plugins.installed') }}</h5>
+            <h5 class="card-title mb-0">{{ trans('admin.plugins.list') }}</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -72,12 +72,12 @@
         </div>
     </div>
 
-    @if(! $availablePlugins->isEmpty())
-        <div class="card shadow mb-4">
-            <div class="card-header">
-                <h5 class="card-title mb-0">{{ trans('admin.plugins.available') }}</h5>
-            </div>
-            <div class="card-body">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{{ trans('admin.plugins.available') }}</h5>
+        </div>
+        <div class="card-body">
+            @if(! $availablePlugins->isEmpty())
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -128,16 +128,15 @@
                         </tbody>
                     </table>
                 </div>
+            @endif
 
-                <form method="POST" action="{{ route('admin.plugins.reload') }}">
-                    @csrf
+            <form method="POST" action="{{ route('admin.plugins.reload') }}">
+                @csrf
 
-                    <button type="submit" class="btn btn-warning">
-                        <i class="bi bi-arrow-repeat"></i> {{ trans('messages.actions.reload') }}
-                    </button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-warning">
+                    <i class="bi bi-arrow-repeat"></i> {{ trans('messages.actions.reload') }}
+                </button>
+            </form>
         </div>
-    @endif
-
+    </div>
 @endsection

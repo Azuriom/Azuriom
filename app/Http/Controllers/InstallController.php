@@ -206,7 +206,9 @@ class InstallController extends Controller
 
     public function showGames()
     {
-        return view('install.games', ['games' => $this->games]);
+        return view('install.games', [
+            'games' => Arr::except($this->games, 'custom'),
+        ]);
     }
 
     public function showGame(string $game)

@@ -7,12 +7,14 @@ use Azuriom\Models\User;
 
 class FiveMRcon extends FiveMStatus
 {
+    use SteamBridge;
+
     public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         $rcon = $this->connectRcon();
 
         foreach ($commands as $command) {
-            $rcon->sendCommand($this->replacePlaceholders($command, $user));
+            $rcon->sendCommand($this->replaceSteamPlaceholders($command, $user));
         }
     }
 

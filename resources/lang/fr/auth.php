@@ -40,6 +40,7 @@ return [
     ],
 
     'suspended' => 'Ce compte est actuellement banni.',
+
     'maintenance' => 'Le site est actuellement en maintenance.',
 
     'remember' => 'Se souvenir de moi',

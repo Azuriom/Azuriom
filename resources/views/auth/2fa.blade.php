@@ -14,7 +14,7 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="code">{{ trans('auth.2fa.code') }}</label>
-                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" required autofocus>
+                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" required autocomplete="one-time-code" autofocus>
 
                         @error('code')
                             <span class="invalid-feedback" role="alert">

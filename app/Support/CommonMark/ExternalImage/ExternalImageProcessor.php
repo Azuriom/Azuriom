@@ -2,6 +2,7 @@
 
 namespace Azuriom\Support\CommonMark\ExternalImage;
 
+use Illuminate\Support\Str;
 use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
@@ -60,6 +61,10 @@ class ExternalImageProcessor
         }
 
         foreach ((array) $compareTo as $c) {
+            if (Str::contains($c, ':')) {
+                $c = Str::before($c, ':');
+            }
+
             if (strncmp($c, '/', 1) === 0) {
                 if (preg_match($c, $host)) {
                     return true;

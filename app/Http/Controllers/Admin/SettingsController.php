@@ -383,6 +383,12 @@ class SettingsController extends Controller
 
     public function sendTestMail(Request $request)
     {
+        if ($request->user()->email === null) {
+            return response()->json([
+                'message' => trans('admin.settings.mail.missing'),
+            ], 400);
+        }
+
         try {
             $request->user()->notify(new TestMail());
         } catch (Exception $e) {
