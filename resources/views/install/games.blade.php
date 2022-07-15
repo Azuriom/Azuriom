@@ -23,7 +23,7 @@
         </div>
 
         <p class="text-danger font-weight-bold mb-0">
-            {{ trans('install.game.warn') }}
+            <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
         </p>
     </div>
 @endsection

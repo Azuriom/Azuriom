@@ -406,6 +406,7 @@ return [
         'published_info' => 'Cet article ne sera visible de façon publique qu\'à partir de cette date.',
         'pin' => 'Épingler cet article',
         'pinned' => 'Épinglé',
+        'feed' => 'Un flux RSS/Atom pour les articles est disponible sur <code>:rss</code> et <code>:atom</code>.',
     ],
 
     'pages' => [

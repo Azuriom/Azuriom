@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
+use Illuminate\Database\Query\Builder;
 
 class PostController extends Controller
 {
@@ -32,9 +33,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load(['author', 'comments.author', 'likes.author' => function ($query) {
-            $query->without('role');
-        }]);
+        $post->load([
+            'author', 'comments.author',
+            'likes.author' => fn (Builder $query) => $query->without('role'),
+        ]);
 
         $this->authorize('view', $post);
 

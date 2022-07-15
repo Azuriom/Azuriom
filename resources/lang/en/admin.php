@@ -111,7 +111,7 @@ return [
             'copyright' => 'Copyright',
             'user_money_transfer' => 'Enable money transfer between users',
             'site_key' => 'Site key for azuriom.com',
-            'site_key_info' => 'The azuriom.com site key is required to install premiums extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
+            'site_key_info' => 'The azuriom.com site key is required to install premium extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
         ],
 
         'security' => [
@@ -406,6 +406,7 @@ return [
         'published_info' => 'This post will not be visible publicly until this date.',
         'pin' => 'Pin this post',
         'pinned' => 'Pinned',
+        'feed' => 'An RSS/Atom feed for the posts is available on <code>:rss</code> and <code>:atom</code>.',
     ],
 
     'pages' => [

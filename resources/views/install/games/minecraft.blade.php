@@ -21,7 +21,9 @@
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
 
-            <small class="form-text text-danger mb-3">{{ trans('install.game.warn') }}</small>
+            <small class="form-text text-danger mb-3">
+                <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
+            </small>
         </div>
 
         <h3>{{ trans('install.game.user.title') }}</h3>

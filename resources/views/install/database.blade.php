@@ -59,7 +59,7 @@
         </div>
 
         <p class="text-danger" data-database="sqlite sqlsrv">
-            {{ trans('install.database.warn') }}
+            <i class="bi bi-exclamation-triangle"></i> {{ trans('install.database.warn') }}
         </p>
 
         <div class="text-center">

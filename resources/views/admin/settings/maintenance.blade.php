@@ -12,15 +12,15 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="maintenanceArea">{{ trans('admin.settings.maintenance.message') }}</label>
-                    <textarea class="form-control html-editor @error('maintenance-message') is-invalid @enderror" id="maintenanceArea" name="maintenance-message" rows="5">{{ old('maintenance-message', $message) }}</textarea>
+                    <textarea class="form-control html-editor @error('maintenance_message') is-invalid @enderror" id="maintenanceArea" name="maintenance_message" rows="5">{{ old('maintenance_message', $message) }}</textarea>
 
-                    @error('maintenance-message')
+                    @error('maintenance_message')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
 
                 <div class="mb-3 form-check form-switch">
-                    <input type="checkbox" class="form-check-input" id="enableSwitch" name="maintenance-status" @if($status) checked @endif>
+                    <input type="checkbox" class="form-check-input" id="enableSwitch" name="maintenance_status" @if($status) checked @endif>
                     <label class="form-check-label" for="enableSwitch">{{ trans('admin.settings.maintenance.enable') }}</label>
                 </div>
 

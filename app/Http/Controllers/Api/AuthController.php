@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware(function (Request $request, callable $next) {
-            if (! setting('auth-api', false)) {
+            if (! setting('auth_api', false)) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Auth API is not enabled',

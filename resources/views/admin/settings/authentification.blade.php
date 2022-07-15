@@ -33,7 +33,7 @@
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="authApiInput" name="auth-api" @if($authApi) checked @endif aria-describedby="authApiInfo">
+                        <input type="checkbox" class="form-check-input" id="authApiInput" name="auth_api" @if($authApi) checked @endif aria-describedby="authApiInfo">
                         <label class="form-check-label" for="authApiInput">{{ trans('admin.settings.auth.api') }}</label>
                     </div>
 

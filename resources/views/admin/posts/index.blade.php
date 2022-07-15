@@ -52,9 +52,14 @@
 
             {{ $posts->links() }}
 
-            <a class="btn btn-primary" href="{{ route('admin.posts.create') }}">
+            <a class="btn btn-primary mb-3" href="{{ route('admin.posts.create') }}">
                 <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
+
+            <p class="mb-0">
+                <i class="bi bi-info-circle text-primary"></i>
+                @lang('admin.posts.feed', ['rss' => route('feeds.rss'), 'atom' => route('feeds.atom')])
+            </p>
         </div>
     </div>
 @endsection

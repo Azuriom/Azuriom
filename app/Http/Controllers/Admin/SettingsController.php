@@ -264,7 +264,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.seo', [
             'homeMessage' => setting('home_message'),
-            'welcomePopup' => setting('welcome_alert'),
+            'welcomeAlert' => setting('welcome_alert'),
         ]);
     }
 
@@ -280,11 +280,11 @@ class SettingsController extends Controller
     {
         $this->validate($request, [
             'home-message' => ['nullable', 'string'],
-            'welcome-popup' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
+            'welcome_alert' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
         ]);
 
         $alert = $request->filled('enable_welcome_popup')
-            ? $request->input('welcome-popup')
+            ? $request->input('welcome_alert')
             : null;
 
         Setting::updateSettings([
@@ -302,7 +302,7 @@ class SettingsController extends Controller
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
             'register' => setting('register', true),
-            'authApi' => setting('auth-api', false),
+            'authApi' => setting('auth_api', false),
             'hashAlgorithms' => $this->hashAlgorithms,
             'currentHash' => config('hashing.driver'),
             'captchaType' => old('captcha', setting('captcha.type')),
@@ -317,7 +317,7 @@ class SettingsController extends Controller
             'conditions' => ['nullable', 'url', 'max:150'],
         ]) + [
             'register' => $request->filled('register'),
-            'auth-api' => $request->filled('auth-api'),
+            'auth_api' => $request->filled('auth_api'),
         ];
 
         Setting::updateSettings($settings);
@@ -425,14 +425,14 @@ class SettingsController extends Controller
     public function updateMaintenance(Request $request)
     {
         $this->validate($request, [
-            'maintenance-message' => ['nullable', 'string'],
+            'maintenance_message' => ['nullable', 'string'],
         ]);
 
         $paths = $request->filled('is_global') ? null : array_filter($request->input('paths'));
 
         Setting::updateSettings([
-            'maintenance.enabled' => $request->filled('maintenance-status'),
-            'maintenance.message' => $request->input('maintenance-message'),
+            'maintenance.enabled' => $request->filled('maintenance_status'),
+            'maintenance.message' => $request->input('maintenance_message'),
             'maintenance.paths' => empty($paths) ? null : $paths,
         ]);
 

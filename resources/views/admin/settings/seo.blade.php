@@ -10,9 +10,9 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="homeMessage">{{ trans('admin.settings.seo.home_message') }}</label>
-                    <textarea class="form-control html-editor @error('home-message') is-invalid @enderror" id="homeMessage" name="home-message" rows="5">{{ old('home-message', $homeMessage) }}</textarea>
+                    <textarea class="form-control html-editor @error('home_message') is-invalid @enderror" id="homeMessage" name="home_message" rows="5">{{ old('home_message', $homeMessage) }}</textarea>
 
-                    @error('home-message')
+                    @error('home_message')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
@@ -22,21 +22,21 @@
                 </div>
 
                 <div class="mb-3 form-check form-switch">
-                    <input type="checkbox" class="form-check-input" id="welcomePopupSwitch" name="enable_welcome_popup" data-bs-toggle="collapse" data-bs-target="#welcomePopup" @if($welcomePopup) checked @endif>
-                    <label class="form-check-label" for="welcomePopupSwitch">{{ trans('admin.settings.seo.welcome_alert.enable') }}</label>
+                    <input type="checkbox" class="form-check-input" id="welcomeAlertSwitch" name="enable_welcome_alert" data-bs-toggle="collapse" data-bs-target="#welcomeAlert" @if($welcomeAlert) checked @endif>
+                    <label class="form-check-label" for="welcomeAlertSwitch">{{ trans('admin.settings.seo.welcome_alert.enable') }}</label>
                 </div>
 
-                <div id="welcomePopup" class="{{ $welcomePopup ? 'show' : 'collapse' }}">
+                <div id="welcomeAlert" class="{{ $welcomeAlert ? 'show' : 'collapse' }}">
                     <div class="card card-body mb-3">
-                        <div class="mb-3 mb-0">
-                            <label class="form-label" for="welcomePopupArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
-                            <textarea class="form-control @error('welcome-popup') is-invalid @enderror" id="welcomePopupArea" name="welcome-popup" aria-describedby="welcomePopupInfo" rows="5">{{ old('welcome-popup', $welcomePopup) }}</textarea>
+                        <div class="mb-0">
+                            <label class="form-label" for="welcomeAlertArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
+                            <textarea class="form-control @error('welcome_alert') is-invalid @enderror" id="welcomeAlertArea" name="welcome_alert" aria-describedby="welcomeAlertInfo" rows="5">{{ old('welcome_alert', $welcomeAlert) }}</textarea>
 
-                            @error('welcome-popup')
+                            @error('welcome_alert')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                             @enderror
 
-                            <small id="welcomePopupInfo" class="form-text">{{ trans('admin.settings.seo.welcome_alert.info') }}</small>
+                            <small id="welcomeAlertInfo" class="form-text">{{ trans('admin.settings.seo.welcome_alert.info') }}</small>
                         </div>
                     </div>
                 </div>

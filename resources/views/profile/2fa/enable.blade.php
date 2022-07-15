@@ -7,7 +7,7 @@
 
     <div class="card">
         <div class="card-body">
-            <p>{{ trans('messages.profile.2fa.info') }}</p>
+            <p>@lang('messages.profile.2fa.info')</p>
 
             <div class="text-center">
                 {{ $qrCode }}
