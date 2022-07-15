@@ -27,15 +27,19 @@ use Throwable;
 class InstallController extends Controller
 {
     public const TEMP_KEY = 'base64:hmU1T3OuvHdi5t1wULI8Xp7geI+JIWGog9pBCNxslY8=';
+
     public const MIN_PHP_VERSION = '8.0';
+
     public const REQUIRED_EXTENSIONS = [
         'bcmath', 'ctype', 'json', 'mbstring', 'openssl', 'PDO', 'tokenizer',
         'xml', 'xmlwriter', 'curl', 'fileinfo', 'zip',
     ];
+
     public const SUPPORTED_LANGUAGES_NAMES = [
         'en' => 'English',
         'fr' => 'Français',
     ];
+
     public const SUPPORTED_LANGUAGES = ['en', 'fr'];
 
     protected $databaseDrivers = [
@@ -49,6 +53,7 @@ class InstallController extends Controller
     protected $steamGames = [
         'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2',
     ];
+
     protected $games = [
         'minecraft' => [
             'name' => 'Minecraft',

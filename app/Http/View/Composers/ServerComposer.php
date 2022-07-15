@@ -12,6 +12,7 @@ use Illuminate\View\View;
 class ServerComposer
 {
     private static ?Collection $servers = null;
+
     private static ?Server $server = null;
 
     /**

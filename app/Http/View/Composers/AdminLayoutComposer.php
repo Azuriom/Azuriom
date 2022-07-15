@@ -11,7 +11,9 @@ use Illuminate\View\View;
 class AdminLayoutComposer
 {
     protected UpdateManager $updates;
+
     protected PluginManager $plugins;
+
     protected ThemeManager $themes;
 
     /**

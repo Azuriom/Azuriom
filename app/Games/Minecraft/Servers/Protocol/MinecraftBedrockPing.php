@@ -16,6 +16,7 @@ class MinecraftBedrockPing
     protected $socket;
 
     protected $address;
+
     protected $port;
 
     public function __construct(string $address, int $port = 19132)

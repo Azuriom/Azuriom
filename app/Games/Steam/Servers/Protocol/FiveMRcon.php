@@ -12,7 +12,9 @@ use RuntimeException;
 class FiveMRcon
 {
     private $address;
+
     private $port;
+
     private $password;
 
     private $socket;

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 class FiveMStatus extends ServerBridge
 {
     protected const TIMEOUT = 3;
+
     protected const DEFAULT_PORT = 30120;
 
     public function getServerData()
