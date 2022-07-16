@@ -8,6 +8,10 @@ class ExtensionFileLoader extends FileLoader
 {
     protected function loadNamespaceOverrides(array $lines, $locale, $group, $namespace)
     {
+        if ($namespace === 'theme') {
+            $namespace = themes()->currentTheme() ?? $namespace;
+        }
+
         $file = "{$this->path}/{$locale}/extensions/{$namespace}/{$group}.php";
 
         if ($this->files->exists($file)) {

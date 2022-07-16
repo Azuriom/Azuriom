@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_enabled
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Support\Collection|\Azuriom\Models\Role[] $roles
  *
  * @method static \Illuminate\Database\Eloquent\Builder enabled()
  */
@@ -41,6 +42,19 @@ class Page extends Model
     protected $casts = [
         'is_enabled' => 'boolean',
     ];
+
+    /**
+     * Get roles allowed to access this page.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isRestricted()
+    {
+        return ! $this->roles->isEmpty();
+    }
 
     /**
      * Scope a query to only include enabled pages.

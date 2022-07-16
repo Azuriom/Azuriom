@@ -415,6 +415,7 @@ return [
         'create' => 'Create page',
 
         'enable' => 'Enable the page',
+        'restrict' => 'Limit roles that will be able to access this page',
     ],
 
     'redirects' => [

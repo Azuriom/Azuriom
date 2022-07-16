@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
+use Azuriom\Models\Role;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -28,6 +29,7 @@ class PageController extends Controller
     {
         return view('admin.pages.create', [
             'pendingId' => old('pending_id', Str::uuid()),
+            'roles' => Role::orderByDesc('power')->get(),
         ]);
     }
 
@@ -42,6 +44,7 @@ class PageController extends Controller
         $page = Page::create($request->validated());
 
         $page->persistPendingAttachments($request->input('pending_id'));
+        $page->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
     }
@@ -54,7 +57,10 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', ['page' => $page]);
+        return view('admin.pages.edit', [
+            'page' => $page,
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
@@ -67,6 +73,7 @@ class PageController extends Controller
     public function update(PageRequest $request, Page $page)
     {
         $page->update($request->validated());
+        $page->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
     }

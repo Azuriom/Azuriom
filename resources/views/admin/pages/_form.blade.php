@@ -39,6 +39,28 @@
     @enderror
 </div>
 
+<div class="mb-3 mb-2">
+    <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @if(isset($page) && $page->isRestricted()) checked @endif>
+        <label class="form-check-label" for="restrictedSwitch">{{ trans('admin.pages.restrict') }}</label>
+    </div>
+</div>
+
+<div id="rolesGroup" class="{{ (isset($page) && $page->isRestricted()) ? 'show' : 'collapse' }}">
+    <div class="card card-body mb-2">
+        <div class="row">
+            @foreach($roles as $role)
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="role{{ $role->id }}" name="roles[]" value="{{ $role->id }}" @if(in_array($role->id, old('roles', isset($page) ? $page->roles->modelKeys() : []), true)) checked @endif>
+                        <label class="form-check-label" for="role{{ $role->id }}">{{ $role->name }}</label>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 <div class="mb-3 form-check form-switch">
     <input type="checkbox" class="form-check-input" id="enableSwitch" name="is_enabled" @if($page->is_enabled ?? true) checked @endif>
     <label class="form-check-label" for="enableSwitch">{{ trans('admin.pages.enable') }}</label>

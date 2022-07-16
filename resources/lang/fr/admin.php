@@ -415,6 +415,7 @@ return [
         'create' => 'Création d\'une page',
 
         'enable' => 'Activer la page',
+        'restrict' => 'Limiter les grades qui peuvent accéder à cette page',
     ],
 
     'redirects' => [

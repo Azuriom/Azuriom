@@ -33,7 +33,7 @@ return [
         'duplicate' => 'Duplicate',
         'edit' => 'Edit',
         'enable' => 'Enable',
-        'generate' => 'Générer',
+        'generate' => 'Generate',
         'install' => 'Install',
         'refresh' => 'Refresh',
         'reload' => 'Reload',

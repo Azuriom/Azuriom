@@ -83,7 +83,7 @@
 
 <div class="mb-3 mb-2">
     <div class="form-check form-switch">
-        <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @if(isset($navbarElement) && $navbarElement->isRestricted()) checked @endif aria-describedby="adminInfo">
+        <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @if(isset($navbarElement) && $navbarElement->isRestricted()) checked @endif>
         <label class="form-check-label" for="restrictedSwitch">{{ trans('admin.navbar_elements.restrict') }}</label>
     </div>
 </div>

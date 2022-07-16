@@ -19,10 +19,10 @@ class PagePolicy
      */
     public function view(?User $user, Page $page)
     {
-        if (! $page->is_enabled) {
-            abort(404);
+        abort_if(! $page->is_enabled, 404);
 
-            return false;
+        if ($page->isRestricted()) {
+            return $user !== null && $page->roles->contains($user->role);
         }
 
         return true;

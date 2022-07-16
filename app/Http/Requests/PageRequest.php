@@ -21,6 +21,20 @@ class PageRequest extends FormRequest
     ];
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->mergeCheckboxes();
+
+        if (! $this->filled('restricted')) {
+            $this->merge(['roles' => null]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -35,6 +49,7 @@ class PageRequest extends FormRequest
             'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('pages')->ignore($page, 'slug')],
             'content' => ['required', 'string'],
             'is_enabled' => ['filled', 'boolean'],
+            'roles.*' => ['required', 'integer', 'exists:roles,id'],
         ];
     }
 }
