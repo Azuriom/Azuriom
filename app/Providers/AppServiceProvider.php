@@ -2,6 +2,7 @@
 
 namespace Azuriom\Providers;
 
+use Azuriom\Extensions\ExtensionFileLoader;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
 use Azuriom\Notifications\AlertNotificationChannel;
@@ -11,6 +12,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Translation\Translator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +23,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Override translator to use our own FileLoader for translating extensions
+        $this->app->singleton('translator', function ($app) {
+            $loader = new ExtensionFileLoader($app['files'], $app['path.lang']);
+            $locale = $app['config']['app.locale'];
+
+            $trans = new Translator($loader, $locale);
+            $trans->setFallback($app['config']['app.fallback_locale']);
+
+            return $trans;
+        });
     }
 
     /**

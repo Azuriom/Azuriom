@@ -107,7 +107,7 @@ class InstallController extends Controller
 
         $this->middleware(function (Request $request, callable $next) {
             if (config('app.key') !== self::TEMP_KEY || ! $this->hasRequirements) {
-                return redirect()->home();
+                return redirect()->route('home');
             }
 
             return $next($request);

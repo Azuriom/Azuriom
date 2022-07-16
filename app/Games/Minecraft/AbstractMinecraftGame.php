@@ -16,13 +16,13 @@ abstract class AbstractMinecraftGame extends Game
     {
         XboxProvider::$notFoundCallback = function () {
             return new HttpResponseException(
-                redirect()->home()->with('error', trans('game.minecraft.missing'))
+                redirect()->route('home')->with('error', trans('game.minecraft.missing'))
             );
         };
 
         MinecraftProvider::$notFoundCallback = function () {
             return new HttpResponseException(
-                redirect()->home()->with('error', trans('game.minecraft.missing'))
+                redirect()->route('home')->with('error', trans('game.minecraft.missing'))
             );
         };
     }
