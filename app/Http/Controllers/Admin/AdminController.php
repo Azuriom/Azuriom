@@ -11,7 +11,6 @@ use Azuriom\Models\User;
 use Azuriom\Support\Charts;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {

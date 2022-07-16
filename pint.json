@@ -1,5 +1,6 @@
 {
     "exclude": [
+        "crowdin_translations",
         "plugins",
         "resources/themes"
     ]
