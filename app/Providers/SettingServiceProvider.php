@@ -105,6 +105,7 @@ class SettingServiceProvider extends ServiceProvider
             'maintenance-message' => 'maintenance.message',
             'maintenance-paths' => 'maintenance.paths',
             'welcome-popup' => 'welcome_alert',
+            'auth-api' => 'auth_api',
             'user_money_transfer' => 'users.money_transfer',
             'shop.use-site-money' => 'shop.use_site_money',
             'shop.month-goal' => 'shop.month_goal',

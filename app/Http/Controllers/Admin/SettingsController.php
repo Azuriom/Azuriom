@@ -279,16 +279,16 @@ class SettingsController extends Controller
     public function updateSeo(Request $request)
     {
         $this->validate($request, [
-            'home-message' => ['nullable', 'string'],
-            'welcome_alert' => ['required_with:enable_welcome_popup', 'nullable', 'string'],
+            'home_message' => ['nullable', 'string'],
+            'welcome_alert' => ['required_with:enable_welcome_alert', 'nullable', 'string'],
         ]);
 
-        $alert = $request->filled('enable_welcome_popup')
+        $alert = $request->filled('enable_welcome_alert')
             ? $request->input('welcome_alert')
             : null;
 
         Setting::updateSettings([
-            'home_message' => $request->input('home-message'),
+            'home_message' => $request->input('home_message'),
             'welcome_alert' => $alert,
         ]);
 
