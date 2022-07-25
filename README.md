@@ -14,7 +14,7 @@
 
 ## Supported Games
 
-Currently, Azuriom supports the following games:
+Azuriom natively supports the following games:
 * [Minecraft](https://www.minecraft.net/)
 * [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/)
 * [ARK: Survival Evolved](https://store.steampowered.com/app/346110/ARK_Survival_Evolved/)
@@ -23,6 +23,7 @@ Currently, Azuriom supports the following games:
 * [Counter-Strike: Global Offensive](https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/)
 * [Team Fortress 2](https://store.steampowered.com/app/440/Team_Fortress_2/)
 
+You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129). You can find the how-to in [this documentation](https://azuriom.com/en/docs/games)
 ## Documentation
 
 Azuriom's documentation is available [on our website](https://azuriom.com/docs).
