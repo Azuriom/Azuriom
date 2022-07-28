@@ -172,6 +172,8 @@ class ThemeController extends Controller
 
             $this->themes->updateConfig($theme, $validated);
 
+            ActionLog::log('themes.configured');
+
             if ($request->isXmlHttpRequest()) {
                 return response()->json(['message' => 'admin.themes.config_updated']);
             }

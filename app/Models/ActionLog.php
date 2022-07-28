@@ -50,11 +50,6 @@ class ActionLog extends Model
             'color' => 'warning',
             'message' => 'admin.logs.settings.updated',
         ],
-        'theme.changed' => [
-            'icon' => 'arrow-repeat',
-            'color' => 'warning',
-            'message' => 'admin.logs.themes.changed',
-        ],
         'updates.installed' => [
             'icon' => 'arrow-repeat',
             'color' => 'warning',
@@ -71,9 +66,14 @@ class ActionLog extends Model
             'message' => 'admin.logs.plugins.disabled',
         ],
         'themes.changed' => [
-            'icon' => 'plus-lg',
-            'color' => 'success',
+            'icon' => 'arrow-repeat',
+            'color' => 'warning',
             'message' => 'admin.logs.themes.changed',
+        ],
+        'themes.configured' => [
+            'icon' => 'sliders',
+            'color' => 'warning',
+            'message' => 'admin.logs.themes.configured',
         ],
     ];
 

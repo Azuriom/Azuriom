@@ -3,7 +3,7 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Contracts\Database\Query\Builder;
 
 class PostController extends Controller
 {

@@ -449,7 +449,7 @@ return [
         'available' => 'Plugins disponibles',
 
         'requirements' => [
-            'api' => 'Ce plugin n\'est pas encore compatible avec Azuriom 1.0',
+            'api' => 'La version de ce plugin n\'est pas compatible avec Azuriom v1.0',
             'azuriom' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
             'game' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
             'plugin' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',
@@ -473,7 +473,7 @@ return [
         'list' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
-        'legacy' => 'Ce thème n\'est pas encore compatible avec Azuriom 1.0',
+        'legacy' => 'La version de ce thème n\'est pas compatible avec Azuriom v1.0',
 
         'config' => 'Configurer',
         'disable' => 'Désactiver le thème',
@@ -577,7 +577,8 @@ return [
         ],
 
         'themes' => [
-            'changed' => 'Changement de theme',
+            'changed' => 'Changement de thème',
+            'configured' => 'Configuration du thème',
         ],
     ],
 
