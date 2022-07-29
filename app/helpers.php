@@ -229,10 +229,10 @@ if (! function_exists('theme_config')) {
      * Generate an asset path for the current theme.
      *
      * @param  string|null  $key
-     * @param  mixed  $default
+     * @param  mixed|null  $default
      * @return mixed
      */
-    function theme_config(string $key = null, $default = null)
+    function theme_config(string $key = null, mixed $default = null)
     {
         return $key === null ? config('theme') : config('theme.'.$key, $default);
     }
@@ -264,6 +264,6 @@ if (! function_exists('oauth_login')) {
 if (! function_exists('dark_theme')) {
     function dark_theme()
     {
-        return request()->cookie('theme') === 'dark';
+        return request()?->cookie('theme') === 'dark';
     }
 }

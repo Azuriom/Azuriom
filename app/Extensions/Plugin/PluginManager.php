@@ -480,7 +480,7 @@ class PluginManager extends ExtensionManager
             }, $plugins);
 
             return $this->plugins;
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFoundException) {
             $this->plugins = $this->cachePlugins()->all();
 
             return $this->plugins;
@@ -531,7 +531,13 @@ class PluginManager extends ExtensionManager
 
     protected function runMigrations(string $plugin)
     {
-        app('migrator')->run([$this->path($plugin, 'database/migrations')]);
+        try {
+            app('migrator')->run([$this->path($plugin, 'database/migrations')]);
+        } catch (Throwable $t) {
+            $this->setPluginEnabled($plugin, false);
+
+            throw $t;
+        }
     }
 
     protected function createAssetsLink(string $plugin)
