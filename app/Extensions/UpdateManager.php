@@ -51,6 +51,17 @@ class UpdateManager
         return $this->files->exists(storage_path('app/updates/'.$updates['file']));
     }
 
+    public function isV1Downloaded(bool $force = false)
+    {
+        $updates = $this->getUpdateV1($force);
+
+        if (empty($updates)) {
+            return false;
+        }
+
+        return $this->files->exists(storage_path('app/updates/'.$updates['file']));
+    }
+
     public function hasUpdate(bool $force = false)
     {
         $version = $this->getLastVersion($force);
@@ -70,6 +81,11 @@ class UpdateManager
     public function getUpdate(bool $force = false)
     {
         return $this->fetch($force)['update'] ?? null;
+    }
+
+    public function getUpdateV1(bool $force = false)
+    {
+        return $this->fetch($force)['update_v1'] ?? null;
     }
 
     public function getPlugins(bool $force = false)
@@ -165,17 +181,31 @@ class UpdateManager
 
     public function installUpdate(array $info)
     {
-        if (! is_writable(base_path())) {
+        if (! is_writable(base_path()) || ! is_writable(base_path('vendor'))) {
             throw new RuntimeException('Missing write permission on '.base_path());
         }
 
-        $this->extract($info, base_path());
+        $ex = null;
 
-        app(Optimizer::class)->clear();
+        try {
+            $this->extract($info, base_path());
+        } catch (Exception $e) {
+            $ex = $e;
+        }
 
-        Cache::flush();
+        try {
+            app(Optimizer::class)->clear();
 
-        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+            Cache::flush();
+
+            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+        } catch (Exception $e) {
+            $ex = $ex ?? $e;
+        }
+
+        if ($ex !== null) {
+            throw $ex;
+        }
     }
 
     public function extract(array $info, string $targetDir, string $tempDir = '')

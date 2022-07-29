@@ -580,7 +580,7 @@ return [
         'title' => 'Mise à jour',
 
         'subtitle-update' => 'Mise à jour disponible',
-        'subtitle-no-update' => 'Pas de mise à jour disponible',
+        'subtitle-no-update' => 'Pas de mise à jour disponible pour Azuriom v0.x',
 
         'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
         'changelog' => 'Les notes de mise à jour sont disponibles <a href=":url" target="_blank" rel="noopener noreferrer">ici</a>.',
@@ -589,7 +589,18 @@ return [
 
         'backup-info' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
 
-        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
+        'up-to-date' => 'Vous utilisez la dernière version d\'Azuriom v0.x: <code>:version</code>.',
+
+        'v1' => [
+            'title' => 'Azuriom v1.0',
+            'subtitle' => 'Mettre à jour vers Azuriom v1.0',
+            'update' => 'La nouvelle version majeure d\'Azuriom, Azuriom v1.0 est maintenant disponible !',
+            'info' => 'Merci de lire la <a href="https://azuriom.com/docs/update">documentation</a> et de faire une sauvegarde avant de mettre à jour !',
+            'sqlite' => 'Mettre à jour n\'est pas supporté avec SQLite. Vous devez réinstaller Azuriom ou migrer vers MySQL ou PostgreSQL.',
+            'php8' => 'Vous devez installer PHP 8 pour installer Azuriom v1.0. Les versions antérieures de PHP ne sont <a href="https://www.php.net/supported-versions.php" target="_blank">plus supportées par PHP</a> et leur utilisation est risquée. Version actuelle de PHP : :version',
+            'extensions' => 'Afin d\'éviter des problèmes durant la mise à jour, avant la mise à jour il est nécessaire de mettre à jour tous les plugins et de désactiver l\'ensemble des extensions (plugins et thèmes). Les extensions pourront être réactivées après la mise à jour.',
+            'path' => 'Actuellement Azuriom v1.0 a besoin d\'être installé à la racine d\'un domaine (<code>:root</code> au lieu de <code>:url</code>. Si besoin, vous pouvez installer Azuriom sur un sous-domaine.',
+        ],
 
         'status' => [
             'download-success' => 'La dernière version d\'Azuriom a été téléchargée, vous pouvez maintenant l\'installer.',

@@ -91,7 +91,9 @@ Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(
     Route::get('/version', [UpdateController::class, 'version'])->name('version');
     Route::post('/fetch', [UpdateController::class, 'fetch'])->name('fetch');
     Route::post('/download', [UpdateController::class, 'download'])->name('download');
+    Route::post('/v1/download', [UpdateController::class, 'downloadV1'])->name('download-v1');
     Route::post('/install', [UpdateController::class, 'install'])->name('install');
+    Route::post('/v1/install', [UpdateController::class, 'installV1'])->name('install-v1');
 });
 
 Route::resource('navbar-elements', NavbarController::class)->except('show')->middleware('can:admin.navbar');

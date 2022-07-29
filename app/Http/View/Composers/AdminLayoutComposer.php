@@ -34,7 +34,7 @@ class AdminLayoutComposer
     {
         $view->with([
             'lastVersion' => $this->updates->getLastVersion(),
-            'hasUpdate' => $this->updates->hasUpdate(),
+            'hasUpdate' => true,
         ]);
     }
 }

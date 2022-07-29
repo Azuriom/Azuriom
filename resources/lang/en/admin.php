@@ -581,7 +581,7 @@ return [
         'title' => 'Update',
 
         'subtitle-update' => 'Update available',
-        'subtitle-no-update' => 'No updates available',
+        'subtitle-no-update' => 'No updates available for Azuriom v0.x',
 
         'update' => 'The version <code>:last-version</code> of Azuriom is available and you are on version <code>:version</code>.',
         'changelog' => 'The changelog is available <a href=":url" target="_blank" rel="noopener noreferrer">here</a>.',
@@ -590,7 +590,18 @@ return [
 
         'backup-info' => 'Before updating Azuriom, you should make a backup of your site!',
 
-        'up-to-date' => 'You are running the latest version of Azuriom: <code>:version</code>.',
+        'up-to-date' => 'You are running the latest version of Azuriom v0.x: <code>:version</code>.',
+
+        'v1' => [
+            'title' => 'Azuriom v1.0',
+            'subtitle' => 'Update to Azuriom v1.0',
+            'update' => 'The new major version of Azuriom, Azuriom v1.0 is now available!',
+            'info' => 'Please read the <a href="https://azuriom.com/docs/update">documentation</a> and make a backup before updating!',
+            'sqlite' => 'Updating is not supported when using SQLite. You need to reinstall Azuriom or migrate to a SQL database like MySQL or PostgreSQL.',
+            'php8' => 'You need PHP 8 to install Azuriom v1.0. Older PHP versions are <a href="https://www.php.net/supported-versions.php" target="_blank">no longer supported by PHP</a> and using them isn\'t secure. Current PHP version : :version',
+            'extensions' => 'To prevent update issues, before updating, all plugins must be up-to-date and all extensions (plugins and theme) must be disabled. They can be enabled after the update.',
+            'path' => 'Currently Azuriom v1.0 requires to be installed at the domain root (<code>:root</code> instead of <code>:url</code>). You can also install Azuriom on a subdomain if needed.',
+        ],
 
         'status' => [
             'download-success' => 'The latest version has been downloaded, you can now install it.',

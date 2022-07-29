@@ -116,8 +116,6 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.downloads') }}</th>
-                            <th scope="col">{{ trans('messages.fields.likes') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
@@ -140,8 +138,6 @@
                                 </th>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
-                                <td>{{ $theme['downloads'] }} <i class="ml-2 fas fa-download text-success"></i></td>
-                                <td>{{ $theme['likes'] }} <i class="ml-2 fas fa-heart text-danger"></i></td>
                                 <td>
                                     @if($theme['premium'] && ! $theme['purchased'])
                                         <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
