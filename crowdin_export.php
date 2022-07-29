@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 // as "crowdin_translations".
 
 // The successfully translated locales (currently for >95% completed)
-$locales = ['ca', 'zh-CN', 'de', 'id', 'ru', 'es-ES'];
+$locales = ['ca', 'cs', 'zh-CN', 'de', 'id', 'ru', 'es-ES'];
 
 if (! is_dir('crowdin_translations')) {
     exit('The Crowdin translations must be in the "crowdin_translations" folder.');
@@ -41,3 +41,5 @@ foreach ($locales as $locale) {
         $files->rename($currentName, $newName, true);
     }
 }
+
+echo 'Success!';
