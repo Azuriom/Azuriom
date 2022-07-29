@@ -179,7 +179,7 @@ class UpdateManager
         }
     }
 
-    public function installUpdate(array $info)
+    public function installUpdate(array $info, bool $seed = true)
     {
         if (! is_writable(base_path()) || ! is_writable(base_path('vendor'))) {
             throw new RuntimeException('Missing write permission on '.base_path());
@@ -198,7 +198,7 @@ class UpdateManager
 
             Cache::flush();
 
-            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+            Artisan::call('migrate', ['--force' => true, '--seed' => $seed]);
         } catch (Exception $e) {
             $ex = $ex ?? $e;
         }

@@ -154,27 +154,28 @@ class UpdateController extends Controller
             throw new RuntimeException('Unable to create file on '.base_path());
         }
 
+        ActionLog::log('updates.installed');
+
+        // Enforce loading response class before updating to prevent issues
+        $success = response()->noContent();
+
         try {
             app(Optimizer::class)->clear();
 
             Cache::flush();
 
-            $this->updates->installUpdate($update);
+            $this->updates->installUpdate($update, false);
 
             usleep(250); // Help with OPCache
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('admin.update.status.error-install', [
-                    'error' => $e->getMessage(),
-                ]),
+                'message' => $e->getMessage(),
             ], 422);
         }
 
         $request->session()->flash('success', trans('admin.update.status.install-success'));
 
-        ActionLog::log('updates.installed');
-
-        return response()->noContent();
+        return $success;
     }
 
     public function version()
@@ -185,7 +186,8 @@ class UpdateController extends Controller
         ]);
     }
 
-    protected function extensionsUpToDateAndDisabled() {
+    protected function extensionsUpToDateAndDisabled()
+    {
         if (! plugins()->getPluginToUpdate()->isEmpty()) {
             return false;
         }
