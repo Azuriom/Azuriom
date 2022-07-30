@@ -1,5 +1,7 @@
 <?php
 
+use Azuriom\Azuriom;
+
 /*
 |--------------------------------------------------------------------------
 | Base helpers
@@ -20,6 +22,9 @@ if (! function_exists('asset')) {
      */
     function asset(string $path, $secure = null)
     {
-        return app('url')->asset('assets/'.$path, $secure);
+        // Ignore if there is already a query string
+        $query = str_contains($path, '?') ? '' : '?v'.Azuriom::version();
+
+        return app('url')->asset('assets/'.$path.$query, $secure);
     }
 }

@@ -30,7 +30,7 @@ class PostFactory extends Factory
             'description' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
             'content' => $this->faker->paragraph(),
-            'published_at' => now(),
+            'published_at' => $this->faker->dateTimeThisYear(),
             'author_id' => User::factory(),
         ];
     }

@@ -19,7 +19,7 @@ class AdminController extends Controller
      *
      * @var \Illuminate\Contracts\Foundation\Application
      */
-    private $app;
+    private Application $app;
 
     /**
      * Create a new controller instance.
@@ -35,16 +35,17 @@ class AdminController extends Controller
     {
         $updates = $this->app->make(UpdateManager::class);
         $newVersion = $updates->hasUpdate() ? $updates->getLastVersion() : null;
+        $userCount = User::whereNull('deleted_at')->count();
 
         return view('admin.dashboard', [
             'secure' => $request->secure() || ! $this->app->isProduction(),
-            'userCount' => User::whereNull('deleted_at')->count(),
+            'userCount' => $userCount,
             'postCount' => Post::count(),
             'pageCount' => Page::count(),
             'imageCount' => Image::count(),
             'newUsersPerMonths' => Charts::countByMonths(User::whereNull('deleted_at')),
             'newUsersPerDays' => Charts::countByDays(User::whereNull('deleted_at')),
-            'activeUsers' => $this->getActiveUsers(),
+            'activeUsers' => $this->getActiveUsers($userCount),
             'newVersion' => $newVersion,
             'apiAlerts' => $updates->getApiAlerts(),
         ]);
@@ -55,39 +56,23 @@ class AdminController extends Controller
         return response()->view('admin.errors.404', [], 404);
     }
 
-    protected function getActiveUsers()
+    protected function getActiveUsers(int $totalUsers)
     {
-        $days = [1, 7, 31];
+        $column = 'last_login_at';
 
-        $users = collect([
-            1 => 0,
-            7 => 0,
-            31 => 0,
-        ]);
+        $dayUsers = User::where($column, '>', now()->subDay())->count();
+        $weekUsers = User::where($column, '>', now()->subWeek())->count() - $dayUsers;
+        $monthUsers = User::where($column, '>', now()->subMonth())->count() - $weekUsers;
 
-        User::where('last_login_at', '>=', now()->subMonth())
-            ->without('role')
-            ->get(['id', 'last_login_at'])
-            ->each(function ($user) use ($days, $users) {
-                $diff = $user->last_login_at->diffInDays();
+        $dayTrans = now()->subDay()->longAbsoluteDiffForHumans();
+        $weekTrans = now()->subWeek()->longAbsoluteDiffForHumans();
+        $monthTrans = now()->subMonth()->longAbsoluteDiffForHumans();
 
-                foreach ($days as $time) {
-                    if ($diff <= $time) {
-                        $users->put($time, $users->get($time, 0) + 1);
-                        break;
-                    }
-                }
-            });
-
-        $users = $users->mapWithKeys(function ($value, $key) {
-            $time = now()->subDays($key)->longAbsoluteDiffForHumans();
-
-            return [$time => $value];
-        });
-
-        $oldUsers = User::whereDate('last_login_at', '<', now()->subMonth())->count();
-        $users->put('+ '.now()->subMonth()->longAbsoluteDiffForHumans(), $oldUsers);
-
-        return $users;
+        return [
+            $dayTrans => $dayUsers,
+            $weekTrans => $weekUsers,
+            $monthTrans => $monthUsers,
+            '+ '.$monthTrans => $totalUsers - $monthUsers,
+        ];
     }
 }
