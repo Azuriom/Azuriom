@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://azuriom.com/en/docs
+    about: Check documentation and FAQ for questions already answered
+  - name: Discord for quick support
+    url: https://azuriom.com/discord
+    about: If you have a quick question, come on discord
