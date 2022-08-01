@@ -1,26 +1,22 @@
 name: "Bug report"
-description: "Report something that gone wrong from Azuriom CMS"
-title: "Bug: "
-labels: ["bug"]
+description: "Report something that isn't working as expected with Azuriom"
 assignees: []
 body:
 - type: markdown
   attributes:
     value: "Something is not working as expected with Azuriom and the documentation doesn't answer: https://azuriom.com/en/docs."
-- type: dropdown
-  id: platform
+- type: textarea
+  id: description
   attributes:
-    label: "Which platform are you using ?"
-    multiple: true
-    options:
-    - Apache
-    - Nginx
-    - "I don't know"
+    label: "Bug description"
+    description: "A clear and concise description of what the bug is."
+  validations:
+    required: true
 - type: textarea
   id: reproduce-step
   attributes:
     label: "Step to reproduce"
-    description: "Explain all step to reproduce, with some element that can be particular to your setup and help us to fix it"
+    description: "Explain all step to reproduce, with some element that can be particular to your setup and help us to fix it."
     placeholder: "To reproduce, I do ... then ..."
   validations:
     required: true
@@ -28,5 +24,30 @@ body:
   id: error-logs
   attributes:
     label: "Errors / Logs"
-    description: "If applicable, add logs of error (copy/paste on pastebin/hastebin)"
-    placeholder: "Here is my link to error:"
+    description: "If you have an error 500, please add error logs (located in `storage/logs`)"
+    placeholder: |
+      - "```"
+      - "<!-- Paste your logs here -->
+      - "```"
+- type: dropdown
+  id: webserver
+  attributes:
+    label: "Web serber"
+    multiple: true
+    options:
+    - Apache
+    - Nginx
+    - Other
+- type: dropdown
+  id: database
+  attributes:
+    label: "Database type"
+    options:
+    - MySQL
+    - PostgreSQL
+    - SQLite
+    - SQLServer
+- type: input
+  id: php-version
+  attributes:
+    label: "PHP version"
