@@ -4,7 +4,7 @@ assignees: []
 body:
 - type: markdown
   attributes:
-    value: "Something is not working as expected with Azuriom and the documentation doesn't answer: https://azuriom.com/en/docs."
+    value: "Something is not working as expected with Azuriom and the answer isn't in the [documentation](https://azuriom.com/docs)."
 - type: textarea
   id: description
   attributes:
@@ -49,3 +49,8 @@ body:
   id: php-version
   attributes:
     label: "PHP version"
+- type: textarea
+  id: context
+  attributes:
+    label: "Additional context"
+    description: "Add any other context about the problem here."
