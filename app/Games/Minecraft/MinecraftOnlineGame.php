@@ -6,7 +6,6 @@ use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Ramsey\Uuid\Uuid;
 use RuntimeException;
 
 class MinecraftOnlineGame extends AbstractMinecraftGame
@@ -35,7 +34,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
                 throw new RuntimeException("No UUID for {$name}");
             }
 
-            return Uuid::fromString($uuid)->toString();
+            return $uuid;
         });
     }
 

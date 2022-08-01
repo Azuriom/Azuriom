@@ -27,6 +27,12 @@ return new class extends Migration
         } elseif ($connection instanceof SqlServerConnection) {
             $connection->statement('alter table "users" alter column "email" nvarchar('.$strLength.') null;');
         }
+
+        $column = DB::table('users')->getGrammar()->wrap('game_id');
+
+        DB::table('users')->update([
+            'game_id' => DB::raw("replace({$column}, '-', '')"),
+        ]);
     }
 
     /**
