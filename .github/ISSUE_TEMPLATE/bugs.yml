@@ -27,7 +27,7 @@ body:
     description: "If you have an error 500, please add error logs (located in `storage/logs`)"
     placeholder:
     - "```"
-    - "<!-- Paste your logs here -->
+    - "<!-- Paste your logs here -->"
     - "```"
 - type: dropdown
   id: webserver
