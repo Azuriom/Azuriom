@@ -1,38 +1,19 @@
 name: "Suggestion"
 description: "Suggest an idea for Azuriom"
-title: "Suggestion: "
-labels: ["enhancement"]
 body:
 - type: markdown
   attributes:
-    value: "Use this template only if you want a new feature for Azuriom."
-- type: dropdown
-  id: concerned
-  attributes:
-    label: "What is concerned ?"
-    multiple: true
-    options:
-    - Users
-    - Plugins
-    - Themes
-    - Security
-    - Others
-- type: checkboxes
-  id: versions
-  attributes:
-    label: "Are you using v1.x ?"
-    options:
-      - label: "Yes"
+    value: "Suggest an idea for Azuriom. Before posting a suggestion, please check to see if your suggestion was already proposed in the [issues](https://github.com/Azuriom/Azuriom/issues). Suggestions for plugins/themes should be posted on the corresponding GitHub repository."
 - type: textarea
-  id: describe
+  id: description
   attributes:
-    label: "What is your idea ? What do you want ?"
-    description: "Explain your idea with screenshoots, example etc"
-    placeholder: "Explain your idea !"
+    label: "Description of your suggestion"
+    description: "Explain your idea with screenshoots, example, etc"
+    placeholder: "Explain your idea"
   validations:
     required: true
 - type: textarea
-  id: why
+  id: advantages
   attributes:
-    label: "Why this idea ? Why it should be accepted ?"
-    description: "What is the advantage of your suggestion ?"
+    label: "Advantages"
+    description: "What are the advantages of your suggestion or the alternatives you've considered?"
