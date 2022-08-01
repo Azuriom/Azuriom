@@ -1,0 +1,32 @@
+name: "Bug report"
+description: "Report something that gone wrong from Azuriom CMS"
+title: "Bug: "
+labels: ["bug"]
+assignees: []
+body:
+- type: markdown
+  attributes:
+    value: "Something is not working as expected with Azuriom and the documentation doesn't answer: https://azuriom.com/en/docs."
+- type: dropdown
+  id: platform
+  attributes:
+    label: "Which platform are you using ?"
+    multiple: true
+    options:
+    - Apache
+    - Nginx
+    - "I don't know"
+- type: textarea
+  id: reproduce-step
+  attributes:
+    label: "Step to reproduce"
+    description: "Explain all step to reproduce, with some element that can be particular to your setup and help us to fix it"
+    placeholder: "To reproduce, I do ... then ..."
+  validations:
+    required: true
+- type: textarea
+  id: error-logs
+  attributes:
+    label: "Errors / Logs"
+    description: "If applicable, add logs of error (copy/paste on pastebin/hastebin)"
+    placeholder: "Here is my link to error:"
