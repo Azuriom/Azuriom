@@ -1,0 +1,56 @@
+name: "Bug report"
+description: "Report something that isn't working as expected with Azuriom"
+assignees: []
+body:
+- type: markdown
+  attributes:
+    value: "Something is not working as expected with Azuriom and the answer isn't in the [documentation](https://azuriom.com/docs)."
+- type: textarea
+  id: description
+  attributes:
+    label: "Bug description"
+    description: "A clear and concise description of what the bug is."
+  validations:
+    required: true
+- type: textarea
+  id: reproduce-step
+  attributes:
+    label: "Step to reproduce"
+    description: "Explain all step to reproduce, with some element that can be particular to your setup and help us to fix it."
+    placeholder: "To reproduce, I do ... then ..."
+  validations:
+    required: true
+- type: textarea
+  id: error-logs
+  attributes:
+    label: "Errors / Logs"
+    description: "If you have an error 500, please add error logs (located in `storage/logs`)"
+    placeholder: "<!-- Paste your logs here -->"
+- type: dropdown
+  id: webserver
+  attributes:
+    label: "Web server"
+    multiple: true
+    options:
+    - Apache
+    - Nginx
+    - Other
+- type: dropdown
+  id: database
+  attributes:
+    label: "Database type"
+    options:
+    - MySQL
+    - MariaDB
+    - PostgreSQL
+    - SQLite
+    - SQLServer
+- type: input
+  id: php-version
+  attributes:
+    label: "PHP version"
+- type: textarea
+  id: context
+  attributes:
+    label: "Additional context"
+    description: "Add any other context about the problem here."

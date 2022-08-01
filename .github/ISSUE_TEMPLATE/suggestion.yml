@@ -1,0 +1,19 @@
+name: "Suggestion"
+description: "Suggest an idea for Azuriom"
+body:
+- type: markdown
+  attributes:
+    value: "Suggest an idea for Azuriom. Before posting a suggestion, please check to see if your suggestion was already proposed in the [issues](https://github.com/Azuriom/Azuriom/issues). Suggestions for plugins/themes should be posted on the corresponding GitHub repository."
+- type: textarea
+  id: description
+  attributes:
+    label: "Description of your suggestion"
+    description: "Explain your idea with screenshoots, example, etc"
+    placeholder: "Explain your idea"
+  validations:
+    required: true
+- type: textarea
+  id: advantages
+  attributes:
+    label: "Advantages"
+    description: "What are the advantages of your suggestion or the alternatives you've considered?"
