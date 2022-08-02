@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
+use Azuriom\Notifications\UserDelete;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
@@ -25,7 +26,10 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
-        return view('profile.index', ['user' => $request->user()]);
+        return view('profile.index', [
+            'user' => $request->user(),
+            'canDelete' => setting('user.delete', false),
+        ]);
     }
 
     /**
@@ -165,6 +169,34 @@ class ProfileController extends Controller
         $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
         return redirect()->back()->withCookie($cookie);
+    }
+
+    public function delete(Request $request)
+    {
+        abort_if(! setting('user.delete'), 404);
+
+        $request->user()->notify(new UserDelete());
+
+        return redirect()
+            ->back()
+            ->with('success', trans('messages.profile.delete.sent'));
+    }
+
+    public function confirmDelete(Request $request)
+    {
+        $user = $request->user();
+
+        abort_if(! setting('user.delete'), 404);
+        abort_if((int) $request->input('id') !== $user->id, 403);
+
+        ActionLog::log('users.deleted', $user);
+
+        $user->setDeleted();
+        $request->session()->flush();
+
+        return redirect()
+            ->back()
+            ->with('success', trans('messages.profile.delete.success'));
     }
 
     public function transferMoney(Request $request)

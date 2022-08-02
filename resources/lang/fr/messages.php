@@ -142,6 +142,12 @@ return [
         'change_email' => 'Changer l\'adresse email',
         'change_password' => 'Changer le mot de passe',
 
+        'delete' => [
+            'btn' => 'Supprimer mon compte',
+            'sent' => 'Un lien de confirmation a été envoyé à votre adresse email.',
+            'success' => 'Votre compte a bien été supprimé!',
+        ],
+
         'email_verification' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
         'updated' => 'Votre profil a été mis à jour.',
 

@@ -40,6 +40,13 @@
                     <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.api_info')</small>
                 </div>
 
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="userDelete" name="user_delete" @checked($userDelete)>
+                        <label class="form-check-label" for="userDelete">{{ trans('admin.settings.auth.user_delete') }}</label>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>

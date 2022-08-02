@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -186,6 +188,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isDeleted()
     {
         return $this->deleted_at !== null;
+    }
+
+    public function setDeleted()
+    {
+        $this->comments()->delete();
+        $this->likes()->delete();
+        $this->setRememberToken(null);
+
+        $this->forceFill([
+            'name' => 'Deleted #'.$this->id,
+            'email' => null,
+            'password' => Hash::make(Str::random()),
+            'role_id' => Role::defaultRoleId(),
+            'game_id' => null,
+            'access_token' => null,
+            'two_factor_secret' => null,
+            'email_verified_at' => null,
+            'last_login_ip' => null,
+            'deleted_at' => now(),
+        ])->save();
     }
 
     public function flushBanCache()

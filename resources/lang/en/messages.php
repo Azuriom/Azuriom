@@ -142,6 +142,12 @@ return [
         'change_email' => 'Change Email Address',
         'change_password' => 'Change Password',
 
+        'delete' => [
+            'btn' => 'Delete my account',
+            'sent' => 'A confirmation link has been sent to your email address.',
+            'success' => 'Your account has been successfully deleted!',
+        ],
+
         'email_verification' => 'Your email is not verified, please check your email for a verification link.',
         'updated' => 'Your profile has been updated.',
 

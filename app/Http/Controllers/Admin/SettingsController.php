@@ -301,6 +301,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
+            'userDelete' => setting('user.delete'),
             'register' => setting('register', true),
             'authApi' => setting('auth_api', false),
             'hashAlgorithms' => $this->hashAlgorithms,
@@ -318,6 +319,7 @@ class SettingsController extends Controller
         ]) + [
             'register' => $request->filled('register'),
             'auth_api' => $request->filled('auth_api'),
+            'user.delete' => $request->filled('user_delete'),
         ];
 
         Setting::updateSettings($settings);

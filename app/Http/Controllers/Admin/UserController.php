@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -166,23 +165,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $user->comments()->delete();
-        $user->likes()->delete();
-
-        $user->setRememberToken(null);
-
-        $user->forceFill([
-            'name' => 'Deleted #'.$user->id,
-            'email' => 'deleted'.$user->id.'@deleted.ltd',
-            'password' => Hash::make(Str::random()),
-            'role_id' => Role::defaultRoleId(),
-            'game_id' => null,
-            'access_token' => null,
-            'two_factor_secret' => null,
-            'email_verified_at' => null,
-            'last_login_ip' => null,
-            'deleted_at' => now(),
-        ])->save();
+        $user->setDeleted();
 
         ActionLog::log('users.deleted', $user);
 
