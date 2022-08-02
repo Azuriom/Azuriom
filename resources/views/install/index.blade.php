@@ -51,7 +51,7 @@
                                 @if(Str::startsWith($requirement, 'extension-'))
                                     @lang('install.requirements.help.extension', [
                                         'extension' => Str::replace('extension-', '', $requirement),
-                                        'command' => "apt install curl php{$v}-mysql php{$v}-pgsql php{$v}-sqlite php{$v}-bcmath php{$v}-mbstring php{$v}-xml php{$v}-curl php{$v}-zip php{$v}-gd",
+                                        'command' => "apt install curl php{$v}-mysql php{$v}-pgsql php{$v}-sqlite3 php{$v}-bcmath php{$v}-mbstring php{$v}-xml php{$v}-curl php{$v}-zip php{$v}-gd",
                                     ])
                                 @elseif(Str::startsWith($requirement, 'function-'))
                                     @lang('install.requirements.help.function')

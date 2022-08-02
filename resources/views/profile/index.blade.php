@@ -33,11 +33,11 @@
                     @if(! oauth_login())
                         @if($user->hasTwoFactorAuth())
                             <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">
-                                {{ trans('messages.profile.2fa.manage') }}
+                                <i class="bi bi-shield-lock"></i> {{ trans('messages.profile.2fa.manage') }}
                             </a>
                         @else
                             <a class="btn btn-primary" href="{{ route('profile.2fa.index') }}">
-                                {{ trans('messages.profile.2fa.enable') }}
+                                <i class="bi bi-shield-lock"></i> {{ trans('messages.profile.2fa.enable') }}
                             </a>
                         @endif
                     @endif
@@ -60,15 +60,15 @@
             <form method="POST" action="{{ route('verification.resend') }}">
                 @csrf
                 <button type="submit" class="btn btn-primary">
-                    {{ trans('auth.verification.resend') }}
+                    <i class="bi bi-send"></i> {{ trans('auth.verification.resend') }}
                 </button>
             </form>
         </div>
     @endif
 
-    <div class="row">
+    <div class="row gy-4">
         <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">
                         {{ trans('messages.profile.change_email') }}
@@ -98,7 +98,7 @@
                         @endif
 
                         <button type="submit" class="btn btn-primary">
-                            {{ trans('messages.actions.update') }}
+                            <i class="bi bi-check-lg"></i> {{ trans('messages.actions.update') }}
                         </button>
                     </form>
                 </div>
@@ -107,7 +107,7 @@
 
         @if(! oauth_login())
             <div class="col-md-6">
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-body">
                         <h2 class="card-title">
                             {{ trans('messages.profile.change_password') }}
@@ -140,7 +140,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">
-                                {{ trans('messages.actions.update') }}
+                                <i class="bi bi-check-lg"></i> {{ trans('messages.actions.update') }}
                             </button>
                         </form>
                     </div>
@@ -149,7 +149,7 @@
 
             @if(setting('users.money_transfer'))
                 <div class="col-md-6">
-                    <div class="card mb-4">
+                    <div class="card">
                         <div class="card-body">
                             <h2 class="card-title">
                                 {{ trans('messages.profile.money_transfer.title') }}
@@ -177,7 +177,7 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">
-                                    {{ trans('messages.actions.send') }}
+                                    <i class="bi bi-send"></i> {{ trans('messages.actions.send') }}
                                 </button>
                             </form>
                         </div>
@@ -187,7 +187,7 @@
 
             @foreach($cards ?? [] as $card)
                 <div class="col-md-6">
-                    <div class="card mb-4">
+                    <div class="card">
                         <div class="card-body">
                             <h2 class="card-title">
                                 {{ $card['name'] }}

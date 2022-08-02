@@ -45,7 +45,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
                 throw new RuntimeException("No UUID for {$name}");
             }
 
-            return Uuid::fromString($uuid)->toString();
+            return $uuid;
         });
     }
 

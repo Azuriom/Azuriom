@@ -192,7 +192,7 @@
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="userMoneySwitch" name="user_money_transfer" @if($userMoneyTransfer) checked @endif>
+                        <input type="checkbox" class="form-check-input" id="userMoneySwitch" name="user_money_transfer" @checked($userMoneyTransfer)>
                         <label class="form-check-label" for="userMoneySwitch">{{ trans('admin.settings.index.user_money_transfer') }}</label>
                     </div>
                 </div>

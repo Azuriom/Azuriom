@@ -42,7 +42,7 @@
                             <div class="col-md-9">
                                 <div class="mb-3">
                                     <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @if($user->isDeleted()) disabled @endif>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name) }}" required @disabled($user->isDeleted())>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -51,7 +51,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @if(! oauth_login()) required @endif @if($user->isDeleted()) disabled @endif>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @if(! oauth_login()) required @endif @disabled($user->isDeleted())>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -67,7 +67,7 @@
                         @if(! oauth_login())
                             <div class="mb-3">
                                 <label class="form-label" for="passwordInput">{{ trans('auth.password') }}</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @if($user->isDeleted()) disabled @endif>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="passwordInput" name="password" placeholder="**********" @disabled($user->isDeleted())>
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -77,7 +77,7 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="roleSelect">{{ trans('messages.fields.role') }}</label>
-                            <select class="form-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role" @if($user->isDeleted()) disabled @endif>
+                            <select class="form-select @error('role_id') is-invalid @enderror" id="roleSelect" name="role" @disabled($user->isDeleted())>
                                 @foreach($roles as $role)
                                     <option value="{{ $role->id }}" @selected($user->role->is($role))>{{ $role->name }}</option>
                                 @endforeach
@@ -91,7 +91,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="moneyInput">{{ trans('messages.fields.money') }}</label>
                             <div class="input-group @error('money') has-validation @enderror">
-                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @if($user->isDeleted()) disabled @endif>
+                                <input type="number" min="0" max="999999999999" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money', $user->money) }}" required @disabled($user->isDeleted())>
                                 <span class="input-group-text">{{ money_name() }}</span>
 
                                 @error('money')
@@ -100,7 +100,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" @if($user->isDeleted()) disabled @endif>
+                        <button type="submit" class="btn btn-primary" @disabled($user->isDeleted())>
                             <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                         </button>
 

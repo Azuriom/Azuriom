@@ -134,7 +134,7 @@
 
                 <div class="mb-3" data-mail-type="smtp sendmail">
                     <div class="mb-3 form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="verificationSwitch" name="users_email_verification" @if(setting('mail.users_email_verification')) checked @endif>
+                        <input type="checkbox" class="form-check-input" id="verificationSwitch" name="users_email_verification" @checked(setting('mail.users_email_verification'))>
                         <label class="form-check-label" for="verificationSwitch">{{ trans('admin.settings.mail.verification') }}</label>
                     </div>
                 </div>

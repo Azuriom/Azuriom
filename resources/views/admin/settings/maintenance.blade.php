@@ -20,13 +20,13 @@
                 </div>
 
                 <div class="mb-3 form-check form-switch">
-                    <input type="checkbox" class="form-check-input" id="enableSwitch" name="maintenance_status" @if($status) checked @endif>
+                    <input type="checkbox" class="form-check-input" id="enableSwitch" name="maintenance_status" @checked($status)>
                     <label class="form-check-label" for="enableSwitch">{{ trans('admin.settings.maintenance.enable') }}</label>
                 </div>
 
                 <div class="mb-3 mb-2">
                     <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="globalSwitch" name="is_global" data-bs-toggle="collapse" data-bs-target="#pathsGroup" @if($paths === null) checked @endif>
+                        <input type="checkbox" class="form-check-input" id="globalSwitch" name="is_global" data-bs-toggle="collapse" data-bs-target="#pathsGroup" @checked($paths === null)>
                         <label class="form-check-label" for="globalSwitch">
                             {{ trans('admin.settings.maintenance.global') }}
                         </label>

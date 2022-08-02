@@ -33,6 +33,7 @@
 
             <div class="d-md-flex justify-content-between align-items-center">
                 <button type="button" class="btn btn-primary @if($post->isLiked()) active @endif mb-3" @guest disabled @endguest data-like-url="{{ route('posts.like', $post) }}">
+                    <i class="bi bi-heart"></i>
                     @lang('messages.likes', ['count' => '<span class="likes-count">'.$post->likes->count().'</span>'])
                     <span class="d-none spinner-border spinner-border-sm load-spinner" role="status"></span>
                 </button>
@@ -49,7 +50,7 @@
             <div class="card mb-3">
                 <div class="card-body d-flex">
                     <div class="flex-shrink-0">
-                        <img class="me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" style="height: 60px">
+                        <img class="me-3 rounded" src="{{ $comment->author->getAvatar() }}" alt="{{ $comment->author->name }}" style="height: 60px; width: auto">
                     </div>
                     <div class="flex-grow-1">
                         <div class="d-flex justify-content-between align-items-center">
@@ -62,7 +63,9 @@
                             </div>
 
                             @can('delete', $comment)
-                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete">{{ trans('messages.actions.delete') }}</a>
+                                <a class="btn btn-danger" href="{{ route('posts.comments.destroy', [$post, $comment]) }}" data-confirm="delete" title="{{ trans('messages.actions.delete') }}">
+                                    <i class="bi bi-trash"></i>
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -91,7 +94,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        {{ trans('messages.actions.comment') }}
+                        <i class="bi bi-chat"></i> {{ trans('messages.actions.comment') }}
                     </button>
                 </form>
             </div>

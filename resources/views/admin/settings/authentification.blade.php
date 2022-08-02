@@ -24,7 +24,7 @@
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="registerInput" name="register" @if($register) checked @endif aria-describedby="registerInput">
+                        <input type="checkbox" class="form-check-input" id="registerInput" name="register" @checked($register) aria-describedby="registerInput">
                         <label class="form-check-label" for="registerInput">{{ trans('admin.settings.auth.registration') }}</label>
                     </div>
 
@@ -33,7 +33,7 @@
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input type="checkbox" class="form-check-input" id="authApiInput" name="auth_api" @if($authApi) checked @endif aria-describedby="authApiInfo">
+                        <input type="checkbox" class="form-check-input" id="authApiInput" name="auth_api" @checked($authApi) aria-describedby="authApiInfo">
                         <label class="form-check-label" for="authApiInput">{{ trans('admin.settings.auth.api') }}</label>
                     </div>
 
@@ -122,7 +122,7 @@
                 @if($canForce2fa)
                     <div class="mb-3">
                         <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" id="force2faInput" name="force_2fa" @if($force2fa) checked @endif>
+                            <input type="checkbox" class="form-check-input" id="force2faInput" name="force_2fa" @checked($force2fa)>
                             <label class="form-check-label" for="force2faInput">{{ trans('admin.settings.security.force_2fa') }}</label>
                         </div>
                     </div>

@@ -64,6 +64,6 @@
 </div>
 
 <div class="mb-3 form-check form-switch">
-    <input type="checkbox" class="form-check-input" id="pinnedSwitch" name="is_pinned" @if($post->is_pinned ?? false) checked @endif>
+    <input type="checkbox" class="form-check-input" id="pinnedSwitch" name="is_pinned" @checked($post->is_pinned ?? false)>
     <label class="form-check-label" for="pinnedSwitch">{{ trans('admin.posts.pin') }}</label>
 </div>

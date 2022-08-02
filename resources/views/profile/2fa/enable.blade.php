@@ -30,11 +30,11 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    {{ trans('messages.actions.enable') }}
+                    <i class="bi bi-shield-check"></i> {{ trans('messages.actions.enable') }}
                 </button>
 
                 <a class="btn btn-secondary" href="{{ route('profile.index') }}">
-                    {{ trans('messages.actions.cancel') }}
+                    <i class="bi bi-x-lg"></i> {{ trans('messages.actions.cancel') }}
                 </a>
             </form>
         </div>

@@ -39,10 +39,10 @@
                 {{ trans('messages.servers') }}
             </h2>
 
-            <div class="row justify-content-center mb-4">
+            <div class="row gy-3 justify-content-center mb-4">
                 @foreach($servers as $server)
                     <div class="col-md-4">
-                        <div class="card">
+                        <div class="card h-100">
                             <div class="card-body text-center">
                                 <h3 class="card-title">
                                     {{ $server->name }}
@@ -86,10 +86,10 @@
                 {{ trans('messages.news') }}
             </h2>
 
-            <div class="row">
+            <div class="row gy-3">
                 @foreach($posts as $post)
                     <div class="col-md-6">
-                        <div class="post-preview card mb-3">
+                        <div class="post-preview card">
                             @if($post->hasImage())
                                 <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="card-img-top">
                             @endif

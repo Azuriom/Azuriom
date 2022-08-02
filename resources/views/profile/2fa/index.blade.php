@@ -35,11 +35,11 @@
                 @csrf
 
                 <a class="btn btn-secondary" href="{{ route('profile.index') }}">
-                    {{ trans('messages.actions.back') }}
+                    <i class="bi bi-arrow-left"></i> {{ trans('messages.actions.back') }}
                 </a>
 
                 <button type="submit" class="btn btn-danger">
-                    {{ trans('messages.profile.2fa.disable') }}
+                    <i class="bi bi-shield-slash"></i> {{ trans('messages.profile.2fa.disable') }}
                 </button>
             </form>
 

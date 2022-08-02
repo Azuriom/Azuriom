@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="mb-3 form-check form-switch">
-                    <input type="checkbox" class="form-check-input" id="welcomeAlertSwitch" name="enable_welcome_alert" data-bs-toggle="collapse" data-bs-target="#welcomeAlert" @if($welcomeAlert) checked @endif>
+                    <input type="checkbox" class="form-check-input" id="welcomeAlertSwitch" name="enable_welcome_alert" data-bs-toggle="collapse" data-bs-target="#welcomeAlert" @checked($welcomeAlert)>
                     <label class="form-check-label" for="welcomeAlertSwitch">{{ trans('admin.settings.seo.welcome_alert.enable') }}</label>
                 </div>
 

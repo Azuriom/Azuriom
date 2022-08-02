@@ -5,10 +5,10 @@
 @section('content')
     <h1>{{ trans('messages.posts.posts') }}</h1>
 
-    <div class="row">
+    <div class="row gy-3">
         @foreach($posts as $post)
             <div class="col-md-6">
-                <div class="post-preview card my-2">
+                <div class="post-preview card">
                     @if($post->hasImage())
                         <img src="{{ $post->imageUrl() }}" class="card-img-top" alt="{{ $post->title }}">
                     @endif
