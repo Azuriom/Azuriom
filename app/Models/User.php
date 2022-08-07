@@ -180,17 +180,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->ban !== null;
     }
 
-    public function getIsDeletedAttribute()
-    {
-        return $this->isDeleted();
-    }
-
     public function isDeleted()
     {
         return $this->deleted_at !== null;
     }
 
-    public function setDeleted()
+    protected function performDeleteOnModel()
     {
         $this->comments()->delete();
         $this->likes()->delete();

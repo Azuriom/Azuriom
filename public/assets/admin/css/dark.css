@@ -273,31 +273,14 @@ select.form-control:focus::-ms-value {
     background-color: #4e73df;
 }
 
-.list-group-item-action {
-    color: #9394a8;
-}
-
-.list-group-item-action:hover, .list-group-item-action:focus {
-    color: #9394a8;
-    background-color: #f8f9fc;
-}
-
-.list-group-item-action:active {
-    color: #858796;
-    background-color: #eaecf4;
-}
-
-.list-group-item {
-    background-color: #fff;
-}
-
-.list-group-item.disabled, .list-group-item:disabled {
-    color: #858796;
-    background-color: #fff;
+.list-group-item,
+.list-group-item:hover {
+    color: #fff!important;
+    background-color: #1e1e1e!important;
+    border-color: #1e1e1e!important;
 }
 
 .list-group-item.active {
-    color: #fff;
     background-color: #4e73df;
     border-color: #4e73df;
 }
@@ -334,6 +317,10 @@ select.form-control:focus::-ms-value {
 
 .text-gray-900 {
     color: #3a3b45 !important;
+}
+
+.text-dark {
+    color: #fff!important;
 }
 
 .dropdown .dropdown-menu .dropdown-header,
@@ -406,4 +393,17 @@ h1.text-gray-800 {
 
 .date-picker {
     background: var(--background-elements) !important;
+}
+
+.CodeMirror {
+    color: rgba(255, 255, 255, 0.8)!important;
+    background-color: var(--background-elements-darker)!important;
+}
+
+.CodeMirror, .editor-toolbar {
+    border: 1px solid var(--background-elements)!important;
+}
+
+.editor-toolbar i {
+    color: #326abc;
 }

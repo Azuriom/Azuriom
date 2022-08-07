@@ -97,16 +97,19 @@ class SteamGame extends Game
 
     public function getUserProfile(User $user)
     {
-        if (empty($user->game_id)) {
+        $steamKey = config('services.steam.client_secret');
+
+        if (empty($user->game_id) || empty($steamKey)) {
             return [];
         }
 
-        return Cache::remember("users.{$user->id}.steam", now()->addMinutes(15), function () use ($user) {
-            return Http::get(self::USER_INFO_URL, [
-                'key' => config('services.steam.client_secret'),
-                'steamids' => $user->game_id,
-            ])->throw()->json('response.players.0');
-        });
+        return Cache::remember("users.{$user->id}.steam", now()->addMinutes(15),
+            function () use ($user, $steamKey) {
+                return Http::get(self::USER_INFO_URL, [
+                    'key' => $steamKey,
+                    'steamids' => $user->game_id,
+                ])->throw()->json('response.players.0');
+            });
     }
 
     public function isExtensionCompatible(array $supportedGames)

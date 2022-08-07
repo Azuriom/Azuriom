@@ -31,6 +31,6 @@ return [
         'line1' => 'You are receiving this email because we received a deletion request for your account.',
         'action' => 'Delete my account',
         'line2' => 'This action cannot be undone. This will permanently delete your account and associated data. This link will expire in :count minutes.',
-        'line3' => 'If you did not request a password reset, please make sure to review your security settings.',
+        'line3' => 'If you did not request your account deletion, please make sure to review your security settings.',
     ],
 ];

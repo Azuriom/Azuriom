@@ -39,7 +39,7 @@
                                     {{ $v = $phpVersion }}
                                 </span>
                             @elseif($requirementStatus)
-                                <i class="bi-check-lg text-success float-right"></i>
+                                <i class="bi-check2-circle text-success float-right"></i>
                             @else
                                 <i class="bi bi-x-lg text-danger float-right"></i>
                             @endif

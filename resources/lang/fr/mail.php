@@ -31,6 +31,6 @@ return [
         'line1' => 'Vous recevez cet email parce que nous avons reçu une demande de suppression de votre compte.',
         'action' => 'Supprimer mon compte',
         'line2' => 'Cette action est définitive et il n\'est pas possible de revenir en arrière. Ce lien expirera dans :count minutes.',
-        'line3' => 'Si vous n\'avez pas demandé une réinitialisation de mot de passe, veuillez vérifier les paramètres de sécurité de votre compte.',
+        'line3' => 'Si vous n\'avez pas demandé la suppression de votre compte, veuillez vérifier vos paramètres de sécurité.',
     ],
 ];

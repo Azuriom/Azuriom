@@ -52,7 +52,7 @@
 </div>
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">
-    <div class="card card-body mb-2">
+    <div class="card card-body mb-2 pb-0">
         <div class="row">
             @foreach($permissions as $permission => $permissionDescription)
                 <div class="col-lg-6">

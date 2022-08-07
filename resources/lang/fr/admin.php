@@ -557,7 +557,7 @@ return [
             'deleted' => 'Suppression de l\'utilisateur #:id',
             'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
 
-            'login' => 'Nouvelle connexion réusssie depuis :ip (A2F: :2fa)',
+            'login' => 'Nouvelle connexion réussie depuis :ip (A2F: :2fa)',
             '2fa' => [
                 'enabled' => 'Activation de l\'authentification à deux facteurs',
                 'disabled' => 'Désactivation de l\'authentification à deux facteurs',

@@ -191,7 +191,7 @@ class ProfileController extends Controller
 
         ActionLog::log('users.deleted', $user);
 
-        $user->setDeleted();
+        $user->delete();
         $request->session()->flush();
 
         return redirect()

@@ -146,7 +146,10 @@ class UserController extends Controller
 
     public function disable2fa(User $user)
     {
-        $user->update(['two_factor_secret' => null]);
+        $user->forceFill([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+        ])->save();
 
         ActionLog::log('users.updated', $user);
 
@@ -165,7 +168,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $user->setDeleted();
+        $user->delete();
 
         ActionLog::log('users.deleted', $user);
 
