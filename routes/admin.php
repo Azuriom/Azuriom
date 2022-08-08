@@ -102,6 +102,7 @@ Route::resource('social-links', SocialLinkController::class)->except('show');
 Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
 
 Route::resource('users', UserController::class)->except('show')->middleware('can:admin.users');
+Route::post('/users/notify', [UserController::class, 'notify'])->name('users.notify')->middleware('can:admin.users');
 Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');
 Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power')->middleware('can:admin.roles');
 

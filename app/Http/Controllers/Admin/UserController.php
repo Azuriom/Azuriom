@@ -5,13 +5,16 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\UserRequest;
 use Azuriom\Models\ActionLog;
+use Azuriom\Models\Notification;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Azuriom\Notifications\AlertNotification;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -35,7 +38,26 @@ class UserController extends Controller
         return view('admin.users.index', [
             'users' => $users,
             'search' => $search,
+            'notificationLevels' => Notification::LEVELS,
         ]);
+    }
+
+    public function notify(Request $request)
+    {
+        $this->validate($request, [
+            'level' => ['required', Rule::in(Notification::LEVELS)],
+            'content' => ['required', 'string', 'max:100'],
+        ]);
+
+        $notification = (new AlertNotification($request->input('content')))
+            ->level($request->input('level'))
+            ->from($request->user());
+
+        foreach (User::all() as $user) {
+            $notification->send($user);
+        }
+
+        return redirect()->back()->with('success', trans('messages.status.success'));
     }
 
     /**

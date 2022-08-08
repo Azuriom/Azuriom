@@ -123,6 +123,11 @@ return [
         'notifications' => 'Notifications',
         'read' => 'Mark as read',
         'empty' => 'You have no unread notifications.',
+        'level' => 'Level',
+        'info' => 'Information',
+        'warning' => 'Warning',
+        'danger' => 'Danger',
+        'success' => 'Success',
     ],
 
     'clipboard' => [

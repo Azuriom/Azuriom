@@ -123,6 +123,11 @@ return [
         'notifications' => 'Notifications',
         'read' => 'Marquer comme lues',
         'empty' => 'Vous n\'avez pas de notifications non lues.',
+        'level' => 'Niveau',
+        'info' => 'Information',
+        'warning' => 'Avertissement',
+        'danger' => 'Danger',
+        'success' => 'Succès',
     ],
 
     'clipboard' => [

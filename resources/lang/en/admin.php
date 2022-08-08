@@ -355,6 +355,9 @@ return [
             'banned' => 'This user is now banned.',
             'unbanned' => 'This user has been unbanned.',
         ],
+
+        'notify' => 'Send a notification',
+        'notify_info' => 'Send a notification to all users',
     ],
 
     'roles' => [

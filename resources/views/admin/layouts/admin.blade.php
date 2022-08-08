@@ -346,8 +346,8 @@
                                             <a href="{{ $notification->link ? url($notification->link) : '#' }}" class="list-group-item">
                                                 <div class="row g-0 align-items-center">
                                                     <div class="col-2 text-{{ $notification->level }}">
-                                                        <span class="d-inline-block rounded-circle border border-{{ $notification->level }}">
-                                                            <i class="bi bi-{{ $notification->icon() }} m-2"></i>
+                                                        <span class="d-inline-block rounded-circle p-1 border border-{{ $notification->level }}">
+                                                            <i class="bi bi-{{ $notification->icon() }} mx-1"></i>
                                                         </span>
                                                     </div>
                                                     <div class="col-10">

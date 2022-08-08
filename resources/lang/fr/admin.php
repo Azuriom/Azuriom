@@ -355,6 +355,9 @@ return [
             'banned' => 'Utilisateur banni',
             'unbanned' => 'Utilisateur débanni',
         ],
+
+        'notify' => 'Envoyer une notification',
+        'notify_info' => 'Envoyer une notification à tous les utilisateurs',
     ],
 
     'roles' => [
