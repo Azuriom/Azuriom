@@ -9,6 +9,7 @@
             plugins: 'searchreplace autolink code image link hr anchor lists paste table',
             toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls : false,
+            valid_children : "+body[style]",
 
             @if(dark_theme())
             skin: 'oxide-dark',
