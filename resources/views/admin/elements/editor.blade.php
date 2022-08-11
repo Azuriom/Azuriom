@@ -10,6 +10,8 @@
             toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls : false,
             valid_children : "+body[style]",
+            extended_valid_elements: 'i[class]',
+            content_css: '/assets/vendor/bootstrap-icons/bootstrap-icons.css',
 
             @if(dark_theme())
             skin: 'oxide-dark',
