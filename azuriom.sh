@@ -32,12 +32,12 @@ case $1 in
     ;;
 
   "npm-install")
-    docker run -it --rm -v "${SCRIPT_DIR}":/usr/src/app -w /usr/src/app  node:12 npm ci
+    docker run -it --rm -v "${SCRIPT_DIR}":/usr/src/app -w /usr/src/app  node:18 npm ci
     exit
     ;;
 
   "npm-run-prod")
-    docker run -it --rm -v "${SCRIPT_DIR}":/usr/src/app -w /usr/src/app  node:12 npm run prod
+    docker run -it --rm -v "${SCRIPT_DIR}":/usr/src/app -w /usr/src/app  node:18 npm run prod
     exit
     ;;
 
