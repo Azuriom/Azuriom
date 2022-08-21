@@ -56,7 +56,7 @@ class CheckForMaintenanceSettings
             return Str::endsWith($path, '/*')
                 ? Str::replaceLast('/*', '*', $path)
                 : $path;
-        }, setting('maintenance-paths'));
+        }, setting('maintenance-paths') ?? []);
 
         if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
             return $next($request);
