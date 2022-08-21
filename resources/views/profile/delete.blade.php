@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', trans('messages.profile.delete.btn'))
+@section('title', trans('messages.profile.delete.title'))
 
 @section('content')
-    <h1>{{ trans('messages.profile.delete.btn') }}</h1>
+    <h1>{{ trans('messages.profile.delete.title') }}</h1>
 
     <div class="card">
         <div class="card-body">

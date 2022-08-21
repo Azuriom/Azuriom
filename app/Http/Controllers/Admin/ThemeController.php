@@ -168,9 +168,13 @@ class ThemeController extends Controller
         $rulesPath = $this->themes->path('config/rules.php', $theme);
 
         try {
-            $validated = $this->validate($request, $this->files->getRequire($rulesPath));
+            $config = $this->validate($request, $this->files->getRequire($rulesPath));
 
-            $this->themes->updateConfig($theme, $validated);
+            if ($request->has('append')) {
+                $config = array_merge($this->themes->readConfig($theme), $config);
+            }
+
+            $this->themes->updateConfig($theme, $config);
 
             ActionLog::log('themes.configured');
 

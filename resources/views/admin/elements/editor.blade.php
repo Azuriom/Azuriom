@@ -11,11 +11,10 @@
             relative_urls : false,
             valid_children : "+body[style]",
             extended_valid_elements: 'i[class]',
-            content_css: '/assets/vendor/bootstrap-icons/bootstrap-icons.css',
+            content_css: '{{ (dark_theme() ? 'dark,' : '').asset('vendor/bootstrap-icons/bootstrap-icons.css') }}',
 
             @if(dark_theme())
             skin: 'oxide-dark',
-            content_css: 'dark',
             @endif
 
             @isset($imagesUploadUrl)
