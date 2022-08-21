@@ -53,7 +53,7 @@ class UserController extends Controller
             ->level($request->input('level'))
             ->from($request->user());
 
-        foreach (User::all() as $user) {
+        foreach (User::lazy() as $user) {
             $notification->send($user);
         }
 

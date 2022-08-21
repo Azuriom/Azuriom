@@ -42,12 +42,9 @@
                         @endif
 
                         @if($canDelete)
-                            <form method="POST" action="{{ route('profile.delete') }}" class="d-inline-block">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="bi bi-trash"></i> {{ trans('messages.profile.delete.btn') }}
-                                </button>
-                            </form>
+                            <a class="btn btn-danger" href="{{ route('profile.delete.index') }}">
+                                <i class="bi bi-x-lg"></i> {{ trans('messages.profile.delete.btn') }}
+                            </a>
                         @endif
                     @endif
                 </div>

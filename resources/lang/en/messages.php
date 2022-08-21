@@ -149,6 +149,9 @@ return [
 
         'delete' => [
             'btn' => 'Delete my account',
+            'title' => 'Account deletion',
+            'info' => 'This will permanently delete your account and associated data. This action cannot be undone.',
+            'email' => 'We will send you a confirmation e-mail to confirm this operation.',
             'sent' => 'A confirmation link has been sent to your email address.',
             'success' => 'Your account has been successfully deleted!',
         ],

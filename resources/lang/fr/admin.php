@@ -275,6 +275,7 @@ return [
             'link2' => 'Redémarrer votre serveur.',
             'link3' => 'Exécuter cette commande sur votre serveur: ',
 
+            'info' => 'Si vous avez des problèmes avec AzLink en utilisant Cloudflare ou un pare-feu, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
             'command' => 'Vous pouvez lier votre serveur Minecraft à votre site web avec la commande: ',
             'port_command' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
             'ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',

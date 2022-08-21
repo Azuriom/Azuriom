@@ -18,6 +18,15 @@ use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function (Request $request, callable $next) {
+            abort_if(! setting('user.delete'), 404);
+
+            return $next($request);
+        })->only(['showDelete', 'sendDelete', 'confirmDelete']);
+    }
+
     /**
      * Show the user profile.
      *
@@ -171,31 +180,37 @@ class ProfileController extends Controller
         return redirect()->back()->withCookie($cookie);
     }
 
-    public function delete(Request $request)
+    public function showDelete()
     {
-        abort_if(! setting('user.delete'), 404);
+        return view('profile.delete', ['confirmDelete' => false]);
+    }
 
+    public function sendDelete(Request $request)
+    {
         $request->user()->notify(new UserDelete());
 
         return redirect()
-            ->back()
+            ->route('profile.index')
             ->with('success', trans('messages.profile.delete.sent'));
+    }
+
+    public function showDeleteConfirm()
+    {
+        return view('profile.delete', ['confirmDelete' => true]);
     }
 
     public function confirmDelete(Request $request)
     {
         $user = $request->user();
 
-        abort_if(! setting('user.delete'), 404);
         abort_if((int) $request->input('id') !== $user->id, 403);
-
         ActionLog::log('users.deleted', $user);
 
         $user->delete();
         $request->session()->flush();
 
         return redirect()
-            ->back()
+            ->route('home')
             ->with('success', trans('messages.profile.delete.success'));
     }
 

@@ -149,6 +149,9 @@ return [
 
         'delete' => [
             'btn' => 'Supprimer mon compte',
+            'title' => 'Suppression du compte',
+            'info' => 'Cela supprimera votre compte et l\'ensemble des données associées. Cette action est définitive et il n\'est pas possible de revenir en arrière.',
+            'email' => 'Nous vous enverrons un e-mail pour confirmer cette opération.',
             'sent' => 'Un lien de confirmation a été envoyé à votre adresse email.',
             'success' => 'Votre compte a bien été supprimé!',
         ],

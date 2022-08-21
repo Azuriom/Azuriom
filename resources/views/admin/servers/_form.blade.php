@@ -159,6 +159,12 @@
 </div>
 
 <div v-show="type === 'mc-azlink'">
+    @unless(isset($server) && $server->isOnline())
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> @lang('admin.servers.azlink.info')
+        </div>
+    @endunless
+
     <div class="mb-3 form-check form-switch">
         <input type="checkbox" class="form-check-input" id="hasPingSwitch" name="azlink-ping" data-bs-toggle="collapse" data-bs-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? false)) checked @endisset aria-describedby="pingInfo">
         <label class="form-check-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.ping') }}</label>

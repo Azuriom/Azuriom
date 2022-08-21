@@ -275,6 +275,7 @@ return [
             'link2' => 'Restart the server.',
             'link3' => 'Execute this command on the server: ',
 
+            'info' => 'If you are having problems with AzLink when using Cloudflare or a firewall, try following the steps in the <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
             'command' => 'You can link your Minecraft server to your website with the command: ',
             'port_command' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
             'ping' => 'Enable instant commands (require an open port on the server)',
