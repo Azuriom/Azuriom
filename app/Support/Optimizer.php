@@ -46,9 +46,20 @@ class Optimizer
 
     public function cacheConfig()
     {
+        $currentTheme = themes()->currentTheme();
+
+        if ($currentTheme !== null) {
+            // Disable current theme to prevent caching view paths
+            themes()->changeTheme(null);
+        }
+
         $result = $this->artisan->call('config:cache');
 
         $this->removeFileFromOPCache($this->app->getCachedConfigPath());
+
+        if ($currentTheme !== null) {
+            themes()->changeTheme($currentTheme);
+        }
 
         return $result === 0;
     }

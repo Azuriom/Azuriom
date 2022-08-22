@@ -67,7 +67,7 @@ class ThemeManager extends ExtensionManager
         $this->loadConfig($theme);
     }
 
-    public function changeTheme($theme)
+    public function changeTheme(?string $theme)
     {
         Setting::updateSettings('theme', $theme);
 
@@ -222,6 +222,8 @@ class ThemeManager extends ExtensionManager
         $this->files->deleteDirectory($this->publicPath('', $theme));
 
         $this->files->deleteDirectory($this->path('', $theme));
+
+        Cache::forget('updates_counts');
     }
 
     /**

@@ -441,6 +441,7 @@ return [
         'title' => 'Images',
         'edit' => 'Edit image :image',
         'create' => 'Upload image',
+        'help' => 'If images are not loading, try following the steps in the <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
     ],
 
     'extensions' => [

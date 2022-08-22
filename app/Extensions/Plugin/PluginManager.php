@@ -15,6 +15,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
@@ -237,6 +238,8 @@ class PluginManager extends ExtensionManager
         $this->files->deleteDirectory($this->publicPath($plugin));
 
         $this->files->deleteDirectory($this->path($plugin));
+
+        Cache::forget('updates_counts');
     }
 
     /**

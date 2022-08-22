@@ -2,6 +2,24 @@
 
 @section('title', trans('admin.images.title'))
 
+@push('footer-scripts')
+    <script>
+        let showError = false;
+
+        document.querySelectorAll('td img').forEach(function (el) {
+            el.addEventListener('error', function () {
+                if (showError) {
+                    return;
+                }
+
+                showError = true;
+
+                document.getElementById('loadingHelpMessage').classList.remove('d-none');
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -47,5 +65,9 @@
                 <i class="bi bi-upload"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
+    </div>
+
+    <div class="alert alert-info d-none" id="loadingHelpMessage">
+        <i class="bi bi-info-circle"></i> @lang('admin.images.help')
     </div>
 @endsection
