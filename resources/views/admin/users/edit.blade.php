@@ -104,6 +104,12 @@
                             <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                         </button>
 
+                        @if(! $user->isDeleted())
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                                <i class="bi bi-megaphone"></i> {{ trans('admin.users.notify') }}
+                            </button>
+                        @endif
+
                         @if (! $user->isDeleted() && ! $user->isAdmin() && ! $user->is(Auth::user()))
                             @if(! $user->isBanned())
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#banModal">
@@ -288,4 +294,6 @@
             </div>
         </div>
     @endif
+
+    @include('admin.users._notify', ['route' => route('admin.users.notify', ['user' => $user])])
 @endsection

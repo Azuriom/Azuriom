@@ -358,7 +358,8 @@ return [
         ],
 
         'notify' => 'Envoyer une notification',
-        'notify_info' => 'Envoyer une notification à tous les utilisateurs',
+        'notify_info' => 'Envoyer une notification à cet utilisateur',
+        'notify_all' => 'Envoyer une notification à tous les utilisateurs',
     ],
 
     'roles' => [

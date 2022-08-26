@@ -42,19 +42,20 @@ class UserController extends Controller
         ]);
     }
 
-    public function notify(Request $request)
+    public function notify(Request $request, User $user = null)
     {
         $this->validate($request, [
             'level' => ['required', Rule::in(Notification::LEVELS)],
             'content' => ['required', 'string', 'max:100'],
         ]);
 
+        $users = $user !== null ? [$user] : User::lazy();
         $notification = (new AlertNotification($request->input('content')))
             ->level($request->input('level'))
             ->from($request->user());
 
-        foreach (User::lazy() as $user) {
-            $notification->send($user);
+        foreach ($users as $localUser) {
+            $notification->send($localUser);
         }
 
         return redirect()->back()->with('success', trans('messages.status.success'));
@@ -113,6 +114,7 @@ class UserController extends Controller
             'user' => $user->load('ban'),
             'roles' => Role::orderByDesc('power')->get(),
             'logs' => $logs,
+            'notificationLevels' => Notification::LEVELS,
         ]);
     }
 
