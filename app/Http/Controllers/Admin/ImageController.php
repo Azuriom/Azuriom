@@ -63,7 +63,8 @@ class ImageController extends Controller
             'type' => $mimeType,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.images.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -93,7 +94,10 @@ class ImageController extends Controller
         ])->validate();
 
         if ($image->file !== $fileName) {
-            Storage::disk('public')->move($this->getImagesPath($image->file), $this->getImagesPath($fileName));
+            $oldPath = $this->getImagesPath($image->file);
+            $newPath = $this->getImagesPath($fileName);
+
+            Storage::disk('public')->move($oldPath, $newPath);
         }
 
         $image->update([
@@ -101,7 +105,8 @@ class ImageController extends Controller
             'file' => $fileName,
         ]);
 
-        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.images.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -118,7 +123,8 @@ class ImageController extends Controller
 
         $image->delete();
 
-        return redirect()->route('admin.images.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.images.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     protected function getImagesPath(string $fileName)

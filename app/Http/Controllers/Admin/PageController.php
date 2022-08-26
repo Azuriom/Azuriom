@@ -46,7 +46,8 @@ class PageController extends Controller
         $page->persistPendingAttachments($request->input('pending_id'));
         $page->roles()->sync($request->input('roles'));
 
-        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.pages.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -75,7 +76,8 @@ class PageController extends Controller
         $page->update($request->validated());
         $page->roles()->sync($request->input('roles'));
 
-        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.pages.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -90,6 +92,7 @@ class PageController extends Controller
     {
         $page->delete();
 
-        return redirect()->route('admin.pages.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.pages.index')
+            ->with('success', trans('messages.status.success'));
     }
 }

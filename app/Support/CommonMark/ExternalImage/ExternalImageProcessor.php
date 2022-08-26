@@ -18,8 +18,9 @@ class ExternalImageProcessor
 
     public function __invoke(DocumentParsedEvent $e)
     {
-        $internalHosts = $this->environment->getConfiguration()->get('external_image/internal_hosts', []);
-        $imageProxy = $this->environment->getConfiguration()->get('external_image/image_proxy', '');
+        $config = $this->environment->getConfiguration();
+        $internalHosts = $config->get('external_image/internal_hosts');
+        $imageProxy = $config->get('external_image/image_proxy');
 
         $walker = $e->getDocument()->walker();
         while ($event = $walker->next()) {

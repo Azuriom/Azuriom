@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 if (! function_exists('add_active')) {
     function add_active(string ...$patterns)
     {
-        return Route::currentRouteNamed(...$patterns) ? 'active' : '';
+        return Route::is(...$patterns) ? 'active' : '';
     }
 }
 
@@ -43,7 +43,9 @@ if (! function_exists('is_installed')) {
 if (! function_exists('format_date')) {
     function format_date(Carbon $date, bool $fullTime = false)
     {
-        return $date->translatedFormat(trans('messages.date.'.($fullTime ? 'full' : 'default')));
+        $format = trans('messages.date.'.($fullTime ? 'full' : 'default'));
+
+        return $date->translatedFormat($format);
     }
 }
 

@@ -43,9 +43,9 @@ class Charts
         $start = today()->subDays($days);
 
         return static::rawAggregateByDays($query, $start, $function, $group, $column)
-            ->mapWithKeys(function ($value, string $date) {
-                return [format_date(Carbon::createFromFormat('!Y-m-d', $date)) => $value];
-            });
+            ->mapWithKeys(fn ($value, string $date) => [
+                format_date(Carbon::createFromFormat('!Y-m-d', $date)) => $value,
+            ]);
     }
 
     public static function rawAggregateByDays(Builder $query, Carbon $start, string $function, string $group, ?string $column)

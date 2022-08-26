@@ -200,7 +200,8 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
+        return redirect()->route('admin.settings.auth')
+            ->with('success', trans('admin.settings.updated'));
     }
 
     public function performance()
@@ -294,10 +295,11 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.seo')->with('success', trans('admin.settings.updated'));
+        return redirect()->route('admin.settings.seo')
+            ->with('success', trans('admin.settings.updated'));
     }
 
-    public function auth()
+    public function auth(Request $request)
     {
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
@@ -308,7 +310,7 @@ class SettingsController extends Controller
             'currentHash' => config('hashing.driver'),
             'captchaType' => old('captcha', setting('captcha.type')),
             'force2fa' => setting('admin.force_2fa'),
-            'canForce2fa' => auth()->user()->hasTwoFactorAuth(),
+            'canForce2fa' => $request->user()->hasTwoFactorAuth(),
         ]);
     }
 
@@ -326,7 +328,8 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.auth')->with('success', trans('admin.settings.updated'));
+        return redirect()->route('admin.settings.auth')
+            ->with('success', trans('admin.settings.updated'));
     }
 
     /**
@@ -380,7 +383,8 @@ class SettingsController extends Controller
 
         ActionLog::log('settings.updated');
 
-        return redirect()->route('admin.settings.mail')->with('success', trans('admin.settings.updated'));
+        return redirect()->route('admin.settings.mail')
+            ->with('success', trans('admin.settings.updated'));
     }
 
     public function sendTestMail(Request $request)
@@ -395,7 +399,9 @@ class SettingsController extends Controller
             $request->user()->notify(new TestMail());
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('messages.status.error', ['error' => $e->getMessage()]),
+                'message' => trans('messages.status.error', [
+                    'error' => $e->getMessage(),
+                ]),
             ], 500);
         }
 
@@ -430,7 +436,9 @@ class SettingsController extends Controller
             'maintenance_message' => ['nullable', 'string'],
         ]);
 
-        $paths = $request->filled('is_global') ? null : array_filter($request->input('paths'));
+        $paths = $request->filled('is_global')
+            ? null
+            : array_filter($request->input('paths', []));
 
         Setting::updateSettings([
             'maintenance.enabled' => $request->filled('maintenance_status'),
@@ -438,7 +446,8 @@ class SettingsController extends Controller
             'maintenance.paths' => empty($paths) ? null : $paths,
         ]);
 
-        return redirect()->route('admin.settings.maintenance')->with('success', trans('admin.settings.updated'));
+        return redirect()->route('admin.settings.maintenance')
+            ->with('success', trans('admin.settings.updated'));
     }
 
     protected function getAvailableLocales()
@@ -450,9 +459,8 @@ class SettingsController extends Controller
 
     protected function getAvailableLocaleCodes()
     {
-        return collect(File::directories($this->app->langPath()))->map(function (string $path) {
-            return basename($path);
-        });
+        return collect(File::directories($this->app->langPath()))
+            ->map(fn (string $path) => basename($path));
     }
 
     protected function isHashSupported(string $algo)

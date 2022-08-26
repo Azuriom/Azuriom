@@ -168,7 +168,6 @@ class PluginManager extends ExtensionManager
     public function findPluginsDescriptions()
     {
         $directories = $this->files->directories($this->pluginsPath);
-
         $plugins = [];
 
         foreach ($directories as $dir) {
@@ -193,7 +192,6 @@ class PluginManager extends ExtensionManager
     public function findDescription(string $plugin)
     {
         $path = $this->path($plugin, 'plugin.json');
-
         $json = $this->getJson($path);
 
         if ($json === null) {
@@ -205,7 +203,8 @@ class PluginManager extends ExtensionManager
             return null;
         }
 
-        $json->composer = $this->getJson($this->path($plugin, 'composer.json'), true);
+        $composerPath = $this->path($plugin, 'composer.json');
+        $json->composer = $this->getJson($composerPath, true);
 
         return $json;
     }
@@ -217,11 +216,9 @@ class PluginManager extends ExtensionManager
      */
     public function findPlugins()
     {
-        $directories = $this->files->directories($this->pluginsPath);
+        $paths = $this->files->directories($this->pluginsPath);
 
-        return array_map(function ($dir) {
-            return $this->files->basename($dir);
-        }, $directories);
+        return array_map(fn ($dir) => $this->files->basename($dir), $paths);
     }
 
     /**
@@ -236,7 +233,6 @@ class PluginManager extends ExtensionManager
         }
 
         $this->files->deleteDirectory($this->publicPath($plugin));
-
         $this->files->deleteDirectory($this->path($plugin));
 
         Cache::forget('updates_counts');
@@ -373,20 +369,18 @@ class PluginManager extends ExtensionManager
     public function cachePlugins(array $enabledPlugins = null)
     {
         if ($enabledPlugins === null) {
-            $enabledPlugins = $this->getJson($this->pluginsPath('plugins.json'), true) ?? [];
+            $pluginsJsonPath = $this->pluginsPath('plugins.json');
+            $enabledPlugins = $this->getJson($pluginsJsonPath, true) ?? [];
         }
 
-        $plugins = $this->findPluginsDescriptions()->filter(function ($desc, $plugin) use ($enabledPlugins) {
-            return in_array($plugin, $enabledPlugins, true);
-        });
+        $plugins = $this->findPluginsDescriptions()
+            ->filter(fn ($desc, $plugin) => in_array($plugin, $enabledPlugins, true));
 
         if ($plugins->isEmpty() && app()->runningInConsole()) {
             return $plugins;
         }
 
-        $pluginsCache = $plugins->map(function ($plugin) {
-            return (array) $plugin;
-        })->all();
+        $pluginsCache = $plugins->map(fn ($plugin) => (array) $plugin)->all();
 
         if (is_installed()) {
             $this->files->put($this->getCachedPluginsPath(), '<?php return '.var_export($pluginsCache, true).';');
@@ -407,9 +401,7 @@ class PluginManager extends ExtensionManager
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
         $installedPlugins = $this->findPluginsDescriptions()
-            ->filter(function ($plugin) {
-                return isset($plugin->apiId);
-            });
+            ->filter(fn ($plugin) => isset($plugin->apiId));
 
         return collect($plugins)
             ->filter(function ($plugin) use ($installedPlugins) {
@@ -478,9 +470,7 @@ class PluginManager extends ExtensionManager
         try {
             $plugins = $this->files->getRequire($this->getCachedPluginsPath());
 
-            $this->plugins = array_map(function ($array) {
-                return (object) $array;
-            }, $plugins);
+            $this->plugins = array_map(fn ($array) => (object) $array, $plugins);
 
             return $this->plugins;
         } catch (FileNotFoundException) {

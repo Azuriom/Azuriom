@@ -92,7 +92,8 @@ class LoginController extends Controller
             ]);
         }
 
-        if (setting('maintenance.enabled', false) && ! $user->can('maintenance.access')) {
+        if (setting('maintenance.enabled', false)
+            && ! $user->can('maintenance.access')) {
             return $this->sendMaintenanceResponse($request);
         }
 
@@ -125,7 +126,9 @@ class LoginController extends Controller
 
             $this->guard()->login($user);
 
-            return $request->expectsJson() ? response()->noContent() : redirect($this->redirectPath());
+            return $request->expectsJson()
+                ? response()->noContent()
+                : redirect($this->redirectPath());
         }
 
         $user->update([
@@ -205,7 +208,9 @@ class LoginController extends Controller
         if (! $user->isValidTwoFactorCode($code)) {
             $request->session()->keep('login.2fa');
 
-            throw ValidationException::withMessages(['code' => trans('auth.2fa.invalid')]);
+            throw ValidationException::withMessages([
+                'code' => trans('auth.2fa.invalid'),
+            ]);
         }
 
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));

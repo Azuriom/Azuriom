@@ -92,7 +92,8 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        return redirect()->route('admin.users.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.users.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -149,7 +150,8 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.users.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     public function verifyEmail(User $user)
@@ -175,7 +177,8 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.2fa.disabled'));
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', trans('admin.users.2fa.disabled'));
     }
 
     /**
@@ -194,12 +197,14 @@ class UserController extends Controller
 
         ActionLog::log('users.deleted', $user);
 
-        return redirect()->route('admin.users.index', $user)->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.users.index', $user)
+            ->with('success', trans('messages.status.success'));
     }
 
     protected function validateRole(User $user, Role $role, User $target = null)
     {
-        if (($target && $user->role->power < $target->role->power) || (! $user->isAdmin() && $user->role->power < $role->power)) {
+        if (($target && $user->role->power < $target->role->power)
+            || (! $user->isAdmin() && $user->role->power < $role->power)) {
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.unauthorized'),
             ]);

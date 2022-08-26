@@ -35,7 +35,8 @@ class BanController extends Controller
             'reason' => $request->input('reason'),
         ]);
 
-        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.banned'));
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', trans('admin.users.status.banned'));
     }
 
     /**
@@ -51,6 +52,7 @@ class BanController extends Controller
     {
         $ban->removeBan();
 
-        return redirect()->route('admin.users.edit', $user)->with('success', trans('admin.users.status.unbanned'));
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', trans('admin.users.status.unbanned'));
     }
 }

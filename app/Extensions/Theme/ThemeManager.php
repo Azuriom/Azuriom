@@ -201,11 +201,9 @@ class ThemeManager extends ExtensionManager
      */
     public function findThemes()
     {
-        $directories = $this->files->directories($this->themesPath);
+        $paths = $this->files->directories($this->themesPath);
 
-        return array_map(function ($dir) {
-            return $this->files->basename($dir);
-        }, $directories);
+        return array_map(fn ($dir) => $this->files->basename($dir), $paths);
     }
 
     /**
@@ -251,9 +249,7 @@ class ThemeManager extends ExtensionManager
         $themes = app(UpdateManager::class)->getThemes($force);
 
         $installedThemes = $this->findThemesDescriptions()
-            ->filter(function ($theme) {
-                return isset($theme->apiId);
-            });
+            ->filter(fn ($theme) => isset($theme->apiId));
 
         return collect($themes)->filter(function ($theme) use ($installedThemes) {
             return ! $installedThemes->contains('apiId', $theme['id']);

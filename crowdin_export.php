@@ -21,14 +21,15 @@ foreach ($locales as $locale) {
     $origin = 'crowdin_translations/'.$locale;
     $target = 'resources/lang/'.$locale;
     $targetExtensions = $target.'/extensions';
+    $options = ['override' => true];
 
     if (! is_dir($origin)) {
         continue;
     }
 
-    $files->mirror($origin.'/Azuriom', $target);
-    $files->mirror($origin.'/Plugins', $targetExtensions);
-    $files->mirror($origin.'/Themes', $targetExtensions);
+    $files->mirror($origin.'/Azuriom', $target, null, $options);
+    $files->mirror($origin.'/Plugins', $targetExtensions, null, $options);
+    $files->mirror($origin.'/Themes', $targetExtensions, null, $options);
 
     foreach (new DirectoryIterator($targetExtensions) as $file) {
         if ($file->isDot()) {
@@ -42,4 +43,4 @@ foreach ($locales as $locale) {
     }
 }
 
-echo 'Success!';
+echo 'Translations successfully exported!'.PHP_EOL;

@@ -38,12 +38,10 @@ class AdminLayoutComposer
      */
     public function compose(View $view)
     {
-        $extensions = Cache::remember('updates_counts', now()->addHour(), function () {
-            return [
-                'pluginsUpdates' => $this->plugins->getPluginsToUpdate()->count(),
-                'themesUpdates' => $this->themes->getThemesToUpdate()->count(),
-            ];
-        });
+        $extensions = Cache::remember('updates_counts', now()->addHour(), fn () => [
+            'pluginsUpdates' => $this->plugins->getPluginsToUpdate()->count(),
+            'themesUpdates' => $this->themes->getThemesToUpdate()->count(),
+        ]);
 
         $view->with(array_merge($extensions, [
             'lastVersion' => $this->updates->getLastVersion(),

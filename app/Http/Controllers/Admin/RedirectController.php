@@ -38,7 +38,8 @@ class RedirectController extends Controller
     {
         Redirect::create($request->validated());
 
-        return redirect()->route('admin.redirects.index')->with('success', trans(''));
+        return redirect()->route('admin.redirects.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -63,7 +64,8 @@ class RedirectController extends Controller
     {
         $redirect->update($request->validated());
 
-        return redirect()->route('admin.redirects.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.redirects.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -78,6 +80,7 @@ class RedirectController extends Controller
     {
         $redirect->delete();
 
-        return redirect()->route('admin.redirects.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.redirects.index')
+            ->with('success', trans('messages.status.success'));
     }
 }

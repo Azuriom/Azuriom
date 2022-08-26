@@ -56,9 +56,8 @@ trait TwoFactorAuthenticatable
      */
     public function isValidRecoveryCode(string $code)
     {
-        return collect($this->two_factor_recovery_codes)->contains(function ($recoveryCode) use ($code) {
-            return hash_equals($recoveryCode, $code);
-        });
+        return collect($this->two_factor_recovery_codes)
+            ->contains(fn ($recoveryCode) => hash_equals($recoveryCode, $code));
     }
 
     /**
@@ -68,9 +67,7 @@ trait TwoFactorAuthenticatable
      */
     public function generateRecoveryCodes()
     {
-        return Collection::times(8, function () {
-            return $this->generateRecoveryCode();
-        })->all();
+        return Collection::times(8, fn () => $this->generateRecoveryCode())->all();
     }
 
     /**

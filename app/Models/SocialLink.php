@@ -52,9 +52,7 @@ class SocialLink extends Model
     protected static function booted()
     {
         foreach (['created', 'updated', 'deleted'] as $event) {
-            static::registerModelEvent($event, function () {
-                static::clearCache();
-            });
+            static::registerModelEvent($event, fn () => static::clearCache());
         }
     }
 

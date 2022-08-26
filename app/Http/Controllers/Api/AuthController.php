@@ -136,7 +136,9 @@ class AuthController extends Controller
     {
         $this->validate($request, ['access_token' => 'required|string']);
 
-        User::where('access_token', $request->input('access_token'))->update(['access_token' => null]);
+        User::where('access_token', $request->input('access_token'))->update([
+            'access_token' => null,
+        ]);
 
         return response()->json(['status' => 'success']);
     }

@@ -35,13 +35,8 @@ class ViewServiceProvider extends ServiceProvider
             return new ThemeViewFinder($app['files'], $app['config']['view.paths']);
         });
 
-        Blade::if('plugin', function ($expression) {
-            return plugins()->isEnabled($expression);
-        });
-
-        Blade::if('route', function ($expression) {
-            return Route::currentRouteNamed($expression);
-        });
+        Blade::if('plugin', fn ($expression) => plugins()->isEnabled($expression));
+        Blade::if('route', fn ($expression) => Route::is($expression));
 
         View::composer('*', ServerComposer::class);
         View::composer('*', NotificationComposer::class);

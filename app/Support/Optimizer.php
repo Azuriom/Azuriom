@@ -5,6 +5,7 @@ namespace Azuriom\Support;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
+use Throwable;
 
 class Optimizer
 {
@@ -120,6 +121,10 @@ class Optimizer
             return false;
         }
 
-        return opcache_invalidate($file);
+        try {
+            return opcache_invalidate($file);
+        } catch (Throwable) {
+            return false;
+        }
     }
 }

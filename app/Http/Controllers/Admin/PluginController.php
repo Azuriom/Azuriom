@@ -85,12 +85,14 @@ class PluginController extends Controller
         } catch (Throwable $t) {
             report($t);
 
-            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status.error', [
-                'error' => $t->getMessage(),
-            ]));
+            return redirect()->route('admin.plugins.index')
+                ->with('error', trans('messages.status.error', [
+                    'error' => $t->getMessage(),
+                ]));
         }
 
-        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.enabled'));
+        $response = redirect()->route('admin.plugins.index')
+            ->with('success', trans('admin.plugins.enabled'));
 
         $this->plugins->refreshRoutesCache();
 
@@ -103,7 +105,8 @@ class PluginController extends Controller
     {
         $this->plugins->disable($plugin);
 
-        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.disabled'));
+        $response = redirect()->route('admin.plugins.index')
+            ->with('success', trans('admin.plugins.disabled'));
 
         $this->plugins->refreshRoutesCache();
 
@@ -121,12 +124,14 @@ class PluginController extends Controller
                 $this->plugins->install($description->apiId);
             }
         } catch (Throwable $t) {
-            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status.error', [
-                'error' => $t->getMessage(),
-            ]));
+            return redirect()->route('admin.plugins.index')
+                ->with('error', trans('messages.status.error', [
+                    'error' => $t->getMessage(),
+                ]));
         }
 
-        $response = redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.updated'));
+        $response = redirect()->route('admin.plugins.index')
+            ->with('success', trans('admin.plugins.updated'));
 
         $this->plugins->refreshRoutesCache();
 
@@ -140,22 +145,26 @@ class PluginController extends Controller
         } catch (Throwable $t) {
             report($t);
 
-            return redirect()->route('admin.plugins.index')->with('error', trans('messages.status.error', [
-                'error' => $t->getMessage(),
-            ]));
+            return redirect()->route('admin.plugins.index')
+                ->with('error', trans('messages.status.error', [
+                    'error' => $t->getMessage(),
+                ]));
         }
 
-        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.installed'));
+        return redirect()->route('admin.plugins.index')
+            ->with('success', trans('admin.plugins.installed'));
     }
 
     public function delete(string $plugin)
     {
         if ($this->plugins->isEnabled($plugin)) {
-            return redirect()->route('admin.plugins.index')->with('error', trans('admin.plugins.delete_enabled'));
+            return redirect()->route('admin.plugins.index')
+                ->with('error', trans('admin.plugins.delete_enabled'));
         }
 
         $this->plugins->delete($plugin);
 
-        return redirect()->route('admin.plugins.index')->with('success', trans('admin.plugins.deleted'));
+        return redirect()->route('admin.plugins.index')
+            ->with('success', trans('admin.plugins.deleted'));
     }
 }

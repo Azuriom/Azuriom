@@ -107,16 +107,12 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     protected function registerAdminNavigation()
     {
-        $this->app['plugins']->addAdminNavItem(function () {
-            return $this->adminNavigation();
-        });
+        $this->app['plugins']->addAdminNavItem(fn () => $this->adminNavigation());
     }
 
     protected function registerUserNavigation()
     {
-        $this->app['plugins']->addUserNavItem(function () {
-            return $this->userNavigation();
-        });
+        $this->app['plugins']->addUserNavItem(fn () => $this->userNavigation());
     }
 
     protected function middleware($middleware, bool $before = false)

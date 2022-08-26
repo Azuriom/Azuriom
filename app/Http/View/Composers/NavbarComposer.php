@@ -19,9 +19,8 @@ class NavbarComposer
      */
     public function compose(View $view)
     {
-        $elements = $this->loadNavbarElements()->filter(function (NavbarElement $element) {
-            return $element->hasPermission();
-        });
+        $elements = $this->loadNavbarElements()
+            ->filter(fn (NavbarElement $element) => $element->hasPermission());
         $parentElements = $elements->whereNull('parent_id');
 
         foreach ($parentElements as $element) {

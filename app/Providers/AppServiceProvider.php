@@ -46,9 +46,7 @@ class AppServiceProvider extends ServiceProvider
 
         JsonResource::withoutWrapping();
 
-        Notification::extend('alert', function () {
-            return new AlertNotificationChannel();
-        });
+        Notification::extend('alert', fn () => new AlertNotificationChannel());
 
         // TODO : change default string length only on incompatible
         //  database versions (MySQL < 5.7.7 & MariaDB < 10.2)?

@@ -77,7 +77,8 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.roles.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -116,18 +117,21 @@ class RoleController extends Controller
         $user = $request->user();
 
         if ($user->isAdmin() && $role->is($user->role) && ! $request->input('is_admin')) {
-            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.remove_admin'));
+            return redirect()->route('admin.roles.index')
+                ->with('error', trans('admin.roles.remove_admin'));
         }
 
         if (! $user->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
-            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.add_admin'));
+            return redirect()->route('admin.roles.index')
+                ->with('error', trans('admin.roles.add_admin'));
         }
 
         $role->syncPermissions($request->input('permissions', []));
 
         $role->update($request->validated());
 
-        return redirect()->route('admin.roles.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.roles.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -143,17 +147,20 @@ class RoleController extends Controller
         $this->authorize('delete', $role);
 
         if ($role->isDefault()) {
-            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.delete_default'));
+            return redirect()->route('admin.roles.index')
+                ->with('error', trans('admin.roles.delete_default'));
         }
 
         if ($role->is(Auth::user()->role)) {
-            return redirect()->route('admin.roles.index')->with('error', trans('admin.roles.delete_own'));
+            return redirect()->route('admin.roles.index')
+                ->with('error', trans('admin.roles.delete_own'));
         }
 
         $role->users()->update(['role_id' => Role::defaultRoleId()]);
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.roles.index')
+            ->with('success', trans('messages.status.success'));
     }
 }

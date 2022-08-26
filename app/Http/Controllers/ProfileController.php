@@ -67,7 +67,8 @@ class ProfileController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
     }
 
     public function updatePassword(Request $request)
@@ -84,7 +85,8 @@ class ProfileController extends Controller
         Auth::logoutOtherDevices($password);
         event(new PasswordReset($user));
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.updated'));
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
     }
 
     /**
@@ -166,7 +168,8 @@ class ProfileController extends Controller
 
         ActionLog::log('users.2fa.disabled', null, ['ip' => $request->ip()]);
 
-        return redirect()->route('profile.index')->with('success', trans('messages.profile.2fa.disabled'));
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.2fa.disabled'));
     }
 
     public function theme(Request $request)
@@ -245,10 +248,11 @@ class ProfileController extends Controller
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 
-        $notification = (new AlertNotification(trans('messages.profile.money_transfer.notification', [
+        $message = trans('messages.profile.money_transfer.notification', [
             'user' => $user->name,
             'money' => format_money($money),
-        ])))->from($user);
+        ]);
+        $notification = (new AlertNotification($message))->from($user);
 
         $receiver->notifications()->create($notification->toArray());
 

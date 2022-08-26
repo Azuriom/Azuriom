@@ -44,7 +44,8 @@ class ServerController extends Controller
 
         Setting::updateSettings('servers.default', $request->input('server'));
 
-        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.servers.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -74,9 +75,10 @@ class ServerController extends Controller
                 throw new RuntimeException('Unable to connect to the server');
             }
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.error', [
-                'error' => $e->getMessage(),
-            ]));
+            return redirect()->back()->withInput()
+                ->with('error', trans('admin.servers.error', [
+                    'error' => $e->getMessage(),
+                ]));
         }
 
         $server->save();
@@ -89,7 +91,8 @@ class ServerController extends Controller
             return redirect()->route('admin.servers.edit', $server);
         }
 
-        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.servers.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -122,13 +125,15 @@ class ServerController extends Controller
                 throw new RuntimeException('Unable to connect to the server');
             }
         } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', trans('admin.servers.error', [
-                'error' => $e->getMessage(),
-            ]));
+            return redirect()->back()->withInput()
+                ->with('error', trans('admin.servers.error', [
+                    'error' => $e->getMessage(),
+                ]));
         }
         $server->save();
 
-        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.servers.index')
+            ->with('success', trans('messages.status.success'));
     }
 
     public function verifyAzLink(ServerRequest $request, Server $server)
@@ -178,6 +183,7 @@ class ServerController extends Controller
     {
         $server->delete();
 
-        return redirect()->route('admin.servers.index')->with('success', trans('messages.status.success'));
+        return redirect()->route('admin.servers.index')
+            ->with('success', trans('messages.status.success'));
     }
 }

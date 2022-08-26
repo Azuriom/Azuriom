@@ -44,14 +44,12 @@ class ServerController extends Controller
             ->orWhere('need_online', false)
             ->limit(100)
             ->get();
-        $usersData = $users->map(function (User $user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'uid' => $user->game_id,
-                'money' => $user->money,
-            ];
-        });
+        $usersData = $users->map(fn (User $user) => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'uid' => $user->game_id,
+            'money' => $user->money,
+        ]);
 
         if (! $commands->isEmpty()) {
             ServerCommand::whereIn('id', $commands->modelKeys())->delete();
