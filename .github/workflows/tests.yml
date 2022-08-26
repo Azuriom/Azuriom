@@ -1,4 +1,4 @@
-name: PHP CI
+name: Azuriom CI
 
 on:
   push:
@@ -45,3 +45,23 @@ jobs:
           DB_CONNECTION: mysql
           DB_DATABASE: azuriom
           DB_USERNAME: root
+
+  assets:
+    name: Bundle assets
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run production
