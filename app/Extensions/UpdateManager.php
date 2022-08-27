@@ -164,7 +164,7 @@ class UpdateManager
 
         // TODO : Verify checksum for non-latest plugin's version
         // Not possible for now because auzriom.com API does not return plugin's hash for older versions.
-        if (! hash_equals($info['hash'], hash_file('sha256', $path)) && $pluginVersion === 'latest') {
+        if ($pluginVersion === 'latest' && ! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
             throw new RuntimeException('The file hash do not match expected hash!');
