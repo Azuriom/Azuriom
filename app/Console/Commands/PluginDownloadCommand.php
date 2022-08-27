@@ -15,7 +15,7 @@ class PluginDownloadCommand extends Command
      */
     protected $signature = 'plugin:download
                             {id : Plugin\'s id we wish to download.}
-                            {version : Plugin\'s version.}';
+                            {version=latest : Plugin\'s version.}';
 
     /**
      * The console command description.
