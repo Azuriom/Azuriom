@@ -428,7 +428,7 @@ class PluginManager extends ExtensionManager
         });
     }
 
-    public function install($pluginId)
+    public function install($pluginId, string $pluginVersion = 'latest')
     {
         $updateManager = app(UpdateManager::class);
 
@@ -448,7 +448,7 @@ class PluginManager extends ExtensionManager
             $this->files->makeDirectory($pluginDir);
         }
 
-        $updateManager->download($pluginInfo, 'plugins/');
+        $updateManager->download($pluginInfo, 'plugins/', $pluginVersion);
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);
