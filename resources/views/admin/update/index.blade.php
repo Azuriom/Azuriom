@@ -42,23 +42,25 @@
 
                 <p>@lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])</p>
 
-                @if($isDownloaded)
-                    <p>{{ trans('admin.update.install') }}</p>
+                @allowPanelDownloadAction
+                    @if($isDownloaded)
+                        <p>{{ trans('admin.update.install') }}</p>
 
-                    <button type="button" class="btn btn-success" data-update-route="{{ route('admin.update.install') }}">
-                        <i class="bi bi-download"></i>
-                        {{ trans('messages.actions.install') }}
-                        <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-                    </button>
-                @else
-                    <p>{{ trans('admin.update.download') }}</p>
+                        <button type="button" class="btn btn-success" data-update-route="{{ route('admin.update.install') }}">
+                            <i class="bi bi-download"></i>
+                            {{ trans('messages.actions.install') }}
+                            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                        </button>
+                    @else
+                        <p>{{ trans('admin.update.download') }}</p>
 
-                    <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
-                        <i class="bi bi-cloud-download"></i>
-                        {{ trans('messages.actions.download') }}
-                        <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
-                    </button>
-                @endif
+                        <button type="button" class="btn btn-primary" data-update-route="{{ route('admin.update.download') }}">
+                            <i class="bi bi-cloud-download"></i>
+                            {{ trans('messages.actions.download') }}
+                            <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
+                        </button>
+                    @endif
+                @endallowPanelDownloadAction
 
             @else
                 <h2>{{ trans('admin.update.no_update') }}</h2>

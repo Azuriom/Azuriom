@@ -18,6 +18,7 @@ use Azuriom\Http\Controllers\Admin\SocialLinkController;
 use Azuriom\Http\Controllers\Admin\ThemeController;
 use Azuriom\Http\Controllers\Admin\UpdateController;
 use Azuriom\Http\Controllers\Admin\UserController;
+use Azuriom\Http\Middleware\VerifyDownloadActionsViaPanel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,32 +68,38 @@ Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(fun
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
     Route::get('/', [ThemeController::class, 'index'])->name('index');
     Route::post('/reload', [ThemeController::class, 'reload'])->name('reload');
-    Route::post('/change/{theme?}', [ThemeController::class, 'changeTheme'])->name('change');
     Route::prefix('/{theme}/config')->group(function () {
         Route::get('/', [ThemeController::class, 'edit'])->name('edit');
         Route::post('/', [ThemeController::class, 'config'])->name('config');
     });
-    Route::post('/{theme}/update', [ThemeController::class, 'update'])->name('update');
-    Route::post('/{themeId}/download', [ThemeController::class, 'download'])->name('download');
-    Route::delete('/{theme}', [ThemeController::class, 'delete'])->name('delete');
+    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+        Route::post('/change/{theme?}', [ThemeController::class, 'changeTheme'])->name('change');
+        Route::post('/{theme}/update', [ThemeController::class, 'update'])->name('update');
+        Route::post('/{themeId}/download', [ThemeController::class, 'download'])->name('download');
+        Route::delete('/{theme}', [ThemeController::class, 'delete'])->name('delete');
+    });
 });
 
 Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->group(function () {
     Route::get('/', [PluginController::class, 'index'])->name('index');
     Route::post('/reload', [PluginController::class, 'reload'])->name('reload');
-    Route::post('/{plugin}/enable', [PluginController::class, 'enable'])->name('enable');
-    Route::post('/{plugin}/disable', [PluginController::class, 'disable'])->name('disable');
-    Route::post('/{plugin}/update', [PluginController::class, 'update'])->name('update');
-    Route::post('/{pluginId}/download', [PluginController::class, 'download'])->name('download');
-    Route::delete('/{plugin}', [PluginController::class, 'delete'])->name('delete');
+    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+        Route::post('/{plugin}/enable', [PluginController::class, 'enable'])->name('enable');
+        Route::post('/{plugin}/disable', [PluginController::class, 'disable'])->name('disable');
+        Route::post('/{plugin}/update', [PluginController::class, 'update'])->name('update');
+        Route::post('/{pluginId}/download', [PluginController::class, 'download'])->name('download');
+        Route::delete('/{plugin}', [PluginController::class, 'delete'])->name('delete');
+    });
 });
 
 Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(function () {
     Route::get('/', [UpdateController::class, 'index'])->name('index');
     Route::get('/version', [UpdateController::class, 'version'])->name('version');
     Route::post('/fetch', [UpdateController::class, 'fetch'])->name('fetch');
-    Route::post('/download', [UpdateController::class, 'download'])->name('download');
-    Route::post('/install', [UpdateController::class, 'install'])->name('install');
+    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+        Route::post('/download', [UpdateController::class, 'download'])->name('download');
+        Route::post('/install', [UpdateController::class, 'install'])->name('install');
+    });
 });
 
 Route::resource('navbar-elements', NavbarController::class)->except('show')->middleware('can:admin.navbar');

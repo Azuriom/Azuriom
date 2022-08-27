@@ -36,6 +36,7 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         Blade::if('plugin', fn ($expression) => plugins()->isEnabled($expression));
+        Blade::if('allowPanelDownloadAction', fn () => env('ALLOW_PANEL_DOWNLOAD_ACTIONS', true));
         Blade::if('route', fn ($expression) => Route::is($expression));
 
         View::composer('*', ServerComposer::class);

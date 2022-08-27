@@ -23,20 +23,23 @@
                             <i class="bi bi-sliders"></i> {{ trans('admin.themes.config') }}
                         </a>
                     @endif
-
-                    <button type="submit" class="btn btn-warning">
-                        <i class="bi bi-x-lg"></i> {{ trans('admin.themes.disable') }}
-                    </button>
-                </form>
-                @if($themesUpdates->has($currentPath))
-                    <form method="POST" action="{{ route('admin.themes.update', $currentPath) }}" class="d-inline-block">
-                        @csrf
-
-                        <button type="submit" class="btn btn-info">
-                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                    @allowPanelDownloadAction
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-x-lg"></i> {{ trans('admin.themes.disable') }}
                         </button>
-                    </form>
-                @endif
+                    @endallowPanelDownloadAction
+                </form>
+                @allowPanelDownloadAction
+                    @if($themesUpdates->has($currentPath))
+                        <form method="POST" action="{{ route('admin.themes.update', $currentPath) }}" class="d-inline-block">
+                            @csrf
+
+                            <button type="submit" class="btn btn-info">
+                                <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                            </button>
+                        </form>
+                    @endif
+                @endallowPanelDownloadAction
             @else
                 {{ trans('admin.themes.no-enabled') }}
             @endif
@@ -55,7 +58,9 @@
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
-                        <th scope="col">{{ trans('messages.fields.action') }}</th>
+                        @allowPanelDownloadAction
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                        @endallowPanelDownloadAction
                     </tr>
                     </thead>
                     <tbody>
@@ -73,27 +78,29 @@
                             </th>
                             <td>{{ implode(', ', $theme->authors ?? []) }}</td>
                             <td>{{ $theme->version }}</td>
-                            <td>
-                                <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
-                                    @csrf
-
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-check-lg"></i> {{ trans('messages.actions.enable') }}
-                                    </button>
-                                </form>
-                                <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
-                                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
-                                </a>
-                                @if($themesUpdates->has($path))
-                                    <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
+                            @allowPanelDownloadAction
+                                <td>
+                                    <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-info btn-sm">
-                                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-check-lg"></i> {{ trans('messages.actions.enable') }}
                                         </button>
                                     </form>
-                                @endif
-                            </td>
+                                    <a href="{{ route('admin.themes.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
+                                        <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
+                                    </a>
+                                    @if($themesUpdates->has($path))
+                                        <form method="POST" action="{{ route('admin.themes.update', $path) }}" class="d-inline-block">
+                                            @csrf
+
+                                            <button type="submit" class="btn btn-info btn-sm">
+                                                <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
+                            @endallowPanelDownloadAction
                         </tr>
                     @endforeach
 
@@ -116,7 +123,9 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            @allowPanelDownloadAction
+                                <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            @endallowPanelDownloadAction
                         </tr>
                         </thead>
                         <tbody>
@@ -139,19 +148,21 @@
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
-                                    @if($theme['premium'] && ! $theme['purchased'])
-                                        <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
-                                            <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
-                                        </a>
-                                    @else
-                                        <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
-                                            @csrf
+                                    @allowPanelDownloadAction
+                                        @if($theme['premium'] && ! $theme['purchased'])
+                                            <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
+                                                <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
+                                            </a>
+                                        @else
+                                            <form method="POST" action="{{ route('admin.themes.download', $theme['id']) }}">
+                                                @csrf
 
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
-                                            </button>
-                                        </form>
-                                    @endif
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endallowPanelDownloadAction
                                 </td>
                             </tr>
                         @endforeach

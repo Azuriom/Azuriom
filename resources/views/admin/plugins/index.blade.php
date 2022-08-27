@@ -16,7 +16,9 @@
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
                         <th scope="col">{{ trans('messages.fields.enabled') }}</th>
-                        <th scope="col">{{ trans('messages.fields.action') }}</th>
+                        @allowPanelDownloadAction
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                        @endallowPanelDownloadAction
                     </tr>
                     </thead>
                     <tbody>
@@ -39,29 +41,31 @@
                                     {{ trans_bool(plugins()->isEnabled($path)) }}
                                 </span>
                             </td>
-                            <td>
-                                <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
-                                    @csrf
-
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-{{ plugins()->isEnabled($path)  ? 'x-lg' : 'check-lg' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
-                                    </button>
-                                </form>
-                                @if(! plugins()->isEnabled($path))
-                                    <a href="{{ route('admin.plugins.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
-                                        <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
-                                    </a>
-                                @endif
-                                @if($pluginsUpdates->has($path))
-                                    <form method="POST" action="{{ route('admin.plugins.update', $path) }}" class="d-inline-block">
+                            @allowPanelDownloadAction
+                                <td>
+                                    <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-info btn-sm">
-                                            <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-{{ plugins()->isEnabled($path)  ? 'x-lg' : 'check-lg' }}"></i> {{ trans('messages.actions.'.(plugins()->isEnabled($path) ? 'disable' : 'enable')) }}
                                         </button>
                                     </form>
-                                @endif
-                            </td>
+                                    @if(! plugins()->isEnabled($path))
+                                        <a href="{{ route('admin.plugins.delete', $path) }}" class="btn btn-danger btn-sm" data-confirm="delete">
+                                            <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
+                                        </a>
+                                    @endif
+                                    @if($pluginsUpdates->has($path))
+                                        <form method="POST" action="{{ route('admin.plugins.update', $path) }}" class="d-inline-block">
+                                            @csrf
+
+                                            <button type="submit" class="btn btn-info btn-sm">
+                                                <i class="bi bi-download"></i> {{ trans('messages.actions.update') }}
+                                            </button>
+                                        </form>
+                                    @endif
+                                </td>
+                            @endallowPanelDownloadAction
                         </tr>
                     @endforeach
 
@@ -85,7 +89,9 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            @allowPanelDownloadAction
+                                <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            @endallowPanelDownloadAction
                         </tr>
                         </thead>
                         <tbody>
@@ -107,21 +113,23 @@
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
-                                <td>
-                                    @if($plugin['premium'] && ! $plugin['purchased'])
-                                        <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
-                                            <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
-                                        </a>
-                                    @else
-                                        <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
-                                            @csrf
+                                @allowPanelDownloadAction
+                                    <td>
+                                        @if($plugin['premium'] && ! $plugin['purchased'])
+                                            <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
+                                                <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $plugin['price']]) }}
+                                            </a>
+                                        @else
+                                            <form method="POST" action="{{ route('admin.plugins.download', $plugin['id']) }}">
+                                                @csrf
 
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
-                                            </button>
-                                        </form>
-                                    @endif
-                                </td>
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-download"></i> {{ trans('messages.actions.download') }}
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                @endallowPanelDownloadAction
                             </tr>
                         @endforeach
 
