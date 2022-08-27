@@ -32,14 +32,14 @@ class PluginDownloadCommand extends Command
         $extensionId = $this->argument('id');
 
         $plugin = $plugins->getOnlinePlugins()
-            ->first(fn ($plugin) =>  $plugin["extension_id"] == $extensionId);
+            ->first(fn ($plugin) =>  $plugin['extension_id'] == $extensionId);
 
         if ($plugin === null) {
             throw new RuntimeException("There is no plugin with extension_id '$extensionId',' ".
-            "or it is already downloaded or does not support this installation.");
+            'or it is already downloaded or does not support this installation.');
         }
 
-        $id = $plugin["id"];
+        $id = $plugin['id'];
         $plugins->install($id, $this->argument('version'));
         $this->info("Plugin $extensionId downloaded.");
 
