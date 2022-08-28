@@ -23,13 +23,13 @@
                             <i class="bi bi-sliders"></i> {{ trans('admin.themes.config') }}
                         </a>
                     @endif
-                    @allowPanelDownloadAction
+                    @ifPanelActionAllowed('themes')
                         <button type="submit" class="btn btn-warning">
                             <i class="bi bi-x-lg"></i> {{ trans('admin.themes.disable') }}
                         </button>
-                    @endallowPanelDownloadAction
+                    @endifPanelActionAllowed
                 </form>
-                @allowPanelDownloadAction
+                @ifPanelActionAllowed('themes')
                     @if($themesUpdates->has($currentPath))
                         <form method="POST" action="{{ route('admin.themes.update', $currentPath) }}" class="d-inline-block">
                             @csrf
@@ -39,7 +39,7 @@
                             </button>
                         </form>
                     @endif
-                @endallowPanelDownloadAction
+                @endifPanelActionAllowed
             @else
                 {{ trans('admin.themes.no-enabled') }}
             @endif
@@ -58,9 +58,9 @@
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
-                        @allowPanelDownloadAction
+                        @ifPanelActionAllowed('themes')
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
-                        @endallowPanelDownloadAction
+                        @endifPanelActionAllowed
                     </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                             </th>
                             <td>{{ implode(', ', $theme->authors ?? []) }}</td>
                             <td>{{ $theme->version }}</td>
-                            @allowPanelDownloadAction
+                            @ifPanelActionAllowed('themes')
                                 <td>
                                     <form method="POST" action="{{ route('admin.themes.change', $path) }}" class="d-inline-block">
                                         @csrf
@@ -100,7 +100,7 @@
                                         </form>
                                     @endif
                                 </td>
-                            @endallowPanelDownloadAction
+                            @endifPanelActionAllowed
                         </tr>
                     @endforeach
 
@@ -123,9 +123,9 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            @allowPanelDownloadAction
+                            @ifPanelActionAllowed('themes')
                                 <th scope="col">{{ trans('messages.fields.action') }}</th>
-                            @endallowPanelDownloadAction
+                            @endifPanelActionAllowed
                         </tr>
                         </thead>
                         <tbody>
@@ -148,7 +148,7 @@
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
-                                    @allowPanelDownloadAction
+                                    @ifPanelActionAllowed('themes')
                                         @if($theme['premium'] && ! $theme['purchased'])
                                             <a href="{{ $theme['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
                                                 <i class="bi bi-card"></i> {{ trans('admin.extensions.buy', ['price' =>  $theme['price']]) }}
@@ -162,7 +162,7 @@
                                                 </button>
                                             </form>
                                         @endif
-                                    @endallowPanelDownloadAction
+                                    @endifPanelActionAllowed
                                 </td>
                             </tr>
                         @endforeach

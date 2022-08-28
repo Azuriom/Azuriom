@@ -42,7 +42,7 @@
 
                 <p>@lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])</p>
 
-                @allowPanelDownloadAction
+                @ifPanelActionAllowed('azuriom')
                     @if($isDownloaded)
                         <p>{{ trans('admin.update.install') }}</p>
 
@@ -60,7 +60,7 @@
                             <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
                         </button>
                     @endif
-                @endallowPanelDownloadAction
+                @endifPanelActionAllowed
 
             @else
                 <h2>{{ trans('admin.update.no_update') }}</h2>

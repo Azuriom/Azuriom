@@ -16,9 +16,9 @@
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
                         <th scope="col">{{ trans('messages.fields.enabled') }}</th>
-                        @allowPanelDownloadAction
+                        @ifPanelActionAllowed('plugins')
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
-                        @endallowPanelDownloadAction
+                        @endifPanelActionAllowed
                     </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
                                     {{ trans_bool(plugins()->isEnabled($path)) }}
                                 </span>
                             </td>
-                            @allowPanelDownloadAction
+                            @ifPanelActionAllowed('plugins')
                                 <td>
                                     <form method="POST" action="{{ route('admin.plugins.' . (plugins()->isEnabled($path) ? 'disable' : 'enable'), $path) }}" class="d-inline-block">
                                         @csrf
@@ -65,7 +65,7 @@
                                         </form>
                                     @endif
                                 </td>
-                            @endallowPanelDownloadAction
+                            @endifPanelActionAllowed
                         </tr>
                     @endforeach
 
@@ -89,9 +89,9 @@
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
-                            @allowPanelDownloadAction
+                            @ifPanelActionAllowed('plugins')
                                 <th scope="col">{{ trans('messages.fields.action') }}</th>
-                            @endallowPanelDownloadAction
+                            @endifPanelActionAllowed
                         </tr>
                         </thead>
                         <tbody>
@@ -113,7 +113,7 @@
                                 </th>
                                 <td>{{ $plugin['author']['name'] }}</td>
                                 <td>{{ $plugin['version'] }}</td>
-                                @allowPanelDownloadAction
+                                @ifPanelActionAllowed('plugins')
                                     <td>
                                         @if($plugin['premium'] && ! $plugin['purchased'])
                                             <a href="{{ $plugin['info_url'] }}" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">
@@ -129,7 +129,7 @@
                                             </form>
                                         @endif
                                     </td>
-                                @endallowPanelDownloadAction
+                                @endifPanelActionAllowed
                             </tr>
                         @endforeach
 
