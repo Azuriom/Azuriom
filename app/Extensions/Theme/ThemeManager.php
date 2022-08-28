@@ -84,6 +84,8 @@ class ThemeManager extends ExtensionManager
 
         $this->files->put($this->path('config.json', $theme), $json);
 
+        Setting::updateSettings("themes.theme_config.$theme", json_encode($config));
+
         Cache::put('theme.config.'.$theme, $config, now()->addDay());
     }
 
@@ -308,6 +310,13 @@ class ThemeManager extends ExtensionManager
 
     public function readConfig(string $theme)
     {
+        if (null !== $this->currentTheme()
+            && null !== \setting()->has("themes.theme_config.$theme")
+            && null !== $config = json_decode(\setting("themes.theme_config.$theme"))
+        ) {
+            return $config;
+        }
+
         return $this->getJson($this->path('config.json', $theme), true);
     }
 
