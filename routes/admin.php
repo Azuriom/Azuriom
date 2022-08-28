@@ -18,7 +18,7 @@ use Azuriom\Http\Controllers\Admin\SocialLinkController;
 use Azuriom\Http\Controllers\Admin\ThemeController;
 use Azuriom\Http\Controllers\Admin\UpdateController;
 use Azuriom\Http\Controllers\Admin\UserController;
-use Azuriom\Http\Middleware\VerifyDownloadActionsViaPanel;
+use Azuriom\Http\Middleware\VerifyPanelActions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,7 +72,7 @@ Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(
         Route::get('/', [ThemeController::class, 'edit'])->name('edit');
         Route::post('/', [ThemeController::class, 'config'])->name('config');
     });
-    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+    Route::middleware(VerifyPanelActions::class)->group(function () {
         Route::post('/change/{theme?}', [ThemeController::class, 'changeTheme'])->name('change');
         Route::post('/{theme}/update', [ThemeController::class, 'update'])->name('update');
         Route::post('/{themeId}/download', [ThemeController::class, 'download'])->name('download');
@@ -83,7 +83,7 @@ Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(
 Route::prefix('plugins')->name('plugins.')->middleware('can:admin.plugins')->group(function () {
     Route::get('/', [PluginController::class, 'index'])->name('index');
     Route::post('/reload', [PluginController::class, 'reload'])->name('reload');
-    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+    Route::middleware(VerifyPanelActions::class)->group(function () {
         Route::post('/{plugin}/enable', [PluginController::class, 'enable'])->name('enable');
         Route::post('/{plugin}/disable', [PluginController::class, 'disable'])->name('disable');
         Route::post('/{plugin}/update', [PluginController::class, 'update'])->name('update');
@@ -96,7 +96,7 @@ Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(
     Route::get('/', [UpdateController::class, 'index'])->name('index');
     Route::get('/version', [UpdateController::class, 'version'])->name('version');
     Route::post('/fetch', [UpdateController::class, 'fetch'])->name('fetch');
-    Route::middleware(VerifyDownloadActionsViaPanel::class)->group(function () {
+    Route::middleware(VerifyPanelActions::class)->group(function () {
         Route::post('/download', [UpdateController::class, 'download'])->name('download');
         Route::post('/install', [UpdateController::class, 'install'])->name('install');
     });

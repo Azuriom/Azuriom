@@ -36,7 +36,7 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         Blade::if('plugin', fn ($expression) => plugins()->isEnabled($expression));
-        Blade::if('ifPanelActionAllowed', fn ($expression) => env(strtoupper("ALLOW_PANEL_{$expression}_ACTIONS"), true));
+        Blade::if('ifPanelActionAllowed', fn ($expression) => config("azuriom.allowed_panel_actions.$expression", true));
         Blade::if('route', fn ($expression) => Route::is($expression));
 
         View::composer('*', ServerComposer::class);
