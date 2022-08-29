@@ -4,6 +4,7 @@ namespace Azuriom\Games\Minecraft;
 
 use Azuriom\Models\User;
 use Closure;
+use Illuminate\Support\Facades\Http;
 use Ramsey\Uuid\Generator\NameGeneratorInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
@@ -34,7 +35,15 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
         {
             public function generate(UuidInterface $ns, string $name, string $hashAlgorithm): string
             {
-                return md5($name, true);
+                $uuid = Http::get("https://mcapi.cloudprotected.net/uuid/{$name}")
+                    ->throw()
+                    ->json()->result->uuid;
+
+                if ($uuid === null) {
+                    return md5($name, true);
+                } else {
+                    return $uuid;
+                }
             }
         });
         $uuid = $factory->uuid3(Uuid::NIL, 'OfflinePlayer:'.$name)->toString();
