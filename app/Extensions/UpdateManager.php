@@ -129,7 +129,7 @@ class UpdateManager
         return $updates;
     }
 
-    public function download(array $info, string $tempDir = '')
+    public function download(array $info, string $tempDir = '', bool $verifyHash = true)
     {
         $updatesPath = storage_path('app/updates/');
 
@@ -157,7 +157,7 @@ class UpdateManager
             ->get($info['url'])
             ->throw();
 
-        if (! hash_equals($info['hash'], hash_file('sha256', $path))) {
+        if ($verifyHash && ! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
             throw new RuntimeException('The file hash do not match expected hash!');
