@@ -5,21 +5,21 @@ namespace Azuriom\Console\Commands;
 use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Console\Command;
 
-class PluginEnableCommand extends Command
+class PluginDisableCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'plugin:enable {id : The id of the plugin}';
+    protected $signature = 'plugin:disable {id : The id of the plugin}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Enable an installed plugin';
+    protected $description = 'Disable an enabled plugin';
 
     /**
      * Execute the console command.
@@ -28,13 +28,13 @@ class PluginEnableCommand extends Command
     {
         $id = $this->argument('id');
 
-        if (! $plugins->enable($id)) {
-            $this->error('Unable to enable plugin with id '.$id);
+        if (! $plugins->disable($id)) {
+            $this->error('Unable to disable plugin with id '.$id);
 
             return 1;
         }
 
-        $this->info('Plugin "'.$id.'" enabled.');
+        $this->info('Plugin "'.$id.'" disabled.');
 
         return 0;
     }

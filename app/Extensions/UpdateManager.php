@@ -129,7 +129,7 @@ class UpdateManager
         return $updates;
     }
 
-    public function download(array $info, string $tempDir = '', string $pluginVersion = 'latest')
+    public function download(array $info, string $tempDir = '', bool $verifyHash = true)
     {
         $updatesPath = storage_path('app/updates/');
 
@@ -152,19 +152,12 @@ class UpdateManager
             $this->files->delete($path);
         }
 
-        $downloadUrl = $info['url'];
-        if ($pluginVersion !== 'latest') {
-            $downloadUrl = preg_replace("#\/updates\/\d+\/download$#", "/download/$pluginVersion", $downloadUrl);
-        }
-
         $this->prepareHttpRequest()
             ->withOptions(['sink' => $path])
-            ->get($downloadUrl)
+            ->get($info['url'])
             ->throw();
 
-        // TODO : Verify checksum for non-latest plugin's version
-        // Not possible for now because auzriom.com API does not return plugin's hash for older versions.
-        if ($pluginVersion === 'latest' && ! hash_equals($info['hash'], hash_file('sha256', $path))) {
+        if ($verifyHash && ! hash_equals($info['hash'], hash_file('sha256', $path))) {
             $this->files->delete($path);
 
             throw new RuntimeException('The file hash do not match expected hash!');

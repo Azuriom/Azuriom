@@ -4,7 +4,6 @@ namespace Azuriom\Console\Commands;
 
 use Azuriom\Extensions\Plugin\PluginManager;
 use Illuminate\Console\Command;
-use RuntimeException;
 
 class PluginDownloadCommand extends Command
 {
@@ -14,15 +13,15 @@ class PluginDownloadCommand extends Command
      * @var string
      */
     protected $signature = 'plugin:download
-                            {id : Plugin\'s id we wish to download.}
-                            {version=latest : Plugin\'s version.}';
+                            {id : The id of the plugin}
+                            {version? : The version of the plugin}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Download a plugin';
+    protected $description = 'Download a plugin from market.azuriom.com';
 
     /**
      * Execute the console command.
@@ -32,16 +31,17 @@ class PluginDownloadCommand extends Command
         $extensionId = $this->argument('id');
 
         $plugin = $plugins->getOnlinePlugins()
-            ->first(fn ($plugin) =>  $plugin['extension_id'] == $extensionId);
+            ->first(fn ($plugin) => $plugin['extension_id'] === $extensionId);
 
         if ($plugin === null) {
-            throw new RuntimeException("There is no plugin with extension_id '$extensionId',' ".
-            'or it is already downloaded or does not support this installation.');
+            $this->error('There is no plugin with id "'.$extensionId
+                .'", it is already downloaded or does not support this installation.');
+
+            return 1;
         }
 
-        $id = $plugin['id'];
-        $plugins->install($id, $this->argument('version'));
-        $this->info("Plugin $extensionId downloaded.");
+        $plugins->install($plugin['id'], $this->argument('version'));
+        $this->info('Plugin '.$extensionId.' downloaded.');
 
         return 0;
     }

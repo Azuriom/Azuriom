@@ -261,16 +261,20 @@ class PluginManager extends ExtensionManager
 
     public function enable(string $plugin)
     {
-        $this->setPluginEnabled($plugin, true);
+        if (! $this->setPluginEnabled($plugin, true)) {
+            return false;
+        }
 
         $this->runMigrations($plugin);
 
         $this->createAssetsLink($plugin);
+
+        return true;
     }
 
     public function disable(string $plugin)
     {
-        $this->setPluginEnabled($plugin, false);
+        return $this->setPluginEnabled($plugin, false);
     }
 
     public function hasRequirements(string $plugin)
@@ -428,7 +432,7 @@ class PluginManager extends ExtensionManager
         });
     }
 
-    public function install($pluginId, string $pluginVersion = 'latest')
+    public function install($pluginId, string $version = null)
     {
         $updateManager = app(UpdateManager::class);
 
@@ -439,16 +443,19 @@ class PluginManager extends ExtensionManager
         }
 
         $pluginInfo = $plugins[$pluginId];
-
         $plugin = $pluginInfo['extension_id'];
-
         $pluginDir = $this->path($plugin);
+
+        if ($version !== null) {
+            $baseUrl = Str::beforeLast($pluginInfo['url'], '/updates/');
+            $pluginInfo['url'] = $baseUrl.'/download/'.$version;
+        }
 
         if (! $this->files->isDirectory($pluginDir)) {
             $this->files->makeDirectory($pluginDir);
         }
 
-        $updateManager->download($pluginInfo, 'plugins/', $pluginVersion);
+        $updateManager->download($pluginInfo, 'plugins/', $version === null);
         $updateManager->extract($pluginInfo, $pluginDir, 'plugins/');
 
         $this->createAssetsLink($plugin);
