@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -29,6 +30,7 @@ class Setting extends Model
      */
     private static array $jsonEncoded = [
         'maintenance.paths',
+        'themes.config.*',
     ];
 
     /**
@@ -53,7 +55,7 @@ class Setting extends Model
             return null;
         }
 
-        if (in_array($this->name, self::$encrypted, true)) {
+        if (Str::is(self::$encrypted, $this->name)) {
             try {
                 return decrypt($value, false);
             } catch (DecryptException) {
@@ -61,7 +63,7 @@ class Setting extends Model
             }
         }
 
-        if (in_array($this->name, self::$jsonEncoded, true)) {
+        if (Str::is(self::$jsonEncoded, $this->name)) {
             $decoded = json_decode($value, true);
 
             return json_last_error() === JSON_ERROR_NONE ? $decoded : null;
@@ -78,13 +80,13 @@ class Setting extends Model
             return;
         }
 
-        if (in_array($this->name, self::$encrypted, true)) {
+        if (Str::is(self::$encrypted, $this->name)) {
             $this->attributes['value'] = encrypt($value, false);
 
             return;
         }
 
-        if (in_array($this->name, self::$jsonEncoded, true)) {
+        if (Str::is(self::$jsonEncoded, $this->name)) {
             $this->attributes['value'] = json_encode($value);
 
             return;
