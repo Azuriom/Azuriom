@@ -32,7 +32,7 @@ class ChartsTest extends TestCase
             ])
             ->all();
 
-        $this->assertSame($expected, Charts::countByDays(User::query())->all());
+        $this->assertEquals($expected, Charts::countByDays(User::query())->all());
     }
 
     public function testMonthlyChart()
@@ -58,6 +58,6 @@ class ChartsTest extends TestCase
             ])
             ->all();
 
-        $this->assertSame($expected, Charts::countByMonths(User::query(), null, 6)->all());
+        $this->assertEquals($expected, Charts::countByMonths(User::query(), null, 6)->all());
     }
 }

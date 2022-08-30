@@ -189,11 +189,9 @@ class ThemeController extends Controller
                 return response()->json(['message' => 'admin.themes.config_updated']);
             }
 
-            return redirect()->route('admin.themes.index')->with(
-                'success',
-                trans('admin.themes.config_updated')
-            );
-        } catch (FileNotFoundException $e) {
+            return redirect()->route('admin.themes.config', $theme)
+                ->with('success', trans('admin.themes.config_updated'));
+        } catch (FileNotFoundException) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
         }
     }

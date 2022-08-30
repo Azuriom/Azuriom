@@ -298,6 +298,7 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'Source RCON',
+            'steam-azlink' => 'AzLink',
             'bedrock-ping' => 'Bedrock Ping',
             'bedrock-rcon' => 'Bedrock RCON',
             'fivem-status' => 'FiveM status',

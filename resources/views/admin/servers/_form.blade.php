@@ -158,21 +158,21 @@
     </div>
 </div>
 
-<div v-show="type === 'mc-azlink'">
+<div v-show="type === 'mc-azlink' || type === 'steam-azlink'">
     @unless(isset($server) && $server->isOnline())
         <div class="alert alert-info">
             <i class="bi bi-info-circle"></i> @lang('admin.servers.azlink.info')
         </div>
     @endunless
 
-    <div class="mb-3 form-check form-switch">
+    <div v-show="type === 'mc-azlink'" class="mb-3 form-check form-switch">
         <input type="checkbox" class="form-check-input" id="hasPingSwitch" name="azlink-ping" data-bs-toggle="collapse" data-bs-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? false)) checked @endisset aria-describedby="pingInfo">
         <label class="form-check-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.ping') }}</label>
 
         <small class="form-text" id="pingInfo">{{ trans('admin.servers.azlink.ping_info') }}</small>
     </div>
 
-    <div id="hasPingGroup" class="@if(isset($server) && ($server->data['azlink-ping'] ?? false)) show @else collapse @endisset">
+    <div id="hasPingGroup" v-show="type === 'mc-azlink'" class="@if(isset($server) && ($server->data['azlink-ping'] ?? false)) show @else collapse @endisset">
         <div class="mb-3 form-check form-switch">
             <input type="checkbox" class="form-check-input" id="customPortSwitch" name="azlink-custom-port" data-bs-toggle="collapse" data-bs-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
             <label class="form-check-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom_port') }}</label>
@@ -212,7 +212,9 @@
                 <div class="alert alert-info" role="alert">
                     <i class="bi bi-info-circle"></i>
                     {{ trans('admin.servers.azlink.command') }}
-                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">
+                        {{ $server->getLinkCommand() }}
+                    </code>
                     .
                 </div>
             @else
@@ -223,7 +225,9 @@
                         <li>{{ trans('admin.servers.azlink.link2') }}</li>
                         <li>
                             {{ trans('admin.servers.azlink.link3') }}
-                            <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">{{ $server->getLinkCommand() }}</code>
+                            <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">
+                                {{ $server->getLinkCommand() }}
+                            </code>
                             .
                         </li>
                     </ol>

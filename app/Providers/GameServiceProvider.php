@@ -30,7 +30,7 @@ class GameServiceProvider extends ServiceProvider
             'mc-online' => MinecraftOnlineGame::class,
             'mc-offline' => MinecraftOfflineGame::class,
             'mc-bedrock' => MinecraftBedrockGame::class,
-            'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod'),
+            'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod', true),
             'ark' => SteamGame::forName('ark', 'ARK'),
             'rust' => RustGame::class,
             'fivem' => FiveMGame::class,

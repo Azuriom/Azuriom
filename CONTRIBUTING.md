@@ -4,7 +4,11 @@
 
 Azuriom follows the [PSR-12 coding style](https://www.php-fig.org/psr/psr-12/).
 
-You can also run [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to automatically fix the code style.
+[Laravel Pint](https://github.com/laravel/pint) is included in the Composer dev-dependencies,
+and can be used to automatically fix code style issues with this command:
+```
+./vendor/bin/pint
+```
 
 ## Manual installation for development
 

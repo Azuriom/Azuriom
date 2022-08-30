@@ -126,12 +126,27 @@ class Server extends Model
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
-        if ($data !== null && $full && ! $this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
-            $stats = Arr::except($data, 'max_players');
-            $statsData = ['data' => array_filter(Arr::except($stats, ['players', 'cpu', 'ram']))];
-
-            $this->stats()->create(array_merge(Arr::only($stats, ['players', 'cpu', 'ram']), $statsData));
+        if ($data === null || ! $full) {
+            return;
         }
+
+        if ($this->stats()->where('created_at', '>=', now()->subMinutes(10))->exists()) {
+            return;
+        }
+
+        $stats = Arr::except($data, 'max_players');
+        $basicStats = Arr::only($stats, ['players', 'cpu', 'ram']);
+        $statsData = array_filter(Arr::except($stats, ['players', 'cpu', 'ram']));
+
+        if (Arr::get($basicStats, 'cpu', 0) < 0) {
+            $basicStats['cpu'] = null;
+        }
+
+        if (is_numeric($tps = Arr::get($statsData, 'tps', 0))) {
+            $statsData['tps'] = round($tps, 2);
+        }
+
+        $this->stats()->create(array_merge($basicStats, ['data' => $statsData]));
     }
 
     public function getData(string $key = null)
@@ -159,7 +174,9 @@ class Server extends Model
 
     public function getLinkCommand()
     {
-        return '/azlink setup '.url('/').' '.$this->token;
+        return $this->type === 'mc-azlink'
+            ? '/azlink setup '.url('/').' '.$this->token
+            : 'azlink:setup '.str_replace(':', '!', url('/')).' '.$this->token;
     }
 
     public static function types()
@@ -190,6 +207,6 @@ class Server extends Model
      */
     public function scopePingable(Builder $query)
     {
-        return $query->where('type', '<>', 'mc-azlink');
+        return $query->whereNotIn('type', ['mc-azlink', 'steam-azlink']);
     }
 }

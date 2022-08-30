@@ -16,12 +16,12 @@
 
 Azuriom natively supports the following games:
 * [Minecraft](https://www.minecraft.net/)
-* [Garry's Mod](https://store.steampowered.com/app/4000/Garrys_Mod/)
-* [ARK: Survival Evolved](https://store.steampowered.com/app/346110/ARK_Survival_Evolved/)
-* [Rust](https://store.steampowered.com/agecheck/app/252490/)
+* [Garry's Mod](https://gmod.facepunch.com/)
+* [ARK: Survival Evolved](https://playark.com/ark-survival-evolved/)
+* [Rust](https://rust.facepunch.com/)
 * [FiveM](https://fivem.net/)
-* [Counter-Strike: Global Offensive](https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/)
-* [Team Fortress 2](https://store.steampowered.com/app/440/Team_Fortress_2/)
+* [Counter-Strike: Global Offensive](https://blog.counter-strike.net/)
+* [Team Fortress 2](https://www.teamfortress.com/)
 
 You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129). You can find the how-to in [this documentation](https://azuriom.com/en/docs/games)
 ## Documentation

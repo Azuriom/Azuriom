@@ -3,6 +3,7 @@
 namespace Azuriom\Games\Steam;
 
 use Azuriom\Games\Game;
+use Azuriom\Games\Steam\Servers\AzLink;
 use Azuriom\Games\Steam\Servers\Query;
 use Azuriom\Games\Steam\Servers\Rcon;
 use Azuriom\Models\User;
@@ -14,35 +15,29 @@ class SteamGame extends Game
 {
     protected const USER_INFO_URL = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
 
-    /**
-     * The game's name.
-     *
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * The game's id.
-     *
-     * @var string
-     */
-    protected $id;
+    protected string $id;
+
+    protected bool $azLinkSupport;
 
     /**
      * Create a new game instance.
      *
      * @param  string  $id
      * @param  string  $name
+     * @param  bool  $azLinkSupport
      */
-    protected function __construct(string $id, string $name)
+    protected function __construct(string $id, string $name, bool $azLinkSupport)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->azLinkSupport = $azLinkSupport;
     }
 
-    public static function forName(string $id, string $name)
+    public static function forName(string $id, string $name, bool $azLink = false)
     {
-        return new self($id, $name);
+        return new self($id, $name, $azLink);
     }
 
     public function id()
@@ -74,10 +69,14 @@ class SteamGame extends Game
 
     public function getSupportedServers()
     {
-        return [
+        $games = [
             'source-query' => Query::class,
             'source-rcon' => Rcon::class,
         ];
+
+        return $this->azLinkSupport
+            ? array_merge($games, ['steam-azlink' => AzLink::class])
+            : $games;
     }
 
     public function loginWithOAuth()

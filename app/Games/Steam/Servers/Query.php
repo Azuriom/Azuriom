@@ -8,7 +8,7 @@ use xPaw\SourceQuery\SourceQuery;
 
 class Query extends ServerBridge
 {
-    protected const DEFAULT_PORT = 27015;
+    public const DEFAULT_PORT = 27015;
 
     protected $engine = SourceQuery::SOURCE;
 
