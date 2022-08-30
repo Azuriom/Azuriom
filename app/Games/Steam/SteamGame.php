@@ -26,13 +26,13 @@ class SteamGame extends Game
      *
      * @param  string  $id
      * @param  string  $name
-     * @param  bool  $azLinkSupport
+     * @param  bool  $azLink
      */
-    protected function __construct(string $id, string $name, bool $azLinkSupport)
+    protected function __construct(string $id, string $name, bool $azLink = false)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->azLinkSupport = $azLinkSupport;
+        $this->azLinkSupport = $azLink;
     }
 
     public static function forName(string $id, string $name, bool $azLink = false)
