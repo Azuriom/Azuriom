@@ -28,8 +28,8 @@ class ServerController extends Controller
         $maxPlayers = $request->json('maxPlayers');
 
         $players = $uidKey
-            ? Arr::pluck($rawPlayers, 'name', 'uuid')
-            : Arr::pluck($rawPlayers, 'uid');
+            ? Arr::pluck($rawPlayers, 'uid')
+            : Arr::pluck($rawPlayers, 'name', 'uuid');
 
         $server->updateData(array_merge(
             ['players' => count($players), 'max_players' => $maxPlayers],

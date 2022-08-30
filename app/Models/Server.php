@@ -142,7 +142,7 @@ class Server extends Model
             $basicStats['cpu'] = null;
         }
 
-        if (is_numeric($tps = Arr::get($statsData, 'tps', 0))) {
+        if (is_numeric($tps = Arr::get($statsData, 'tps'))) {
             $statsData['tps'] = round($tps, 2);
         }
 
@@ -174,9 +174,11 @@ class Server extends Model
 
     public function getLinkCommand()
     {
-        return $this->type === 'mc-azlink'
-            ? '/azlink setup '.url('/').' '.$this->token
-            : 'azlink:setup '.str_replace(':', '!', url('/')).' '.$this->token;
+        $base = $this->type === 'mc-azlink'
+            ? '/azlink setup '.url('/')
+            : 'azlink:setup '.str_replace([':', '/'], ['!', '|'], url('/'));
+
+        return $base.' '.$this->token;
     }
 
     public static function types()

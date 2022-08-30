@@ -9,9 +9,12 @@ use Azuriom\Notifications\UserDelete;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
@@ -100,7 +103,10 @@ class ProfileController extends Controller
     public function show2fa(Request $request)
     {
         if ($request->user()->hasTwoFactorAuth()) {
-            return view('profile.2fa.index', ['user' => $request->user()]);
+            return view('profile.2fa.index', [
+                'user' => $request->user(),
+                'codesBackupName' => Str::slug(site_name()).'-codes.txt',
+            ]);
         }
 
         $google2fa = new Google2FA();
@@ -112,6 +118,18 @@ class ProfileController extends Controller
         return view('profile.2fa.enable', [
             'secret' => $secret,
             'qrCode' => new HtmlString(QrCodeRenderer::render($qrCodeUrl, 250)),
+        ]);
+    }
+
+    public function download2faCodes(Request $request)
+    {
+        abort_if(! $request->user()->hasTwoFactorAuth(), 404);
+
+        $codes = $request->user()->two_factor_recovery_codes;
+
+        return new Response(Arr::join($codes, "\n"), 200, [
+            'Content-Disposition' => 'attachment',
+            'Content-Type' => 'text/plain',
         ]);
     }
 

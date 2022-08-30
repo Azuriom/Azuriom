@@ -55,6 +55,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 
     Route::prefix('2fa')->name('2fa.')->middleware('password.confirm')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
+        Route::get('/codes', [ProfileController::class, 'download2faCodes'])->name('codes');
 
         Route::post('/enable', [ProfileController::class, 'enable2fa'])->name('enable');
         Route::post('/disable', [ProfileController::class, 'disable2fa'])->name('disable');
