@@ -4,7 +4,7 @@
     <form method="POST">
         @csrf
 
-        <a href="{{ route('install.games') }}" class="btn btn-secondary mb-3">
+        <a href="{{ route('install.games') }}" class="btn btn-secondary rounded-pill mb-3">
             <i class="bi bi-arrow-left"></i> {{ trans('install.back') }}
         </a>
 
@@ -27,7 +27,7 @@
         @yield('game')
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary rounded-pill">
                 {{ trans('install.game.install') }} <i class="bi bi-check-lg"></i>
             </button>
         </div>

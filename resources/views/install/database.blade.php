@@ -63,7 +63,7 @@
         </p>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary rounded-pill">
                 {{ trans('messages.actions.continue') }} <i class="bi bi-arrow-right"></i>
             </button>
         </div>

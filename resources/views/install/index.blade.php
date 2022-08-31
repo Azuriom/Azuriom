@@ -68,7 +68,7 @@
         </div>
 
         <div class="text-center">
-            <a href="{{ route('home') }}" class="btn btn-primary mx-1">
+            <a href="{{ route('home') }}" class="btn btn-primary rounded-pill mx-1">
                 {{ trans('install.requirements.refresh') }} <i class="bi bi-arrow-clockwise"></i>
             </a>
         </div>

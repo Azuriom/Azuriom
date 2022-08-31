@@ -56,17 +56,18 @@ class EnsureInstalled
 
     protected function getRequestLocale(Request $request)
     {
+        $locales = InstallController::getAvailableLocaleCodes();
         $locale = $request->input('locale');
 
-        if (in_array($locale, InstallController::SUPPORTED_LANGUAGES, true)) {
+        if ($locales->contains($locale)) {
             return $locale;
         }
 
-        if (in_array($locale = $request->cookie('azuriom_locale'), InstallController::SUPPORTED_LANGUAGES, true)) {
+        if ($locales->contains($locale = $request->cookie('azuriom_locale'))) {
             return $locale;
         }
 
-        return $request->getPreferredLanguage(InstallController::SUPPORTED_LANGUAGES);
+        return $request->getPreferredLanguage($locales->all());
     }
 
     protected function addLocaleCookieToResponse(Response $response, string $locale)

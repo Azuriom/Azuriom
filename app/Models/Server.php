@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Azuriom\Games\FallbackServerBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -82,6 +83,11 @@ class Server extends Model
         return $this->hasMany(ServerCommand::class);
     }
 
+    protected function cpu(): Attribute
+    {
+        return Attribute::make(set: fn ($value) => $value >= 0 ? $value : null);
+    }
+
     public function fullAddress()
     {
         if ($this->port === null || $this->port === $this->bridge()->getDefaultPort()) {
@@ -134,19 +140,15 @@ class Server extends Model
             return;
         }
 
-        $stats = Arr::except($data, 'max_players');
-        $basicStats = Arr::only($stats, ['players', 'cpu', 'ram']);
-        $statsData = array_filter(Arr::except($stats, ['players', 'cpu', 'ram']));
-
-        if (Arr::get($basicStats, 'cpu', 0) < 0) {
-            $basicStats['cpu'] = null;
-        }
+        $statsData = Arr::except($data, ['players', 'max_players', 'cpu', 'ram']);
 
         if (is_numeric($tps = Arr::get($statsData, 'tps'))) {
             $statsData['tps'] = round($tps, 2);
         }
 
-        $this->stats()->create(array_merge($basicStats, ['data' => $statsData]));
+        $this->stats()->create(array_merge([
+            'data' => array_filter($statsData),
+        ], Arr::only($data, ['players', 'cpu', 'ram'])));
     }
 
     public function getData(string $key = null)

@@ -452,9 +452,9 @@ class SettingsController extends Controller
 
     protected function getAvailableLocales()
     {
-        return $this->getAvailableLocaleCodes()->mapWithKeys(function (string $file) {
-            return [$file => trans('messages.lang', [], $file)];
-        });
+        return $this->getAvailableLocaleCodes()->mapWithKeys(fn (string $file) => [
+            $file => trans('messages.lang', [], $file),
+        ]);
     }
 
     protected function getAvailableLocaleCodes()
