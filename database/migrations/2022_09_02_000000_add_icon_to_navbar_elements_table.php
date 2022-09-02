@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('navbar_elements', function (Blueprint $table) {
-            $table->string('icon')->nullable();
+            $table->string('icon')->nullable()->after('name');
         });
     }
 
