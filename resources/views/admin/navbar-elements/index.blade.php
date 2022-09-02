@@ -60,6 +60,9 @@
                             <div class="card-body d-flex justify-content-between">
                                 <span>
                                     <i class="bi bi-arrows-move sortable-handle"></i>
+                                    @if($navbarElement->icon)
+                                        <i class="bi bi-{{ $navbarElement->icon }} me-2"></i>
+                                    @endif
                                     {{ $navbarElement->name }}
 
                                     @if($navbarElement->isDropdown())
@@ -81,6 +84,9 @@
                                             <div class="card-body d-flex justify-content-between">
                                                 <span>
                                                     <i class="bi bi-arrows-move sortable-handle"></i>
+                                                    @if($childElement->icon)
+                                                        <i class="bi bi-{{ $childElement->icon }} me-2"></i>
+                                                    @endif
                                                     {{ $childElement->name }}
                                                 </span>
                                                 <span>

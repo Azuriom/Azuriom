@@ -50,7 +50,7 @@ class NavbarElement extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'value', 'position', 'type', 'parent_id', 'new_tab',
+        'icon','name', 'value', 'position', 'type', 'parent_id', 'new_tab',
     ];
 
     /**

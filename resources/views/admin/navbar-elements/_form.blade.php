@@ -1,7 +1,18 @@
 @csrf
 
 <div class="row g-3">
-    <div class="mb-3 col-md-6">
+    <div class="mb-3 col-md-4">
+        <label class="form-label" for="nameInput">{{ trans('messages.fields.icon') }}</label>
+        <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ (string) old('icon', $navbarElement->icon ?? '') }}">
+
+        @error('icon')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+        <p class="mb-0">
+            {!! trans('messages.icons') !!}
+        </p>
+    </div>
+    <div class="mb-3 col-md-4">
         <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ (string) old('name', $navbarElement->name ?? '') }}" required>
 
@@ -10,7 +21,7 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-md-6">
+    <div class="mb-3 col-md-4">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
             @foreach($types as $type)
