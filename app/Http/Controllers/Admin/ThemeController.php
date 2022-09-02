@@ -98,7 +98,7 @@ class ThemeController extends Controller
                 if ($oldConfig !== null) {
                     $newConfig = $this->themes->readConfig($theme) ?? [];
 
-                    $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
+                    $this->themes->updateConfig($theme, array_merge_recursive($newConfig, $oldConfig));
                 }
             }
         } catch (Throwable $t) {
@@ -178,7 +178,7 @@ class ThemeController extends Controller
             $config = $this->validate($request, $this->files->getRequire($rulesPath));
 
             if ($request->has('append')) {
-                $config = array_merge($this->themes->readConfig($theme), $config);
+                $config = array_merge_recursive($this->themes->readConfig($theme), $config);
             }
 
             $this->themes->updateConfig($theme, $config);

@@ -24,7 +24,7 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
             return (static::$avatarRetriever)($user, $size);
         }
 
-        return "https://crafthead.net/helm/{$user->name}/{$size}.png";
+        return "https://mc-heads.net/avatar/{$user->name}/{$size}.png";
     }
 
     public function getUserUniqueId(string $name)
