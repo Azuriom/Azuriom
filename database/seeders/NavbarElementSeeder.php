@@ -15,8 +15,8 @@ class NavbarElementSeeder extends Seeder
     public function run()
     {
         NavbarElement::firstOrCreate(['type' => 'home'], [
-            'icon' => 'house-fill',
             'name' => trans('seed.navbar.home'),
+            'icon' => 'bi bi-house',
             'value' => '#',
         ]);
     }

@@ -46,8 +46,8 @@ class NavbarElementRequest extends FormRequest
     public function rules()
     {
         return [
-            'icon' => ['max:100'],
             'name' => ['required', 'string', 'max:100'],
+            'icon' => ['nullable', 'string', 'max:100'],
             'type' => ['string', Rule::in(NavbarElement::types())],
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],

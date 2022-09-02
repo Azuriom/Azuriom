@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $name
+ * @property string|null $icon
  * @property string $value
  * @property int $position
  * @property string $type
@@ -50,7 +51,7 @@ class NavbarElement extends Model
      * @var array
      */
     protected $fillable = [
-        'icon', 'name', 'value', 'position', 'type', 'parent_id', 'new_tab',
+        'name', 'icon', 'value', 'position', 'type', 'parent_id', 'new_tab',
     ];
 
     /**
@@ -127,7 +128,14 @@ class NavbarElement extends Model
 
     public function getNameAttribute(string $value)
     {
-        return new HtmlString($value);
+        $icon = $this->icon !== null ? '<i class="'.$this->icon.'"></i> ' : '';
+
+        return new HtmlString($icon.e($value));
+    }
+
+    public function rawName()
+    {
+        return $this->getRawOriginal('name');
     }
 
     public function getTypeValue(string $type)

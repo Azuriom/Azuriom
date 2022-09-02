@@ -2,23 +2,28 @@
 
 <div class="row g-3">
     <div class="mb-3 col-md-4">
-        <label class="form-label" for="nameInput">{{ trans('messages.fields.icon') }}</label>
-        <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ (string) old('icon', $navbarElement->icon ?? '') }}">
-
-        @error('icon')
-        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-        @enderror
-        <p class="mb-0">
-            {!! trans('messages.icons') !!}
-        </p>
-    </div>
-    <div class="mb-3 col-md-4">
         <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
-        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ (string) old('name', $navbarElement->name ?? '') }}" required>
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $navbarElement->rawName() ?? '') }}" required>
 
         @error('name')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
+    </div>
+
+    <div class="mb-3 col-md-4">
+        <label class="form-label" for="iconInput">{{ trans('messages.fields.icon') }}</label>
+
+        <div class="input-group @error('icon') has-validation @enderror">
+            <span class="input-group-text"><i class="{{ $navbarElement->icon ?? 'bi bi-house' }}"></i></span>
+
+            <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $navbarElement->icon ?? '') }}" placeholder="bi bi-house" aria-labelledby="iconLabel">
+
+            @error('icon')
+            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <small id="iconLabel" class="form-text">@lang('messages.icons')</small>
     </div>
 
     <div class="mb-3 col-md-4">
