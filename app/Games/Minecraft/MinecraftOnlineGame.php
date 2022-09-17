@@ -58,13 +58,9 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         $cacheKey = 'games.minecraft.profile.'.$user->game_id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
-            $uuid = str_replace('-', '', $user->game_id);
-
-            $profile = Http::get("https://sessionserver.mojang.com/session/minecraft/profile/{$uuid}")
+            return Http::get('https://sessionserver.mojang.com/session/minecraft/profile/'.$uuid)
                 ->throw()
-                ->json();
-
-            return Arr::get($profile, 'name');
+                ->json('name');
         });
     }
 }
