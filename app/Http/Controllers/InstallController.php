@@ -295,10 +295,10 @@ class InstallController extends Controller
 
                 if ($game === 'mc-online') {
                     $gameId = Str::replace('-', '', $request->input('uuid', ''));
-                    $response = Http::get("https://api.mojang.com/user/profiles/{$gameId}/names");
+                    $response = Http::get("https://sessionserver.mojang.com/session/minecraft/profile/{$gameId}");
 
-                    if (! $response->successful() || ! ($name = Arr::get(Arr::last($response->json()), 'name'))) {
-                        throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID.']);
+                    if (! $response->successful() || ! ($name = Arr::get($response->json(), 'name'))) {
+                        throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID or couldn\'t contact Mojang\'s session server.']);
                     }
                 } elseif ($game === 'mc-bedrock') {
                     $gameId = $request->input('xuid');

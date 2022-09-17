@@ -60,11 +60,11 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
             $uuid = str_replace('-', '', $user->game_id);
 
-            $profiles = Http::get("https://api.mojang.com/user/profiles/{$uuid}/names")
+            $profile = Http::get("https://sessionserver.mojang.com/session/minecraft/profile/{$uuid}")
                 ->throw()
                 ->json();
 
-            return Arr::get(Arr::last($profiles), 'name');
+            return Arr::get($profile, 'name');
         });
     }
 }
