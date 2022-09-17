@@ -3,10 +3,8 @@
 namespace Azuriom\Games\Minecraft;
 
 use Azuriom\Models\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Ramsey\Uuid\Uuid;
 use RuntimeException;
 
 class MinecraftOnlineGame extends AbstractMinecraftGame
@@ -58,7 +56,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         $cacheKey = 'games.minecraft.profile.'.$user->game_id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
-            return Http::get('https://sessionserver.mojang.com/session/minecraft/profile/'.$uuid)
+            return Http::get('https://sessionserver.mojang.com/session/minecraft/profile/'.$user->game_id)
                 ->throw()
                 ->json('name');
         });
