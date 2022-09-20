@@ -6,7 +6,7 @@
 
         <div class="text-center">
             <p class="text-success">
-                <i class="bi bi-check-lg"></i> {{ trans('install.requirements.success') }}
+                <i class="bi bi-check2-circle"></i> {{ trans('install.requirements.success') }}
             </p>
 
             <a href="{{ route('install.database') }}" class="btn btn-primary rounded-pill mx-1">

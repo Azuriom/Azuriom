@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 
 class SteamGame extends Game
 {
-    protected const USER_INFO_URL = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
+    public const USER_INFO_URL = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
 
     protected string $name;
 

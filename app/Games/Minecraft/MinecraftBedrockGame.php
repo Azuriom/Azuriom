@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Http;
 
 class MinecraftBedrockGame extends Game
 {
+    public const PROFILE_LOOKUP = 'https://xbox-api.azuriom.com/profiles/';
+
+    public const USERNAME_LOOKUP = 'https://xbox-api.azuriom.com/search/';
+
     public function name()
     {
         return 'Minecraft Bedrock';
@@ -51,7 +55,7 @@ class MinecraftBedrockGame extends Game
     public function getUserUniqueId(string $name)
     {
         return Cache::remember("users.{$name}.xbox", now()->addMinutes(15), function () use ($name) {
-            return Http::get('https://xbox-api.azuriom.com/search/'.$name)
+            return Http::get(self::USERNAME_LOOKUP.$name)
                 ->throw()
                 ->json('xuid');
         });
@@ -74,7 +78,7 @@ class MinecraftBedrockGame extends Game
     public function getUserProfile(User $user)
     {
         return Cache::remember("users.{$user->id}.xbox", now()->addMinutes(15), function () use ($user) {
-            return Http::get('https://xbox-api.azuriom.com/profiles/'.$user->game_id)
+            return Http::get(self::PROFILE_LOOKUP.$user->game_id)
                 ->throw()
                 ->json() ?? [];
         });

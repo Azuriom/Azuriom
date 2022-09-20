@@ -5,7 +5,6 @@ namespace Azuriom\Models;
 use Azuriom\Games\FallbackServerBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -76,16 +75,11 @@ class Server extends Model
     /**
      * Get the commands waiting to be dispatch on this server.
      *
-     * Currently this should only be use for servers using AzLink.
+     * Currently, this should only be use for servers using AzLink.
      */
     public function commands()
     {
         return $this->hasMany(ServerCommand::class);
-    }
-
-    protected function cpu(): Attribute
-    {
-        return Attribute::make(set: fn ($value) => $value >= 0 ? $value : null);
     }
 
     public function fullAddress()

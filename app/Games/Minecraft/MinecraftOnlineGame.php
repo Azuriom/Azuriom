@@ -9,6 +9,10 @@ use RuntimeException;
 
 class MinecraftOnlineGame extends AbstractMinecraftGame
 {
+    public const PROFILE_LOOKUP = 'https://sessionserver.mojang.com/session/minecraft/profile/';
+
+    public const USERNAME_LOOKUP = 'https://api.mojang.com/users/profiles/minecraft/';
+
     public function id()
     {
         return 'mc-online';
@@ -35,7 +39,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
     public function getUserUniqueId(string $name)
     {
         return Cache::remember('games.minecraft.uuid.'.$name, now()->addMinutes(30), function () use ($name) {
-            $uuid = Http::get("https://api.mojang.com/users/profiles/minecraft/{$name}")
+            $uuid = Http::get(self::USERNAME_LOOKUP.$name)
                 ->throw()
                 ->json('id');
 
@@ -56,7 +60,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         $cacheKey = 'games.minecraft.profile.'.$user->game_id;
 
         return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($user) {
-            return Http::get('https://sessionserver.mojang.com/session/minecraft/profile/'.$user->game_id)
+            return Http::get(self::PROFILE_LOOKUP.$user->game_id)
                 ->throw()
                 ->json('name');
         });

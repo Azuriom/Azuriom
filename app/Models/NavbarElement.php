@@ -126,14 +126,18 @@ class NavbarElement extends Model
         };
     }
 
-    public function getNameAttribute(string $value)
+    public function getNameAttribute($value)
     {
+        if ($value instanceof HtmlString) {
+            return $value;
+        }
+
         $icon = $this->icon !== null ? '<i class="'.$this->icon.'"></i> ' : '';
 
         return new HtmlString($icon.e($value));
     }
 
-    public function rawName()
+    public function getRawNameAttribute()
     {
         return $this->getRawOriginal('name');
     }

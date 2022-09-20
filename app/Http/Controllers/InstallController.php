@@ -4,6 +4,10 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Extensions\UpdateManager;
+use Azuriom\Games\Minecraft\MinecraftBedrockGame;
+use Azuriom\Games\Minecraft\MinecraftOnlineGame;
+use Azuriom\Games\Steam\SteamGame;
+use Azuriom\Models\Role;
 use Azuriom\Models\Setting;
 use Azuriom\Models\User;
 use Azuriom\Support\EnvEditor;
@@ -198,7 +202,7 @@ class InstallController extends Controller
             return redirect()->route('install.games');
         } catch (Throwable $t) {
             return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
-                'error' => utf8_encode($t->getMessage()),
+                'error' => mb_convert_encoding($t->getMessage(), 'UTF-8'),
             ]));
         }
     }
@@ -269,9 +273,10 @@ class InstallController extends Controller
                 $steamKey = $request->input('key');
 
                 try {
-                    $name = Http::get("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?steamids={$gameId}&key={$steamKey}")
-                        ->throw()
-                        ->json('response.players.0.personaname');
+                    $name = Http::get(SteamGame::USER_INFO_URL, [
+                        'key' => $steamKey,
+                        'steamids' => $gameId,
+                    ])->throw()->json('response.players.0.personaname');
 
                     if ($name === null) {
                         throw new RuntimeException('Invalid Steam URL.');
@@ -295,14 +300,14 @@ class InstallController extends Controller
 
                 if ($game === 'mc-online') {
                     $gameId = Str::replace('-', '', $request->input('uuid', ''));
-                    $response = Http::get("https://sessionserver.mojang.com/session/minecraft/profile/{$gameId}");
+                    $response = Http::get(MinecraftOnlineGame::PROFILE_LOOKUP.$gameId);
 
                     if (! $response->successful() || ! ($name = $response->json('name'))) {
                         throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID or couldn\'t contact Mojang\'s session server.']);
                     }
                 } elseif ($game === 'mc-bedrock') {
                     $gameId = $request->input('xuid');
-                    $name = Http::get('https://xbox-api.azuriom.com/profiles/'.$gameId)
+                    $name = Http::get(MinecraftBedrockGame::PROFILE_LOOKUP.$gameId)
                         ->json('gamertag');
 
                     if ($name === null) {
@@ -351,6 +356,7 @@ class InstallController extends Controller
                 }
             }
 
+            $roleId = Role::admin()->orderByDesc('power')->value('id');
             $user = User::create([
                 'name' => $name,
                 'email' => $request->input('email'),
@@ -359,7 +365,7 @@ class InstallController extends Controller
             ]);
 
             $user->markEmailAsVerified();
-            $user->forceFill(['role_id' => 2])->save();
+            $user->forceFill(['role_id' => $roleId])->save();
 
             if ($game !== 'mc-offline') {
                 Setting::updateSettings('register', false);
@@ -368,7 +374,7 @@ class InstallController extends Controller
             throw $e;
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
-                'error' => utf8_encode($e->getMessage()),
+                'error' => mb_convert_encoding($e->getMessage(), 'UTF-8'),
             ]));
         }
 
