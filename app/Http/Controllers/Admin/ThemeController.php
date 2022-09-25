@@ -162,6 +162,29 @@ class ThemeController extends Controller
     }
 
     /**
+     * Append changes to the old configuration.
+     *
+     * @param  array  $old_config
+     * @param  array  $new_config
+     * @return array $config
+     *
+     */
+    function appendConfig(array $old_config, array $new_config)
+    {
+        $config = $old_config;
+
+        foreach($new_config as $index => $new_config_value) {
+            if (is_array($new_config_value)) {
+                $config[$index] = $this->appendConfig($config[$index], $new_config_value);
+            } else {
+                $config[$index] = $new_config_value;
+            }
+        }
+        
+        return $config;
+    }
+
+    /**
      * Update the theme settings.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -178,7 +201,7 @@ class ThemeController extends Controller
             $config = $this->validate($request, $this->files->getRequire($rulesPath));
 
             if ($request->has('append')) {
-                $config = array_merge_recursive($this->themes->readConfig($theme), $config);
+                $config = $this->appendConfig($this->themes->readConfig($theme), $config);
             }
 
             $this->themes->updateConfig($theme, $config);
