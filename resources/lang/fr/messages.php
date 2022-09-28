@@ -205,4 +205,15 @@ return [
     ],
 
     'likes' => 'J\'aimes : :count',
+
+    'markdown' => [
+        'init' => 'Joignez des images par glisser-déposer ou depuis le presse-papier.',
+        'drag' => 'Déposez pour télécharger.',
+        'drop' => 'Téléchargement de #images_names#...',
+        'progress' => 'Téléchargement de #file_name# : #progress#%',
+        'uploaded' => 'Téléchargement de #image_name# terminé.',
+
+        'size' => 'L\'image #image_name# est trop lourde (#image_size#).\nLa taille maximum est #image_max_size#.',
+        'error' => 'Une erreur est survenue lors du téléchargement de l\'image #image_name#.',
+    ],
 ];

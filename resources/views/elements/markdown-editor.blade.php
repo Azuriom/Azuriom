@@ -10,6 +10,7 @@
 
             promptURLs: true,
             spellChecker: false,
+            status: ['upload-image'],
 
             showIcons: ['strikethrough', 'code', '{{ isset($imagesUploadUrl) ? 'upload-image' : 'image' }}', 'table', 'horizontal-rule', 'undo', 'redo'],
 
@@ -47,6 +48,19 @@
                 });
             },
             @endisset
+
+            imageTexts: {
+                sbInit: '{{ trans('messages.markdown.init') }}',
+                sbOnDragEnter: '{{ trans('messages.markdown.drag') }}',
+                sbOnDrop: '{{ trans('messages.markdown.drop') }}',
+                sbProgress: '{{ trans('messages.markdown.progress') }}',
+                sbOnUploaded: '{{ trans('messages.markdown.uploaded') }}',
+            },
+
+            errorMessages: {
+                fileTooLarge: '{{ trans('messages.markdown.size') }}',
+                importError: '{{ trans('messages.markdown.error') }}',
+            },
         });
     </script>
 @endpush

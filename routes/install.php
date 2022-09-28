@@ -1,6 +1,7 @@
 <?php
 
 use Azuriom\Http\Controllers\InstallController;
+use Illuminate\Support\Facades\Route;
 
 $middleware = [
     \Azuriom\Http\Middleware\EncryptCookies::class,

@@ -50,14 +50,13 @@ abstract class ServerBridge
      * @param  string[]  $commands
      * @param  \Azuriom\Models\User  $user
      * @param  bool  $needConnected
-     * @return bool
      */
     public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {
         if (! $this->canExecuteCommand()) {
             report(new RuntimeException('Command cannot be executed with this link.'));
 
-            return false;
+            return;
         }
 
         throw new RuntimeException('The sendCommands() method must be implemented.');

@@ -75,9 +75,4 @@ class GameCreateCommand extends PluginCreateCommand
 
         return 0;
     }
-
-    private function replace(string $stub, string $name, string $id, string $namespace)
-    {
-        return str_replace(['DummyPlugin', 'DummyNamespace', 'DummyId'], [$name, $namespace, $id], $stub);
-    }
 }

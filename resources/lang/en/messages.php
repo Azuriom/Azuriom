@@ -205,4 +205,15 @@ return [
     ],
 
     'likes' => 'Likes: :count',
+
+    'markdown' => [
+        'init' => 'Attach files by drag and dropping or pasting from clipboard.',
+        'drag' => 'Drop image to upload it.',
+        'drop' => 'Uploading image #images_names#...',
+        'progress' => 'Uploading #file_name#: #progress#%',
+        'uploaded' => 'Uploaded #image_name#',
+
+        'size' => 'Image #image_name# is too big (#image_size#).\nMaximum file size is #image_max_size#.',
+        'error' => 'Something went wrong when uploading the image #image_name#.',
+    ],
 ];
