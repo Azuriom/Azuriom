@@ -98,7 +98,7 @@ class ThemeController extends Controller
                 if ($oldConfig !== null) {
                     $newConfig = $this->themes->readConfig($theme) ?? [];
 
-                    $this->themes->updateConfig($theme, array_merge_recursive($newConfig, $oldConfig));
+                    $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
                 }
             }
         } catch (Throwable $t) {
@@ -162,29 +162,6 @@ class ThemeController extends Controller
     }
 
     /**
-     * Append changes to the old configuration.
-     *
-     * @param  array  $old_config
-     * @param  array  $new_config
-     * @return array $config
-     *
-     */
-    function appendConfig(array $old_config, array $new_config)
-    {
-        $config = $old_config;
-
-        foreach($new_config as $index => $new_config_value) {
-            if (is_array($new_config_value)) {
-                $config[$index] = $this->appendConfig($config[$index], $new_config_value);
-            } else {
-                $config[$index] = $new_config_value;
-            }
-        }
-        
-        return $config;
-    }
-
-    /**
      * Update the theme settings.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -201,7 +178,8 @@ class ThemeController extends Controller
             $config = $this->validate($request, $this->files->getRequire($rulesPath));
 
             if ($request->has('append')) {
-                $config = $this->appendConfig($this->themes->readConfig($theme), $config);
+                $currentConfig = $this->themes->readConfig($theme);
+                $config = static::appendConfig($currentConfig, $config);
             }
 
             $this->themes->updateConfig($theme, $config);
@@ -237,5 +215,18 @@ class ThemeController extends Controller
 
         return redirect()->route('admin.themes.index')
             ->with('success', trans('admin.themes.updated'));
+    }
+
+    protected static function appendConfig(array $config, array $replacement)
+    {
+        foreach($replacement as $key => $value) {
+            if (is_array($value)) {
+                $config[$key] = static::appendConfig($config[$key], $value);
+            } else {
+                $config[$key] = $value;
+            }
+        }
+
+        return $config;
     }
 }
