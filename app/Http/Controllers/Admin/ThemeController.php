@@ -98,7 +98,7 @@ class ThemeController extends Controller
                 if ($oldConfig !== null) {
                     $newConfig = $this->themes->readConfig($theme) ?? [];
 
-                    $this->themes->updateConfig($theme, array_merge_recursive($newConfig, $oldConfig));
+                    $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
                 }
             }
         } catch (Throwable $t) {
@@ -178,7 +178,8 @@ class ThemeController extends Controller
             $config = $this->validate($request, $this->files->getRequire($rulesPath));
 
             if ($request->has('append')) {
-                $config = array_merge_recursive($this->themes->readConfig($theme), $config);
+                $currentConfig = $this->themes->readConfig($theme);
+                $config = static::appendConfig($currentConfig, $config);
             }
 
             $this->themes->updateConfig($theme, $config);
@@ -214,5 +215,18 @@ class ThemeController extends Controller
 
         return redirect()->route('admin.themes.index')
             ->with('success', trans('admin.themes.updated'));
+    }
+
+    protected static function appendConfig(array $config, array $replacement)
+    {
+        foreach ($replacement as $key => $value) {
+            if (is_array($value)) {
+                $config[$key] = static::appendConfig($config[$key], $value);
+            } else {
+                $config[$key] = $value;
+            }
+        }
+
+        return $config;
     }
 }

@@ -215,6 +215,8 @@ class ThemeManager extends ExtensionManager
             return;
         }
 
+        Setting::updateSettings('themes.config.'.$theme, null);
+
         $this->files->deleteDirectory($this->publicPath('', $theme));
 
         $this->files->deleteDirectory($this->path('', $theme));
