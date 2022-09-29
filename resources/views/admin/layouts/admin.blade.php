@@ -38,7 +38,7 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
 
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center">
                     <div class="sidebar-brand-text mx-3">
                         <img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom">
 
@@ -333,7 +333,7 @@
                                 <i class="bi bi-house small d-sm-none d-sm-inline-block" data-bs-toggle="tooltip"></i>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="position-relative">
