@@ -322,6 +322,18 @@
                             @endcan
                         @endif
 
+                        <li class="nav-item">
+                            <a  href="{{ route('logout') }}" data-route="logout" class="nav-icon">
+                                <i class="bi bi-box-arrow-right small d-sm-none d-sm-inline-block" data-bs-toggle="tooltip"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('home') }}" class="nav-icon" data-route="back">
+                                <i class="bi bi-house small d-sm-none d-sm-inline-block" data-bs-toggle="tooltip"></i>
+                            </a>
+                        </li>
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="position-relative">
