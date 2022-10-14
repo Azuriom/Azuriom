@@ -38,7 +38,7 @@
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
 
-                <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                     <div class="sidebar-brand-text mx-3">
                         <img src="{{ asset('svg/azuriom-text-white.svg') }}" alt="Azuriom">
 
@@ -322,18 +322,6 @@
                             @endcan
                         @endif
 
-                        <li class="nav-item">
-                            <a  href="{{ route('logout') }}" data-route="logout" class="nav-icon">
-                                <i class="bi bi-box-arrow-right small d-sm-none d-sm-inline-block" data-bs-toggle="tooltip"></i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('home') }}" class="nav-icon" data-route="back">
-                                <i class="bi bi-house small d-sm-none d-sm-inline-block" data-bs-toggle="tooltip"></i>
-                            </a>
-                        </li>
-
                         <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="position-relative">
@@ -397,7 +385,7 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="avatar img-fluid rounded me-1" src="{{ auth()->user()->getAvatar() }}" alt="Avatar">
                                 <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                             </a>
