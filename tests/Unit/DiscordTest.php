@@ -48,6 +48,7 @@ class DiscordTest extends TestCase
                         'icon_url' => null,
                     ],
                     'thumbnail' => null,
+                    'image' => null,
                     'author' => [
                         'name' => 'Wampus',
                         'url' => 'https://github.com',

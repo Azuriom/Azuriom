@@ -112,6 +112,8 @@ return [
             'user_money_transfer' => 'Enable money transfer between users',
             'site_key' => 'Site key for azuriom.com',
             'site_key_info' => 'The azuriom.com site key is required to install premium extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
+            'webhook' => 'Posts Discord Webhook URL',
+            'webhook_info' => 'A Discord webhook will be sent to this URL when creating a new post, if the publication date is not in the future. Leave empty to disable.',
         ],
 
         'security' => [

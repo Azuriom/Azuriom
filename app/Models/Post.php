@@ -6,6 +6,8 @@ use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
+use Azuriom\Support\Discord\DiscordWebhook;
+use Azuriom\Support\Discord\Embed;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -115,6 +117,23 @@ class Post extends Model
         } catch (Exception $e) {
             return 0;
         }
+    }
+
+    public function createDiscordWebhook()
+    {
+        $embed = Embed::create()
+            ->title($this->title)
+            ->description($this->description)
+            ->author($this->author->name, null, $this->author->getAvatar())
+            ->color('#004de6')
+            ->url(route('posts.show', $this))
+            ->timestamp($this->published_at);
+
+        if ($this->hasImage()) {
+            $embed->image($this->imageUrl());
+        }
+
+        return DiscordWebhook::create()->addEmbed($embed);
     }
 
     /**

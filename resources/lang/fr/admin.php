@@ -110,6 +110,8 @@ return [
             'money' => 'Nom de la monnaie du site',
             'copyright' => 'Copyright',
             'user_money_transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
+            'webhook' => 'URL du webhook Discord pour les articles',
+            'webhook_info' => 'Un webhook Discord sera envoyé sur cette URL lors de la création d\'un nouvel article, si la date de publication n\'est pas dans le futur. Laisser vide pour désactiver.',
             'site_key' => 'Clé de site pour azuriom.com',
             'site_key_info' => 'La clé de site d\'azuriom.com est utilisée pour installer les extensions payantes achetées sur le market. Elle peut être obtenue dans votre <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">profil Azuriom</a>.',
         ],

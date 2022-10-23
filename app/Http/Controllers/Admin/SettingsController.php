@@ -107,6 +107,7 @@ class SettingsController extends Controller
             'money' => setting('money'),
             'siteKey' => setting('site-key'),
             'userMoneyTransfer' => setting('users.money_transfer'),
+            'postsWebhook' => setting('posts_webhook'),
         ]);
     }
 
@@ -133,6 +134,7 @@ class SettingsController extends Controller
             'background' => ['nullable', 'exists:images,file'],
             'money' => ['required', 'string', 'max:15'],
             'site-key' => ['nullable', 'string', 'size:50'],
+            'posts_webhook' => ['nullable', 'url'],
         ]), [
             'user_money_transfer' => $request->filled('user_money_transfer'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash

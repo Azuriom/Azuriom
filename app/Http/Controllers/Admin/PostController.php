@@ -50,6 +50,10 @@ class PostController extends Controller
 
         $post->persistPendingAttachments($request->input('pending_id'));
 
+        if ($post->isPublished() && ($webhookUrl = setting('posts_webhook'))) {
+            rescue(fn () => $post->createDiscordWebhook()->send($webhookUrl));
+        }
+
         return redirect()->route('admin.posts.index')
             ->with('success', trans('messages.status.success'));
     }

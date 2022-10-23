@@ -177,6 +177,17 @@ class Server extends Model
         return $base.' '.$this->token;
     }
 
+    public function playersRecord(bool $force = false)
+    {
+        if ($force) {
+            return $this->stats()->max('players');
+        }
+
+        return Cache::remember('servers.record.'.$this->id, now()->addHour(), function () {
+            return $this->playersRecord(true);
+        });
+    }
+
     public static function types()
     {
         return array_keys(game()->getSupportedServers());

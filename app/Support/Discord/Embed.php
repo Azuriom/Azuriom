@@ -5,6 +5,7 @@ namespace Azuriom\Support\Discord;
 use Azuriom\Support\Discord\Embeds\EmbedAuthor;
 use Azuriom\Support\Discord\Embeds\EmbedField;
 use Azuriom\Support\Discord\Embeds\EmbedFooter;
+use Azuriom\Support\Discord\Embeds\EmbedImage;
 use Azuriom\Support\Discord\Embeds\EmbedThumbnail;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -56,6 +57,13 @@ class Embed implements Arrayable
      * @var \Azuriom\Support\Discord\Embeds\EmbedFooter|null
      */
     protected ?EmbedFooter $footer = null;
+
+    /**
+     * Image information.
+     *
+     * @var \Azuriom\Support\Discord\Embeds\EmbedImage|null
+     */
+    protected ?EmbedImage $image = null;
 
     /**
      * Thumbnail information.
@@ -143,10 +151,10 @@ class Embed implements Arrayable
     /**
      * Set the color code of the embed.
      *
-     * @param  string|int|null  $color
+     * @param  int|string  $color
      * @return $this
      */
-    public function color($color)
+    public function color(int|string $color)
     {
         if (is_string($color) && Str::startsWith($color, '#')) {
             $this->color = (int) hexdec(Str::substr($color, 1));
@@ -178,12 +186,27 @@ class Embed implements Arrayable
     }
 
     /**
-     * Set the thumbnail of the embed.
+     * Set the image of the embed.
      *
-     * @param  string|null  $url
+     * @param  string  $url
+     * @param  int|null  $height
+     * @param  int|null  $width
      * @return $this
      */
-    public function thumbnail(?string $url)
+    public function image(string $url, int $height = null, int $width = null)
+    {
+        $this->image = new EmbedImage($url, $height, $width);
+
+        return $this;
+    }
+
+    /**
+     * Set the thumbnail of the embed.
+     *
+     * @param  string  $url
+     * @return $this
+     */
+    public function thumbnail(string $url)
     {
         $this->thumbnail = new EmbedThumbnail($url);
 
@@ -193,12 +216,12 @@ class Embed implements Arrayable
     /**
      * Set the author of the embed.
      *
-     * @param  string|null  $name
-     * @param  string  $url
-     * @param  string  $iconUrl
+     * @param  string  $name
+     * @param  string|null  $url
+     * @param  string|null  $iconUrl
      * @return $this
      */
-    public function author(?string $name, string $url = null, string $iconUrl = null)
+    public function author(string $name, string $url = null, string $iconUrl = null)
     {
         $this->author = new EmbedAuthor($name, $url, $iconUrl);
 
@@ -233,6 +256,7 @@ class Embed implements Arrayable
             'color' => $this->color,
             'footer' => $this->footer?->toArray(),
             'thumbnail' => $this->thumbnail?->toArray(),
+            'image' => $this->image?->toArray(),
             'author' => $this->author?->toArray(),
             'fields' => array_map(function (EmbedField $field) {
                 return $field->toArray();

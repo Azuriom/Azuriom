@@ -179,15 +179,28 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label" for="siteKeyInput">{{ trans('admin.settings.index.site_key') }}</label>
-                    <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">
+                <div class="row g-3">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="siteKeyInput">{{ trans('admin.settings.index.site_key') }}</label>
+                        <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">
 
-                    @error('site-key')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
+                        @error('site-key')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
 
-                    <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site_key_info')</small>
+                        <small id="siteKeyInfo" class="form-text">@lang('admin.settings.index.site_key_info')</small>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="webhookInput">{{ trans('admin.settings.index.webhook') }}</label>
+                        <input type="text" class="form-control @error('posts_webhook') is-invalid @enderror" id="webhookInput" name="posts_webhook" placeholder="https://discord.com/api/webhooks/.../..." value="{{ old('posts_webhook', $postsWebhook) }}" aria-describedby="webhookInfo">
+
+                        @error('posts_webhook')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+
+                        <small id="webhookInfo" class="form-text">{{ trans('admin.settings.index.webhook_info') }}</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
