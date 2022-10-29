@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class EmbedImage implements Arrayable
 {
     /**
-     * Source URL of image (only supports http(s) and attachments)
+     * Source URL of image (only supports http(s) and attachments).
      *
      * @var string
      */

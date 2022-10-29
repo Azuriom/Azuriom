@@ -117,6 +117,7 @@ return [
     'required' => 'Le champ :attribute est requis.',
     'required_array_keys' => 'Le champ :attribute doit contenir des valeur pour : :values.',
     'required_if' => 'Le champ :attribute est requis quand la valeur de :other est :value.',
+    'required_if_accepted' => 'Le champ :attribute est requis quand :other est accepté.',
     'required_unless' => 'Le champ :attribute est requis sauf si :other est :values.',
     'required_with' => 'Le champ :attribute est requis quand :values est présent.',
     'required_with_all' => 'Le champ :attribute est requis quand :values sont présents.',

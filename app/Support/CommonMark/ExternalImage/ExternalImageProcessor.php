@@ -36,6 +36,7 @@ class ExternalImageProcessor
 
                 if (self::hostMatches($host, $internalHosts)) {
                     $image->data->set('external', false);
+
                     continue;
                 }
 

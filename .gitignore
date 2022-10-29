@@ -7,6 +7,9 @@
 .vscode/
 .history
 
+# Fleet
+.fleet/
+
 # Mac
 .DS_Store
 
@@ -21,6 +24,7 @@
 /vendor
 .env
 .env.backup
+.env.production
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json

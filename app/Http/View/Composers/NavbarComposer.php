@@ -26,6 +26,7 @@ class NavbarComposer
         foreach ($parentElements as $element) {
             if (! $element->isDropdown()) {
                 $element->setRelation('elements', collect());
+
                 continue;
             }
 

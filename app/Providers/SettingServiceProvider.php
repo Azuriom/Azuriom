@@ -75,7 +75,7 @@ class SettingServiceProvider extends ServiceProvider
                 break;
             case 'timezone':
                 date_default_timezone_set($value);
-            // no break
+                // no break
             case 'url':
                 $config->set('app.'.$name, $value);
                 break;
