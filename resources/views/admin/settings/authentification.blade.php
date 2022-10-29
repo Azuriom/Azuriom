@@ -69,8 +69,11 @@
                         <option value="hcaptcha" @selected($captchaType === 'hcaptcha')>
                             hCaptcha
                         </option>
+                        <option value="turnstile" @selected($captchaType === 'turnstile')>
+                            Cloudflare Turnstile
+                        </option>
                         <option value="recaptcha" @selected($captchaType === 'recaptcha')>
-                            reCaptcha
+                            Google reCaptcha
                         </option>
                     </select>
 
@@ -79,7 +82,7 @@
                     @enderror
                 </div>
 
-                <div v-show="type === 'hcaptcha' || type === 'recaptcha'">
+                <div v-show="type">
                     <div class="card card-body mb-2">
                         <div class="row g-3">
                             <div class="mb-3 col-md-6">
@@ -90,12 +93,16 @@
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
 
-                                <small class="form-text" data-captcha-type="recaptcha">
+                                <small class="form-text" v-if="type === 'recaptcha'">
                                     @lang('admin.settings.security.captcha.recaptcha')
                                 </small>
 
-                                <small class="form-text" data-captcha-type="hcaptcha">
+                                <small class="form-text" v-if="type === 'hcaptcha'">
                                     @lang('admin.settings.security.captcha.hcaptcha')
+                                </small>
+
+                                <small class="form-text" v-if="type === 'turnstile'">
+                                    @lang('admin.settings.security.captcha.turnstile')
                                 </small>
                             </div>
 

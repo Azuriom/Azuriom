@@ -26,9 +26,9 @@ class VerifyCaptcha
             return $next($request);
         }
 
-        $success = $captchaType === 'hcaptcha'
-            ? $this->verifyHCaptcha($request, $secretKey)
-            : $this->verifyReCaptcha($request, $secretKey);
+        $success = $captchaType === 'recaptcha'
+            ? $this->verifyReCaptcha($request, $secretKey)
+            : $this->verifyCaptcha($captchaType, $request, $secretKey);
 
         return $success ? $next($request) : $this->sendFailedResponse($request);
     }
@@ -54,15 +54,16 @@ class VerifyCaptcha
         return $response->isSuccess();
     }
 
-    protected function verifyHCaptcha(Request $request, string $secretKey)
+    protected function verifyCaptcha(string $type, Request $request, string $secretKey)
     {
-        $code = $request->input('h-captcha-response');
+        $inputName = $type === 'hcaptcha' ? 'h-captcha' : 'cf-turnstile';
+        $host = $type === 'hcaptcha' ? 'hcaptcha.com' : 'challenges.cloudflare.com/turnstile/v0';
 
-        if ($code === null) {
+        if (($code = $request->input($inputName.'-response')) === null) {
             return false;
         }
 
-        $response = Http::asForm()->post('https://hcaptcha.com/siteverify', [
+        $response = Http::asForm()->post('https://'.$host.'/siteverify', [
             'secret' => $secretKey,
             'response' => $code,
         ]);

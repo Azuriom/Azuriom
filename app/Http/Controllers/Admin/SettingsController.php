@@ -170,7 +170,7 @@ class SettingsController extends Controller
         $hash = array_keys($this->hashAlgorithms);
 
         $this->validate($request, [
-            'captcha' => ['nullable', 'in:recaptcha,hcaptcha'],
+            'captcha' => ['nullable', 'in:recaptcha,hcaptcha,turnstile'],
             'site_key' => ['required_with:captcha', 'max:50'],
             'secret_key' => ['required_with:captcha', 'max:50'],
             'hash' => [

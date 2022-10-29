@@ -125,6 +125,7 @@ return [
                 'secret_key' => 'Secret key',
                 'recaptcha' => 'You can get reCaptcha keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCaptcha website</a>. You need to use reCaptcha <strong>v2 invisible</strong> keys.',
                 'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer"> hCaptcha website</a>.',
+                'turnstile' => 'You can get Turnstil keys on the <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">Cloudflare dashboard</a>. You must select "Managed" widget.',
             ],
 
             'hash' => 'Hash algorithm',

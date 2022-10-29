@@ -47,4 +47,10 @@
     @endpush
 
     <div class="h-captcha mb-2 @if($center ?? false) text-center @endif" data-sitekey="{{ setting('captcha.site_key') }}" @if($dark ?? false) data-theme="dark" @endif></div>
+@elseif(setting('captcha.type') === 'turnstile')
+    @push('scripts')
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    @endpush
+
+    <div class="cf-turnstile mb-2 @if($center ?? false) text-center @endif" data-sitekey="{{ setting('captcha.site_key') }}" data-theme="{{ ($dark ?? false) ? 'dark' : 'light' }}"></div>
 @endif
