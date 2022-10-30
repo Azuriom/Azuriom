@@ -14,7 +14,7 @@ class RulesTest extends TestCase
     public function testColorRule()
     {
         $validColors = ['#ffffff', '#000000', '#ff0000'];
-        $invalidColors = ['#fff', 'fff', 'ff0000', '#f000', '#hh0000'];
+        $invalidColors = ['#fff', 'fff', 'ff0000', '#f000', '#hh0000', 'not-a-color', '#FF0000', '#FF00000'];
 
         foreach ($validColors as $color) {
             $this->assertTrue($this->validateRule($color, new Color()));
