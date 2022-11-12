@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2.0RC6-fpm-bullseye
 
 RUN apt-get update && apt-get install -y libicu-dev libzip-dev \
     libicu-dev zlib1g-dev libpng-dev libjpeg-dev libxml2-dev \
