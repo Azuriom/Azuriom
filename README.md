@@ -42,7 +42,7 @@ Contributions are always welcome!
 
 See [the contribution guidelines](CONTRIBUTING.md) for ways to get started.
 
-Please adhere to this project's [code of conduct](CODE_OF_CONDUCT.md)`.
+Please adhere to this project's [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Translations
 
