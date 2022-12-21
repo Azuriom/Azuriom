@@ -4,6 +4,7 @@ namespace Azuriom\Models\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Add a simple search method to a model.
@@ -17,18 +18,34 @@ trait Searchable
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $search
-     * @param  string[]|string|null  $columns
+     * @param  string|string[]|null  $columns
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch(Builder $query, string $search, $columns = null)
+    public function scopeSearch(Builder $query, string $search, array|string $columns = null)
     {
-        if ($columns !== null) {
-            $columns = Arr::wrap($columns);
+        $columns = $columns !== null ? Arr::wrap($columns) : $this->searchable;
+
+        if ($columns === ['*']) {
+            $columns = $this->searchable;
         }
 
         return $query->where(function (Builder $query) use ($search, $columns) {
-            foreach ($columns ?? $this->searchable as $column) {
-                $query->orWhere($column, 'like', "%{$search}%");
+            $models = [];
+
+            foreach ($columns as $column) {
+                if (Str::contains($column, '.')) {
+                    [$model, $column] = explode('.', $column);
+
+                    $models[$model] = array_merge($models[$model] ?? [], [$column]);
+                } else {
+                    $query->orWhere($column, 'like', "%{$search}%");
+                }
+            }
+
+            foreach ($models as $model => $column) {
+                $query->orWhereRelation($model, function (Builder $query) use ($column, $search) {
+                    $query->search($search, $column);
+                });
             }
 
             if (is_numeric($search) || $this->getKeyType() !== 'int') {

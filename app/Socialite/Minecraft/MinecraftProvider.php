@@ -3,7 +3,6 @@
 namespace Azuriom\Socialite\Minecraft;
 
 use Azuriom\Socialite\Xbox\XboxProvider;
-use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -11,8 +10,6 @@ use Laravel\Socialite\Two\User;
 
 class MinecraftProvider extends XboxProvider
 {
-    public static ?Closure $notFoundCallback = null;
-
     protected function getUserByToken($token)
     {
         $response = Http::asJson()->post('https://api.minecraftservices.com/authentication/login_with_xbox', [

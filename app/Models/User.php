@@ -98,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $searchable = [
-        'email', 'name', 'game_id',
+        'email', 'name', 'game_id', 'role.*',
     ];
 
     /**
@@ -201,7 +201,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'two_factor_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
-            'deleted_at' => now(),
+            'deleted_at' => $this->freshTimestamp(),
         ])->save();
     }
 

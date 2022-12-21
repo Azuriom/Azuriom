@@ -13,6 +13,8 @@ class XboxProvider extends AbstractProvider
 {
     public static ?Closure $notFoundCallback = null;
 
+    public static ?Closure $childCallback = null;
+
     protected $parameters = [
         'prompt' => 'select_account',
     ];
@@ -84,6 +86,11 @@ class XboxProvider extends AbstractProvider
             if ($code === 2148916233) {
                 throw value(static::$notFoundCallback)
                     ?? new InvalidStateException('No Xbox profile for this account.');
+            }
+
+            if ($code === 2148916238) {
+                throw value(static::$childCallback)
+                    ?? new InvalidStateException('Child accounts must be added to a Family by an adult.');
             }
 
             throw new InvalidStateException('Invalid Xbox response: '.$code);

@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Casts\Color;
 use Azuriom\Models\Traits\Loggable;
+use Azuriom\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ class Role extends Model
 {
     use HasFactory;
     use Loggable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +45,15 @@ class Role extends Model
     protected $casts = [
         'color' => Color::class,
         'is_admin' => 'boolean',
+    ];
+
+    /**
+     * The attributes that can be search for.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'name',
     ];
 
     /**

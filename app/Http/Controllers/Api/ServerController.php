@@ -17,7 +17,9 @@ class ServerController extends Controller
 {
     public function status()
     {
-        return response()->noContent();
+        return response()->noContent(headers: [
+            'AzLink-Status' => 'Success',
+        ]);
     }
 
     public function fetch(Request $request)

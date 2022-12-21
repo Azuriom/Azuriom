@@ -2,7 +2,7 @@
 
 # Azuriom
 
-[![PHP CI](https://img.shields.io/github/workflow/status/Azuriom/Azuriom/PHP%20CI?style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
+[![PHP CI](https://img.shields.io/github/actions/workflow/status/Azuriom/Azuriom/tests.yml?branch=master&style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![CodeFactor](https://www.codefactor.io/repository/github/azuriom/azuriom/badge?style=flat-square)](https://www.codefactor.io/repository/github/azuriom/azuriom)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)

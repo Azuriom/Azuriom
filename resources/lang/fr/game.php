@@ -13,6 +13,7 @@ return [
     'minecraft' => [
         'id' => 'UUID',
         'missing' => 'Ce compte Xbox ne possède pas de profile Minecraft.',
+        'child' => 'Ce compte est un enfant (moins de 18 ans) et doit être ajouté à une famille par un adulte pour pouvoir se connecter.',
         'commands' => 'Vous pouvez utiliser <code>{name}</code> pour le pseudo du joueur et <code>{uuid}</code> pour l\'UUID du joueur.',
     ],
 
