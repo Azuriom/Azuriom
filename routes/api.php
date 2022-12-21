@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('posts', PostController::class)->names('api.')->only(['index', 'show']);
 
+Route::apiResource('servers', ServerController::class)->names('api.')->only('index');
+
 Route::prefix('/auth')->name('auth.')->group(function () {
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
     Route::post('/verify', [AuthController::class, 'verify'])->name('verify');

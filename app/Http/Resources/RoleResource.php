@@ -2,11 +2,10 @@
 
 namespace Azuriom\Http\Resources;
 
-use Azuriom\Http\Resources\Role as RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \Azuriom\Models\User */
-class User extends JsonResource
+/** @mixin \Azuriom\Models\Role */
+class RoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,8 +18,7 @@ class User extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'role' => new RoleResource($this->role),
-            'registered' => $this->created_at->toIso8601String(),
+            'color' => $this->color,
         ];
     }
 }

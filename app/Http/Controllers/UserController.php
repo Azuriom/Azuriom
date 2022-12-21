@@ -2,7 +2,7 @@
 
 namespace Azuriom\Http\Controllers;
 
-use Azuriom\Http\Resources\User as UserResource;
+use Azuriom\Http\Resources\UserResource;
 use Azuriom\Models\User;
 use Illuminate\Http\Request;
 

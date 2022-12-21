@@ -4,10 +4,12 @@ namespace Azuriom\Http\Controllers\Api;
 
 use Azuriom\Games\Steam\SteamID;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Http\Resources\ServerCollection;
 use Azuriom\Models\Role;
 use Azuriom\Models\Server;
 use Azuriom\Models\ServerCommand;
 use Azuriom\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -15,6 +17,21 @@ use Illuminate\Support\Facades\Hash;
 
 class ServerController extends Controller
 {
+    public function index()
+    {
+        $serverId = (int) setting('servers.default');
+        $servers = Server::where('home_display', true)
+            ->when($serverId, function (Builder $query) use ($serverId) {
+                $query->orWhere('id', $serverId);
+            })
+            ->get();
+
+        $servers = $servers->where('home_display', true);
+        $server = $servers->first(fn (Server $server) => $server->id === $serverId);
+
+        return new ServerCollection($servers, $server);
+    }
+
     public function status()
     {
         return response()->noContent(headers: [

@@ -3,7 +3,7 @@
 namespace Azuriom\Http\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Http\Resources\Post as PostResource;
+use Azuriom\Http\Resources\PostResource;
 use Azuriom\Models\Post;
 
 class PostController extends Controller

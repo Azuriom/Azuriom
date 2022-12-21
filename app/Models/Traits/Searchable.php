@@ -29,28 +29,31 @@ trait Searchable
             $columns = $this->searchable;
         }
 
-        return $query->where(function (Builder $query) use ($search, $columns) {
-            $models = [];
+        return $query->where(fn ($query) => $this->runSearch($query, $search, $columns));
+    }
 
-            foreach ($columns as $column) {
-                if (Str::contains($column, '.')) {
-                    [$model, $column] = explode('.', $column);
+    protected function runSearch(Builder $query, string $search, array $columns)
+    {
+        $models = [];
 
-                    $models[$model] = array_merge($models[$model] ?? [], [$column]);
-                } else {
-                    $query->orWhere($column, 'like', "%{$search}%");
-                }
+        foreach ($columns as $column) {
+            if (Str::contains($column, '.')) {
+                [$model, $column] = explode('.', $column);
+
+                $models[$model] = array_merge($models[$model] ?? [], [$column]);
+            } else {
+                $query->orWhere($column, 'like', "%{$search}%");
             }
+        }
 
-            foreach ($models as $model => $column) {
-                $query->orWhereRelation($model, function (Builder $query) use ($column, $search) {
-                    $query->search($search, $column);
-                });
-            }
+        foreach ($models as $model => $column) {
+            $query->orWhereRelation($model, function (Builder $query) use ($column, $search) {
+                $query->search($search, $column);
+            });
+        }
 
-            if (is_numeric($search) || $this->getKeyType() !== 'int') {
-                $query->orWhere($this->getKeyName(), $search);
-            }
-        });
+        if (is_numeric($search) || $this->getKeyType() !== 'int') {
+            $query->orWhere($this->getKeyName(), $search);
+        }
     }
 }

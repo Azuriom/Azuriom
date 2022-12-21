@@ -2,11 +2,10 @@
 
 namespace Azuriom\Http\Resources;
 
-use Azuriom\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \Azuriom\Models\Comment */
-class Comment extends JsonResource
+/** @mixin \Azuriom\Models\User */
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,8 +17,9 @@ class Comment extends JsonResource
     {
         return [
             'id' => $this->id,
-            'author' => new UserResource($this->author),
-            'content' => $this->content,
+            'name' => $this->name,
+            'role' => new RoleResource($this->role),
+            'registered' => $this->created_at->toIso8601String(),
         ];
     }
 }
