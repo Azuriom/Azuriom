@@ -88,10 +88,6 @@ a.sidebar-link {
 
 .sidebar [data-bs-toggle="collapse"]::after {
     border: solid;
-    border-top-width: medium;
-    border-right-width: medium;
-    border-bottom-width: medium;
-    border-left-width: medium;
     border-width: 0 .075rem .075rem 0;
     content: " ";
     display: inline-block;

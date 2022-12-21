@@ -22,6 +22,7 @@ return [
     'alpha_dash' => 'Le champ :attribute doit contenir uniquement des lettres, des chiffres et des tirets.',
     'alpha_num' => 'Le champ :attribute doit contenir uniquement des lettres et des chiffres.',
     'array' => 'Le champ :attribute doit être un tableau.',
+    'ascii' => 'Le champ :attribute doit contenir que des caractères alphanumériques et des symboles à un octet.',
     'before' => 'Le champ :attribute doit être une date avant le :date.',
     'before_or_equal' => 'Le champ :attribute doit être une date avant ou égale au :date.',
     'between' => [
@@ -36,6 +37,7 @@ return [
     'date' => 'Le champ :attribute n\'est pas une date valide.',
     'date_equals' => 'La date :attribute doit être une date égale au :date.',
     'date_format' => 'La date :attribute ne correspond pas au format :format.',
+    'decimal' => 'Le champ :attribute doit avoir :decimal décimales.',
     'declined' => 'Le champ :attribute ne doit pas être accepté.',
     'declined_if' => 'Le champ :attribute ne doit pas être accepté quand :other est :value.',
     'different' => 'Les champs :attribute et :other doivent être différents.',
@@ -70,6 +72,7 @@ return [
     'ipv4' => 'Le champ :attribute doit être une adresse IPv4 valide.',
     'ipv6' => 'Le champ :attribute doit être une adresse IPv6 valide.',
     'json' => 'Le champ :attribute doit être un document JSON valide.',
+    'lowercase' => 'Le champ :attribute doit être en minuscules.',
     'lt' => [
         'array' => 'Le tableau :attribute doit contenir moins de :value éléments.',
         'file' => 'La taille du fichier de :attribute doit être inférieure à :value kilooctets.',
@@ -135,7 +138,9 @@ return [
     'timezone' => 'Le champ :attribute doit être un fuseau horaire valide.',
     'unique' => 'La valeur du champ :attribute est déjà utilisée.',
     'uploaded' => 'Le fichier du champ :attribute n\'a pas pu être téléchargé. Celui-ci est peut-être trop lourd.',
+    'uppercase' => 'Le champ :attribute doit être en majuscules.',
     'url' => 'Le champ :attribute n\'est pas une URL valide.',
+    'ulid' => 'Le champ :attribute doit être un ULID valide.',
     'uuid' => 'Le champ :attribute doit être un UUID valide.',
 
     'username' => 'Le champ :attribute doit être un pseudo valide.',

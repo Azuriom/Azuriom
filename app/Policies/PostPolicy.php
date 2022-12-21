@@ -19,11 +19,7 @@ class PostPolicy
      */
     public function view(?User $user, Post $post)
     {
-        if (! $post->isPublished()) {
-            abort(404);
-
-            return false;
-        }
+        abort_if(! $post->isPublished(), 404);
 
         return true;
     }
