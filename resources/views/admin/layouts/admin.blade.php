@@ -378,7 +378,7 @@
 
                         <li class="nav-item">
                             <a href="{{ route('profile.theme') }}" class="nav-icon" data-route="theme">
-                                <i class="bi bi-{{ dark_theme() ? 'sun' : 'moon' }} small" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
+                                <i class="bi bi-{{ dark_theme() ? 'sun' : 'moon-stars' }} small" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
                             </a>
                         </li>
 

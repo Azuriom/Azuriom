@@ -45,6 +45,7 @@ return [
     'digits_between' => 'Le champ :attribute doit contenir entre :min et :max chiffres.',
     'dimensions' => 'Les dimensions de l\'image :attribute ne sont pas valides.',
     'distinct' => 'Le champ :attribute a une valeur en double.',
+    'doesnt_end_with' => 'Le champ :attribute ne doit pas se terminer avec une des valeurs suivantes: :values.',
     'doesnt_start_with' => 'Le champ :attribute ne doit pas commencer avec une des valeurs suivantes: :values.',
     'email' => 'Le champ :attribute doit être une adresse email valide.',
     'ends_with' => 'Le champ :attribute doit se terminer par l\'une des valeurs suivantes : :values',
@@ -92,6 +93,7 @@ return [
         'numeric' => 'La valeur du champ :attribute ne peut être supérieure à :max.',
         'string' => 'Le texte de :attribute ne peut contenir plus de :max caractères.',
     ],
+    'max_digits' => 'Le champ :attribute ne doit pas avoir plus de :max chiffres.',
     'mimes' => 'Le champ :attribute doit être un fichier de type: :values.',
     'mimetypes' => 'Le champ :attribute doit être un fichier de type: :values.',
     'min' => [
@@ -100,6 +102,7 @@ return [
         'numeric' => 'La valeur du champ :attribute doit être supérieure ou égale à :min.',
         'string' => 'Le texte :attribute doit contenir au moins :min caractères.',
     ],
+    'min_digits' => 'Le champ :attribute doit avoir au moins :min chiffres.',
     'multiple_of' => 'Le champ :attribute doit être un multiple de :value.',
     'not_in' => 'Le champ :attribute sélectionné n\'est pas valide.',
     'not_regex' => 'Le format du champ :attribute n\'est pas valide.',

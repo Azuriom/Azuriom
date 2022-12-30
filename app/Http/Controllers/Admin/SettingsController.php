@@ -26,7 +26,7 @@ class SettingsController extends Controller
      *
      * @var array
      */
-    private $mailEncryptionTypes = [
+    private array $mailEncryptionTypes = [
         'tls' => 'TLS',
         'ssl' => 'SSL',
     ];
@@ -36,7 +36,7 @@ class SettingsController extends Controller
      *
      * @var array
      */
-    private $mailMailers = [
+    private array $mailMailers = [
         'smtp' => 'SMTP',
         'sendmail' => 'Sendmail',
     ];
@@ -46,7 +46,7 @@ class SettingsController extends Controller
      *
      * @var array
      */
-    private $hashAlgorithms = [
+    private array $hashAlgorithms = [
         'bcrypt' => 'Bcrypt',
         'argon' => 'Argon2i',
         'argon2id' => 'Argon2id',

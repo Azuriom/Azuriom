@@ -2,6 +2,7 @@
 
 namespace Azuriom\Extensions\Plugin;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
@@ -54,6 +55,17 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
+    {
+        //
+    }
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
     {
         //
     }
@@ -132,8 +144,8 @@ abstract class BasePluginServiceProvider extends ServiceProvider
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
-        foreach ($middlewares as $key => $middleware) {
-            $this->router->middlewareGroup($key, $middleware);
+        foreach ($middlewares as $key => $class) {
+            $this->router->middlewareGroup($key, $class);
         }
     }
 
@@ -141,8 +153,16 @@ abstract class BasePluginServiceProvider extends ServiceProvider
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
-        foreach ($middlewares as $key => $middleware) {
-            $this->router->aliasMiddleware($key, $middleware);
+        foreach ($middlewares as $key => $class) {
+            $this->router->aliasMiddleware($key, $class);
+        }
+    }
+
+    protected function registerSchedule() {
+        if ($this->app->runningInConsole()) {
+            $this->app->booted(function () {
+                $this->schedule($this->app->make(Schedule::class));
+            });
         }
     }
 

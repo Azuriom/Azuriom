@@ -2,7 +2,7 @@
 
 # Azuriom
 
-[![PHP CI](https://img.shields.io/github/actions/workflow/status/Azuriom/Azuriom/tests.yml?branch=master&style=flat-square)](https://github.com/Azuriom/Azuriom/actions)
+[![PHP CI](https://img.shields.io/github/actions/workflow/status/Azuriom/Azuriom/tests.yml?branch=master&style=flat-square)](https://github.com/Azuriom/Azuriom/actions/workflows/tests.yml)
 [![Style](https://github.styleci.io/repos/237486333/shield)](https://github.styleci.io/repos/237486333)
 [![CodeFactor](https://www.codefactor.io/repository/github/azuriom/azuriom/badge?style=flat-square)](https://www.codefactor.io/repository/github/azuriom/azuriom)
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)
@@ -24,6 +24,7 @@ Azuriom natively supports the following games:
 * [Team Fortress 2](https://www.teamfortress.com/)
 
 You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129). You can find the how-to in [this documentation](https://azuriom.com/en/docs/games)
+
 ## Documentation
 
 Azuriom's documentation is available [on our website](https://azuriom.com/docs).

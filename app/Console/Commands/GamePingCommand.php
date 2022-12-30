@@ -3,6 +3,7 @@
 namespace Azuriom\Console\Commands;
 
 use Azuriom\Models\Server;
+use Azuriom\Models\Setting;
 use Illuminate\Console\Command;
 
 class GamePingCommand extends Command
@@ -28,6 +29,8 @@ class GamePingCommand extends Command
      */
     public function handle()
     {
+        Setting::updateSettings('schedule.last', now()->toISOString());
+
         $servers = Server::pingable()->get();
 
         foreach ($servers as $server) {
