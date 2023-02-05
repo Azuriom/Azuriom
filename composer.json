@@ -79,6 +79,6 @@
             "app/base_helpers.php"
         ]
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

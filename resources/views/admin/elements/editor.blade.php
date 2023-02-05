@@ -3,10 +3,11 @@
     <script>
         tinymce.init({
             selector: '.html-editor',
+            promotion: false,
             height: 400,
             min_height: 200,
             entity_encoding: 'raw',
-            plugins: 'searchreplace autolink code image link hr anchor lists paste table',
+            plugins: 'searchreplace autolink code image link anchor lists table',
             toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls : false,
             valid_children : "+body[style]",

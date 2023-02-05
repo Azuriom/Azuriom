@@ -97,7 +97,7 @@ class UpdateManager
         if ($force) {
             try {
                 return $this->forceFetchUpdates();
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return [];
             }
         }
@@ -105,7 +105,7 @@ class UpdateManager
         return Cache::remember('updates', now()->addMinutes(15), function () {
             try {
                 return $this->forceFetchUpdates(false);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return [];
             }
         });

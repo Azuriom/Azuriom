@@ -23,7 +23,9 @@ Azuriom natively supports the following games:
 * [Counter-Strike: Global Offensive](https://blog.counter-strike.net/)
 * [Team Fortress 2](https://www.teamfortress.com/)
 
-You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129). You can find the how-to in [this documentation](https://azuriom.com/en/docs/games)
+You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129).
+
+You can find the how-to in [the documentation](https://azuriom.com/en/docs/games)
 
 ## Documentation
 

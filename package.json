@@ -13,7 +13,7 @@
         "@adminkit/core": "https://github.com/adminkit/adminkit/tarball/master",
         "@popperjs/core": "^2.11.5",
         "@simonwep/pickr": "^1.8.0",
-        "autosize": "^4.0.2",
+        "autosize": "^5.0.2",
         "axios": "^1.1.2",
         "bootstrap": "^5.1.0",
         "bootstrap-icons": "^1.8.1",
@@ -29,6 +29,6 @@
         "sass-loader": "^8.0.0",
         "simplebar": "^5.3.6",
         "sortablejs": "^1.13.0",
-        "tinymce": "^5.7.0"
+        "tinymce": "^6.3.1"
     }
 }

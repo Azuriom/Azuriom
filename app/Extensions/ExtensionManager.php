@@ -37,7 +37,7 @@ abstract class ExtensionManager
 
         try {
             return json_decode($this->files->get($path), $asoc);
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFoundException) {
             return null;
         }
     }

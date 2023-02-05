@@ -158,7 +158,8 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerSchedule() {
+    protected function registerSchedule()
+    {
         if ($this->app->runningInConsole()) {
             $this->app->booted(function () {
                 $this->schedule($this->app->make(Schedule::class));

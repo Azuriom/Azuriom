@@ -273,13 +273,13 @@ return [
         'azlink' => [
             'port' => 'AzLink Port',
 
-            'link' => 'To link Minecraft to your website using AzLink:',
+            'link' => 'To link your server to your website using AzLink:',
             'link1' => '<a href="https://azuriom.com/azlink">Download the plugin AzLink</a> and install it on your server.',
             'link2' => 'Restart the server.',
             'link3' => 'Execute this command on the server: ',
 
             'info' => 'If you are having problems with AzLink when using Cloudflare or a firewall, try following the steps in the <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
-            'command' => 'You can link your Minecraft server to your website with the command: ',
+            'command' => 'You can link your server to your website with the command: ',
             'port_command' => 'If you are using a different AzLink port than the default, you must configure it with the command: ',
             'ping' => 'Enable instant commands (require an open port on the server)',
             'ping_info' => 'When instant commands are not enabled, commands will be executed with a delay of 30 seconds to 1 minute.',
