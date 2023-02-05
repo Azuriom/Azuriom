@@ -1,9 +1,9 @@
-<div class="modal fade" id="logDataModal" tabindex="-1" role="dialog" aria-labelledby="notificationLabel"
+<div class="modal fade" id="logDataModal" tabindex="-1" role="dialog" aria-labelledby="logData"
      aria-modal="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="notificationLabel">
+                <h2 class="modal-title" id="logData">
                     {{ __('messages.notifications.info') }}
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
