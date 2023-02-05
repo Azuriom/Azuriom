@@ -12,28 +12,28 @@ class AlertNotification implements Arrayable
      *
      * @var string
      */
-    protected $level = 'info';
+    protected string $level = 'info';
 
     /**
      * The notification's content.
      *
      * @var string
      */
-    protected $content;
+    protected string $content;
 
     /**
      * The notification's link.
      *
      * @var string|null
      */
-    protected $link;
+    protected ?string $link = null;
 
     /**
      * The notification's from user.
      *
      * @var \Azuriom\Models\User|null
      */
-    protected $from;
+    protected ?string $from = null;
 
     /**
      * Create a new notification instance.

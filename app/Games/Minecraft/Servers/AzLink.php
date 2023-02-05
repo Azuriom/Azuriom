@@ -42,7 +42,7 @@ class AzLink extends ServerBridge
 
         try {
             $this->sendServerRequest();
-        } catch (Exception $e) {
+        } catch (Exception) {
             // ignore, commands will be dispatched few minutes later
         }
     }

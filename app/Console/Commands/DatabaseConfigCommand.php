@@ -5,6 +5,7 @@ namespace Azuriom\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class DatabaseConfigCommand extends Command
 {
@@ -96,8 +97,8 @@ class DatabaseConfigCommand extends Command
         $contents = $this->files->get($file);
 
         foreach ($values as $key => $value) {
-            if (strpos($value, ' ') !== false || strpos($value, '#') !== false) {
-                if (strpos($value, '"') !== false) {
+            if (Str::contains($value, ' ') || Str::contains($value, '#')) {
+                if (Str::contains($value, '"')) {
                     $value = str_replace('"', '\"', $value);
                 }
                 $value = '"'.$value.'"';

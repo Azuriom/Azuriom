@@ -17,7 +17,7 @@ class SteamID
 
     public static function convertTo64(string $steamId32)
     {
-        [$x, $y, $z] = explode(':', $steamId32);
+        [, $y, $z] = explode(':', $steamId32);
 
         return $z * 2 + $y + 0x110000100000000;
     }

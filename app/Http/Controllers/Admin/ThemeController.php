@@ -220,11 +220,9 @@ class ThemeController extends Controller
     protected static function appendConfig(array $config, array $replacement)
     {
         foreach ($replacement as $key => $value) {
-            if (is_array($value)) {
-                $config[$key] = static::appendConfig($config[$key], $value);
-            } else {
-                $config[$key] = $value;
-            }
+            $config[$key] = is_array($value)
+                ? static::appendConfig($config[$key], $value)
+                : $value;
         }
 
         return $config;

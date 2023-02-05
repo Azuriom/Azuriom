@@ -15,7 +15,7 @@ class ThemeViewFinder extends FileViewFinder
         if (plugins()->isEnabled($namespace)) {
             try {
                 return $this->findInPaths("plugins.{$namespace}.{$view}", $this->paths);
-            } catch (InvalidArgumentException $e) {
+            } catch (InvalidArgumentException) {
                 // ignore, theme don't have the plugin view, just use the default view
             }
         }
@@ -23,7 +23,7 @@ class ThemeViewFinder extends FileViewFinder
         try {
             // Try to find the view in the theme.
             return $this->findInPaths("vendor.{$namespace}.{$view}", $this->paths);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             // Nothing found, fallback to the default view
             return $this->findInPaths($view, $this->hints[$namespace]);
         }

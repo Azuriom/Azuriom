@@ -16,7 +16,7 @@ class FiveMStatus extends ServerBridge
     {
         try {
             return $this->getData();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }

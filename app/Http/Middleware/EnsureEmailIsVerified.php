@@ -17,7 +17,7 @@ class EnsureEmailIsVerified extends Middleware
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (! setting('mail.users_email_verification')) {
+        if (! setting('mail.users_email_verification') && $request->user() !== null) {
             return $next($request);
         }
 

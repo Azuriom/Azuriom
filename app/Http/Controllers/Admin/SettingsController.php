@@ -475,7 +475,7 @@ class SettingsController extends Controller
             $hashManager = $this->app->make(HashManager::class);
 
             return $hashManager->driver($algo)->make('hello') !== null;
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }

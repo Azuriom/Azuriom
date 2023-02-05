@@ -17,7 +17,7 @@ class BedrockPing extends ServerBridge
     {
         try {
             return $this->ping($this->server->address, $this->server->port);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }

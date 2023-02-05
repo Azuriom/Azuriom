@@ -48,7 +48,7 @@ class SettingServiceProvider extends ServiceProvider
             }
 
             $repo->set($settings);
-        } catch (Exception $e) {
+        } catch (Exception) {
             //
         }
     }

@@ -25,7 +25,7 @@ class RustRcon extends Query
                 'entities' => Arr::get($info, 'EntityCount'),
                 'framerate' => Arr::get($info, 'Framerate'),
             ];
-        } catch (Exception $e) {
+        } catch (Exception) {
             return parent::getServerData();
         }
     }

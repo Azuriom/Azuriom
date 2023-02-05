@@ -106,7 +106,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $logs = ActionLog::with('target')
-            ->where('user_id', $user->id)
+            ->whereBelongsTo($user)
             ->latest()
             ->paginate();
 

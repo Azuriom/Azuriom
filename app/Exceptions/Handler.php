@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
                     'exception' => $e,
                 ], $e->getStatusCode(), $e->getHeaders());
             }
-        } catch (Throwable $t) {
+        } catch (Throwable) {
             //
         }
 
@@ -93,7 +93,7 @@ class Handler extends ExceptionHandler
                 'exception' => $e,
                 'code' => $e->getStatusCode(),
             ], $e->getStatusCode(), $e->getHeaders());
-        } catch (Throwable $t) {
+        } catch (Throwable) {
             // Even the fallback rendering failed, we will just render with Symfony
             return $this->convertExceptionToResponse($e);
         }

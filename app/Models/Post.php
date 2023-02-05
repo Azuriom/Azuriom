@@ -96,7 +96,7 @@ class Post extends Model
             return false;
         }
 
-        $userId = $user ? $user->id : Auth::id();
+        $userId = $user?->id ?? Auth::id();
 
         if ($this->relationLoaded('likes')) {
             return $this->likes->contains('author_id', $userId);
@@ -114,7 +114,7 @@ class Post extends Model
     {
         try {
             return $this->getImageDisk()->size($this->getImagePath());
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 0;
         }
     }

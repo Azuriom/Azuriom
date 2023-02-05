@@ -92,8 +92,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if (setting('maintenance.enabled', false)
-            && ! $user->can('maintenance.access')) {
+        if ($this->isMaintenance($user)) {
             return $this->sendMaintenanceResponse($request);
         }
 
@@ -120,6 +119,10 @@ class LoginController extends Controller
 
         $userProfile = Socialite::driver(game()->getSocialiteDriverName())->user();
         $user = User::firstWhere('game_id', (string) $userProfile->getId());
+
+        if ($this->isMaintenance($user)) {
+            return $this->sendMaintenanceResponse($request);
+        }
 
         if ($user === null) {
             $user = $this->registerUser($request, $userProfile);
@@ -283,5 +286,14 @@ class LoginController extends Controller
         }
 
         return redirect()->back()->with('error', trans('auth.maintenance'));
+    }
+
+    protected function isMaintenance(User $user = null)
+    {
+        if (! setting('maintenance.enabled', false)) {
+            return false;
+        }
+
+        return $user !== null && $user->can('maintenance.access');
     }
 }

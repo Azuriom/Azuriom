@@ -17,7 +17,7 @@ use Laravel\Socialite\Contracts\Factory;
 
 class GameServiceProvider extends ServiceProvider
 {
-    protected static $games = [];
+    protected static array $games = [];
 
     /**
      * Register services.

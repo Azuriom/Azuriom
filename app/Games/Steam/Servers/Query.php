@@ -25,14 +25,14 @@ class Query extends ServerBridge
                 'players' => $info['Players'],
                 'max_players' => $info['MaxPlayers'],
             ];
-        } catch (Exception $e) {
+        } catch (Exception) {
             return null;
         }
     }
 
     public function verifyLink()
     {
-        return $this->connect()->GetInfo() !== false;
+        return $this->connect()->GetInfo() !== null;
     }
 
     public function canExecuteCommand()

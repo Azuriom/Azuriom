@@ -7,7 +7,6 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Resources\ServerCollection;
 use Azuriom\Models\Role;
 use Azuriom\Models\Server;
-use Azuriom\Models\ServerCommand;
 use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -34,13 +33,12 @@ class ServerController extends Controller
 
     public function status()
     {
-        return response()->noContent(headers: [
-            'AzLink-Status' => 'Success',
-        ]);
+        return response()->noContent(headers: ['AzLink-Status' => 'Success']);
     }
 
     public function fetch(Request $request)
     {
+        /** @var \Azuriom\Models\Server $server */
         $server = Server::find($request->input('server-id'));
         $uidKey = $request->json('platform.type') === 'GMOD';
         $rawPlayers = $request->json('players', []);
@@ -59,13 +57,13 @@ class ServerController extends Controller
         $users = User::whereIn($uidKey ? 'game_id' : 'name', $players)->get();
         $commands = $server->commands()
             ->with('user')
-            ->whereIn('user_id', $users->modelKeys())
+            ->whereBelongsTo($users)
             ->orWhere('need_online', false)
             ->limit(100)
             ->get();
 
         if (! $commands->isEmpty()) {
-            ServerCommand::whereIn('id', $commands->modelKeys())->delete();
+            $commands->toQuery()->delete();
 
             $commands = $uidKey
                 ? $this->mapCommands($commands)
@@ -131,9 +129,7 @@ class ServerController extends Controller
     protected function mapLegacyCommands(Collection $commands)
     {
         return $commands->groupBy('user.name')
-            ->map(function (Collection $serverCommands) {
-                return $serverCommands->pluck('command');
-            });
+            ->map(fn (Collection $group) => $group->pluck('command'));
     }
 
     protected function mapCommands(Collection $commands)

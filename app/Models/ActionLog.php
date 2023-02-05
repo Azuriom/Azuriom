@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class ActionLog extends Model
 {
-    private static $actions = [
+    private static array $actions = [
         'users.login' => [
             'global' => false,
             'icon' => 'box-arrow-in-right',

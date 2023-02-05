@@ -160,7 +160,7 @@ class ServerController extends Controller
             return response()->json([
                 'message' => trans('admin.servers.connected'),
             ]);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionException) {
             return response()->json([
                 'message' => trans('admin.servers.azlink.error'),
             ], 422);

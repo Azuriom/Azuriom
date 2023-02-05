@@ -20,7 +20,7 @@ class GameAuth implements Rule
             $id = game()->getUserUniqueId($value);
 
             return $id !== false;
-        } catch (Exception $e) {
+        } catch (Exception) {
             //
         }
 
