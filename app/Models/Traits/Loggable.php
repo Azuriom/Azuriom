@@ -26,7 +26,7 @@ trait Loggable
     /**
      * By default, get the attributes that have been changed since the last sync.
      *
-     * @param string $event
+     * @param  string  $event
      * @return array
      */
     protected function getLogData(string $event): array
