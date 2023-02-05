@@ -271,6 +271,7 @@
                             <th scope="col">#</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                             <th scope="col">{{ trans('messages.fields.date') }}</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -283,6 +284,9 @@
                                     {{ $log->getActionMessage() }}
                                 </td>
                                 <td>{{ format_date_compact($log->created_at) }}</td>
+                                <td>
+                                    @include('admin.elements.show-log-modal', ['data' => $log->data])
+                                </td>
                             </tr>
                         @endforeach
 
@@ -296,4 +300,5 @@
     @endif
 
     @include('admin.users._notify', ['route' => route('admin.users.notify', ['user' => $user])])
+    @include('admin.users._logData')
 @endsection

@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\InteractsWithMoney;
+use Azuriom\Models\Traits\Loggable;
 use Azuriom\Models\Traits\Searchable;
 use Azuriom\Models\Traits\TwoFactorAuthenticatable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
@@ -51,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use Searchable;
     use TwoFactorAuthenticatable;
+    use Loggable;
 
     /**
      * The attributes that are mass assignable.
