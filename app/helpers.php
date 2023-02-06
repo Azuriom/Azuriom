@@ -278,6 +278,6 @@ if (! function_exists('can_change_name')) {
      */
     function can_change_name(): bool
     {
-        return !oauth_login() && setting('users.change_name', false);
+        return ! oauth_login() && setting('users.change_name', false);
     }
 }
