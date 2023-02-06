@@ -40,6 +40,15 @@
                     <small id="authApiInfo" class="form-text">@lang('admin.settings.auth.api_info')</small>
                 </div>
 
+                @unless(oauth_login())
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id="userChangeName" name="user_change_name" @checked($userNameChange)>
+                            <label class="form-check-label" for="userChangeName">{{ trans('admin.settings.auth.user_change_name') }}</label>
+                        </div>
+                    </div>
+                @endunless
+
                 <div class="mb-3">
                     <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" id="userDelete" name="user_delete" @checked($userDelete)>

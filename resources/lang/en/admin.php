@@ -182,6 +182,7 @@ return [
             'registration_info' => 'It can still be possible to register through plugins.',
             'api' => 'Enable Auth API',
             'api_info' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
+            'user_change_name' => 'Allow users to change username from their profile',
             'user_delete' => 'Allow users to delete their account from their profile',
         ],
 

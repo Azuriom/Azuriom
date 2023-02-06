@@ -6,8 +6,10 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
 use Azuriom\Notifications\UserDelete;
+use Azuriom\Rules\Username;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use PragmaRX\Google2FA\Google2FA;
@@ -40,6 +43,7 @@ class ProfileController extends Controller
     {
         return view('profile.index', [
             'user' => $request->user(),
+            'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
         ]);
     }
@@ -87,6 +91,27 @@ class ProfileController extends Controller
         $user->update(['password' => Hash::make($password)]);
         Auth::logoutOtherDevices($password);
         event(new PasswordReset($user));
+
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
+    }
+
+    /**
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
+    public function updateName(Request $request): RedirectResponse
+    {
+        abort_if(oauth_login() || ! setting('user.change_name'), 403);
+
+        $validated = $this->validate($request, [
+            'name' => [
+                'required', 'max:25', new Username(),
+                Rule::unique('users', 'name')->ignore($request->user()),
+            ],
+        ]);
+
+        $request->user()->update($validated);
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.updated'));

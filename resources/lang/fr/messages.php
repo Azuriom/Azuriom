@@ -146,6 +146,7 @@ return [
         'title' => 'Mon Profil',
         'change_email' => 'Changer l\'adresse email',
         'change_password' => 'Changer le mot de passe',
+        'change_name' => 'Changer le pseudo',
 
         'delete' => [
             'btn' => 'Supprimer mon compte',

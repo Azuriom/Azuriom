@@ -107,6 +107,7 @@ class SettingServiceProvider extends ServiceProvider
             'welcome-popup' => 'welcome_alert',
             'auth-api' => 'auth_api',
             'user_money_transfer' => 'users.money_transfer',
+            'user_change_name' => 'users.change_name',
             'shop.use-site-money' => 'shop.use_site_money',
             'shop.month-goal' => 'shop.month_goal',
         ];

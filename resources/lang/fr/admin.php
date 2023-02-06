@@ -182,7 +182,8 @@ return [
             'registration_info' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
             'api' => 'Activer l\'API auth',
             'api_info' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
-            'user_delete' => 'Autoriser les utilisateurs à supprimer leur compte depuis le profil',
+            'user_change_name' => 'Permettre aux utilisateurs de changer leur pseudo depuis le profil.',
+            'user_delete' => 'Permettre aux utilisateurs de supprimer leur compte depuis le profil',
         ],
 
         'mail' => [
