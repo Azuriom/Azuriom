@@ -104,14 +104,14 @@ class ProfileController extends Controller
     {
         abort_if(oauth_login() || ! setting('user.change_name'), 403);
 
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name' => [
                 'required', 'max:25', new Username(),
                 Rule::unique('users', 'name')->ignore($request->user()),
             ],
         ]);
 
-        $request->user()->update(['name' => $request->get('name')]);
+        $request->user()->update($validated);
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.updated'));
