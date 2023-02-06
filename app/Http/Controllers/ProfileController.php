@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -97,13 +96,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return RedirectResponse
      */
     public function updateName(Request $request): RedirectResponse
     {
-        abort_if(!can_change_name(), 403);
+        abort_if(! can_change_name(), 403);
 
         $this->validate($request, [
             'name'              => ['required', Rule::unique('users', 'name')->ignore($request->user())],
