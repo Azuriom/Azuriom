@@ -74,45 +74,6 @@
 
     <div class="row gy-4">
         <div class="col-md-6">
-            @if($canChangeName)
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h2 class="card-title">
-                            {{ trans('messages.profile.change_name') }}
-                        </h2>
-
-                        <form action="{{ route('profile.name') }}" method="POST">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name ?? '') }}" required>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label"
-                                       for="nameConfirmPassInput">{{ trans('auth.current_password') }}</label>
-                                <input type="password"
-                                       class="form-control @error('name_confirm_pass') is-invalid @enderror"
-                                       id="nameConfirmPassInput" name="name_confirm_pass" required>
-
-                                @error('name_confirm_pass')
-                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-check-lg"></i> {{ trans('messages.actions.update') }}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            @endif
-
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title">
@@ -191,6 +152,35 @@
                     </div>
                 </div>
             </div>
+
+            @if($canChangeName)
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">
+                                {{ trans('messages.profile.change_name') }}
+                            </h2>
+
+                            <form action="{{ route('profile.name') }}" method="POST">
+                                @csrf
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $user->name ?? '') }}" required>
+
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-lg"></i> {{ trans('messages.actions.update') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             @if(setting('users.money_transfer'))
                 <div class="col-md-6">

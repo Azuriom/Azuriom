@@ -6,6 +6,7 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
 use Azuriom\Notifications\UserDelete;
+use Azuriom\Rules\Username;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
@@ -42,8 +43,8 @@ class ProfileController extends Controller
     {
         return view('profile.index', [
             'user' => $request->user(),
+            'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
-            'canChangeName' => can_change_name(),
         ]);
     }
 
@@ -101,16 +102,19 @@ class ProfileController extends Controller
      */
     public function updateName(Request $request): RedirectResponse
     {
-        abort_if(! can_change_name(), 403);
+        abort_if(oauth_login() || ! setting('user.change_name'), 403);
 
         $this->validate($request, [
-            'name'              => ['required', Rule::unique('users', 'name')->ignore($request->user())],
-            'name_confirm_pass' => ['required', 'current_password'],
+            'name' => [
+                'required', 'max:25', new Username(),
+                Rule::unique('users', 'name')->ignore($request->user()),
+            ],
         ]);
 
         $request->user()->update(['name' => $request->get('name')]);
 
-        return to_route('profile.index')->with('success', trans('messages.profile.updated'));
+        return redirect()->route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
     }
 
     /**

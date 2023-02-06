@@ -108,7 +108,6 @@ class SettingsController extends Controller
             'siteKey' => setting('site-key'),
             'userMoneyTransfer' => setting('users.money_transfer'),
             'postsWebhook' => setting('posts_webhook'),
-            'userCanChangeName' => setting('users.change_name'),
         ]);
     }
 
@@ -138,7 +137,6 @@ class SettingsController extends Controller
             'posts_webhook' => ['nullable', 'url'],
         ]), [
             'user_money_transfer' => $request->filled('user_money_transfer'),
-            'user_change_name' => $request->filled('user_change_name'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
 
@@ -307,6 +305,7 @@ class SettingsController extends Controller
     {
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
+            'userNameChange' => setting('user.change_name'),
             'userDelete' => setting('user.delete'),
             'register' => setting('register', true),
             'authApi' => setting('auth_api', false),
@@ -325,6 +324,7 @@ class SettingsController extends Controller
         ]) + [
             'register' => $request->filled('register'),
             'auth_api' => $request->filled('auth_api'),
+            'user.change_name' => $request->filled('user_change_name'),
             'user.delete' => $request->filled('user_delete'),
         ];
 

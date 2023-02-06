@@ -210,15 +210,6 @@
                     </div>
                 </div>
 
-                @unless(game()->loginWithOAuth())
-                    <div class="mb-3">
-                        <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" id="userChangeName" name="user_change_name" @checked($userCanChangeName)>
-                            <label class="form-check-label" for="userChangeName">{{ trans('admin.settings.index.user_change_name') }}</label>
-                        </div>
-                    </div>
-                @endcan
-
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>

@@ -109,7 +109,6 @@ return [
             'locale' => 'Locale',
             'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
-            'user_change_name' => 'Enable user nickname change',
             'user_money_transfer' => 'Enable money transfer between users',
             'site_key' => 'Site key for azuriom.com',
             'site_key_info' => 'The azuriom.com site key is required to install premium extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',
@@ -183,6 +182,7 @@ return [
             'registration_info' => 'It can still be possible to register through plugins.',
             'api' => 'Enable Auth API',
             'api_info' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
+            'user_change_name' => 'Allow users to change username from their profile',
             'user_delete' => 'Allow users to delete their account from their profile',
         ],
 
