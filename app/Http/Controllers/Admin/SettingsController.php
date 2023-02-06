@@ -17,6 +17,7 @@ use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -108,6 +109,7 @@ class SettingsController extends Controller
             'siteKey' => setting('site-key'),
             'userMoneyTransfer' => setting('users.money_transfer'),
             'postsWebhook' => setting('posts_webhook'),
+            'userCanChangeName' => setting('users.change_name'),
         ]);
     }
 
@@ -137,6 +139,7 @@ class SettingsController extends Controller
             'posts_webhook' => ['nullable', 'url'],
         ]), [
             'user_money_transfer' => $request->filled('user_money_transfer'),
+            'user_change_name' => $request->filled('user_change_name'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
 

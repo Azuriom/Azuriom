@@ -269,3 +269,15 @@ if (! function_exists('dark_theme')) {
         return request()?->cookie('theme') === 'dark';
     }
 }
+
+if (! function_exists('can_change_name')) {
+    /**
+     * Determine if username change feature is enabled.
+     *
+     * @return bool
+     */
+    function can_change_name(): bool
+    {
+        return !oauth_login() && setting('users.change_name', false);
+    }
+}

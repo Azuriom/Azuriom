@@ -109,6 +109,7 @@ return [
             'locale' => 'Langue',
             'money' => 'Nom de la monnaie du site',
             'copyright' => 'Copyright',
+            'user_change_name' => 'Activer la possibilité aux utilisateurs de changer leurs pseudo.',
             'user_money_transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
             'webhook' => 'URL du webhook Discord pour les articles',
             'webhook_info' => 'Un webhook Discord sera envoyé sur cette URL lors de la création d\'un nouvel article, si la date de publication n\'est pas dans le futur. Laisser vide pour désactiver.',

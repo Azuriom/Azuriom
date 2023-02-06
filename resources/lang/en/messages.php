@@ -146,6 +146,7 @@ return [
         'title' => 'My Profile',
         'change_email' => 'Change Email Address',
         'change_password' => 'Change Password',
+        'change_name' => 'Change Nickname',
 
         'delete' => [
             'btn' => 'Delete my account',
