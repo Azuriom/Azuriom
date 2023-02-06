@@ -280,4 +280,5 @@ if (! function_exists('can_change_name')) {
     {
         return ! oauth_login() && setting('users.change_name', false);
     }
+
 }
