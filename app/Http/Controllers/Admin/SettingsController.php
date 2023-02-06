@@ -140,9 +140,9 @@ class SettingsController extends Controller
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
 
-        Setting::updateSettings($settings);
+        $old = Arr::except(Setting::updateSettings($settings), 'user_money_transfer');
 
-        ActionLog::log('settings.updated');
+        ActionLog::log('settings.updated')?->createEntries($old, $settings);
 
         $response = redirect()->route('admin.settings.index')
             ->with('success', trans('admin.settings.updated'));
@@ -182,25 +182,27 @@ class SettingsController extends Controller
             ],
         ]);
 
-        Setting::updateSettings(array_merge($request->only('hash'), [
+        $settings = array_merge($request->only('hash'), [
             'admin.force_2fa' => $request->filled('force_2fa'),
-        ]));
+        ]);
 
         if ($request->filled('captcha')) {
-            Setting::updateSettings([
+            $settings = array_merge($settings, [
                 'captcha.type' => $request->input('captcha'),
                 'captcha.site_key' => $request->input('site_key'),
                 'captcha.secret_key' => $request->input('secret_key'),
             ]);
         } else {
-            Setting::updateSettings([
+            $settings = array_merge($settings, [
                 'captcha.type' => null,
                 'captcha.site_key' => null,
                 'captcha.secret_key' => null,
             ]);
         }
 
-        ActionLog::log('settings.updated');
+        $old = Setting::updateSettings($settings);
+
+        ActionLog::log('settings.updated')?->createEntries($old, $settings);
 
         return redirect()->route('admin.settings.auth')
             ->with('success', trans('admin.settings.updated'));

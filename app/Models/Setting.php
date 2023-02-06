@@ -100,11 +100,14 @@ class Setting extends Model
      *
      * @param  array|string  $key
      * @param  mixed  $value
-     * @return void
+     * @return array
      */
     public static function updateSettings(string|array $key, mixed $value = null)
     {
         $keys = is_array($key) ? $key : [$key => $value];
+        $old = collect($keys)->mapWithKeys(fn ($value, $name) => [
+            $name => setting($name),
+        ])->all();
 
         foreach ($keys as $name => $val) {
             if ($val !== null) {
@@ -117,5 +120,7 @@ class Setting extends Model
         }
 
         Cache::forget('settings');
+
+        return $old;
     }
 }

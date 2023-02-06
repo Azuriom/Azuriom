@@ -35,7 +35,7 @@
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
-                        <select class="form-control" id="mailerSelect" name="mailer" v-model="type" aria-describedby="mailerInfo">
+                        <select class="form-select" id="mailerSelect" name="mailer" v-model="type" aria-describedby="mailerInfo">
                             <option value="" @selected(config('mail.default') === 'array')>
                                 {{ trans('messages.none') }}
                             </option>

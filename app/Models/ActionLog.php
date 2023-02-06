@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
  * @property \Carbon\Carbon $updated_at
  * @property \Azuriom\Models\User $user
  * @property \Illuminate\Database\Eloquent\Model|null $target
+ * @property \Azuriom\Models\ActionLogEntry[] $entries
  *
  * @method static \Illuminate\Database\Eloquent\Builder onlyGlobal()
  */
@@ -125,6 +127,11 @@ class ActionLog extends Model
         return $this->morphTo('target');
     }
 
+    public function entries()
+    {
+        return $this->hasMany(ActionLogEntry::class);
+    }
+
     protected function getTargetTypeAttribute()
     {
         if ($this->target_id === null) {
@@ -211,6 +218,21 @@ class ActionLog extends Model
 
         foreach ($keys as $actionKey => $actionValue) {
             self::$actions[$actionKey] = $actionValue;
+        }
+    }
+
+    public function createEntries(array $old, array $new)
+    {
+        foreach ($old as $attribute => $oldValue) {
+            $newValue = Arr::get($new, $attribute);
+
+            if ($oldValue !== $newValue) {
+                $this->entries()->create([
+                    'attribute' => $attribute,
+                    'old_value' => $oldValue,
+                    'new_value' => $newValue,
+                ]);
+            }
         }
     }
 

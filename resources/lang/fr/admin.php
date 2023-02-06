@@ -526,6 +526,9 @@ return [
 
         'clear' => 'Supprimer les anciens logs (+15 jours)',
         'cleared' => 'Les anciens logs ont été supprimés.',
+        'changes' => 'Changements',
+        'old' => 'Ancienne valeur',
+        'new' => 'Nouvelle valeur',
 
         'pages' => [
             'created' => 'Création de la page #:id',

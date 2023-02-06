@@ -526,6 +526,9 @@ return [
 
         'clear' => 'Clear old logs (15d+)',
         'cleared' => 'The old logs has been deleted.',
+        'changes' => 'Changes',
+        'old' => 'Old value',
+        'new' => 'New value',
 
         'pages' => [
             'created' => 'Created page #:id',

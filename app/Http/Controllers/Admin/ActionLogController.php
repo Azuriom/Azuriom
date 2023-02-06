@@ -23,6 +23,17 @@ class ActionLogController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \Azuriom\Models\ActionLog  $log
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ActionLog $log)
+    {
+        return view('admin.logs.show', ['log' => $log->load('entries')]);
+    }
+
+    /**
      * Clear old records.
      *
      * @return \Illuminate\Http\Response

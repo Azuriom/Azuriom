@@ -271,6 +271,7 @@
                             <th scope="col">#</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
                             <th scope="col">{{ trans('messages.fields.date') }}</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -283,6 +284,9 @@
                                     {{ $log->getActionMessage() }}
                                 </td>
                                 <td>{{ format_date_compact($log->created_at) }}</td>
+                                <td>
+                                    <a href="{{ route('admin.logs.show', $log) }}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                                </td>
                             </tr>
                         @endforeach
 

@@ -42,6 +42,15 @@ class Server extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'token',
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

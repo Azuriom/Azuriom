@@ -125,6 +125,6 @@ Route::post('/servers/{server}/verify/azlink', [ServerController::class, 'verify
 Route::post('/servers/default', [ServerController::class, 'changeDefault'])->name('servers.change-default');
 
 Route::post('logs/clear', [ActionLogController::class, 'clear'])->name('logs.clear')->middleware('can:admin.logs');
-Route::resource('logs', ActionLogController::class)->only(['index'])->middleware('can:admin.logs');
+Route::resource('logs', ActionLogController::class)->only(['index', 'show'])->middleware('can:admin.logs');
 
 Route::fallback([AdminController::class, 'fallback']);
