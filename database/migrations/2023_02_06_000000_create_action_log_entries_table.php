@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('action_log_entries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('action_log_id');
+            $table->unsignedBigInteger('action_log_id');
             $table->string('attribute');
             $table->text('old_value')->nullable();
             $table->text('new_value')->nullable();
