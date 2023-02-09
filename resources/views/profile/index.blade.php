@@ -219,20 +219,19 @@
                     </div>
                 </div>
             @endif
+        @endif
+        @foreach($cards ?? [] as $card)
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            {{ $card['name'] }}
+                        </h2>
 
-            @foreach($cards ?? [] as $card)
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                {{ $card['name'] }}
-                            </h2>
-
-                            @include($card['view'])
-                        </div>
+                        @include($card['view'])
                     </div>
                 </div>
-            @endforeach
-        </div>
-    @endif
+            </div>
+        @endforeach
+    </div>
 @endsection
