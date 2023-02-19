@@ -40,7 +40,7 @@ trait Searchable
             if (Str::contains($column, '.')) {
                 [$model, $column] = explode('.', $column);
 
-                $models[$model] = array_merge($models[$model] ?? [], [$column]);
+                $models[$model] = [...$models[$model] ?? [], $column];
             } else {
                 $query->orWhere($column, 'like', "%{$search}%");
             }

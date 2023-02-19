@@ -274,7 +274,15 @@ class PluginManager extends ExtensionManager
 
     public function disable(string $plugin)
     {
-        return $this->setPluginEnabled($plugin, false);
+        $result = $this->setPluginEnabled($plugin, false);
+
+        foreach (array_keys($this->plugins) as $dependency) {
+            if (! $this->hasRequirements($dependency)) {
+                $this->disable($dependency);
+            }
+        }
+
+        return $result;
     }
 
     public function hasRequirements(string $plugin)
@@ -379,6 +387,8 @@ class PluginManager extends ExtensionManager
 
         $plugins = $this->findPluginsDescriptions()
             ->filter(fn ($desc, $plugin) => in_array($plugin, $enabledPlugins, true));
+
+        $this->plugins = $plugins->all();
 
         if ($plugins->isEmpty() && app()->runningInConsole()) {
             return $plugins;

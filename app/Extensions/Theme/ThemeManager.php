@@ -61,7 +61,7 @@ class ThemeManager extends ExtensionManager
         view()->getFinder()->prependLocation($viewsPath);
 
         config([
-            'view.paths' => array_merge([$viewsPath], config('view.paths', [])),
+            'view.paths' => [$viewsPath, ...config('view.paths', [])],
         ]);
 
         $this->loadConfig($theme);

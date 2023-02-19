@@ -82,7 +82,7 @@
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
 
-                            <select class="form-control" id="smtpEncryptionSelect" name="smtp-encryption">
+                            <select class="form-select" id="smtpEncryptionSelect" name="smtp-encryption">
                                 <option value="" @selected(config('mail.encryption') === null)>
                                     {{ trans('messages.none') }}
                                 </option>
