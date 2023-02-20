@@ -4,7 +4,5 @@ updates:
     schedule:
       interval: "weekly"
     directory: "/"
-    schedule:
-      interval: "weekly"
     labels:
       - "dependencies"
