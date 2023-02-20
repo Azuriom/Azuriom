@@ -55,7 +55,7 @@ class ServerController extends Controller
         ), $request->json('full', false));
 
         $users = User::whereIn($uidKey ? 'game_id' : 'name', $players)->get();
-        $commands = $server->commands()
+        $commands = $users->isEmpty() ? collect() : $server->commands()
             ->with('user')
             ->whereBelongsTo($users)
             ->orWhere('need_online', false)

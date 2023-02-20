@@ -294,6 +294,6 @@ class LoginController extends Controller
             return false;
         }
 
-        return $user !== null && $user->can('maintenance.access');
+        return $user !== null && ! $user->can('maintenance.access');
     }
 }
