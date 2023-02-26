@@ -19,7 +19,7 @@ $files = new Filesystem();
 
 foreach ($locales as $locale) {
     $origin = 'crowdin_translations/'.$locale;
-    $target = 'resources/lang/'.$locale;
+    $target = 'resources/lang/'.str_replace('-', '_', $locale);
     $targetExtensions = $target.'/extensions';
     $options = ['override' => true];
 
