@@ -105,7 +105,7 @@ return [
     'servers' => 'Servers',
     'news' => 'News',
     'welcome' => 'Welcome on :name',
-    'copyright' => 'Powered by <a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>.',
+    'copyright' => '<i class="bi bi-rocket-takeoff-fill"></i> Powered by <a href="https://azuriom.com"><img style="width: 78px; vertical-align: top;" src="https://azuriom.com/assets/svg/logo-text-white.svg"></a>',
 
     'maintenance' => [
         'title' => 'Maintenance',
