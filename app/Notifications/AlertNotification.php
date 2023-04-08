@@ -33,7 +33,7 @@ class AlertNotification implements Arrayable
      *
      * @var \Azuriom\Models\User|null
      */
-    protected ?string $from = null;
+    protected ?User $from = null;
 
     /**
      * Create a new notification instance.

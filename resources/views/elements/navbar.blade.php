@@ -62,23 +62,23 @@
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{ route('profile.index') }}">
-                                {{ trans('messages.nav.profile') }}
+                                <i class="bi bi-person"></i> {{ trans('messages.nav.profile') }}
                             </a>
 
                             @foreach(plugins()->getUserNavItems() ?? [] as $navId => $navItem)
                                 <a class="dropdown-item" href="{{ route($navItem['route']) }}">
-                                    {{ $navItem['name'] }}
+                                    <i class="{{ $navItem['icon'] ?? 'bi bi-three-dots' }}"></i> {{ $navItem['name'] }}
                                 </a>
                             @endforeach
 
                             @if(Auth::user()->hasAdminAccess())
                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    {{ trans('messages.nav.admin') }}
+                                    <i class="bi bi-speedometer2"></i> {{ trans('messages.nav.admin') }}
                                 </a>
                             @endif
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ trans('auth.logout') }}
+                                <i class="bi bi-box-arrow-right"></i> {{ trans('auth.logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

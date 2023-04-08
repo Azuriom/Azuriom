@@ -102,7 +102,7 @@ class Notification extends Model
     public function markAsUnread()
     {
         if ($this->read_at !== null) {
-            $this->update((['read_at' => null]));
+            $this->update(['read_at' => null]);
         }
     }
 

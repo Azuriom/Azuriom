@@ -71,7 +71,7 @@ class SettingServiceProvider extends ServiceProvider
                 $config->set('mail.from.name', $value);
                 break;
             case 'locale':
-                $this->app->setLocale($value);
+                $this->app->setLocale(str_replace('-', '_', $value));
                 break;
             case 'timezone':
                 date_default_timezone_set($value);

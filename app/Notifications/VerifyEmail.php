@@ -23,7 +23,9 @@ class VerifyEmail extends Notification
 
         return (new MailMessage())
             ->subject(trans('auth.mail.verify.subject'))
-            ->line(trans('auth.mail.verify.line1'))
+            ->line(trans('auth.mail.verify.line1', [
+                'count' => config('auth.verification.expire', 60),
+            ]))
             ->action(trans('auth.mail.verify.action'), $verificationUrl)
             ->line(trans('auth.mail.verify.line2'));
     }

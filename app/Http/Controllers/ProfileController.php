@@ -291,13 +291,12 @@ class ProfileController extends Controller
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 
-        $message = trans('messages.profile.money_transfer.notification', [
+        (new AlertNotification(trans('messages.profile.money_transfer.notification', [
             'user' => $user->name,
             'money' => format_money($money),
-        ]);
-        $notification = (new AlertNotification($message))->from($user);
-
-        $receiver->notifications()->create($notification->toArray());
+        ])))
+        ->from($user)
+        ->send($receiver);
 
         return redirect()->route('profile.index')
             ->with('success', trans('messages.profile.money_transfer.success'));

@@ -66,7 +66,7 @@ return [
 
         'verify' => [
             'subject' => 'Vérification de l\'adresse email',
-            'line1' => 'Veuillez cliquer sur le bouton ci-dessous pour vérifier votre adresse email.',
+            'line1' => 'Veuillez cliquer sur le bouton ci-dessous pour vérifier votre adresse email. Ce lien est valable pendant :count minutes.',
             'action' => 'Verifier l\'adresse email',
             'line2' => 'Si vous n\'avez pas créé de compte, vous pouvez ignorer cet email.',
         ],

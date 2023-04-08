@@ -53,13 +53,21 @@ trait Loggable
         }
 
         foreach ($this->getDirty() as $attribute => $value) {
-            if ($this->shouldLogAttribute($attribute)) {
+            $original = $this->getOriginal($attribute);
+
+            if ($this->shouldLogAttribute($attribute) && $this->isValidLogType($original) && $this->isValidLogType($value)) {
                 $log->entries()->create([
                     'attribute' => $attribute,
-                    'old_value' => $this->getOriginal($attribute),
+                    'old_value' => $original,
                     'new_value' => $value,
                 ]);
             }
         }
+    }
+
+    protected function isValidLogType($value)
+    {
+        return $value === null || is_bool($value)
+            || is_string($value) || is_numeric($value);
     }
 }

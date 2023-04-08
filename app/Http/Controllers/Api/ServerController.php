@@ -57,7 +57,7 @@ class ServerController extends Controller
         $users = User::whereIn($uidKey ? 'game_id' : 'name', $players)->get();
         $commands = $server->commands()
             ->with('user')
-            ->whereBelongsTo($users)
+            ->whereIn('user_id', $users->modelKeys())
             ->orWhere('need_online', false)
             ->limit(100)
             ->get();
@@ -124,6 +124,50 @@ class ServerController extends Controller
             ->update(Arr::only($data, 'email'));
 
         return response()->noContent();
+    }
+
+    public function user(User $user)
+    {
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'uid' => $user->game_id,
+            'money' => $user->money,
+        ]);
+    }
+
+    public function addMoney(Request $request, User $user)
+    {
+        return $this->editMoney($request, $user, function (float $amount) use ($user) {
+            $user->increment('money', $amount);
+        });
+    }
+
+    public function removeMoney(Request $request, User $user)
+    {
+        return $this->editMoney($request, $user, function (float $amount) use ($user) {
+            $user->decrement('money', min($amount, $user->money));
+        });
+    }
+
+    public function setMoney(Request $request, User $user)
+    {
+        return $this->editMoney($request, $user, function (float $amount) use ($user) {
+            $user->update(['money' => $amount]);
+        });
+    }
+
+    protected function editMoney(Request $request, User $user, callable $action)
+    {
+        $this->validate($request, ['amount' => 'required|numeric|min:0.01']);
+
+        $balance = $user->money;
+        $action($request->input('amount'));
+
+        return response()->json([
+            'old_balance' => $balance,
+            'new_balance' => $user->money,
+        ]);
     }
 
     protected function mapLegacyCommands(Collection $commands)
