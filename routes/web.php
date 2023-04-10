@@ -25,6 +25,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/sitemap.xml', function () {
+    // create an array with URLs and their priorities
+    $urls = [
+        [
+            'url' => 'https://site.com/',
+            'priority' => 1.00,
+        ]
+    ];
+    
+    // create a string with the sitemap XML content
+    $sitemap = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ';
+    $sitemap .= 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ';
+    $sitemap .= 'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 ';
+    $sitemap .= 'http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' . "\n";
+    
+    foreach ($urls as $url) {
+        $sitemap .= '<url>' . "\n";
+        $sitemap .= '<loc>' . $url['url'] . '</loc>' . "\n";
+        $sitemap .= '<priority>' . $url['priority'] . '</priority>' . "\n";
+        $sitemap .= '</url>' . "\n";
+    }
+    
+    $sitemap .= '</urlset>' . "\n";
+    
+    return new Response($sitemap, 200, [
+        'Content-Type' => 'application/xml'
+    ]);
+});
+
 Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function () {
     Auth::routes([
         'verify' => true,
