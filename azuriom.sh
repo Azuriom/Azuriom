@@ -12,22 +12,22 @@ case $1 in
     bash "$0" npm-install
     bash "$0" npm-run-prod
     bash "$0" laravel-symlink
-    docker-compose build
+    docker compose build
     exit
     ;;
 
   "start")
-    docker-compose up -d
+    docker compose up -d
     exit
     ;;
 
   "stop")
-    docker-compose stop
+    docker compose stop
     exit
     ;;
 
   "docker-compose-build")
-    docker-compose build
+    docker compose build
     exit
     ;;
 
@@ -47,38 +47,38 @@ case $1 in
     ;;
 
   "laravel-generate-key")
-    docker-compose exec php-fpm php artisan key:generate
+    docker compose exec php-fpm php artisan key:generate
     exit
     ;;
 
   "laravel-init-db")
-    docker-compose exec php-fpm php artisan migrate --seed
+    docker compose exec php-fpm php artisan migrate --seed
     exit
     ;;
 
   "laravel-migrate")
-    docker-compose exec php-fpm php artisan migrate
+    docker compose exec php-fpm php artisan migrate
     exit
     ;;
 
   "laravel-symlink")
-    docker-compose exec php-fpm php artisan storage:link
+    docker compose exec php-fpm php artisan storage:link
     exit
     ;;
 
   "laravel-create-admin")
-    docker-compose exec php-fpm php artisan user:create --admin
+    docker compose exec php-fpm php artisan user:create --admin
     exit
     ;;
 
   "laravel-clear-cache")
-    docker-compose exec php-fpm php artisan cache:clear
+    docker compose exec php-fpm php artisan cache:clear
     exit
     ;;
 
   "artisan")
     shift
-    docker-compose exec php-fpm php artisan "$*"
+    docker compose exec php-fpm php artisan "$*"
     exit
     ;;
 
