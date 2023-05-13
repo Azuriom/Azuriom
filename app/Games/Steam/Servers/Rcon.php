@@ -10,7 +10,13 @@ class Rcon extends Query
 
     public function verifyLink()
     {
-        return $this->connect(true)->GetInfo() !== null;
+        $query = $this->connect(true);
+
+        $reflection = new \ReflectionClass($query);
+        $property = $reflection->getProperty('Connected');
+        $property->setAccessible(true);
+
+        return $property->getValue($query);
     }
 
     public function sendCommands(array $commands, User $user, bool $needConnected = false)
