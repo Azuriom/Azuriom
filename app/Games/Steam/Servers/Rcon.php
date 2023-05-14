@@ -13,6 +13,7 @@ class Rcon extends Query
         // This will call SourceQuery::SetRconPassword which will call SourceRcon::Authorize
         // Both methods will throw if the socket is not connected or password is wrong
         $this->connect(true);
+
         return true;
     }
 
