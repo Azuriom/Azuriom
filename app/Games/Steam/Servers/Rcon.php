@@ -10,7 +10,11 @@ class Rcon extends Query
 
     public function verifyLink()
     {
-        return $this->connect(true)->GetInfo() !== null;
+        // This will call SourceQuery::SetRconPassword which will call SourceRcon::Authorize
+        // Both methods will throw if the socket is not connected or password is wrong
+        $this->connect(true);
+
+        return true;
     }
 
     public function sendCommands(array $commands, User $user, bool $needConnected = false)
