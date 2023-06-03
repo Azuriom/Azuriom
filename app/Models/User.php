@@ -43,6 +43,7 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $unreadNotifications
  * @property \Azuriom\Models\Role $role
  * @property \Azuriom\Models\Ban|null $ban
+ * @property \Carbon\Carbon $forced_password_change_at
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar', 'access_token', 'two_factor_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar', 'access_token', 'two_factor_secret', 'forced_password_change',
     ];
 
     /**
@@ -81,6 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'deleted_at' => 'datetime',
+        'forced_password_change_at' => 'datetime',
     ];
 
     /**
@@ -201,6 +203,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'two_factor_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
+            'forced_password_change_at' => null,
             'deleted_at' => $this->freshTimestamp(),
         ])->save();
     }
@@ -249,5 +252,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
+    }
+
+    /**
+     * Allows you to find out if the user is blocked for FPC.
+     *
+     * @return bool
+     */
+    public function isLockedForFpc()
+    {
+        return isset($this->forced_password_change_at);
     }
 }

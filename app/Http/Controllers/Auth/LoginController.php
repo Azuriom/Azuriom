@@ -100,6 +100,10 @@ class LoginController extends Controller
             return $this->redirectTo2fa($request, $user);
         }
 
+        if ($user->isLockedForFpc()) {
+            return view('auth.fpc', ['user' => $user]);
+        }
+
         $this->guard()->login($user, $isOauth || $request->filled('remember'));
 
         return $this->sendLoginResponse($request);
@@ -214,6 +218,10 @@ class LoginController extends Controller
             throw ValidationException::withMessages([
                 'code' => trans('auth.2fa.invalid'),
             ]);
+        }
+
+        if ($user->isLockedForFpc()) {
+            return view('auth.fpc', ['user' => $user]);
         }
 
         $this->guard()->login($user, $request->session()->get('login.2fa.remember'));

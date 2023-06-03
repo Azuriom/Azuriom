@@ -183,6 +183,21 @@ class UserController extends Controller
             ->with('success', trans('admin.users.2fa.disabled'));
     }
 
+    public function forcedPasswordChange(User $user)
+    {
+        $user->forced_password_change_at = $user->isLockedForFpc() ? null : now();
+        $user->save();
+
+        ActionLog::log('users.updated', $user);
+
+        return redirect()->route('admin.users.edit', $user)
+            ->with(
+                'success',
+                $user->isLockedForFpc()
+                    ? trans('admin.users.fpc.toast.enabled')
+                    : trans('admin.users.fpc.toast.disabled'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *

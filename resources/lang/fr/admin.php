@@ -357,6 +357,14 @@ return [
             'disabled' => 'L\'authentification à deux facteurs a été désactivée',
         ],
 
+        'fpc' => [
+            'title' => 'Forcer le changement de mot de passe',
+            'toast' => [
+                'enabled' => 'L\'option Forcer le changement de mot de passe a été activée.',
+                'disabled' => 'L\'option Forcer le changement de mot de passe a été désactivée.',
+            ],
+        ],
+
         'status' => [
             'banned' => 'Utilisateur banni',
             'unbanned' => 'Utilisateur débanni',

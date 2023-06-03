@@ -356,6 +356,13 @@ return [
             'disable' => 'Disable 2FA',
             'disabled' => 'The Two Factor Authentication has been disabled.',
         ],
+        'fpc' => [
+            'title' => 'Force Password Change',
+            'toast' => [
+                'enabled' => 'The Force Password Change has been enabled.',
+                'disabled' => 'The Force Password Change has been disabled.',
+            ],
+        ],
 
         'status' => [
             'banned' => 'This user is now banned.',

@@ -191,6 +191,21 @@
                         </form>
                     @endif
 
+                    <form action="{{ route('admin.users.fpc', $user) }}" method="POST">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label class="form-label" for="fpc">{{ trans('admin.users.fpc.title') }}</label>
+
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control {{$user->isLockedForFpc() ? "text-danger" : ""}}" id="fpcInput" value="{{ $user->isLockedForFpc() ? format_date_compact($user->forced_password_change_at) : trans('messages.no') }}" disabled>
+                                <button class="btn btn-outline-{{$user->isLockedForFpc() ? "success" : "danger"}}" type="submit" @disabled($user->isDeleted())>
+                                    {{ trans($user->isLockedForFpc() ? 'messages.actions.disable' : 'messages.actions.enable') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="mb-3">
                         <label class="form-label" for="addressInput">{{ trans('admin.users.ip') }}</label>
                         <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
