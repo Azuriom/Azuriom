@@ -4,6 +4,7 @@ namespace Azuriom\Http\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\Server;
+use Azuriom\Rules\GameUrl;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,7 +37,7 @@ class ServerRequest extends FormRequest
             'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
-            'join_url' => ['sometimes', 'nullable', 'url', 'max:100'],
+            'join_url' => ['sometimes', 'nullable', new GameUrl, 'max:100'],
             'home_display' => ['filled', 'boolean'],
         ];
     }

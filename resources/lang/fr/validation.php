@@ -155,6 +155,7 @@ return [
     'slug' => 'Le champ :attribute doit être un lien avec seulement des lettres minuscules, des chiffres et des tirets.',
     'color' => 'Le champ :attribute doit être un code couleur hexadécimal.',
     'game_auth' => 'Le champ :attribute doit être un pseudo :game valide.',
+    'game_url' => 'La valeur n\'est pas une url valide pour les jeux ({protocol://{ip}}).',
 
     /*
     |--------------------------------------------------------------------------

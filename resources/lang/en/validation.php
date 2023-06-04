@@ -152,6 +152,7 @@ return [
     'slug' => 'The :attribute must be a slug with only lowercase letters, numbers and dashes.',
     'color' => 'The :attribute must be a hex color code.',
     'game_auth' => 'The :attribute must be a valid :game username.',
+    'game_url' => 'The value is not a valid url for games ({protocol://{ip}}).',
 
     /*
     |--------------------------------------------------------------------------
