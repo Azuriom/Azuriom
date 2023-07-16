@@ -25,7 +25,12 @@ return [
         'reset' => 'Reset Password',
         'send' => 'Send Password Reset Link',
     ],
-
+    'fpc' => [
+        'title' => 'Forced password change',
+        'line1' => 'Your account has been temporarily blocked for security reasons. To unblock it, please change your password.',
+        'line2' => 'If you need more information or have problems unlocking your account, please contact the site administrator.',
+        'action' => 'Change my password',
+    ],
     'name' => 'Username',
     'email' => 'Email Address',
     'password' => 'Password',

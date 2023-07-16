@@ -18,4 +18,5 @@ return [
     'throttled' => 'Veuillez attendre avant de réessayer.',
     'token' => 'Cette clé de réinitialisation de mot de passe n\'est pas valide.',
     'user' => "Aucun utilisateur n'a été trouvé avec cette adresse email.",
+    'change' => 'Vous devez réinitialiser votre mot de passe pour continuer.',
 ];

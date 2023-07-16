@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
  * @property string[]|null $two_factor_recovery_codes
  * @property string|null $last_login_ip
  * @property \Carbon\Carbon|null $last_login_at
+ * @property \Carbon\Carbon|null $password_changed_at
  * @property string|null $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -58,7 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar', 'access_token', 'two_factor_secret',
+        'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar',
+        'access_token', 'two_factor_secret', 'password_changed_at',
     ];
 
     /**
@@ -80,6 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_recovery_codes' => 'array',
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'password_changed_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
@@ -201,6 +204,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'two_factor_secret' => null,
             'email_verified_at' => null,
             'last_login_ip' => null,
+            'password_changed_at' => null,
             'deleted_at' => $this->freshTimestamp(),
         ])->save();
     }
@@ -228,6 +232,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin()
     {
         return $this->role->is_admin;
+    }
+
+    public function mustChangePassword()
+    {
+        return $this->password_changed_at === null;
     }
 
     /**

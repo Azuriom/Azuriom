@@ -189,6 +189,30 @@
                                 @endif
                             </div>
                         </form>
+
+                        <form action="{{ route('admin.users.force-password', $user) }}" method="POST">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label" for="forcePassword">{{ trans('admin.users.password.title') }}</label>
+
+                                @if($user->mustChangePassword())
+                                    <input type="text" class="form-control" id="forcePassword" value="{{ trans('admin.users.password.forced') }}" disabled>
+                                @else
+                                    <div class="input-group mb-3">
+                                        @if($user->password_changed_at->eq($user->created_at))
+                                            <input type="text" class="form-control" id="forcePassword" value="{{ trans('messages.unknown') }}" disabled>
+                                        @else
+                                            <input type="text" class="form-control" id="forcePassword" value="{{ format_date_compact($user->password_changed_at) }}" disabled>
+                                        @endif
+
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            {{ trans('admin.users.password.force') }}
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                        </form>
                     @endif
 
                     <div class="mb-3">

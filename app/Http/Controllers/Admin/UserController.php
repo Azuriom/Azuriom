@@ -152,7 +152,7 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
     }
 
@@ -181,6 +181,14 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.edit', $user)
             ->with('success', trans('admin.users.2fa.disabled'));
+    }
+
+    public function forcePasswordChange(User $user)
+    {
+        $user->update(['password_changed_at' => null]);
+
+        return redirect()->route('admin.users.edit', $user)
+            ->with('success', trans('messages.status.success'));
     }
 
     /**

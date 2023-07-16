@@ -2,6 +2,8 @@
 
 namespace Azuriom\Providers;
 
+use Azuriom\Listeners\UpdatePasswordChangedDate;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -14,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        PasswordReset::class => [
+            UpdatePasswordChangedDate::class,
+        ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],

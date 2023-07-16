@@ -357,6 +357,12 @@ return [
             'disabled' => 'The Two Factor Authentication has been disabled.',
         ],
 
+        'password' => [
+            'title' => 'Last password change',
+            'force' => 'Force change',
+            'forced' => 'Must change password',
+        ],
+
         'status' => [
             'banned' => 'This user is now banned.',
             'unbanned' => 'This user has been unbanned.',

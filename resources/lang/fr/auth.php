@@ -25,7 +25,12 @@ return [
         'reset' => 'Réinitialiser le mot de passe',
         'send' => 'Envoyer',
     ],
-
+    'fpc' => [
+        'title' => 'Changement forcé du mot de passe',
+        'line1' => 'Votre compte a été temporairement bloqué pour des raisons de sécurité. Pour le débloquer, veuillez modifier votre mot de passe.',
+        'line2' => 'Si vous avez besoin de plus d\'informations ou si vous avez des problèmes pour débloquer votre compte, veuillez contacter l\'administrateur du site.',
+        'action' => 'Changer mon mot de passe',
+    ],
     'name' => 'Pseudo',
     'email' => 'Adresse Email ',
     'password' => 'Mot de passe',

@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -68,6 +69,8 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
+        $this->ensureUserCanLogin($this->credentials($request));
+
         if (! $this->guard()->once($this->credentials($request))) {
             $this->incrementLoginAttempts($request);
 
@@ -103,6 +106,17 @@ class LoginController extends Controller
         $this->guard()->login($user, $isOauth || $request->filled('remember'));
 
         return $this->sendLoginResponse($request);
+    }
+
+    protected function ensureUserCanLogin(array $credential)
+    {
+        $user = User::firstWhere(Arr::except($credential, 'password'));
+
+        if ($user?->mustChangePassword()) {
+            throw ValidationException::withMessages([
+                $this->username() => trans('passwords.change'),
+            ]);
+        }
     }
 
     /**
