@@ -16,8 +16,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use RuntimeException;
 use Throwable;
 
@@ -377,7 +377,7 @@ class PluginManager extends ExtensionManager
     public function getUserNavItems()
     {
         return $this->userNavItems->flatMap(fn ($value) => value($value))
-            ->filter(fn ($navItem) => !isset($navItem['permission']) || Gate::check($navItem['permission']));
+            ->filter(fn ($item) => ! isset($item['permission']) || Gate::allows($item['permission']));
     }
 
     public function cachePlugins(array $enabledPlugins = null)
