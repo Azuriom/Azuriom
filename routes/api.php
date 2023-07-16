@@ -37,6 +37,7 @@ Route::prefix('/azlink')->middleware('server.token')->group(function () {
     Route::post('/user/{user}/money/set', [ServerController::class, 'setMoney']);
     Route::post('/register', [ServerController::class, 'register']);
     Route::post('/email', [ServerController::class, 'updateEmail']);
+    Route::post('/password', [ServerController::class, 'updatePassword']);
 });
 
 Route::get('/rss', [FeedController::class, 'rss'])->name('feeds.rss');

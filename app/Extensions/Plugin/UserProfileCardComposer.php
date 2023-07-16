@@ -6,11 +6,11 @@ abstract class UserProfileCardComposer extends AdminDashboardCardComposer
 {
     /**
      * Get the cards to add to the user profile.
-     * Each card should contains:
-     * - 'name' : The name of the card
+     * Each card should contain:
+     * - 'name' : The title of the card
      * - 'view' : The view (Ex: shop::giftcards.index).
      *
-     * @return array
+     * @return array{name: string, view: string}[]
      */
     abstract public function getCards();
 }

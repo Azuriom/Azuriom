@@ -115,13 +115,29 @@ class ServerController extends Controller
     public function updateEmail(Request $request)
     {
         $data = $this->validate($request, [
-            'game_id' => ['required', 'string', 'max:100', 'exists:users,game_id'],
+            'game_id' => ['required', 'string', 'exists:users,game_id'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
-        User::where('game_id', $request->input('uuid'))
+        User::where('game_id', $request->input('game_id'))
             ->firstOrFail()
             ->update(Arr::only($data, 'email'));
+
+        return response()->noContent();
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'game_id' => ['required', 'string', 'exists:users,game_id'],
+            'password' => ['required', 'string'],
+        ]);
+
+        User::where('game_id', $request->input('game_id'))
+            ->firstOrFail()
+            ->update([
+                'password' => Hash::make($request->input('password')),
+            ]);
 
         return response()->noContent();
     }
