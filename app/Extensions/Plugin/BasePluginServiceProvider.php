@@ -50,6 +50,19 @@ abstract class BasePluginServiceProvider extends ServiceProvider
     protected Router|null $router;
 
     /**
+     * Create a new service provider instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->router = $app[Router::class];
+    }
+
+    /**
      * Register any plugin services.
      *
      * @return void
@@ -140,16 +153,16 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function middlewareGroup(string|array $name, $middleware = null)
+    protected function middlewareGroup(string|array $name, array $middleware = null)
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
-        foreach ($middlewares as $key => $class) {
-            $this->router->middlewareGroup($key, $class);
+        foreach ($middlewares as $key => $group) {
+            $this->router->middlewareGroup($key, $group);
         }
     }
 
-    protected function routeMiddleware(string|array $name, $middleware = null)
+    protected function routeMiddleware(string|array $name, string $middleware = null)
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 

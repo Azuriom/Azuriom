@@ -30,7 +30,7 @@ class ProfileController extends Controller
             abort_if(! setting('user.delete'), 404);
 
             return $next($request);
-        })->only(['showDelete', 'sendDelete', 'confirmDelete']);
+        })->only(['showDelete', 'showDeleteConfirm', 'sendDelete', 'confirmDelete']);
     }
 
     /**

@@ -82,7 +82,7 @@
                             Cloudflare Turnstile
                         </option>
                         <option value="recaptcha" @selected($captchaType === 'recaptcha')>
-                            Google reCaptcha
+                            Google reCAPTCHA
                         </option>
                     </select>
 

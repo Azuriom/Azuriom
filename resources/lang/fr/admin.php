@@ -123,7 +123,7 @@ return [
                 'title' => 'Captcha (protection anti bot)',
                 'site_key' => 'Clé du site',
                 'secret_key' => 'Clé secrète',
-                'recaptcha' => 'Vous pouvez obtenir les clés Google reCaptcha sur le site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCaptcha</a>. Vous devez utiliser des clés reCaptcha <strong>v2 invisible</strong>.',
+                'recaptcha' => 'Vous pouvez obtenir les clés Google reCAPTCHA sur le site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA</a>. Vous devez utiliser des clés reCAPTCHA <strong>v2 invisible</strong>.',
                 'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur le site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
                 'turnstile' => 'Vous pouvez obtenir les clés Turnstile sur le <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">tableau de bord Cloudflare</a>. Vous devez sélectionner le widget "Géré".',
             ],
@@ -265,7 +265,7 @@ return [
 
         'query_port_info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 
-        'verify' => 'Vérifier la connexion',
+        'verify' => 'Tester les commandes instantanées',
 
         'rcon_password' => 'Mot de passe Rcon',
         'rcon_port' => 'Port Rcon',

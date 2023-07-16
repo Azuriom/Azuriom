@@ -4,7 +4,7 @@
 
 @section('content')
     <form class="row g-3 align-items-center" action="{{ route('admin.users.index') }}" method="GET">
-        <div class="col-md4 col-12 mb-3">
+        <div class="col-md-4 col-12 mb-3">
             <label class="visually-hidden" for="searchInput">
                 {{ trans('messages.actions.search') }}
             </label>

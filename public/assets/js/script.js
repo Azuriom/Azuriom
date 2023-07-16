@@ -63,7 +63,7 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
             const likesCount = el.querySelector('.likes-count');
 
             if (likesCount) {
-                likesCount.innerHTML = json.data.likes;
+                likesCount.innerText = json.data.likes;
             }
         }).finally(function () {
             likeSpinner.classList.add('d-none');

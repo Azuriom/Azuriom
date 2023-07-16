@@ -171,7 +171,7 @@ return [
             'enable' => 'Enable 2FA',
             'disable' => 'Disable 2FA',
             'manage' => 'Manage 2FA',
-            'info' => 'Scan the QR code above with a two-factor authentication app on your phone like <a href="https://authy.com/" target="_blank" rel="noopener norefferer">Authy</a>, <a href="https://outercorner.com/secrets-ios/" target="_blank" rel="noopener norefferer">Secrets</a> or Google Authenticator.',
+            'info' => 'Scan the QR code above with a two-factor authentication app on your phone like <a href="https://authy.com/" target="_blank" rel="noopener norefferer">Authy</a>, <a href="https://secrets.app/" target="_blank" rel="noopener norefferer">Secrets</a> or Google Authenticator.',
             'secret' => 'Secret key: :secret',
             'title' => 'Two-Factor Authentication',
             'codes' => 'Show recovery codes',
