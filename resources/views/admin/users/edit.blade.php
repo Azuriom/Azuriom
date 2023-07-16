@@ -189,22 +189,31 @@
                                 @endif
                             </div>
                         </form>
-                    @endif
 
-                    <form action="{{ route('admin.users.fpc', $user) }}" method="POST">
-                        @csrf
+                        <form action="{{ route('admin.users.force-password', $user) }}" method="POST">
+                            @csrf
 
-                        <div class="mb-3">
-                            <label class="form-label" for="fpc">{{ trans('admin.users.fpc.title') }}</label>
+                            <div class="mb-3">
+                                <label class="form-label" for="forcePassword">{{ trans('admin.users.password.title') }}</label>
 
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control {{$user->isLockedForFpc() ? "text-danger" : ""}}" id="fpcInput" value="{{ $user->isLockedForFpc() ? format_date_compact($user->forced_password_change_at) : trans('messages.no') }}" disabled>
-                                <button class="btn btn-outline-{{$user->isLockedForFpc() ? "success" : "danger"}}" type="submit" @disabled($user->isDeleted())>
-                                    {{ trans($user->isLockedForFpc() ? 'messages.actions.disable' : 'messages.actions.enable') }}
-                                </button>
+                                @if($user->mustChangePassword())
+                                    <input type="text" class="form-control" id="forcePassword" value="{{ trans('admin.users.password.forced') }}" disabled>
+                                @else
+                                    <div class="input-group mb-3">
+                                        @if($user->password_changed_at->eq($user->created_at))
+                                            <input type="text" class="form-control" id="forcePassword" value="{{ trans('messages.unknown') }}" disabled>
+                                        @else
+                                            <input type="text" class="form-control" id="forcePassword" value="{{ format_date_compact($user->password_changed_at) }}" disabled>
+                                        @endif
+
+                                        <button class="btn btn-outline-danger" type="submit">
+                                            {{ trans('admin.users.password.force') }}
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    @endif
 
                     <div class="mb-3">
                         <label class="form-label" for="addressInput">{{ trans('admin.users.ip') }}</label>

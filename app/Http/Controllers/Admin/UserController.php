@@ -152,7 +152,7 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
     }
 
@@ -183,19 +183,12 @@ class UserController extends Controller
             ->with('success', trans('admin.users.2fa.disabled'));
     }
 
-    public function forcedPasswordChange(User $user)
+    public function forcePasswordChange(User $user)
     {
-        $user->forced_password_change_at = $user->isLockedForFpc() ? null : now();
-        $user->save();
-
-        ActionLog::log('users.updated', $user);
+        $user->update(['password_changed_at' => null]);
 
         return redirect()->route('admin.users.edit', $user)
-            ->with(
-                'success',
-                $user->isLockedForFpc()
-                    ? trans('admin.users.fpc.toast.enabled')
-                    : trans('admin.users.fpc.toast.disabled'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**

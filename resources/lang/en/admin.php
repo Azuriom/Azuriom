@@ -356,12 +356,11 @@ return [
             'disable' => 'Disable 2FA',
             'disabled' => 'The Two Factor Authentication has been disabled.',
         ],
-        'fpc' => [
-            'title' => 'Force Password Change',
-            'toast' => [
-                'enabled' => 'The Force Password Change has been enabled.',
-                'disabled' => 'The Force Password Change has been disabled.',
-            ],
+
+        'password' => [
+            'title' => 'Last password change',
+            'force' => 'Force change',
+            'forced' => 'Must change password',
         ],
 
         'status' => [

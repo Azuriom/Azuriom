@@ -62,7 +62,7 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
 Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(function () {
     Route::post('/{user}/verify', [UserController::class, 'verifyEmail'])->name('verify');
     Route::post('/{user}/2fa', [UserController::class, 'disable2fa'])->name('2fa');
-    Route::post('/{user}/fpc', [UserController::class, 'forcedPasswordChange'])->name('fpc');
+    Route::post('/{user}/password/force', [UserController::class, 'forcePasswordChange'])->name('force-password');
 });
 
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {

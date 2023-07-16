@@ -357,12 +357,10 @@ return [
             'disabled' => 'L\'authentification à deux facteurs a été désactivée',
         ],
 
-        'fpc' => [
-            'title' => 'Forcer le changement de mot de passe',
-            'toast' => [
-                'enabled' => 'L\'option Forcer le changement de mot de passe a été activée.',
-                'disabled' => 'L\'option Forcer le changement de mot de passe a été désactivée.',
-            ],
+        'password' => [
+            'title' => 'Dernier changement de mot de passe',
+            'force' => 'Force le changement',
+            'forced' => 'Doit changer son mot de passe',
         ],
 
         'status' => [
