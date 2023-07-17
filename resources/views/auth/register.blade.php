@@ -50,13 +50,13 @@
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                     </div>
 
-                    @if($conditions !== null)
+                    @if($registerConditions !== null)
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" @checked(old('conditions'))>
 
                                 <label class="form-check-label" for="conditions">
-                                    @lang('auth.conditions', ['url' => $conditions])
+                                    {{ $registerConditions }}
                                 </label>
 
                                 @error('conditions')

@@ -176,8 +176,8 @@ return [
         'auth' => [
             'title' => 'Authentication',
 
-            'conditions' => 'Conditions URL',
-            'conditions_info' => 'Users will have to accept these conditions when registering.',
+            'conditions' => 'Conditions to be accepted on registration',
+            'conditions_info' => 'Links in Markdown format, for example: <code>I accept the [conditions](/conditions-link) and [privacy policy](/privacy-policy)</code>',
             'registration' => 'Enable user registration',
             'registration_info' => 'It can still be possible to register through plugins.',
             'api' => 'Enable Auth API',

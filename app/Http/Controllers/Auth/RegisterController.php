@@ -8,10 +8,13 @@ use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Azuriom\Rules\GameAuth;
 use Azuriom\Rules\Username;
+use Azuriom\Support\Markdown;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -57,7 +60,20 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.register', ['conditions' => setting('conditions')]);
+        $conditions = setting('conditions');
+
+        if ($conditions !== null) {
+            $rawConditions = preg_match('/^https?:\/\//i', $conditions)
+                ? trans('auth.conditions', ['url' => $conditions])
+                : Str::between(Markdown::parse($conditions, true), '<p>', '</p>');
+
+            $conditions = new HtmlString($rawConditions);
+        }
+
+        return view('auth.register', [
+            'conditions' => null,
+            'registerConditions' => $conditions,
+        ]);
     }
 
     /**

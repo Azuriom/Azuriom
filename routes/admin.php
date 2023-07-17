@@ -43,6 +43,7 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
 
     Route::get('/performance', [SettingsController::class, 'performance'])->name('performance');
     Route::get('/storage/link', [SettingsController::class, 'linkStorage'])->name('link-storage');
+    Route::get('/migrate', [SettingsController::class, 'migrate'])->name('migrate');
 
     Route::get('/seo', [SettingsController::class, 'seo'])->name('seo');
     Route::post('/seo/update', [SettingsController::class, 'updateSeo'])->name('seo.update');

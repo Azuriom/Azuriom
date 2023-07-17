@@ -19,7 +19,7 @@
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
-                    <small id="conditionsLabel" class="form-text">{{ trans('admin.settings.auth.conditions_info') }}</small>
+                    <small id="conditionsLabel" class="form-text">@lang('admin.settings.auth.conditions_info')</small>
                 </div>
 
                 <div class="mb-3">

@@ -269,3 +269,12 @@ if (! function_exists('dark_theme')) {
         return request()?->cookie('theme') === 'dark';
     }
 }
+
+if (! function_exists('scheduler_running')) {
+    function scheduler_running()
+    {
+        $last = setting('schedule.last');
+
+        return $last !== null && Carbon::parse($last)->diffInHours() < 1;
+    }
+}

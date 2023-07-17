@@ -176,8 +176,8 @@ return [
         'auth' => [
             'title' => 'Authentification',
 
-            'conditions' => 'Lien des CGU',
-            'conditions_info' => 'Les utilisateurs devront accepter ces conditions lors de l\'inscription.',
+            'conditions' => 'Conditions à accepter lors de l\'inscription',
+            'conditions_info' => 'Liens au format Markdown, par exemple: <code>J\'accepte les [CGU](/lien-des-cgu) et [CGV](/liens-des-cgu)</code>',
             'registration' => 'Activer l\'inscription des utilisateurs',
             'registration_info' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
             'api' => 'Activer l\'API auth',

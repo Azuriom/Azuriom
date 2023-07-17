@@ -16,6 +16,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
@@ -265,6 +266,14 @@ class SettingsController extends Controller
             ->with('success', trans('messages.status.success'));
     }
 
+    public function migrate()
+    {
+        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+
+        return redirect()->route('admin.settings.performance')
+            ->with('success', trans('messages.status.success'));
+    }
+
     public function seo()
     {
         return view('admin.settings.seo', [
@@ -322,7 +331,7 @@ class SettingsController extends Controller
     public function updateAuth(Request $request)
     {
         $settings = $this->validate($request, [
-            'conditions' => ['nullable', 'url', 'max:150'],
+            'conditions' => ['nullable', 'string', 'max:150'],
         ]) + [
             'register' => $request->filled('register'),
             'auth_api' => $request->filled('auth_api'),
