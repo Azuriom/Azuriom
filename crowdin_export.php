@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 // as "crowdin_translations".
 
 // The successfully translated locales (currently for >95% completed)
-$locales = ['de', 'es-ES', 'fi', 'sv-SE', 'ru', 'zh-CN', 'ko', 'pt-BR', 'cs', 'ca', 'uk', 'hu', 'id'];
+$locales = ['de', 'es-ES', 'fi', 'sv-SE', 'pl', 'ru', 'zh-CN', 'ko', 'pt-BR', 'cs', 'ca', 'uk', 'hu', 'id'];
 
 if (! is_dir('crowdin_translations')) {
     exit('The Crowdin translations must be in the "crowdin_translations" folder.');

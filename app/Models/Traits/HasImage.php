@@ -71,7 +71,7 @@ trait HasImage
     }
 
     /**
-     * Return true if this this model has an image.
+     * Return true if this model has an image.
      *
      * @return bool
      */

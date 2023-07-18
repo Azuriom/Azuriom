@@ -13,7 +13,6 @@
                     <thead>
                     <tr>
                         <th scope="col">{{ trans('messages.fields.name') }}</th>
-                        <th scope="col">{{ trans('messages.fields.description') }}</th>
                         <th scope="col">{{ trans('messages.fields.author') }}</th>
                         <th scope="col">{{ trans('messages.fields.version') }}</th>
                         <th scope="col">{{ trans('messages.fields.enabled') }}</th>
@@ -33,7 +32,6 @@
                                     {{ $plugin->name }}
                                 @endisset
                             </th>
-                            <td>{{ $plugin->description }}</td>
                             <td>{{ implode(', ', $plugin->authors ?? []) }}</td>
                             <td>{{ $plugin->version }}</td>
                             <td>
