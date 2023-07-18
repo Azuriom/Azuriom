@@ -361,6 +361,7 @@ class InstallController extends Controller
                 'name' => $name,
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password', Str::random(32))),
+                'password_changed_at' => now(),
                 'game_id' => $gameId ?? null,
             ]);
 
