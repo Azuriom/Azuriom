@@ -8,6 +8,7 @@ use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -158,7 +159,7 @@ class LoginController extends Controller
 
     protected function registerUser(Request $request, SocialUser $user)
     {
-        return User::forceCreate([
+        $user = User::forceCreate([
             'name' => $user->getNickname() ?? $user->getName(),
             'email' => $user->getEmail(),
             'avatar' => $user->getAvatar(),
@@ -167,6 +168,10 @@ class LoginController extends Controller
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
         ]);
+
+        event(new Registered($user));
+
+        return $user;
     }
 
     protected function redirectTo2fa(Request $request, User $user)

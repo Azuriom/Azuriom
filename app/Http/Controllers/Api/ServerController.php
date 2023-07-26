@@ -8,6 +8,7 @@ use Azuriom\Http\Resources\ServerCollection;
 use Azuriom\Models\Role;
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -101,13 +102,15 @@ class ServerController extends Controller
             return response()->noContent();
         }
 
-        User::forceCreate(array_merge(Arr::except($data, 'ip'), [
+        $user = User::forceCreate(array_merge(Arr::except($data, 'ip'), [
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),
             'last_login_at' => now(),
         ]));
+
+        event(new Registered($user));
 
         return response()->noContent();
     }

@@ -73,9 +73,9 @@ return [
     ],
 
     'success' => [
-        'thanks' => 'Thanks for choosing Azuriom !',
-        'success' => 'Your website has been successfully installed, you can now use your website and make something awesome !',
+        'thanks' => 'Thanks for choosing Azuriom!',
+        'success' => 'Your website has been successfully installed, you can now use your website and make something awesome!',
         'go' => 'Get started',
-        'support' => 'If you appreciate Azuriom and the work we provides, please don\'t forget to <a href="https://azuriom.com/support-us" target="_blank" rel="noopener noreferrer">support us</a>.',
+        'support' => 'If you appreciate Azuriom and the work we provide, please don\'t forget to <a href="https://azuriom.com/support-us" target="_blank" rel="noopener noreferrer">support us</a>.',
     ],
 ];
