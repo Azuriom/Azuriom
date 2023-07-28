@@ -13,7 +13,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="conditionsInput">{{ trans('admin.settings.auth.conditions') }}</label>
-                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}" required aria-describedby="conditionsLabel">
+                    <input type="text" class="form-control @error('conditions') is-invalid @enderror" id="conditionsInput" name="conditions" value="{{ old('conditions', $conditions) }}" aria-describedby="conditionsLabel">
 
                     @error('conditions')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

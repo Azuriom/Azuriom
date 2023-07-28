@@ -104,6 +104,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email', 'name', 'game_id', 'role.*',
     ];
 
+    protected static function booted()
+    {
+        self::creating(function (self $user) {
+            if ($user->password_changed_at === null) {
+                $user->password_changed_at = $user->freshTimestamp();
+            }
+        });
+    }
+
     /**
      * Get the posts of this user.
      */

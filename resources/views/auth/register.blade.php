@@ -53,7 +53,7 @@
                     @if($registerConditions !== null)
                         <div class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" @checked(old('conditions'))>
+                                <input class="form-check-input @error('conditions') is-invalid @enderror" type="checkbox" name="conditions" id="conditions" required @checked(old('conditions'))>
 
                                 <label class="form-check-label" for="conditions">
                                     {{ $registerConditions }}

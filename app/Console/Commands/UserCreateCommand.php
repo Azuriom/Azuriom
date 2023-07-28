@@ -34,10 +34,7 @@ class UserCreateCommand extends Command
      */
     public function handle()
     {
-        $data = [
-            'role_id' => Role::defaultRoleId(),
-            'password_changed_at' => now(),
-        ];
+        $data = ['role_id' => Role::defaultRoleId()];
 
         $admin = $this->option('admin');
 

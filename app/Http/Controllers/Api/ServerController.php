@@ -8,6 +8,7 @@ use Azuriom\Http\Resources\ServerCollection;
 use Azuriom\Models\Role;
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -136,11 +137,13 @@ class ServerController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        User::where('game_id', $request->input('game_id'))
-            ->firstOrFail()
-            ->update([
-                'password' => Hash::make($request->input('password')),
-            ]);
+        $user = User::where('game_id', $request->input('game_id'))->firstOrFail();
+
+        $user->update([
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        event(new PasswordReset($user));
 
         return response()->noContent();
     }
