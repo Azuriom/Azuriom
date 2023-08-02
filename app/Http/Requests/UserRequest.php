@@ -12,9 +12,9 @@ class UserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         $user = $this->route('user');
 
@@ -28,5 +28,15 @@ class UserRequest extends FormRequest
             'money' => ['filled', 'numeric', 'min:0'],
             'role' => ['required', 'integer', 'exists:roles,id'],
         ];
+    }
+
+    /**
+     * Handle a passed validation attempt.
+     */
+    public function passedValidation(): void
+    {
+        if (! $this->filled('password')) {
+            $this->request->remove('password');
+        }
     }
 }

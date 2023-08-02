@@ -5,7 +5,6 @@ namespace Azuriom\Games\Minecraft;
 use Azuriom\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 
 class MinecraftOnlineGame extends AbstractMinecraftGame
 {
@@ -13,22 +12,22 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
 
     public const USERNAME_LOOKUP = 'https://api.mojang.com/users/profiles/minecraft/';
 
-    public function id()
+    public function id(): string
     {
         return 'mc-online';
     }
 
-    public function loginWithOAuth()
+    public function loginWithOAuth(): bool
     {
         return true;
     }
 
-    public function getSocialiteDriverName()
+    public function getSocialiteDriverName(): string
     {
         return 'minecraft';
     }
 
-    public function getAvatarUrl(User $user, int $size = 64)
+    public function getAvatarUrl(User $user, int $size = 64): string
     {
         // Fallback to MHF_Steve if the user don't have an uuid
         $uuid = $user->game_id ?? 'c06f8906-4c8a-4911-9c29-ea1dbd1aab82';
@@ -36,22 +35,16 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         return "https://crafatar.com/avatars/{$uuid}?size={$size}&overlay&default=MHF_Steve";
     }
 
-    public function getUserUniqueId(string $name)
+    public function getUserUniqueId(string $name): ?string
     {
         return Cache::remember('games.minecraft.uuid.'.$name, now()->addMinutes(30), function () use ($name) {
-            $uuid = Http::get(self::USERNAME_LOOKUP.$name)
+            return Http::get(self::USERNAME_LOOKUP.$name)
                 ->throw()
                 ->json('id');
-
-            if ($uuid === null) {
-                throw new RuntimeException("No UUID for {$name}");
-            }
-
-            return $uuid;
         });
     }
 
-    public function getUserName(User $user)
+    public function getUserName(User $user): ?string
     {
         if ($user->game_id === null) {
             return $user->name;

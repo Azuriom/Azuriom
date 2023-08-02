@@ -23,8 +23,6 @@ abstract class Game
     /**
      * Get the avatar URL of the user.
      *
-     * @param  \Azuriom\Models\User  $user
-     * @param  int  $size
      *
      * @deprecated Will be removed in 1.0, use User::getAvatar()
      */
@@ -32,15 +30,12 @@ abstract class Game
 
     /**
      * Get the game id of the user.
-     *
-     * @param  string  $name
      */
     abstract public function getUserUniqueId(string $name);
 
     /**
-     * Get the game user name.
+     * Get the game username of the user.
      *
-     * @param  \Azuriom\Models\User  $user
      * @return mixed
      */
     abstract public function getUserName(User $user);
@@ -48,8 +43,6 @@ abstract class Game
     /**
      * Get the translation for a given key.
      *
-     * @param  string  $key
-     * @param  array  $placeholders
      * @return string
      */
     public function trans(string $key, array $placeholders = [])

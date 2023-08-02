@@ -21,15 +21,15 @@ class PendingAttachment extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'pending_id', 'pending_type',
     ];
 
-    protected $imageKey = 'file';
+    protected string $imageKey = 'file';
 
-    protected function resolveImagePath(string $path = '')
+    protected function resolveImagePath(string $path = ''): string
     {
         $type = Relation::getMorphedModel($this->pending_type) ?? $this->pending_type;
 

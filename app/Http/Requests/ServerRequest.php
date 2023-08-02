@@ -5,6 +5,7 @@ namespace Azuriom\Http\Requests;
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\Server;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ServerRequest extends FormRequest
@@ -12,20 +13,20 @@ class ServerRequest extends FormRequest
     use ConvertCheckbox;
 
     /**
-     * The checkboxes attributes.
+     * The attributes represented by checkboxes.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $checkboxes = [
+    protected array $checkboxes = [
         'home_display',
     ];
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:50'],
@@ -42,41 +43,40 @@ class ServerRequest extends FormRequest
     }
 
     /**
-     * Get the validated data from the request.
-     *
-     * @param  mixed|null  $key
-     * @param  mixed|null  $default
-     * @return array
+     * Handle a passed validation attempt.
      */
-    public function validated($key = null, $default = null)
+    public function passedValidation(): void
     {
-        $data = null;
         $type = $this->input('type');
 
-        if (in_array($type, ['mc-rcon', 'source-rcon', 'rust-rcon', 'fivem-rcon', 'bedrock-rcon'], true)) {
-            $data = [
-                'query-port' => $this->input('query-port'),
-                'rcon-port' => $this->input('rcon-port'),
-                'rcon-password' => encrypt($this->input('rcon-password'), false),
-            ];
-        } elseif ($type === 'source-query') {
-            $data = [
-                'query-port' => $this->input('query-port'),
-            ];
-        } elseif ($type === 'mc-azlink') {
+        if (Str::endsWith($type, 'rcon')) {
+            $this->merge([
+                'data' => [
+                    'query-port' => $this->input('query-port'),
+                    'rcon-port' => $this->input('rcon-port'),
+                    'rcon-password' => encrypt($this->input('rcon-password'), false),
+                ],
+            ]);
+
+            return;
+        }
+
+        if ($type === 'source-query') {
+            $this->merge([
+                'data' => ['query-port' => $this->input('query-port')],
+            ]);
+
+            return;
+        }
+
+        if (Str::endsWith($type, 'azlink')) {
             $data = ['azlink-ping' => $this->filled('azlink-ping')];
 
             if ($this->filled('azlink-custom-port')) {
                 $data['azlink-port'] = $this->input('azlink-port');
             }
+
+            $this->merge(['data' => $data]);
         }
-
-        $validated = $this->validator->validated();
-
-        if ($data !== null) {
-            $validated['data'] = array_filter($data);
-        }
-
-        return $validated;
     }
 }

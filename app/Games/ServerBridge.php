@@ -14,15 +14,11 @@ abstract class ServerBridge
 
     /**
      * The associated server.
-     *
-     * @var \Azuriom\Models\Server
      */
-    protected $server;
+    protected Server $server;
 
     /**
      * Create a new ServerBridge instance.
-     *
-     * @param  \Azuriom\Models\Server  $server
      */
     public function __construct(Server $server)
     {
@@ -48,8 +44,6 @@ abstract class ServerBridge
      * Depending on the server ping, this may take a while (up to one second).
      *
      * @param  string[]  $commands
-     * @param  \Azuriom\Models\User  $user
-     * @param  bool  $needConnected
      */
     public function sendCommands(array $commands, User $user, bool $needConnected = false)
     {

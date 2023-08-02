@@ -10,11 +10,8 @@ trait TwoFactorAuthenticatable
 {
     /**
      * Replace the given recovery code with a new one in the user's stored codes.
-     *
-     * @param  string  $code
-     * @return void
      */
-    public function replaceRecoveryCode(string $code)
+    public function replaceRecoveryCode(string $code): void
     {
         $codes = $this->two_factor_recovery_codes;
 
@@ -28,12 +25,9 @@ trait TwoFactorAuthenticatable
     /**
      * Verify the given two-factor authentication code.
      *
-     * @param  string  $code
-     * @return bool
-     *
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
      */
-    public function isValidTwoFactorCode(string $code)
+    public function isValidTwoFactorCode(string $code): bool
     {
         if (! filled($this->two_factor_secret)) {
             return false;
@@ -50,11 +44,8 @@ trait TwoFactorAuthenticatable
 
     /**
      * Verify if the given code is a user recovery code.
-     *
-     * @param  string  $code
-     * @return bool
      */
-    public function isValidRecoveryCode(string $code)
+    public function isValidRecoveryCode(string $code): bool
     {
         return collect($this->two_factor_recovery_codes)
             ->contains(fn ($recoveryCode) => hash_equals($recoveryCode, $code));
@@ -65,17 +56,15 @@ trait TwoFactorAuthenticatable
      *
      * @return string[]
      */
-    public function generateRecoveryCodes()
+    public function generateRecoveryCodes(): array
     {
         return Collection::times(8, fn () => $this->generateRecoveryCode())->all();
     }
 
     /**
      * Generate a new recovery code.
-     *
-     * @return string
      */
-    public function generateRecoveryCode()
+    public function generateRecoveryCode(): string
     {
         return Str::random(8).'-'.Str::random(8);
     }

@@ -8,6 +8,7 @@ use Azuriom\Support\Optimizer;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -21,27 +22,22 @@ class UpdateManager
      */
     protected ?array $updates = null;
 
-    /**
-     * The filesystem instance.
-     */
     protected Filesystem $files;
 
     /**
      * Create a new UpdateManager instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      */
     public function __construct(Filesystem $files)
     {
         $this->files = $files;
     }
 
-    public function getApiAlerts(bool $force = false)
+    public function getApiAlerts(bool $force = false): array
     {
         return $this->fetch($force)['alerts'] ?? [];
     }
 
-    public function isLastVersionDownloaded(bool $force = false)
+    public function isLastVersionDownloaded(bool $force = false): bool
     {
         $updates = $this->getUpdate($force);
 
@@ -52,7 +48,7 @@ class UpdateManager
         return $this->files->exists(storage_path('app/updates/'.$updates['file']));
     }
 
-    public function hasUpdate(bool $force = false)
+    public function hasUpdate(bool $force = false): bool
     {
         $version = $this->getLastVersion($force);
 
@@ -63,7 +59,7 @@ class UpdateManager
         return version_compare($version, Azuriom::version(), '>');
     }
 
-    public function getLastVersion(bool $force = false)
+    public function getLastVersion(bool $force = false): ?string
     {
         return $this->getUpdate($force)['version'] ?? null;
     }
@@ -73,22 +69,22 @@ class UpdateManager
         return $this->fetch($force)['update'] ?? null;
     }
 
-    public function getPlugins(bool $force = false)
+    public function getPlugins(bool $force = false): array
     {
         return $this->fetch($force)['plugins'] ?? [];
     }
 
-    public function getThemes(bool $force = false)
+    public function getThemes(bool $force = false): array
     {
         return $this->fetch($force)['themes'] ?? [];
     }
 
-    public function getGames(bool $force = false)
+    public function getGames(bool $force = false): array
     {
         return $this->fetch($force)['games'] ?? [];
     }
 
-    public function fetch(bool $force = false)
+    public function fetch(bool $force = false): array
     {
         if ($this->updates !== null) {
             return $this->updates;
@@ -111,7 +107,7 @@ class UpdateManager
         });
     }
 
-    public function forceFetchUpdates(bool $cache = true)
+    public function forceFetchUpdates(bool $cache = true): ?array
     {
         $updates = $this->prepareHttpRequest()
             ->get('https://market.azuriom.com/api/updates')
@@ -129,7 +125,7 @@ class UpdateManager
         return $updates;
     }
 
-    public function download(array $info, string $tempDir = '', bool $verifyHash = true)
+    public function download(array $info, string $tempDir = '', bool $verifyHash = true): void
     {
         $updatesPath = storage_path('app/updates/');
 
@@ -166,7 +162,7 @@ class UpdateManager
         Cache::forget('updates_counts');
     }
 
-    public function installUpdate(array $info)
+    public function installUpdate(array $info): void
     {
         if (! is_writable(base_path())) {
             throw new RuntimeException('Missing write permission on '.base_path());
@@ -181,7 +177,7 @@ class UpdateManager
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
     }
 
-    public function extract(array $info, string $targetDir, string $tempDir = '')
+    public function extract(array $info, string $targetDir, string $tempDir = ''): void
     {
         $file = storage_path('app/updates/'.$tempDir.$info['file']);
 
@@ -208,7 +204,7 @@ class UpdateManager
         $this->files->delete($file);
     }
 
-    private function prepareHttpRequest()
+    private function prepareHttpRequest(): PendingRequest
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 

@@ -16,15 +16,11 @@ class AdminController extends Controller
 {
     /**
      * The application instance.
-     *
-     * @var \Illuminate\Contracts\Foundation\Application
      */
     private Application $app;
 
     /**
      * Create a new controller instance.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
      */
     public function __construct(Application $app)
     {

@@ -8,6 +8,7 @@ use Azuriom\Models\Setting;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use RuntimeException;
 
@@ -19,7 +20,7 @@ class ThemeManager extends ExtensionManager
     protected ?string $currentTheme = null;
 
     /**
-     * The themes directory.
+     * The themes' directory.
      */
     protected string $themesPath;
 
@@ -30,8 +31,6 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Create a new ThemeManager instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      */
     public function __construct(Filesystem $files)
     {
@@ -44,10 +43,8 @@ class ThemeManager extends ExtensionManager
     /**
      * Load and enable the given theme.
      * Currently, this method can only be call once.
-     *
-     * @param  string  $theme
      */
-    public function loadTheme(string $theme)
+    public function loadTheme(string $theme): void
     {
         if ($this->currentTheme !== null) {
             throw new RuntimeException('A theme has been already loaded');
@@ -67,7 +64,7 @@ class ThemeManager extends ExtensionManager
         $this->loadConfig($theme);
     }
 
-    public function changeTheme(?string $theme)
+    public function changeTheme(?string $theme): void
     {
         Setting::updateSettings('theme', $theme);
 
@@ -76,7 +73,7 @@ class ThemeManager extends ExtensionManager
         }
     }
 
-    public function updateConfig(string $theme, array $config)
+    public function updateConfig(string $theme, array $config): void
     {
         $json = json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
@@ -90,12 +87,8 @@ class ThemeManager extends ExtensionManager
      * If no theme is specified the current theme is used.
      * When no theme is specified and there is no theme enabled, this
      * will return null.
-     *
-     * @param  string  $path
-     * @param  string|null  $theme
-     * @return string|null
      */
-    public function path(string $path = '', string $theme = null)
+    public function path(string $path = '', string $theme = null): ?string
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {
@@ -110,12 +103,8 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Get the public path of the specified theme.
-     *
-     * @param  string  $path
-     * @param  string|null  $theme
-     * @return string|null
      */
-    public function publicPath(string $path = '', string $theme = null)
+    public function publicPath(string $path = '', string $theme = null): ?string
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {
@@ -130,32 +119,24 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Get the themes path which contains the installed themes.
-     *
-     * @param  string  $path
-     * @return string
      */
-    public function themesPath(string $path = '')
+    public function themesPath(string $path = ''): string
     {
         return $this->themesPath.$path;
     }
 
     /**
      * Get the themes public path which contains the assets of the installed themes.
-     *
-     * @param  string  $path
-     * @return string
      */
-    public function themesPublicPath(string $path = '')
+    public function themesPublicPath(string $path = ''): string
     {
         return $this->themesPublicPath.$path;
     }
 
     /**
      * Get an array containing the descriptions of the installed themes.
-     *
-     * @return \Illuminate\Support\Collection
      */
-    public function findThemesDescriptions()
+    public function findThemesDescriptions(): Collection
     {
         $directories = $this->files->directories($this->themesPath);
 
@@ -174,11 +155,8 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Get the description of the given theme.
-     *
-     * @param  string|null  $theme
-     * @return mixed|null
      */
-    public function findDescription(string $theme)
+    public function findDescription(string $theme): ?object
     {
         $path = $this->path('theme.json', $theme);
 
@@ -197,7 +175,7 @@ class ThemeManager extends ExtensionManager
      *
      * @return string[]
      */
-    public function findThemes()
+    public function findThemes(): array
     {
         $paths = $this->files->directories($this->themesPath);
 
@@ -206,10 +184,8 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Delete the given theme.
-     *
-     * @param  string  $theme
      */
-    public function delete(string $theme)
+    public function delete(string $theme): void
     {
         if ($this->findDescription($theme) === null) {
             return;
@@ -226,25 +202,21 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Get the current theme, or null if none is active.
-     *
-     * @return string|null
      */
-    public function currentTheme()
+    public function currentTheme(): ?string
     {
         return $this->currentTheme;
     }
 
     /**
      * Get if there is any active theme enabled.
-     *
-     * @return bool
      */
-    public function hasTheme()
+    public function hasTheme(): bool
     {
         return $this->currentTheme !== null;
     }
 
-    public function getOnlineThemes(bool $force = false)
+    public function getOnlineThemes(bool $force = false): Collection
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
@@ -256,7 +228,7 @@ class ThemeManager extends ExtensionManager
         });
     }
 
-    public function getThemesToUpdate(bool $force = false)
+    public function getThemesToUpdate(bool $force = false): Collection
     {
         $themes = app(UpdateManager::class)->getThemes($force);
 
@@ -271,14 +243,14 @@ class ThemeManager extends ExtensionManager
         });
     }
 
-    public function isLegacy(string $theme)
+    public function isLegacy(string $theme): bool
     {
         $description = $this->findDescription($theme);
 
         return ($description->azuriom_api ?? null) !== '1.0.0';
     }
 
-    public function install($themeId)
+    public function install($themeId): void
     {
         $updateManager = app(UpdateManager::class);
 
@@ -306,12 +278,12 @@ class ThemeManager extends ExtensionManager
         $this->createAssetsLink($theme);
     }
 
-    public function readConfig(string $theme)
+    public function readConfig(string $theme): ?array
     {
         return $this->getJson($this->path('config.json', $theme), true);
     }
 
-    protected function loadConfig(string $theme)
+    protected function loadConfig(string $theme): void
     {
         $config = setting('themes.config.'.$theme);
 
@@ -328,7 +300,7 @@ class ThemeManager extends ExtensionManager
         }
     }
 
-    protected function createAssetsLink(string $theme)
+    protected function createAssetsLink(string $theme): void
     {
         if ($this->files->exists($this->publicPath('', $theme))) {
             return;

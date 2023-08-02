@@ -27,18 +27,10 @@ class PluginCreateCommand extends Command
      */
     protected $description = 'Create a new Azuriom plugin';
 
-    /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Create a new command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
      */
     public function __construct(Filesystem $files)
     {
@@ -50,9 +42,9 @@ class PluginCreateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @throws \JsonException
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('name');
         $id = $this->argument('id') ?? Str::slug($name);
@@ -81,7 +73,7 @@ class PluginCreateCommand extends Command
         return 0;
     }
 
-    protected function copyFiles(string $source, string $path, string $id, string $studlyName, string $namespace)
+    protected function copyFiles(string $source, string $path, string $id, string $studlyName, string $namespace): void
     {
         foreach ($this->files->allFiles($source, true) as $file) {
             $fileContent = $this->replace($file->getContents(), $studlyName, $id, $namespace);
@@ -98,7 +90,7 @@ class PluginCreateCommand extends Command
         }
     }
 
-    private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace)
+    private function createPluginJson(string $path, string $id, string $name, string $className, string $namespace): void
     {
         $this->files->put($path.'/plugin.json', json_encode([
             'id' => $id,
@@ -145,7 +137,7 @@ class PluginCreateCommand extends Command
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    private function replace(string $stub, string $name, string $id, string $namespace)
+    private function replace(string $stub, string $name, string $id, string $namespace): string
     {
         return str_replace(['DummyPlugin', 'DummyNamespace', 'DummyId'], [$name, $namespace, $id], $stub);
     }

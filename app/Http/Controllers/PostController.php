@@ -9,8 +9,6 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -25,9 +23,6 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \Azuriom\Models\Post  $post
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

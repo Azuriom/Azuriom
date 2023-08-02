@@ -6,34 +6,12 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class EmbedAuthor implements Arrayable
 {
-    /**
-     * Name of the author.
-     *
-     * @var string|null
-     */
     protected ?string $name = null;
 
-    /**
-     * URL of author.
-     *
-     * @var string|null
-     */
     protected ?string $url = null;
 
-    /**
-     * URL of author icon (only supports http(s) and attachments).
-     *
-     * @var string|null
-     */
     protected ?string $iconUrl = null;
 
-    /**
-     * Create a new author instance.
-     *
-     * @param  string  $name
-     * @param  string|null  $url
-     * @param  string|null  $iconUrl
-     */
     public function __construct(string $name, string $url = null, string $iconUrl = null)
     {
         $this->name = $name;
@@ -41,10 +19,7 @@ class EmbedAuthor implements Arrayable
         $this->iconUrl = $iconUrl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'name' => $this->name,

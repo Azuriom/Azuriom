@@ -17,27 +17,27 @@ class MinecraftBedrockGame extends Game
 
     public const USERNAME_LOOKUP = 'https://xbox-api.azuriom.com/search/';
 
-    public function name()
+    public function name(): string
     {
         return 'Minecraft Bedrock';
     }
 
-    public function id()
+    public function id(): string
     {
         return 'mc-bedrock';
     }
 
-    public function loginWithOAuth()
+    public function loginWithOAuth(): bool
     {
         return true;
     }
 
-    public function getSocialiteDriverName()
+    public function getSocialiteDriverName(): string
     {
         return 'xbox';
     }
 
-    public function getAvatarUrl(User $user, int $size = 64)
+    public function getAvatarUrl(User $user, int $size = 64): string
     {
         $params = '';
 
@@ -52,7 +52,7 @@ class MinecraftBedrockGame extends Game
         return $url !== null ? $url.$params : asset('img/user.png');
     }
 
-    public function getUserUniqueId(string $name)
+    public function getUserUniqueId(string $name): ?string
     {
         return Cache::remember("users.{$name}.xbox", now()->addMinutes(15), function () use ($name) {
             return Http::get(self::USERNAME_LOOKUP.$name)
@@ -61,12 +61,12 @@ class MinecraftBedrockGame extends Game
         });
     }
 
-    public function getUserName(User $user)
+    public function getUserName(User $user): ?string
     {
         return Arr::get($this->getUserProfile($user), 'gamertag');
     }
 
-    public function getSupportedServers()
+    public function getSupportedServers(): array
     {
         return [
             'bedrock-ping' => BedrockPing::class,
@@ -75,7 +75,7 @@ class MinecraftBedrockGame extends Game
         ];
     }
 
-    public function getUserProfile(User $user)
+    public function getUserProfile(User $user): array
     {
         return Cache::remember("users.{$user->id}.xbox", now()->addMinutes(15), function () use ($user) {
             return Http::get(self::PROFILE_LOOKUP.$user->game_id)
@@ -84,7 +84,7 @@ class MinecraftBedrockGame extends Game
         });
     }
 
-    public function trans(string $key, array $placeholders = [])
+    public function trans(string $key, array $placeholders = []): string
     {
         return trans('game.minecraft_bedrock.'.$key, $placeholders);
     }

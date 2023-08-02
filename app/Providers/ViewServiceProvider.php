@@ -16,20 +16,16 @@ class ViewServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->app->bind('view.finder', function ($app) {
             return new ThemeViewFinder($app['files'], $app['config']['view.paths']);

@@ -14,20 +14,18 @@ class NavbarElementRequest extends FormRequest
     use ConvertCheckbox;
 
     /**
-     * The checkboxes attributes.
+     * The attributes represented by checkboxes.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $checkboxes = [
+    protected array $checkboxes = [
         'new_tab',
     ];
 
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->mergeCheckboxes();
 
@@ -41,9 +39,9 @@ class NavbarElementRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:100'],
@@ -59,10 +57,8 @@ class NavbarElementRequest extends FormRequest
 
     /**
      * Get the link value to store.
-     *
-     * @return string
      */
-    protected function getLinkValue()
+    protected function getLinkValue(): string
     {
         $type = $this->input('type');
 

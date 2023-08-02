@@ -13,10 +13,8 @@ class Azuriom
 
     /**
      * Get the current version of Azuriom CMS.
-     *
-     * @return string
      */
-    public static function version()
+    public static function version(): string
     {
         return static::VERSION;
     }

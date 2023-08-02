@@ -13,8 +13,6 @@ class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -25,9 +23,6 @@ class RoleController extends Controller
 
     /**
      * Update the resources order in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -55,8 +50,6 @@ class RoleController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -67,9 +60,6 @@ class RoleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\RoleRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(RoleRequest $request)
     {
@@ -77,15 +67,12 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index')
+        return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\Role  $role
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -104,10 +91,6 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\RoleRequest  $request
-     * @param  \Azuriom\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(RoleRequest $request, Role $role)
@@ -117,12 +100,12 @@ class RoleController extends Controller
         $user = $request->user();
 
         if ($user->isAdmin() && $role->is($user->role) && ! $request->input('is_admin')) {
-            return redirect()->route('admin.roles.index')
+            return to_route('admin.roles.index')
                 ->with('error', trans('admin.roles.remove_admin'));
         }
 
         if (! $user->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
-            return redirect()->route('admin.roles.index')
+            return to_route('admin.roles.index')
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
@@ -130,29 +113,26 @@ class RoleController extends Controller
 
         $role->update($request->validated());
 
-        return redirect()->route('admin.roles.index')
+        return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(Role $role)
     {
         $this->authorize('delete', $role);
 
         if ($role->isDefault()) {
-            return redirect()->route('admin.roles.index')
+            return to_route('admin.roles.index')
                 ->with('error', trans('admin.roles.delete_default'));
         }
 
         if ($role->is(Auth::user()->role)) {
-            return redirect()->route('admin.roles.index')
+            return to_route('admin.roles.index')
                 ->with('error', trans('admin.roles.delete_own'));
         }
 
@@ -160,7 +140,7 @@ class RoleController extends Controller
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')
+        return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait Loggable
 {
-    protected static function bootLoggable()
+    protected static function bootLoggable(): void
     {
         $events = static::$logEvents ?? ['created', 'updated', 'deleted'];
 
@@ -27,12 +27,12 @@ trait Loggable
         }
     }
 
-    protected function getLogData(string $event)
+    protected function getLogData(string $event): array
     {
         return [];
     }
 
-    protected function shouldLogAttribute(string $attribute)
+    protected function shouldLogAttribute(string $attribute): bool
     {
         if ($attribute === $this->getCreatedAtColumn()
             || $attribute === $this->getUpdatedAtColumn()) {
@@ -46,7 +46,7 @@ trait Loggable
         return ! in_array($attribute, $this->getHidden(), true);
     }
 
-    protected function createLogEntries(ActionLog $log, string $event)
+    protected function createLogEntries(ActionLog $log, string $event): void
     {
         if ($event !== 'updated') {
             return;
@@ -65,7 +65,7 @@ trait Loggable
         }
     }
 
-    protected function isValidLogType($value)
+    protected function isValidLogType($value): bool
     {
         return $value === null || is_bool($value)
             || is_string($value) || is_numeric($value);

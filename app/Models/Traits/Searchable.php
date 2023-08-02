@@ -15,13 +15,8 @@ trait Searchable
 {
     /**
      * Scope a query to only include results that match the search.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $search
-     * @param  string|string[]|null  $columns
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearch(Builder $query, string $search, array|string $columns = null)
+    public function scopeSearch(Builder $query, string $search, array|string $columns = null): void
     {
         $columns = $columns !== null ? Arr::wrap($columns) : $this->searchable;
 
@@ -29,10 +24,10 @@ trait Searchable
             $columns = $this->searchable;
         }
 
-        return $query->where(fn ($query) => $this->runSearch($query, $search, $columns));
+        $query->where(fn ($query) => $this->runSearch($query, $search, $columns));
     }
 
-    protected function runSearch(Builder $query, string $search, array $columns)
+    protected function runSearch(Builder $query, string $search, array $columns): void
     {
         $models = [];
 

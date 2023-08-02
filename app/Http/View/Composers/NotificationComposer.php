@@ -9,13 +9,10 @@ class NotificationComposer
 {
     /**
      * Bind data to the view.
-     *
-     * @param  \Illuminate\View\View  $view
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
-        $notifications = Auth::check() ? Auth::user()->unreadNotifications : null;
+        $notifications = Auth::user()?->unreadNotifications;
 
         $view->with('notifications', $notifications);
     }

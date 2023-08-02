@@ -21,10 +21,8 @@ class GameServiceProvider extends ServiceProvider
 
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         self::registerGames([
             'mc-online' => MinecraftOnlineGame::class,
@@ -41,10 +39,8 @@ class GameServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerSocialiteProviders();
 
@@ -60,7 +56,7 @@ class GameServiceProvider extends ServiceProvider
         $this->app->instance('game', $game);
     }
 
-    protected function registerSocialiteProviders()
+    protected function registerSocialiteProviders(): void
     {
         $socialite = $this->app->make(Factory::class);
 
@@ -77,7 +73,7 @@ class GameServiceProvider extends ServiceProvider
         });
     }
 
-    public static function registerGames(array $games)
+    public static function registerGames(array $games): void
     {
         static::$games = array_merge(static::$games, $games);
     }

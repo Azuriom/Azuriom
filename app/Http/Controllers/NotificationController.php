@@ -9,10 +9,6 @@ class NotificationController extends Controller
 {
     /**
      * Mark the specified notification as read.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Azuriom\Models\Notification  $notification
-     * @return \Illuminate\Http\Response
      */
     public function markAsRead(Request $request, Notification $notification)
     {
@@ -25,9 +21,6 @@ class NotificationController extends Controller
 
     /**
      * Mark all the user notification as read.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function markAllAsRead(Request $request)
     {

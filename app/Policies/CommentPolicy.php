@@ -12,23 +12,16 @@ class CommentPolicy
 
     /**
      * Determine whether the user can create comments.
-     *
-     * @param  \Azuriom\Models\User  $user
-     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->can('comments.create');
     }
 
     /**
      * Determine whether the user can delete the comment.
-     *
-     * @param  \Azuriom\Models\User  $user
-     * @param  \Azuriom\Models\Comment  $comment
-     * @return bool
      */
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user, Comment $comment): bool
     {
         return $user->is($comment->author) || $user->can('comments.delete.other');
     }

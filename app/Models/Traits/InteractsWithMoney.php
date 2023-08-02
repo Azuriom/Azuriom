@@ -4,17 +4,17 @@ namespace Azuriom\Models\Traits;
 
 trait InteractsWithMoney
 {
-    public function addMoney(float $amount)
+    public function addMoney(float $amount): int
     {
-        $this->increment('money', $amount);
+        return $this->increment('money', $amount);
     }
 
-    public function removeMoney(float $amount)
+    public function removeMoney(float $amount): int
     {
-        $this->decrement('money', $amount);
+        return $this->decrement('money', $amount);
     }
 
-    public function hasMoney(float $amount)
+    public function hasMoney(float $amount): bool
     {
         return $this->money >= $amount;
     }

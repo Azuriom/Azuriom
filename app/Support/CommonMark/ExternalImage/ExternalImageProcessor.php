@@ -9,7 +9,7 @@ use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class ExternalImageProcessor
 {
-    private $environment;
+    private EnvironmentInterface $environment;
 
     public function __construct(EnvironmentInterface $environment)
     {
@@ -26,7 +26,7 @@ class ExternalImageProcessor
         while ($event = $walker->next()) {
             $image = $event->getNode();
 
-            if ($event->isEntering() && $image instanceof Image) {
+            if ($image instanceof Image && $event->isEntering()) {
                 $host = parse_url($image->getUrl(), PHP_URL_HOST);
 
                 if (empty($host)) {
@@ -46,7 +46,7 @@ class ExternalImageProcessor
         }
     }
 
-    private function markImageAsExternal(Image $image, string $imageProxy)
+    private function markImageAsExternal(Image $image, string $imageProxy): void
     {
         $image->data->set('external', true);
         $image->data->set('attributes.data-original-src', $image->getUrl());
@@ -56,7 +56,7 @@ class ExternalImageProcessor
         }
     }
 
-    private static function hostMatches(string $host, $compareTo)
+    private static function hostMatches(string $host, $compareTo): bool
     {
         if (Str::startsWith($host, '/')) {
             return true;

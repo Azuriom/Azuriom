@@ -12,10 +12,6 @@ class FallbackController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $path
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function get(Request $request, string $path)

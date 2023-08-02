@@ -18,7 +18,7 @@ use League\CommonMark\MarkdownConverter;
 
 class Markdown
 {
-    public static function parse(string $text, bool $basic = false)
+    public static function parse(string $text, bool $basic = false): string
     {
         $internalHosts = [str_replace(['http://', 'https://'], '', config('app.url'))];
 
@@ -56,7 +56,7 @@ class Markdown
         return $converter->convert($text)->getContent();
     }
 
-    public static function parseRaw(string $text)
+    public static function parseRaw(string $text): string
     {
         $environment = new Environment();
         $environment->addExtension(new CommonMarkCoreExtension());

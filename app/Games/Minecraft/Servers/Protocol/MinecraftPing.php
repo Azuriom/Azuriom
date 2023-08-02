@@ -14,11 +14,11 @@ use RuntimeException;
  */
 class MinecraftPing
 {
+    private string $address;
+
+    private int $port;
+
     private $socket;
-
-    private $address;
-
-    private $port;
 
     public function __construct(string $address, int $port = 25565, bool $resolveSrv = true)
     {
@@ -33,12 +33,9 @@ class MinecraftPing
     /**
      * Ping the Minecraft server.
      *
-     * @param  int  $timeout
-     * @return array
-     *
      * @throws \RuntimeException
      */
-    public function ping(int $timeout = 3)
+    public function ping(int $timeout = 3): array
     {
         if (! $this->isConnected()) {
             $this->connect();
@@ -101,11 +98,9 @@ class MinecraftPing
     /**
      * Connect to the server.
      *
-     * @param  int  $timeout
-     *
      * @throws \RuntimeException
      */
-    public function connect(int $timeout = 3)
+    public function connect(int $timeout = 3): void
     {
         $connectTimeout = $timeout;
         $this->socket = fsockopen($this->address, $this->port, $errno, $errstr, $connectTimeout);
@@ -119,12 +114,12 @@ class MinecraftPing
         stream_set_timeout($this->socket, $timeout);
     }
 
-    public function isConnected()
+    public function isConnected(): bool
     {
         return $this->socket !== null;
     }
 
-    public function close()
+    public function close(): void
     {
         if ($this->isConnected()) {
             fclose($this->socket);
@@ -141,11 +136,9 @@ class MinecraftPing
     /**
      * Read a var int.
      *
-     * @return int
-     *
      * @throws \RuntimeException
      */
-    protected function readVarInt()
+    protected function readVarInt(): int
     {
         $result = 0;
         $numRead = 0;
@@ -170,7 +163,7 @@ class MinecraftPing
         return $result;
     }
 
-    protected function resolveSrv()
+    protected function resolveSrv(): void
     {
         if (ip2long($this->address) !== false) {
             return;

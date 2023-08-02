@@ -24,7 +24,7 @@ class ActionLogEntry extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'action_log_id', 'attribute', 'old_value', 'new_value',

@@ -8,7 +8,7 @@ use Thedudeguy\Rcon as MinecraftRcon;
 
 trait RconTrait
 {
-    public function sendCommands(array $commands, User $user, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false): void
     {
         $rcon = $this->connectRcon();
 
@@ -17,12 +17,12 @@ trait RconTrait
         }
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return true;
     }
 
-    protected function connectRcon()
+    protected function connectRcon(): MinecraftRcon
     {
         $port = ($this->server->data['rcon-port'] ?? $this->server->port) ?? $this->getDefaultPort();
         $password = decrypt($this->server->data['rcon-password'], false);

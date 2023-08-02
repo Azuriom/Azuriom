@@ -12,16 +12,7 @@ use Illuminate\Validation\Rule;
 class ImageController extends Controller
 {
     /**
-     * The storage path for uploaded images.
-     *
-     * @var string
-     */
-    protected $imagesPath = 'img';
-
-    /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -30,8 +21,6 @@ class ImageController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -40,9 +29,6 @@ class ImageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\ImageRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(ImageRequest $request)
     {
@@ -55,7 +41,7 @@ class ImageController extends Controller
             'slug' => [Rule::unique('images', 'file')],
         ])->validate();
 
-        $file->storeAs($this->imagesPath, $fileName, 'public');
+        $file->storeAs('img', $fileName, 'public');
 
         Image::create([
             'name' => $request->input('name'),
@@ -63,15 +49,12 @@ class ImageController extends Controller
             'type' => $mimeType,
         ]);
 
-        return redirect()->route('admin.images.index')
+        return to_route('admin.images.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\Image  $image
-     * @return \Illuminate\Http\Response
      */
     public function edit(Image $image)
     {
@@ -80,10 +63,6 @@ class ImageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\ImageRequest  $request
-     * @param  \Azuriom\Models\Image  $image
-     * @return \Illuminate\Http\Response
      */
     public function update(ImageRequest $request, Image $image)
     {
@@ -105,17 +84,14 @@ class ImageController extends Controller
             'file' => $fileName,
         ]);
 
-        return redirect()->route('admin.images.index')
+        return to_route('admin.images.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(Image $image)
     {
@@ -123,13 +99,13 @@ class ImageController extends Controller
 
         $image->delete();
 
-        return redirect()->route('admin.images.index')
+        return to_route('admin.images.index')
             ->with('success', trans('messages.status.success'));
     }
 
     protected function getImagesPath(string $fileName)
     {
-        return "{$this->imagesPath}/{$fileName}";
+        return 'img/'.$fileName;
     }
 
     protected function normalizeExtensions(string $name)

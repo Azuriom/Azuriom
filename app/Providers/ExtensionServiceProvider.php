@@ -11,11 +11,9 @@ class ExtensionServiceProvider extends ServiceProvider
     /**
      * Register services.
      *
-     * @return void
-     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(Plugins::class);
         $this->app->alias(Plugins::class, 'plugins');
@@ -28,11 +26,8 @@ class ExtensionServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes
-     * @return void
      */
-    public function boot(Themes $themes)
+    public function boot(Themes $themes): void
     {
         $theme = setting('theme');
 

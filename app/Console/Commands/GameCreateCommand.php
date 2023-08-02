@@ -29,9 +29,6 @@ class GameCreateCommand extends PluginCreateCommand
 
     /**
      * Create a new command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
      */
     public function __construct(Filesystem $files)
     {
@@ -42,10 +39,8 @@ class GameCreateCommand extends PluginCreateCommand
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('name');
         $id = $this->argument('id') ?? Str::slug($name);
@@ -69,9 +64,7 @@ class GameCreateCommand extends PluginCreateCommand
 
         $this->copyFiles($sourcePath, $path, $id, $studlyName, $namespace);
 
-        EnvEditor::updateEnv([
-            'AZURIOM_GAME' => $id,
-        ]);
+        EnvEditor::updateEnv(['AZURIOM_GAME' => $id]);
 
         return 0;
     }

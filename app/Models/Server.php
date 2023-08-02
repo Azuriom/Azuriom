@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Games\FallbackServerBridge;
+use Azuriom\Games\ServerBridge;
 use Azuriom\Models\Traits\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +36,7 @@ class Server extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'address', 'port', 'token', 'join_url', 'type', 'data', 'home_display',
@@ -44,7 +45,7 @@ class Server extends Model
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'token',
@@ -53,14 +54,14 @@ class Server extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'data' => 'array',
         'home_display' => 'bool',
     ];
 
-    public static function booted()
+    protected static function booted(): void
     {
         static::deleted(function (self $server) {
             if (((int) setting('servers.default')) === $server->id) {
@@ -91,7 +92,7 @@ class Server extends Model
         return $this->hasMany(ServerCommand::class);
     }
 
-    public function fullAddress()
+    public function fullAddress(): string
     {
         if ($this->port === null || $this->port === $this->bridge()->getDefaultPort()) {
             return $this->address;
@@ -100,22 +101,22 @@ class Server extends Model
         return $this->address.':'.$this->port;
     }
 
-    public function isOnline()
+    public function isOnline(): bool
     {
         return $this->getData() !== null;
     }
 
-    public function getOnlinePlayers()
+    public function getOnlinePlayers(): int
     {
         return $this->getData('players');
     }
 
-    public function getMaxPlayers()
+    public function getMaxPlayers(): int
     {
         return $this->getData('max_players');
     }
 
-    public function getPlayersPercents()
+    public function getPlayersPercents(): float
     {
         $max = $this->getMaxPlayers();
 
@@ -126,12 +127,12 @@ class Server extends Model
         return min(($this->getOnlinePlayers() / $max) * 100, 100);
     }
 
-    public function joinUrl()
+    public function joinUrl(): string
     {
         return $this->join_url;
     }
 
-    public function updateData(array $data = null, bool $full = false)
+    public function updateData(array $data = null, bool $full = false): void
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
@@ -154,7 +155,7 @@ class Server extends Model
         ], Arr::only($data, ['players', 'cpu', 'ram'])));
     }
 
-    public function getData(string $key = null)
+    public function getData(string $key = null): mixed
     {
         $data = Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
             return $this->bridge()->getServerData();
@@ -163,10 +164,7 @@ class Server extends Model
         return $key === null ? $data : ($data[$key] ?? null);
     }
 
-    /**
-     * @return \Azuriom\Games\ServerBridge
-     */
-    public function bridge()
+    public function bridge(): ServerBridge
     {
         $games = game()->getSupportedServers();
 
@@ -177,7 +175,7 @@ class Server extends Model
         return app($games[$this->type], ['server' => $this]);
     }
 
-    public function getLinkCommand()
+    public function getLinkCommand(): string
     {
         $base = $this->type === 'mc-azlink'
             ? '/azlink setup '.url('/')
@@ -186,7 +184,7 @@ class Server extends Model
         return $base.' '.$this->token;
     }
 
-    public function playersRecord(bool $force = false)
+    public function playersRecord(bool $force = false): int
     {
         if ($force) {
             return $this->stats()->max('players');
@@ -197,34 +195,28 @@ class Server extends Model
         });
     }
 
-    public static function types()
+    public static function types(): array
     {
         return array_keys(game()->getSupportedServers());
     }
 
     /**
      * Scope a query to only include servers which can execute commands.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeExecutable(Builder $query)
+    public function scopeExecutable(Builder $query): void
     {
         $servers = collect(game()->getSupportedServers())->filter(function (string $bridge) {
             return (new $bridge($this))->canExecuteCommand();
         });
 
-        return $query->whereIn('type', $servers->keys());
+        $query->whereIn('type', $servers->keys());
     }
 
     /**
      * Scope a query to only include servers which can be pinged.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePingable(Builder $query)
+    public function scopePingable(Builder $query): void
     {
-        return $query->whereNotIn('type', ['mc-azlink', 'steam-azlink']);
+        $query->whereNotIn('type', ['mc-azlink', 'steam-azlink']);
     }
 }

@@ -7,11 +7,11 @@ use Illuminate\Support\Str;
 use RuntimeException;
 
 /**
- * Automatically generate an UUID for the model if it's doesn't have one.
+ * Automatically generate an UUID for the model if it doesn't have one.
  */
 trait HasUuidKey
 {
-    public static function bootHasUuidKey()
+    public static function bootHasUuidKey(): void
     {
         static::creating(function (Model $model) {
             if ($model->getKey() === null) {
@@ -22,40 +22,32 @@ trait HasUuidKey
 
     /**
      * Get the auto-incrementing key type.
-     *
-     * @return string
      */
-    public function getKeyType()
+    public function getKeyType(): string
     {
         return 'string';
     }
 
     /**
      * Set the data type for the primary key.
-     *
-     * @param  string  $type
      */
-    public function setKeyType($type)
+    public function setKeyType($type): never
     {
         throw new RuntimeException('Cannot change key type with UUID key.');
     }
 
     /**
      * Get the value indicating whether the IDs are incrementing.
-     *
-     * @return bool
      */
-    public function getIncrementing()
+    public function getIncrementing(): bool
     {
         return false;
     }
 
     /**
      * Set whether IDs are incrementing.
-     *
-     * @param  bool  $value
      */
-    public function setIncrementing($value)
+    public function setIncrementing($value): void
     {
         throw new RuntimeException('Cannot change incrementing with UUID key.');
     }

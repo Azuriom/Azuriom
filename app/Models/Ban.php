@@ -30,18 +30,18 @@ class Ban extends Model
     protected const DELETED_AT = 'removed_at';
 
     /**
-     * The actions to automatically log.
+     * The actions to that should be automatically logged.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected static $logEvents = [
+    protected static array $logEvents = [
         'created', 'deleted',
     ];
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'user_id', 'reason',
@@ -49,12 +49,10 @@ class Ban extends Model
 
     /**
      * The user key associated with this model.
-     *
-     * @var string
      */
-    protected $userKey = 'author_id';
+    protected string $userKey = 'author_id';
 
-    protected static function booted()
+    protected static function booted(): void
     {
         foreach (['created', 'deleted'] as $event) {
             static::registerModelEvent($event, function (self $ban) {
@@ -90,11 +88,9 @@ class Ban extends Model
     /**
      * Remove this ban.
      *
-     * @param  \Azuriom\Models\User|null  $remover
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
-    public function removeBan(User $remover = null)
+    public function removeBan(User $remover = null): void
     {
         $this->remover()->associate($remover ?? Auth::user());
         $this->save();

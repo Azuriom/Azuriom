@@ -24,19 +24,13 @@ class ResetPasswordController extends Controller
 
     /**
      * Redirect users after resetting their password to login screen.
-     *
-     * @var string
      */
-    protected $redirectTo = '/user/login';
+    protected string $redirectTo = '/user/login';
 
     /**
      * Reset the given user's password.
-     *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
-     * @return void
      */
-    protected function resetPassword($user, $password)
+    protected function resetPassword($user, $password): void
     {
         $this->setUserPassword($user, $password);
         $user->setRememberToken(Str::random(60));

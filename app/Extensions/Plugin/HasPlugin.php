@@ -6,8 +6,6 @@ trait HasPlugin
 {
     /**
      * The associated plugin.
-     *
-     * @var mixed
      */
     protected mixed $plugin;
 

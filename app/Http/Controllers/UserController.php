@@ -10,9 +10,6 @@ class UserController extends Controller
 {
     /**
      * Find the users with the specified name.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function search(Request $request)
     {

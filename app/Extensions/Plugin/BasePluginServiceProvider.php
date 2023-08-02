@@ -3,6 +3,7 @@
 namespace Azuriom\Extensions\Plugin;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
@@ -14,15 +15,11 @@ abstract class BasePluginServiceProvider extends ServiceProvider
 
     /**
      * The plugin's global HTTP middleware stack.
-     *
-     * @var array
      */
     protected array $middleware = [];
 
     /**
      * The plugin's route middleware groups.
-     *
-     * @var array
      */
     protected array $middlewareGroups = [];
 
@@ -30,32 +27,23 @@ abstract class BasePluginServiceProvider extends ServiceProvider
      * The plugin's route middleware.
      *
      * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
      */
     protected array $routeMiddleware = [];
 
     /**
      * The policy mappings for this plugin.
-     *
-     * @var array
      */
     protected array $policies = [];
 
     /**
      * The router instance.
-     *
-     * @var \Illuminate\Routing\Router|null
      */
-    protected Router|null $router;
+    protected ?Router $router;
 
     /**
      * Create a new service provider instance.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     * @return void
      */
-    public function __construct($app)
+    public function __construct(Application $app)
     {
         parent::__construct($app);
 
@@ -75,7 +63,6 @@ abstract class BasePluginServiceProvider extends ServiceProvider
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -83,12 +70,12 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         //
     }
 
-    protected function registerMiddleware()
+    protected function registerMiddleware(): void
     {
         $this->registerMiddlewares();
     }
 
-    protected function registerMiddlewares()
+    protected function registerMiddlewares(): void
     {
         $this->middleware($this->middleware);
 
@@ -97,50 +84,50 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         $this->routeMiddleware($this->routeMiddleware);
     }
 
-    protected function registerPolicies()
+    protected function registerPolicies(): void
     {
         foreach ($this->policies() as $key => $value) {
             Gate::policy($key, $value);
         }
     }
 
-    protected function loadViews()
+    protected function loadViews(): void
     {
         $viewsPath = $this->pluginResourcePath('views');
 
         $this->loadViewsFrom($viewsPath, $this->plugin->id);
     }
 
-    protected function loadTranslations()
+    protected function loadTranslations(): void
     {
         $langPath = $this->pluginResourcePath('lang');
 
         $this->loadTranslationsFrom($langPath, $this->plugin->id);
     }
 
-    protected function loadMigrations()
+    protected function loadMigrations(): void
     {
         $this->loadMigrationsFrom($this->pluginPath('database/migrations'));
     }
 
-    protected function registerRouteDescriptions()
+    protected function registerRouteDescriptions(): void
     {
         $this->app['plugins']->addRouteDescription(function () {
             return $this->routeDescriptions();
         });
     }
 
-    protected function registerAdminNavigation()
+    protected function registerAdminNavigation(): void
     {
         $this->app['plugins']->addAdminNavItem(fn () => $this->adminNavigation());
     }
 
-    protected function registerUserNavigation()
+    protected function registerUserNavigation(): void
     {
         $this->app['plugins']->addUserNavItem(fn () => $this->userNavigation());
     }
 
-    protected function middleware($middleware, bool $before = false)
+    protected function middleware($middleware, bool $before = false): void
     {
         $kernel = $this->app->make(Kernel::class);
 
@@ -153,7 +140,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function middlewareGroup(string|array $name, array $middleware = null)
+    protected function middlewareGroup(string|array $name, array $middleware = null): void
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
@@ -162,7 +149,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function routeMiddleware(string|array $name, string $middleware = null)
+    protected function routeMiddleware(string|array $name, string $middleware = null): void
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
@@ -171,7 +158,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerSchedule()
+    protected function registerSchedule(): void
     {
         if ($this->app->runningInConsole()) {
             $this->app->booted(function () {
@@ -220,12 +207,12 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         return $this->policies;
     }
 
-    protected function pluginPath($path = '')
+    protected function pluginPath($path = ''): string
     {
         return $this->app['plugins']->path($this->plugin->id, $path);
     }
 
-    protected function pluginResourcePath($path = '')
+    protected function pluginResourcePath($path = ''): string
     {
         return $this->pluginPath('resources/'.$path);
     }

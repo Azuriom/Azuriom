@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class AzuriomMinecraftProvider extends MinecraftProvider
 {
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         if (empty($this->clientSecret) || empty($this->clientId)) {
             return $this->buildAuthUrlFromBase('https://xbox-api.azuriom.com/auth/redirect', $state);
@@ -15,7 +15,7 @@ class AzuriomMinecraftProvider extends MinecraftProvider
         return parent::getAuthUrl($state);
     }
 
-    public function getAccessTokenResponse($code)
+    public function getAccessTokenResponse($code): array
     {
         if (Str::startsWith($code, 'access_token:')) {
             return [

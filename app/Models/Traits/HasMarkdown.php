@@ -13,7 +13,7 @@ use Illuminate\Support\HtmlString;
  */
 trait HasMarkdown
 {
-    protected static function bootHasMarkdown()
+    protected static function bootHasMarkdown(): void
     {
         static::updated(function (Model $model) {
             Cache::forget($model->getMarkdownCacheKey());
@@ -24,7 +24,7 @@ trait HasMarkdown
         });
     }
 
-    public function parseMarkdown(string $attribute, bool $inlineOnly = false)
+    public function parseMarkdown(string $attribute, bool $inlineOnly = false): ?HtmlString
     {
         $text = $this->getAttribute($attribute);
 
@@ -47,12 +47,12 @@ trait HasMarkdown
         return new HtmlString(Arr::get($cached, $attribute));
     }
 
-    public function parseRawMarkdown(string $attribute, string $content, bool $inlineOnly = false)
+    public function parseRawMarkdown(string $attribute, string $content, bool $inlineOnly = false): string
     {
         return Markdown::parse($content, $inlineOnly);
     }
 
-    protected function getMarkdownCacheKey()
+    protected function getMarkdownCacheKey(): string
     {
         return "markdown.{$this->getTable()}.{$this->getKey()}";
     }

@@ -11,7 +11,7 @@ class Ping extends ServerBridge
 {
     protected const DEFAULT_PORT = 25565;
 
-    public function getServerData()
+    public function getServerData(): ?array
     {
         try {
             return $this->ping($this->server->address, $this->server->port);
@@ -20,36 +20,36 @@ class Ping extends ServerBridge
         }
     }
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         $this->ping($this->server->address, $this->server->port);
 
         return true;
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return false;
     }
 
-    public function getDefaultPort()
+    public function getDefaultPort(): int
     {
         return self::DEFAULT_PORT;
     }
 
-    protected function ping(string $address, int $port = null, bool $resolveSrv = true)
+    protected function ping(string $address, int $port = null, bool $resolveSrv = true): array
     {
-        $pinger = new MinecraftPing($address, $port ?? self::DEFAULT_PORT, $resolveSrv);
+        $client = new MinecraftPing($address, $port ?? self::DEFAULT_PORT, $resolveSrv);
 
         try {
-            $response = $pinger->ping(self::TIMEOUT);
+            $response = $client->ping(self::TIMEOUT);
 
             return [
                 'players' => Arr::get($response, 'players.online', 0),
                 'max_players' => Arr::get($response, 'players.max', 0),
             ];
         } finally {
-            $pinger->close();
+            $client->close();
         }
     }
 }

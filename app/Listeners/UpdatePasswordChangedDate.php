@@ -8,11 +8,8 @@ class UpdatePasswordChangedDate
 {
     /**
      * Handle the event.
-     *
-     * @param  \Illuminate\Auth\Events\PasswordReset  $event
-     * @return void
      */
-    public function handle(PasswordReset $event)
+    public function handle(PasswordReset $event): void
     {
         $event->user->update(['password_changed_at' => now()]);
     }

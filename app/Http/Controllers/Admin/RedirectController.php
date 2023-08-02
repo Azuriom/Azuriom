@@ -10,8 +10,6 @@ class RedirectController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -20,8 +18,6 @@ class RedirectController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -30,23 +26,17 @@ class RedirectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\RedirectRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(RedirectRequest $request)
     {
         Redirect::create($request->validated());
 
-        return redirect()->route('admin.redirects.index')
+        return to_route('admin.redirects.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\Redirect  $page
-     * @return \Illuminate\Http\Response
      */
     public function edit(Redirect $redirect)
     {
@@ -55,32 +45,25 @@ class RedirectController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\RedirectRequest  $request
-     * @param  \Azuriom\Models\Redirect  $redirect
-     * @return \Illuminate\Http\Response
      */
     public function update(RedirectRequest $request, Redirect $redirect)
     {
         $redirect->update($request->validated());
 
-        return redirect()->route('admin.redirects.index')
+        return to_route('admin.redirects.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\Redirect  $redirect
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(Redirect $redirect)
     {
         $redirect->delete();
 
-        return redirect()->route('admin.redirects.index')
+        return to_route('admin.redirects.index')
             ->with('success', trans('messages.status.success'));
     }
 }

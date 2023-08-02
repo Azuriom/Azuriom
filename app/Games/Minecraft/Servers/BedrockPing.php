@@ -13,7 +13,7 @@ class BedrockPing extends ServerBridge
 {
     protected const DEFAULT_PORT = 19132;
 
-    public function getServerData()
+    public function getServerData(): ?array
     {
         try {
             return $this->ping($this->server->address, $this->server->port);
@@ -22,29 +22,29 @@ class BedrockPing extends ServerBridge
         }
     }
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         $this->ping($this->server->address, $this->server->port);
 
         return true;
     }
 
-    public function sendCommands(array $commands, User $user, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false): void
     {
         report(new RuntimeException('Command cannot be executed with ping link.'));
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return false;
     }
 
-    public function getDefaultPort()
+    public function getDefaultPort(): int
     {
         return self::DEFAULT_PORT;
     }
 
-    protected function ping(string $address, int $port = null)
+    protected function ping(string $address, int $port = null): array
     {
         $pinger = new MinecraftBedrockPing($address, $port ?? self::DEFAULT_PORT);
 

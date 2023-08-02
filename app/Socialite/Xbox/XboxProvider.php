@@ -23,17 +23,17 @@ class XboxProvider extends AbstractProvider
 
     protected $scopeSeparator = ' ';
 
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         return $this->buildAuthUrlFromBase('https://login.live.com/oauth20_authorize.srf', $state);
     }
 
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return 'https://login.live.com/oauth20_token.srf';
     }
 
-    protected function getUserByToken($token)
+    protected function getUserByToken($token): array
     {
         $token = $this->getXboxIdentityToken($token, 'http://xboxlive.com');
 
@@ -46,7 +46,7 @@ class XboxProvider extends AbstractProvider
             ->json('profileUsers.0');
     }
 
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
         $data = Arr::pluck(Arr::get($user, 'settings'), 'value', 'id');
 
@@ -57,7 +57,7 @@ class XboxProvider extends AbstractProvider
         ]);
     }
 
-    protected function getXboxIdentityToken(string $token, string $relying)
+    protected function getXboxIdentityToken(string $token, string $relying): string
     {
         $response = Http::asJson()->post('https://user.auth.xboxlive.com/user/authenticate', [
             'Properties' => [

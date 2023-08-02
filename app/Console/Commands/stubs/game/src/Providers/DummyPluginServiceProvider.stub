@@ -44,10 +44,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Register any plugin services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         // $this->registerMiddleware();
 
@@ -60,10 +58,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Bootstrap any plugin services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // $this->registerPolicies();
 
@@ -85,10 +81,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Returns the routes that should be able to be added to the navbar.
-     *
-     * @return array
      */
-    protected function routeDescriptions()
+    protected function routeDescriptions(): array
     {
         return [
             //
@@ -97,10 +91,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Return the admin navigations routes to register in the dashboard.
-     *
-     * @return array
      */
-    protected function adminNavigation()
+    protected function adminNavigation(): array
     {
         return [
             'DummyId' => [
@@ -117,10 +109,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Return the user navigations routes to register in the user menu.
-     *
-     * @return array
      */
-    protected function userNavigation()
+    protected function userNavigation(): array
     {
         return [
             //

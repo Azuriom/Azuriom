@@ -9,12 +9,9 @@ use Illuminate\Support\Facades\URL;
 class UserDelete extends Notification
 {
     /**
-     * Build the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * Get the mail representation of the notification.
      */
-    public function toMail($notifiable)
+    public function toMail(object $notifiable): MailMessage
     {
         $url = URL::temporarySignedRoute('profile.delete.confirm', now()->addMinutes(30), [
             'id' => $notifiable->getKey(),
@@ -29,12 +26,11 @@ class UserDelete extends Notification
     }
 
     /**
-     * Get the notification's channels.
+     * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<int, string>
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['mail'];
     }

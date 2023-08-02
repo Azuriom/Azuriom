@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -56,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'email', 'password', 'money', 'role_id', 'game_id', 'avatar',
@@ -66,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password', 'remember_token', 'access_token', 'last_login_ip', 'two_factor_secret',
@@ -75,9 +74,10 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
+        'password' => 'hashed',
         'money' => 'float',
         'two_factor_recovery_codes' => 'array',
         'email_verified_at' => 'datetime',
@@ -96,15 +96,15 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that can be search for.
+     * The attributes that can be used for search.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $searchable = [
         'email', 'name', 'game_id', 'role.*',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         self::creating(function (self $user) {
             if ($user->password_changed_at === null) {
@@ -146,7 +146,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the the ban of this user if he is currently banned.
+     * Get the active ban of this user if he is currently banned.
      */
     public function ban()
     {
@@ -172,16 +172,13 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the user's avatar url.
      * The size may not correspond depending on the provider.
-     *
-     * @param  int  $size
-     * @return string
      */
-    public function getAvatar(int $size = 64)
+    public function getAvatar(int $size = 64): string
     {
         return $this->avatar ?? game()->getAvatarUrl($this, $size);
     }
 
-    public function isBanned(bool $useCache = false)
+    public function isBanned(bool $useCache = false): bool
     {
         if ($useCache) {
             return Cache::remember("users.{$this->id}.banned", now()->addHour(), function () {
@@ -192,12 +189,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->ban !== null;
     }
 
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted_at !== null;
     }
 
-    protected function performDeleteOnModel()
+    /**
+     * Perform the actual delete query on this model instance.
+     */
+    protected function performDeleteOnModel(): void
     {
         $this->comments()->delete();
         $this->likes()->delete();
@@ -206,7 +206,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->forceFill([
             'name' => 'Deleted #'.$this->id,
             'email' => null,
-            'password' => Hash::make(Str::random()),
+            'password' => Str::random(),
             'role_id' => Role::defaultRoleId(),
             'game_id' => null,
             'access_token' => null,
@@ -218,53 +218,48 @@ class User extends Authenticatable implements MustVerifyEmail
         ])->save();
     }
 
-    public function flushBanCache()
+    public function flushBanCache(): void
     {
         Cache::forget("users.{$this->id}.banned");
     }
 
-    public function hasPermission($permission)
+    public function hasPermission($permission): bool
     {
         return $this->role->hasPermission($permission);
     }
 
-    public function hasTwoFactorAuth()
+    public function hasTwoFactorAuth(): bool
     {
         return $this->two_factor_secret !== null;
     }
 
-    public function hasAdminAccess()
+    public function hasAdminAccess(): bool
     {
         return $this->can('admin.access');
     }
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->role->is_admin;
     }
 
-    public function mustChangePassword()
+    public function mustChangePassword(): bool
     {
         return $this->password_changed_at === null;
     }
 
     /**
      * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }
 
     /**
      * Send the email verification notification.
-     *
-     * @return void
      */
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailNotification());
     }

@@ -3,33 +3,24 @@
 namespace Azuriom\Rules;
 
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
-class Username implements Rule
+class Username implements ValidationRule
 {
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (oauth_login() || game() instanceof MinecraftBedrockGame) {
-            return true;
+        if (! oauth_login() && ! game() instanceof MinecraftBedrockGame) {
+            return;
         }
 
-        return preg_match('/^[A-Za-z0-9_*.]+$/', $value);
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return trans('validation.username');
+        if (! preg_match('/^[A-Za-z0-9_*.]+$/', $value)) {
+            $fail(trans('validation.username'));
+        }
     }
 }

@@ -6,15 +6,13 @@ trait ConvertCheckbox
 {
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->mergeCheckboxes();
     }
 
-    protected function mergeCheckboxes()
+    protected function mergeCheckboxes(): void
     {
         $attribute = [];
 

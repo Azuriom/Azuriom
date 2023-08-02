@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models\Traits;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -12,9 +13,9 @@ use Illuminate\Support\Str;
  */
 trait HasImage
 {
-    protected $imageDisk = 'public';
+    protected string $imageDisk = 'public';
 
-    protected static function bootHasImage()
+    protected static function bootHasImage(): void
     {
         static::deleted(function (Model $model) {
             if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
@@ -27,12 +28,8 @@ trait HasImage
 
     /**
      * Store the image and associate it with this model.
-     *
-     * @param  \Illuminate\Http\UploadedFile  $file
-     * @param  bool  $save
-     * @return string
      */
-    public function storeImage(UploadedFile $file, bool $save = false)
+    public function storeImage(UploadedFile $file, bool $save = false): string
     {
         $this->deleteImage();
 
@@ -49,10 +46,8 @@ trait HasImage
 
     /**
      * Delete the image associated with this model.
-     *
-     * @return bool
      */
-    public function deleteImage()
+    public function deleteImage(): bool
     {
         $key = $this->getImageKey();
         $image = $this->getAttribute($key);
@@ -72,20 +67,16 @@ trait HasImage
 
     /**
      * Return true if this model has an image.
-     *
-     * @return bool
      */
-    public function hasImage()
+    public function hasImage(): bool
     {
         return $this->getAttribute($this->getImageKey()) !== null;
     }
 
     /**
      * Get this post image url.
-     *
-     * @return string|null
      */
-    public function imageUrl()
+    public function imageUrl(): ?string
     {
         $image = $this->getAttribute($this->getImageKey());
 
@@ -98,10 +89,8 @@ trait HasImage
 
     /**
      * Get this post image path.
-     *
-     * @return string|null
      */
-    public function getImagePath()
+    public function getImagePath(): ?string
     {
         $image = $this->getAttribute($this->getImageKey());
 
@@ -112,17 +101,17 @@ trait HasImage
         return $this->resolveImagePath($image);
     }
 
-    public function getImageDisk()
+    public function getImageDisk(): Filesystem
     {
         return Storage::disk($this->imageDisk);
     }
 
-    protected function getImageKey()
+    protected function getImageKey(): string
     {
         return $this->imageKey ?? 'image';
     }
 
-    protected function resolveImagePath(string $path = '')
+    protected function resolveImagePath(string $path = ''): string
     {
         return ($this->imagePath ?? Str::snake(Str::pluralStudly(class_basename($this)))).'/'.$path;
     }

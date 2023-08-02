@@ -2,38 +2,29 @@
 
 namespace Azuriom\Rules;
 
+use Closure;
 use Exception;
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ValidationRule;
 
-class GameAuth implements Rule
+class GameAuth implements ValidationRule
 {
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
             $id = game()->getUserUniqueId($value);
 
-            return $id !== false;
+            if ($id) {
+                return;
+            }
         } catch (Exception) {
-            //
+            // Fallthrough
         }
 
-        return false;
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return trans('validation.game_auth', ['game' => game()->name()]);
+        $fail(trans('validation.game_auth', ['game' => game()->name()]));
     }
 }

@@ -12,12 +12,8 @@ class PagePolicy
 
     /**
      * Determine whether the user can view the post.
-     *
-     * @param  \Azuriom\Models\User|null  $user
-     * @param  \Azuriom\Models\Page  $page
-     * @return mixed
      */
-    public function view(?User $user, Page $page)
+    public function view(?User $user, Page $page): bool
     {
         abort_if(! $page->is_enabled, 404);
 

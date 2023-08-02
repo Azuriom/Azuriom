@@ -11,8 +11,6 @@ class BanController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -23,10 +21,6 @@ class BanController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\BanRequest  $request
-     * @param  \Azuriom\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
     public function store(BanRequest $request, User $user)
     {
@@ -35,24 +29,20 @@ class BanController extends Controller
             'reason' => $request->input('reason'),
         ]);
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.status.banned'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\User  $user
-     * @param  \Azuriom\Models\Ban  $ban
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(User $user, Ban $ban)
     {
         $ban->removeBan();
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.status.unbanned'));
     }
 }

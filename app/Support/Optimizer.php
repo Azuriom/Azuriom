@@ -9,19 +9,10 @@ use Throwable;
 
 class Optimizer
 {
-    /**
-     * The application instance.
-     */
     protected Application $app;
 
-    /**
-     * The filesystem instance.
-     */
     protected Filesystem $files;
 
-    /**
-     * The Artisan application instance.
-     */
     protected Kernel $artisan;
 
     public function __construct(Application $app, Filesystem $files, Kernel $artisan)
@@ -31,12 +22,12 @@ class Optimizer
         $this->artisan = $artisan;
     }
 
-    public function cache()
+    public function cache(): bool
     {
         return $this->cacheRoutes() && $this->cacheConfig();
     }
 
-    public function cacheRoutes()
+    public function cacheRoutes(): bool
     {
         $result = $this->artisan->call('route:cache');
 
@@ -45,7 +36,7 @@ class Optimizer
         return $result === 0;
     }
 
-    public function cacheConfig()
+    public function cacheConfig(): bool
     {
         $currentTheme = themes()->currentTheme();
 
@@ -65,57 +56,57 @@ class Optimizer
         return $result === 0;
     }
 
-    public function clearRoutesCache()
+    public function clearRoutesCache(): void
     {
         $this->files->delete($this->app->getCachedRoutesPath());
     }
 
-    public function clearConfigCache()
+    public function clearConfigCache(): void
     {
         $this->files->delete($this->app->getCachedConfigPath());
     }
 
-    public function clearViewCache()
+    public function clearViewCache(): void
     {
         $path = config('view.compiled');
 
-        foreach ($this->files->glob("{$path}/*") as $view) {
+        foreach ($this->files->glob($path.'/*') as $view) {
             $this->files->delete($view);
         }
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->clearConfigCache();
         $this->clearRoutesCache();
         $this->clearViewCache();
     }
 
-    public function isConfigCached()
+    public function isConfigCached(): bool
     {
         return $this->files->exists($this->app->getCachedConfigPath());
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->app->routesAreCached() && $this->isConfigCached();
     }
 
-    public function reloadRoutesCache()
+    public function reloadRoutesCache(): void
     {
         if ($this->app->routesAreCached()) {
             $this->cacheRoutes();
         }
     }
 
-    public function reload()
+    public function reload(): void
     {
         if ($this->isEnabled()) {
             $this->cache();
         }
     }
 
-    public function removeFileFromOPCache(string $file)
+    public function removeFileFromOPCache(string $file): bool
     {
         if (! function_exists('opcache_invalidate')) {
             return false;

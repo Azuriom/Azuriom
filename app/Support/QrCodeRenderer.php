@@ -13,13 +13,8 @@ class QrCodeRenderer
 {
     /**
      * Render the QR Code with a dynamic size to prevent blurry images.
-     *
-     * @param  string  $content
-     * @param  int  $size
-     * @param  int  $margin
-     * @return string
      */
-    public static function render(string $content, int $size, int $margin = 4)
+    public static function render(string $content, int $size, int $margin = 4): string
     {
         $qrCode = Encoder::encode($content, ErrorCorrectionLevel::L());
         $width = $qrCode->getMatrix()->getWidth() + (2 * $margin);

@@ -7,10 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SettingsTest extends TestCase
 {
-    /**
-     * @var \Azuriom\Support\SettingsRepository
-     */
-    protected $repository;
+    protected SettingsRepository $repository;
 
     protected function setUp(): void
     {
@@ -29,28 +26,28 @@ class SettingsTest extends TestCase
         parent::setUp();
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $this->assertTrue($this->repository->has('foo'));
 
         $this->assertFalse($this->repository->has('missing'));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertSame('bar', $this->repository->get('foo'));
 
         $this->assertSame('default', $this->repository->get('missing', 'default'));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $this->repository->set('key', 'value');
 
         $this->assertSame('value', $this->repository->get('key'));
     }
 
-    public function testSetArray()
+    public function testSetArray(): void
     {
         $this->repository->set([
             'key1' => 'value1',

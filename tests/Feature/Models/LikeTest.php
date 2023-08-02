@@ -11,7 +11,7 @@ class LikeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testIsLiked()
+    public function testIsLiked(): void
     {
         $post = Post::factory()->create();
 
@@ -22,7 +22,7 @@ class LikeTest extends TestCase
         $this->assertTrue($post->isLiked());
     }
 
-    public function testIsNotLiked()
+    public function testIsNotLiked(): void
     {
         $post = Post::factory()->create();
 
@@ -31,7 +31,7 @@ class LikeTest extends TestCase
         $this->assertFalse($post->isLiked());
     }
 
-    public function testIsLikedWithExplicitUser()
+    public function testIsLikedWithExplicitUser(): void
     {
         $post = Post::factory()->create();
 
@@ -45,7 +45,7 @@ class LikeTest extends TestCase
         $this->assertTrue($post->isLiked($user));
     }
 
-    public function testIsLikedWithLoadedRelations()
+    public function testIsLikedWithLoadedRelations(): void
     {
         $post = Post::factory()->create();
 
@@ -58,7 +58,7 @@ class LikeTest extends TestCase
         $this->assertTrue($post->isLiked());
     }
 
-    public function testIsNotLikedWithLoadedRelations()
+    public function testIsNotLikedWithLoadedRelations(): void
     {
         $post = Post::factory()->create();
 

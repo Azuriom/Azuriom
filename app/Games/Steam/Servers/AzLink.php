@@ -7,17 +7,17 @@ use Azuriom\Models\User;
 
 class AzLink extends ServerBridge
 {
-    public function getServerData()
+    public function getServerData(): ?array
     {
         return null;
     }
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         return true;
     }
 
-    public function sendCommands(array $commands, User $user, bool $needConnected = false)
+    public function sendCommands(array $commands, User $user, bool $needConnected = false): void
     {
         foreach ($commands as $command) {
             $this->server->commands()->create([
@@ -28,12 +28,12 @@ class AzLink extends ServerBridge
         }
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return true;
     }
 
-    public function getDefaultPort()
+    public function getDefaultPort(): int
     {
         return Query::DEFAULT_PORT;
     }

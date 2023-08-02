@@ -14,8 +14,6 @@ class NavbarController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -29,9 +27,6 @@ class NavbarController extends Controller
 
     /**
      * Update the resources order in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -74,8 +69,6 @@ class NavbarController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -90,9 +83,6 @@ class NavbarController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(NavbarElementRequest $request)
     {
@@ -100,15 +90,12 @@ class NavbarController extends Controller
 
         $element->roles()->sync($request->input('roles'));
 
-        return redirect()->route('admin.navbar-elements.index')
+        return to_route('admin.navbar-elements.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\NavbarElement  $navbarElement
-     * @return \Illuminate\Http\Response
      */
     public function edit(NavbarElement $navbarElement)
     {
@@ -124,10 +111,6 @@ class NavbarController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\NavbarElementRequest  $request
-     * @param  \Azuriom\Models\NavbarElement  $navbarElement
-     * @return \Illuminate\Http\Response
      */
     public function update(NavbarElementRequest $request, NavbarElement $navbarElement)
     {
@@ -144,28 +127,25 @@ class NavbarController extends Controller
 
         NavbarElement::clearCache();
 
-        return redirect()->route('admin.navbar-elements.index')
+        return to_route('admin.navbar-elements.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\NavbarElement  $navbarElement
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(NavbarElement $navbarElement)
     {
         if ($navbarElement->isDropdown() && ! $navbarElement->elements->isEmpty()) {
-            return redirect()->route('admin.navbar-elements.index')
+            return to_route('admin.navbar-elements.index')
                 ->with('error', trans('admin.navbar_elements.not_empty'));
         }
 
         $navbarElement->delete();
 
-        return redirect()->route('admin.navbar-elements.index')
+        return to_route('admin.navbar-elements.index')
             ->with('success', trans('messages.status.success'));
     }
 }

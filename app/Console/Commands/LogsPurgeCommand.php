@@ -24,9 +24,7 @@ class LogsPurgeCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return int
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function handle()
     {
@@ -36,7 +34,5 @@ class LogsPurgeCommand extends Command
         $query->delete();
 
         $this->info($count.' logs was deleted.');
-
-        return 0;
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
  */
 trait HasUser
 {
-    protected static function bootHasUser()
+    protected static function bootHasUser(): void
     {
         static::creating(function (Model $model) {
             $key = $model->userKey ?? 'user_id';

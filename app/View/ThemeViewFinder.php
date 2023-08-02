@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 class ThemeViewFinder extends FileViewFinder
 {
-    protected function findNamespacedView($name)
+    protected function findNamespacedView($name): string
     {
         [$namespace, $view] = $this->parseNamespaceSegments($name);
 

@@ -25,9 +25,7 @@ class AttachmentsPurgeCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return int
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function handle()
     {
@@ -52,7 +50,5 @@ class AttachmentsPurgeCommand extends Command
         }
 
         $this->info("{$count} attachments and {$pendingCount} pending attachments was deleted.");
-
-        return 0;
     }
 }

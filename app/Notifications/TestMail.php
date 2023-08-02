@@ -8,12 +8,9 @@ use Illuminate\Notifications\Notification;
 class TestMail extends Notification
 {
     /**
-     * Build the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * Get the mail representation of the notification.
      */
-    public function toMail($notifiable)
+    public function toMail(): MailMessage
     {
         return (new MailMessage())
             ->subject(trans('mail.test.subject', ['name' => site_name()]))
@@ -21,12 +18,11 @@ class TestMail extends Notification
     }
 
     /**
-     * Get the notification's channels.
+     * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array|string
+     * @return array<int, string>
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['mail'];
     }

@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class HelpersTest extends TestCase
 {
-    public function testColorContrast()
+    public function testColorContrast(): void
     {
         $this->assertSame('white', color_contrast('#2b3531'));
         $this->assertSame('white', color_contrast('#104682'));

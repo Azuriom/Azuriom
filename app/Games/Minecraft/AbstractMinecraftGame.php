@@ -14,18 +14,18 @@ abstract class AbstractMinecraftGame extends Game
     public function __construct()
     {
         XboxProvider::$notFoundCallback = fn () => new HttpResponseException(
-            redirect()->route('home')->with('error', trans('game.minecraft.missing')));
+            to_route('home')->with('error', trans('game.minecraft.missing')));
 
         XboxProvider::$childCallback = fn () => new HttpResponseException(
-            redirect()->route('home')->with('error', trans('game.minecraft.child')));
+            to_route('home')->with('error', trans('game.minecraft.child')));
     }
 
-    public function name()
+    public function name(): string
     {
         return 'Minecraft';
     }
 
-    public function getSupportedServers()
+    public function getSupportedServers(): array
     {
         return [
             'mc-ping' => Ping::class,
@@ -34,12 +34,12 @@ abstract class AbstractMinecraftGame extends Game
         ];
     }
 
-    public function trans(string $key, array $placeholders = [])
+    public function trans(string $key, array $placeholders = []): string
     {
         return trans('game.minecraft.'.$key, $placeholders);
     }
 
-    public function isExtensionCompatible(array $supportedGames)
+    public function isExtensionCompatible(array $supportedGames): bool
     {
         if (parent::isExtensionCompatible($supportedGames)) {
             return true;

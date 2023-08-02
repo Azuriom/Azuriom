@@ -9,9 +9,6 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Azuriom\Models\Page  $page
-     * @return \Illuminate\Http\Response
-     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Page $page)

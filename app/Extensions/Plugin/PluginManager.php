@@ -35,8 +35,6 @@ class PluginManager extends ExtensionManager
 
     /**
      * The plugins/ public directory for assets.
-     *
-     * @var string
      */
     protected string $pluginsPublicPath;
 
@@ -57,8 +55,6 @@ class PluginManager extends ExtensionManager
 
     /**
      * Create a new PluginManager instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      */
     public function __construct(Filesystem $files)
     {
@@ -71,7 +67,12 @@ class PluginManager extends ExtensionManager
         $this->userNavItems = collect();
     }
 
-    public function loadPlugins(Application $app, bool $gamesOnly = false)
+    /**
+     * Load all the plugins, or only the games if specified.
+     *
+     * @throws \Throwable
+     */
+    public function loadPlugins(Application $app, bool $gamesOnly = false): void
     {
         $plugins = $this->getPlugins();
 
@@ -114,59 +115,48 @@ class PluginManager extends ExtensionManager
 
     /**
      * Get the plugins path which contains the installed plugins.
-     *
-     * @param  string  $path
-     * @return string
      */
-    public function pluginsPath(string $path = '')
+    public function pluginsPath(string $path = ''): string
     {
         return $this->pluginsPath.$path;
     }
 
     /**
      * Get the plugins public path which contains the assets of the installed plugins.
-     *
-     * @param  string  $path
-     * @return string
      */
-    public function pluginsPublicPath(string $path = '')
+    public function pluginsPublicPath(string $path = ''): string
     {
         return $this->pluginsPublicPath.$path;
     }
 
     /**
      * Get the path of the specified plugin.
-     *
-     * @param  string  $path
-     * @param  string  $plugin
-     * @return string
      */
-    public function path(string $plugin, string $path = '')
+    public function path(string $plugin, string $path = ''): string
     {
-        return $this->pluginsPath("{$plugin}/{$path}");
+        return $this->pluginsPath($plugin.'/'.$path);
     }
 
-    public function publicPath(string $plugin, string $path = '')
+    /**
+     * Get the public path of the specified plugin.
+     */
+    public function publicPath(string $plugin, string $path = ''): string
     {
-        return $this->pluginsPublicPath("{$plugin}/{$path}");
+        return $this->pluginsPublicPath($plugin.'/'.$path);
     }
 
     /**
      * Get the path to the cached plugins.php file.
-     *
-     * @return string
      */
-    public function getCachedPluginsPath()
+    public function getCachedPluginsPath(): string
     {
         return base_path('bootstrap/cache/plugins.php');
     }
 
     /**
      * Get an array containing the descriptions of the installed plugins.
-     *
-     * @return \Illuminate\Support\Collection
      */
-    public function findPluginsDescriptions()
+    public function findPluginsDescriptions(): Collection
     {
         $directories = $this->files->directories($this->pluginsPath);
         $plugins = [];
@@ -186,11 +176,8 @@ class PluginManager extends ExtensionManager
 
     /**
      * Get the description of the given plugin.
-     *
-     * @param  string|null  $plugin
-     * @return mixed|null
      */
-    public function findDescription(string $plugin)
+    public function findDescription(string $plugin): ?object
     {
         $path = $this->path($plugin, 'plugin.json');
         $json = $this->getJson($path);
@@ -215,7 +202,7 @@ class PluginManager extends ExtensionManager
      *
      * @return string[]
      */
-    public function findPlugins()
+    public function findPlugins(): array
     {
         $paths = $this->files->directories($this->pluginsPath);
 
@@ -224,10 +211,8 @@ class PluginManager extends ExtensionManager
 
     /**
      * Delete the given plugin.
-     *
-     * @param  string  $plugin
      */
-    public function delete(string $plugin)
+    public function delete(string $plugin): void
     {
         if ($this->findDescription($plugin) === null) {
             return;
@@ -241,26 +226,26 @@ class PluginManager extends ExtensionManager
 
     /**
      * Get the enabled plugins.
-     *
-     * @return array
      */
-    public function plugins()
+    public function plugins(): array
     {
         return $this->plugins;
     }
 
     /**
      * Return if a plugin is enabled.
-     *
-     * @param  string  $plugin
-     * @return bool
      */
-    public function isEnabled(string $plugin)
+    public function isEnabled(string $plugin): bool
     {
         return array_key_exists($plugin, $this->plugins);
     }
 
-    public function enable(string $plugin)
+    /**
+     * Enable the given plugin.
+     *
+     * @throws \Throwable
+     */
+    public function enable(string $plugin): bool
     {
         if (! $this->setPluginEnabled($plugin, true)) {
             return false;
@@ -273,7 +258,7 @@ class PluginManager extends ExtensionManager
         return true;
     }
 
-    public function disable(string $plugin)
+    public function disable(string $plugin): bool
     {
         $result = $this->setPluginEnabled($plugin, false);
 
@@ -286,12 +271,12 @@ class PluginManager extends ExtensionManager
         return $result;
     }
 
-    public function hasRequirements(string $plugin)
+    public function hasRequirements(string $plugin): bool
     {
         return $this->getMissingRequirements($plugin) === null;
     }
 
-    public function isSupportedByGame(string $plugin)
+    public function isSupportedByGame(string $plugin): bool
     {
         $description = $this->findDescription($plugin);
         $supportedGames = $description->games ?? null;
@@ -303,7 +288,7 @@ class PluginManager extends ExtensionManager
         return game()->isExtensionCompatible($supportedGames);
     }
 
-    public function getMissingRequirements(string $plugin)
+    public function getMissingRequirements(string $plugin): ?string
     {
         $description = $this->findDescription($plugin);
 
@@ -340,47 +325,38 @@ class PluginManager extends ExtensionManager
         return null;
     }
 
-    public function addRouteDescription(Closure|array $items)
+    public function addRouteDescription(Closure|array $items): void
     {
         $this->routeDescriptions->add($items);
     }
 
-    public function addAdminNavItem(Closure|array $items)
+    public function addAdminNavItem(Closure|array $items): void
     {
         $this->adminNavItems->add($items);
     }
 
-    public function addUserNavItem(Closure|array $items)
+    public function addUserNavItem(Closure|array $items): void
     {
         $this->userNavItems->add($items);
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getRouteDescriptions()
+    public function getRouteDescriptions(): Collection
     {
         return $this->routeDescriptions->flatMap(fn ($value) => value($value));
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getAdminNavItems()
+    public function getAdminNavItems(): Collection
     {
         return $this->adminNavItems->flatMap(fn ($value) => value($value));
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getUserNavItems()
+    public function getUserNavItems(): Collection
     {
         return $this->userNavItems->flatMap(fn ($value) => value($value))
             ->filter(fn ($item) => ! isset($item['permission']) || Gate::allows($item['permission']));
     }
 
-    public function cachePlugins(array $enabledPlugins = null)
+    public function cachePlugins(array $enabledPlugins = null): Collection
     {
         if ($enabledPlugins === null) {
             $pluginsJsonPath = $this->pluginsPath('plugins.json');
@@ -407,12 +383,12 @@ class PluginManager extends ExtensionManager
         return $plugins;
     }
 
-    public function refreshRoutesCache()
+    public function refreshRoutesCache(): void
     {
         app(Optimizer::class)->reloadRoutesCache();
     }
 
-    public function getOnlinePlugins(bool $force = false)
+    public function getOnlinePlugins(bool $force = false): Collection
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
@@ -429,7 +405,7 @@ class PluginManager extends ExtensionManager
             });
     }
 
-    public function getPluginsToUpdate(bool $force = false)
+    public function getPluginsToUpdate(bool $force = false): Collection
     {
         $plugins = app(UpdateManager::class)->getPlugins($force);
 
@@ -444,7 +420,7 @@ class PluginManager extends ExtensionManager
         });
     }
 
-    public function install($pluginId, string $version = null)
+    public function install($pluginId, string $version = null): void
     {
         $updateManager = app(UpdateManager::class);
 
@@ -484,7 +460,7 @@ class PluginManager extends ExtensionManager
         }
     }
 
-    protected function getPlugins()
+    protected function getPlugins(): array
     {
         try {
             $plugins = $this->files->getRequire($this->getCachedPluginsPath());
@@ -499,7 +475,7 @@ class PluginManager extends ExtensionManager
         }
     }
 
-    protected function setPluginEnabled(string $plugin, bool $enabled)
+    protected function setPluginEnabled(string $plugin, bool $enabled): bool
     {
         $description = $this->findDescription($plugin);
 
@@ -526,7 +502,7 @@ class PluginManager extends ExtensionManager
         return true;
     }
 
-    protected function autoloadPlugin(string $plugin, ClassLoader $composer, array $composerJson)
+    protected function autoloadPlugin(string $plugin, ClassLoader $composer, array $composerJson): void
     {
         $autoload = $composerJson['autoload'] ?? [];
 
@@ -541,7 +517,7 @@ class PluginManager extends ExtensionManager
         }
     }
 
-    protected function runMigrations(string $plugin)
+    protected function runMigrations(string $plugin): void
     {
         try {
             app('migrator')->run([$this->path($plugin, 'database/migrations')]);
@@ -552,7 +528,7 @@ class PluginManager extends ExtensionManager
         }
     }
 
-    protected function createAssetsLink(string $plugin)
+    protected function createAssetsLink(string $plugin): void
     {
         if ($this->files->exists($this->publicPath('', $plugin))) {
             return;

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use JsonException;
 
 /**
  * @property int $id
@@ -43,13 +44,13 @@ class Setting extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'value',
     ];
 
-    public function getValueAttribute(?string $value)
+    public function getValueAttribute(?string $value): mixed
     {
         if ($value === null) {
             return null;
@@ -64,15 +65,17 @@ class Setting extends Model
         }
 
         if (Str::is(self::$jsonEncoded, $this->name)) {
-            $decoded = json_decode($value, true);
-
-            return json_last_error() === JSON_ERROR_NONE ? $decoded : null;
+            try {
+                return json_decode($value, true, flags: JSON_THROW_ON_ERROR);
+            } catch (JsonException) {
+                return null;
+            }
         }
 
         return $value;
     }
 
-    public function setValueAttribute($value)
+    public function setValueAttribute(mixed $value)
     {
         if ($value === null) {
             $this->attributes['value'] = null;
@@ -96,13 +99,9 @@ class Setting extends Model
     }
 
     /**
-     * Set a given settings values.
-     *
-     * @param  array|string  $key
-     * @param  mixed  $value
-     * @return array
+     * Modify a given settings values and return the previous values.
      */
-    public static function updateSettings(string|array $key, mixed $value = null)
+    public static function updateSettings(string|array $key, mixed $value = null): array
     {
         $keys = is_array($key) ? $key : [$key => $value];
         $old = collect($keys)->mapWithKeys(fn ($value, $name) => [

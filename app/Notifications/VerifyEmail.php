@@ -8,25 +8,18 @@ use Illuminate\Notifications\Messages\MailMessage;
 class VerifyEmail extends Notification
 {
     /**
-     * Build the mail representation of the notification.
+     * Get the verify email notification mail message for the given URL.
      *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param  string  $url
      */
-    public function toMail($notifiable)
+    protected function buildMailMessage($url): MailMessage
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
-
-        if (static::$toMailCallback !== null) {
-            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
-        }
-
         return (new MailMessage())
             ->subject(trans('auth.mail.verify.subject'))
             ->line(trans('auth.mail.verify.line1', [
                 'count' => config('auth.verification.expire', 60),
             ]))
-            ->action(trans('auth.mail.verify.action'), $verificationUrl)
+            ->action(trans('auth.mail.verify.action'), $url)
             ->line(trans('auth.mail.verify.line2'));
     }
 }

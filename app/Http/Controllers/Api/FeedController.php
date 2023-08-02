@@ -4,13 +4,12 @@ namespace Azuriom\Http\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Post;
+use Illuminate\Database\Eloquent\Collection;
 
 class FeedController extends Controller
 {
     /**
      * Show the RSS feed for the posts.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function rss()
     {
@@ -20,8 +19,6 @@ class FeedController extends Controller
 
     /**
      * Show the Atom feed for the posts.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function atom()
     {
@@ -29,7 +26,7 @@ class FeedController extends Controller
             ->header('Content-Type', 'application/xml');
     }
 
-    protected function getRecentPosts()
+    protected function getRecentPosts(): Collection
     {
         return Post::published()
             ->with(['author', 'comments'])

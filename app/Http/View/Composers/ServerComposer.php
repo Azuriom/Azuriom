@@ -17,11 +17,8 @@ class ServerComposer
 
     /**
      * Bind data to the view.
-     *
-     * @param  \Illuminate\View\View  $view
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         if (Route::is('admin.*') || Route::is('*.admin.*')) {
             $view->with('server', Arr::get($view, 'server'));

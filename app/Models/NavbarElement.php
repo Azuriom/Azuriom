@@ -48,7 +48,7 @@ class NavbarElement extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'icon', 'value', 'position', 'type', 'parent_id', 'new_tab',
@@ -57,13 +57,13 @@ class NavbarElement extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'new_tab' => 'boolean',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         foreach (['created', 'updated', 'deleted'] as $event) {
             static::registerModelEvent($event, fn () => static::clearCache());
@@ -94,7 +94,7 @@ class NavbarElement extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function getLink()
+    public function getLink(): string
     {
         return match ($this->type) {
             'home' => route('home'),
@@ -107,7 +107,7 @@ class NavbarElement extends Model
         };
     }
 
-    public function isCurrent()
+    public function isCurrent(): bool
     {
         $request = request();
 
@@ -126,7 +126,7 @@ class NavbarElement extends Model
         };
     }
 
-    public function getNameAttribute($value)
+    public function getNameAttribute($value): HtmlString
     {
         if ($value instanceof HtmlString) {
             return $value;
@@ -137,63 +137,56 @@ class NavbarElement extends Model
         return new HtmlString($icon.e($value));
     }
 
-    public function getRawNameAttribute()
+    public function getRawNameAttribute(): string
     {
         return $this->getRawOriginal('name');
     }
 
-    public function getTypeValue(string $type)
+    public function getTypeValue(string $type): string
     {
         return $this->type === $type ? $this->value : '';
     }
 
-    public function isDropdown()
+    public function isDropdown(): bool
     {
         return $this->type === 'dropdown';
     }
 
-    public function isRestricted()
+    public function isRestricted(): bool
     {
         return ! $this->roles->isEmpty();
     }
 
-    public function hasParent()
+    public function hasParent(): bool
     {
         return $this->parent_id !== null;
     }
 
     /**
      * Scope a query to only include elements without parent.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeParent(Builder $query)
+    public function scopeParent(Builder $query): void
     {
-        return $query->whereNull('parent_id');
+        $query->whereNull('parent_id');
     }
 
-    public static function types()
+    public static function types(): array
     {
         return self::TYPES;
     }
 
     /**
      * Clear the navbar elements cache.
-     *
-     * @return void
      */
-    public static function clearCache()
+    public static function clearCache(): void
     {
         Cache::forget(static::CACHE_KEY);
     }
 
     /**
      * Test if the current user has the permission to see this element.
-     *
-     * @return bool
      */
-    public function hasPermission()
+    public function hasPermission(): bool
     {
         if (! $this->isRestricted()) {
             return true;

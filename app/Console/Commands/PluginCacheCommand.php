@@ -23,16 +23,11 @@ class PluginCacheCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param  \Azuriom\Extensions\Plugin\PluginManager  $plugins
-     * @return int
      */
     public function handle(PluginManager $plugins)
     {
         $plugins->cachePlugins();
 
         $this->info('Cached plugins files generated successfully.');
-
-        return 0;
     }
 }

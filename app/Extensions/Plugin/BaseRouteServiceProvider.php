@@ -10,17 +10,13 @@ abstract class BaseRouteServiceProvider extends ServiceProvider
 
     /**
      * Define the routes for the plugin.
-     *
-     * @return void
      */
     abstract public function loadRoutes();
 
     /**
      * Bootstrap any plugin services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if (! $this->app->routesAreCached()) {
             $this->loadRoutes();

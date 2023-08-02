@@ -11,19 +11,10 @@ use WebSocket\Client;
  */
 class RustRcon
 {
-    /**
-     * The websocket client.
-     *
-     * @var \WebSocket\Client
-     */
-    private $client;
+    private Client $client;
 
     /**
-     * Create a new Rcon instance.
-     *
-     * @param  string  $host
-     * @param  int  $port
-     * @param  string  $password
+     * Create a new Rcon client instance.
      */
     public function __construct(string $host, int $port, string $password)
     {
@@ -33,12 +24,10 @@ class RustRcon
     /**
      * Send a command to the connected server.
      *
-     * @param  string  $command
-     * @return array
-     *
+     * @throws \JsonException
      * @throws \WebSocket\BadOpcodeException
      */
-    public function sendCommand(string $command)
+    public function sendCommand(string $command): array
     {
         $data = [
             'Identifier' => -1,
@@ -46,7 +35,7 @@ class RustRcon
             'name' => 'AzuriomRcon',
         ];
 
-        $this->client->send(json_encode($data));
+        $this->client->send(json_encode($data, JSON_THROW_ON_ERROR));
 
         return json_decode($this->client->receive(), true);
     }
@@ -54,11 +43,9 @@ class RustRcon
     /**
      * Get the server information.
      *
-     * @return array
-     *
      * @throws \WebSocket\BadOpcodeException
      */
-    public function getServerInfo()
+    public function getServerInfo(): array
     {
         $response = $this->sendCommand('serverinfo');
 
@@ -67,10 +54,8 @@ class RustRcon
 
     /**
      * Disconnect from the server.
-     *
-     * @return void
      */
-    public function disconnect()
+    public function disconnect(): void
     {
         $this->client->close();
     }

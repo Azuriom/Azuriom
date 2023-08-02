@@ -15,25 +15,12 @@ use Throwable;
 
 class ThemeController extends Controller
 {
-    /**
-     * The themes manager instance.
-     *
-     * @var \Azuriom\Extensions\Theme\ThemeManager
-     */
-    private $themes;
+    private ThemeManager $themes;
 
-    /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    private $files;
+    private Filesystem $files;
 
     /**
      * Create a new controller instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @param  \Azuriom\Extensions\Theme\ThemeManager  $themes
      */
     public function __construct(Filesystem $files, ThemeManager $themes)
     {
@@ -43,8 +30,6 @@ class ThemeController extends Controller
 
     /**
      * Display a listing of the extensions.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -70,7 +55,7 @@ class ThemeController extends Controller
 
     public function reload()
     {
-        $response = redirect()->route('admin.themes.index');
+        $response = to_route('admin.themes.index');
 
         try {
             app(UpdateManager::class)->forceFetchUpdates();
@@ -104,13 +89,13 @@ class ThemeController extends Controller
         } catch (Throwable $t) {
             report($t);
 
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('messages.status.error', [
                     'error' => $t->getMessage(),
                 ]));
         }
 
-        return redirect()->route('admin.themes.index')
+        return to_route('admin.themes.index')
             ->with('success', trans('admin.themes.installed'));
     }
 
@@ -119,26 +104,26 @@ class ThemeController extends Controller
         try {
             $this->themes->install($themeId);
         } catch (Throwable $t) {
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('messages.status.error', [
                     'error' => $t->getMessage(),
                 ]));
         }
 
-        return redirect()->route('admin.themes.index')
+        return to_route('admin.themes.index')
             ->with('success', trans('admin.themes.installed'));
     }
 
     public function delete(string $theme)
     {
         if ($this->themes->currentTheme() === $theme) {
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('admin.themes.delete_current'));
         }
 
         $this->themes->delete($theme);
 
-        return redirect()->route('admin.themes.index')
+        return to_route('admin.themes.index')
             ->with('success', trans('admin.themes.deleted'));
     }
 
@@ -151,7 +136,7 @@ class ThemeController extends Controller
         $viewPath = $this->themes->path('config/config.blade.php', $theme);
 
         if (! $this->files->exists($viewPath)) {
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('admin.themes.no_config'));
         }
 
@@ -163,10 +148,6 @@ class ThemeController extends Controller
 
     /**
      * Update the theme settings.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $theme
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -190,7 +171,7 @@ class ThemeController extends Controller
                 return response()->json(['message' => 'admin.themes.config_updated']);
             }
 
-            return redirect()->route('admin.themes.config', $theme)
+            return to_route('admin.themes.config', $theme)
                 ->with('success', trans('admin.themes.config_updated'));
         } catch (FileNotFoundException) {
             return redirect()->back()->with('error', 'Invalid theme configuration.');
@@ -200,12 +181,12 @@ class ThemeController extends Controller
     public function changeTheme($theme = null)
     {
         if ($theme !== null && $this->themes->findDescription($theme) === null) {
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('admin.themes.invalid'));
         }
 
         if ($theme !== null && $this->themes->isLegacy($theme)) {
-            return redirect()->route('admin.themes.index')
+            return to_route('admin.themes.index')
                 ->with('error', trans('admin.themes.legacy'));
         }
 
@@ -213,7 +194,7 @@ class ThemeController extends Controller
 
         ActionLog::log('themes.changed');
 
-        return redirect()->route('admin.themes.index')
+        return to_route('admin.themes.index')
             ->with('success', trans('admin.themes.updated'));
     }
 

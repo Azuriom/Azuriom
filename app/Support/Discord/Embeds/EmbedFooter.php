@@ -6,26 +6,10 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class EmbedFooter implements Arrayable
 {
-    /**
-     * Footer text.
-     *
-     * @var string
-     */
     protected string $text;
 
-    /**
-     * URL of footer icon (only supports http(s) and attachments).
-     *
-     * @var string|null
-     */
     protected ?string $iconUrl = null;
 
-    /**
-     * Create a new footer instance.
-     *
-     * @param  string  $text
-     * @param  string|null  $iconUrl
-     */
     public function __construct(string $text, string $iconUrl = null)
     {
         $this->text = $text;
@@ -35,7 +19,7 @@ class EmbedFooter implements Arrayable
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'text' => $this->text,
