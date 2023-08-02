@@ -213,7 +213,9 @@ class ProfileController extends Controller
 
         $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
-        return redirect()->back()->withCookie($cookie);
+        return $request->expectsJson()
+            ? response()->json($request->only('theme'))
+            : redirect()->back()->withCookie($cookie);
     }
 
     public function showDelete()

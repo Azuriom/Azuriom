@@ -49,7 +49,7 @@ class MinecraftBedrockGame extends Game
 
         $url = Arr::get($this->getUserProfile($user), 'gamerpic');
 
-        return $url !== null ? $url.$params : asset('img/user.png');
+        return $url !== null ? $url.$params : asset('img/user.svg');
     }
 
     public function getUserUniqueId(string $name): ?string

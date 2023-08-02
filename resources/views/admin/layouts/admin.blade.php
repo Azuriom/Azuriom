@@ -374,8 +374,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('profile.theme') }}" class="nav-icon" data-route="theme">
-                                <i class="bi bi-{{ dark_theme() ? 'sun' : 'moon-stars' }} small" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
+                            <a href="{{ route('profile.theme') }}" class="nav-icon @if(! dark_theme()) d-none @endif" data-theme-value="light">
+                                <i class="bi bi-sun small" title="{{ trans('messages.theme.light') }}" data-bs-toggle="tooltip"></i>
+                            </a>
+                            <a href="{{ route('profile.theme') }}" class="nav-icon @if(dark_theme()) d-none @endif" data-theme-value="dark">
+                                <i class="bi bi-moon-stars small" title="{{ trans('messages.theme.dark') }}" data-bs-toggle="tooltip"></i>
                             </a>
                         </li>
 
@@ -462,12 +465,6 @@
 
 <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
-</form>
-
-<form id="themeForm" action="{{ route('profile.theme') }}" method="POST" class="d-none">
-    @csrf
-
-    <input type="hidden" name="theme" value="{{ dark_theme() ? 'light' : 'dark' }}">
 </form>
 
 @stack('footer-scripts')

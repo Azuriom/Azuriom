@@ -69,7 +69,7 @@
     </style>
 </head>
 
-<body>
+<body @if(dark_theme()) data-bs-theme="dark" @endif>
 <div id="app">
     <header>
         @include('elements.navbar')

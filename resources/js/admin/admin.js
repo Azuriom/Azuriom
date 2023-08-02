@@ -14,6 +14,28 @@ document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
     new bootstrap.Tooltip(el)
 });
 
+document.querySelectorAll('[data-theme-value]').forEach(function (el) {
+    el.addEventListener('click', function (ev) {
+        ev.preventDefault()
+
+        const theme = el.getAttribute('data-theme-value')
+
+        document.body.setAttribute('data-bs-theme', theme)
+
+        document.querySelectorAll('[data-theme-value]').forEach(function (child) {
+            const childTheme = child.getAttribute('data-theme-value')
+
+            if (childTheme === theme) {
+                child.classList.add('d-none')
+            } else {
+                child.classList.remove('d-none')
+            }
+        })
+
+        axios.post(el.href, { theme: theme }) // TODO check this
+    })
+});
+
 document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
     el.addEventListener('click', function (ev) {
         ev.preventDefault();
@@ -23,14 +45,6 @@ document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
         document.getElementById('confirmDeleteForm').setAttribute('action', url);
         new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
     })
-});
-
-document.querySelectorAll('[data-route="theme"]').forEach(function (el) {
-    el.addEventListener('click', function (ev) {
-        ev.preventDefault();
-
-        document.getElementById('themeForm').submit();
-    });
 });
 
 document.querySelectorAll('[data-route="logout"]').forEach(function (el) {
