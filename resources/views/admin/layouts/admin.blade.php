@@ -25,12 +25,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('vendor/admin.css') }}" rel="stylesheet">
-    @if(dark_theme())
-        <link href="{{ asset('admin/css/dark.css') }}" rel="stylesheet">
-    @endif
     @stack('styles')
 </head>
-<body>
+<body @if(dark_theme()) data-bs-theme="dark" @endif>
     <!-- Page Wrapper -->
     <div class="wrapper">
 
@@ -292,7 +289,7 @@
         <div class="main">
 
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light navbar-bgw">
+            <nav class="navbar navbar-expand bg-body-secondary navbar-bgw">
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>

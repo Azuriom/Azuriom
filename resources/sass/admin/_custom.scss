@@ -51,27 +51,18 @@ a.disabled,
     font-size: 1.5em;
 }
 
+.main {
+    background: var(--bs-body-bg);
+}
+
 /*
  * Sidebar
  */
-.sidebar-content {
-    background: linear-gradient(135deg,#266fd9,#2359a8 40%,#2359a8);
-}
-
-.sidebar-link,
-a.sidebar-link {
-    background: none;
-}
-
-.sidebar-link:hover {
-    background: #1f4f94;
-}
-
 .sidebar-dropdown .sidebar-link {
-    color:#adb5bd;
-    font-size:90%;
-    font-weight:400;
-    padding:.625rem 1.5rem .625rem 3.25rem
+    color: #adb5bd;
+    font-size: 90%;
+    font-weight: 400;
+    padding: .625rem 1.5rem .625rem 3.25rem
 }
 
 .sidebar-dropdown .sidebar-link::before {

@@ -1,9 +1,6 @@
 // Variables
 @import "~@adminkit/core/src/scss/1-variables/app";
-
-$font-size-base: 0.9rem;
-$font-size-sm: $font-size-base * .875;
-$font-size-lg: $font-size-base * 1.05;
+@import "variables";
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
@@ -42,5 +39,5 @@ $font-size-lg: $font-size-base * 1.05;
 @import "~@adminkit/core/src/scss/5-vendor/simplebar";
 
 // Custom CSS
-@import "_sortable";
-@import "_custom";
+@import "sortable";
+@import "custom";
