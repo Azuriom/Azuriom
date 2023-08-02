@@ -138,7 +138,7 @@ class Role extends Model
     /**
      * Get the default role.
      */
-    public static function defaultRole(): Role
+    public static function defaultRole(): self
     {
         return self::find(self::defaultRoleId());
     }

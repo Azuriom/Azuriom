@@ -11,7 +11,9 @@ class EnsureEmailIsVerified extends Middleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string|null  $redirectToRoute
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|null
      */
     public function handle($request, Closure $next, $redirectToRoute = null): Response
     {

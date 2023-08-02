@@ -23,20 +23,21 @@ abstract class Game
     /**
      * Get the avatar URL of the user.
      *
-     *
      * @deprecated Will be removed in 1.0, use User::getAvatar()
      */
     abstract public function getAvatarUrl(User $user, int $size = 64);
 
     /**
      * Get the game id of the user.
+     *
+     * @return string|null
      */
     abstract public function getUserUniqueId(string $name);
 
     /**
      * Get the game username of the user.
      *
-     * @return mixed
+     * @return string|null
      */
     abstract public function getUserName(User $user);
 

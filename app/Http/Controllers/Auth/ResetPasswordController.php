@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ class ResetPasswordController extends Controller
     /**
      * Reset the given user's password.
      */
-    protected function resetPassword($user, $password): void
+    protected function resetPassword(User $user, string $password): void
     {
         $this->setUserPassword($user, $password);
         $user->setRememberToken(Str::random(60));

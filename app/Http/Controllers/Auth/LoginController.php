@@ -241,7 +241,7 @@ class LoginController extends Controller
     /**
      * Send the response after the user was authenticated.
      */
-    protected function authenticated(Request $request, $user): void
+    protected function authenticated(Request $request, User $user): void
     {
         $user->forceFill([
             'last_login_ip' => $request->ip(),
