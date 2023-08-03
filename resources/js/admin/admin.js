@@ -32,7 +32,7 @@ document.querySelectorAll('[data-theme-value]').forEach(function (el) {
             }
         })
 
-        axios.post(el.href, { theme: theme }) // TODO check this
+        axios.post(el.href, { theme: theme })
     })
 });
 

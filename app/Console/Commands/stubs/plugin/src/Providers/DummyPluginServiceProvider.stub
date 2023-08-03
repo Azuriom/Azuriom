@@ -27,6 +27,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * The policy mappings for this plugin.
+     *
+     * @var array<string, string>
      */
     protected array $policies = [
         // User::class => UserPolicy::class,
@@ -66,6 +68,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Returns the routes that should be able to be added to the navbar.
+     *
+     * @return array<string, string>
      */
     protected function routeDescriptions(): array
     {
@@ -76,6 +80,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Return the admin navigations routes to register in the dashboard.
+     *
+     * @return array<string, array<string, string>>
      */
     protected function adminNavigation(): array
     {
@@ -86,6 +92,8 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
 
     /**
      * Return the user navigations routes to register in the user menu.
+     *
+     * @return array<string, array<string, string>>
      */
     protected function userNavigation(): array
     {

@@ -214,7 +214,7 @@ class ProfileController extends Controller
         $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
         return $request->expectsJson()
-            ? response()->json($request->only('theme'))
+            ? response()->json($request->only('theme'))->withCookie($cookie)
             : redirect()->back()->withCookie($cookie);
     }
 

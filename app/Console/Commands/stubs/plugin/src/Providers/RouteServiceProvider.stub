@@ -12,18 +12,18 @@ class RouteServiceProvider extends BaseRouteServiceProvider
      */
     public function loadRoutes(): void
     {
-        Route::prefix($this->plugin->id)
-            ->middleware('web')
+        Route::middleware('web')
+            ->prefix($this->plugin->id)
             ->name($this->plugin->id.'.')
             ->group(plugin_path($this->plugin->id.'/routes/web.php'));
 
-        Route::prefix('admin/'.$this->plugin->id)
-            ->middleware('admin-access')
+        Route::middleware('admin-access')
+            ->prefix('admin/'.$this->plugin->id)
             ->name($this->plugin->id.'.admin.')
             ->group(plugin_path($this->plugin->id.'/routes/admin.php'));
 
-        Route::prefix('api/'.$this->plugin->id)
-            ->middleware('api')
+        Route::middleware('api')
+            ->prefix('api/'.$this->plugin->id)
             ->name($this->plugin->id.'.api.')
             ->group(plugin_path($this->plugin->id.'/routes/api.php'));
     }

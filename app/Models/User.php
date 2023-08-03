@@ -100,7 +100,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $searchable = [
+    protected array $searchable = [
         'email', 'name', 'game_id', 'role.*',
     ];
 

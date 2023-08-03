@@ -53,7 +53,7 @@ class Role extends Model
      *
      * @var array<int, string>
      */
-    protected $searchable = [
+    protected array $searchable = [
         'name',
     ];
 
