@@ -299,7 +299,7 @@ class InstallController extends Controller
                 $name = $request->input('name');
 
                 if ($game === 'mc-online') {
-                    $gameId = Str::replace('-', '', $request->input('uuid', ''));
+                    $gameId = Str::remove('-', $request->input('uuid', ''));
                     $response = Http::get(MinecraftOnlineGame::PROFILE_LOOKUP.$gameId);
 
                     if (! $response->successful() || ! ($name = $response->json('name'))) {

@@ -33,11 +33,11 @@
     cursor: move;
 
     &:hover {
-        color: #2ea8e5;
+        color: var(--bs-link-hover-color);
     }
 }
 
 .sortable-ghost .card {
-    background: #f2fbff;
-    border: 1px dashed #b6bcbf;
+    opacity: 0.6;
+    border: 1px dashed var(--bs-primary);
 }

@@ -347,10 +347,10 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-10">
-                                                        <p class="text-dark">
+                                                        <p>
                                                             {{ $notification->content }}
                                                         </p>
-                                                        <small class="text-muted">
+                                                        <small class="text-body-secondary">
                                                             {{ format_date($notification->created_at, true) }}
                                                         </small>
                                                     </div>
@@ -359,7 +359,7 @@
                                         @endforeach
 
                                         <div class="dropdown-menu-footer">
-                                            <a href="{{ route('notifications.read.all') }}" id="readNotifications" class="text-muted">
+                                            <a href="{{ route('notifications.read.all') }}" id="readNotifications" class="text-body-secondary">
                                                 <span class="d-none spinner-border spinner-border-sm loader" role="status"></span>
                                                 {{ trans('messages.notifications.read') }}
                                             </a>
@@ -451,7 +451,7 @@
 
             <footer class="footer">
                 <div class="container-fluid">
-                    <p class="mb-0 py-2 text-center text-muted">
+                    <p class="mb-0 py-2 text-center text-body-secondary">
                         @lang('admin.footer', [
                             'year' => '2019-'.now()->year,
                             'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>',

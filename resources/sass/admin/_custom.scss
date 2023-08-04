@@ -55,6 +55,10 @@ a.disabled,
     background: var(--bs-body-bg);
 }
 
+.dropdown .list-group .list-group-item:hover {
+    background: rgba(25, 25, 25, 0.1);
+}
+
 /*
  * Sidebar
  */

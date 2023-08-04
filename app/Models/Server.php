@@ -127,7 +127,7 @@ class Server extends Model
         return min(($this->getOnlinePlayers() / $max) * 100, 100);
     }
 
-    public function joinUrl(): string
+    public function joinUrl(): ?string
     {
         return $this->join_url;
     }

@@ -31,9 +31,9 @@ class UserRequest extends FormRequest
     }
 
     /**
-     * Handle a passed validation attempt.
+     * Prepare the data for validation.
      */
-    public function passedValidation(): void
+    protected function prepareForValidation(): void
     {
         if (! $this->filled('password')) {
             $this->request->remove('password');

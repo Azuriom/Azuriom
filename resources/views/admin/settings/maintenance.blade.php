@@ -37,7 +37,7 @@
                     <div class="card card-body mb-2">
                         <label class="form-label">{{ trans('admin.settings.maintenance.paths') }}</label>
 
-                        @include('admin.elements.list-input', ['name' => 'paths', 'values' => $paths, 'placeholder' => 'news/*'])
+                        @include('admin.elements.list-input', ['name' => 'paths', 'values' => $paths, 'placeholder' => '/news/*'])
 
                         <small class="form-text">@lang('admin.settings.maintenance.info')</small>
                     </div>

@@ -41,7 +41,7 @@
                                 {{ $user->id }}
 
                                 @if($user->isDeleted())
-                                    <i class="bi bi-person-x text-dark" title="{{ trans('admin.users.deleted') }}" data-bs-toggle="tooltip"></i>
+                                    <i class="bi bi-person-x text-secondary" title="{{ trans('admin.users.deleted') }}" data-bs-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
                                     <i class="bi bi-trophy text-warning" title="{{ trans('admin.users.admin') }}" data-bs-toggle="tooltip"></i>
                                 @endif

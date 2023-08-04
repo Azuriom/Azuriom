@@ -33,7 +33,7 @@ trait TwoFactorAuthenticatable
             return false;
         }
 
-        $code = str_replace(' ', '', $code);
+        $code = Str::remove(' ', $code);
 
         if ((new Google2FA())->verifyKey($this->two_factor_secret, $code)) {
             return true;

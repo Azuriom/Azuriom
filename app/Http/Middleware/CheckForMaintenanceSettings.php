@@ -49,9 +49,11 @@ class CheckForMaintenanceSettings
         }
 
         $blockedPaths = array_map(function (string $path) {
-            return Str::endsWith($path, '/*')
+            $normalized = Str::endsWith($path, '/*')
                 ? Str::replaceLast('/*', '*', $path)
                 : $path;
+
+            return trim($normalized, '/');
         }, setting('maintenance.paths', []));
 
         if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {

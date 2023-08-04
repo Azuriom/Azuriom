@@ -165,7 +165,7 @@ class ProfileController extends Controller
             return to_route('profile.2fa.index');
         }
 
-        $code = str_replace(' ', '', $request->input('code'));
+        $code = Str::remove(' ', $request->input('code'));
         $secret = $request->session()->get('2fa.secret');
 
         if (! $secret || ! (new Google2FA())->verifyKey($secret, $code)) {

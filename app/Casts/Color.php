@@ -24,7 +24,7 @@ class Color implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $color = str_replace('#', '', $value);
+        $color = ltrim($value, '#');
 
         // Convert short hex colors
         if (strlen($color) === 3) {

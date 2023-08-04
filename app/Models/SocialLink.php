@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -88,7 +89,7 @@ class SocialLink extends Model
     {
         return Attribute::make(
             get: fn ($val, array $attr) => $this->getProperty('title', $attr),
-            set: fn (string $value) => $this->withProperty('title', $value),
+            set: fn (?string $value) => $this->withProperty('title', $value),
         );
     }
 
@@ -99,7 +100,7 @@ class SocialLink extends Model
     {
         return Attribute::make(
             get: fn ($val, array $attr) => $this->getProperty('color', $attr),
-            set: fn (string $value) => $this->withProperty('color', $value),
+            set: fn (?string $value) => $this->withProperty('color', $value),
         );
     }
 
@@ -110,14 +111,14 @@ class SocialLink extends Model
     {
         return Attribute::make(
             get: fn ($val, array $attr) => $this->getProperty('icon', $attr),
-            set: fn (string $value) => $this->withProperty('icon', $value),
+            set: fn (?string $value) => $this->withProperty('icon', $value),
         );
     }
 
-    private function getProperty(string $key, array $attributes): string
+    private function getProperty(string $key): string
     {
         $properties = $this->type === 'other'
-            ? $attributes['properties']
+            ? $this->properties
             : self::DEFAULT_VALUES[$this->type];
 
         return $properties[$key] ?? '';
@@ -126,13 +127,13 @@ class SocialLink extends Model
     private function withProperty(string $key, ?string $value): array
     {
         if ($this->type !== 'other') {
-            return ['properties' => null];
+            return [];
         }
 
         $properties = $this->properties ?? [];
         $properties[$key] = $value;
 
-        return ['properties' => $properties];
+        return ['properties' => Json::encode($properties)];
     }
 
     public static function clearCache(): void

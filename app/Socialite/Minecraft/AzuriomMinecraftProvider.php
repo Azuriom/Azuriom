@@ -19,7 +19,7 @@ class AzuriomMinecraftProvider extends MinecraftProvider
     {
         if (Str::startsWith($code, 'access_token:')) {
             return [
-                'access_token' => Str::replaceFirst('access_token:', '', $code),
+                'access_token' => Str::after($code, 'access_token:'),
             ];
         }
 

@@ -116,11 +116,11 @@ class SettingsController extends Controller
             'site-key' => ['nullable', 'string', 'size:50'],
             'posts_webhook' => ['nullable', 'url'],
         ]), [
-            'user_money_transfer' => $request->filled('user_money_transfer'),
+            'users.money_transfer' => $request->filled('user_money_transfer'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
         ]);
 
-        $old = Arr::except(Setting::updateSettings($settings), 'user_money_transfer');
+        $old = Arr::except(Setting::updateSettings($settings), 'users.money_transfer');
 
         ActionLog::log('settings.updated')?->createEntries($old, $settings);
 

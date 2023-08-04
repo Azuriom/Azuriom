@@ -21,7 +21,9 @@
                             </div>
                         </div>
                         <div class="flex-grow-1">
-                            <div class="small text-muted">{{ format_date($notification->created_at, true) }}</div>
+                            <div class="small text-body-secondary">
+                                {{ format_date($notification->created_at, true) }}
+                            </div>
                             {{ $notification->content }}
                         </div>
                     </a>
