@@ -13,7 +13,6 @@
         "@adminkit/core": "https://github.com/adminkit/adminkit/tarball/master",
         "@popperjs/core": "^2.11.5",
         "@simonwep/pickr": "^1.8.0",
-        "autosize": "^6.0.1",
         "axios": "^1.1.2",
         "bootstrap": "^5.1.0",
         "bootstrap-icons": "^1.8.1",

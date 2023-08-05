@@ -33,6 +33,7 @@ class MinecraftPing
     /**
      * Ping the Minecraft server.
      *
+     * @throws \JsonException
      * @throws \RuntimeException
      */
     public function ping(int $timeout = 3): array
@@ -86,13 +87,7 @@ class MinecraftPing
             throw new RuntimeException('Server didn\'t return any data');
         }
 
-        $response = json_decode($data, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON response: '.json_last_error_msg());
-        }
-
-        return $response;
+        return json_decode($data, true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**

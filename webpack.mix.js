@@ -17,7 +17,7 @@ const mix = require('laravel-mix');
 const vendorPath = 'public/assets/vendor';
 
 const vendorDependencies = [
-    'autosize', 'axios', 'bootstrap', 'chart.js', 'clipboard', 'easymde', '@simonwep/pickr:pickr',
+    'axios', 'bootstrap', 'chart.js', 'clipboard', 'easymde', '@simonwep/pickr:pickr',
 ];
 
 for (const name of vendorDependencies) {
@@ -37,5 +37,5 @@ mix.disableSuccessNotifications()
     .copyDirectory('node_modules/flatpickr/dist/*.js', `${vendorPath}/flatpickr/js`)
     .copy('node_modules/sortablejs/Sortable.min.js', `${vendorPath}/sortablejs/Sortable.min.js`)
     .options({
-        processCssUrls: false
+        processCssUrls: false,
     });

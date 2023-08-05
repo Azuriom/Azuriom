@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <div class="stat text-primary">
+                            <div class="stat text-primary h3">
                                 <i class="bi bi-people"></i>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <div class="stat text-primary">
+                            <div class="stat text-primary h3">
                                 <i class="bi bi-newspaper"></i>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <div class="stat text-primary">
+                            <div class="stat text-primary h3">
                                 <i class="bi bi-file-earmark"></i>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <div class="stat text-primary">
+                            <div class="stat text-primary h3">
                                 <i class="bi bi-image"></i>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                             </div>
 
                             <div class="col-auto">
-                                <div class="stat text-primary">
+                                <div class="stat text-primary h3">
                                     <i class="{{ $card['icon'] }}"></i>
                                 </div>
                             </div>

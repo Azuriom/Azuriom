@@ -29,15 +29,15 @@ class RustRcon
      */
     public function sendCommand(string $command): array
     {
-        $data = [
+        $this->client->send(json_encode([
             'Identifier' => -1,
             'Message' => $command,
             'name' => 'AzuriomRcon',
-        ];
+        ], JSON_THROW_ON_ERROR));
 
-        $this->client->send(json_encode($data, JSON_THROW_ON_ERROR));
+        $data = $this->client->receive();
 
-        return json_decode($this->client->receive(), true);
+        return json_decode($data, true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -47,9 +47,9 @@ class RustRcon
      */
     public function getServerInfo(): array
     {
-        $response = $this->sendCommand('serverinfo');
+        $data = $this->sendCommand('serverinfo');
 
-        return json_decode($response['Message'], true);
+        return json_decode($data['Message'], true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**

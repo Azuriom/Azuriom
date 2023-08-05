@@ -47,16 +47,39 @@ a.disabled,
     font-size: 0.85em;
 }
 
-.stat .bi::before {
-    font-size: 1.5em;
-}
-
 .main {
     background: var(--bs-body-bg);
 }
 
 .dropdown .list-group .list-group-item:hover {
     background: rgba(25, 25, 25, 0.1);
+}
+
+/*
+ * EasyMDE
+ */
+.EasyMDEContainer {
+    .editor-toolbar .table {
+        width: unset;
+    }
+
+    .CodeMirror.cm-s-easymde,
+    .CodeMirror-fullscreen,
+    .editor-preview,
+    .editor-toolbar.fullscreen {
+        color: inherit;
+        background: var(--bs-body-bg);
+    }
+
+    .editor-toolbar button.active,
+    .editor-toolbar button:hover {
+        background: var(--bs-body-bg);
+        border-color: #86b7fe;
+    }
+
+    .CodeMirror-cursor {
+        border-color: var(--bs-body-color);
+    }
 }
 
 /*

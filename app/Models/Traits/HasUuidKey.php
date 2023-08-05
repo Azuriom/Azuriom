@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use RuntimeException;
 
 /**
- * Automatically generate an UUID for the model if it doesn't have one.
+ * Automatically generate a UUID for the model if it doesn't have one.
  */
 trait HasUuidKey
 {
@@ -47,7 +47,7 @@ trait HasUuidKey
     /**
      * Set whether IDs are incrementing.
      */
-    public function setIncrementing($value): void
+    public function setIncrementing($value): never
     {
         throw new RuntimeException('Cannot change incrementing with UUID key.');
     }
