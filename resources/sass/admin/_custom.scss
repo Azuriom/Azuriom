@@ -15,12 +15,12 @@ a.disabled,
 .btn.disabled,
 .btn:disabled {
     cursor: not-allowed;
-    opacity: .55;
+    opacity: var(--bs-btn-disabled-opacity);
 }
 
 .tox-tinymce {
-    border: 1px solid #d1d3e2 !important;
-    border-radius: .35rem !important;
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    border-radius: var(--bs-border-radius) !important;
 }
 
 .img-small {

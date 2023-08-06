@@ -24,21 +24,6 @@ if (! function_exists('add_active')) {
     }
 }
 
-if (! function_exists('color_contrast')) {
-    /**
-     * Return the color (black or white) with the best contrast for the given hex color.
-     */
-    function color_contrast(string $hex): string
-    {
-        $r = hexdec(substr($hex, 1, 2));
-        $g = hexdec(substr($hex, 3, 2));
-        $b = hexdec(substr($hex, 5, 2));
-        $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
-
-        return ($yiq >= 128) ? 'black' : 'white';
-    }
-}
-
 if (! function_exists('is_installed')) {
     /**
      * Determine whether the application is installed or not.
