@@ -29,19 +29,17 @@ if (! function_exists('color_contrast')) {
         [$r, $g, $b] = hex2rgb($hex);
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
 
-        return ($yiq >= 128) ? 'black' : 'white';
+        return ($yiq >= 128) ? '#000' : '#fff';
     }
 }
 
 if (! function_exists('color_rgb')) {
     /**
-     * Convert a hex color to a CSS-formatted RGB color.
+     * Convert a hex color to the RGB values separated by commas.
      */
     function color_rgb(string $hex): string
     {
-        [$r, $g, $b] = hex2rgb($hex);
-
-        return "rgb($r, $g, $b)";
+        return implode(', ', hex2rgb($hex));
     }
 }
 
