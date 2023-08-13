@@ -101,7 +101,7 @@ class PluginCreateCommand extends Command
             'authors' => [
                 $this->option('author'),
             ],
-            'azuriom_api' => '1.0.0',
+            'azuriom_api' => '1.1.0',
             'providers' => [
                 "\\{$namespace}\\Providers\\{$className}ServiceProvider",
                 "\\{$namespace}\\Providers\\RouteServiceProvider",

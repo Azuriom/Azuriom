@@ -292,7 +292,7 @@ class PluginManager extends ExtensionManager
     {
         $description = $this->findDescription($plugin);
 
-        if (($description->azuriom_api ?? null) !== '1.0.0') {
+        if (! ExtensionManager::isApiSupported($description->azuriom_api ?? null)) {
             return 'api';
         }
 

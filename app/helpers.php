@@ -280,9 +280,11 @@ if (! function_exists('dark_theme')) {
     /**
      * Determine whether the user should have the dark theme.
      */
-    function dark_theme(): bool
+    function dark_theme(bool $defaultDark = false): bool
     {
-        return request()?->cookie('theme') === 'dark';
+        $defaultTheme = $defaultDark ? 'dark' : 'light';
+
+        return request()?->cookie('theme', $defaultTheme) === 'dark';
     }
 }
 

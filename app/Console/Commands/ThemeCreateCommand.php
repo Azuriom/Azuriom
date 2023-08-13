@@ -82,6 +82,7 @@ class ThemeCreateCommand extends Command
             'authors' => [
                 $this->option('author'),
             ],
+            'azuriom_api' => '1.1.0',
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 

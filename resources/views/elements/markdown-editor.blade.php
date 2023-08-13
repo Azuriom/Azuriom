@@ -16,7 +16,7 @@
         .editor-toolbar button.active,
         .editor-toolbar button:hover {
             background: var(--bs-body-bg);
-            border-color: #86b7fe;
+            border-color: var(--bs-primary-border-subtle);
         }
 
         .CodeMirror-cursor {

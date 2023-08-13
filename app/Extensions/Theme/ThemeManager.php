@@ -246,8 +246,9 @@ class ThemeManager extends ExtensionManager
     public function isLegacy(string $theme): bool
     {
         $description = $this->findDescription($theme);
+        $apiVersion = $description->azuriom_api ?? null;
 
-        return ($description->azuriom_api ?? null) !== '1.0.0';
+        return ! ExtensionManager::isApiSupported($apiVersion);
     }
 
     public function install($themeId): void

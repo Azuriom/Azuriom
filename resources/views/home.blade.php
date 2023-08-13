@@ -61,7 +61,7 @@
                                     </p>
                                 @else
                                     <p>
-                                        <span class="badge bg-danger text-white">
+                                        <span class="badge bg-danger">
                                             {{ trans('messages.server.offline') }}
                                         </span>
                                     </p>

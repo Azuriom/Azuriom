@@ -7,6 +7,8 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class ExtensionManager
 {
+    protected const API_VERSIONS = ['1.0.0', '1.1.0'];
+
     protected Filesystem $files;
 
     public function __construct(Filesystem $files)
@@ -28,5 +30,10 @@ abstract class ExtensionManager
         } catch (FileNotFoundException) {
             return null;
         }
+    }
+
+    public static function isApiSupported(?string $version)
+    {
+        return in_array($version, static::API_VERSIONS, true);
     }
 }
