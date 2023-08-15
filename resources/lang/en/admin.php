@@ -380,6 +380,8 @@ return [
         'edit' => 'Edit role :role (#:id)',
         'create' => 'Create role',
 
+        'info' => '(ID: :id, Power: :power)',
+
         'default' => 'Default',
         'admin' => 'Admin',
         'admin_info' => 'When the group is admin it has all the permissions.',
@@ -394,6 +396,7 @@ return [
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',
+            'enable_info' => 'Once enabled, edit the role on Discord, and add a requirement in the <b>Links</b> tab.',
             'info' => 'You need to create an application on the <a href="https://discord.com/developers/applications" target="_blank">Discord developer dashboard</a> and set the <b>Linked Role Verification URL</b> to <code>:url</code>',
             'oauth' => 'Then, in <b>OAuth2</b> and in <b>General</b>, you need to add <code>:url</code> in the <b>Redirects</b>.',
             'token_info' => 'The Bot token can be obtained by creating a bot for your application, in the <b>Bot</b> tab on the left of the Discord developer dashboard.',

@@ -380,6 +380,8 @@ return [
         'edit' => 'Édition du grade :role (#:id)',
         'create' => 'Création d\'un grade',
 
+        'info' => '(ID: :id, Pouvoir: :power)',
+
         'default' => 'Grade par défaut',
         'admin' => 'Administrateur',
         'admin_info' => 'Lorsque le grade est administrateur, il a toutes les permissions.',
@@ -394,6 +396,7 @@ return [
         'discord' => [
             'title' => 'Lier les grades avec Discord',
             'enable' => 'Activer la liaison des grades avec Discord',
+            'enable_info' => 'Une fois activé, modifiez le rôle sur Discord, et ajoutez un pré-requis dans l\'onglet <b>Liens</b>.',
             'info' => 'Vous devez créer une application sur le <a href="https://discord.com/developers/applications" target="_blank">portail développeur Discord</a> et définir <b>l\'URL de vérification</b> sur <code>:url</code>',
             'oauth' => 'Puis, dans <b>OAuth2</b> et <b>Général</b>, vous devez ajouter <code>:url</code> dans les <b>Redirections</b>.',
             'token_info' => 'Le token du Bot peut être obtenu en créant un bot pour votre application, dans l\'onglet <b>Bot</b> à gauche du portail développeur Discord.',
