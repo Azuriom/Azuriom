@@ -7,6 +7,7 @@ use Azuriom\Models\Traits\Searchable;
 use Azuriom\Models\Traits\TwoFactorAuthenticatable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
 use Azuriom\Notifications\VerifyEmail as VerifyEmailNotification;
+use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,6 +35,7 @@ use Illuminate\Support\Str;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon|null $deleted_at
+ * @property \Azuriom\Models\DiscordAccount|null $discordAccount
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Post[] $posts
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Comment[] $comments
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Like[] $likes
@@ -101,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected array $searchable = [
-        'email', 'name', 'game_id', 'role.*',
+        'email', 'name', 'game_id', 'role.*', 'discordAccount.discord_user_id',
     ];
 
     protected static function booted(): void
@@ -109,6 +111,13 @@ class User extends Authenticatable implements MustVerifyEmail
         self::creating(function (self $user) {
             if ($user->password_changed_at === null) {
                 $user->password_changed_at = $user->freshTimestamp();
+            }
+        });
+
+        self::updated(function (self $user) {
+            if ($user->discordAccount !== null &&
+                $user->role_id !== $user->getOriginal('role_id')) {
+                LinkedRoles::linkRole($user->discordAccount);
             }
         });
     }
@@ -167,6 +176,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function notifications()
     {
         return $this->hasMany(Notification::class)->latest();
+    }
+
+    public function discordAccount()
+    {
+        return $this->hasOne(DiscordAccount::class);
     }
 
     /**

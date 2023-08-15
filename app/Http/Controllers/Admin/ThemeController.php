@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\Theme\ThemeManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
@@ -84,6 +85,15 @@ class ThemeController extends Controller
                     $newConfig = $this->themes->readConfig($theme) ?? [];
 
                     $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
+                }
+
+                if ($this->themes->isLegacy($theme)) {
+                    $this->themes->changeTheme(null);
+
+                    return to_route('admin.themes.index')
+                        ->with('error', trans('admin.themes.legacy', [
+                            'version' => Azuriom::apiVersion(),
+                        ]));
                 }
             }
         } catch (Throwable $t) {
@@ -187,7 +197,9 @@ class ThemeController extends Controller
 
         if ($theme !== null && $this->themes->isLegacy($theme)) {
             return to_route('admin.themes.index')
-                ->with('error', trans('admin.themes.legacy'));
+                ->with('error', trans('admin.themes.legacy', [
+                    'version' => Azuriom::apiVersion(),
+                ]));
         }
 
         $this->themes->changeTheme($theme);

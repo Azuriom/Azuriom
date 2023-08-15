@@ -206,7 +206,7 @@
 @endsection
 
 @push('footer-scripts')
-    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
     <script src="{{ asset('admin/js/charts.js') }}"></script>
     <script>
         createLineChart('newUsersPerMonthsChart', @json($newUsersPerMonths), '{{ trans('admin.dashboard.recent_users') }}');

@@ -68,7 +68,7 @@ class ThemeManager extends ExtensionManager
     {
         Setting::updateSettings('theme', $theme);
 
-        if ($theme) {
+        if ($theme !== null) {
             $this->createAssetsLink($theme);
         }
     }

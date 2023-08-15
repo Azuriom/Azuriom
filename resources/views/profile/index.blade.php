@@ -28,6 +28,9 @@
                         @if(! oauth_login())
                             <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans_bool($user->hasTwoFactorAuth())]) }}</li>
                         @endif
+                        @if($enableDiscordLink && $discordAccount !== null)
+                            <li>{{ trans('messages.profile.info.discord', ['user' => $discordAccount->name]) }}</li>
+                        @endif
                     </ul>
 
                     @if(! oauth_login())
@@ -44,6 +47,24 @@
                         @if($canDelete)
                             <a class="btn btn-danger" href="{{ route('profile.delete.index') }}">
                                 <i class="bi bi-x-lg"></i> {{ trans('messages.profile.delete.btn') }}
+                            </a>
+                        @endif
+                    @endif
+
+                    @if($enableDiscordLink)
+                        @if($discordAccount !== null)
+                            <form action="{{ route('profile.discord.unlink') }}" method="POST" class="d-inline-block">
+                                @csrf
+
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-discord"></i>
+                                    {{ trans('messages.profile.discord.unlink') }}
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('profile.discord.link') }}" class="btn btn-primary">
+                                <i class="bi bi-discord"></i>
+                                {{ trans('messages.profile.discord.link') }}
                             </a>
                         @endif
                     @endif

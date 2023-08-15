@@ -2,6 +2,7 @@
 
 namespace Azuriom\Http\Controllers\Admin;
 
+use Azuriom\Azuriom;
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Http\Controllers\Controller;
@@ -65,7 +66,9 @@ class PluginController extends Controller
 
             if ($missing === 'azuriom' || $missing === 'api') {
                 return to_route('admin.plugins.index')
-                    ->with('error', trans('admin.plugins.requirements.'.$missing));
+                    ->with('error', trans('admin.plugins.requirements.'.$missing, [
+                        'version' => Azuriom::apiVersion(),
+                    ]));
             }
 
             if ($missing !== null) {

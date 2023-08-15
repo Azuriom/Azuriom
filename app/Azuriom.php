@@ -2,6 +2,8 @@
 
 namespace Azuriom;
 
+use Illuminate\Support\Str;
+
 class Azuriom
 {
     /**
@@ -17,5 +19,13 @@ class Azuriom
     public static function version(): string
     {
         return static::VERSION;
+    }
+
+    /**
+     * Get the current API version, for extensions, of Azuriom CMS.
+     */
+    public static function apiVersion(): string
+    {
+        return Str::beforeLast(static::VERSION, '.');
     }
 }

@@ -7,6 +7,7 @@ use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
 use Azuriom\Notifications\UserDelete;
 use Azuriom\Rules\Username;
+use Azuriom\Support\Discord\LinkedRoles;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
@@ -19,6 +20,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
@@ -41,6 +43,8 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
+            'discordAccount' => $request->user()->discordAccount,
+            'enableDiscordLink' => setting('discord.link_roles', false),
         ]);
     }
 
@@ -216,6 +220,53 @@ class ProfileController extends Controller
         return $request->expectsJson()
             ? response()->json($request->only('theme'))->withCookie($cookie)
             : redirect()->back()->withCookie($cookie);
+    }
+
+    /**
+     * Redirect the user to the Discord OAuth page to link his account.
+     */
+    public function linkDiscord()
+    {
+        return Socialite::driver('discord')->redirect();
+    }
+
+    /**
+     * Unlink the Discord account from the user.
+     */
+    public function unlinkDiscord(Request $request)
+    {
+        $discordAccount = $request->user()->discordAccount;
+
+        if ($discordAccount !== null) {
+            LinkedRoles::clearRole($discordAccount);
+
+            $discordAccount->delete();
+        }
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.status.success'));
+    }
+
+    /**
+     * Handle the Discord OAuth callback.
+     */
+    public function discordCallback(Request $request)
+    {
+        $user = $request->user();
+        $discordUser = Socialite::driver('discord')->user();
+
+        $discordAccount = $user->discordAccount()->updateOrCreate([], [
+            'name' => $discordUser->getNickname(),
+            'discord_user_id' => $discordUser->getId(),
+            'access_token' => $discordUser->token,
+            'refresh_token' => $discordUser->refreshToken,
+            'expires_at' => now()->addSeconds($discordUser->expiresIn),
+        ]);
+
+        LinkedRoles::linkRole($discordAccount);
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.profile.discord.linked'));
     }
 
     public function showDelete()

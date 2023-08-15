@@ -88,4 +88,72 @@
             </a>
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{{ trans('admin.roles.discord.title') }}</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('admin.roles.settings') }}" method="POST">
+                @csrf
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="clientId" class="form-label">
+                            {{ trans('admin.roles.discord.client_id') }}
+                        </label>
+                        <input type="text" class="form-control @error('client_id') is-invalid @enderror" id="clientId" name="client_id" value="{{ old('client_id', setting('discord.client_id')) }}">
+
+                        @error('client_id')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="clientSecret" class="form-label">
+                            {{ trans('admin.roles.discord.client_secret') }}
+                        </label>
+                        <input type="text" class="form-control @error('client_secret') is-invalid @enderror" id="clientSecret" name="client_secret" value="{{ old('client_secret', setting('discord.client_secret')) }}">
+
+                        @error('client_secret')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <p><i class="bi bi-info-circle"></i> @lang('admin.roles.discord.info', ['url' => route('profile.discord.link')])</p>
+                    @lang('admin.roles.discord.oauth', ['url' => route('profile.discord.callback')])
+                </div>
+
+                <div class="mb-3">
+                    <label for="token" class="form-label">
+                        {{ trans('admin.roles.discord.token') }}
+                    </label>
+                    <input type="password" class="form-control @error('token') is-invalid @enderror" id="token" name="token" value="{{ old('token', setting('discord.token')) }}">
+
+                    @error('token')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> @lang('admin.roles.discord.token_info')
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="linkSwitch" name="link_roles" @checked($linkRoles)>
+                        <label class="form-check-label" for="linkSwitch">
+                            {{ trans('admin.roles.discord.enable') }}
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+            </form>
+        </div>
+    </div>
 @endsection

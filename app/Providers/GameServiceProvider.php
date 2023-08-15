@@ -9,6 +9,7 @@ use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\FiveMGame;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
+use Azuriom\Socialite\DiscordProvider;
 use Azuriom\Socialite\Minecraft\AzuriomMinecraftProvider;
 use Azuriom\Socialite\Xbox\AzuriomXboxProvider;
 use Illuminate\Support\Arr;
@@ -70,6 +71,14 @@ class GameServiceProvider extends ServiceProvider
             $config = $app['config']['services.microsoft'];
 
             return $socialite->buildProvider(AzuriomMinecraftProvider::class, $config);
+        });
+
+        $socialite->extend('discord', function () use ($socialite) {
+            return $socialite->buildProvider(DiscordProvider::class, [
+                'client_id' => setting('discord.client_id'),
+                'client_secret' => setting('discord.client_secret'),
+                'redirect' => '/profile/discord/callback',
+            ]);
         });
     }
 

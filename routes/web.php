@@ -54,6 +54,12 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
     Route::post('/name', [ProfileController::class, 'updateName'])->name('name');
 
+    Route::prefix('discord')->name('discord.')->group(function () {
+        Route::get('/link', [ProfileController::class, 'linkDiscord'])->name('link');
+        Route::get('/callback', [ProfileController::class, 'discordCallback'])->name('callback');
+        Route::post('/unlink', [ProfileController::class, 'unlinkDiscord'])->name('unlink');
+    });
+
     Route::prefix('2fa')->name('2fa.')->middleware('password.confirm')->group(function () {
         Route::get('/', [ProfileController::class, 'show2fa'])->name('index');
         Route::get('/codes', [ProfileController::class, 'download2faCodes'])->name('codes');

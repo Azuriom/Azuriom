@@ -165,6 +165,7 @@ return [
             'register' => 'Registered: :date',
             'money' => 'Money: :money',
             '2fa' => 'Two-Factor Authentication (2FA): :2fa',
+            'discord' => 'Linked Discord account: :user',
         ],
 
         '2fa' => [
@@ -178,6 +179,12 @@ return [
             'code' => 'Code',
             'enabled' => 'Two-Factor Authentication is currently enabled. Don\'t forget to save your recovery codes!',
             'disabled' => 'Two-Factor Authentication disabled.',
+        ],
+
+        'discord' => [
+            'link' => 'Link to Discord',
+            'unlink' => 'Unlink from Discord',
+            'linked' => 'Your Discord account has been linked successfully.',
         ],
 
         'money_transfer' => [
@@ -216,5 +223,17 @@ return [
 
         'size' => 'Image #image_name# is too big (#image_size#).\nMaximum file size is #image_max_size#.',
         'error' => 'Something went wrong when uploading the image #image_name#.',
+    ],
+
+    'discord_roles' => [
+        'id' => [
+            'name' => 'Role ID',
+            'description' => 'ID of the role on the website.',
+        ],
+
+        'power' => [
+            'name' => 'Role Power',
+            'description' => 'Power of the role on the website equal or greater than',
+        ],
     ],
 ];

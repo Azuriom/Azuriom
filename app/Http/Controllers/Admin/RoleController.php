@@ -6,7 +6,11 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\RoleRequest;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
+use Azuriom\Models\Setting;
+use Azuriom\Support\Discord\LinkedRoles;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
@@ -18,6 +22,7 @@ class RoleController extends Controller
     {
         return view('admin.roles.index', [
             'roles' => Role::orderByDesc('power')->get(),
+            'linkRoles' => setting('discord.link_roles', false),
         ]);
     }
 
@@ -46,6 +51,43 @@ class RoleController extends Controller
         return response()->json([
             'message' => trans('admin.roles.updated'),
         ]);
+    }
+
+    /**
+     * Update the settings for Discord linked roles.
+     */
+    public function updateSettings(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'client_id' => ['sometimes', 'nullable', 'required_with:link_roles'],
+            'client_secret' => ['sometimes', 'nullable', 'required_with:link_roles'],
+            'token' => ['sometimes', 'nullable', 'required_with:link_roles'],
+        ]);
+
+        $linkRoles = $request->filled('link_roles');
+
+        $validated = array_merge(array_filter($validated), [
+            'link_roles' => $linkRoles,
+        ]);
+
+        try {
+            if ($linkRoles) {
+                LinkedRoles::registerMetadata(
+                    $request->input('client_id'),
+                    $request->input('token'),
+                );
+            }
+
+            Setting::updateSettings(Arr::prependKeysWith($validated, 'discord.'));
+
+            return to_route('admin.roles.index')
+                ->with('success', trans('messages.status.success'));
+        } catch (Exception $e) {
+            return to_route('admin.roles.index')
+                ->with('error', trans('messages.status.error', [
+                    'error' => $e->getMessage(),
+                ]));
+        }
     }
 
     /**

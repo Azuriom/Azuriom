@@ -9,6 +9,7 @@ use Azuriom\Models\Notification;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
+use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -168,6 +169,18 @@ class UserController extends Controller
     public function forcePasswordChange(User $user)
     {
         $user->update(['password_changed_at' => null]);
+
+        return to_route('admin.users.edit', $user)
+            ->with('success', trans('messages.status.success'));
+    }
+
+    public function unlinkDiscord(User $user)
+    {
+        if ($user->discordAccount !== null) {
+            LinkedRoles::clearRole($user->discordAccount);
+
+            $user->discordAccount->delete();
+        }
 
         return to_route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));

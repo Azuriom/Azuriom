@@ -226,6 +226,24 @@
                             <input type="text" class="form-control" id="idInput" value="{{ $user->game_id }}" disabled>
                         </div>
                     @endif
+
+                    @if($user->discordAccount !== null)
+                        <form action="{{ route('admin.users.discord.unlink', $user) }}" method="POST">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label" for="discordInput">{{ trans('admin.users.discord') }}</label>
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="discordInput" value="{{ $user->discordAccount->name }}" disabled>
+
+                                    <button class="btn btn-outline-danger" type="submit">
+                                        {{ trans('messages.actions.remove') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

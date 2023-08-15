@@ -5,15 +5,14 @@ function createLineChart(elementId, data, labelName) {
             labels: Object.keys(data),
             datasets: [{
                 label: labelName,
-                lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgba(78, 115, 223, 1)",
+                backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                borderColor: 'rgba(78, 115, 223, 1)',
                 pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
+                pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                pointBorderColor: 'rgba(78, 115, 223, 1)',
                 pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+                pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
                 pointHitRadius: 10,
                 pointBorderWidth: 2,
                 data: Object.values(data),
@@ -21,38 +20,36 @@ function createLineChart(elementId, data, labelName) {
         },
         options: {
             maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-            tooltips: {
-                intersect: false
-            },
             hover: {
-                intersect: true
+                intersect: true,
             },
             plugins: {
                 filler: {
-                    propagate: false
-                }
+                    propagate: false,
+                },
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    intersect: false,
+                },
             },
             scales: {
-                xAxes: [{
+                x: {
                     reverse: true,
-                    gridLines: {
-                        color: "rgba(0,0,0,0.0)"
-                    }
-                }],
-                yAxes: [{
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0)'
+                    },
+                },
+                y: {
                     ticks: {
                         stepSize: 1000
                     },
                     display: true,
-                    borderDash: [3, 3],
-                    gridLines: {
-                        color: "rgba(0,0,0,0.0)",
-                        fontColor: "#fff"
-                    }
-                }]
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0)',
+                    },
+                }
             }
         }
     });
@@ -64,31 +61,21 @@ function createPieChart(elementId, data) {
         data: {
             labels: Object.keys(data),
             datasets: [{
-                borderWidth: 5,
-                borderColor: '#fff',
+                borderWidth: 0,
                 data: Object.values(data),
-                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#e9aa0b'],
-                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#f4b619'],
-                hoverBorderColor: 'rgba(234, 236, 244, 1)',
+                backgroundColor: ['#3b7ddd', '#1cbb8c', '#17a2b8', '#fcb92c'],
+                hoverBackgroundColor: ['#2f64b1', '#158a67', '#117686', '#b08220'],
             }],
         },
         options: {
-            responsive: !window.MSInputMethodContext,
+            responsive: true,
             maintainAspectRatio: false,
-            tooltips: {
-                backgroundColor: '#fff',
-                bodyFontColor: '#858796',
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
+            plugins: {
+                legend: {
+                    display: false,
+                },
             },
-            legend: {
-                display: false
-            },
-            cutoutPercentage: 70
+            cutout: '70%',
         }
     });
 }

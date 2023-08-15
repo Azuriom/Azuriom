@@ -368,6 +368,8 @@ return [
             'unbanned' => 'Utilisateur débanni',
         ],
 
+        'discord' => 'Compte Discord associé',
+
         'notify' => 'Envoyer une notification',
         'notify_info' => 'Envoyer une notification à cet utilisateur',
         'notify_all' => 'Envoyer une notification à tous les utilisateurs',
@@ -375,7 +377,7 @@ return [
 
     'roles' => [
         'title' => 'Grades',
-        'edit' => 'Édition du grade :role',
+        'edit' => 'Édition du grade :role (#:id)',
         'create' => 'Création d\'un grade',
 
         'default' => 'Grade par défaut',
@@ -388,6 +390,18 @@ return [
         'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
         'delete_default' => 'Ce grade ne peut pas être supprimé.',
         'delete_own' => 'Vous ne pouvez pas supprimer votre grade.',
+
+        'discord' => [
+            'title' => 'Lier les grades avec Discord',
+            'enable' => 'Activer la liaison des grades avec Discord',
+            'info' => 'Vous devez créer une application sur le <a href="https://discord.com/developers/applications" target="_blank">portail développeur Discord</a> et définir <b>l\'URL de vérification</b> sur <code>:url</code>',
+            'oauth' => 'Puis, dans <b>OAuth2</b> et <b>Général</b>, vous devez ajouter <code>:url</code> dans les <b>Redirections</b>.',
+            'token_info' => 'Le token du Bot peut être obtenu en créant un bot pour votre application, dans l\'onglet <b>Bot</b> à gauche du portail développeur Discord.',
+
+            'token' => 'Discord Bot Token',
+            'client_id' => 'Discord Client ID',
+            'client_secret' => 'Discord Client Secret',
+        ],
     ],
 
     'permissions' => [
@@ -467,7 +481,7 @@ return [
         'available' => 'Plugins disponibles',
 
         'requirements' => [
-            'api' => 'La version de ce plugin n\'est pas compatible avec Azuriom v1.0',
+            'api' => 'La version de ce plugin n\'est pas compatible avec Azuriom v:version',
             'azuriom' => 'Ce plugin n\'est pas compatible avec votre version d\'Azuriom.',
             'game' => 'Ce plugin n\'est pas compatible avec le jeu :game.',
             'plugin' => 'Le plugin ":plugin" est manquant ou sa version n\'est pas compatible avec ce plugin.',
@@ -491,7 +505,7 @@ return [
         'list' => 'Thèmes installés',
         'available' => 'Thèmes disponibles',
         'no-enabled' => 'Vous n\'avez pas de thème activé, le thème par défaut est automatiquement mis en place.',
-        'legacy' => 'La version de ce thème n\'est pas compatible avec Azuriom v1.0',
+        'legacy' => 'La version de ce thème n\'est pas compatible avec Azuriom v:version',
 
         'config' => 'Configurer',
         'disable' => 'Désactiver le thème',

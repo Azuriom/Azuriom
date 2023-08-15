@@ -23,7 +23,7 @@
         @endif
     </div>
 
-    <div class="container content">
+    <div class="container content my-5">
         @include('elements.session-alerts')
 
         @if($message)
@@ -97,7 +97,9 @@
                                 <h3 class="card-title">
                                     <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
                                 <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
-                                <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
+                                <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">
+                                    {{ trans('messages.posts.read') }}
+                                </a>
                             </div>
                             <div class="card-footer text-body-secondary">
                                 {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
