@@ -7,16 +7,10 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class ExtensionManager
 {
-    /**
-     * The filesystem instance.
-     */
+    protected const API_VERSIONS = ['1.0.0', '1.1.0'];
+
     protected Filesystem $files;
 
-    /**
-     * Create a new ExtensionManager instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     */
     public function __construct(Filesystem $files)
     {
         $this->files = $files;
@@ -24,12 +18,8 @@ abstract class ExtensionManager
 
     /**
      * Read the content of a json.
-     *
-     * @param  string  $path
-     * @param  bool  $asoc
-     * @return mixed|null
      */
-    protected function getJson(string $path, bool $asoc = false)
+    protected function getJson(string $path, bool $asoc = false): object|array|null
     {
         if (! $this->files->isFile($path)) {
             return null;
@@ -40,5 +30,10 @@ abstract class ExtensionManager
         } catch (FileNotFoundException) {
             return null;
         }
+    }
+
+    public static function isApiSupported(?string $version)
+    {
+        return in_array($version, static::API_VERSIONS, true);
     }
 }

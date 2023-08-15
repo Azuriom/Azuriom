@@ -26,7 +26,7 @@ class PluginDownloadCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PluginManager $plugins)
+    public function handle(PluginManager $plugins): int
     {
         $extensionId = $this->argument('id');
 

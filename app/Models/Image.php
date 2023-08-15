@@ -20,7 +20,7 @@ class Image extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'file', 'type',
@@ -29,17 +29,17 @@ class Image extends Model
     /**
      * Get the slug of this image.
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return pathinfo($this->file, PATHINFO_FILENAME);
     }
 
-    public function getExtension()
+    public function getExtension(): string
     {
         return pathinfo($this->file, PATHINFO_EXTENSION);
     }
 
-    public function url()
+    public function url(): string
     {
         return image_url($this->file);
     }

@@ -13,11 +13,10 @@
 # Mac
 .DS_Store
 
-# PHP CS Fixer
-.php-cs-fixer.cache
-
 # Laravel
+/.phpunit.cache
 /node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key

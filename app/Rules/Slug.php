@@ -2,12 +2,13 @@
 
 namespace Azuriom\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Str;
 
-class Slug implements Rule
+class Slug implements ValidationRule
 {
-    private $allowSlashes;
+    private bool $allowSlashes;
 
     public function __construct(bool $allowSlashes = false)
     {
@@ -15,30 +16,25 @@ class Slug implements Rule
     }
 
     /**
-     * Determine if the validation rule passes.
+     * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
+     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if ($this->allowSlashes) {
-            return preg_match('/^[a-z0-9-\/]+$/', $value)
-                && ! Str::startsWith($value, '/')
-                && ! Str::endsWith($value, '/');
+        if (! $this->isValidSlug($value)) {
+            $fail(trans('validation.slug'));
         }
-
-        return preg_match('/^[a-z0-9-]+$/', $value);
     }
 
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
+    protected function isValidSlug(string $slug)
     {
-        return trans('validation.slug');
+        if ($this->allowSlashes) {
+            return preg_match('/^[a-z0-9-\/]+$/', $slug)
+                && ! Str::startsWith($slug, '/')
+                && ! Str::endsWith($slug, '/');
+        }
+
+        return preg_match('/^[a-z0-9-]+$/', $slug);
     }
 }

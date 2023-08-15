@@ -9,10 +9,8 @@ class SettingsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $defaultSettings = [
             'copyright' => trans('seed.settings.copyright', ['year' => now()->year]),

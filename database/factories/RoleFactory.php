@@ -22,7 +22,7 @@ class RoleFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name(),
@@ -32,10 +32,8 @@ class RoleFactory extends Factory
 
     /**
      * Indicate that the role is admin.
-     *
-     * @return static
      */
-    public function admin()
+    public function admin(): static
     {
         return $this->state([
             'is_admin' => true,

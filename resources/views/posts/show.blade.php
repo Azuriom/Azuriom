@@ -57,7 +57,7 @@
                             <div class="content-body">
                                 {{ $comment->parseContent() }}
 
-                                <p class="card-text text-muted">
+                                <p class="card-text text-body-secondary">
                                     @lang('messages.comments.author', ['user' => e($comment->author->name), 'date' => format_date($comment->created_at, true)])
                                 </p>
                             </div>

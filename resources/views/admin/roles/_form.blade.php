@@ -42,7 +42,7 @@
 
 <h3>{{ trans('messages.fields.permissions') }}</h3>
 
-<div class="mb-3 mb-2">
+<div class="mb-3">
     <div class="form-check form-switch">
         <input type="checkbox" class="form-check-input" id="adminSwitch" name="is_admin" data-bs-toggle="collapse" data-bs-target="#permissionsGroup" @checked($role->is_admin ?? false) aria-describedby="adminInfo">
         <label class="form-check-label" for="adminSwitch">{{ trans('admin.roles.admin') }}</label>

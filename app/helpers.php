@@ -1,34 +1,34 @@
 <?php
 
+use Azuriom\Extensions\Plugin\PluginManager;
+use Azuriom\Extensions\Theme\ThemeManager;
+use Azuriom\Games\Game;
 use Azuriom\Http\Controllers\InstallController;
 use Azuriom\Models\SocialLink;
 use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('add_active')) {
-    function add_active(string ...$patterns)
+    /**
+     * Return the active class if the current route match the given patterns, or
+     * an empty string otherwise.
+     */
+    function add_active(string ...$patterns): string
     {
         return Route::is(...$patterns) ? 'active' : '';
     }
 }
 
-if (! function_exists('color_contrast')) {
-    function color_contrast(string $hex)
-    {
-        $r = hexdec(substr($hex, 1, 2));
-        $g = hexdec(substr($hex, 3, 2));
-        $b = hexdec(substr($hex, 5, 2));
-        $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
-
-        return ($yiq >= 128) ? 'black' : 'white';
-    }
-}
-
 if (! function_exists('is_installed')) {
-    function is_installed()
+    /**
+     * Determine whether the application is installed or not.
+     */
+    function is_installed(): bool
     {
         $key = config('app.key');
 
@@ -41,7 +41,10 @@ if (! function_exists('is_installed')) {
  */
 
 if (! function_exists('format_date')) {
-    function format_date(Carbon $date, bool $fullTime = false)
+    /**
+     * Format a date using with the format corresponding to the current locale.
+     */
+    function format_date(Carbon $date, bool $fullTime = false): string
     {
         $format = trans('messages.date.'.($fullTime ? 'full' : 'default'));
 
@@ -50,29 +53,41 @@ if (! function_exists('format_date')) {
 }
 
 if (! function_exists('format_date_compact')) {
-    function format_date_compact(Carbon $date)
+    /**
+     * Format a date using with the compact format corresponding to the current locale.
+     */
+    function format_date_compact(Carbon $date): string
     {
         return $date->format(trans('messages.date.compact'));
     }
 }
 
 if (! function_exists('trans_bool')) {
-    function trans_bool(bool $bool)
+    /**
+     * Translate a boolean value in the current locale.
+     */
+    function trans_bool(bool $bool): string
     {
         return trans('messages.'.($bool ? 'yes' : 'no'));
     }
 }
 
 if (! function_exists('money_name')) {
-    function money_name($money = 2)
+    /**
+     * Return the money name for the given amount.
+     */
+    function money_name(float $money = 2): string
     {
         $moneyName = setting('money', 'points');
 
-        return trans()->getSelector()->choose($moneyName, $money, app()->getLocale());
+        return Lang::getSelector()->choose($moneyName, $money, app()->getLocale());
     }
 }
 
 if (! function_exists('format_money')) {
+    /**
+     * Format the given money amount with the money name.
+     */
     function format_money(float $money)
     {
         return $money.' '.money_name($money);
@@ -83,8 +98,13 @@ if (! function_exists('format_money')) {
  * Settings/Config helpers
  */
 if (! function_exists('setting')) {
-    function setting(string $name = null, $default = null)
+    /**
+     * Return the value of the given setting name, or the default value if the
+     * setting doesn't exist.
+     */
+    function setting(string $name = null, mixed $default = null): mixed
     {
+        /** @var \Azuriom\Support\SettingsRepository $settings */
         $settings = app(SettingsRepository::class);
 
         if ($name === null) {
@@ -96,7 +116,10 @@ if (! function_exists('setting')) {
 }
 
 if (! function_exists('favicon')) {
-    function favicon()
+    /**
+     * Return the URL to configured favicon, or the default favicon.
+     */
+    function favicon(): string
     {
         $icon = setting('icon');
 
@@ -105,7 +128,10 @@ if (! function_exists('favicon')) {
 }
 
 if (! function_exists('site_logo')) {
-    function site_logo()
+    /**
+     * Return the URL to configured logo, or the default favicon.
+     */
+    function site_logo(): string
     {
         $logo = setting('logo');
 
@@ -114,21 +140,27 @@ if (! function_exists('site_logo')) {
 }
 
 if (! function_exists('site_name')) {
-    function site_name()
+    /**
+     * Return the name of the website.
+     */
+    function site_name(): string
     {
         return setting('name', config('app.name'));
     }
 }
 
 if (! function_exists('image_url')) {
-    function image_url(string $name = '')
+    /**
+     * Get the URL of the given image, in the public storage.
+     */
+    function image_url(string $name = ''): string
     {
         return url(Storage::disk('public')->url(rtrim('img/'.$name, '/')));
     }
 }
 
 if (! function_exists('social_links')) {
-    function social_links()
+    function social_links(): Collection
     {
         return Cache::remember(SocialLink::CACHE_KEY, now()->addDay(), function () {
             return SocialLink::orderBy('position')->get();
@@ -142,11 +174,9 @@ if (! function_exists('social_links')) {
 
 if (! function_exists('plugins')) {
     /**
-     * Get the plugins manager.
-     *
-     * @return \Azuriom\Extensions\Plugin\PluginManager
+     * Get the plugins' manager.
      */
-    function plugins()
+    function plugins(): PluginManager
     {
         return app('plugins');
     }
@@ -154,18 +184,19 @@ if (! function_exists('plugins')) {
 
 if (! function_exists('themes')) {
     /**
-     * Get the themes manager.
-     *
-     * @return \Azuriom\Extensions\Theme\ThemeManager
+     * Get the themes' manager.
      */
-    function themes()
+    function themes(): ThemeManager
     {
         return app('themes');
     }
 }
 
 if (! function_exists('plugin_path')) {
-    function plugin_path(string $path = '')
+    /**
+     * Get the path to a plugin directory.
+     */
+    function plugin_path(string $path = ''): string
     {
         return plugins()->pluginsPath($path);
     }
@@ -173,12 +204,9 @@ if (! function_exists('plugin_path')) {
 
 if (! function_exists('themes_path')) {
     /**
-     * Get the path of the themes directory.
-     *
-     * @param  string  $path
-     * @return string
+     * Get the path of the 'themes' directory.
      */
-    function themes_path(string $path = '')
+    function themes_path(string $path = ''): string
     {
         return themes()->themesPath($path);
     }
@@ -188,12 +216,8 @@ if (! function_exists('theme_path')) {
     /**
      * Get the path of a theme. If no theme is specified the current theme
      * is used.
-     *
-     * @param  string  $path
-     * @param  string|null  $theme
-     * @return string
      */
-    function theme_path(string $path = '', string $theme = null)
+    function theme_path(string $path = '', string $theme = null): string
     {
         return themes()->path($path, $theme);
     }
@@ -202,12 +226,8 @@ if (! function_exists('theme_path')) {
 if (! function_exists('plugin_asset')) {
     /**
      * Generate an asset path for the current theme.
-     *
-     * @param  string  $plugin
-     * @param  string  $path
-     * @return string
      */
-    function plugin_asset(string $plugin, string $path)
+    function plugin_asset(string $plugin, string $path): string
     {
         return asset("plugins/{$plugin}/{$path}");
     }
@@ -216,11 +236,8 @@ if (! function_exists('plugin_asset')) {
 if (! function_exists('theme_asset')) {
     /**
      * Generate an asset path for the current theme.
-     *
-     * @param  string  $path
-     * @return string
      */
-    function theme_asset(string $path)
+    function theme_asset(string $path): string
     {
         return asset('themes/'.themes()->currentTheme().'/'.$path);
     }
@@ -229,12 +246,8 @@ if (! function_exists('theme_asset')) {
 if (! function_exists('theme_config')) {
     /**
      * Generate an asset path for the current theme.
-     *
-     * @param  string|null  $key
-     * @param  mixed|null  $default
-     * @return mixed
      */
-    function theme_config(string $key = null, mixed $default = null)
+    function theme_config(string $key = null, mixed $default = null): mixed
     {
         return $key === null ? config('theme') : config('theme.'.$key, $default);
     }
@@ -243,35 +256,43 @@ if (! function_exists('theme_config')) {
 /*
  * Other helpers
  */
-
 if (! function_exists('game')) {
     /**
      * Get the current game bridge implementation.
-     *
-     * @return \Azuriom\Games\Game
      */
-    function game()
+    function game(): Game
     {
         return app('game');
     }
 }
 
 if (! function_exists('oauth_login')) {
-    function oauth_login()
+    /**
+     * Determine whether the app use OAuth login.
+     */
+    function oauth_login(): bool
     {
         return game()->loginWithOAuth();
     }
 }
 
 if (! function_exists('dark_theme')) {
-    function dark_theme()
+    /**
+     * Determine whether the user should have the dark theme.
+     */
+    function dark_theme(bool $defaultDark = false): bool
     {
-        return request()?->cookie('theme') === 'dark';
+        $defaultTheme = $defaultDark ? 'dark' : 'light';
+
+        return request()?->cookie('theme', $defaultTheme) === 'dark';
     }
 }
 
 if (! function_exists('scheduler_running')) {
-    function scheduler_running()
+    /**
+     * Verify if the scheduler is configured and running.
+     */
+    function scheduler_running(): bool
     {
         $last = setting('schedule.last');
 

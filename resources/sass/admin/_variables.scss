@@ -1,0 +1,40 @@
+$enable-dark-mode: true;
+
+// Body
+$headings-color-dark: $gray-100;
+$body-secondary-bg: $white;
+
+$body-bg-dark: $gray-800;
+$body-secondary-bg-dark: $gray-900;
+
+$font-size-base: 0.9rem;
+$font-size-sm: $font-size-base * .875;
+$font-size-lg: $font-size-base * 1.05;
+
+// Navbar
+$navbar-bg: var(--bs-secondary-bg);
+$footer-bg: var(--bs-secondary-bg);
+
+// Forms
+$input-bg: var(--bs-secondary-bg);
+$input-disabled-bg: var(--bs-secondary-bg);
+$input-color: var(--bs-body-color);
+
+// Cards
+$card-bg: var(--bs-secondary-bg);
+$card-cap-bg: $card-bg;
+
+// Tables
+$table-striped-bg: rgba($black, .05);
+
+// Sidebar general
+$sidebar-bg: linear-gradient(135deg, #266fd9, #2359a8 40%, #2359a8);
+$sidebar-link-bg: transparent;
+$sidebar-link-hover-bg: rgba($primary, .5);
+$sidebar-link-active-bg: linear-gradient(90deg, rgba($primary, 0.3) 0%, rgba($primary, 0.0875 * 3) 50%, rgba($black, 0) 100%);
+
+// Dropdowns
+$dropdown-bg: var(--bs-secondary-bg);
+
+// Simplebar
+$simplebar-scrollbar-bg: var(--bs-secondary-bg);

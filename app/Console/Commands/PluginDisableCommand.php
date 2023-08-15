@@ -24,7 +24,7 @@ class PluginDisableCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PluginManager $plugins)
+    public function handle(PluginManager $plugins): int
     {
         $id = $this->argument('id');
 

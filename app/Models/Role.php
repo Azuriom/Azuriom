@@ -8,6 +8,7 @@ use Azuriom\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -31,7 +32,7 @@ class Role extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'color', 'power', 'is_admin',
@@ -40,7 +41,7 @@ class Role extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'color' => Color::class,
@@ -48,11 +49,11 @@ class Role extends Model
     ];
 
     /**
-     * The attributes that can be search for.
+     * The attributes that can be used for search.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $searchable = [
+    protected array $searchable = [
         'name',
     ];
 
@@ -80,22 +81,22 @@ class Role extends Model
         return $this->hasMany(Permission::class);
     }
 
-    public function rawPermissions()
+    public function rawPermissions(): Collection
     {
         return $this->permissions->pluck('permission');
     }
 
-    public function hasPermission($permission)
+    public function hasPermission($permission): bool
     {
         return $this->is_admin || $this->hasRawPermission($permission);
     }
 
-    public function hasRawPermission(string $permission)
+    public function hasRawPermission(string $permission): bool
     {
         return $this->permissions->contains('permission', $permission);
     }
 
-    public function syncPermissions(array $newPermissions, bool $remove = true)
+    public function syncPermissions(array $newPermissions, bool $remove = true): void
     {
         $permissions = $this->rawPermissions();
 
@@ -115,10 +116,8 @@ class Role extends Model
      * Get the CSS inline style rules of this role.
      * The background color is the role color and the text
      * color is white or black depending on the role color.
-     *
-     * @return string
      */
-    public function getBadgeStyle()
+    public function getBadgeStyle(): string
     {
         $color = color_contrast($this->color);
 
@@ -130,42 +129,33 @@ class Role extends Model
      * The role created by the application with the id 1
      * is always the default role that new users will get
      * when they will register.
-     *
-     * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->id === self::defaultRoleId();
     }
 
     /**
      * Get the default role.
-     *
-     * @return \Azuriom\Models\Role
      */
-    public static function defaultRole()
+    public static function defaultRole(): self
     {
         return self::find(self::defaultRoleId());
     }
 
     /**
      * Get the default role id.
-     *
-     * @return int
      */
-    public static function defaultRoleId()
+    public static function defaultRoleId(): int
     {
         return (int) setting('roles.default', 1);
     }
 
     /**
      * Scope a query to only include admin roles.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeAdmin(Builder $query)
+    public function scopeAdmin(Builder $query): void
     {
-        return $query->where('is_admin', true);
+        $query->where('is_admin', true);
     }
 }

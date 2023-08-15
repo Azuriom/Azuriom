@@ -64,6 +64,7 @@ Route::prefix('users')->name('users.')->middleware('can:admin.users')->group(fun
     Route::post('/{user}/verify', [UserController::class, 'verifyEmail'])->name('verify');
     Route::post('/{user}/2fa', [UserController::class, 'disable2fa'])->name('2fa');
     Route::post('/{user}/password/force', [UserController::class, 'forcePasswordChange'])->name('force-password');
+    Route::post('/{user}/discord/unlink', [UserController::class, 'unlinkDiscord'])->name('discord.unlink');
 });
 
 Route::prefix('themes')->name('themes.')->middleware('can:admin.themes')->group(function () {
@@ -108,6 +109,7 @@ Route::post('/users/notify', [UserController::class, 'notify'])->name('users.not
 Route::post('/users/{user}/notify', [UserController::class, 'notify'])->name('users.notify')->middleware('can:admin.users');
 Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');
 Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power')->middleware('can:admin.roles');
+Route::post('/roles/settings', [RoleController::class, 'updateSettings'])->name('roles.settings')->middleware('can:admin.roles');
 
 Route::resource('bans', BanController::class)->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])->middleware('can:admin.users');

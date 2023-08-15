@@ -4,22 +4,24 @@ namespace Azuriom\Support;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
 class Charts
 {
-    public static function count(Builder $query, string $column)
+    public static function count(Builder $query, string $column): Collection
     {
         return static::aggregate($query, __FUNCTION__, '*', $column);
     }
 
-    public static function sum(Builder $query, string $column, string $group)
+    public static function sum(Builder $query, string $column, string $group): Collection
     {
         return static::aggregate($query, __FUNCTION__, $column, $group);
     }
 
-    public static function aggregate(Builder $query, string $function, string $column, string $group)
+    public static function aggregate(Builder $query, string $function,
+        string $column, string $group): Collection
     {
         return $query->withoutEagerLoads()
             ->select($group, DB::raw("{$function}({$query->getGrammar()->wrap($column)}) as aggregate"))
@@ -28,17 +30,20 @@ class Charts
             ->pluck('aggregate', $group);
     }
 
-    public static function countByDays(Builder $query, string $column = null, int $days = 7)
+    public static function countByDays(Builder $query, string $column = null,
+        int $days = 7): Collection
     {
         return static::aggregateByDays($query, 'count', '*', $column, $days);
     }
 
-    public static function sumByDays(Builder $query, string $group, string $column = null, int $days = 7)
+    public static function sumByDays(Builder $query, string $group,
+        string $column = null, int $days = 7): Collection
     {
         return static::aggregateByDays($query, 'sum', $group, $column, $days);
     }
 
-    public static function aggregateByDays(Builder $query, string $function, string $group, string $column = null, int $days = 7)
+    public static function aggregateByDays(Builder $query, string $function,
+        string $group, string $column = null, int $days = 7): Collection
     {
         $start = today()->subDays($days);
 
@@ -48,7 +53,8 @@ class Charts
             ]);
     }
 
-    public static function rawAggregateByDays(Builder $query, Carbon $start, string $function, string $group, ?string $column)
+    public static function rawAggregateByDays(Builder $query, Carbon $start,
+        string $function, string $group, ?string $column): Collection
     {
         $date = $start->clone();
         $dates = collect();
@@ -76,17 +82,20 @@ class Charts
         return $dates->merge($results);
     }
 
-    public static function countByMonths(Builder $query, string $column = null, int $months = 12)
+    public static function countByMonths(Builder $query, string $column = null,
+        int $months = 12): Collection
     {
         return static::aggregateByMonths($query, 'count', '*', $column, $months);
     }
 
-    public static function sumByMonths(Builder $query, string $group, string $column = null, int $months = 12)
+    public static function sumByMonths(Builder $query, string $group,
+        string $column = null, int $months = 12): Collection
     {
         return static::aggregateByMonths($query, 'sum', $group, $column, $months);
     }
 
-    public static function aggregateByMonths(Builder $query, string $function, string $group, string $column = null, int $months = 12)
+    public static function aggregateByMonths(Builder $query, string $function,
+        string $group, string $column = null, int $months = 12): Collection
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
         $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);
@@ -98,7 +107,8 @@ class Charts
         });
     }
 
-    public static function rawAggregateByMonths(Builder $query, Carbon $start, string $function, string $group, ?string $column)
+    public static function rawAggregateByMonths(Builder $query, Carbon $start,
+        string $function, string $group, ?string $column): Collection
     {
         $date = $start->clone();
         $dates = collect();
@@ -111,7 +121,7 @@ class Charts
         }
 
         $driver = $query->getConnection()->getDriverName();
-        $rawQuery = static::getDatabaseRawQuery($driver, $query->getGrammar()->wrap($column));
+        $rawQuery = static::getRawQuery($driver, $query->getGrammar()->wrap($column));
         $sqlGroupColumn = $query->getGrammar()->wrap($group);
 
         $results = $query->withoutEagerLoads()
@@ -125,7 +135,7 @@ class Charts
         return $dates->merge($results);
     }
 
-    protected static function getDatabaseRawQuery(string $driver, string $column)
+    protected static function getRawQuery(string $driver, string $column): string
     {
         return match ($driver) {
             'mysql' => "date_format({$column}, '%Y-%m')",

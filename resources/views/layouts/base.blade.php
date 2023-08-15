@@ -44,22 +44,8 @@
             height: 100%;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-
         a {
             text-decoration: none;
-        }
-
-        #app {
-            flex-shrink: 0;
-        }
-
-        .content {
-            margin-top: 3rem;
-            margin-bottom: 3rem;
         }
 
         img {
@@ -69,8 +55,8 @@
     </style>
 </head>
 
-<body>
-<div id="app">
+<body class="d-flex flex-column bg-body-secondary" @if(dark_theme()) data-bs-theme="dark" @endif>
+<div id="app" class="flex-shrink-0">
     <header>
         @include('elements.navbar')
     </header>
@@ -78,7 +64,7 @@
     @yield('app')
 </div>
 
-<footer class="text-center text-white bg-dark mt-auto py-4">
+<footer class="text-center text-bg-dark mt-auto py-4">
     <div class="copyright">
         <div class="container">
             <p>{{ setting('copyright') }} | @lang('messages.copyright')</p>

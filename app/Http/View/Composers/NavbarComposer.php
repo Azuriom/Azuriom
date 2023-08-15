@@ -6,6 +6,7 @@ use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Role;
 use Illuminate\Database\Eloquent\Collection as ModelCollection;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -13,11 +14,8 @@ class NavbarComposer
 {
     /**
      * Bind data to the view.
-     *
-     * @param  \Illuminate\View\View  $view
-     * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $elements = $this->loadNavbarElements()
             ->filter(fn (NavbarElement $element) => $element->hasPermission());
@@ -36,7 +34,7 @@ class NavbarComposer
         $view->with('navbar', $parentElements);
     }
 
-    protected function loadNavbarElements()
+    protected function loadNavbarElements(): Collection
     {
         $elements = Cache::get(NavbarElement::CACHE_KEY, function () {
             return NavbarElement::orderBy('position')->with('roles')->get();

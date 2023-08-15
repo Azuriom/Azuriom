@@ -18,7 +18,7 @@ class ServerCommand extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'user_id', 'need_online', 'command',

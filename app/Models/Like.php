@@ -28,10 +28,8 @@ class Like extends Model
 
     /**
      * The user key associated with this model.
-     *
-     * @var string
      */
-    protected $userKey = 'author_id';
+    protected string $userKey = 'author_id';
 
     /**
      * Get the post of this like.

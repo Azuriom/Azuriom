@@ -4,6 +4,7 @@ namespace Azuriom\Games\Minecraft;
 
 use Azuriom\Models\User;
 use Closure;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Generator\NameGeneratorInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
@@ -13,12 +14,12 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
 {
     protected static ?Closure $avatarRetriever = null;
 
-    public function id()
+    public function id(): string
     {
         return 'mc-offline';
     }
 
-    public function getAvatarUrl(User $user, int $size = 64)
+    public function getAvatarUrl(User $user, int $size = 64): string
     {
         if (static::$avatarRetriever !== null) {
             return (static::$avatarRetriever)($user, $size);
@@ -27,7 +28,7 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
         return "https://mc-heads.net/avatar/{$user->name}/{$size}.png";
     }
 
-    public function getUserUniqueId(string $name)
+    public function getUserUniqueId(string $name): ?string
     {
         $factory = new UuidFactory();
         $factory->setNameGenerator(new class implements NameGeneratorInterface
@@ -39,15 +40,15 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
         });
         $uuid = $factory->uuid3(Uuid::NIL, 'OfflinePlayer:'.$name)->toString();
 
-        return str_replace('-', '', $uuid);
+        return Str::remove('-', $uuid);
     }
 
-    public function getUserName(User $user)
+    public function getUserName(User $user): ?string
     {
         return $user->name;
     }
 
-    public static function setAvatarRetriever(Closure $avatarRetriever)
+    public static function setAvatarRetriever(Closure $avatarRetriever): void
     {
         self::$avatarRetriever = $avatarRetriever;
     }

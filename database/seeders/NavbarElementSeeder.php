@@ -9,10 +9,8 @@ class NavbarElementSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         NavbarElement::firstOrCreate(['type' => 'home'], [
             'name' => trans('seed.navbar.home'),

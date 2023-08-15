@@ -23,10 +23,6 @@ class SteamGame extends Game
 
     /**
      * Create a new game instance.
-     *
-     * @param  string  $id
-     * @param  string  $name
-     * @param  bool  $azLink
      */
     protected function __construct(string $id, string $name, bool $azLink = false)
     {
@@ -35,39 +31,39 @@ class SteamGame extends Game
         $this->azLinkSupport = $azLink;
     }
 
-    public static function forName(string $id, string $name, bool $azLink = false)
+    public static function forName(string $id, string $name, bool $azLink = false): Game
     {
         return new self($id, $name, $azLink);
     }
 
-    public function id()
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function getAvatarUrl(User $user, int $size = 64)
+    public function getAvatarUrl(User $user, int $size = 64): string
     {
         $key = $size > 64 ? 'avatarfull' : ($size > 32 ? 'avatarmedium' : 'avatar');
 
-        return Arr::get($this->getUserProfile($user), $key, asset('img/user.png'));
+        return Arr::get($this->getUserProfile($user), $key, asset('img/user.svg'));
     }
 
-    public function getUserUniqueId(string $name)
+    public function getUserUniqueId(string $name): ?string
     {
         return null; // Not implemented
     }
 
-    public function getUserName(User $user)
+    public function getUserName(User $user): ?string
     {
         return Arr::get($this->getUserProfile($user), 'personaname');
     }
 
-    public function getSupportedServers()
+    public function getSupportedServers(): array
     {
         $games = [
             'source-query' => Query::class,
@@ -79,17 +75,17 @@ class SteamGame extends Game
             : $games;
     }
 
-    public function loginWithOAuth()
+    public function loginWithOAuth(): bool
     {
         return true;
     }
 
-    public function getSocialiteDriverName()
+    public function getSocialiteDriverName(): string
     {
         return 'steam';
     }
 
-    public function trans(string $key, array $placeholders = [])
+    public function trans(string $key, array $placeholders = []): string
     {
         return trans('game.steam.'.$key, $placeholders);
     }
@@ -109,7 +105,7 @@ class SteamGame extends Game
             ])->throw()->json('response.players.0'));
     }
 
-    public function isExtensionCompatible(array $supportedGames)
+    public function isExtensionCompatible(array $supportedGames): bool
     {
         if (parent::isExtensionCompatible($supportedGames)) {
             return true;

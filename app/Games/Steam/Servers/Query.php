@@ -10,9 +10,9 @@ class Query extends ServerBridge
 {
     public const DEFAULT_PORT = 27015;
 
-    protected $engine = SourceQuery::SOURCE;
+    protected int $engine = SourceQuery::SOURCE;
 
-    public function getServerData()
+    public function getServerData(): ?array
     {
         try {
             $info = $this->connect()->GetInfo();
@@ -30,22 +30,22 @@ class Query extends ServerBridge
         }
     }
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         return $this->connect()->GetInfo() !== null;
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return false;
     }
 
-    public function getDefaultPort()
+    public function getDefaultPort(): int
     {
         return self::DEFAULT_PORT;
     }
 
-    protected function connect(bool $rcon = false)
+    protected function connect(bool $rcon = false): SourceQuery
     {
         $address = $this->server->address;
         $portKey = $rcon ? 'rcon-port' : 'query-port';

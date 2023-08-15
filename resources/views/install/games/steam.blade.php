@@ -10,7 +10,7 @@
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
 
-        <small class="form-text text-muted">{{ trans('install.game.steam.profile_info') }}</small>
+        <small class="form-text text-body-secondary">{{ trans('install.game.steam.profile_info') }}</small>
     </div>
 
     <div class="mb-3">
@@ -22,7 +22,7 @@
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
 
-        <small class="form-text text-muted">
+        <small class="form-text text-body-secondary">
             @lang('install.game.steam.key_info')
         </small>
     </div>

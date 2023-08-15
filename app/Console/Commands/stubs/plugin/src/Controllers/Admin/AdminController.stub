@@ -8,8 +8,6 @@ class AdminController extends Controller
 {
     /**
      * Show the home admin page of the plugin.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {

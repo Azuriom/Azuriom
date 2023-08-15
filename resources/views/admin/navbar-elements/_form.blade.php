@@ -97,7 +97,7 @@
     <label class="form-check-label" for="newTabSwitch">{{ trans('admin.navbar_elements.fields.new_tab') }}</label>
 </div>
 
-<div class="mb-3 mb-2">
+<div class="mb-3">
     <div class="form-check form-switch">
         <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @checked(isset($navbarElement) && $navbarElement->isRestricted())>
         <label class="form-check-label" for="restrictedSwitch">{{ trans('admin.navbar_elements.restrict') }}</label>

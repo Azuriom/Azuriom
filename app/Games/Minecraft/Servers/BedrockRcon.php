@@ -8,7 +8,7 @@ class BedrockRcon extends BedrockPing
 {
     use RconTrait;
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         if (! parent::verifyLink()) {
             return false;
@@ -17,7 +17,7 @@ class BedrockRcon extends BedrockPing
         return $this->connectRcon()->sendCommand('list');
     }
 
-    public function replacePlaceholders(string $command, User $user = null)
+    public function replacePlaceholders(string $command, User $user = null): string
     {
         if ($user === null) {
             return parent::replacePlaceholders($command, $user);

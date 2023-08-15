@@ -6,18 +6,8 @@ use Illuminate\Support\Collection;
 
 class SettingsRepository
 {
-    /**
-     * All the settings.
-     *
-     * @var \Illuminate\Support\Collection
-     */
     protected Collection $settings;
 
-    /**
-     * Create a repository instance.
-     *
-     * @param  \Illuminate\Support\Collection|null  $settings
-     */
     public function __construct(Collection $settings = null)
     {
         $this->settings = $settings ?? collect();
@@ -25,35 +15,24 @@ class SettingsRepository
 
     /**
      * Determine if the given settings exists.
-     *
-     * @param  string  $key
-     * @return bool
      */
-    public function has(string $key)
+    public function has(string $key): bool
     {
         return $this->settings->has($key);
     }
 
     /**
      * Get the specified settings.
-     *
-     * @param  string  $key
-     * @param  mixed|null  $default
-     * @return mixed
      */
-    public function get(string $key, mixed $default = null)
+    public function get(string $key, mixed $default = null): mixed
     {
         return $this->settings->get($key, $default);
     }
 
     /**
      * Set a given configuration value.
-     *
-     * @param  array|string  $key
-     * @param  mixed|null  $value
-     * @return void
      */
-    public function set(array|string $key, mixed $value = null)
+    public function set(array|string $key, mixed $value = null): void
     {
         $keys = is_array($key) ? $key : [$key => $value];
 

@@ -13,11 +13,11 @@ use RuntimeException;
  */
 class MinecraftBedrockPing
 {
+    protected string $address;
+
+    protected int $port;
+
     protected $socket;
-
-    protected $address;
-
-    protected $port;
 
     public function __construct(string $address, int $port = 19132)
     {
@@ -27,8 +27,6 @@ class MinecraftBedrockPing
 
     /**
      * Connect to the server.
-     *
-     * @param  int  $timeout
      *
      * @throws \RuntimeException
      */
@@ -48,11 +46,9 @@ class MinecraftBedrockPing
     /**
      * Ping the Minecraft server.
      *
-     * @return array
-     *
      * @throws \RuntimeException
      */
-    public function ping()
+    public function ping(): array
     {
         if (! $this->isConnected()) {
             $this->connect();
@@ -98,12 +94,12 @@ class MinecraftBedrockPing
         ];
     }
 
-    public function isConnected()
+    public function isConnected(): bool
     {
         return $this->socket !== null;
     }
 
-    public function close()
+    public function close(): void
     {
         if ($this->isConnected()) {
             fclose($this->socket);

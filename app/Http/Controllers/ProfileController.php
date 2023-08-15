@@ -7,6 +7,7 @@ use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
 use Azuriom\Notifications\UserDelete;
 use Azuriom\Rules\Username;
+use Azuriom\Support\Discord\LinkedRoles;
 use Azuriom\Support\QrCodeRenderer;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
@@ -14,12 +15,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 use PragmaRX\Google2FA\Google2FA;
 
 class ProfileController extends Controller
@@ -35,9 +36,6 @@ class ProfileController extends Controller
 
     /**
      * Show the user profile.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
@@ -45,14 +43,13 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
+            'discordAccount' => $request->user()->discordAccount,
+            'enableDiscordLink' => setting('discord.link_roles', false),
         ]);
     }
 
     /**
      * Update the user email address.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -74,10 +71,15 @@ class ProfileController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.updated'));
     }
 
+    /**
+     * Update the user password.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
@@ -88,18 +90,14 @@ class ProfileController extends Controller
         $password = $request->input('password');
         $user = $request->user();
 
-        $user->update(['password' => Hash::make($password)]);
+        $user->update(['password' => $password]);
         Auth::logoutOtherDevices($password);
         event(new PasswordReset($user));
 
-        return redirect()->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.updated'));
     }
 
-    /**
-     * @param  Request  $request
-     * @return RedirectResponse
-     */
     public function updateName(Request $request): RedirectResponse
     {
         abort_if(oauth_login() || ! setting('user.change_name'), 403);
@@ -113,15 +111,12 @@ class ProfileController extends Controller
 
         $request->user()->update($validated);
 
-        return redirect()->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.updated'));
     }
 
     /**
      * Show the form to enable two-factor authentification.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      *
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
      */
@@ -161,9 +156,6 @@ class ProfileController extends Controller
     /**
      * Enable two-factor authentification for this user.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
      */
@@ -174,10 +166,10 @@ class ProfileController extends Controller
         ]);
 
         if ($request->user()->hasTwoFactorAuth()) {
-            return redirect()->route('profile.2fa.index');
+            return to_route('profile.2fa.index');
         }
 
-        $code = str_replace(' ', '', $request->input('code'));
+        $code = Str::remove(' ', $request->input('code'));
         $secret = $request->session()->get('2fa.secret');
 
         if (! $secret || ! (new Google2FA())->verifyKey($secret, $code)) {
@@ -191,14 +183,11 @@ class ProfileController extends Controller
 
         ActionLog::log('users.2fa.enabled', null, ['ip' => $request->ip()]);
 
-        return redirect()->route('profile.2fa.index');
+        return to_route('profile.2fa.index');
     }
 
     /**
      * Disable two-factor authentification for this user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function disable2fa(Request $request)
     {
@@ -211,10 +200,15 @@ class ProfileController extends Controller
 
         ActionLog::log('users.2fa.disabled', null, ['ip' => $request->ip()]);
 
-        return redirect()->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.2fa.disabled'));
     }
 
+    /**
+     * Update the user preferred theme.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function theme(Request $request)
     {
         $this->validate($request, [
@@ -223,7 +217,56 @@ class ProfileController extends Controller
 
         $cookie = cookie('theme', $request->input('theme'), 525600, null, null, null, false);
 
-        return redirect()->back()->withCookie($cookie);
+        return $request->expectsJson()
+            ? response()->json($request->only('theme'))->withCookie($cookie)
+            : redirect()->back()->withCookie($cookie);
+    }
+
+    /**
+     * Redirect the user to the Discord OAuth page to link his account.
+     */
+    public function linkDiscord()
+    {
+        return Socialite::driver('discord')->redirect();
+    }
+
+    /**
+     * Unlink the Discord account from the user.
+     */
+    public function unlinkDiscord(Request $request)
+    {
+        $discordAccount = $request->user()->discordAccount;
+
+        if ($discordAccount !== null) {
+            LinkedRoles::clearRole($discordAccount);
+
+            $discordAccount->delete();
+        }
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.status.success'));
+    }
+
+    /**
+     * Handle the Discord OAuth callback.
+     */
+    public function discordCallback(Request $request)
+    {
+        $user = $request->user();
+        $discordUser = Socialite::driver('discord')->user();
+
+        $discordAccount = $user->discordAccount()->updateOrCreate([], [
+            'name' => $discordUser->getNickname(),
+            'discord_user_id' => $discordUser->getId(),
+            'access_token' => $discordUser->token,
+            'refresh_token' => $discordUser->refreshToken,
+            'expires_at' => now()->addSeconds($discordUser->expiresIn),
+        ]);
+
+        LinkedRoles::linkRole($discordAccount);
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.profile.discord.linked'));
     }
 
     public function showDelete()
@@ -235,8 +278,7 @@ class ProfileController extends Controller
     {
         $request->user()->notify(new UserDelete());
 
-        return redirect()
-            ->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.delete.sent'));
     }
 
@@ -255,11 +297,15 @@ class ProfileController extends Controller
         $user->delete();
         $request->session()->flush();
 
-        return redirect()
-            ->route('home')
+        return to_route('home')
             ->with('success', trans('messages.profile.delete.success'));
     }
 
+    /**
+     * Transfer money from one user to another.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function transferMoney(Request $request)
     {
         abort_if(! setting('users.money_transfer'), 403);
@@ -295,10 +341,10 @@ class ProfileController extends Controller
             'user' => $user->name,
             'money' => format_money($money),
         ])))
-        ->from($user)
-        ->send($receiver);
+            ->from($user)
+            ->send($receiver);
 
-        return redirect()->route('profile.index')
+        return to_route('profile.index')
             ->with('success', trans('messages.profile.money_transfer.success'));
     }
 }

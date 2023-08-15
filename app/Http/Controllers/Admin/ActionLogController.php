@@ -9,8 +9,6 @@ class ActionLogController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -24,9 +22,6 @@ class ActionLogController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \Azuriom\Models\ActionLog  $log
-     * @return \Illuminate\Http\Response
      */
     public function show(ActionLog $log)
     {
@@ -36,15 +31,13 @@ class ActionLogController extends Controller
     /**
      * Clear old records.
      *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function clear()
     {
         ActionLog::whereDate('created_at', '<', now()->subDays(15))->delete();
 
-        return redirect()->route('admin.logs.index')
+        return to_route('admin.logs.index')
             ->with('success', trans('admin.logs.cleared'));
     }
 }

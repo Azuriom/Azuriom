@@ -50,7 +50,7 @@
                                 <i class="bi bi-info-circle text-primary me-1"></i>
                                 @if(Str::startsWith($requirement, 'extension-'))
                                     @lang('install.requirements.help.extension', [
-                                        'extension' => Str::replace('extension-', '', $requirement),
+                                        'extension' => Str::remove('extension-', $requirement),
                                         'command' => "apt install curl php{$v}-mysql php{$v}-pgsql php{$v}-sqlite3 php{$v}-bcmath php{$v}-mbstring php{$v}-xml php{$v}-curl php{$v}-zip php{$v}-gd",
                                     ])
                                 @elseif(Str::startsWith($requirement, 'function-'))

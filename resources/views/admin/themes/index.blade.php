@@ -128,11 +128,11 @@
                                         {{ $theme['name'] }}
                                     </a>
 
-                                    <span class="badge bg-secondary text-white">
+                                    <span class="badge bg-secondary">
                                         <i class="bi bi-download"></i> {{ $theme['downloads'] }}
                                     </span>
 
-                                    <span class="badge bg-secondary text-white">
+                                    <span class="badge bg-secondary">
                                         <i class="bi bi-heart"></i> {{ $theme['likes'] }}
                                     </span>
                                 </th>

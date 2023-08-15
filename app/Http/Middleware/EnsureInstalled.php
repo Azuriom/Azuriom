@@ -14,11 +14,9 @@ class EnsureInstalled
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if (! empty(config('app.key'))) {
             return $next($request); // Already installed
@@ -54,7 +52,7 @@ class EnsureInstalled
         ]);
     }
 
-    protected function getRequestLocale(Request $request)
+    protected function getRequestLocale(Request $request): ?string
     {
         $locales = InstallController::getAvailableLocaleCodes();
         $locale = $request->input('locale');
@@ -70,7 +68,7 @@ class EnsureInstalled
         return $request->getPreferredLanguage($locales->all());
     }
 
-    protected function addLocaleCookieToResponse(Response $response, string $locale)
+    protected function addLocaleCookieToResponse(Response $response, string $locale): Response
     {
         $response->headers->setCookie(cookie('azuriom_locale', $locale, 60 * 24));
 

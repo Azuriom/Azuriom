@@ -24,7 +24,7 @@ class Redirect extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'source', 'destination', 'code', 'is_enabled',
@@ -33,7 +33,7 @@ class Redirect extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'is_enabled' => 'boolean',
@@ -41,12 +41,9 @@ class Redirect extends Model
 
     /**
      * Scope a query to only include enabled redirects.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): void
     {
-        return $query->where('is_enabled', true);
+        $query->where('is_enabled', true);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Azuriom\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -26,40 +28,39 @@ class SocialLink extends Model
         'twitter' => [
             'title' => 'Twitter',
             'color' => '#1da1f2',
+            'icon' => 'bi bi-twitter',
         ],
         'discord' => [
             'title' => 'Discord',
             'color' => '#5865f2',
+            'icon' => 'bi bi-discord',
         ],
         'youtube' => [
             'title' => 'YouTube',
             'color' => '#ff0000',
+            'icon' => 'bi bi-youtube',
         ],
         'steam' => [
             'title' => 'Steam',
             'color' => '#111d2e',
+            'icon' => 'bi bi-steam',
         ],
         'instagram' => [
             'title' => 'Instagram',
             'color' => '#ff0076',
+            'icon' => 'bi bi-instagram',
         ],
         'facebook' => [
             'title' => 'FaceBook',
             'color' => '#1877f2',
+            'icon' => 'bi bi-facebook',
         ],
     ];
-
-    protected static function booted()
-    {
-        foreach (['created', 'updated', 'deleted'] as $event) {
-            static::registerModelEvent($event, fn () => static::clearCache());
-        }
-    }
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'type', 'value', 'position', 'properties', 'title', 'icon', 'color',
@@ -68,73 +69,79 @@ class SocialLink extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'properties' => 'array',
     ];
 
-    public function getTitleAttribute()
+    protected static function booted(): void
     {
-        $properties = $this->type === 'other'
-            ? $this->properties
-            : self::DEFAULT_VALUES[$this->type];
-
-        return $properties['title'] ?? '';
-    }
-
-    public function setTitleAttribute($value)
-    {
-        $this->setProperty('title', $value);
-    }
-
-    public function getColorAttribute()
-    {
-        $properties = $this->type === 'other'
-            ? $this->properties
-            : self::DEFAULT_VALUES[$this->type];
-
-        return $properties['color'] ?? '';
-    }
-
-    public function setColorAttribute($value)
-    {
-        $this->setProperty('color', $value);
-    }
-
-    public function getIconAttribute()
-    {
-        if ($this->type !== 'other') {
-            return 'bi bi-'.$this->type;
+        foreach (['created', 'updated', 'deleted'] as $event) {
+            static::registerModelEvent($event, fn () => static::clearCache());
         }
-
-        return $this->properties['icon'] ?? '';
     }
 
-    public function setIconAttribute($value)
+    /**
+     * Interact with the link's title.
+     */
+    protected function title(): Attribute
     {
-        $this->setProperty('icon', $value);
+        return Attribute::make(
+            get: fn ($val, array $attr) => $this->getProperty('title', $attr),
+            set: fn (?string $value) => $this->withProperty('title', $value),
+        );
     }
 
-    private function setProperty(string $key, ?string $value)
+    /**
+     * Interact with the link's color.
+     */
+    protected function color(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($val, array $attr) => $this->getProperty('color', $attr),
+            set: fn (?string $value) => $this->withProperty('color', $value),
+        );
+    }
+
+    /**
+     * Interact with the link's icon.
+     */
+    protected function icon(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($val, array $attr) => $this->getProperty('icon', $attr),
+            set: fn (?string $value) => $this->withProperty('icon', $value),
+        );
+    }
+
+    private function getProperty(string $key): string
+    {
+        $properties = $this->type === 'other'
+            ? $this->properties
+            : self::DEFAULT_VALUES[$this->type];
+
+        return $properties[$key] ?? '';
+    }
+
+    private function withProperty(string $key, ?string $value): array
     {
         if ($this->type !== 'other') {
-            $this->properties = null;
-
-            return;
+            return [];
         }
 
         $properties = $this->properties ?? [];
         $properties[$key] = $value;
-        $this->properties = $properties;
+
+        return ['properties' => Json::encode($properties)];
     }
 
-    public static function clearCache()
+    public static function clearCache(): void
     {
         Cache::forget(static::CACHE_KEY);
     }
 
-    public static function types()
+    public static function types(): array
     {
         $values = Arr::pluck(self::DEFAULT_VALUES, 'title');
 

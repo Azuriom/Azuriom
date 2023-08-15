@@ -14,10 +14,19 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Hash;
 
 class ServerController extends Controller
 {
+    public function user(User $user)
+    {
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'uid' => $user->game_id,
+            'money' => $user->money,
+        ]);
+    }
+
     public function index()
     {
         $serverId = (int) setting('servers.default');
@@ -84,6 +93,11 @@ class ServerController extends Controller
         ]);
     }
 
+    /**
+     * Register a new user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function register(Request $request)
     {
         $data = $this->validate($request, [
@@ -105,7 +119,7 @@ class ServerController extends Controller
 
         $user = User::forceCreate(array_merge(Arr::except($data, 'ip'), [
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => $request->input('password'),
             'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),
             'last_login_at' => now(),
@@ -116,20 +130,35 @@ class ServerController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * Update the email of the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateEmail(Request $request)
     {
-        $data = $this->validate($request, [
+        $this->validate($request, [
             'game_id' => ['required', 'string', 'exists:users,game_id'],
             'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
-        User::where('game_id', $request->input('game_id'))
-            ->firstOrFail()
-            ->update(Arr::only($data, 'email'));
+        $user = User::where('game_id', $request->input('game_id'))->firstOrFail();
+
+        $user->update([
+            'email' => $request->input('email'),
+            'email_verified_at' => null,
+        ]);
+
+        $user->sendEmailVerificationNotification();
 
         return response()->noContent();
     }
 
+    /**
+     * Update the password of the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
@@ -140,7 +169,7 @@ class ServerController extends Controller
         $user = User::where('game_id', $request->input('game_id'))->firstOrFail();
 
         $user->update([
-            'password' => Hash::make($request->input('password')),
+            'password' => $request->input('password'),
         ]);
 
         event(new PasswordReset($user));
@@ -148,16 +177,11 @@ class ServerController extends Controller
         return response()->noContent();
     }
 
-    public function user(User $user)
-    {
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'uid' => $user->game_id,
-            'money' => $user->money,
-        ]);
-    }
-
+    /**
+     * Add money to the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function addMoney(Request $request, User $user)
     {
         return $this->editMoney($request, $user, function (float $amount) use ($user) {
@@ -165,6 +189,11 @@ class ServerController extends Controller
         });
     }
 
+    /**
+     * Remove money from the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function removeMoney(Request $request, User $user)
     {
         return $this->editMoney($request, $user, function (float $amount) use ($user) {
@@ -172,6 +201,11 @@ class ServerController extends Controller
         });
     }
 
+    /**
+     * Change the money of the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function setMoney(Request $request, User $user)
     {
         return $this->editMoney($request, $user, function (float $amount) use ($user) {
@@ -179,6 +213,11 @@ class ServerController extends Controller
         });
     }
 
+    /**
+     * Edit the money of the user.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     protected function editMoney(Request $request, User $user, callable $action)
     {
         $this->validate($request, ['amount' => 'required|numeric|min:0.01']);
@@ -192,13 +231,13 @@ class ServerController extends Controller
         ]);
     }
 
-    protected function mapLegacyCommands(Collection $commands)
+    protected function mapLegacyCommands(Collection $commands): Collection
     {
         return $commands->groupBy('user.name')
             ->map(fn (Collection $group) => $group->pluck('command'));
     }
 
-    protected function mapCommands(Collection $commands)
+    protected function mapCommands(Collection $commands): Collection
     {
         return $commands->groupBy('user.name')
             ->map(function (Collection $serverCommands) {

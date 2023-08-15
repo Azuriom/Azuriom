@@ -19,7 +19,7 @@
                         <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
                         <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
                     </div>
-                    <div class="card-footer text-muted">
+                    <div class="card-footer text-body-secondary">
                         {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
                     </div>
                 </div>

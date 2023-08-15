@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Permission extends Model
 {
-    private static $permissions = [
+    private static array $permissions = [
         'comments.create' => 'admin.permissions.create-comments',
         'comments.delete.other' => 'admin.permissions.delete-other-comments',
         'maintenance.access' => 'admin.permissions.maintenance-access',
@@ -39,7 +39,7 @@ class Permission extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'permission',
@@ -53,17 +53,17 @@ class Permission extends Model
         return $this->belongsTo(Role::class);
     }
 
-    public static function permissionsWithName()
+    public static function permissionsWithName(): array
     {
         return self::$permissions;
     }
 
-    public static function permissions()
+    public static function permissions(): array
     {
         return array_keys(self::$permissions);
     }
 
-    public static function registerPermissions(array $permissions)
+    public static function registerPermissions(array $permissions): void
     {
         self::$permissions = array_merge(self::$permissions, $permissions);
     }

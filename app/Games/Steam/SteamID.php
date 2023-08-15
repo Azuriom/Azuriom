@@ -4,9 +4,9 @@ namespace Azuriom\Games\Steam;
 
 class SteamID
 {
-    public static function convertTo32($steamId64)
+    public static function convertTo32(int $steamId64): string
     {
-        $id = ((int) $steamId64) & 0xFFFFFFFF;
+        $id = $steamId64 & 0xFFFFFFFF;
 
         // $x = ($steamId64 >> 56) & 0xF;
         $y = $id & 1;
@@ -15,10 +15,10 @@ class SteamID
         return "STEAM_0:{$y}:{$z}";
     }
 
-    public static function convertTo64(string $steamId32)
+    public static function convertTo64(string $steamId32): int
     {
         [, $y, $z] = explode(':', $steamId32);
 
-        return $z * 2 + $y + 0x110000100000000;
+        return $z * 2 + (int) $y + 0x110000100000000;
     }
 }

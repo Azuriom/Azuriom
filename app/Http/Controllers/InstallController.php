@@ -16,11 +16,11 @@ use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -104,8 +104,8 @@ class InstallController extends Controller
         $this->hasRequirements = ! in_array(false, $this->requirements, true);
 
         $this->middleware(function (Request $request, callable $next) {
-            if (config('app.key') !== self::TEMP_KEY || ! $this->hasRequirements) {
-                return redirect()->route('home');
+            if (! $this->hasRequirements || config('app.key') !== self::TEMP_KEY) {
+                return to_route('home');
             }
 
             return $next($request);
@@ -114,7 +114,7 @@ class InstallController extends Controller
         $this->middleware(function (Request $request, callable $next) {
             return file_exists(App::environmentFilePath())
                 ? $next($request)
-                : redirect()->route('install.database');
+                : to_route('install.database');
         })->only(['showGame', 'showGames', 'setupGame']);
 
         $this->games = array_merge($this->games, $this->getCommunityGames());
@@ -164,7 +164,7 @@ class InstallController extends Controller
 
                 EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType]);
 
-                return redirect()->route('install.games');
+                return to_route('install.games');
             }
 
             $host = $request->input('host');
@@ -199,7 +199,7 @@ class InstallController extends Controller
                 'DB_PASSWORD' => $password,
             ]);
 
-            return redirect()->route('install.games');
+            return to_route('install.games');
         } catch (Throwable $t) {
             return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => mb_convert_encoding($t->getMessage(), 'UTF-8'),
@@ -299,7 +299,7 @@ class InstallController extends Controller
                 $name = $request->input('name');
 
                 if ($game === 'mc-online') {
-                    $gameId = Str::replace('-', '', $request->input('uuid', ''));
+                    $gameId = Str::remove('-', $request->input('uuid', ''));
                     $response = Http::get(MinecraftOnlineGame::PROFILE_LOOKUP.$gameId);
 
                     if (! $response->successful() || ! ($name = $response->json('name'))) {
@@ -328,7 +328,7 @@ class InstallController extends Controller
             ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
 
             if ($game === 'custom') {
-                return redirect()->route('install.finish');
+                return to_route('install.finish');
             }
 
             $communityGames = $this->getCommunityGames();
@@ -352,7 +352,7 @@ class InstallController extends Controller
 
                     return $this->finishInstall();
                 } catch (Throwable $t) {
-                    return redirect()->route('install.games')->with('error', $t->getMessage());
+                    return to_route('install.games')->with('error', $t->getMessage());
                 }
             }
 
@@ -360,7 +360,7 @@ class InstallController extends Controller
             $user = User::create([
                 'name' => $name,
                 'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password', Str::random(32))),
+                'password' => $request->input('password', Str::random(32)),
                 'password_changed_at' => now(),
                 'game_id' => $gameId ?? null,
             ]);
@@ -379,7 +379,7 @@ class InstallController extends Controller
             ]));
         }
 
-        return redirect()->route('install.finish');
+        return to_route('install.finish');
     }
 
     public function finishInstall()
@@ -391,7 +391,7 @@ class InstallController extends Controller
         return view('install.success');
     }
 
-    public static function getRequirements()
+    public static function getRequirements(): array
     {
         $requirements = [
             'php' => version_compare(PHP_VERSION, static::MIN_PHP_VERSION, '>='),
@@ -408,7 +408,7 @@ class InstallController extends Controller
         return $requirements;
     }
 
-    private static function hasFunctionEnabled(string $function)
+    private static function hasFunctionEnabled(string $function): bool
     {
         if (! function_exists($function)) {
             return false;
@@ -421,7 +421,7 @@ class InstallController extends Controller
         }
     }
 
-    public static function parsePhpVersion()
+    public static function parsePhpVersion(): string
     {
         preg_match('/^(\d+)\.(\d+)/', PHP_VERSION, $matches);
 
@@ -432,14 +432,14 @@ class InstallController extends Controller
         return PHP_VERSION;
     }
 
-    public static function getAvailableLocales()
+    public static function getAvailableLocales(): Collection
     {
         return static::getAvailableLocaleCodes()->mapWithKeys(fn (string $file) => [
             $file => trans('messages.lang', [], $file),
         ]);
     }
 
-    public static function getAvailableLocaleCodes()
+    public static function getAvailableLocaleCodes(): Collection
     {
         return collect(File::directories(app()->langPath()))
             ->map(fn (string $path) => basename($path));

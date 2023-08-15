@@ -12,7 +12,7 @@ class FiveMStatus extends ServerBridge
 
     protected const DEFAULT_PORT = 30120;
 
-    public function getServerData()
+    public function getServerData(): ?array
     {
         try {
             return $this->getData();
@@ -21,22 +21,22 @@ class FiveMStatus extends ServerBridge
         }
     }
 
-    public function verifyLink()
+    public function verifyLink(): bool
     {
         return $this->getData() !== null;
     }
 
-    public function canExecuteCommand()
+    public function canExecuteCommand(): bool
     {
         return false;
     }
 
-    public function getDefaultPort()
+    public function getDefaultPort(): int
     {
         return self::DEFAULT_PORT;
     }
 
-    private function getData()
+    private function getData(): array
     {
         $port = $this->server->port ?? self::DEFAULT_PORT;
 

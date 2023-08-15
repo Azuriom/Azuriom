@@ -25,12 +25,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('vendor/admin.css') }}" rel="stylesheet">
-    @if(dark_theme())
-        <link href="{{ asset('admin/css/dark.css') }}" rel="stylesheet">
-    @endif
     @stack('styles')
 </head>
-<body>
+<body @if(dark_theme()) data-bs-theme="dark" @endif>
     <!-- Page Wrapper -->
     <div class="wrapper">
 
@@ -292,7 +289,7 @@
         <div class="main">
 
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light navbar-bgw">
+            <nav class="navbar navbar-expand bg-body-secondary navbar-bgw">
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>
@@ -350,10 +347,10 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-10">
-                                                        <p class="text-dark">
+                                                        <p>
                                                             {{ $notification->content }}
                                                         </p>
-                                                        <small class="text-muted">
+                                                        <small class="text-body-secondary">
                                                             {{ format_date($notification->created_at, true) }}
                                                         </small>
                                                     </div>
@@ -362,7 +359,7 @@
                                         @endforeach
 
                                         <div class="dropdown-menu-footer">
-                                            <a href="{{ route('notifications.read.all') }}" id="readNotifications" class="text-muted">
+                                            <a href="{{ route('notifications.read.all') }}" id="readNotifications" class="text-body-secondary">
                                                 <span class="d-none spinner-border spinner-border-sm loader" role="status"></span>
                                                 {{ trans('messages.notifications.read') }}
                                             </a>
@@ -377,8 +374,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('profile.theme') }}" class="nav-icon" data-route="theme">
-                                <i class="bi bi-{{ dark_theme() ? 'sun' : 'moon-stars' }} small" title="{{ trans('messages.theme.'.(dark_theme() ? 'light' : 'dark')) }}" data-bs-toggle="tooltip"></i>
+                            <a href="{{ route('profile.theme') }}" class="nav-icon @if(! dark_theme()) d-none @endif" data-theme-value="light">
+                                <i class="bi bi-sun small" title="{{ trans('messages.theme.light') }}" data-bs-toggle="tooltip"></i>
+                            </a>
+                            <a href="{{ route('profile.theme') }}" class="nav-icon @if(dark_theme()) d-none @endif" data-theme-value="dark">
+                                <i class="bi bi-moon-stars small" title="{{ trans('messages.theme.dark') }}" data-bs-toggle="tooltip"></i>
                             </a>
                         </li>
 
@@ -451,7 +451,7 @@
 
             <footer class="footer">
                 <div class="container-fluid">
-                    <p class="mb-0 py-2 text-center text-muted">
+                    <p class="mb-0 py-2 text-center text-body-secondary">
                         @lang('admin.footer', [
                             'year' => '2019-'.now()->year,
                             'azuriom' => '<a href="https://azuriom.com" target="_blank" rel="noopener noreferrer">Azuriom</a>',
@@ -465,12 +465,6 @@
 
 <form id="logoutForm" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf
-</form>
-
-<form id="themeForm" action="{{ route('profile.theme') }}" method="POST" class="d-none">
-    @csrf
-
-    <input type="hidden" name="theme" value="{{ dark_theme() ? 'light' : 'dark' }}">
 </form>
 
 @stack('footer-scripts')

@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
  */
 trait Attachable
 {
-    public static function bootAttachable()
+    public static function bootAttachable(): void
     {
         static::updated(function (Model $model) {
             $content = $model->getAttribute($model->getAttachmentsKey());
@@ -36,7 +36,7 @@ trait Attachable
         });
     }
 
-    public static function storePendingAttachment(string $pendingId, UploadedFile $file)
+    public static function storePendingAttachment(string $pendingId, UploadedFile $file): string
     {
         $attachment = new PendingAttachment([
             'pending_id' => $pendingId,
@@ -46,7 +46,7 @@ trait Attachable
         return $attachment->storeImage($file, true);
     }
 
-    public function persistPendingAttachments(?string $pendingId)
+    public function persistPendingAttachments(?string $pendingId): void
     {
         if ($pendingId === null) {
             return;
@@ -74,7 +74,7 @@ trait Attachable
         }
     }
 
-    public function storeAttachment(UploadedFile $file)
+    public function storeAttachment(UploadedFile $file): string
     {
         /** @var \Azuriom\Models\Attachment $attachment */
         $attachment = $this->attachments()->make();
@@ -87,17 +87,17 @@ trait Attachable
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
-    public function getAttachmentsKey()
+    public function getAttachmentsKey(): string
     {
         return 'content';
     }
 
-    public function getAttachmentsType()
+    public function getAttachmentsType(): string
     {
         return (new self())->getMorphClass();
     }
 
-    public function getAttachmentsPath()
+    public function getAttachmentsPath(): string
     {
         return Str::replace('_', '/', $this->getTable()).'/attachments';
     }

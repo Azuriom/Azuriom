@@ -1,5 +1,28 @@
 @push('styles')
     <link href="{{ asset('vendor/easymde/easymde.min.css') }}" rel="stylesheet">
+    <style>
+        .editor-toolbar .table {
+            width: unset;
+        }
+
+        .CodeMirror.cm-s-easymde,
+        .CodeMirror-fullscreen,
+        .editor-preview,
+        .editor-toolbar.fullscreen {
+            color: inherit;
+            background: var(--bs-body-bg);
+        }
+
+        .editor-toolbar button.active,
+        .editor-toolbar button:hover {
+            background: var(--bs-body-bg);
+            border-color: var(--bs-primary-border-subtle);
+        }
+
+        .CodeMirror-cursor {
+            border-color: var(--bs-body-color);
+        }
+    </style>
 @endpush
 
 @push('footer-scripts')

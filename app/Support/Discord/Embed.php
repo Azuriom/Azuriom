@@ -16,93 +16,38 @@ use InvalidArgumentException;
 
 class Embed implements Arrayable
 {
-    /**
-     * Title of the embed.
-     *
-     * @var string|null
-     */
     protected ?string $title = null;
 
-    /**
-     * Description of embed.
-     *
-     * @var string|null
-     */
     protected ?string $description = null;
 
-    /**
-     * Url of embed.
-     *
-     * @var string|null
-     */
     protected ?string $url = null;
 
-    /**
-     * Timestamp of embed content.
-     *
-     * @var \Carbon\CarbonInterface|null
-     */
     protected ?CarbonInterface $timestamp = null;
 
-    /**
-     * Color code of the embed.
-     *
-     * @var int|null
-     */
     protected ?int $color = null;
 
-    /**
-     * Footer information.
-     *
-     * @var \Azuriom\Support\Discord\Embeds\EmbedFooter|null
-     */
     protected ?EmbedFooter $footer = null;
 
-    /**
-     * Image information.
-     *
-     * @var \Azuriom\Support\Discord\Embeds\EmbedImage|null
-     */
     protected ?EmbedImage $image = null;
 
-    /**
-     * Thumbnail information.
-     *
-     * @var \Azuriom\Support\Discord\Embeds\EmbedThumbnail|null
-     */
     protected ?EmbedThumbnail $thumbnail = null;
 
-    /**
-     * Author information.
-     *
-     * @var \Azuriom\Support\Discord\Embeds\EmbedAuthor|null
-     */
     protected ?EmbedAuthor $author = null;
 
-    /**
-     * Fields information.
-     *
-     * @var \Azuriom\Support\Discord\Embeds\EmbedFooter[]|null
-     */
     protected ?array $fields = [];
 
     /**
      * Create a new message instance.
-     *
-     * @return self
      */
-    public static function create()
+    public static function create(): self
     {
         return new self();
     }
 
     /**
      * Set the title of the embed.
-     *
-     * @param  string|null  $title
-     * @return $this
      */
-    public function title(?string $title)
+    public function title(?string $title): self
     {
         $this->title = $title;
 
@@ -111,11 +56,8 @@ class Embed implements Arrayable
 
     /**
      * Set the description of embed.
-     *
-     * @param  string|null  $description
-     * @return $this
      */
-    public function description(?string $description)
+    public function description(?string $description): self
     {
         $this->description = $description;
 
@@ -123,12 +65,9 @@ class Embed implements Arrayable
     }
 
     /**
-     * Set the Url of embed.
-     *
-     * @param  string|null  $url
-     * @return $this
+     * Set the URL of embed.
      */
-    public function url(?string $url)
+    public function url(?string $url): self
     {
         $this->url = $url;
 
@@ -137,11 +76,8 @@ class Embed implements Arrayable
 
     /**
      * Set the timestamp of embed content.
-     *
-     * @param  \DateTimeInterface|null  $timestamp
-     * @return $this
      */
-    public function timestamp(?DateTimeInterface $timestamp)
+    public function timestamp(?DateTimeInterface $timestamp): self
     {
         $this->timestamp = Carbon::instance($timestamp);
 
@@ -150,11 +86,8 @@ class Embed implements Arrayable
 
     /**
      * Set the color code of the embed.
-     *
-     * @param  int|string  $color
-     * @return $this
      */
-    public function color(int|string $color)
+    public function color(int|string $color): self
     {
         if (is_string($color) && Str::startsWith($color, '#')) {
             $this->color = (int) hexdec(Str::substr($color, 1));
@@ -173,12 +106,8 @@ class Embed implements Arrayable
 
     /**
      * Set the footer of the embed.
-     *
-     * @param  string  $text
-     * @param  string|null  $iconUrl
-     * @return $this
      */
-    public function footer(string $text, string $iconUrl = null)
+    public function footer(string $text, string $iconUrl = null): self
     {
         $this->footer = new EmbedFooter($text, $iconUrl);
 
@@ -187,13 +116,8 @@ class Embed implements Arrayable
 
     /**
      * Set the image of the embed.
-     *
-     * @param  string  $url
-     * @param  int|null  $height
-     * @param  int|null  $width
-     * @return $this
      */
-    public function image(string $url, int $height = null, int $width = null)
+    public function image(string $url, int $height = null, int $width = null): self
     {
         $this->image = new EmbedImage($url, $height, $width);
 
@@ -202,11 +126,8 @@ class Embed implements Arrayable
 
     /**
      * Set the thumbnail of the embed.
-     *
-     * @param  string  $url
-     * @return $this
      */
-    public function thumbnail(string $url)
+    public function thumbnail(string $url): self
     {
         $this->thumbnail = new EmbedThumbnail($url);
 
@@ -215,13 +136,8 @@ class Embed implements Arrayable
 
     /**
      * Set the author of the embed.
-     *
-     * @param  string  $name
-     * @param  string|null  $url
-     * @param  string|null  $iconUrl
-     * @return $this
      */
-    public function author(string $name, string $url = null, string $iconUrl = null)
+    public function author(string $name, string $url = null, string $iconUrl = null): self
     {
         $this->author = new EmbedAuthor($name, $url, $iconUrl);
 
@@ -230,13 +146,8 @@ class Embed implements Arrayable
 
     /**
      * Add a field to the embed.
-     *
-     * @param  string  $name
-     * @param  string  $value
-     * @param  bool  $inline
-     * @return $this
      */
-    public function addField(string $name, string $value, bool $inline = false)
+    public function addField(string $name, string $value, bool $inline = false): self
     {
         $this->fields[] = new EmbedField($name, $value, $inline);
 
@@ -246,7 +157,7 @@ class Embed implements Arrayable
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'title' => $this->title,

@@ -2,10 +2,9 @@
 
 namespace Azuriom\Console\Commands;
 
+use Azuriom\Support\EnvEditor;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 
 class DatabaseConfigCommand extends Command
 {
@@ -33,31 +32,9 @@ class DatabaseConfigCommand extends Command
     protected $description = 'Config the database credentials.';
 
     /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $files;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct();
-
-        $this->files = $files;
-    }
-
-    /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->confirmToProceed();
 
@@ -85,35 +62,10 @@ class DatabaseConfigCommand extends Command
             'DB_PASSWORD' => $this->option('password') ?? $this->secret('The password of the user'),
         ];
 
-        $this->updateEnv(base_path('.env'), $env);
+        EnvEditor::updateEnv($env);
 
         $this->info('Database config successfully updated.');
 
         return 0;
-    }
-
-    protected function updateEnv(string $file, array $values)
-    {
-        $contents = $this->files->get($file);
-
-        foreach ($values as $key => $value) {
-            if (Str::contains($value, ' ') || Str::contains($value, '#')) {
-                if (Str::contains($value, '"')) {
-                    $value = str_replace('"', '\"', $value);
-                }
-                $value = '"'.$value.'"';
-            }
-
-            preg_match("/^{$key}=[^\r\n]*/m", $contents, $matches);
-            if (count($matches)) {
-                $oldValue = substr($matches[0], strlen($key) + 1);
-
-                $contents = str_replace("{$key}={$oldValue}", "{$key}={$value}", $contents);
-            } else {
-                $contents .= PHP_EOL."{$key}={$value}";
-            }
-        }
-
-        return $this->files->put($file, $contents);
     }
 }

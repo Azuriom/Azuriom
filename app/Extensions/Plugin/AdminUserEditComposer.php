@@ -14,8 +14,6 @@ abstract class AdminUserEditComposer
      * - 'name' : The title of the card
      * - 'view' : The view (Ex: shop::giftcards.index).
      *
-     * @param  \Azuriom\Models\User  $user
-     * @param  \Illuminate\View\View  $view
      * @return array{name: string, view: string}[]
      */
     abstract public function getCards(User $user, View $view);
@@ -23,7 +21,6 @@ abstract class AdminUserEditComposer
     /**
      * Bind data to the view.
      *
-     * @param  \Illuminate\View\View  $view
      * @return void
      */
     public function compose(View $view)

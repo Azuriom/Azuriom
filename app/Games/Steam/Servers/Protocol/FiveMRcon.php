@@ -11,11 +11,11 @@ use RuntimeException;
  */
 class FiveMRcon
 {
-    private $address;
+    private string $address;
 
-    private $port;
+    private int $port;
 
-    private $password;
+    private string $password;
 
     private $socket;
 
@@ -26,7 +26,7 @@ class FiveMRcon
         $this->password = $password;
     }
 
-    public function connect(int $timeout = 5)
+    public function connect(int $timeout = 5): void
     {
         $this->socket = fsockopen("udp://{$this->address}", $this->port, $errno, $errstr, $timeout);
 
@@ -39,19 +39,19 @@ class FiveMRcon
         stream_set_timeout($this->socket, $timeout, 0);
     }
 
-    public function sendCommand(string $command)
+    public function sendCommand(string $command): string
     {
         return $this->send("rcon {$this->password} {$command}");
     }
 
-    public function disconnect()
+    public function disconnect(): void
     {
         if ($this->socket) {
             fclose($this->socket);
         }
     }
 
-    private function send(string $command)
+    private function send(string $command): string
     {
         fwrite($this->socket, "\xFF\xFF\xFF\xFF{$command}\x00");
 

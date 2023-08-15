@@ -9,11 +9,10 @@ use Azuriom\Models\Notification;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotification;
+use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -21,9 +20,6 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
@@ -42,6 +38,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Send a notification to one or all users.
+     *
+     * @throws \Illuminate\Validation\ValidationException;
+     */
     public function notify(Request $request, User $user = null)
     {
         $this->validate($request, [
@@ -63,8 +64,6 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -76,9 +75,6 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\UserRequest  $request
-     * @return \Illuminate\Http\Response
-     *
      * @throws \Illuminate\Validation\ValidationException;
      */
     public function store(UserRequest $request)
@@ -87,21 +83,16 @@ class UserController extends Controller
 
         $this->validateRole($request->user(), $role);
 
-        $passwordHash = Hash::make($request->input('password'));
-
-        $user = new User(['password' => $passwordHash] + $request->validated());
+        $user = new User($request->validated());
         $user->role()->associate($role);
         $user->save();
 
-        return redirect()->route('admin.users.index')
+        return to_route('admin.users.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
     {
@@ -121,10 +112,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Azuriom\Http\Requests\UserRequest  $request
-     * @param  \Azuriom\Models\User  $user
-     * @return \Illuminate\Http\Response
-     *
      * @throws \Illuminate\Validation\ValidationException;
      */
     public function update(UserRequest $request, User $user)
@@ -133,11 +120,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $user->fill(Arr::except($request->validated(), 'password'));
-
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->input('password'));
-        }
+        $user->fill($request->validated());
 
         $role = Role::find($request->input('role'));
 
@@ -152,7 +135,7 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
     }
 
@@ -166,7 +149,7 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.email.verify_success'));
     }
 
@@ -179,7 +162,7 @@ class UserController extends Controller
 
         ActionLog::log('users.updated', $user);
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.2fa.disabled'));
     }
 
@@ -187,15 +170,24 @@ class UserController extends Controller
     {
         $user->update(['password_changed_at' => null]);
 
-        return redirect()->route('admin.users.edit', $user)
+        return to_route('admin.users.edit', $user)
+            ->with('success', trans('messages.status.success'));
+    }
+
+    public function unlinkDiscord(User $user)
+    {
+        if ($user->discordAccount !== null) {
+            LinkedRoles::clearRole($user->discordAccount);
+
+            $user->discordAccount->delete();
+        }
+
+        return to_route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \Azuriom\Models\User  $user
-     * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
@@ -207,11 +199,16 @@ class UserController extends Controller
 
         ActionLog::log('users.deleted', $user);
 
-        return redirect()->route('admin.users.index', $user)
+        return to_route('admin.users.index', $user)
             ->with('success', trans('messages.status.success'));
     }
 
-    protected function validateRole(User $user, Role $role, User $target = null)
+    /**
+     * Ensure if a user can change the specified role.
+     *
+     * @throws \Illuminate\Validation\ValidationException;
+     */
+    protected function validateRole(User $user, Role $role, User $target = null): void
     {
         if (($target && $user->role->power < $target->role->power)
             || (! $user->isAdmin() && $user->role->power < $role->power)) {

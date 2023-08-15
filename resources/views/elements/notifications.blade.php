@@ -16,12 +16,14 @@
                 @foreach($notifications as $notification)
                     <a href="{{ $notification->link ? url($notification->link) : '#' }}" class="dropdown-item d-flex align-items-center">
                         <div class="flex-shrink-0 me-3">
-                            <div class="rounded-circle text-white p-1 bg-{{ $notification->level }}">
+                            <div class="rounded-circle p-1 text-bg-{{ $notification->level }}">
                                 <i class="bi bi-{{ $notification->icon() }} m-1"></i>
                             </div>
                         </div>
                         <div class="flex-grow-1">
-                            <div class="small text-muted">{{ format_date($notification->created_at, true) }}</div>
+                            <div class="small text-body-secondary">
+                                {{ format_date($notification->created_at, true) }}
+                            </div>
                             {{ $notification->content }}
                         </div>
                     </a>

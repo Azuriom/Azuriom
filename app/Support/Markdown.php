@@ -4,6 +4,7 @@ namespace Azuriom\Support;
 
 use Azuriom\Support\CommonMark\BasicOnly\RemoveImageProcessor;
 use Azuriom\Support\CommonMark\ExternalImage\ExternalImageExtension;
+use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
@@ -18,9 +19,9 @@ use League\CommonMark\MarkdownConverter;
 
 class Markdown
 {
-    public static function parse(string $text, bool $basic = false)
+    public static function parse(string $text, bool $basic = false): string
     {
-        $internalHosts = [str_replace(['http://', 'https://'], '', config('app.url'))];
+        $internalHosts = [Str::remove(['http://', 'https://'], config('app.url'))];
 
         $config = [
             'html_input' => 'escape',
@@ -56,7 +57,7 @@ class Markdown
         return $converter->convert($text)->getContent();
     }
 
-    public static function parseRaw(string $text)
+    public static function parseRaw(string $text): string
     {
         $environment = new Environment();
         $environment->addExtension(new CommonMarkCoreExtension());

@@ -24,8 +24,6 @@ class GamePingCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle()
     {
@@ -40,7 +38,5 @@ class GamePingCommand extends Command
         }
 
         $this->info($servers->count().' server(s) were successfully pinged.');
-
-        return 0;
     }
 }

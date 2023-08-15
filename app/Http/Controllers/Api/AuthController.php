@@ -32,9 +32,6 @@ class AuthController extends Controller
     /**
      * Authenticate the user and get the access token.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\Support\Responsable
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function authenticate(Request $request)
@@ -52,6 +49,7 @@ class AuthController extends Controller
             ], 422);
         }
 
+        /** @var \Azuriom\Models\User $user */
         $user = Auth::getLastAttempted();
 
         if ($user->isBanned()) {
@@ -96,9 +94,6 @@ class AuthController extends Controller
     /**
      * Get the profile of the user by his access token.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Contracts\Support\Responsable
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function verify(Request $request)
@@ -127,9 +122,6 @@ class AuthController extends Controller
     /**
      * Invalidate the access token if it exists.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function logout(Request $request)
@@ -143,10 +135,9 @@ class AuthController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    protected function credentials(array $credentials)
+    protected function credentials(array $credentials): array
     {
         $email = $credentials['email'];
-
         $field = Str::contains($email, '@') ? 'email' : 'name';
 
         return array_merge([$field => $email], Arr::only($credentials, 'password'));

@@ -12,7 +12,7 @@ class FiveMGame extends SteamGame
         parent::__construct('fivem', 'FiveM');
     }
 
-    public function getSupportedServers()
+    public function getSupportedServers(): array
     {
         return [
             'fivem-status' => FiveMStatus::class,

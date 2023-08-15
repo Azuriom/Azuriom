@@ -12,11 +12,8 @@ class EnvEditor
     /**
      * Edit values in the environment file
      * Based on https://github.com/imliam/laravel-env-set-command, under MIT license.
-     *
-     * @param  array  $values
-     * @param  string|null  $path
      */
-    public static function updateEnv(array $values, string $path = null)
+    public static function updateEnv(array $values, string $path = null): void
     {
         $envPath = $path ?? App::environmentFilePath();
         $content = file_get_contents($envPath);
@@ -44,9 +41,10 @@ class EnvEditor
         }
     }
 
-    protected static function getOldValue(string $envContents, string $key)
+    protected static function getOldValue(string $envContents, string $key): ?string
     {
         preg_match("/^{$key}=[^\r\n]*/m", $envContents, $matches);
+
         if (count($matches)) {
             return substr($matches[0], strlen($key) + 1);
         }

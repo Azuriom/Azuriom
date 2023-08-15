@@ -6,6 +6,7 @@ use Azuriom\Models\Traits\HasMarkdown;
 use Azuriom\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\HtmlString;
 
 /**
  * @property int $id
@@ -26,7 +27,7 @@ class Comment extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'content',
@@ -34,10 +35,8 @@ class Comment extends Model
 
     /**
      * The user key associated with this model.
-     *
-     * @var string
      */
-    protected $userKey = 'author_id';
+    protected string $userKey = 'author_id';
 
     /**
      * Get the post of this comment.
@@ -55,7 +54,7 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function parseContent()
+    public function parseContent(): HtmlString
     {
         return $this->parseMarkdown('content', true);
     }

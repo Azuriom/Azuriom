@@ -36,6 +36,7 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+                @include('elements.theme-selector')
 
                 <!-- Authentication Links -->
                 @guest

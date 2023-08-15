@@ -15,12 +15,8 @@ use Azuriom\Azuriom;
 if (! function_exists('asset')) {
     /**
      * Generate an asset path for the application.
-     *
-     * @param  string  $path
-     * @param  bool|null  $secure
-     * @return string
      */
-    function asset(string $path, $secure = null)
+    function asset(string $path, bool $secure = null): string
     {
         // Ignore if there is already a query string
         $query = str_contains($path, '?') ? '' : '?v'.Azuriom::version();

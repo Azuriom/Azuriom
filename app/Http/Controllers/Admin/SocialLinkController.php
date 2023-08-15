@@ -11,8 +11,6 @@ class SocialLinkController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -21,6 +19,11 @@ class SocialLinkController extends Controller
         ]);
     }
 
+    /**
+     * Update the order of the social links.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateOrder(Request $request)
     {
         $this->validate($request, [
@@ -44,8 +47,6 @@ class SocialLinkController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -54,23 +55,17 @@ class SocialLinkController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\SocialLinkRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(SocialLinkRequest $request)
     {
         SocialLink::create($request->validated());
 
-        return redirect()->route('admin.social-links.index')
+        return to_route('admin.social-links.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Models\SocialLink  $socialLink
-     * @return \Illuminate\Http\Response
      */
     public function edit(SocialLink $socialLink)
     {
@@ -82,30 +77,23 @@ class SocialLinkController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\SocialLinkRequest  $request
-     * @param  \Azuriom\Models\SocialLink  $socialLink
-     * @return \Illuminate\Http\Response
      */
     public function update(SocialLinkRequest $request, SocialLink $socialLink)
     {
         $socialLink->update($request->validated());
 
-        return redirect()->route('admin.social-links.index')
+        return to_route('admin.social-links.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \Azuriom\Models\SocialLink  $socialLink
-     * @return \Illuminate\Http\Response
      */
     public function destroy(SocialLink $socialLink)
     {
         $socialLink->delete();
 
-        return redirect()->route('admin.social-links.index')
+        return to_route('admin.social-links.index')
             ->with('success', trans('messages.status.success'));
     }
 }

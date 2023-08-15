@@ -28,8 +28,6 @@ class TrustProxies extends Middleware
 
     /**
      * Sets the trusted proxies on the request to the value of 'trustedproxy.proxies'.
-     *
-     * @param  \Illuminate\Http\Request  $request
      */
     protected function setTrustedProxyIpAddresses(Request $request)
     {

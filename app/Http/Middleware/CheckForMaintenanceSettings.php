@@ -6,15 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckForMaintenanceSettings
 {
     /**
      * The routes that should be reachable while maintenance mode is enabled.
-     *
-     * @var array
      */
-    protected $exceptRoutes = [
+    protected array $exceptRoutes = [
         'maintenance',
         'login',
         'login.*',
@@ -25,21 +24,17 @@ class CheckForMaintenanceSettings
 
     /**
      * The paths that should be reachable while maintenance mode is enabled.
-     *
-     * @var array
      */
-    protected $except = [
+    protected array $except = [
         'user/login',
     ];
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if (! setting('maintenance.enabled', false)) {
             return $next($request);
@@ -54,9 +49,11 @@ class CheckForMaintenanceSettings
         }
 
         $blockedPaths = array_map(function (string $path) {
-            return Str::endsWith($path, '/*')
+            $normalized = Str::endsWith($path, '/*')
                 ? Str::replaceLast('/*', '*', $path)
                 : $path;
+
+            return trim($normalized, '/');
         }, setting('maintenance.paths', []));
 
         if (! empty($blockedPaths) && ! $request->is($blockedPaths)) {
@@ -66,7 +63,7 @@ class CheckForMaintenanceSettings
         return $this->renderMaintenanceView();
     }
 
-    protected function renderMaintenanceView()
+    protected function renderMaintenanceView(): Response
     {
         $maintenanceMessage = setting('maintenance.message', trans('messages.maintenance.message'));
 

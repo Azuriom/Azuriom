@@ -165,6 +165,7 @@ return [
             'register' => 'Inscription: :date',
             'money' => 'Argent: :money',
             '2fa' => 'Authentification à deux facteurs (A2F): :2fa',
+            'discord' => 'Compte Discord lié: :user',
         ],
 
         '2fa' => [
@@ -178,6 +179,12 @@ return [
             'code' => 'Code',
             'enabled' => 'L\'authentification à deux facteurs est activée. N\'oubliez pas de sauvegarder vos codes de récupération!',
             'disabled' => 'Authentification à deux facteurs désactivée.',
+        ],
+
+        'discord' => [
+            'link' => 'Associer à Discord',
+            'unlink' => 'Dissocier de Discord',
+            'linked' => 'Votre compte a bien été associé à votre compte Discord.',
         ],
 
         'money_transfer' => [
@@ -216,5 +223,17 @@ return [
 
         'size' => 'L\'image #image_name# est trop lourde (#image_size#).\nLa taille maximum est #image_max_size#.',
         'error' => 'Une erreur est survenue lors du téléchargement de l\'image #image_name#.',
+    ],
+
+    'discord_roles' => [
+        'id' => [
+            'name' => 'ID du rôle',
+            'description' => 'ID du rôle sur le site.',
+        ],
+
+        'power' => [
+            'name' => 'Pouvoir du rôle',
+            'description' => 'Pourvoir du rôle sur le site égal ou supérieur à',
+        ],
     ],
 ];

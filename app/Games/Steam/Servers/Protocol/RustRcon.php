@@ -11,19 +11,10 @@ use WebSocket\Client;
  */
 class RustRcon
 {
-    /**
-     * The websocket client.
-     *
-     * @var \WebSocket\Client
-     */
-    private $client;
+    private Client $client;
 
     /**
-     * Create a new Rcon instance.
-     *
-     * @param  string  $host
-     * @param  int  $port
-     * @param  string  $password
+     * Create a new Rcon client instance.
      */
     public function __construct(string $host, int $port, string $password)
     {
@@ -33,44 +24,38 @@ class RustRcon
     /**
      * Send a command to the connected server.
      *
-     * @param  string  $command
-     * @return array
-     *
+     * @throws \JsonException
      * @throws \WebSocket\BadOpcodeException
      */
-    public function sendCommand(string $command)
+    public function sendCommand(string $command): array
     {
-        $data = [
+        $this->client->send(json_encode([
             'Identifier' => -1,
             'Message' => $command,
             'name' => 'AzuriomRcon',
-        ];
+        ], JSON_THROW_ON_ERROR));
 
-        $this->client->send(json_encode($data));
+        $data = $this->client->receive();
 
-        return json_decode($this->client->receive(), true);
+        return json_decode($data, true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**
      * Get the server information.
      *
-     * @return array
-     *
      * @throws \WebSocket\BadOpcodeException
      */
-    public function getServerInfo()
+    public function getServerInfo(): array
     {
-        $response = $this->sendCommand('serverinfo');
+        $data = $this->sendCommand('serverinfo');
 
-        return json_decode($response['Message'], true);
+        return json_decode($data['Message'], true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**
      * Disconnect from the server.
-     *
-     * @return void
      */
-    public function disconnect()
+    public function disconnect(): void
     {
         $this->client->close();
     }

@@ -43,7 +43,7 @@ class Post extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'title', 'description', 'slug', 'content', 'is_pinned', 'published_at',
@@ -52,7 +52,7 @@ class Post extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'is_pinned' => 'boolean',
@@ -61,10 +61,8 @@ class Post extends Model
 
     /**
      * The user key associated with this model.
-     *
-     * @var string
      */
-    protected $userKey = 'author_id';
+    protected string $userKey = 'author_id';
 
     /**
      * Get the author of this post.
@@ -90,7 +88,7 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function isLiked(User $user = null)
+    public function isLiked(User $user = null): bool
     {
         if ($user === null && Auth::guest()) {
             return false;
@@ -105,12 +103,12 @@ class Post extends Model
         return $this->likes()->where('author_id', $userId)->exists();
     }
 
-    public function isPublished()
+    public function isPublished(): bool
     {
         return $this->published_at->isPast();
     }
 
-    public function getImageSize()
+    public function getImageSize(): int
     {
         try {
             return $this->getImageDisk()->size($this->getImagePath());
@@ -119,7 +117,7 @@ class Post extends Model
         }
     }
 
-    public function createDiscordWebhook()
+    public function createDiscordWebhook(): DiscordWebhook
     {
         $embed = Embed::create()
             ->title($this->title)
@@ -138,12 +136,9 @@ class Post extends Model
 
     /**
      * Scope a query to only include published posts.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePublished(Builder $query)
+    public function scopePublished(Builder $query): void
     {
-        return $query->where('published_at', '<=', now());
+        $query->where('published_at', '<=', now());
     }
 }

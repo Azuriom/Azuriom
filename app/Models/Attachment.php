@@ -21,14 +21,14 @@ class Attachment extends Model
     use HasImage;
     use SoftDeletes;
 
-    protected $imageKey = 'file';
+    protected string $imageKey = 'file';
 
     public function attachable()
     {
         return $this->morphTo('attachable');
     }
 
-    protected function resolveImagePath(string $path = '')
+    protected function resolveImagePath(string $path = ''): string
     {
         return $this->attachable->getAttachmentsPath().'/'.$path;
     }

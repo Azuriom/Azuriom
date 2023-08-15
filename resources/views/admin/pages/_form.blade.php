@@ -39,7 +39,7 @@
     @enderror
 </div>
 
-<div class="mb-3 mb-2">
+<div class="mb-3">
     <div class="form-check form-switch">
         <input type="checkbox" class="form-check-input" id="restrictedSwitch" name="restricted" data-bs-toggle="collapse" data-bs-target="#rolesGroup" @checked(isset($page) && $page->isRestricted())>
         <label class="form-check-label" for="restrictedSwitch">{{ trans('admin.pages.restrict') }}</label>

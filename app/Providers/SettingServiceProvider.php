@@ -14,10 +14,8 @@ class SettingServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(SettingsRepository::class);
     }
@@ -25,12 +23,9 @@ class SettingServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      *
-     * @param  \Illuminate\Config\Repository  $config
-     * @return void
-     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function boot(Config $config)
+    public function boot(Config $config): void
     {
         if (! is_installed()) {
             return;
@@ -40,8 +35,6 @@ class SettingServiceProvider extends ServiceProvider
 
         try {
             $settings = $this->loadSettings();
-
-            $this->migrateSettings($settings);
 
             foreach ($settings as $name => $value) {
                 $this->handleSpecialSettings($config, $name, $value);
@@ -53,7 +46,7 @@ class SettingServiceProvider extends ServiceProvider
         }
     }
 
-    protected function loadSettings()
+    protected function loadSettings(): array
     {
         if ($this->app->runningInConsole()) {
             return Setting::all()->pluck('value', 'name')->all();
@@ -64,7 +57,7 @@ class SettingServiceProvider extends ServiceProvider
         });
     }
 
-    protected function handleSpecialSettings(Config $config, string $name, $value)
+    protected function handleSpecialSettings(Config $config, string $name, $value): void
     {
         switch ($name) {
             case 'name':
@@ -93,35 +86,6 @@ class SettingServiceProvider extends ServiceProvider
             $key = str_replace('mail.smtp', 'mail.mailers.smtp', $name);
 
             $config->set($key, $value);
-        }
-    }
-
-    protected function migrateSettings(array &$settings)
-    {
-        $migrations = [
-            'default-server' => 'servers.default',
-            'role.default' => 'roles.default',
-            'maintenance-status' => 'maintenance.enabled',
-            'maintenance-message' => 'maintenance.message',
-            'maintenance-paths' => 'maintenance.paths',
-            'welcome-popup' => 'welcome_alert',
-            'auth-api' => 'auth_api',
-            'user_money_transfer' => 'users.money_transfer',
-            'user_change_name' => 'users.change_name',
-            'shop.use-site-money' => 'shop.use_site_money',
-            'shop.month-goal' => 'shop.month_goal',
-        ];
-
-        foreach ($migrations as $oldKey => $newKey) {
-            $value = $settings[$oldKey] ?? null;
-
-            if ($value !== null) {
-                unset($settings[$oldKey]);
-                $settings[$newKey] = $value;
-
-                Setting::where('name', $oldKey)->delete();
-                Setting::updateOrCreate(['name' => $newKey], ['value' => $value]);
-            }
         }
     }
 }

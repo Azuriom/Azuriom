@@ -98,11 +98,11 @@
                                         {{ $plugin['name'] }}
                                     </a>
 
-                                    <span class="badge bg-secondary text-white">
+                                    <span class="badge bg-secondary">
                                         <i class="bi bi-download"></i> {{ $plugin['downloads'] }}
                                     </span>
 
-                                    <span class="badge bg-secondary text-white">
+                                    <span class="badge bg-secondary">
                                         <i class="bi bi-heart"></i> {{ $plugin['likes'] }}
                                     </span>
                                 </th>

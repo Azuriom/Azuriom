@@ -13,8 +13,8 @@
                 <h2>{{ trans('messages.server.offline') }}</h2>
             @endif
 
-            @if($server->joinUrl())
-                <a href="{{ $server->joinUrl() }}" class="btn btn-secondary btn-lg">
+            @if($server->join_url)
+                <a href="{{ $server->join_url }}" class="btn btn-secondary btn-lg">
                     {{ trans('messages.server.join') }}
                 </a>
             @else
@@ -23,7 +23,7 @@
         @endif
     </div>
 
-    <div class="container content">
+    <div class="container content my-5">
         @include('elements.session-alerts')
 
         @if($message)
@@ -61,14 +61,14 @@
                                     </p>
                                 @else
                                     <p>
-                                        <span class="badge bg-danger text-white">
+                                        <span class="badge bg-danger">
                                             {{ trans('messages.server.offline') }}
                                         </span>
                                     </p>
                                 @endif
 
-                                @if($server->joinUrl())
-                                    <a href="{{ $server->joinUrl() }}" class="btn btn-primary">
+                                @if($server->join_url)
+                                    <a href="{{ $server->join_url }}" class="btn btn-primary">
                                         {{ trans('messages.server.join') }}
                                     </a>
                                 @else
@@ -97,9 +97,11 @@
                                 <h3 class="card-title">
                                     <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h3>
                                 <p class="card-text">{{ Str::limit(strip_tags($post->content), 250) }}</p>
-                                <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">{{ trans('messages.posts.read') }}</a>
+                                <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">
+                                    {{ trans('messages.posts.read') }}
+                                </a>
                             </div>
-                            <div class="card-footer text-muted">
+                            <div class="card-footer text-body-secondary">
                                 {{ trans('messages.posts.posted', ['date' => format_date($post->published_at), 'user' => $post->author->name]) }}
                             </div>
                         </div>

@@ -10,8 +10,6 @@ class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
      */
     public function index()
     {
@@ -23,9 +21,6 @@ class PostController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \Azuriom\Models\Post  $post
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Support\Responsable
      */
     public function show(Post $post)
     {

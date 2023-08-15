@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Resources;
 
 use Azuriom\Models\Server;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ServerCollection extends ResourceCollection
@@ -22,10 +23,9 @@ class ServerCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<int|string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'default' => new ServerResource($this->default),

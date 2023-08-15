@@ -10,7 +10,7 @@ use Laravel\Socialite\Two\User;
 
 class MinecraftProvider extends XboxProvider
 {
-    protected function getUserByToken($token)
+    protected function getUserByToken($token): array
     {
         $response = Http::asJson()->post('https://api.minecraftservices.com/authentication/login_with_xbox', [
             'identityToken' => $this->getXboxIdentityToken($token, 'rp://api.minecraftservices.com/'),
@@ -27,7 +27,7 @@ class MinecraftProvider extends XboxProvider
         return $response->throw()->json();
     }
 
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
         return (new User())->setRaw($user)->map([
             'id' => Arr::get($user, 'id'),

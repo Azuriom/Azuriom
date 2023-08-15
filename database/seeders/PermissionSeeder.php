@@ -10,21 +10,15 @@ class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (Permission::count() > 0) {
             return;
         }
 
-        $defaultPermissions = [
-            'comments.create',
-        ];
-
         foreach (Role::all() as $role) {
-            $role->syncPermissions($defaultPermissions, false);
+            $role->syncPermissions(['comments.create'], false);
         }
     }
 }

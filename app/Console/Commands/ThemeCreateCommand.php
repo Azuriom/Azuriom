@@ -9,13 +9,6 @@ use Illuminate\Support\Str;
 class ThemeCreateCommand extends Command
 {
     /**
-     * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $files;
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -35,11 +28,10 @@ class ThemeCreateCommand extends Command
      */
     protected $description = 'Create a new Azuriom theme';
 
+    protected Filesystem $files;
+
     /**
      * Create a new command instance.
-     *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
      */
     public function __construct(Filesystem $files)
     {
@@ -50,10 +42,8 @@ class ThemeCreateCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('name');
         $id = $this->argument('id') ?? Str::slug($name);
@@ -81,7 +71,7 @@ class ThemeCreateCommand extends Command
         return 0;
     }
 
-    private function createThemeJson(string $path, string $id, string $name)
+    private function createThemeJson(string $path, string $id, string $name): void
     {
         $this->files->put($path.'/theme.json', json_encode([
             'id' => $id,
@@ -92,10 +82,11 @@ class ThemeCreateCommand extends Command
             'authors' => [
                 $this->option('author'),
             ],
+            'azuriom_api' => '1.1.0',
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
-    private function createConfigJson(string $path)
+    private function createConfigJson(string $path): void
     {
         $this->files->put($path.'/config.json', '{}');
     }

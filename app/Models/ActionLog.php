@@ -82,7 +82,7 @@ class ActionLog extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'user_id', 'type', 'target_id', 'action', 'data',
@@ -91,13 +91,13 @@ class ActionLog extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'data' => 'array',
     ];
 
-    protected static function booted()
+    protected static function booted(): void
     {
         self::registerLogModels([
             Ban::class,
@@ -132,7 +132,7 @@ class ActionLog extends Model
         return $this->hasMany(ActionLogEntry::class);
     }
 
-    protected function getTargetTypeAttribute()
+    protected function getTargetTypeAttribute(): ?string
     {
         if ($this->target_id === null) {
             return null;
@@ -141,7 +141,7 @@ class ActionLog extends Model
         return $this->getActionFormat()['model'] ?? null;
     }
 
-    public function getActionFormat()
+    public function getActionFormat(): array
     {
         return self::$actions[$this->action] ?? [
             'icon' => 'question-lg',
@@ -150,7 +150,7 @@ class ActionLog extends Model
         ];
     }
 
-    public function getActionMessage()
+    public function getActionMessage(): string
     {
         $data = ['id' => $this->target_id] + ($this->data ?? []);
 
@@ -158,14 +158,9 @@ class ActionLog extends Model
     }
 
     /**
-     * Create a new log entry.
-     *
-     * @param  string  $action
-     * @param  \Illuminate\Database\Eloquent\Model|null  $target
-     * @param  array  $data
-     * @return \Azuriom\Models\ActionLog|null
+     * Create a new log entry for the current logged-in user.
      */
-    public static function log(string $action, Model $target = null, array $data = [])
+    public static function log(string $action, Model $target = null, array $data = []): ?ActionLog
     {
         if (Auth::guest()) {
             return null;
@@ -179,14 +174,14 @@ class ActionLog extends Model
         ]);
     }
 
-    public static function registerLogModels(array $models, string $transNamespacePrefix)
+    public static function registerLogModels(array $models, string $transNamespacePrefix): void
     {
         foreach ($models as $item) {
             self::registerLogModel($item, $transNamespacePrefix);
         }
     }
 
-    public static function registerLogModel(string $class, string $transPrefix)
+    public static function registerLogModel(string $class, string $transPrefix): void
     {
         $table = str_replace('_', '-', (new $class())->getTable());
 
@@ -212,7 +207,7 @@ class ActionLog extends Model
         ];
     }
 
-    public static function registerLogs($key, $value = null)
+    public static function registerLogs($key, $value = null): void
     {
         $keys = is_array($key) ? $key : [$key => $value];
 
@@ -221,7 +216,7 @@ class ActionLog extends Model
         }
     }
 
-    public function createEntries(array $old, array $new)
+    public function createEntries(array $old, array $new): void
     {
         foreach ($old as $attribute => $oldValue) {
             $newValue = Arr::get($new, $attribute);
@@ -238,17 +233,14 @@ class ActionLog extends Model
 
     /**
      * Scope a query to only include global logs.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOnlyGlobal(Builder $query)
+    public function scopeOnlyGlobal(Builder $query): void
     {
         $nonGlobals = collect(static::$actions)
             ->where('global', '===', false)
             ->keys()
             ->all();
 
-        return $query->whereNotIn('action', $nonGlobals);
+        $query->whereNotIn('action', $nonGlobals);
     }
 }

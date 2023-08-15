@@ -28,7 +28,7 @@ class Page extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'title', 'description', 'slug', 'content', 'is_enabled',
@@ -37,7 +37,7 @@ class Page extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'is_enabled' => 'boolean',
@@ -51,19 +51,16 @@ class Page extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function isRestricted()
+    public function isRestricted(): bool
     {
         return ! $this->roles->isEmpty();
     }
 
     /**
      * Scope a query to only include enabled pages.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): void
     {
-        return $query->where('is_enabled', true);
+        $query->where('is_enabled', true);
     }
 }

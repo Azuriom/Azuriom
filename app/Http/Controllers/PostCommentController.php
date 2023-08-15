@@ -18,31 +18,23 @@ class PostCommentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Http\Requests\CommentRequest  $request
-     * @param  \Azuriom\Models\Post  $post
-     * @return \Illuminate\Http\Response
      */
     public function store(CommentRequest $request, Post $post)
     {
         $post->comments()->create($request->validated());
 
-        return redirect()->route('posts.show', $post);
+        return to_route('posts.show', $post);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Models\Comment  $comment
-     * @param  \Azuriom\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(Post $post, Comment $comment)
     {
         $comment->delete();
 
-        return redirect()->route('posts.show', $post);
+        return to_route('posts.show', $post);
     }
 }

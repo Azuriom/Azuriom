@@ -368,6 +368,8 @@ return [
             'unbanned' => 'This user has been unbanned.',
         ],
 
+        'discord' => 'Linked Discord account',
+
         'notify' => 'Send a notification',
         'notify_info' => 'Send a notification to this user',
         'notify_all' => 'Send a notification to all users',
@@ -375,7 +377,7 @@ return [
 
     'roles' => [
         'title' => 'Roles',
-        'edit' => 'Edit role :role',
+        'edit' => 'Edit role :role (#:id)',
         'create' => 'Create role',
 
         'default' => 'Default',
@@ -388,6 +390,18 @@ return [
         'remove_admin' => 'You can\'t remove the admin permission of your role.',
         'delete_default' => 'This role cannot be deleted.',
         'delete_own' => 'You cannot delete your role.',
+
+        'discord' => [
+            'title' => 'Link Discord roles',
+            'enable' => 'Enable Discord roles link',
+            'info' => 'You need to create an application on the <a href="https://discord.com/developers/applications" target="_blank">Discord developer dashboard</a> and set the <b>Linked Role Verification URL</b> to <code>:url</code>',
+            'oauth' => 'Then, in <b>OAuth2</b> and in <b>General</b>, you need to add <code>:url</code> in the <b>Redirects</b>.',
+            'token_info' => 'The Bot token can be obtained by creating a bot for your application, in the <b>Bot</b> tab on the left of the Discord developer dashboard.',
+
+            'token' => 'Discord Bot Token',
+            'client_id' => 'Discord Client ID',
+            'client_secret' => 'Discord Client Secret',
+        ],
     ],
 
     'permissions' => [
@@ -467,7 +481,7 @@ return [
         'available' => 'Available plugins',
 
         'requirements' => [
-            'api' => 'This plugin version is not compatible with Azuriom v1.0.',
+            'api' => 'This plugin version is not compatible with Azuriom v:version.',
             'azuriom' => 'This plugin is not compatible with your Azuriom version.',
             'game' => 'This plugin is not compatible with the game :game.',
             'plugin' => 'The plugin ":plugin" is missing or its version is not compatible with this plugin.',
@@ -491,7 +505,7 @@ return [
         'list' => 'Installed themes',
         'available' => 'Available themes',
         'no-enabled' => 'You don\'t have any themes enabled.',
-        'legacy' => 'This theme version is not compatible with Azuriom v1.0.',
+        'legacy' => 'This theme version is not compatible with Azuriom v:version.',
 
         'config' => 'Edit config',
         'disable' => 'Disable theme',

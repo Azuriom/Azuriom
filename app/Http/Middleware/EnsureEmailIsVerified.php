@@ -4,6 +4,7 @@ namespace Azuriom\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified as Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailIsVerified extends Middleware
 {
@@ -11,11 +12,10 @@ class EnsureEmailIsVerified extends Middleware
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @param  string|null  $redirectToRoute
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse|null
      */
-    public function handle($request, Closure $next, $redirectToRoute = null)
+    public function handle($request, Closure $next, $redirectToRoute = null): Response
     {
         if (! setting('mail.users_email_verification') && $request->user() !== null) {
             return $next($request);
