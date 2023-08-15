@@ -63,7 +63,7 @@ class UpdateController extends Controller
             $this->updates->download($update);
         } catch (Exception $e) {
             return response()->json([
-                'message' => trans('message.status.error', [
+                'message' => trans('messages.status.error', [
                     'error' => $e->getMessage(),
                 ]),
             ], 422);

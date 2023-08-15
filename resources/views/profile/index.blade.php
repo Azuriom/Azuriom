@@ -28,7 +28,7 @@
                         @if(! oauth_login())
                             <li>{{ trans('messages.profile.info.2fa', ['2fa' => trans_bool($user->hasTwoFactorAuth())]) }}</li>
                         @endif
-                        @if($enableDiscordLink && $discordAccount !== null)
+                        @if($discordAccount !== null)
                             <li>{{ trans('messages.profile.info.discord', ['user' => $discordAccount->name]) }}</li>
                         @endif
                     </ul>

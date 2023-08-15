@@ -39,12 +39,14 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
+        $discordLink = setting('discord.link_roles', false);
+
         return view('profile.index', [
             'user' => $request->user(),
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
-            'discordAccount' => $request->user()->discordAccount,
-            'enableDiscordLink' => setting('discord.link_roles', false),
+            'discordAccount' => $discordLink ? $request->user()->discordAccount : null,
+            'enableDiscordLink' => $discordLink,
         ]);
     }
 

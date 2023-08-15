@@ -360,7 +360,7 @@ class InstallController extends Controller
             $user = User::create([
                 'name' => $name,
                 'email' => $request->input('email'),
-                'password' => $request->input('password', Str::random(32)),
+                'password' => $request->input('password') ?? Str::random(32),
                 'password_changed_at' => now(),
                 'game_id' => $gameId ?? null,
             ]);
