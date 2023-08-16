@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\Searchable;
 use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DiscordAccount extends Model
 {
+    use Searchable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,6 +39,15 @@ class DiscordAccount extends Model
      */
     protected $casts = [
         'expires_at' => 'datetime',
+    ];
+
+    /**
+     * The attributes that can be used for search.
+     *
+     * @var array<int, string>
+     */
+    protected array $searchable = [
+        'discord_user_id',
     ];
 
     public function user()

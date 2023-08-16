@@ -1,6 +1,19 @@
 @push('styles')
     <link href="{{ asset('vendor/easymde/easymde.min.css') }}" rel="stylesheet">
     <style>
+        .editor-toolbar {
+            border-top-left-radius: var(--bs-border-radius);
+            border-top-right-radius: var(--bs-border-radius);
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            border-bottom: 0;
+        }
+
+        .EasyMDEContainer .CodeMirror {
+            border-bottom-left-radius: var(--bs-border-radius);
+            border-bottom-right-radius: var(--bs-border-radius);
+            border: var(--bs-border-width) solid var(--bs-border-color);
+        }
+
         .editor-toolbar .table {
             width: unset;
         }

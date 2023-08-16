@@ -108,12 +108,12 @@ class Server extends Model
 
     public function getOnlinePlayers(): int
     {
-        return $this->getData('players');
+        return $this->getData('players', 0);
     }
 
     public function getMaxPlayers(): int
     {
-        return $this->getData('max_players');
+        return $this->getData('max_players', 0);
     }
 
     public function getPlayersPercents(): float
@@ -155,13 +155,13 @@ class Server extends Model
         ], Arr::only($data, ['players', 'cpu', 'ram'])));
     }
 
-    public function getData(string $key = null): mixed
+    public function getData(string $key = null, mixed $default = null): mixed
     {
         $data = Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
             return $this->bridge()->getServerData();
         });
 
-        return $key === null ? $data : ($data[$key] ?? null);
+        return $key === null ? $data : ($data[$key] ?? $default);
     }
 
     public function bridge(): ServerBridge

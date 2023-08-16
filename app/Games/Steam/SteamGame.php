@@ -6,6 +6,7 @@ use Azuriom\Games\Game;
 use Azuriom\Games\Steam\Servers\AzLink;
 use Azuriom\Games\Steam\Servers\Query;
 use Azuriom\Games\Steam\Servers\Rcon;
+use Azuriom\Games\UserAttribute;
 use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Http;
 class SteamGame extends Game
 {
     public const USER_INFO_URL = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
+
+    protected UserAttribute $userPrimaryAttribute = UserAttribute::ID;
 
     protected string $name;
 

@@ -202,44 +202,44 @@
                     </div>
                 </div>
             @endif
+        @endif
 
-            @if(setting('users.money_transfer'))
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">
-                                {{ trans('messages.profile.money_transfer.title') }}
-                            </h2>
+        @if(setting('users.money_transfer'))
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            {{ trans('messages.profile.money_transfer.title') }}
+                        </h2>
 
-                            <form action="{{ route('profile.transfer-money') }}" method="POST">
-                                @csrf
+                        <form action="{{ route('profile.transfer-money') }}" method="POST">
+                            @csrf
 
-                                <div class="mb-3">
-                                    <label class="form-label" for="nameInput">{{ trans('auth.name') }}</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
+                            <div class="mb-3">
+                                <label class="form-label" for="nameInput">{{ game()->userPrimaryAttributeName() }}</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name') }}" required>
 
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label" for="moneyInput">{{ trans('messages.fields.money') }}</label>
-                                    <input type="number" placeholder="0.00" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money') }}" required>
+                            <div class="mb-3">
+                                <label class="form-label" for="moneyInput">{{ trans('messages.fields.money') }}</label>
+                                <input type="number" placeholder="0.00" min="0" step="0.01" class="form-control @error('money') is-invalid @enderror" id="moneyInput" name="money" value="{{ old('money') }}" required>
 
-                                    @error('money')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
+                                @error('money')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-send"></i> {{ trans('messages.actions.send') }}
-                                </button>
-                            </form>
-                        </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send"></i> {{ trans('messages.actions.send') }}
+                            </button>
+                        </form>
                     </div>
                 </div>
-            @endif
+            </div>
         @endif
 
         @foreach($cards ?? [] as $card)

@@ -6,6 +6,7 @@ use Azuriom\Games\Game;
 use Azuriom\Games\Minecraft\Servers\AzLink;
 use Azuriom\Games\Minecraft\Servers\BedrockPing;
 use Azuriom\Games\Minecraft\Servers\BedrockRcon;
+use Azuriom\Games\UserAttribute;
 use Azuriom\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -16,6 +17,8 @@ class MinecraftBedrockGame extends Game
     public const PROFILE_LOOKUP = 'https://xbox-api.azuriom.com/profiles/';
 
     public const USERNAME_LOOKUP = 'https://xbox-api.azuriom.com/search/';
+
+    protected UserAttribute $userPrimaryAttribute = UserAttribute::ID;
 
     public function name(): string
     {

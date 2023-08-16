@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected array $searchable = [
-        'email', 'name', 'game_id', 'role.*', 'discordAccount.discord_user_id',
+        'email', 'name', 'game_id', 'role.*', 'discordAccount.*',
     ];
 
     protected static function booted(): void

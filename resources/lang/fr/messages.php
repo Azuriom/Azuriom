@@ -189,7 +189,7 @@ return [
 
         'money_transfer' => [
             'title' => 'Transfert d\'argent',
-            'self' => 'Vous ne pouvez pas vous envoyer d\'argent à vous même.',
+            'user' => 'Cet utilisateur n\'a pas été trouvé.',
             'balance' => 'Vous n\'avez pas assez d\'argent pour faire ce transfert.',
             'success' => 'L\'argent a été envoyé avec succès.',
             'notification' => ':user vous a envoyé :money.',

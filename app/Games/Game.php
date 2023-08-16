@@ -7,6 +7,12 @@ use Azuriom\Models\User;
 abstract class Game
 {
     /**
+     * The primary attribute that should be used when searching for a user, currently used in
+     * money transfer (in user profile, if enabled) and in some plugins.
+     */
+    protected UserAttribute $userPrimaryAttribute = UserAttribute::NAME;
+
+    /**
      * Get the id of this game.
      *
      * @return string
@@ -87,5 +93,12 @@ abstract class Game
     public function isExtensionCompatible(array $supportedGames)
     {
         return in_array($this->id(), $supportedGames, true);
+    }
+
+    public function userPrimaryAttributeName(): string
+    {
+        return $this->userPrimaryAttribute === UserAttribute::NAME
+            ? trans('auth.name')
+            : $this->trans('id');
     }
 }

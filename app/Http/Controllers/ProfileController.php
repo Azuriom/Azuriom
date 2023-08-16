@@ -313,18 +313,20 @@ class ProfileController extends Controller
         abort_if(! setting('users.money_transfer'), 403);
 
         $this->validate($request, [
-            'name' => ['required', 'exists:users,name'],
+            'name' => ['required'],
             'money' => ['required', 'numeric', 'min:0.01'],
         ]);
 
         $user = $request->user();
         $money = $request->input('money');
 
-        $receiver = User::firstWhere('name', $request->input('name'));
+        $receiver = User::where('game_id', $request->input('name'))
+            ->orWhere('name', $request->input('name'))
+            ->first();
 
-        if ($user->is($receiver)) {
+        if ($receiver === null || $user->is($receiver)) {
             throw ValidationException::withMessages([
-                'name' => trans('messages.profile.money_transfer.self'),
+                'name' => trans('messages.profile.money_transfer.user'),
             ]);
         }
 

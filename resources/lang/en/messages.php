@@ -189,7 +189,7 @@ return [
 
         'money_transfer' => [
             'title' => 'Money transfer',
-            'self' => 'You can\'t send money to yourself.',
+            'user' => 'This user was not found.',
             'balance' => 'You don\'t have enough money to make this transfer.',
             'success' => 'The money was successfully sent.',
             'notification' => ':user sent you :money.',
