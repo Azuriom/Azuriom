@@ -59,6 +59,7 @@ class ServerController extends Controller
         try {
             $server = new Server(array_merge($request->validated(), [
                 'token' => Str::random(32),
+                'data' => $request->input('data'),
             ]));
 
             if (! $server->bridge()->verifyLink()) {
@@ -101,7 +102,7 @@ class ServerController extends Controller
      */
     public function update(ServerRequest $request, Server $server)
     {
-        $server->fill($request->validated());
+        $server->fill(array_merge($request->validated(), $request->only('data')));
 
         try {
             if (! $server->bridge()->verifyLink()) {

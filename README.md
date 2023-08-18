@@ -59,7 +59,7 @@ If you discover any security related issues within Azuriom, please send an e-mai
 
 ## Support us
 
-You can support Azuriom on [DonorBox](https://donorbox.org/Azuriom).
+If you like this project, please consider supporting us on [GitHub sponsors](https://github.com/sponsors/Azuriom).
 
 ## License
 
