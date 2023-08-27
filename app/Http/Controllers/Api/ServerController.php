@@ -246,7 +246,7 @@ class ServerController extends Controller
                 return [
                     'name' => $user->name,
                     'uid' => $user->game_id,
-                    'steamid_32' => SteamID::convertTo32($user->game_id),
+                    'steamid_32' => SteamID::convertTo32((int) $user->game_id),
                     'values' => $serverCommands->pluck('command'),
                 ];
             });

@@ -92,7 +92,11 @@ class ProfileController extends Controller
         $password = $request->input('password');
         $user = $request->user();
 
-        $user->update(['password' => $password]);
+        $user->update([
+            'password' => $password,
+            'access_token' => null,
+        ]);
+
         Auth::logoutOtherDevices($password);
         event(new PasswordReset($user));
 
@@ -254,6 +258,8 @@ class ProfileController extends Controller
      */
     public function discordCallback(Request $request)
     {
+        abort_if(! $request->filled('code'), 401);
+
         $user = $request->user();
         $discordUser = Socialite::driver('discord')->user();
 

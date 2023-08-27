@@ -30,7 +30,7 @@ class LinkedRoles
 
         $url = self::BASE_URL."/users/@me/applications/{$clientId}/role-connection";
         Http::asJson()->withToken($accessToken)->put($url, [
-            'platform_name' => 'Azuriom Discord Bridge',
+            'platform_name' => site_name(),
             'metadata' => [
                 'role_id' => $role->id,
                 'role_power' => $role->power,

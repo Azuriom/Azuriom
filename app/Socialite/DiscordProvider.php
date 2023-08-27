@@ -2,6 +2,7 @@
 
 namespace Azuriom\Socialite;
 
+use Illuminate\Support\Str;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -70,9 +71,13 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
+        $discriminator = $user['discriminator']
+            ? '#'.Str::padLeft($user['discriminator'], 4, '0')
+            : '';
+
         return (new User())->setRaw($user)->map([
             'id' => $user['id'],
-            'nickname' => "{$user['username']}#{$user['discriminator']}",
+            'nickname' => $user['username'].$discriminator,
             'name' => $user['username'],
         ]);
     }
