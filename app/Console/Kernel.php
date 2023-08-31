@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('game:ping')->everyMinute();
         $schedule->command('attachments:purge')->daily();
         $schedule->command('logs:purge')->monthly();
+        $schedule->command('sitemap:generate')->daily();
     }
 
     /**

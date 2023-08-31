@@ -18,6 +18,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2.2",
         "pragmarx/google2fa": "^8.0",
+        "spatie/laravel-sitemap": "^6.3",
         "symfony/filesystem": "^6.2",
         "textalk/websocket": "^1.5",
         "thedudeguy/rcon": "^1.0",
