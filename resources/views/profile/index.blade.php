@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    @if($user->email !== null && ! $user->hasVerifiedEmail())
+    @if($user->email !== null && ! $user->hasVerifiedEmail() && setting('mail.users_email_verification', true))
         @if (session('resent'))
             <div class="alert alert-success mb-4" role="alert">
                 {{ trans('auth.verification.sent') }}
