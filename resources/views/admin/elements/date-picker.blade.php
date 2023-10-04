@@ -4,6 +4,12 @@
 
 @push('footer-scripts')
     <script src="{{ asset('vendor/flatpickr/js/flatpickr.min.js') }}"></script>
+    @if(app()->getLocale() !== 'en')
+        <script src="{{ asset('vendor/flatpickr/js/l10n/'.Str::beforeLast(app()->getLocale(), '_').'.js') }}"></script>
+        <script>
+            flatpickr.localize(flatpickr.l10ns.{{ Str::beforeLast(app()->getLocale(), '_') }});
+        </script>
+    @endif
     <script>
         flatpickr('.date-picker', {
             time_24hr: true,

@@ -176,7 +176,7 @@ class LoginController extends Controller
 
     protected function redirectTo2fa(Request $request, User $user)
     {
-        $request->session()->flash('login.2fa', [
+        $request->session()->put('login.2fa', [
             'id' => $user->id,
             'remember' => $request->filled('remember'),
         ]);

@@ -37,7 +37,7 @@ Route::prefix('user')->group(function () {
 
     Route::prefix('/2fa')->name('login.')->group(function () {
         Route::get('/', [LoginController::class, 'showCodeForm'])->name('2fa');
-        Route::post('/', [LoginController::class, 'verifyCode'])->name('2fa-verify');
+        Route::post('/', [LoginController::class, 'verifyCode'])->name('2fa-verify')->middleware('throttle:two-factor');
     });
 });
 

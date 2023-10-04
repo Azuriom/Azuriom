@@ -3,6 +3,7 @@
 namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
+use Illuminate\Support\HtmlString;
 
 class HomeController extends Controller
 {
@@ -18,7 +19,7 @@ class HomeController extends Controller
             ->get();
 
         return view('home', [
-            'message' => setting('home_message'),
+            'message' => new HtmlString(setting('home_message')),
             'posts' => $posts,
         ]);
     }

@@ -39,13 +39,16 @@ class ProfileController extends Controller
      */
     public function index(Request $request)
     {
+        $user = $request->user();
         $discordLink = setting('discord.link_roles', false);
+        $emailVerification = setting('mail.users_email_verification', true);
 
         return view('profile.index', [
-            'user' => $request->user(),
+            'user' => $user,
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
             'canDelete' => setting('user.delete', false),
-            'discordAccount' => $discordLink ? $request->user()->discordAccount : null,
+            'canVerifyEmail' => $user->email !== null && ! $user->hasVerifiedEmail() && $emailVerification,
+            'discordAccount' => $discordLink ? $user->discordAccount : null,
             'enableDiscordLink' => $discordLink,
         ]);
     }

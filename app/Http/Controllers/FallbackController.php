@@ -26,8 +26,6 @@ class FallbackController extends Controller
         $page = Page::enabled()->where('slug', $path)->first();
 
         if ($page === null) {
-            $request->session()->reflash();
-
             throw (new ModelNotFoundException())->setModel(Page::class);
         }
 

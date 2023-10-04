@@ -353,6 +353,7 @@ return [
 
         '2fa' => [
             'title' => 'Authentification à deux facteurs',
+            'secured' => 'A2F activée',
             'disable' => 'Désactiver l\'A2F',
             'disabled' => 'L\'authentification à deux facteurs a été désactivée',
         ],

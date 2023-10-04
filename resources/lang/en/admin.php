@@ -353,6 +353,7 @@ return [
 
         '2fa' => [
             'title' => 'Two Factor Authentication',
+            'secured' => '2FA enabled',
             'disable' => 'Disable 2FA',
             'disabled' => 'The Two Factor Authentication has been disabled.',
         ],

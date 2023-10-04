@@ -2,6 +2,8 @@
 
 @section('title', trans('admin.settings.seo.title'))
 
+@include('admin.elements.editor')
+
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
