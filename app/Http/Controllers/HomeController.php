@@ -19,7 +19,7 @@ class HomeController extends Controller
             ->get();
 
         return view('home', [
-            'message' => new HtmlString(setting('home_message')),
+            'message' => empty(setting('home_message')) ? null : new HtmlString(setting('home_message')),
             'posts' => $posts,
         ]);
     }
