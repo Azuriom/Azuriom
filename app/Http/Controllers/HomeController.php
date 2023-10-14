@@ -17,9 +17,10 @@ class HomeController extends Controller
             ->latest('published_at')
             ->take(5)
             ->get();
+        $homeMessage = setting('home_message');
 
         return view('home', [
-            'message' => new HtmlString(setting('home_message')),
+            'message' => $homeMessage ? new HtmlString($homeMessage) : null,
             'posts' => $posts,
         ]);
     }
