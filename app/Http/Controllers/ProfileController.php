@@ -41,7 +41,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $discordLink = setting('discord.link_roles', false);
-        $emailVerification = setting('mail.users_email_verification', true);
+        $emailVerification = setting('mail.users_email_verification', false);
 
         return view('profile.index', [
             'user' => $user,

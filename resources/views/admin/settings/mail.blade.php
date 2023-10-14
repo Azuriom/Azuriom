@@ -128,22 +128,22 @@
                     <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.settings.mail.sendmail') }}
                 </div>
 
-                <div v-if="!type" class="alert alert-warning" role="alert">
-                    <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
-                </div>
-
-                <div class="mb-3" data-mail-type="smtp sendmail">
+                <div v-if="type" class="mb-3">
                     <div class="mb-3 form-check form-switch">
                         <input type="checkbox" class="form-check-input" id="verificationSwitch" name="users_email_verification" @checked(setting('mail.users_email_verification'))>
                         <label class="form-check-label" for="verificationSwitch">{{ trans('admin.settings.mail.verification') }}</label>
                     </div>
                 </div>
 
+                <div v-else class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.settings.mail.disabled') }}
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
-                <button type="button" class="btn btn-success" id="sendTestMail" data-mail-type="smtp sendmail">
+                <button v-if="type" type="button" class="btn btn-success" id="sendTestMail">
                     <i class="bi bi-send"></i>
                     {{ trans('admin.settings.mail.send') }}
                     <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
