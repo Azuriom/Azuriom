@@ -14,7 +14,7 @@
         "@popperjs/core": "^2.11.5",
         "@simonwep/pickr": "^1.8.0",
         "autosize": "^5.0.2",
-        "axios": "^1.1.2",
+        "axios": "^1.6.0",
         "bootstrap": "^5.1.0",
         "bootstrap-icons": "^1.8.1",
         "chart.js": "^2.9.4",
