@@ -158,6 +158,14 @@
     </div>
 </div>
 
+@if (game()->id() === 'unturned')
+<div v-show="type === 'source-rcon'" class="mb-3">
+    <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
+    </div>
+</div>
+@endif
+
 <div v-show="type === 'mc-azlink' || type === 'steam-azlink'">
     @unless(isset($server) && $server->isOnline())
         <div class="alert alert-info">
