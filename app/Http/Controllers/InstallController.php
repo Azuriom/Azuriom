@@ -87,7 +87,7 @@ class InstallController extends Controller
         ],
         'unturned' => [
             'name' => 'Unturned',
-            'logo' => 'assets/img/games/unturned.png',
+            'logo' => 'assets/img/games/unturned.svg',
         ],
         'custom' => [
             'name' => 'Custom Game',

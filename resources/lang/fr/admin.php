@@ -262,7 +262,7 @@ return [
 
         'ping_info' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
         'query_info' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
-        'unturned_info' => 'Vous devez utiliser le type srcds RCON dans OpenMod. RocketMod RCON n\'est pas compatible!',
+        'unturned_info' => 'Vous devez utiliser le RCON de type SRCDS dans OpenMod. Le RCON de RocketMod n\'est pas compatible!',
 
         'query_port_info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 
