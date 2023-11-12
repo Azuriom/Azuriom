@@ -35,6 +35,7 @@ class GameServiceProvider extends ServiceProvider
             'fivem' => FiveMGame::class,
             'csgo' => SteamGame::forName('csgo', 'CS:GO'),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
+            'unturned' => SteamGame::forName('unturned', 'Unturned'),
         ]);
     }
 

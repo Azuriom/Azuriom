@@ -20,6 +20,7 @@ Azuriom natively supports the following games:
 * [ARK: Survival Evolved](https://playark.com/ark-survival-evolved/)
 * [Rust](https://rust.facepunch.com/)
 * [FiveM](https://fivem.net/)
+* [Unturned](https://smartlydressedgames.com/)
 * [Counter-Strike: Global Offensive](https://blog.counter-strike.net/)
 * [Team Fortress 2](https://www.teamfortress.com/)
 
