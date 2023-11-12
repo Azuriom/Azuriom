@@ -270,7 +270,7 @@ return [
         'rcon_password' => 'Rcon Password',
         'rcon_port' => 'Rcon Port',
         'query_port' => 'Source Query Port',
-        'unturned_info' => 'You need to use srcds RCON type in OpenMod. RocketMod RCON is not compatitable!',
+        'unturned_info' => 'You need to use srcds RCON type in OpenMod. RocketMod RCON is not compatible!',
 
         'azlink' => [
             'port' => 'AzLink Port',
