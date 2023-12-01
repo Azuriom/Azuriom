@@ -36,6 +36,7 @@ class GameServiceProvider extends ServiceProvider
             'csgo' => SteamGame::forName('csgo', 'CS:GO'),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
             'unturned' => SteamGame::forName('unturned', 'Unturned'),
+            '7-days-to-die' => SteamGame::forName('7-days-to-die', '7 Days to Die', true),
         ]);
     }
 

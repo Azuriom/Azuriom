@@ -22,6 +22,7 @@ Azuriom natively supports the following games:
 * [FiveM](https://fivem.net/)
 * [Unturned](https://smartlydressedgames.com/)
 * [Counter-Strike: Global Offensive](https://blog.counter-strike.net/)
+* [7 Days to Die](https://7daystodie.com/)
 * [Team Fortress 2](https://www.teamfortress.com/)
 
 You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129).

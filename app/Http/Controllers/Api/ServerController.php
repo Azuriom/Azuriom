@@ -17,6 +17,8 @@ use Illuminate\Support\Collection;
 
 class ServerController extends Controller
 {
+    private const UID_KEYS = ['GMOD', 'OXIDE'];
+
     public function user(User $user)
     {
         return response()->json([
@@ -44,14 +46,17 @@ class ServerController extends Controller
 
     public function status()
     {
-        return response()->noContent(headers: ['AzLink-Status' => 'Success']);
+        return response()->json([
+            'status' => 'success',
+            'game' => game()->id(),
+        ]);
     }
 
     public function fetch(Request $request)
     {
         /** @var \Azuriom\Models\Server $server */
         $server = Server::find($request->input('server-id'));
-        $uidKey = $request->json('platform.type') === 'GMOD';
+        $uidKey = in_array($request->json('platform.type'), self::UID_KEYS, true);
         $rawPlayers = $request->json('players', []);
         $maxPlayers = $request->json('maxPlayers');
 
@@ -82,6 +87,7 @@ class ServerController extends Controller
         }
 
         return response()->json([
+            'game' => game()->id(),
             'commands' => $commands,
             'retry' => $commands->count() > 100,
             'users' => $users->map(fn (User $user) => [
@@ -249,6 +255,7 @@ class ServerController extends Controller
                     'steamid_32' => SteamID::convertTo32((int) $user->game_id),
                     'values' => $serverCommands->pluck('command'),
                 ];
-            });
+            })
+            ->values();
     }
 }
