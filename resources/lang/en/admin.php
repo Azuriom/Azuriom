@@ -544,6 +544,8 @@ return [
 
         'downloaded' => 'The latest version has been downloaded, you can now install it.',
         'installed' => 'The update has been installed successfully.',
+
+        'php' => 'You must use PHP :version or higher to update to this version of Azuriom.',
     ],
 
     'logs' => [

@@ -197,8 +197,6 @@ class LoginController extends Controller
             return to_route('login');
         }
 
-        $request->session()->keep('login.2fa');
-
         return view('auth.2fa');
     }
 
@@ -222,8 +220,6 @@ class LoginController extends Controller
         $code = $request->input('code');
 
         if (! $user->isValidTwoFactorCode($code)) {
-            $request->session()->keep('login.2fa');
-
             throw ValidationException::withMessages([
                 'code' => trans('auth.2fa.invalid'),
             ]);

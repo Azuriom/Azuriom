@@ -19,6 +19,8 @@ use League\CommonMark\MarkdownConverter;
 
 class Markdown
 {
+    public const IMAGES_PROXY = 'https://images.weserv.nl/?url=%s';
+
     public static function parse(string $text, bool $basic = false): string
     {
         $internalHosts = [Str::remove(['http://', 'https://'], config('app.url'))];
@@ -33,7 +35,7 @@ class Markdown
             ],
             'external_image' => [
                 'internal_hosts' => $internalHosts,
-                'image_proxy' => 'https://images.weserv.nl/?url=%s',
+                'image_proxy' => setting('markdown.images_proxy', self::IMAGES_PROXY),
             ],
         ];
 

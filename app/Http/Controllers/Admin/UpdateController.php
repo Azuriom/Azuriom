@@ -8,6 +8,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class UpdateController extends Controller
 {
@@ -57,6 +58,14 @@ class UpdateController extends Controller
             return response()->json([
                 'message' => trans('admin.update.latest'),
             ]);
+        }
+
+        $minPhp = Arr::get($update, 'php_version');
+
+        if (version_compare(PHP_VERSION, $minPhp, '<')) {
+            return response()->json([
+                'message' => trans('admin.update.php', ['version' => $minPhp]),
+            ], 422);
         }
 
         try {

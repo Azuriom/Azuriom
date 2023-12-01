@@ -143,7 +143,7 @@
                     <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
-                <button v-if="type" type="button" class="btn btn-success" id="sendTestMail">
+                <button v-show="type" type="button" class="btn btn-success" id="sendTestMail">
                     <i class="bi bi-send"></i>
                     {{ trans('admin.settings.mail.send') }}
                     <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
