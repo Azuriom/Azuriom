@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -12,6 +13,11 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    /**
+     * The current password being used by the factory.
+     */
+    protected static ?string $password;
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -31,7 +37,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'role_id' => Role::factory(),
             'email_verified_at' => $this->faker->dateTimeThisYear(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'last_login_at' => $this->faker->dateTimeThisYear(),
             'last_login_ip' => $this->faker->ipv4(),
