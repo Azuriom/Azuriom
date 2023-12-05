@@ -3,12 +3,14 @@
 namespace Azuriom\Providers;
 
 use Azuriom\Games\FallbackGame;
+use Azuriom\Games\FiveMGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
-use Azuriom\Games\Steam\FiveMGame;
+use Azuriom\Games\Steam\FiveMGame as FiveMGameLegacy;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
+use Azuriom\Socialite\CfxProvider;
 use Azuriom\Socialite\DiscordProvider;
 use Azuriom\Socialite\Minecraft\AzuriomMinecraftProvider;
 use Azuriom\Socialite\Xbox\AzuriomXboxProvider;
@@ -29,11 +31,12 @@ class GameServiceProvider extends ServiceProvider
             'mc-online' => MinecraftOnlineGame::class,
             'mc-offline' => MinecraftOfflineGame::class,
             'mc-bedrock' => MinecraftBedrockGame::class,
+            'fivem-cfx' => FiveMGame::class,
             'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod', true),
             'ark' => SteamGame::forName('ark', 'ARK'),
             'rust' => RustGame::class,
-            'fivem' => FiveMGame::class,
-            'csgo' => SteamGame::forName('csgo', 'CS:GO'),
+            'fivem' => FiveMGameLegacy::class,
+            'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2'),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
             'unturned' => SteamGame::forName('unturned', 'Unturned'),
             '7-days-to-die' => SteamGame::forName('7-days-to-die', '7 Days to Die', true),
@@ -73,6 +76,15 @@ class GameServiceProvider extends ServiceProvider
             $config = $app['config']['services.microsoft'];
 
             return $socialite->buildProvider(AzuriomMinecraftProvider::class, $config);
+        });
+
+        $socialite->extend('cfx', function () use ($socialite) {
+            return $socialite->buildProvider(CfxProvider::class, [
+                'app_name' => site_name(),
+                'client_id' => setting('cfx.id'),
+                'client_secret' => '',
+                'redirect' => '/user/login/callback',
+            ]);
         });
 
         $socialite->extend('discord', function () use ($socialite) {

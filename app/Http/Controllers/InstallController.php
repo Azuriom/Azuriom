@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Extensions\UpdateManager;
+use Azuriom\Games\FiveMGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\SteamGame;
@@ -81,7 +82,7 @@ class InstallController extends Controller
             'name' => 'Rust',
             'logo' => 'assets/img/games/rust.svg',
         ],
-        'fivem' => [
+        'fivem-cfx' => [
             'name' => 'FiveM',
             'logo' => 'assets/img/games/fivem.svg',
         ],
@@ -242,6 +243,13 @@ class InstallController extends Controller
             ]);
         }
 
+        if ($game === 'fivem-cfx') {
+            return view('install.games.fivem', [
+                'gameName' => 'Five',
+                'locales' => self::getAvailableLocales(),
+            ]);
+        }
+
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
@@ -259,132 +267,185 @@ class InstallController extends Controller
 
     public function setupGame(Request $request, string $game)
     {
-        abort_if(! array_key_exists($game, $this->games), 404);
-
         try {
             if (in_array($game, $this->steamGames, true)) {
-                $this->validate($request, [
-                    'key' => 'required',
-                    'url' => 'required',
-                    'locale' => [Rule::in(static::getAvailableLocaleCodes())],
-                ]);
-
-                $profile = Http::get($request->input('url').'?xml=1')->body();
-
-                if (! Str::contains($profile, '<steamID64>')) {
-                    throw ValidationException::withMessages(['url' => 'Invalid Steam profile URL.']);
-                }
-
-                preg_match('/<steamID64>(\d{17})<\/steamID64>/', $profile, $matches);
-
-                $gameId = $matches[1];
-                $steamKey = $request->input('key');
-
-                try {
-                    $name = Http::get(SteamGame::USER_INFO_URL, [
-                        'key' => $steamKey,
-                        'steamids' => $gameId,
-                    ])->throw()->json('response.players.0.personaname');
-
-                    if ($name === null) {
-                        throw new RuntimeException('Invalid Steam URL.');
-                    }
-                } catch (HttpClientException) {
-                    throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
-                }
-            } elseif ($game === 'minecraft' || $game === 'mc-bedrock') {
-                if ($game !== 'mc-bedrock') {
-                    $game = $request->input('oauth') ? 'mc-online' : 'mc-offline';
-                }
-
-                $this->validate($request, [
-                    'name' => ['required_if:oauth,0', 'nullable', 'max:25'],
-                    'email' => ['required_if:oauth,0', 'nullable', 'email', 'max:50'], // TODO ensure unique
-                    'password' => ['required_if:oauth,0', 'nullable', 'confirmed', Password::default()],
-                    'locale' => [Rule::in(static::getAvailableLocaleCodes())],
-                ]);
-
-                $name = $request->input('name');
-
-                if ($game === 'mc-online') {
-                    $gameId = Str::remove('-', $request->input('uuid', ''));
-                    $response = Http::get(MinecraftOnlineGame::PROFILE_LOOKUP.$gameId);
-
-                    if (! $response->successful() || ! ($name = $response->json('name'))) {
-                        throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID or couldn\'t contact Mojang\'s session server.']);
-                    }
-                } elseif ($game === 'mc-bedrock') {
-                    $gameId = $request->input('xuid');
-                    $name = Http::get(MinecraftBedrockGame::PROFILE_LOOKUP.$gameId)
-                        ->json('gamertag');
-
-                    if ($name === null) {
-                        throw ValidationException::withMessages(['xuid' => 'Invalid Xbox XUID.']);
-                    }
-                }
+                $this->setupSteamGame($request, $game);
             }
 
-            Artisan::call('cache:clear');
-            Artisan::call('migrate', ['--force' => true, '--seed' => true]);
-            Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
-
-            EnvEditor::updateEnv([
-                'APP_LOCALE' => $request->input('locale'),
-                'APP_URL' => url('/'),
-                'MAIL_MAILER' => 'array',
-                'AZURIOM_GAME' => $game,
-            ] + (isset($steamKey) ? ['STEAM_KEY' => $steamKey] : []));
-
-            if ($game === 'custom') {
-                return to_route('install.finish');
+            if ($game === 'minecraft' || $game === 'mc-bedrock') {
+                return $this->setupMinecraftGame($request, $game);
             }
 
-            $communityGames = $this->getCommunityGames();
-
-            if (array_key_exists($game, $communityGames)) {
-                $updateManager = app(UpdateManager::class);
-                $pluginManager = app(PluginManager::class);
-
-                $pluginDir = $pluginManager->path($game);
-
-                try {
-                    $updateManager->download($communityGames[$game], 'plugins/');
-                    $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
-                    $pluginManager->enable($game);
-
-                    $description = $pluginManager->findDescription($game);
-
-                    if ($description !== null && isset($description->installRedirectPath)) {
-                        return redirect($description->installRedirectPath);
-                    }
-
-                    return $this->finishInstall();
-                } catch (Throwable $t) {
-                    return to_route('install.games')->with('error', $t->getMessage());
-                }
+            if ($game === 'fivem-cfx') {
+                return $this->setupFiveM($request);
             }
 
-            $roleId = Role::admin()->orderByDesc('power')->value('id');
-            $user = User::create([
-                'name' => $name,
-                'email' => $request->input('email'),
-                'password' => $request->input('password') ?? Str::random(32),
-                'password_changed_at' => now(),
-                'game_id' => $gameId ?? null,
-            ]);
-
-            $user->markEmailAsVerified();
-            $user->forceFill(['role_id' => $roleId])->save();
-
-            if ($game !== 'mc-offline') {
-                Setting::updateSettings('register', false);
-            }
+            abort(404, 'Invalid game type: '.$game);
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', trans('messages.status.error', [
                 'error' => mb_convert_encoding($e->getMessage(), 'UTF-8'),
             ]));
+        }
+    }
+
+    /**
+     * Install Azuriom for a Steam-based game.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function setupSteamGame(Request $request, string $game)
+    {
+        $this->validate($request, [
+            'key' => 'required',
+            'url' => 'required',
+            'locale' => [Rule::in(static::getAvailableLocaleCodes())],
+        ]);
+
+        $profile = Http::get($request->input('url').'?xml=1')->body();
+
+        if (! Str::contains($profile, '<steamID64>')) {
+            throw ValidationException::withMessages(['url' => 'Invalid Steam profile URL.']);
+        }
+
+        preg_match('/<steamID64>(\d{17})<\/steamID64>/', $profile, $matches);
+
+        $gameId = $matches[1];
+        $steamKey = $request->input('key');
+
+        try {
+            $name = Http::get(SteamGame::USER_INFO_URL, [
+                'key' => $steamKey,
+                'steamids' => $gameId,
+            ])->throw()->json('response.players.0.personaname');
+
+            if ($name === null) {
+                throw new RuntimeException('Invalid Steam URL.');
+            }
+        } catch (HttpClientException) {
+            throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
+        }
+    }
+
+    /**
+     * Install Azuriom for Minecraft (with register or Microsoft OAuth).
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function setupMinecraftGame(Request $request, string $game)
+    {
+        if ($game !== 'mc-bedrock') {
+            $game = $request->input('oauth') ? 'mc-online' : 'mc-offline';
+        }
+
+        $this->validate($request, [
+            'name' => ['required_if:oauth,0', 'nullable', 'max:25'],
+            'email' => ['required_if:oauth,0', 'nullable', 'email', 'max:50'], // TODO ensure unique
+            'password' => ['required_if:oauth,0', 'nullable', 'confirmed', Password::default()],
+            'locale' => [Rule::in(static::getAvailableLocaleCodes())],
+        ]);
+
+        $name = $request->input('name');
+
+        if ($game === 'mc-online') {
+            $gameId = Str::remove('-', $request->input('uuid', ''));
+            $response = Http::get(MinecraftOnlineGame::PROFILE_LOOKUP.$gameId);
+
+            if (! $response->successful() || ! ($name = $response->json('name'))) {
+                throw ValidationException::withMessages(['uuid' => 'Invalid Minecraft UUID or couldn\'t contact Mojang\'s session server.']);
+            }
+        } elseif ($game === 'mc-bedrock') {
+            $gameId = $request->input('xuid');
+            $name = Http::get(MinecraftBedrockGame::PROFILE_LOOKUP.$gameId)
+                ->json('gamertag');
+
+            if ($name === null) {
+                throw ValidationException::withMessages(['xuid' => 'Invalid Xbox XUID.']);
+            }
+        }
+
+        return $this->setupAzuriom($request, $game, $name, $gameId ?? null);
+    }
+
+    protected function setupFiveM(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'locale' => [Rule::in(static::getAvailableLocaleCodes())],
+        ]);
+
+        $name = $request->input('name');
+
+        try {
+            $id = (new FiveMGame())->getUserUniqueId($name);
+
+            FiveMGame::generateKeys();
+
+            return $this->setupAzuriom($request, 'fivem-cfx', $name, $id);
+        } catch (HttpClientException) {
+            throw ValidationException::withMessages(['name' => 'Invalid Cfx.re username.']);
+        }
+    }
+
+    protected function setupAzuriom(Request $request, string $game, string $name, ?string $gameId)
+    {
+        $steamGame = in_array($game, $this->steamGames, true);
+
+        Artisan::call('cache:clear');
+        Artisan::call('migrate', ['--force' => true, '--seed' => true]);
+        Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
+
+        EnvEditor::updateEnv([
+            'APP_LOCALE' => $request->input('locale'),
+            'APP_URL' => url('/'),
+            'MAIL_MAILER' => 'array',
+            'AZURIOM_GAME' => $game,
+        ] + ($steamGame ? ['STEAM_KEY' => $request->input('key')] : []));
+
+        if ($game === 'custom') {
+            return to_route('install.finish');
+        }
+
+        $communityGames = $this->getCommunityGames();
+
+        if (array_key_exists($game, $communityGames)) {
+            $updateManager = app(UpdateManager::class);
+            $pluginManager = app(PluginManager::class);
+
+            $pluginDir = $pluginManager->path($game);
+
+            try {
+                $updateManager->download($communityGames[$game], 'plugins/');
+                $updateManager->extract($communityGames[$game], $pluginDir, 'plugins/');
+                $pluginManager->enable($game);
+
+                $description = $pluginManager->findDescription($game);
+
+                if ($description !== null && isset($description->installRedirectPath)) {
+                    return redirect($description->installRedirectPath);
+                }
+
+                return $this->finishInstall();
+            } catch (Throwable $t) {
+                return to_route('install.games')->with('error', $t->getMessage());
+            }
+        }
+
+        $roleId = Role::admin()->orderByDesc('power')->value('id');
+        $user = User::create([
+            'name' => $name,
+            'email' => $request->input('email'),
+            'password' => $request->input('password') ?? Str::random(32),
+            'password_changed_at' => now(),
+            'game_id' => $gameId,
+        ]);
+
+        $user->markEmailAsVerified();
+        $user->forceFill(['role_id' => $roleId])->save();
+
+        if ($game !== 'mc-offline') {
+            Setting::updateSettings('register', false);
         }
 
         return to_route('install.finish');

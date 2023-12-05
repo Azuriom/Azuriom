@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 
 class ServerController extends Controller
 {
-    private const UID_KEYS = ['GMOD', 'OXIDE'];
+    private const UID_KEYS = ['GMOD', 'FIVEM', 'OXIDE'];
 
     public function user(User $user)
     {

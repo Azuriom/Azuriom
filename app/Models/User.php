@@ -189,7 +189,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatar(int $size = 64): string
     {
-        return $this->avatar ?? game()->getAvatarUrl($this, $size);
+        if ($this->avatar === null) {
+            return game()->getAvatarUrl($this, $size);
+        }
+
+        return str_replace('{size}', $size, $this->avatar);
     }
 
     public function isBanned(bool $useCache = false): bool

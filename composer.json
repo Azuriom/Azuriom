@@ -20,6 +20,7 @@
         "pragmarx/google2fa": "^8.0",
         "symfony/filesystem": "^6.2",
         "textalk/websocket": "^1.5",
+        "thecoati/socialite-cfx-provider": "^1.0",
         "thedudeguy/rcon": "^1.0",
         "truckersmp/steam-socialite": "^1.4",
         "xpaw/php-source-query-class": "^2.1"
