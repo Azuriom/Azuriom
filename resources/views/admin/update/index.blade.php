@@ -40,7 +40,10 @@
                     {{ trans('admin.update.backup') }}
                 </div>
 
-                <p>@lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])</p>
+                <p>
+                    @lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])
+                    @lang('admin.update.changelog', ['url' => 'https://github.com/Azuriom/Azuriom/releases'])
+                </p>
 
                 @if($isDownloaded)
                     <p>{{ trans('admin.update.install') }}</p>

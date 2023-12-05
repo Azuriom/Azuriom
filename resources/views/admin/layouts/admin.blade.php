@@ -269,6 +269,11 @@
                             <a class="sidebar-link" href="{{ route('admin.update.index') }}">
                                 <i class="bi bi-cloud-download"></i>
                                 <span>{{ trans('admin.nav.other.update') }}</span>
+                                @if($hasUpdate)
+                                    <span class="sidebar-badge badge bg-danger">
+                                        1
+                                    </span>
+                                @endif
                             </a>
                         </li>
                     @endcan
@@ -309,16 +314,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav navbar-align">
-                        @if($hasUpdate)
-                            @can('admin.update')
-                                <li class="nav-item">
-                                    <a class="nav-icon text-info" href="{{ route('admin.update.index') }}">
-                                        <i class="bi bi-cloud-download-alt"></i>
-                                    </a>
-                                </li>
-                            @endcan
-                        @endif
-
                         <li class="nav-item dropdown">
                             <a class="nav-icon dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="position-relative">

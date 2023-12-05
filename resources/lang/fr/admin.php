@@ -533,7 +533,7 @@ return [
         'check' => 'Vérifier les mises à jour',
 
         'update' => 'La version <code>:last-version</code> d\'Azuriom est disponible et vous avez actuellement la version <code>:version</code>.',
-        'changelog' => 'Les notes de mise à jour sont disponibles <a href=":url" target="_blank" rel="noopener noreferrer">ici</a>.',
+        'changelog' => 'Les notes de mise à jour sont disponibles sur <a href=":url" target="_blank" rel="noopener noreferrer">GitHub</a>.',
         'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
         'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
 

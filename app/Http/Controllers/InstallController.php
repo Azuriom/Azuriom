@@ -269,7 +269,7 @@ class InstallController extends Controller
     {
         try {
             if (in_array($game, $this->steamGames, true)) {
-                $this->setupSteamGame($request, $game);
+                return $this->setupSteamGame($request, $game);
             }
 
             if ($game === 'minecraft' || $game === 'mc-bedrock') {
@@ -323,6 +323,8 @@ class InstallController extends Controller
             if ($name === null) {
                 throw new RuntimeException('Invalid Steam URL.');
             }
+
+            return $this->setupAzuriom($request, $game, $name, $gameId);
         } catch (HttpClientException) {
             throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
         }

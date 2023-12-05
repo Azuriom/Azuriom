@@ -533,7 +533,7 @@ return [
         'check' => 'Check updates',
 
         'update' => 'The version <code>:last-version</code> of Azuriom is available and you are on version <code>:version</code>.',
-        'changelog' => 'The changelog is available <a href=":url" target="_blank" rel="noopener noreferrer">here</a>.',
+        'changelog' => 'Changelog can be found on <a href=":url" target="_blank" rel="noopener noreferrer">GitHub</a>.',
         'download' => 'The latest version of Azuriom is ready for download.',
         'install' => 'The latest version of Azuriom has been downloaded and is ready to be installed.',
 
