@@ -177,9 +177,15 @@ class Server extends Model
 
     public function getLinkCommand(): string
     {
-        $base = $this->type === 'mc-azlink'
-            ? '/azlink setup '.url('/')
-            : 'azlink:setup '.str_replace([':', '/'], ['!', '|'], url('/'));
+        if ($this->type === 'mc-azlink') {
+            return '/azlink setup '.url('/').' '.$this->token;
+        }
+
+        $base = match (game()->id()) {
+            'gmod' => 'azlink:setup '.str_replace([':', '/'], ['!', '|'], url('/')),
+            'rust', '7dtd' => 'azlink.setup '.url('/'),
+            default => 'azlink setup '.url('/'),
+        };
 
         return $base.' '.$this->token;
     }

@@ -5,9 +5,11 @@ namespace Azuriom\Games;
 use Azuriom\Games\Steam\Servers\AzLink;
 use Azuriom\Games\Steam\Servers\FiveMRcon;
 use Azuriom\Games\Steam\Servers\FiveMStatus;
+use Azuriom\Models\Setting;
 use Azuriom\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use phpseclib3\Crypt\RSA;
 use TheCoati\CfxSocialite\Cfx;
 
@@ -60,7 +62,7 @@ class FiveMGame extends Game
         return [
             'fivem-status' => FiveMStatus::class,
             'fivem-rcon' => FiveMRcon::class,
-            'azlink' => AzLink::class,
+            'steam-azlink' => AzLink::class,
         ];
     }
 
@@ -71,6 +73,8 @@ class FiveMGame extends Game
 
     public static function generateKeys()
     {
+        Setting::updateSettings('cfx.id', Str::uuid()->toString());
+
         $publicKey = Cfx::keyPath('cfx-public.key');
         $privateKey = Cfx::keyPath('cfx-private.key');
 

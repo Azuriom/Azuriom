@@ -239,6 +239,8 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, User $user): void
     {
+        $request->session()->remove('login.2fa');
+
         $user->forceFill([
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
