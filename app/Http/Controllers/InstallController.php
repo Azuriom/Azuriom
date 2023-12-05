@@ -56,11 +56,11 @@ class InstallController extends Controller
     protected array $games = [
         'minecraft' => [
             'name' => 'Minecraft',
-            'logo' => 'assets/img/games/minecraft.png',
+            'logo' => 'assets/img/games/minecraft.svg',
         ],
         'mc-bedrock' => [
             'name' => 'Minecraft: Bedrock Edition',
-            'logo' => 'assets/img/games/minecraft.png',
+            'logo' => 'assets/img/games/minecraft.svg',
         ],
         'gmod' => [
             'name' => 'Garry\'s mod',
@@ -68,11 +68,11 @@ class InstallController extends Controller
         ],
         'ark' => [
             'name' => 'ARK: Survival Evolved',
-            'logo' => 'assets/img/games/ark.png',
+            'logo' => 'assets/img/games/ark.svg',
         ],
         'csgo' => [
-            'name' => 'CS:GO',
-            'logo' => 'assets/img/games/csgo.png',
+            'name' => 'Counter-Strike 2',
+            'logo' => 'assets/img/games/cs2.svg',
         ],
         'tf2' => [
             'name' => 'Team Fortress 2',
@@ -92,7 +92,7 @@ class InstallController extends Controller
         ],
         '7dtd' => [
             'name' => '7 Days to Die',
-            'logo' => 'assets/img/games/7-days-to-die.png',
+            'logo' => 'assets/img/games/7dtd.svg',
         ],
         'custom' => [
             'name' => 'Custom Game',
