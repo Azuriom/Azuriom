@@ -74,7 +74,7 @@ class PluginManager extends ExtensionManager
      */
     public function loadPlugins(Application $app, bool $gamesOnly = false): void
     {
-        $plugins = $this->getPlugins();
+        $plugins = $this->getPlugins($gamesOnly);
 
         if (empty($plugins)) {
             return;
@@ -460,19 +460,23 @@ class PluginManager extends ExtensionManager
         }
     }
 
-    protected function getPlugins(): array
+    protected function getPlugins(bool $ignoreCache): array
     {
-        try {
-            $plugins = $this->files->getRequire($this->getCachedPluginsPath());
-
-            $this->plugins = array_map(fn ($array) => (object) $array, $plugins);
-
-            return $this->plugins;
-        } catch (FileNotFoundException) {
+        if ($ignoreCache) {
             $this->plugins = $this->cachePlugins()->all();
 
             return $this->plugins;
         }
+
+        try {
+            $plugins = $this->files->getRequire($this->getCachedPluginsPath());
+
+            $this->plugins = array_map(fn ($array) => (object) $array, $plugins);
+        } catch (FileNotFoundException) {
+            $this->plugins = $this->cachePlugins()->all();
+        }
+
+        return $this->plugins;
     }
 
     protected function setPluginEnabled(string $plugin, bool $enabled): bool

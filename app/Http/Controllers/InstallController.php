@@ -280,7 +280,7 @@ class InstallController extends Controller
                 return $this->setupFiveM($request);
             }
 
-            abort(404, 'Invalid game type: '.$game);
+            return $this->setupAzuriom($request, $game, null, null);
         } catch (ValidationException $e) {
             throw $e;
         } catch (Exception $e) {
@@ -382,15 +382,13 @@ class InstallController extends Controller
         try {
             $id = (new FiveMGame())->getUserUniqueId($name);
 
-            FiveMGame::generateKeys();
-
             return $this->setupAzuriom($request, 'fivem-cfx', $name, $id);
         } catch (HttpClientException) {
             throw ValidationException::withMessages(['name' => 'Invalid Cfx.re username.']);
         }
     }
 
-    protected function setupAzuriom(Request $request, string $game, string $name, ?string $gameId)
+    protected function setupAzuriom(Request $request, string $game, ?string $name, ?string $gameId)
     {
         $steamGame = in_array($game, $this->steamGames, true);
 
@@ -434,6 +432,8 @@ class InstallController extends Controller
             }
         }
 
+        abort_if($name === null, 400, 'Expected valid name for game '.$game);
+
         $roleId = Role::admin()->orderByDesc('power')->value('id');
         $user = User::create([
             'name' => $name,
@@ -448,6 +448,10 @@ class InstallController extends Controller
 
         if ($game !== 'mc-offline') {
             Setting::updateSettings('register', false);
+        }
+
+        if ($game === 'fivem-cfx') {
+            FiveMGame::generateKeys();
         }
 
         return to_route('install.finish');
