@@ -14,8 +14,10 @@ class FallbackController extends Controller
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function get(Request $request, string $path)
+    public function get(Request $request)
     {
+        $path = $request->path();
+
         /** @var \Azuriom\Models\Redirect|null $redirect */
         $redirect = Redirect::enabled()->firstWhere('source', $path);
 
