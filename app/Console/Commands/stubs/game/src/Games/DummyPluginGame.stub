@@ -25,7 +25,7 @@ class DummyPluginGame extends Game
 
     public function getUserUniqueId(string $name): ?string
     {
-        return null;
+        return $name;
     }
 
     public function getUserName(User $user): ?string

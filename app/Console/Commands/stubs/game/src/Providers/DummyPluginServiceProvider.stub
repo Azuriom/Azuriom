@@ -13,7 +13,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $middleware = [
+    protected array $middleware = [
         // \DummyNamespace\Middleware\ExampleMiddleware::class,
     ];
 
@@ -22,14 +22,14 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $middlewareGroups = [];
+    protected array $middlewareGroups = [];
 
     /**
      * The plugin's route middleware.
      *
      * @var array
      */
-    protected $routeMiddleware = [
+    protected array $routeMiddleware = [
         // 'example' => \DummyNamespace\Middleware\ExampleRouteMiddleware::class,
     ];
 
@@ -38,7 +38,7 @@ class DummyPluginServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $policies = [
+    protected array $policies = [
         // User::class => UserPolicy::class,
     ];
 
