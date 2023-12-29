@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            @if (Route::has('password.request'))
+                            @if(Route::has('password.request'))
                                 <a class="float-md-end" href="{{ route('password.request') }}">
                                     {{ trans('auth.forgot_password') }}
                                 </a>

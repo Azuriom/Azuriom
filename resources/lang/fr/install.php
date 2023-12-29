@@ -16,7 +16,7 @@ return [
         '64bit' => 'PHP 64-bit',
 
         'refresh' => 'Revérifier',
-        'success' => 'Azuriom est prêt a être configuré !',
+        'success' => 'Azuriom est prêt a être configuré!',
         'missing' => 'Votre serveur n\'a pas les pré-requis nécessaires pour installer Azuriom.',
 
         'help' => [
@@ -46,7 +46,7 @@ return [
 
         'locale' => 'Langue',
 
-        'warn' => 'Attention, une fois l\'installation terminée, il ne sera pas possible de changer sans réinstaller entièrement Azuriom !',
+        'warn' => 'Attention, une fois l\'installation terminée, il ne sera pas possible de changer sans réinstaller entièrement Azuriom!',
 
         'install' => 'Installer',
 
@@ -73,8 +73,8 @@ return [
     ],
 
     'success' => [
-        'thanks' => 'Merci d\'avoir choisi Azuriom !',
-        'success' => 'Votre site web a été installé avec succès, vous pouvez maintenant utiliser votre site web et en faire quelque chose de génial !',
+        'thanks' => 'Merci d\'avoir choisi Azuriom!',
+        'success' => 'Votre site web a été installé avec succès, vous pouvez maintenant utiliser votre site web et en faire quelque chose de génial!',
         'go' => 'Commencer',
         'support' => 'Si vous appréciez Azuriom et le travail que nous fournissons, vous pouvez <a href="https://azuriom.com/support-us" target="_blank" rel="noopener noreferrer">nous soutenir</a>.',
     ],

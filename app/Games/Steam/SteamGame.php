@@ -90,6 +90,11 @@ class SteamGame extends Game
 
     public function trans(string $key, array $placeholders = []): string
     {
+        // FiveM not only uses SteamID 64, but also FiveM ID
+        if ($this->id === 'fivem' && $key === 'commands') {
+            return trans('game.fivem.commands');
+        }
+
         return trans('game.steam.'.$key, $placeholders);
     }
 

@@ -82,7 +82,7 @@ return [
     ],
 
     'status' => [
-        'success' => 'L\'action a été effectuée avec succès !',
+        'success' => 'L\'action a été effectuée avec succès!',
         'error' => 'Une erreur est survenue: :error',
     ],
 
@@ -131,7 +131,7 @@ return [
     ],
 
     'clipboard' => [
-        'copied' => 'Copié !',
+        'copied' => 'Copié!',
         'error' => 'CTRL + C pour copier',
     ],
 

@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
-use Azuriom\Rules\Color;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RoleRequest extends FormRequest
@@ -28,7 +27,7 @@ class RoleRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:50'],
-            'color' => ['required', new Color()],
+            'color' => ['required', 'hex_color'],
             'is_admin' => ['filled', 'boolean'],
         ];
     }

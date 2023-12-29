@@ -4,7 +4,7 @@ return [
     'error' => 'Erreur',
     'code' => 'Erreur :code',
     'home' => 'Accueil',
-    'whoops' => 'Oups !',
+    'whoops' => 'Oups!',
 
     '401' => [
         'title' => 'Non autorisé',

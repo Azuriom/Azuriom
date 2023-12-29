@@ -12,8 +12,8 @@ return [
     |
     */
 
-    'hello' => 'Bonjour !',
-    'whoops' => 'Oups !',
+    'hello' => 'Bonjour!',
+    'whoops' => 'Oups!',
 
     'regards' => 'Cordialement,',
 
@@ -23,7 +23,7 @@ return [
 
     'test' => [
         'subject' => 'Mail de test sur :name',
-        'content' => 'Comme vous voyez ce mail, cela veut dire que l\'envoie des mails sur :name fonctionne !',
+        'content' => 'Comme vous voyez ce mail, cela veut dire que l\'envoie des mails sur :name fonctionne!',
     ],
 
     'delete' => [

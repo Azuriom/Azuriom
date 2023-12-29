@@ -9,7 +9,7 @@
 
         <div class="card">
             <div class="card-body">
-                @if (session('resent'))
+                @if(session('resent'))
                     <div class="alert alert-success" role="alert">
                         {{ trans('auth.verification.sent') }}
                     </div>

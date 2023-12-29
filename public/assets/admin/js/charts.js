@@ -16,6 +16,7 @@ function createLineChart(elementId, data, labelName) {
                 pointHitRadius: 10,
                 pointBorderWidth: 2,
                 data: Object.values(data),
+                tension: 0.25,
             }],
         },
         options: {

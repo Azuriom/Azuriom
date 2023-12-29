@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Azuriom\Rules\Color;
 use Azuriom\Rules\Slug;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\ArrayLoader;
@@ -12,20 +11,6 @@ use Tests\TestCase;
 
 class RulesTest extends TestCase
 {
-    public function testColorRule(): void
-    {
-        $validColors = ['#ffffff', '#000000', '#ff0000'];
-        $invalidColors = ['#fff', 'fff', 'ff0000', '#f000', '#hh0000', 'not-a-color', '#FF0000', '#FF00000'];
-
-        foreach ($validColors as $color) {
-            $this->assertTrue($this->validateRule($color, new Color()));
-        }
-
-        foreach ($invalidColors as $color) {
-            $this->assertFalse($this->validateRule($color, new Color()));
-        }
-    }
-
     public function testSlugRule(): void
     {
         $validSlugs = ['hello-world', 'hello', 'world', '-hello-world-', '123456'];

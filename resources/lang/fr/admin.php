@@ -66,7 +66,7 @@ return [
 
     'delete' => [
         'title' => 'Supprimer ?',
-        'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière !',
+        'description' => 'Êtes-vous sûr de vouloir supprimer cela ? Vous ne pourrez pas revenir en arrière!',
     ],
 
     'footer' => 'Propulsé par :azuriom &copy; :year. Panel par :startbootstrap.',
@@ -177,7 +177,7 @@ return [
             'title' => 'Authentification',
 
             'conditions' => 'Conditions à accepter lors de l\'inscription',
-            'conditions_info' => 'Liens au format Markdown, par exemple: <code>J\'accepte les [CGU](/lien-des-cgu) et [CGV](/liens-des-cgu)</code>',
+            'conditions_info' => 'Liens au format Markdown, par exemple: <code>J\'accepte les [CGU](/lien-des-cgu) et [CGV](/liens-des-cgv)</code>.',
             'registration' => 'Activer l\'inscription des utilisateurs',
             'registration_info' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
             'api' => 'Activer l\'API auth',
@@ -225,7 +225,7 @@ return [
         'create' => 'Ajout d\'un élément dans la navbar',
 
         'restrict' => 'Restreindre la visibilité de cet élément à certain grades',
-        'dropdown' => 'Vous pourrez ajouter des éléments une fois que l\'élément sera sauvegardé.',
+        'dropdown' => 'Une fois ce menu déroulant enregistré, des éléments peuvent y être ajoutés par glisser-déposer dans la page principale de la barre de navigation.',
 
         'fields' => [
             'home' => 'Page d\'accueil',
@@ -262,7 +262,7 @@ return [
 
         'ping_info' => 'La liaison par ping ne nécessite pas de plugin, mais cependant vous ne pouvez pas exécuter de commande avec cette liaison.',
         'query_info' => 'La liaison par query ne permet pas d\'exécuter de commandes sur le serveur.',
-        'unturned_info' => 'Vous devez utiliser le RCON de type SRCDS dans OpenMod. Le RCON de RocketMod n\'est pas compatible !',
+        'unturned_info' => 'Vous devez utiliser le RCON de type SRCDS dans OpenMod. Le RCON de RocketMod n\'est pas compatible!',
 
         'query_port_info' => 'Peut être vide si le port est le même que le port du serveur de jeu.',
 
@@ -294,7 +294,7 @@ return [
         'players' => ':count joueur|:count joueurs',
         'offline' => 'Hors-ligne',
 
-        'connected' => 'La connexion au serveur a été effectuée avec succès !',
+        'connected' => 'La connexion au serveur a été effectuée avec succès!',
         'error' => 'La connexion au serveur a échouée: :error',
 
         'type' => [
@@ -398,9 +398,9 @@ return [
         'discord' => [
             'title' => 'Lier les grades avec Discord',
             'enable' => 'Activer la liaison des grades avec Discord',
-            'enable_info' => 'Une fois activé, modifiez le rôle sur Discord, et ajoutez un pré-requis dans l\'onglet <b>Liens</b>. Les utilisateurs pourront récupérer leur rôle Discord dans le menu du serveur, dans <b>Rôles liés</b>.',
+            'enable_info' => 'Une fois activé, modifiez le rôle directement sur Discord, et dans l\'onglet <b>Liens</b> du rôle, ajoutez un pré-requis. Les utilisateurs pourront récupérer leur rôle en allant sur Discord, dans le menu du serveur puis dans <b>Rôles liés</b>. ',
             'info' => 'Vous devez créer une application sur le <a href="https://discord.com/developers/applications" target="_blank">portail développeur Discord</a> et définir <b>l\'URL de vérification</b> sur <code>:url</code>',
-            'oauth' => 'Puis, dans <b>OAuth2</b> et <b>Général</b>, vous devez ajouter <code>:url</code> dans les <b>Redirections</b>.',
+            'oauth' => 'Puis, dans l\'onglet <b>OAuth2</b>, dans <b>Général</b>, vous devez ajouter <code>:url</code> dans les <b>Redirections</b>.',
             'token_info' => 'Le token du Bot peut être obtenu en créant un bot pour votre application, dans l\'onglet <b>Bot</b> à gauche du portail développeur Discord.',
 
             'token' => 'Discord Bot Token',
@@ -537,7 +537,7 @@ return [
         'download' => 'La dernière version d\'Azuriom est prête à être téléchargée.',
         'install' => 'La dernière version d\'Azuriom a été téléchargée et est prête à être installée.',
 
-        'backup' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site !',
+        'backup' => 'Avant de mettre à jour Azuriom, vous devriez faire une sauvegarde de votre site!',
 
         'latest_version' => 'Vous utilisez la dernière version d\'Azuriom: <code>:version</code>.',
         'latest' => 'Vous utilisez la dernière version d\'Azuriom.',

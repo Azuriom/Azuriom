@@ -110,7 +110,7 @@
                             </button>
                         @endif
 
-                        @if (! $user->isDeleted() && ! $user->isAdmin() && ! $user->is(Auth::user()))
+                        @if(! $user->isDeleted() && ! $user->isAdmin() && ! $user->is(Auth::user()))
                             @if(! $user->isBanned())
                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#banModal">
                                     <i class="bi bi-slash-circle"></i> {{ trans('admin.users.ban') }}

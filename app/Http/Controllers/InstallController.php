@@ -82,7 +82,7 @@ class InstallController extends Controller
             'name' => 'Rust',
             'logo' => 'assets/img/games/rust.svg',
         ],
-        'fivem-cfx' => [
+        'fivem' => [
             'name' => 'FiveM',
             'logo' => 'assets/img/games/fivem.svg',
         ],

@@ -177,7 +177,7 @@ return [
             'title' => 'Authentication',
 
             'conditions' => 'Conditions to be accepted on registration',
-            'conditions_info' => 'Links in Markdown format, for example: <code>I accept the [conditions](/conditions-link) and [privacy policy](/privacy-policy)</code>',
+            'conditions_info' => 'Links in Markdown format, for example: <code>I accept the [conditions](/conditions-link) and [privacy policy](/privacy-policy)</code>.',
             'registration' => 'Enable user registration',
             'registration_info' => 'It can still be possible to register through plugins.',
             'api' => 'Enable Auth API',
@@ -225,7 +225,7 @@ return [
         'create' => 'Create navbar element',
 
         'restrict' => 'Limit roles that will be able to see this element',
-        'dropdown' => 'You can add elements to this dropdown when this element is saved.',
+        'dropdown' => 'Once this dropdown is saved, items can be added to it via drag and drop on the main navbar page.',
 
         'fields' => [
             'home' => 'Home',
@@ -398,9 +398,9 @@ return [
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',
-            'enable_info' => 'Once enabled, edit the role on Discord, and add a requirement in the <b>Links</b> tab. Users can get their Discord role in the server menu, in <b>Linked Roles</b>.',
+            'enable_info' => 'Once enabled, edit the role on Discord, and in the <b>Links</b> tab of the role, add a requirement. Users can get their role by going on Discord, in the server menu then in <b>Linked Roles</b>.',
             'info' => 'You need to create an application on the <a href="https://discord.com/developers/applications" target="_blank">Discord developer dashboard</a> and set the <b>Linked Role Verification URL</b> to <code>:url</code>',
-            'oauth' => 'Then, in <b>OAuth2</b> and in <b>General</b>, you need to add <code>:url</code> in the <b>Redirects</b>.',
+            'oauth' => 'Then, in the <b>OAuth2</b> tab, in <b>General</b>, you need to add <code>:url</code> in the <b>Redirects</b>.',
             'token_info' => 'The Bot token can be obtained by creating a bot for your application, in the <b>Bot</b> tab on the left of the Discord developer dashboard.',
 
             'token' => 'Discord Bot Token',

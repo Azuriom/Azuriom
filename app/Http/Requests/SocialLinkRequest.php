@@ -2,7 +2,6 @@
 
 namespace Azuriom\Http\Requests;
 
-use Azuriom\Rules\Color;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SocialLinkRequest extends FormRequest
@@ -19,7 +18,7 @@ class SocialLinkRequest extends FormRequest
             'value' => ['required', 'url', 'max:100'],
             'title' => ['required_if:type,other', 'nullable', 'string', 'max:50'],
             'icon' => ['required_if:type,other', 'nullable', 'string', 'max:50'],
-            'color' => ['required_if:type,other', 'nullable', new Color()],
+            'color' => ['required_if:type,other', 'nullable', 'hex_color'],
         ];
     }
 }

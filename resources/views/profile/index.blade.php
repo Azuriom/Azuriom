@@ -74,7 +74,7 @@
     </div>
 
     @if($canVerifyEmail)
-        @if (session('resent'))
+        @if(session('resent'))
             <div class="alert alert-success mb-4" role="alert">
                 {{ trans('auth.verification.sent') }}
             </div>

@@ -5,6 +5,7 @@ namespace Azuriom\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/** @deprecated Use hex_color rule */
 class Color implements ValidationRule
 {
     /**
@@ -15,7 +16,7 @@ class Color implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! preg_match('/^#[a-f0-9]{6}$/', $value)) {
-            $fail(trans('validation.color'));
+            $fail(trans('validation.hex_color'));
         }
     }
 }
