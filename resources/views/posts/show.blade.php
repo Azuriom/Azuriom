@@ -33,7 +33,7 @@
 
             <div class="d-md-flex justify-content-between align-items-center">
                 <button type="button" class="btn btn-primary @if($post->isLiked()) active @endif mb-3" @guest disabled @endguest data-like-url="{{ route('posts.like', $post) }}">
-                    <i class="bi bi-heart"></i>
+                    <i class="bi @if($post->isLiked()) bi-heart-fill @else bi-heart @endif"></i>
                     @lang('messages.likes', ['count' => '<span class="likes-count">'.$post->likes->count().'</span>'])
                     <span class="d-none spinner-border spinner-border-sm load-spinner" role="status"></span>
                 </button>

@@ -56,8 +56,17 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
         }).then(function (json) {
             el.classList.remove('active');
 
-            if (json.data.liked === true) {
+            const isLiked = json.data.liked;
+            const notLikedIcon = el.querySelector('.bi.bi-heart');
+            const likedIcon = el.querySelector('.bi.bi-heart-fill');
+
+            if (isLiked) {
                 el.classList.add('active');
+                notLikedIcon.classList.remove('bi-heart');
+                notLikedIcon.classList.add('bi-heart-fill');
+            } else {
+                likedIcon.classList.remove('bi-heart-fill');
+                likedIcon.classList.add('bi-heart');
             }
 
             const likesCount = el.querySelector('.likes-count');
