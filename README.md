@@ -37,8 +37,6 @@ Azuriom's documentation is available [on our website](https://azuriom.com/docs).
 
 You can find system requirements and installation guide on our [documentation](https://azuriom.com/docs/installation).
 
-You can find the documentation for launching a docker development environment at [INSTALL.md](docker/INSTALL.md)
-
 ## Community
 
 You can ask for support and talk on our [Discord server](https://azuriom.com/discord).
