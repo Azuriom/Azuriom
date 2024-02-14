@@ -45,6 +45,8 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
         likeLoading = true;
 
         const likeSpinner = el.querySelector('.load-spinner');
+        const likeIcon = el.querySelector('[data-liked=true]');
+        const unlikeIcon = el.querySelector('[data-liked=false]');
 
         if (likeSpinner) {
             likeSpinner.classList.remove('d-none');
@@ -54,10 +56,20 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
             url: el.dataset['likeUrl'],
             method: el.classList.contains('active') ? 'delete' : 'post'
         }).then(function (json) {
-            el.classList.remove('active');
-
             if (json.data.liked === true) {
                 el.classList.add('active');
+
+                if (likeIcon && unlikeIcon) {
+                    likeIcon.classList.add('d-none');
+                    unlikeIcon.classList.remove('d-none');
+                }
+            } else {
+                el.classList.remove('active');
+
+                if (likeIcon && unlikeIcon) {
+                    likeIcon.classList.remove('d-none');
+                    unlikeIcon.classList.add('d-none');
+                }
             }
 
             const likesCount = el.querySelector('.likes-count');
