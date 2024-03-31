@@ -98,6 +98,16 @@ class Setting extends Model
         $this->attributes['value'] = $value;
     }
 
+    public static function markAsEncrypted(string ...$name): void
+    {
+        self::$encrypted = array_merge(self::$encrypted, $name);
+    }
+
+    public static function markAsJsonEncoded(string ...$name): void
+    {
+        self::$jsonEncoded = array_merge(self::$jsonEncoded, $name);
+    }
+
     /**
      * Modify a given settings values and return the previous values.
      */

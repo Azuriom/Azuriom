@@ -30,16 +30,14 @@
 
                 <div id="welcomeAlert" class="{{ $welcomeAlert ? 'show' : 'collapse' }}">
                     <div class="card card-body mb-3">
-                        <div class="mb-0">
-                            <label class="form-label" for="welcomeAlertArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
-                            <textarea class="form-control html-editor @error('welcome_alert') is-invalid @enderror" id="welcomeAlertArea" name="welcome_alert" aria-describedby="welcomeAlertInfo" rows="5">{{ old('welcome_alert', $welcomeAlert) }}</textarea>
+                        <label class="form-label" for="welcomeAlertArea">{{ trans('admin.settings.seo.welcome_alert.message') }}</label>
+                        <textarea class="form-control html-editor @error('welcome_alert') is-invalid @enderror" id="welcomeAlertArea" name="welcome_alert" aria-describedby="welcomeAlertInfo" rows="5">{{ old('welcome_alert', $welcomeAlert) }}</textarea>
 
-                            @error('welcome_alert')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                            @enderror
+                        @error('welcome_alert')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
 
-                            <small id="welcomeAlertInfo" class="form-text">{{ trans('admin.settings.seo.welcome_alert.info') }}</small>
-                        </div>
+                        <small id="welcomeAlertInfo" class="form-text">{{ trans('admin.settings.seo.welcome_alert.info') }}</small>
                     </div>
                 </div>
 

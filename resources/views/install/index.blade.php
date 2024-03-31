@@ -9,9 +9,15 @@
                 <i class="bi bi-check2-circle"></i> {{ trans('install.requirements.success') }}
             </p>
 
-            <a href="{{ route('install.database') }}" class="btn btn-primary rounded-pill mx-1">
-                {{ trans('messages.actions.continue') }} <i class="bi bi-arrow-right"></i>
-            </a>
+            @if($envExists)
+                <a href="{{ route('install.games') }}" class="btn btn-primary rounded-pill mx-1">
+                    {{ trans('messages.actions.continue') }} <i class="bi bi-arrow-right"></i>
+                </a>
+            @else
+                <a href="{{ route('install.database') }}" class="btn btn-primary rounded-pill mx-1">
+                    {{ trans('messages.actions.continue') }} <i class="bi bi-arrow-right"></i>
+                </a>
+            @endif
         </div>
     @else
         <div class="alert alert-danger">

@@ -44,6 +44,7 @@ class EnsureInstalled
         }
 
         return response()->view('install.index', [
+            'envExists' => file_exists(App::environmentFilePath()),
             'requirements' => InstallController::getRequirements(),
             'compatible' => ! in_array(false, InstallController::getRequirements(), true),
             'phpVersion' => InstallController::parsePhpVersion(),

@@ -53,7 +53,11 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="role{{ $role->id }}" name="roles[]" value="{{ $role->id }}" @checked(in_array($role->id, old('roles', isset($page) ? $page->roles->modelKeys() : []), true))>
-                        <label class="form-check-label" for="role{{ $role->id }}">{{ $role->name }}</label>
+                        <label class="form-check-label" for="role{{ $role->id }}">
+                            <span class="badge" style="{{ $role->getBadgeStyle() }}">
+                                {{ $role->name }}
+                            </span>
+                        </label>
                     </div>
                 </div>
             @endforeach

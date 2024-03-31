@@ -240,12 +240,14 @@
                                         <span>{{ $navItem['name'] }}</span>
                                     </a>
                                     <ul id="collapse{{ ucfirst($navId) }}" class="sidebar-dropdown list-unstyled collapse @if(isset($navItem['route']) && Route::is($navItem['route'])) show @endif" data-parent="#accordionSidebar">
-                                        @foreach($navItem['items'] ?? [] as $route => $name)
-                                            <li class="sidebar-item {{ add_active(str_replace('index', '*', $route)) }}">
-                                                <a class="sidebar-link" href="{{ route($route) }}">
-                                                    {{ $name }}
-                                                </a>
-                                            </li>
+                                        @foreach($navItem['items'] ?? [] as $route => $subItem)
+                                            @if(! isset($subItem['permission']) || Gate::check($subItem['permission']))
+                                                <li class="sidebar-item {{ add_active($route) }}">
+                                                    <a class="sidebar-link" href="{{ route($route) }}">
+                                                        <span>{{ is_array($subItem) ? $subItem['name'] : $subItem }}</span>
+                                                    </a>
+                                                </li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </li>

@@ -499,7 +499,11 @@ class PluginManager extends ExtensionManager
             $plugins = array_values($plugins);
         }
 
-        $this->files->put($this->pluginsPath('plugins.json'), json_encode($plugins));
+        $res = $this->files->put($this->pluginsPath('plugins.json'), json_encode($plugins));
+
+        if ($res === false) {
+            return false;
+        }
 
         $this->cachePlugins($plugins);
 

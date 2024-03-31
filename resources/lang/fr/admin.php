@@ -361,7 +361,7 @@ return [
 
         'password' => [
             'title' => 'Dernier changement de mot de passe',
-            'force' => 'Force le changement',
+            'force' => 'Forcer le changement',
             'forced' => 'Doit changer son mot de passe',
         ],
 

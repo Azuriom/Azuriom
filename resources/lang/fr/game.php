@@ -4,7 +4,7 @@ return [
     'fivem' => [
         'id' => 'ID Cfx.re',
         'name' => 'Pseudo Cfx.re',
-        'commands' => 'Vous pouvez utiliser <code>{name}</code> pour le pseudo, <code>{id}</code> pour l\'ID, <code>{fivem_id}</code> pour l\'ID Cfx.re et <code>{steam_id}</code> pour le SteamID 64.',
+        'commands' => 'Vous pouvez utiliser <code>{name}</code> pour le pseudo, <code>{id}</code> pour l\'ID, <code>{fivem_id}</code> pour l\'ID Cfx.re, <code>{steam_id}</code> pour le SteamID 64 et <code>{steam_hex}</code> pour le SteamID hexadécimal.',
     ],
 
     'steam' => [
