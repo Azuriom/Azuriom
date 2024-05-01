@@ -55,7 +55,7 @@
 
 @csrf
 
-<div class="row g-3">
+<div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $server->name ?? '') }}" required>
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<div class="row g-3">
+<div class="row gx-3">
     <div class="mb-3 col-md-8">
         <label class="form-label" for="addressInput">{{ trans('messages.fields.address') }}</label>
         <input type="text" class="form-control @error('address') is-invalid @enderror" id="addressInput" name="address" value="{{ old('address', $server->address ?? '') }}" required>
@@ -108,7 +108,7 @@
 </div>
 
 <div v-show="type === 'source-query' || type === 'source-rcon'">
-    <div class="row g-3">
+    <div class="row gx-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="querySourcePortInput">{{ trans('admin.servers.query_port') }}</label>
             <input type="number" min="1" max="65535" class="form-control @error('query-port') is-invalid @enderror" id="querySourcePortInput" name="query-port" value="{{ old('query-port', $server->data['query-port'] ?? '') }}" aria-describedby="queryPortInfo">
@@ -129,7 +129,7 @@
 </div>
 
 <div v-show="type.includes('rcon')">
-    <div class="row g-3">
+    <div class="row gx-3">
         <div class="mb-3 col-md-8">
             <label class="form-label" for="rconPasswordInput">{{ trans('admin.servers.rcon_password') }}</label>
 
@@ -217,13 +217,19 @@
     @isset($server)
         <div class="mb-3">
             @if($server->isOnline())
-                <div class="alert alert-info" role="alert">
-                    <i class="bi bi-info-circle"></i>
-                    {{ trans('admin.servers.azlink.command') }}
-                    <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">
-                        {{ $server->getLinkCommand() }}
-                    </code>
-                    .
+                <div class="alert alert-primary" role="alert">
+                    <p class="mb-0">
+                        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.azlink.command') }}
+                        <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">
+                            {{ $server->getLinkCommand() }}
+                        </code>
+                    </p>
+
+                    @if(game()->id() === 'mc-offline')
+                        <p class="mt-3 mb-0">
+                            <i class="bi bi-person-lock"></i> {{ trans('admin.servers.azlink.auth') }}
+                        </p>
+                    @endif
                 </div>
             @else
                 <div class="alert alert-primary" role="alert">
@@ -236,7 +242,6 @@
                             <code id="linkCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#linkCommand">
                                 {{ $server->getLinkCommand() }}
                             </code>
-                            .
                         </li>
                     </ol>
                 </div>

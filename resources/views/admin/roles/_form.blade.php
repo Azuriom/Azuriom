@@ -20,8 +20,8 @@
     </script>
 @endpush
 
-<div class="row g-3">
-    <div class="mb-3 col-md-6">
+<div class="row gx-3">
+    <div class="mb-3 col-md-5">
         <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $role->name ?? '') }}" required>
 
@@ -30,7 +30,19 @@
         @enderror
     </div>
 
-    <div class="mb-3 col-md-6 mb-4">
+    <div class="mb-3 col-md-5">
+        <label class="form-label" for="iconInput">{{ trans('messages.fields.icon') }}</label>
+
+        <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $role->icon ?? '') }}" placeholder="bi bi-star" aria-labelledby="iconLabel">
+
+        @error('icon')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+
+        <small id="iconLabel" class="form-text">@lang('messages.icons')</small>
+    </div>
+
+    <div class="mb-3 col-md-2 mb-4">
         <label class="form-label" for="colorInput">{{ trans('messages.fields.color') }}</label>
         <input type="color" class="form-control form-control-color color-picker @error('color') is-invalid @enderror" id="colorInput" name="color" value="{{ old('color', $role->color ?? '#2196f3') }}" required>
 

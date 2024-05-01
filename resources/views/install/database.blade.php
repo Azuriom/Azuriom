@@ -14,7 +14,7 @@
         </div>
 
         <div id="databaseForm" data-database="mysql pgsql sqlsrv">
-            <div class="row g-3">
+            <div class="row gx-3">
                 <div class="mb-3 col-md-9">
                     <label class="form-label" for="host">{{ trans('install.database.host') }}</label>
                     <input name="host" type="text" class="form-control @error('host') is-invalid @enderror" id="host" placeholder="127.0.0.1" value="{{ old('host', '') }}">

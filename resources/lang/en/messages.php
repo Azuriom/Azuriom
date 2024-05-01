@@ -37,6 +37,7 @@ return [
         'expand' => 'Expand',
         'generate' => 'Generate',
         'install' => 'Install',
+        'move' => 'Move',
         'refresh' => 'Refresh',
         'reload' => 'Reload',
         'remove' => 'Remove',

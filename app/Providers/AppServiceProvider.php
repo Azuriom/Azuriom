@@ -5,6 +5,7 @@ namespace Azuriom\Providers;
 use Azuriom\Extensions\ExtensionFileLoader;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Models\User;
 use Azuriom\Notifications\AlertNotificationChannel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -38,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::useBootstrap();
+        Paginator::useBootstrapFive();
 
         JsonResource::withoutWrapping();
 
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'posts' => Post::class,
             'pages' => Page::class,
+            'users' => User::class,
         ]);
     }
 }

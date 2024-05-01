@@ -3,7 +3,7 @@
 @section('title', trans('admin.users.title'))
 
 @section('content')
-    <form class="row g-3 align-items-center" action="{{ route('admin.users.index') }}" method="GET" role="search">
+    <form class="row gx-3 align-items-center" action="{{ route('admin.users.index') }}" method="GET" role="search">
         <div class="col-md-4 col-12 mb-3">
             <label class="visually-hidden" for="searchInput">
                 {{ trans('messages.actions.search') }}
@@ -65,6 +65,7 @@
                             </td>
                             <td>
                                 <span class="badge" style="{{ $user->role->getBadgeStyle() }}">
+                                    @if($user->role->icon) <i class="{{ $user->role->icon }}"></i> @endif
                                     {{ $user->role->name }}
                                 </span>
                             </td>

@@ -31,7 +31,7 @@
             <form action="{{ route('admin.settings.mail.update') }}" method="POST" v-scope="{ type: '{{ str_replace('array', '', config('mail.default')) }}' }">
                 @csrf
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="mailerSelect">{{ trans('admin.settings.mail.mailer') }}</label>
 
@@ -60,7 +60,7 @@
                 </div>
 
                 <div v-show="type === 'smtp'">
-                    <div class="row g-3">
+                    <div class="row gx-3">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpHostInput">{{ trans('admin.settings.mail.smtp.host') }}</label>
                             <input type="text" class="form-control @error('smtp-host') is-invalid @enderror" id="smtpHostInput" name="smtp-host" value="{{ old('smtp-host', $smtpConfig['host']) }}" required>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-3">
+                    <div class="row gx-3">
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpUsernameInput">{{ trans('admin.settings.mail.smtp.username') }}</label>
                             <input type="text" class="form-control @error('smtp-username') is-invalid @enderror" id="smtpUsernameInput" name="smtp-username" value="{{ old('smtp-username', $smtpConfig['username']) }}">

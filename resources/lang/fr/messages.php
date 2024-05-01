@@ -37,6 +37,7 @@ return [
         'expand' => 'Étendre',
         'generate' => 'Générer',
         'install' => 'Installer',
+        'move' => 'Déplacer',
         'refresh' => 'Rafraîchir',
         'reload' => 'Recharger',
         'remove' => 'Retirer',

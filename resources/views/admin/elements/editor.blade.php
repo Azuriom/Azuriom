@@ -3,6 +3,7 @@
     <script>
         tinymce.init({
             selector: '.html-editor',
+            license_key: 'gpl',
             promotion: false,
             height: 400,
             min_height: 200,

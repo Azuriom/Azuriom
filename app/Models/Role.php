@@ -13,6 +13,7 @@ use Illuminate\Support\Collection;
 /**
  * @property int $id
  * @property string $name
+ * @property string|null $icon
  * @property string $color
  * @property int $power
  * @property bool $is_admin
@@ -35,7 +36,7 @@ class Role extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'color', 'power', 'is_admin',
+        'name', 'icon', 'color', 'power', 'is_admin',
     ];
 
     /**

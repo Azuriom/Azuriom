@@ -105,6 +105,7 @@ class AuthController extends Controller
         if ($user === null) {
             return response()->json([
                 'status' => 'error',
+                'reason' => 'invalid_token',
                 'message' => 'Invalid token',
             ], 401);
         }
@@ -112,6 +113,7 @@ class AuthController extends Controller
         if ($user->isBanned()) {
             return response()->json([
                 'status' => 'error',
+                'reason' => 'user_banned',
                 'message' => 'User banned',
             ], 403);
         }

@@ -93,7 +93,7 @@
 
                 <div v-show="type">
                     <div class="card card-body mb-2">
-                        <div class="row g-3">
+                        <div class="row gx-3">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="siteKeyInput">{{ trans('admin.settings.security.captcha.site_key') }}</label>
                                 <input type="text" class="form-control @error('site_key') is-invalid @enderror" id="siteKeyInput" name="site_key" value="{{ old('captcha.site_key', setting('captcha.site_key', '')) }}">

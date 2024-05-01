@@ -12,7 +12,10 @@
                     <img src="{{ $user->getAvatar(150) }}" class="rounded mb-3 img-fluid" alt="{{ $user->name }}">
 
                     <h3 class="h5 mb-0">
-                        <span class="badge" style="{{ $user->role->getBadgeStyle() }}; vertical-align: middle">{{ $user->role->name }}</span>
+                        <span class="badge" style="{{ $user->role->getBadgeStyle() }}; vertical-align: middle">
+                            @if($user->role->icon) <i class="{{ $user->role->icon }}"></i> @endif
+                            {{ $user->role->name }}
+                        </span>
                     </h3>
                 </div>
 

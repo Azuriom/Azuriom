@@ -36,7 +36,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         $url = $this->endpoint.'/oauth2/authorize';
 
@@ -46,7 +46,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return $this->endpoint.'/oauth2/token';
     }
@@ -54,7 +54,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token)
+    protected function getUserByToken($token): array
     {
         $response = $this->getHttpClient()
             ->get($this->endpoint.'/users/@me', [
@@ -69,7 +69,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
         $discriminator = $user['discriminator']
             ? '#'.Str::padLeft($user['discriminator'], 4, '0')
@@ -85,7 +85,7 @@ class DiscordProvider extends AbstractProvider implements ProviderInterface
     /**
      * {@inheritdoc}
      */
-    protected function getTokenFields($code)
+    protected function getTokenFields($code): array
     {
         return array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',

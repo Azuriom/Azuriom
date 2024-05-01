@@ -51,7 +51,10 @@
                                         <i class="bi bi-arrows-move sortable-handle"></i>
                                     @endif
 
-                                    <span class="badge" style="{{ $role->getBadgeStyle() }}; font-size: 1.05em">{{ $role->name }}</span>
+                                    <span class="badge" style="{{ $role->getBadgeStyle() }}; font-size: 1.05em">
+                                        @if($role->icon) <i class="{{ $role->icon }}"></i> @endif
+                                        {{ $role->name }}
+                                    </span>
 
                                     <span class="text-body-secondary">
                                         {{ trans('admin.roles.info', ['id' => $role->id, 'power' => $role->power]) }}

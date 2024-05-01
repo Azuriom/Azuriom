@@ -8,7 +8,7 @@
             <form action="{{ route('admin.settings.update') }}" method="POST">
                 @csrf
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="mb-3 col-md-5">
                         <label class="form-label" for="nameInput">{{ trans('admin.settings.index.name') }}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', site_name()) }}" required>
@@ -48,7 +48,7 @@
                     <small id="keywordsInfo" class="form-text">{{ trans('admin.settings.index.meta_info') }}</small>
                 </div>
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="mb-3 col-md-6" v-scope="{ icon: '{{ $icon ?? '' }}' }">
                         <label class="form-label" for="imageSelect">{{ trans('admin.settings.index.favicon') }}</label>
                         <div class="input-group mb-3">
@@ -127,7 +127,7 @@
                     @enderror
                 </div>
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="mb-3 col-md-6">
                         <label class="form-label" for="timezoneSelect">{{ trans('admin.settings.index.timezone') }}</label>
                         <select class="form-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
@@ -159,7 +159,7 @@
                     </div>
                 </div>
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="mb-3 col-md-8">
                         <label class="form-label" for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
                         <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
@@ -179,7 +179,7 @@
                     </div>
                 </div>
 
-                <div class="row g-3">
+                <div class="row gx-3">
                     <div class="col-md-6 mb-3">
                         <label class="form-label" for="siteKeyInput">{{ trans('admin.settings.index.site_key') }}</label>
                         <input type="text" class="form-control @error('site-key') is-invalid @enderror" id="siteKeyInput" name="site-key" value="{{ old('site-key', $siteKey) }}" aria-describedby="siteKeyInfo">

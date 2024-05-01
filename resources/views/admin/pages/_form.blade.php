@@ -55,6 +55,7 @@
                         <input type="checkbox" class="form-check-input" id="role{{ $role->id }}" name="roles[]" value="{{ $role->id }}" @checked(in_array($role->id, old('roles', isset($page) ? $page->roles->modelKeys() : []), true))>
                         <label class="form-check-label" for="role{{ $role->id }}">
                             <span class="badge" style="{{ $role->getBadgeStyle() }}">
+                                @if($role->icon) <i class="{{ $role->icon }}"></i> @endif
                                 {{ $role->name }}
                             </span>
                         </label>

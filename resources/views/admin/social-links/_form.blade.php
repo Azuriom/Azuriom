@@ -2,7 +2,7 @@
 
 @include('admin.elements.color-picker')
 
-<div class="row g-3">
+<div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
@@ -32,7 +32,7 @@
 </div>
 
 <div v-show="type === 'other'" class="mb-3">
-    <div class="row g-3">
+    <div class="row gx-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="titleInput">{{ trans('messages.fields.title') }}</label>
             <input type="text" class="form-control @error('title') is-invalid @enderror" id="titleInput" name="title" value="{{ old('title', $link->title ?? '') }}">

@@ -302,7 +302,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        abort_if((int) $request->input('id') !== $user->id, 403);
+        abort_if($request->integer('id') !== $user->id, 403);
+
         ActionLog::log('users.deleted', $user);
 
         $user->delete();

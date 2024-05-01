@@ -27,6 +27,7 @@ class RoleRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:50'],
+            'icon' => ['nullable', 'string', 'max:50'],
             'color' => ['required', 'hex_color'],
             'is_admin' => ['filled', 'boolean'],
         ];

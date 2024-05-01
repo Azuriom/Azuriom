@@ -37,6 +37,10 @@
     }
 }
 
+.sortable-btn {
+    cursor: move;
+}
+
 .sortable-ghost .card {
     opacity: 0.6;
     border: 1px dashed var(--bs-primary);

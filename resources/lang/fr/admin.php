@@ -279,6 +279,7 @@ return [
             'link1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
             'link2' => 'Redémarrer votre serveur.',
             'link3' => 'Exécuter cette commande sur votre serveur: ',
+            'auth' => 'Pour automatiquement créer les comptes sur le site, vous pouvez activer l\'intégration de votre plugin de login (AuthMe, etc.) dans la configuraiton d\'AzLink.',
 
             'info' => 'Si vous avez des problèmes avec AzLink en utilisant Cloudflare ou un pare-feu, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
             'command' => 'Vous pouvez lier votre serveur à votre site web avec la commande: ',
