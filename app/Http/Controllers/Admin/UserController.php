@@ -222,7 +222,7 @@ class UserController extends Controller
         });
 
         // So many users lost access to the admin panel because they were the only admin
-        if (! $role->is_admin && $user->isAdmin() && $adminUsers->count() < 2) {
+        if (! $role->is_admin && $target?->isAdmin() && $adminUsers->count() < 2) {
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.no_admin'),
             ]);

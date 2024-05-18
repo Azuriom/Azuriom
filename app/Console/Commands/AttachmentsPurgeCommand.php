@@ -38,6 +38,7 @@ class AttachmentsPurgeCommand extends Command
         $count = $attachments->count();
 
         foreach ($attachments as $attachment) {
+            // Ensure the deleted event is fired to delete the file
             $attachment->forceDelete();
         }
 
@@ -46,6 +47,7 @@ class AttachmentsPurgeCommand extends Command
         $pendingCount = $pendingAttachments->count();
 
         foreach ($pendingAttachments as $pendingAttachment) {
+            // Ensure the deleted event is fired to delete the file
             $pendingAttachment->delete();
         }
 

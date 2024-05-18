@@ -9,7 +9,7 @@
             min_height: 200,
             entity_encoding: 'raw',
             plugins: 'searchreplace autolink code image link anchor lists table',
-            toolbar: 'blocks | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
+            toolbar: 'blocks bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls: false,
             valid_children: "+body[style]",
             extended_valid_elements: 'i[class]',

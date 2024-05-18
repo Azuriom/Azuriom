@@ -115,8 +115,8 @@ class User extends Authenticatable implements MustVerifyEmail
         });
 
         self::updated(function (self $user) {
-            if ($user->discordAccount !== null &&
-                $user->role_id !== $user->getOriginal('role_id')) {
+            if ($user->discordAccount !== null && $user->isDirty('role_id')
+                && setting('discord.link_roles', false)) {
                 LinkedRoles::linkRole($user->discordAccount);
             }
         });

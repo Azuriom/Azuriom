@@ -28,10 +28,7 @@ class LogsPurgeCommand extends Command
      */
     public function handle()
     {
-        $query = ActionLog::where('created_at', '<', now()->subMonths(6));
-
-        $count = $query->count();
-        $query->delete();
+        $count = ActionLog::where('created_at', '<', now()->subMonths(6))->delete();
 
         $this->info($count.' logs was deleted.');
     }
