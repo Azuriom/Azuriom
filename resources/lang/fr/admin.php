@@ -393,6 +393,7 @@ return [
         'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
         'add_admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
         'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
+        'no_admin' => 'Il doit y avoir au moins un autre admin pour retirer votre grade admin.',
         'delete_default' => 'Ce grade ne peut pas être supprimé.',
         'delete_own' => 'Vous ne pouvez pas supprimer votre grade.',
 

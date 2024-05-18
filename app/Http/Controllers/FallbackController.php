@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\Page;
 use Azuriom\Models\Redirect;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class FallbackController extends Controller
 {
@@ -14,7 +13,7 @@ class FallbackController extends Controller
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function get(Request $request, string $path)
+    public function get(string $path)
     {
         /** @var \Azuriom\Models\Redirect|null $redirect */
         $redirect = Redirect::enabled()->firstWhere('source', $path);

@@ -9,7 +9,7 @@
             min_height: 200,
             entity_encoding: 'raw',
             plugins: 'searchreplace autolink code image link anchor lists table',
-            toolbar: 'formatselect | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
+            toolbar: 'blocks | bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls: false,
             valid_children: "+body[style]",
             extended_valid_elements: 'i[class]',
@@ -20,7 +20,6 @@
             @endif
 
             @isset($imagesUploadUrl)
-            paste_data_images: true,
             images_upload_handler: function (blobInfo, progress) {
                 return new Promise(function (resolve, reject) {
                     const formData = new FormData();
@@ -42,6 +41,8 @@
                     });
                 });
             },
+            @else
+            paste_data_images: false,
             @endisset
         });
     </script>

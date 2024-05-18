@@ -216,5 +216,16 @@ class UserController extends Controller
                 'role_id' => trans('admin.roles.unauthorized'),
             ]);
         }
+
+        $adminUsers = User::whereHas('role', function (Builder $query) {
+            $query->where('is_admin', true);
+        });
+
+        // So many users lost access to the admin panel because they were the only admin
+        if (! $role->is_admin && $user->isAdmin() && $adminUsers->count() < 2) {
+            throw ValidationException::withMessages([
+                'role_id' => trans('admin.roles.no_admin'),
+            ]);
+        }
     }
 }

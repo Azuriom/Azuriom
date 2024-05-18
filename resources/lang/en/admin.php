@@ -393,6 +393,7 @@ return [
         'unauthorized' => 'This role is higher than your own role.',
         'add_admin' => 'You can\'t add the admin permission to a role.',
         'remove_admin' => 'You can\'t remove the admin permission of your role.',
+        'no_admin' => 'There must be at least one other admin user to remove your admin role.',
         'delete_default' => 'This role cannot be deleted.',
         'delete_own' => 'You cannot delete your role.',
 

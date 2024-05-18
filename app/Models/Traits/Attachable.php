@@ -9,6 +9,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 /**
+ * Associate multiple attachments to a model.
+ *
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Attachment[] $attachments
  */
 trait Attachable
@@ -32,6 +34,14 @@ trait Attachable
                 } elseif (! $attachment->trashed()) {
                     $attachment->delete();
                 }
+            }
+        });
+
+        static::deleted(function (Model $model) {
+            $attachments = $model->attachments()->withTrashed()->get();
+
+            foreach ($attachments as $attachment) {
+                $attachment->setRelation('attachable', $model)->forceDelete();
             }
         });
     }
