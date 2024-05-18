@@ -15,5 +15,6 @@ return [
 
     'previous' => '&laquo; Précédent',
     'next' => 'Suivant &raquo;',
+    'current' => 'Affichage de :first à :last sur :total résultats',
 
 ];
