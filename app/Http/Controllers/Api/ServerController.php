@@ -73,11 +73,10 @@ class ServerController extends Controller
         $users = User::whereIn($uidKey ? 'game_id' : 'name', $players)->get();
         $commands = $server->commands()
             ->with('user')
-            ->where(
-                fn($q) => $q
-                    ->whereIn('user_id', $users->modelKeys())
-                    ->orWhere('need_online', false)
-            )
+            ->where(function (Builder $query) use ($users) {
+                $query->whereIn('user_id', $users->modelKeys())
+                    ->orWhere('need_online', false);
+            })
             ->limit(100)
             ->get();
 
