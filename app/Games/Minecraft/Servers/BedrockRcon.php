@@ -17,7 +17,7 @@ class BedrockRcon extends BedrockPing
         return $this->connectRcon()->sendCommand('list');
     }
 
-    public function replacePlaceholders(string $command, User $user = null): string
+    public function replacePlaceholders(string $command, ?User $user = null): string
     {
         if ($user === null) {
             return parent::replacePlaceholders($command, $user);

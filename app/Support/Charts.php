@@ -30,20 +30,20 @@ class Charts
             ->pluck('aggregate', $group);
     }
 
-    public static function countByDays(Builder $query, string $column = null,
+    public static function countByDays(Builder $query, ?string $column = null,
         int $days = 7): Collection
     {
         return static::aggregateByDays($query, 'count', '*', $column, $days);
     }
 
     public static function sumByDays(Builder $query, string $group,
-        string $column = null, int $days = 7): Collection
+        ?string $column = null, int $days = 7): Collection
     {
         return static::aggregateByDays($query, 'sum', $group, $column, $days);
     }
 
     public static function aggregateByDays(Builder $query, string $function,
-        string $group, string $column = null, int $days = 7): Collection
+        string $group, ?string $column = null, int $days = 7): Collection
     {
         $start = today()->subDays($days);
 
@@ -82,20 +82,20 @@ class Charts
         return $dates->merge($results);
     }
 
-    public static function countByMonths(Builder $query, string $column = null,
+    public static function countByMonths(Builder $query, ?string $column = null,
         int $months = 12): Collection
     {
         return static::aggregateByMonths($query, 'count', '*', $column, $months);
     }
 
     public static function sumByMonths(Builder $query, string $group,
-        string $column = null, int $months = 12): Collection
+        ?string $column = null, int $months = 12): Collection
     {
         return static::aggregateByMonths($query, 'sum', $group, $column, $months);
     }
 
     public static function aggregateByMonths(Builder $query, string $function,
-        string $group, string $column = null, int $months = 12): Collection
+        string $group, ?string $column = null, int $months = 12): Collection
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
         $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);

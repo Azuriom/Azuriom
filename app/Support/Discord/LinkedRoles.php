@@ -18,7 +18,7 @@ class LinkedRoles
         ]));
     }
 
-    public static function linkRole(DiscordAccount $user, Role $role = null)
+    public static function linkRole(DiscordAccount $user, ?Role $role = null)
     {
         $role ??= $user->user->role;
         $accessToken = $user->refreshAccessToken();

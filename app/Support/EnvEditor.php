@@ -13,7 +13,7 @@ class EnvEditor
      * Edit values in the environment file
      * Based on https://github.com/imliam/laravel-env-set-command, under MIT license.
      */
-    public static function updateEnv(array $values, string $path = null): void
+    public static function updateEnv(array $values, ?string $path = null): void
     {
         $envPath = $path ?? App::environmentFilePath();
         $content = file_get_contents($envPath);

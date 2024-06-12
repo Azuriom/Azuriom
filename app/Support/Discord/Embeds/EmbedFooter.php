@@ -10,7 +10,7 @@ class EmbedFooter implements Arrayable
 
     protected ?string $iconUrl = null;
 
-    public function __construct(string $text, string $iconUrl = null)
+    public function __construct(string $text, ?string $iconUrl = null)
     {
         $this->text = $text;
         $this->iconUrl = $iconUrl;

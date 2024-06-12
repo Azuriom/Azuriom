@@ -7,7 +7,7 @@ use Azuriom\Models\User;
 
 trait SteamBridge
 {
-    public function replaceSteamPlaceholders(string $command, User $user = null): string
+    public function replaceSteamPlaceholders(string $command, ?User $user = null): string
     {
         if ($user === null) {
             return $this->replacePlaceholders($command, $user);

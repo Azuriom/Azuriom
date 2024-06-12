@@ -293,7 +293,7 @@ class LoginController extends Controller
         return redirect()->back()->with('error', trans('auth.maintenance'));
     }
 
-    protected function isMaintenance(User $user = null): bool
+    protected function isMaintenance(?User $user = null): bool
     {
         if (! setting('maintenance.enabled', false)) {
             return false;

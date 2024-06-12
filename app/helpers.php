@@ -102,7 +102,7 @@ if (! function_exists('setting')) {
      * Return the value of the given setting name, or the default value if the
      * setting doesn't exist.
      */
-    function setting(string $name = null, mixed $default = null): mixed
+    function setting(?string $name = null, mixed $default = null): mixed
     {
         /** @var \Azuriom\Support\SettingsRepository $settings */
         $settings = app(SettingsRepository::class);
@@ -217,7 +217,7 @@ if (! function_exists('theme_path')) {
      * Get the path of a theme. If no theme is specified the current theme
      * is used.
      */
-    function theme_path(string $path = '', string $theme = null): string
+    function theme_path(string $path = '', ?string $theme = null): string
     {
         return themes()->path($path, $theme);
     }
@@ -247,7 +247,7 @@ if (! function_exists('theme_config')) {
     /**
      * Generate an asset path for the current theme.
      */
-    function theme_config(string $key = null, mixed $default = null): mixed
+    function theme_config(?string $key = null, mixed $default = null): mixed
     {
         return $key === null ? config('theme') : config('theme.'.$key, $default);
     }

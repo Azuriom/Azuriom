@@ -356,7 +356,7 @@ class PluginManager extends ExtensionManager
             ->filter(fn ($item) => ! isset($item['permission']) || Gate::allows($item['permission']));
     }
 
-    public function cachePlugins(array $enabledPlugins = null): Collection
+    public function cachePlugins(?array $enabledPlugins = null): Collection
     {
         if ($enabledPlugins === null) {
             $pluginsJsonPath = $this->pluginsPath('plugins.json');
@@ -420,7 +420,7 @@ class PluginManager extends ExtensionManager
         });
     }
 
-    public function install($pluginId, string $version = null): void
+    public function install($pluginId, ?string $version = null): void
     {
         $updateManager = app(UpdateManager::class);
 

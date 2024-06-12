@@ -12,7 +12,7 @@ class EmbedImage implements Arrayable
 
     protected ?int $width = null;
 
-    public function __construct(string $url, int $height = null, int $width = null)
+    public function __construct(string $url, ?int $height = null, ?int $width = null)
     {
         $this->url = $url;
         $this->height = $height;

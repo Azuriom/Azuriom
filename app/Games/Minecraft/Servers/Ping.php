@@ -37,7 +37,7 @@ class Ping extends ServerBridge
         return self::DEFAULT_PORT;
     }
 
-    protected function ping(string $address, int $port = null, bool $resolveSrv = true): array
+    protected function ping(string $address, ?int $port = null, bool $resolveSrv = true): array
     {
         $client = new MinecraftPing($address, $port ?? self::DEFAULT_PORT, $resolveSrv);
 

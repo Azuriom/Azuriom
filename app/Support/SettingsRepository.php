@@ -8,7 +8,7 @@ class SettingsRepository
 {
     protected Collection $settings;
 
-    public function __construct(Collection $settings = null)
+    public function __construct(?Collection $settings = null)
     {
         $this->settings = $settings ?? collect();
     }

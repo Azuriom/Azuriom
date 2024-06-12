@@ -132,7 +132,7 @@ class Server extends Model
         return $this->join_url;
     }
 
-    public function updateData(array $data = null, bool $full = false): void
+    public function updateData(?array $data = null, bool $full = false): void
     {
         Cache::put('servers.'.$this->id, $data, now()->addMinutes(5));
 
@@ -155,7 +155,7 @@ class Server extends Model
         ], Arr::only($data, ['players', 'cpu', 'ram'])));
     }
 
-    public function getData(string $key = null, mixed $default = null): mixed
+    public function getData(?string $key = null, mixed $default = null): mixed
     {
         $data = Cache::remember('servers.'.$this->id, now()->addMinute(), function () {
             return $this->bridge()->getServerData();

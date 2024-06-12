@@ -68,7 +68,7 @@ abstract class ServerBridge
         return 0;
     }
 
-    public function replacePlaceholders(string $command, User $user = null)
+    public function replacePlaceholders(string $command, ?User $user = null)
     {
         if ($user === null) {
             return str($command);

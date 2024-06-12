@@ -16,7 +16,7 @@ trait Searchable
     /**
      * Scope a query to only include results that match the search.
      */
-    public function scopeSearch(Builder $query, string $search, array|string $columns = null): void
+    public function scopeSearch(Builder $query, string $search, array|string|null $columns = null): void
     {
         $columns = $columns !== null ? Arr::wrap($columns) : $this->searchable;
 

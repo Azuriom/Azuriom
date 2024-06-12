@@ -88,7 +88,7 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    public function isLiked(User $user = null): bool
+    public function isLiked(?User $user = null): bool
     {
         if ($user === null && Auth::guest()) {
             return false;

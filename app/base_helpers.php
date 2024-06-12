@@ -16,7 +16,7 @@ if (! function_exists('asset')) {
     /**
      * Generate an asset path for the application.
      */
-    function asset(string $path, bool $secure = null): string
+    function asset(string $path, ?bool $secure = null): string
     {
         // Ignore if there is already a query string
         $query = str_contains($path, '?') ? '' : '?v'.Azuriom::version();

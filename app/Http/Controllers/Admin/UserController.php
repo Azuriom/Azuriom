@@ -43,7 +43,7 @@ class UserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException;
      */
-    public function notify(Request $request, User $user = null)
+    public function notify(Request $request, ?User $user = null)
     {
         $this->validate($request, [
             'level' => ['required', Rule::in(Notification::LEVELS)],
@@ -208,7 +208,7 @@ class UserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException;
      */
-    protected function validateRole(User $user, Role $role, User $target = null): void
+    protected function validateRole(User $user, Role $role, ?User $target = null): void
     {
         if (($target && $user->role->power < $target->role->power)
             || (! $user->isAdmin() && $user->role->power < $role->power)) {

@@ -44,7 +44,7 @@ class BedrockPing extends ServerBridge
         return self::DEFAULT_PORT;
     }
 
-    protected function ping(string $address, int $port = null): array
+    protected function ping(string $address, ?int $port = null): array
     {
         $pinger = new MinecraftBedrockPing($address, $port ?? self::DEFAULT_PORT);
 

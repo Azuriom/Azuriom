@@ -12,7 +12,7 @@ class EmbedField implements Arrayable
 
     protected ?bool $inline;
 
-    public function __construct(string $name, string $value, bool $inline = null)
+    public function __construct(string $name, string $value, ?bool $inline = null)
     {
         $this->name = $name;
         $this->value = $value;

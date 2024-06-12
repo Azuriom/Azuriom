@@ -140,7 +140,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function middlewareGroup(string|array $name, array $middleware = null): void
+    protected function middlewareGroup(string|array $name, ?array $middleware = null): void
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 
@@ -149,7 +149,7 @@ abstract class BasePluginServiceProvider extends ServiceProvider
         }
     }
 
-    protected function routeMiddleware(string|array $name, string $middleware = null): void
+    protected function routeMiddleware(string|array $name, ?string $middleware = null): void
     {
         $middlewares = is_array($name) ? $name : [$name => $middleware];
 

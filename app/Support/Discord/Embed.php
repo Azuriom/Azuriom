@@ -107,7 +107,7 @@ class Embed implements Arrayable
     /**
      * Set the footer of the embed.
      */
-    public function footer(string $text, string $iconUrl = null): self
+    public function footer(string $text, ?string $iconUrl = null): self
     {
         $this->footer = new EmbedFooter($text, $iconUrl);
 
@@ -117,7 +117,7 @@ class Embed implements Arrayable
     /**
      * Set the image of the embed.
      */
-    public function image(string $url, int $height = null, int $width = null): self
+    public function image(string $url, ?int $height = null, ?int $width = null): self
     {
         $this->image = new EmbedImage($url, $height, $width);
 
@@ -137,7 +137,7 @@ class Embed implements Arrayable
     /**
      * Set the author of the embed.
      */
-    public function author(string $name, string $url = null, string $iconUrl = null): self
+    public function author(string $name, ?string $url = null, ?string $iconUrl = null): self
     {
         $this->author = new EmbedAuthor($name, $url, $iconUrl);
 

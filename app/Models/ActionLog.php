@@ -160,7 +160,7 @@ class ActionLog extends Model
     /**
      * Create a new log entry for the current logged-in user.
      */
-    public static function log(string $action, Model $target = null, array $data = []): ?ActionLog
+    public static function log(string $action, ?Model $target = null, array $data = []): ?ActionLog
     {
         if (Auth::guest()) {
             return null;

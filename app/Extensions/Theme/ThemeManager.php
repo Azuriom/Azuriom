@@ -88,7 +88,7 @@ class ThemeManager extends ExtensionManager
      * When no theme is specified and there is no theme enabled, this
      * will return null.
      */
-    public function path(string $path = '', string $theme = null): ?string
+    public function path(string $path = '', ?string $theme = null): ?string
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {
@@ -104,7 +104,7 @@ class ThemeManager extends ExtensionManager
     /**
      * Get the public path of the specified theme.
      */
-    public function publicPath(string $path = '', string $theme = null): ?string
+    public function publicPath(string $path = '', ?string $theme = null): ?string
     {
         if ($theme === null) {
             if (! $this->hasTheme()) {

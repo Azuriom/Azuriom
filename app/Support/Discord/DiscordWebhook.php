@@ -20,7 +20,7 @@ class DiscordWebhook implements Arrayable
 
     protected array $embeds = [];
 
-    private function __construct(string $content = null)
+    private function __construct(?string $content = null)
     {
         $this->content = $content;
     }
@@ -28,7 +28,7 @@ class DiscordWebhook implements Arrayable
     /**
      * Create a new webhook instance.
      */
-    public static function create(string $content = null): self
+    public static function create(?string $content = null): self
     {
         return new self($content);
     }
@@ -60,7 +60,7 @@ class DiscordWebhook implements Arrayable
     /**
      * Override the default avatar of the webhook.
      */
-    public function avatarUrl(string $avatarUrl = null): self
+    public function avatarUrl(?string $avatarUrl = null): self
     {
         if (filter_var($avatarUrl, FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('The avatar url must be a valid URL');

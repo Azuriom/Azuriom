@@ -90,7 +90,7 @@ class Ban extends Model
      *
      * @throws \LogicException
      */
-    public function removeBan(User $remover = null): void
+    public function removeBan(?User $remover = null): void
     {
         $this->remover()->associate($remover ?? Auth::user());
         $this->save();
