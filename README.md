@@ -10,7 +10,7 @@
 
 **Azuriom** is a complete open-source web solution for game servers. Enjoy dozens of extensions for endless possibilities. Already trusted by over **1,800 servers**, cumulating more than two **millions users**.
 
-![Screenshot](https://azuriom.com/assets/img/home_dark.png)
+![Screenshot](https://azuriom.com/assets/img/home.png)
 
 ## Supported Games
 

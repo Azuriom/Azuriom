@@ -41,7 +41,7 @@ class FiveMGame extends Game
 
     public function getAvatarUrl(User $user, int $size = 64): string
     {
-        return asset('img/user.svg');
+        return asset('svg/user.svg');
     }
 
     public function getUserUniqueId(string $name): ?string

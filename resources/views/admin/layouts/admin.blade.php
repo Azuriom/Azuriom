@@ -232,8 +232,15 @@
                     @endif
 
                     @foreach(plugins()->getAdminNavItems() as $navId => $navItem)
-                        @if(! isset($navItem['permission']) || Gate::check($navItem['permission']))
-                            @if($navItem['type'] ?? '' === 'dropdown')
+                        @if(! isset($navItem['permission']) || Gate::any($navItem['permission']))
+                            @if(($navItem['type'] ?? '') !== 'dropdown')
+                                <li class="sidebar-item {{ add_active($navItem['route']) }}">
+                                    <a class="sidebar-link" href="{{ route($navItem['route']) }}">
+                                        <i class="{{ $navItem['icon'] }}"></i>
+                                        <span>{{ $navItem['name'] }}</span>
+                                    </a>
+                                </li>
+                            @elseif(Arr::first($navItem['items'] ?? [], fn ($item) => ! isset($item['permission']) || Gate::check($item['permission'])))
                                 <li class="sidebar-item @isset($navItem['route']) {{ add_active($navItem['route']) }} @endisset">
                                     <a class="sidebar-link @if(! isset($navItem['route']) || ! Route::is($navItem['route'])) collapsed @endif" href="#" data-bs-toggle="collapse" data-bs-target="#collapse{{ ucfirst($navId) }}" aria-expanded="true" aria-controls="collapse{{ ucfirst($navId) }}">
                                         <i class="{{ $navItem['icon'] }}"></i>
@@ -250,13 +257,6 @@
                                             @endif
                                         @endforeach
                                     </ul>
-                                </li>
-                            @else
-                                <li class="sidebar-item {{ add_active($navItem['route']) }}">
-                                    <a class="sidebar-link" href="{{ route($navItem['route']) }}">
-                                        <i class="{{ $navItem['icon'] }}"></i>
-                                        <span>{{ $navItem['name'] }}</span>
-                                    </a>
                                 </li>
                             @endif
                         @endif

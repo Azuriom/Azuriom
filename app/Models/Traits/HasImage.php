@@ -47,7 +47,7 @@ trait HasImage
     /**
      * Delete the image associated with this model.
      */
-    public function deleteImage(): bool
+    public function deleteImage(bool $save = false): bool
     {
         $key = $this->getImageKey();
         $image = $this->getAttribute($key);
@@ -61,6 +61,10 @@ trait HasImage
         }
 
         $this->setAttribute($key, null);
+
+        if ($save) {
+            $this->save();
+        }
 
         return true;
     }

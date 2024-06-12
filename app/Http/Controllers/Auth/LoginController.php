@@ -149,9 +149,12 @@ class LoginController extends Controller
                 : redirect($this->redirectPath());
         }
 
+        if (! $user->hasUploadedAvatar()) {
+            $user->avatar = $userProfile->getAvatar();
+        }
+
         $user->update([
             'name' => $userProfile->getNickname() ?? $userProfile->getName(),
-            'avatar' => $userProfile->getAvatar(),
         ]);
 
         return $this->loginUser($request, $user, true);

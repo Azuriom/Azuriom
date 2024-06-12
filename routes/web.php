@@ -53,6 +53,8 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::post('/email', [ProfileController::class, 'updateEmail'])->name('email');
     Route::post('/password', [ProfileController::class, 'updatePassword'])->name('password');
     Route::post('/name', [ProfileController::class, 'updateName'])->name('name');
+    Route::post('/avatar', [ProfileController::class, 'uploadAvatar'])->name('avatar');
+    Route::delete('/avatar', [ProfileController::class, 'deleteAvatar'])->name('avatar.delete');
 
     Route::prefix('discord')->name('discord.')->group(function () {
         Route::get('/link', [ProfileController::class, 'linkDiscord'])->name('link');

@@ -19,10 +19,11 @@ class UserRequest extends FormRequest
         $user = $this->route('user');
 
         return [
-            'name' => ['required', 'string', 'max:25', new Username(), Rule::unique('users')->ignore($user, 'name')],
+            'name' => [
+                'required', 'string', 'max:25', new Username(), Rule::unique('users')->ignore($user, 'name'),
+            ],
             'email' => [
-                oauth_login() ? 'nullable' : 'required',
-                'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
+                'nullable', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
             ],
             'password' => [Rule::requiredIf($user === null), 'nullable', Password::default()],
             'money' => ['filled', 'numeric', 'min:0'],

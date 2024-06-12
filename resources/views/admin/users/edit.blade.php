@@ -51,7 +51,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @if(! oauth_login()) required @endif @disabled($user->isDeleted())>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @disabled($user->isDeleted())>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

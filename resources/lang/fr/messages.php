@@ -150,6 +150,10 @@ return [
         'change_email' => 'Changer l\'adresse email',
         'change_password' => 'Changer le mot de passe',
         'change_name' => 'Changer le pseudo',
+        'change_avatar' => 'Changer d\'avatar',
+        'delete_avatar' => 'Supprimer l\'avatar',
+
+        'avatar' => 'L\'avatar doit être un carré de minimum :size pixels.',
 
         'delete' => [
             'btn' => 'Supprimer mon compte',

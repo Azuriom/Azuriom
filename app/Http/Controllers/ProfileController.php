@@ -46,6 +46,8 @@ class ProfileController extends Controller
         return view('profile.index', [
             'user' => $user,
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
+            'canUploadAvatar' => setting('user.upload_avatar', false) || $user->canUploadAvatar(),
+            'hasAvatar' => $user->hasUploadedAvatar(),
             'canDelete' => setting('user.delete', false),
             'canVerifyEmail' => $user->email !== null && ! $user->hasVerifiedEmail() && $emailVerification,
             'discordAccount' => $discordLink ? $user->discordAccount : null,
@@ -119,6 +121,32 @@ class ProfileController extends Controller
         ]);
 
         $request->user()->update($validated);
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+        $user = $request->user();
+
+        abort_if(! setting('user.upload_avatar', true) && ! $user->canUploadAvatar(), 403);
+
+        $this->validate($request, [
+            'image' => ['required', 'mimes:jpg,jpeg,png,gif', 'dimensions:ratio=1', 'max:2048'],
+        ]);
+
+        $user->storeImage($request->file('image'), true);
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.profile.updated'));
+    }
+
+    public function deleteAvatar(Request $request)
+    {
+        if ($request->user()->hasUploadedAvatar()) {
+            $request->user()->deleteImage(true);
+        }
 
         return to_route('profile.index')
             ->with('success', trans('messages.profile.updated'));

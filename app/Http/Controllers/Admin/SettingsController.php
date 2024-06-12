@@ -287,6 +287,7 @@ class SettingsController extends Controller
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
             'userNameChange' => setting('user.change_name'),
+            'userUploadAvatar' => setting('user.upload_avatar'),
             'userDelete' => setting('user.delete'),
             'register' => setting('register', true),
             'authApi' => setting('auth_api', false),
@@ -313,6 +314,7 @@ class SettingsController extends Controller
             'register' => $request->filled('register'),
             'auth_api' => $request->filled('auth_api'),
             'user.change_name' => $request->filled('user_change_name'),
+            'user.upload_avatar' => $request->filled('user_upload_avatar'),
             'user.delete' => $request->filled('user_delete'),
         ]));
 

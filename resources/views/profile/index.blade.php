@@ -207,6 +207,50 @@
             @endif
         @endif
 
+        @if($canUploadAvatar)
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            {{ trans('messages.profile.change_avatar') }}
+                        </h2>
+
+                        <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label class="form-label" for="imageInput">{{ trans('messages.fields.image') }}</label>
+                                <div class="input-group @error('image') has-validation @enderror">
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif" required>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-check-lg"></i> {{ trans('messages.actions.save') }}
+                                    </button>
+
+                                    @error('image')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+
+                                <small id="imageInfo" class="form-text">{{ trans('messages.profile.avatar', ['size' => '64x64']) }}</small>
+                            </div>
+                        </form>
+
+                        @if($hasAvatar)
+                            <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> {{ trans('messages.profile.delete_avatar') }}
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @if(setting('users.money_transfer'))
             <div class="col-md-6">
                 <div class="card">

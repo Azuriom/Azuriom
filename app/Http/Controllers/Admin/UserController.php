@@ -217,9 +217,7 @@ class UserController extends Controller
             ]);
         }
 
-        $adminUsers = User::whereHas('role', function (Builder $query) {
-            $query->where('is_admin', true);
-        });
+        $adminUsers = User::whereRelation('role', 'is_admin', true);
 
         // So many users lost access to the admin panel because they were the only admin
         if (! $role->is_admin && $target?->isAdmin() && $adminUsers->count() < 2) {

@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\InteractsWithMoney;
 use Azuriom\Models\Traits\Searchable;
 use Azuriom\Models\Traits\TwoFactorAuthenticatable;
@@ -49,6 +50,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
+    use HasImage;
     use InteractsWithMoney;
     use Notifiable;
     use Searchable;
@@ -105,6 +107,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected array $searchable = [
         'email', 'name', 'game_id', 'role.*', 'discordAccount.*',
     ];
+
+    /**
+     * The column of the image attribute.
+     */
+    protected string $imageKey = 'avatar';
 
     protected static function booted(): void
     {
@@ -193,7 +200,14 @@ class User extends Authenticatable implements MustVerifyEmail
             return game()->getAvatarUrl($this, $size);
         }
 
-        return str_replace('{size}', $size, $this->avatar);
+        return $this->hasUploadedAvatar()
+            ? $this->imageUrl()
+            : str_replace('{size}', $size, $this->avatar);
+    }
+
+    public function hasUploadedAvatar(): bool
+    {
+        return $this->avatar !== null && ! Str::isUrl($this->avatar, ['http', 'https']);
     }
 
     public function isBanned(bool $useCache = false): bool
@@ -221,9 +235,14 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->likes()->delete();
         $this->setRememberToken(null);
 
+        if ($this->hasUploadedAvatar()) {
+            $this->deleteImage();
+        }
+
         $this->forceFill([
             'name' => 'Deleted #'.$this->id,
             'email' => null,
+            'avatar' => null,
             'password' => Str::random(),
             'role_id' => Role::defaultRoleId(),
             'game_id' => null,

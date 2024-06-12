@@ -51,6 +51,13 @@
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="userAvatar" name="user_upload_avatar" @checked($userUploadAvatar)>
+                        <label class="form-check-label" for="userAvatar">{{ trans('admin.settings.auth.user_avatar') }}</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
                         <input type="checkbox" class="form-check-input" id="userDelete" name="user_delete" @checked($userDelete)>
                         <label class="form-check-label" for="userDelete">{{ trans('admin.settings.auth.user_delete') }}</label>
                     </div>

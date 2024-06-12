@@ -15,6 +15,27 @@ document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
     })
 });
 
+window.createAlert = function (color, message, dismiss) {
+    const button = dismiss ? ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' : '';
+    let icon;
+
+    switch (color) {
+        case 'info':
+            icon = 'info-circle';
+            break;
+        case 'success':
+            icon = 'check-circle';
+            break;
+        case 'danger':
+            icon = 'exclamation-circle';
+            break;
+    }
+
+    icon = icon ? '<i class="bi bi-' + icon + '"></i> ' : '';
+
+    document.getElementById('status-message').innerHTML
+        = '<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>';
+}
 
 /*
  * Logout

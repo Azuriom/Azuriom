@@ -56,7 +56,8 @@ class ServerController extends Controller
     {
         /** @var \Azuriom\Models\Server $server */
         $server = Server::find($request->input('server-id'));
-        $uidKey = in_array($request->json('platform.type'), self::UID_KEYS, true);
+        $uidKey = $request->json('platform.key') === 'uid'
+            || in_array($request->json('platform.type'), self::UID_KEYS, true);
         $rawPlayers = $request->json('players', []);
         $maxPlayers = $request->json('maxPlayers');
 

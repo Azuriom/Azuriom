@@ -53,7 +53,7 @@ class SteamGame extends Game
     {
         $key = $size > 64 ? 'avatarfull' : ($size > 32 ? 'avatarmedium' : 'avatar');
 
-        return Arr::get($this->getUserProfile($user), $key, asset('img/user.svg'));
+        return Arr::get($this->getUserProfile($user), $key, asset('svg/user.svg'));
     }
 
     public function getUserUniqueId(string $name): ?string
