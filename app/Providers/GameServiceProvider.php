@@ -2,6 +2,7 @@
 
 namespace Azuriom\Providers;
 
+use Azuriom\Games\ArkSurvivalAscendedGame;
 use Azuriom\Games\FallbackGame;
 use Azuriom\Games\FiveMGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
@@ -12,6 +13,7 @@ use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
 use Azuriom\Socialite\CfxProvider;
 use Azuriom\Socialite\DiscordProvider;
+use Azuriom\Socialite\EpicOnlineServiceProvider;
 use Azuriom\Socialite\Minecraft\AzuriomMinecraftProvider;
 use Azuriom\Socialite\Xbox\AzuriomXboxProvider;
 use Illuminate\Support\Arr;
@@ -34,6 +36,7 @@ class GameServiceProvider extends ServiceProvider
             'fivem-cfx' => FiveMGame::class,
             'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod', true),
             'ark' => SteamGame::forName('ark', 'ARK'),
+            'ark-sa' => ArkSurvivalAscendedGame::class,
             'rust' => RustGame::class,
             'fivem' => FiveMGameLegacy::class,
             'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2'),
@@ -76,6 +79,12 @@ class GameServiceProvider extends ServiceProvider
             $config = $app['config']['services.microsoft'];
 
             return $socialite->buildProvider(AzuriomMinecraftProvider::class, $config);
+        });
+
+        $socialite->extend('epic-online-services', function ($app) use ($socialite) {
+            $config = $app['config']['services.epicgames'];
+
+            return $socialite->buildProvider(EpicOnlineServiceProvider::class, $config);
         });
 
         $socialite->extend('cfx', function () use ($socialite) {

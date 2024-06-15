@@ -42,4 +42,10 @@ return [
         'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
         'redirect' => '/user/login/callback',
     ],
+
+    'epicgames' => [
+        'client_id' => env('EPIC_CLIENT_ID'),
+        'client_secret' => env('EPIC_CLIENT_SECRET'),
+        'redirect' => '/user/login/callback',
+    ],
 ];

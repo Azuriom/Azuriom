@@ -70,6 +70,19 @@ return [
             'key' => 'Steam API Key',
             'key_info' => 'You can find your Steam API Key on <a href="https://steamcommunity.com/dev/apikey" target="_blank" rel="noopener noreferrer">Steam</a>.',
         ],
+
+        'epic' => [
+            'id' => 'Epic ID of your account',
+            'id_info' => 'This user will be admin on the site. You can find your Epic ID on your <a href="https://www.epicgames.com/account/personal" target="_blank" rel="noopener noreferrer">Epic Games account</a>.',
+
+            'client_id' => 'Epic Games Client ID',
+            'client_secret' => 'Epic Games Client Secret',
+
+            'steps' => 'To get the Client ID and Client Secret, follow these steps:',
+            'step_1' => 'Go on the <a href="https://dev.epicgames.com/portal/" target="_blank" rel="noopener noreferrer">Epic Games Developer Portal</a> and create a new product.',
+            'step_2' => 'In the product settings, in the "Clients" tab, create a new client with the "GameClient" policy type and the following redirect URL: <code>:redirect</code>',
+            'step_3' => 'You can find the Client ID and Client Secret in the client settings (Edit on the right of the client).',
+        ],
     ],
 
     'success' => [

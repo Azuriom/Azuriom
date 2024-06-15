@@ -12,6 +12,11 @@ return [
         'commands' => 'Vous pouvez utiliser <code>{name}</code> pour le pseudo du joueur, <code>{steam_id}</code> pour le SteamID du joueur et <code>{steam_id_32}</code> pour le SteamID 32 du joueur.',
     ],
 
+    'epic' => [
+        'id' => 'ID Epic Games',
+        'commands' => 'Vous pouvez utiliser <code>{name}</code> pour le pseudo du joueur et <code>{game_id}</code> pour l\'ID Epic Games du joueur.',
+    ],
+
     'xbox' => [
         'missing' => 'Ce compte Microsoft ne possède pas de compte Xbox.',
     ],

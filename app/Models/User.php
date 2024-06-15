@@ -210,6 +210,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->avatar !== null && ! Str::isUrl($this->avatar, ['http', 'https']);
     }
 
+    public function canUploadAvatar(): bool
+    {
+        return $this->avatar === null || $this->hasUploadedAvatar();
+    }
+
     public function isBanned(bool $useCache = false): bool
     {
         if ($useCache) {

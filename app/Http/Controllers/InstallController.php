@@ -94,6 +94,10 @@ class InstallController extends Controller
             'name' => '7 Days to Die',
             'logo' => 'assets/img/games/7dtd.svg',
         ],
+        'ark-sa' => [
+            'name' => 'ARK: Survival Ascended',
+            'logo' => 'assets/img/games/ark-sa.png',
+        ],
         'custom' => [
             'name' => 'Custom Game',
             'logo' => 'assets/img/azuriom.png',
@@ -250,6 +254,13 @@ class InstallController extends Controller
             ]);
         }
 
+        if ($game === 'ark-sa') {
+            return view('install.games.epic', [
+                'gameName' => $this->games[$game]['name'],
+                'locales' => self::getAvailableLocales(),
+            ]);
+        }
+
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
@@ -278,6 +289,10 @@ class InstallController extends Controller
 
             if ($game === 'fivem-cfx') {
                 return $this->setupFiveM($request);
+            }
+
+            if ($game === 'ark-sa') {
+                return $this->setupArkSurvivalAscended($request);
             }
 
             return $this->setupAzuriom($request, $game, null, null);
@@ -324,7 +339,9 @@ class InstallController extends Controller
                 throw new RuntimeException('Invalid Steam URL.');
             }
 
-            return $this->setupAzuriom($request, $game, $name, $gameId);
+            return $this->setupAzuriom($request, $game, $name, $gameId, [
+                'STEAM_KEY' => $request->input('key'),
+            ]);
         } catch (HttpClientException) {
             throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
         }
@@ -370,6 +387,37 @@ class InstallController extends Controller
         return $this->setupAzuriom($request, $game, $name, $gameId ?? null);
     }
 
+    protected function setupArkSurvivalAscended(Request $request)
+    {
+        $this->validate($request, [
+            'client_id' => 'required',
+            'client_secret' => 'required',
+            'id' => 'required',
+            'locale' => [Rule::in(static::getAvailableLocaleCodes())],
+        ]);
+
+        $id = $request->input('id');
+
+        try {
+            Http::asForm()
+                ->withBasicAuth($request->input('client_id'), $request->input('client_secret'))
+                ->post('https://api.epicgames.dev/epic/oauth/v2/token', [
+                    'grant_type' => 'client_credentials',
+                ])->throw();
+
+            return $this->setupAzuriom($request, 'ark-sa', $id, $id, [
+                'EPIC_CLIENT_ID' => $request->input('client_id'),
+                'EPIC_CLIENT_SECRET' => $request->input('client_secret'),
+            ]);
+        } catch (HttpClientException) {
+            $message = 'Invalid Epic Games credentials.';
+            throw ValidationException::withMessages([
+                'client_id' => $message,
+                'client_secret' => $message,
+            ]);
+        }
+    }
+
     protected function setupFiveM(Request $request)
     {
         $this->validate($request, [
@@ -388,20 +436,18 @@ class InstallController extends Controller
         }
     }
 
-    protected function setupAzuriom(Request $request, string $game, ?string $name, ?string $gameId)
+    protected function setupAzuriom(Request $request, string $game, ?string $name, ?string $gameId, array $env = [])
     {
-        $steamGame = in_array($game, $this->steamGames, true);
-
         Artisan::call('cache:clear');
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
         Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
-        EnvEditor::updateEnv([
+        EnvEditor::updateEnv(array_merge([
             'APP_LOCALE' => $request->input('locale'),
             'APP_URL' => url('/'),
             'MAIL_MAILER' => 'array',
             'AZURIOM_GAME' => $game,
-        ] + ($steamGame ? ['STEAM_KEY' => $request->input('key')] : []));
+        ], $env));
 
         if ($game === 'custom') {
             return to_route('install.finish');
