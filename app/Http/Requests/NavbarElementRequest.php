@@ -73,7 +73,7 @@ class NavbarElementRequest extends FormRequest
                 return $post ? $post->slug : '';
             case 'link':
             case 'plugin':
-                return $this->input($type);
+                return $this->input($type) ?? '';
             default:
                 return '#';
         }
