@@ -18,6 +18,7 @@ Azuriom natively supports the following games:
 * [Minecraft](https://www.minecraft.net/)
 * [Garry's Mod](https://gmod.facepunch.com/)
 * [ARK: Survival Evolved](https://playark.com/ark-survival-evolved/)
+* [ARK: Survival Ascended](https://playark.com/)
 * [Rust](https://rust.facepunch.com/)
 * [FiveM](https://fivem.net/)
 * [Unturned](https://smartlydressedgames.com/)

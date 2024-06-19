@@ -183,6 +183,7 @@ class Server extends Model
 
         $base = match (game()->id()) {
             'gmod' => 'azlink:setup '.str_replace([':', '/'], ['!', '|'], url('/')),
+            'csgo' => 'azlink_setup "'.url('/').'"',
             'rust', '7dtd' => 'azlink.setup '.url('/'),
             default => 'azlink setup '.url('/'),
         };

@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.servers.store') }}" method="POST" v-scope="{type: ''}">
+            <form action="{{ route('admin.servers.store') }}" method="POST" v-scope="{ type: '{{ old('type') }}' }">
 
                 @include('admin.servers._form')
 

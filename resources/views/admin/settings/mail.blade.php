@@ -109,7 +109,7 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
 
-                            <div class="input-group has-validation" v-scope="{toggle: false}">
+                            <div class="input-group has-validation" v-scope="{ toggle: false }">
                                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password') }}">
                                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
                                     <i class="bi" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>

@@ -39,7 +39,7 @@ class GameServiceProvider extends ServiceProvider
             'ark-sa' => ArkSurvivalAscendedGame::class,
             'rust' => RustGame::class,
             'fivem' => FiveMGameLegacy::class,
-            'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2'),
+            'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2', true),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
             'unturned' => SteamGame::forName('unturned', 'Unturned'),
             '7dtd' => SteamGame::forName('7dtd', '7 Days to Die', true),

@@ -480,6 +480,7 @@ return [
 
     'extensions' => [
         'buy' => 'Buy for :price',
+        'market' => 'Information about all extensions is available on the <a href=":url" target="_blank" rel="noopener noreferrer">Azuriom Market</a>.',
     ],
 
     'plugins' => [

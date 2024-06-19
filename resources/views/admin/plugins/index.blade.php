@@ -78,6 +78,10 @@
         </div>
         <div class="card-body">
             @if(! $availablePlugins->isEmpty())
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> @lang('admin.extensions.market', ['url' => 'https://market.azuriom.com/resources?type=plugin'])
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>

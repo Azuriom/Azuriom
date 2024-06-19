@@ -13,7 +13,7 @@
                 @endif
             </h5>
 
-            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm" v-scope="{type: '{{ $server->type }}'}">
+            <form action="{{ route('admin.servers.update', $server) }}" method="POST" id="serverForm" v-scope="{ type: '{{ old('type', $server->type) }}' }">
                 @method('PUT')
 
                 @include('admin.servers._form')

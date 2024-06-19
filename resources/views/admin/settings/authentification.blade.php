@@ -75,7 +75,7 @@
             <h5 class="card-title mb-0">{{ trans('admin.settings.security.title') }}</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.settings.security.update') }}" method="POST" v-scope="{ type: '{{ $captchaType }}' }">
+            <form action="{{ route('admin.settings.security.update') }}" method="POST" v-scope="{ type: '{{ old('captcha', $captchaType) }}' }">
                 @csrf
 
                 <div class="mb-3">
@@ -103,7 +103,7 @@
                         <div class="row gx-3">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="siteKeyInput">{{ trans('admin.settings.security.captcha.site_key') }}</label>
-                                <input type="text" class="form-control @error('site_key') is-invalid @enderror" id="siteKeyInput" name="site_key" value="{{ old('captcha.site_key', setting('captcha.site_key', '')) }}">
+                                <input type="text" class="form-control @error('site_key') is-invalid @enderror" id="siteKeyInput" name="site_key" value="{{ old('site_key', setting('captcha.site_key', '')) }}">
 
                                 @error('site_key')
                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

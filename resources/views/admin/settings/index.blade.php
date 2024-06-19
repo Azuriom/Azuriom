@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="row gx-3">
-                    <div class="mb-3 col-md-6" v-scope="{ icon: '{{ $icon ?? '' }}' }">
+                    <div class="mb-3 col-md-6" v-scope="{ icon: '{{ old('icon', $icon) ?? '' }}' }">
                         <label class="form-label" for="imageSelect">{{ trans('admin.settings.index.favicon') }}</label>
                         <div class="input-group mb-3">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">
@@ -75,7 +75,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-md-6" v-scope="{ logo: '{{ $logo ?? '' }}' }">
+                    <div class="mb-3 col-md-6" v-scope="{ logo: '{{ old('logo', $logo) ?? '' }}' }">
                         <label class="form-label" for="logoSelect">{{ trans('admin.settings.index.logo') }}</label>
                         <div class="input-group mb-3">
                             <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3"  v-scope="{ background: '{{ $background ?? '' }}' }">
+                <div class="mb-3"  v-scope="{ background: '{{ old('background', $background) ?? '' }}' }">
                     <label class="form-label" for="imageSelect">{{ trans('admin.settings.index.background') }}</label>
                     <div class="input-group mb-3">
                         <a class="btn btn-outline-success" href="{{ route('admin.images.create') }}" target="_blank" rel="noopener noreferrer">

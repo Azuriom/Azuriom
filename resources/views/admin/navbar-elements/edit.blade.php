@@ -5,7 +5,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.navbar-elements.update', $navbarElement) }}" method="POST" v-scope="{ type: '{{ $navbarElement->type }}' }">
+            <form action="{{ route('admin.navbar-elements.update', $navbarElement) }}" method="POST" v-scope="{ type: '{{ old('type', $navbarElement->type) }}' }">
                 @method('PUT')
 
                 @include('admin.navbar-elements._form')
