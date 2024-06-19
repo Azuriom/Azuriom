@@ -49,6 +49,8 @@ class NavbarElementRequest extends FormRequest
             'type' => ['string', Rule::in(NavbarElement::types())],
             'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],
+            'page' => ['required_if:type,page', 'nullable', Rule::exists(Page::class, 'id')],
+            'post' => ['required_if:type,post', 'nullable', Rule::exists(Post::class, 'id')],
             'value' => ['sometimes'],
             'new_tab' => ['filled', 'boolean'],
             'roles.*' => ['required', 'integer', 'exists:roles,id'],
@@ -58,7 +60,7 @@ class NavbarElementRequest extends FormRequest
     /**
      * Get the link value to store.
      */
-    protected function getLinkValue(): string
+    protected function getLinkValue(): ?string
     {
         $type = $this->input('type');
 
@@ -73,7 +75,7 @@ class NavbarElementRequest extends FormRequest
                 return $post ? $post->slug : '';
             case 'link':
             case 'plugin':
-                return $this->input($type) ?? '';
+                return $this->input($type);
             default:
                 return '#';
         }
