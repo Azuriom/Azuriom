@@ -11,10 +11,10 @@
             @if($current)
                 @isset($current->url)
                     <a href="{{ $current->url }}" target="_blank" rel="noopener noreferrer">
-                        <h3 class="h5">{{ $current->name }}</h3>
+                        <h3 class="h5 fw-bolder link-primary">{{ $current->name }}</h3>
                     </a>
                 @else
-                    <h3 class="h5">{{ $current->name }}</h3>
+                    <h3 class="h5 fw-bolder">{{ $current->name }}</h3>
                 @endisset
                 
                 <ul>
