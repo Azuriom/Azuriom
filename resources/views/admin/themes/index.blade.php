@@ -9,7 +9,14 @@
         </div>
         <div class="card-body">
             @if($current)
-                <h3 class="h5">{{ $current->name }}</h3>
+                @isset($current->url)
+                    <a href="{{ $current->url }}" target="_blank" rel="noopener noreferrer">
+                        <h3 class="h5">{{ $current->name }}</h3>
+                    </a>
+                @else
+                    <h3 class="h5">{{ $current->name }}</h3>
+                @endisset
+                
                 <ul>
                     <li>{{ trans('admin.themes.author', ['author' => implode(', ', $current->authors)]) }}</li>
                     <li>{{ trans('admin.themes.version', ['version' => $current->version]) }}</li>
