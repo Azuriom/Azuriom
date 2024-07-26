@@ -90,7 +90,7 @@ return [
         'cloudflare' => 'If you are using Cloudflare, you should install the Cloudflare Support plugin.',
         'recent_users' => 'Recent users',
         'active_users' => 'Active users',
-        'emails' => 'Emails are disabled. If a user forgets his password he will not be able to reset it. You can enable emails in the <a href=":url">mail settings</a>.',
+        'emails' => 'Emails are disabled. If a user forgets their password they will not be able to reset it. You can enable emails in the <a href=":url">mail settings</a>.',
     ],
 
     'settings' => [
