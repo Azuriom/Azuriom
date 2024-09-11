@@ -60,6 +60,23 @@
                         </button>
                     </div>
                 </form>
+                <div class="col-md-12 text-center" style="margin-top: 20px;">
+    <div class="btn-group" role="group" aria-label="Social login buttons">
+        @plugin('discord-auth') {{-- if plugin discord-auth is enabled --}}
+            <a class="btn btn-primary" href="{{ route('discord-auth.login') }}" role="button" style="margin-right: 10px; border-radius: 8px;">
+                <i class="bi bi-discord" style="margin-right: 8px;"></i>
+                {{ trans('discord-auth::messages.login_via_discord') }}
+            </a>
+        @endplugin
+
+        @plugin('google-auth') {{-- if plugin google-auth is enabled --}}
+            <a class="btn btn-primary" href="{{ route('google-auth.login') }}" role="button" style="border-radius: 8px;">
+                <i class="bi bi-google" style="margin-right: 8px;"></i>
+                {{ trans('google-auth::messages.login_via_google') }}
+            </a>
+        @endplugin
+    </div>
+</div>
             </div>
         </div>
     </div>
