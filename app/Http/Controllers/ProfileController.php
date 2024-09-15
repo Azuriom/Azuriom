@@ -46,7 +46,7 @@ class ProfileController extends Controller
         return view('profile.index', [
             'user' => $user,
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
-            'canUploadAvatar' => setting('user.upload_avatar', false) || $user->canUploadAvatar(),
+            'canUploadAvatar' => setting('user.upload_avatar', false) && $user->canUploadAvatar(),
             'hasAvatar' => $user->hasUploadedAvatar(),
             'canDelete' => setting('user.delete', false),
             'canVerifyEmail' => $user->email !== null && ! $user->hasVerifiedEmail() && $emailVerification,
@@ -130,7 +130,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        abort_if(! setting('user.upload_avatar', true) && ! $user->canUploadAvatar(), 403);
+        abort_if(! setting('user.upload_avatar', false) || ! $user->canUploadAvatar(), 403);
 
         $this->validate($request, [
             'image' => ['required', 'mimes:jpg,jpeg,png,gif', 'dimensions:ratio=1', 'max:2048'],
