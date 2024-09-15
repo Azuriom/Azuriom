@@ -71,7 +71,7 @@ return [
         'price' => 'Prix',
         'published_at' => 'Publié le',
         'quantity' => 'Quantité',
-        'role' => 'Grade',
+        'role' => 'Rôle',
         'server' => 'Serveur',
         'short_description' => 'Description courte',
         'slug' => 'Lien',
@@ -168,7 +168,7 @@ return [
         'updated' => 'Votre profil a été mis à jour.',
 
         'info' => [
-            'role' => 'Grade: :role',
+            'role' => 'Rôle: :role',
             'register' => 'Inscription: :date',
             'money' => 'Argent: :money',
             '2fa' => 'Authentification à deux facteurs (A2F): :2fa',

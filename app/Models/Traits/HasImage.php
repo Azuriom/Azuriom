@@ -3,7 +3,6 @@
 namespace Azuriom\Models\Traits;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +16,7 @@ trait HasImage
 
     protected static function bootHasImage(): void
     {
-        static::deleted(function (Model $model) {
+        static::deleted(function (self $model) {
             if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
                 return;
             }

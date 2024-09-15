@@ -4,7 +4,6 @@ namespace Azuriom\Models\Traits;
 
 use Azuriom\Models\Attachment;
 use Azuriom\Models\PendingAttachment;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
@@ -17,7 +16,7 @@ trait Attachable
 {
     public static function bootAttachable(): void
     {
-        static::updated(function (Model $model) {
+        static::updated(function (self $model) {
             $content = $model->getAttribute($model->getAttachmentsKey());
 
             if ($model->getOriginal($model->getAttachmentsKey()) === $content) {
@@ -37,7 +36,7 @@ trait Attachable
             }
         });
 
-        static::deleted(function (Model $model) {
+        static::deleted(function (self $model) {
             $attachments = $model->attachments()->withTrashed()->get();
 
             foreach ($attachments as $attachment) {

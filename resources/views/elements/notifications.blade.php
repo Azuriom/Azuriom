@@ -36,8 +36,8 @@
             </div>
         @endif
 
-        <div id="noNotificationsLabel" class="dropdown-item text-center small text-success @if(! $notifications->isEmpty()) d-none @endif">
+        <a id="noNotificationsLabel" href="{{ route('notifications.index') }}" class="dropdown-item text-center small text-success @if(! $notifications->isEmpty()) d-none @endif">
             <i class="bi bi-check-lg"></i> {{ trans('messages.notifications.empty') }}
-        </div>
+        </a>
     </div>
 </li>

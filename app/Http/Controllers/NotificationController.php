@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+    public function index(Request $request)
+    {
+        $notifications = $request->user()
+            ->notifications()
+            ->where('read_at', '>', now()->subMonth())
+            ->paginate();
+
+        return view('notifications.index', ['allNotifications' => $notifications]);
+    }
+
     /**
      * Mark the specified notification as read.
      */

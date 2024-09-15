@@ -329,7 +329,7 @@
 
     <div class="row gy-4">
         @foreach($cards ?? [] as $card)
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">{{ $card['name'] }}</h5>

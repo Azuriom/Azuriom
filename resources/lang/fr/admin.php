@@ -31,7 +31,7 @@ return [
         'users' => [
             'heading' => 'Utilisateurs',
             'users' => 'Utilisateurs',
-            'roles' => 'Grades',
+            'roles' => 'Rôles',
             'bans' => 'Bannissements',
         ],
 
@@ -225,7 +225,7 @@ return [
         'edit' => 'Édition l\'élément de la navbar :element',
         'create' => 'Ajout d\'un élément dans la navbar',
 
-        'restrict' => 'Restreindre la visibilité de cet élément à certain grades',
+        'restrict' => 'Restreindre la visibilité de cet élément à certain rôles',
         'dropdown' => 'Une fois ce menu déroulant enregistré, des éléments peuvent y être ajoutés par glisser-déposer dans la page principale de la barre de navigation.',
 
         'fields' => [
@@ -380,27 +380,27 @@ return [
     ],
 
     'roles' => [
-        'title' => 'Grades',
-        'edit' => 'Édition du grade :role (#:id)',
-        'create' => 'Création d\'un grade',
+        'title' => 'Rôles',
+        'edit' => 'Édition du rôle :role (#:id)',
+        'create' => 'Création d\'un rôle',
 
         'info' => '(ID: :id, Pouvoir: :power)',
 
-        'default' => 'Grade par défaut',
+        'default' => 'Rôle par défaut',
         'admin' => 'Administrateur',
-        'admin_info' => 'Lorsque le grade est administrateur, il a toutes les permissions.',
+        'admin_info' => 'Lorsque le rôle est administrateur, il a toutes les permissions.',
 
-        'updated' => 'Les grades ont été mis à jour.',
-        'unauthorized' => 'Ce grade est plus élevé que votre propre grade.',
-        'add_admin' => 'Vous ne pouvez pas mettre la permission administrateur à un grade.',
-        'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre grade.',
-        'no_admin' => 'Il doit y avoir au moins un autre admin pour retirer votre grade admin.',
-        'delete_default' => 'Ce grade ne peut pas être supprimé.',
-        'delete_own' => 'Vous ne pouvez pas supprimer votre grade.',
+        'updated' => 'Les rôles ont été mis à jour.',
+        'unauthorized' => 'Ce rôle est plus élevé que votre propre rôle.',
+        'add_admin' => 'Vous ne pouvez pas mettre la permission administrateur à un rôle.',
+        'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre rôle.',
+        'no_admin' => 'Il doit y avoir au moins un autre admin pour retirer votre rôle admin.',
+        'delete_default' => 'Ce rôle ne peut pas être supprimé.',
+        'delete_own' => 'Vous ne pouvez pas supprimer votre rôle.',
 
         'discord' => [
-            'title' => 'Lier les grades avec Discord',
-            'enable' => 'Activer la liaison des grades avec Discord',
+            'title' => 'Lier les rôles avec Discord',
+            'enable' => 'Activer la liaison des rôles avec Discord',
             'enable_info' => 'Une fois activé, modifiez le rôle directement sur Discord, et dans l\'onglet <b>Liens</b> du rôle, ajoutez un pré-requis. Les utilisateurs pourront récupérer leur rôle en allant sur Discord, dans le menu du serveur puis dans <b>Rôles liés</b>. ',
             'info' => 'Vous devez créer une application sur le <a href="https://discord.com/developers/applications" target="_blank">portail développeur Discord</a> et définir <b>l\'URL de vérification</b> sur <code>:url</code>',
             'oauth' => 'Puis, dans l\'onglet <b>OAuth2</b>, dans <b>Général</b>, vous devez ajouter <code>:url</code> dans les <b>Redirections</b>.',
@@ -454,7 +454,7 @@ return [
         'create' => 'Création d\'une page',
 
         'enable' => 'Activer la page',
-        'restrict' => 'Limiter les grades qui peuvent accéder à cette page',
+        'restrict' => 'Limiter les rôles qui peuvent accéder à cette page',
     ],
 
     'redirects' => [
@@ -480,7 +480,7 @@ return [
 
     'extensions' => [
         'buy' => 'Acheter pour :price',
-        'market' => 'Les informations de toutes les extensions sont disponibles sur le <a href=":market" target="_blank" rel="noopener noreferrer">Market d\'Azuriom</a>.',
+        'market' => 'Les informations de toutes les extensions sont disponibles sur le <a href=":url" target="_blank" rel="noopener noreferrer">Market d\'Azuriom</a>.',
     ],
 
     'plugins' => [
@@ -586,9 +586,9 @@ return [
         ],
 
         'roles' => [
-            'created' => 'Création du grade #:id',
-            'updated' => 'Mise à jour du grade #:id',
-            'deleted' => 'Suppression du grade #:id',
+            'created' => 'Création du rôle #:id',
+            'updated' => 'Mise à jour du rôle #:id',
+            'deleted' => 'Suppression du rôle #:id',
         ],
 
         'servers' => [

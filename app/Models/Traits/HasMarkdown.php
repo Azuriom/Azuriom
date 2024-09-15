@@ -3,7 +3,6 @@
 namespace Azuriom\Models\Traits;
 
 use Azuriom\Support\Markdown;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
@@ -15,11 +14,11 @@ trait HasMarkdown
 {
     protected static function bootHasMarkdown(): void
     {
-        static::updated(function (Model $model) {
+        static::updated(function (self $model) {
             Cache::forget($model->getMarkdownCacheKey());
         });
 
-        static::deleted(function (Model $model) {
+        static::deleted(function (self $model) {
             Cache::forget($model->getMarkdownCacheKey());
         });
     }

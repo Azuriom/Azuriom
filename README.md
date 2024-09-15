@@ -58,6 +58,9 @@ You can contribute to translating Azuriom on our [Crowdin](https://translate.azu
 
 If you discover any security related issues within Azuriom, please send an e-mail to [security@azuriom.com](mailto:security@azuriom.com) instead of using the issue tracker. All security vulnerabilities will be promptly addressed.
 
+> [!NOTE]
+> JavaScript injections from the admin dashboard are not classified as XSS vulnerabilities. Of course, XSS found in user-facing areas of the site, as well as all other vulnerabilities throughout the entire application, will be recognized and addressed accordingly.
+
 ## Support us
 
 If you like this project, please consider supporting us on [GitHub sponsors](https://github.com/sponsors/Azuriom).

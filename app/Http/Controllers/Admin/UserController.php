@@ -13,6 +13,7 @@ use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -83,7 +84,7 @@ class UserController extends Controller
 
         $this->validateRole($request->user(), $role);
 
-        $user = new User($request->validated());
+        $user = new User(Arr::except($request->validated(), 'role'));
         $user->role()->associate($role);
         $user->save();
 
@@ -120,7 +121,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        $user->fill($request->validated());
+        $user->fill(Arr::except($request->validated(), 'role'));
 
         $role = Role::find($request->input('role'));
 

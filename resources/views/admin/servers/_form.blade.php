@@ -102,8 +102,8 @@
 </div>
 
  <div v-show="type === 'mc-ping'" class="mb-3">
-    <div class="alert alert-info" role="alert">
-        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.ping_info') }}
+    <div class="alert alert-warning" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.servers.ping_info') }}
     </div>
 </div>
 
@@ -123,8 +123,8 @@
 </div>
 
 <div v-show="type === 'source-query'" class="mb-3">
-    <div class="alert alert-info" role="alert">
-        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.query_info') }}
+    <div class="alert alert-warning" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.servers.query_info') }}
     </div>
 </div>
 

@@ -84,6 +84,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {
+    Route::get('/', [NotificationController::class, 'index'])->name('index');
     Route::post('/{notification}/read', [NotificationController::class, 'markAsRead'])->name('read');
     Route::post('/read', [NotificationController::class, 'markAllAsRead'])->name('read.all');
 });
