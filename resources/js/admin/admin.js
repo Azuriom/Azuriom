@@ -73,6 +73,31 @@ document.querySelectorAll('[data-image-preview]').forEach(function (el) {
     });
 });
 
+document.querySelectorAll('[data-clipboard-target]').forEach(function (el) {
+    if (!navigator.clipboard) {
+        return;
+    }
+
+    el.tooltip = new bootstrap.Tooltip(el);
+
+    el.addEventListener('click', function (ev) {
+        ev.preventDefault();
+
+        navigator.clipboard.writeText(el.innerText).then(function() {
+            const message = el.dataset['copied'];
+
+            if (el.tooltip && message) {
+                const oldTitle = el.dataset['bsOriginalTitle'];
+                el.setAttribute('data-bs-original-title', message);
+                el.tooltip.show();
+                el.setAttribute('data-bs-original-title', oldTitle ? oldTitle : '');
+            }
+        }, function(err) {
+            console.error('Could not copy text to clipboard: ', err);
+        });
+    });
+});
+
 window.createAlert = function (color, message, dismiss) {
     const button = dismiss ? ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' : '';
     let icon;

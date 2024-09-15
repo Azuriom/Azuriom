@@ -278,7 +278,7 @@ class LoginController extends Controller
 
         $field = Str::contains($username, '@') ? $this->username() : 'name';
 
-        return array_merge([$field => $username], $request->only('password'));
+        return [$field => $username, ...$request->only('password')];
     }
 
     /**

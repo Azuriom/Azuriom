@@ -66,9 +66,7 @@ class RoleController extends Controller
 
         $linkRoles = $request->filled('link_roles');
 
-        $validated = array_merge(array_filter($validated), [
-            'link_roles' => $linkRoles,
-        ]);
+        $validated = [...array_filter($validated), 'link_roles' => $linkRoles];
 
         try {
             if ($linkRoles) {

@@ -3,5 +3,10 @@
         "crowdin_translations",
         "plugins",
         "resources/themes"
-    ]
+    ],
+    "rules": {
+        "new_with_parentheses": {
+            "anonymous_class": false
+        }
+    }
 }

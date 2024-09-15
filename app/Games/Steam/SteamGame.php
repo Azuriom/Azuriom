@@ -74,7 +74,7 @@ class SteamGame extends Game
         ];
 
         return $this->azLinkSupport
-            ? array_merge($games, ['steam-azlink' => AzLink::class])
+            ? [...$games, 'steam-azlink' => AzLink::class]
             : $games;
     }
 

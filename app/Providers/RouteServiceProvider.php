@@ -2,6 +2,7 @@
 
 namespace Azuriom\Providers;
 
+use Azuriom\Http\Controllers\FallbackController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -31,6 +32,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            Route::get('/storage/{path}', [FallbackController::class, 'storage'])
+                ->where('path', '.*');
+
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));

@@ -33,14 +33,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
             'role_id' => Role::factory(),
-            'email_verified_at' => $this->faker->dateTimeThisYear(),
+            'email_verified_at' => fake()->dateTimeThisYear(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'last_login_at' => $this->faker->dateTimeThisYear(),
-            'last_login_ip' => $this->faker->ipv4(),
+            'last_login_at' => fake()->dateTimeThisYear(),
+            'last_login_ip' => fake()->ipv4(),
         ];
     }
 

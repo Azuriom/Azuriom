@@ -34,7 +34,7 @@ class InstallController extends Controller
 {
     public const TEMP_KEY = 'base64:hmU1T3OuvHdi5t1wULI8Xp7geI+JIWGog9pBCNxslY8=';
 
-    public const MIN_PHP_VERSION = '8.0';
+    public const MIN_PHP_VERSION = '8.2';
 
     public const REQUIRED_EXTENSIONS = [
         'bcmath', 'ctype', 'json', 'mbstring', 'openssl', 'PDO', 'tokenizer',
@@ -254,13 +254,6 @@ class InstallController extends Controller
             ]);
         }
 
-        if ($game === 'ark-sa') {
-            return view('install.games.epic', [
-                'gameName' => $this->games[$game]['name'],
-                'locales' => self::getAvailableLocales(),
-            ]);
-        }
-
         if (in_array($game, $this->steamGames, true)) {
             return view('install.games.steam', [
                 'game' => $game,
@@ -442,12 +435,13 @@ class InstallController extends Controller
         Artisan::call('migrate', ['--force' => true, '--seed' => true]);
         Artisan::call('storage:link', ! windows_os() ? ['--relative' => true] : []);
 
-        EnvEditor::updateEnv(array_merge([
+        EnvEditor::updateEnv([
+            ...$env,
             'APP_LOCALE' => $request->input('locale'),
             'APP_URL' => url('/'),
             'MAIL_MAILER' => 'array',
             'AZURIOM_GAME' => $game,
-        ], $env));
+        ]);
 
         if ($game === 'custom') {
             return to_route('install.finish');

@@ -6,6 +6,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PageRequest;
 use Azuriom\Models\Page;
 use Azuriom\Models\Role;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -34,7 +35,7 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $page = Page::create($request->validated());
+        $page = Page::create(Arr::except($request->validated(), 'roles'));
 
         $page->persistPendingAttachments($request->input('pending_id'));
         $page->roles()->sync($request->input('roles'));
@@ -59,7 +60,7 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        $page->update($request->validated());
+        $page->update(Arr::except($request->validated(), 'roles'));
         $page->roles()->sync($request->input('roles'));
 
         return to_route('admin.pages.index')

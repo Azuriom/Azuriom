@@ -17,7 +17,7 @@ const mix = require('laravel-mix');
 const vendorPath = 'public/assets/vendor';
 
 const vendorDependencies = [
-    'axios', 'bootstrap', 'clipboard', 'easymde', '@simonwep/pickr:pickr',
+    'axios', 'bootstrap', 'easymde', '@simonwep/pickr:pickr',
 ];
 
 for (const name of vendorDependencies) {

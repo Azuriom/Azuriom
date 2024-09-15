@@ -36,9 +36,10 @@ class AdminLayoutComposer
             'themesUpdates' => $this->themes->getThemesToUpdate()->count(),
         ]);
 
-        $view->with(array_merge($extensions, [
+        $view->with([
+            ...$extensions,
             'lastVersion' => $this->updates->getLastVersion(),
             'hasUpdate' => $this->updates->hasUpdate(),
-        ]));
+        ]);
     }
 }

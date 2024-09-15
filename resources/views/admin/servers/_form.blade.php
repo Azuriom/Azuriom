@@ -1,20 +1,4 @@
 @push('footer-scripts')
-    <script src="{{ asset('vendor/clipboard/clipboard.min.js') }}"></script>
-    <script>
-        const clipboardJs = new ClipboardJS('[data-clipboard-target]');
-
-        clipboardJs.on('success', function (e) {
-            e.clearSelection();
-
-            const oldTitle = e.trigger.dataset['originalTitle'];
-
-            if ($.fn.tooltip) {
-                e.trigger.setAttribute('data-original-title', e.trigger.dataset['copied']);
-                $(e.trigger).tooltip('show');
-                e.trigger.setAttribute('data-original-title', oldTitle === undefined ? '' : oldTitle);
-            }
-        });
-    </script>
     @isset($server)
         <script>
             const azLinkPortInput = document.getElementById('azlinkPortInput');
@@ -159,62 +143,62 @@
 </div>
 
 @if(game()->id() === 'unturned')
-<div v-show="type === 'source-rcon'" class="mb-3">
-    <div class="alert alert-info" role="alert">
-        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
+    <div v-show="type === 'source-rcon'" class="mb-3">
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
+        </div>
     </div>
-</div>
 @endif
 
 <div v-show="type === 'mc-azlink' || type === 'steam-azlink'">
-    @unless(isset($server) && $server->isOnline())
+    @if(! isset($server) || ! $server->isOnline())
         <div class="alert alert-info">
             <i class="bi bi-info-circle"></i> @lang('admin.servers.azlink.info')
         </div>
-    @endunless
-
-    <div v-show="type === 'mc-azlink'" class="mb-3 form-check form-switch">
-        <input type="checkbox" class="form-check-input" id="hasPingSwitch" name="azlink-ping" data-bs-toggle="collapse" data-bs-target="#hasPingGroup" @if(isset($server) && ($server->data['azlink-ping'] ?? false)) checked @endisset aria-describedby="pingInfo">
-        <label class="form-check-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.ping') }}</label>
-
-        <small class="form-text" id="pingInfo">{{ trans('admin.servers.azlink.ping_info') }}</small>
-    </div>
-
-    <div id="hasPingGroup" v-show="type === 'mc-azlink'" class="@if(isset($server) && ($server->data['azlink-ping'] ?? false)) show @else collapse @endisset">
-        <div class="mb-3 form-check form-switch">
-            <input type="checkbox" class="form-check-input" id="customPortSwitch" name="azlink-custom-port" data-bs-toggle="collapse" data-bs-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
-            <label class="form-check-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom_port') }}</label>
-        </div>
-
-        <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
-            <div class="card card-body mb-3">
-                <div class="mb-3">
-                    <label class="form-label" for="azlinkPortInput">{{ trans('admin.servers.azlink.port') }}</label>
-                    <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
-
-                    @error('azlink-port')
-                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                    @enderror
-                </div>
-
-                <div class="alert alert-info mb-0" role="alert">
-                    <i class="bi bi-info-circle"></i>
-                    {{ trans('admin.servers.azlink.port_command') }}
-                    <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
-                        <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
-                </div>
-            </div>
-        </div>
-
-        @if(isset($server) && $server->isOnline())
-            <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
-                <i class="bi bi-check-lg"></i> {{ trans('admin.servers.verify') }}
-                <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
-            </button>
-        @endif
-    </div>
+    @endif
 
     @isset($server)
+        <div v-show="type === 'mc-azlink'" class="mb-3 form-check form-switch">
+            <input type="checkbox" class="form-check-input" id="hasPingSwitch" name="azlink-ping" data-bs-toggle="collapse" data-bs-target="#hasPingGroup" @if($server->data['azlink-ping'] ?? false) checked @endif aria-describedby="pingInfo">
+            <label class="form-check-label" for="hasPingSwitch">{{ trans('admin.servers.azlink.ping') }}</label>
+
+            <div class="form-text" id="pingInfo">{{ trans('admin.servers.azlink.ping_info') }}</div>
+        </div>
+
+        <div id="hasPingGroup" v-show="type === 'mc-azlink'" class="@if($server->data['azlink-ping'] ?? false) show @else collapse @endif">
+            <div class="mb-3 form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="customPortSwitch" name="azlink-custom-port" data-bs-toggle="collapse" data-bs-target="#customPortGroup" @isset($server->data['azlink-port']) checked @endisset>
+                <label class="form-check-label" for="customPortSwitch">{{ trans('admin.servers.azlink.custom_port') }}</label>
+            </div>
+
+            <div id="customPortGroup" class="@isset($server->data['azlink-port']) show @else collapse @endisset">
+                <div class="card card-body mb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="azlinkPortInput">{{ trans('admin.servers.azlink.port') }}</label>
+                        <input type="number" min="1" max="65535" class="form-control @error('azlink-port') is-invalid @enderror" id="azlinkPortInput" name="azlink-port" value="{{ old('azlink-port', $server->data['azlink-port'] ?? '') }}" placeholder="25588">
+
+                        @error('azlink-port')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="alert alert-info mb-0" role="alert">
+                        <i class="bi bi-info-circle"></i>
+                        {{ trans('admin.servers.azlink.port_command') }}
+                        <code id="portCommand" class="cursor-copy" title="{{ trans('messages.actions.copy') }}" data-copied="{{ trans('messages.copied') }}" data-bs-toggle="tooltip" data-clipboard-target="#portCommand">/azlink port
+                            <span id="azLinkPortDisplay">{{ $server->data['azlink-port'] ?? '25588' }}</span></code>
+                    </div>
+                </div>
+            </div>
+
+            @if($server->isOnline())
+                <button type="button" class="btn btn-success mb-4" id="verifyAzLink">
+                    <i class="bi bi-check-lg"></i> {{ trans('admin.servers.verify') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
+                </button>
+            @endif
+        </div>
+
         <div class="mb-3">
             @if($server->isOnline())
                 <div class="alert alert-primary" role="alert">

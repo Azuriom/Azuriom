@@ -65,11 +65,12 @@ class ServerController extends Controller
             ? Arr::pluck($rawPlayers, 'uid')
             : Arr::pluck($rawPlayers, 'name', 'uuid');
 
-        $server->updateData(array_merge(
-            ['players' => count($players), 'max_players' => $maxPlayers],
-            $request->json('system', []),
-            $request->json('worlds', []),
-        ), $request->json('full', false));
+        $server->updateData([
+            'players' => count($players),
+            'max_players' => $maxPlayers,
+            ...$request->json('system', []),
+            ...$request->json('worlds', []),
+        ], $request->json('full', false));
 
         $users = User::whereIn($uidKey ? 'game_id' : 'name', $players)->get();
         $commands = $server->commands()
@@ -126,13 +127,14 @@ class ServerController extends Controller
             return response()->noContent();
         }
 
-        $user = User::forceCreate(array_merge(Arr::except($data, 'ip'), [
+        $user = User::forceCreate([
+            ...Arr::except($data, 'ip'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
             'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),
             'last_login_at' => now(),
-        ]));
+        ]);
 
         event(new Registered($user));
 

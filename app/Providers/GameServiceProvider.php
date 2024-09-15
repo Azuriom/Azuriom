@@ -2,7 +2,6 @@
 
 namespace Azuriom\Providers;
 
-use Azuriom\Games\ArkSurvivalAscendedGame;
 use Azuriom\Games\FallbackGame;
 use Azuriom\Games\FiveMGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
@@ -36,7 +35,7 @@ class GameServiceProvider extends ServiceProvider
             'fivem-cfx' => FiveMGame::class,
             'gmod' => SteamGame::forName('gmod', 'Garry\'s Mod', true),
             'ark' => SteamGame::forName('ark', 'ARK'),
-            'ark-sa' => ArkSurvivalAscendedGame::class,
+            'ark-sa' => SteamGame::forName('ark-sa', 'ARK: Survival Evolved'),
             'rust' => RustGame::class,
             'fivem' => FiveMGameLegacy::class,
             'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2', true),

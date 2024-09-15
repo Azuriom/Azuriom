@@ -26,11 +26,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->unique()->sentence(),
-            'description' => $this->faker->sentence(),
-            'slug' => $this->faker->slug(),
-            'content' => $this->faker->paragraph(),
-            'published_at' => $this->faker->dateTimeThisYear(),
+            'title' => fake()->unique()->sentence(),
+            'description' => fake()->sentence(),
+            'slug' => fake()->slug(),
+            'content' => fake()->paragraph(),
+            'published_at' => fake()->dateTimeThisYear(),
             'author_id' => User::factory(),
         ];
     }

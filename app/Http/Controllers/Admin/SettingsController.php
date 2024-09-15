@@ -101,24 +101,25 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
-        $settings = array_merge($this->validate($request, [
-            'name' => ['required', 'string', 'max:50'],
-            'description' => ['nullable', 'string', 'max:255'],
-            'url' => ['required', 'url'],
-            'timezone' => ['required', 'timezone'],
-            'copyright' => ['nullable', 'string', 'max:150'],
-            'keywords' => ['nullable', 'string', 'max:150'],
-            'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
-            'icon' => ['nullable', 'exists:images,file'],
-            'logo' => ['nullable', 'exists:images,file'],
-            'background' => ['nullable', 'exists:images,file'],
-            'money' => ['required', 'string', 'max:15'],
-            'site-key' => ['nullable', 'string', 'size:50'],
-            'posts_webhook' => ['nullable', 'url'],
-        ]), [
+        $settings = [
+            ...$this->validate($request, [
+                'name' => ['required', 'string', 'max:50'],
+                'description' => ['nullable', 'string', 'max:255'],
+                'url' => ['required', 'url'],
+                'timezone' => ['required', 'timezone'],
+                'copyright' => ['nullable', 'string', 'max:150'],
+                'keywords' => ['nullable', 'string', 'max:150'],
+                'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
+                'icon' => ['nullable', 'exists:images,file'],
+                'logo' => ['nullable', 'exists:images,file'],
+                'background' => ['nullable', 'exists:images,file'],
+                'money' => ['required', 'string', 'max:15'],
+                'site-key' => ['nullable', 'string', 'size:50'],
+                'posts_webhook' => ['nullable', 'url'],
+            ]),
             'users.money_transfer' => $request->filled('user_money_transfer'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash
-        ]);
+        ];
 
         $old = Arr::except(Setting::updateSettings($settings), 'users.money_transfer');
 
@@ -158,22 +159,25 @@ class SettingsController extends Controller
             ],
         ]);
 
-        $settings = array_merge($request->only('hash'), [
+        $settings = [
+            ...$request->only('hash'),
             'admin.force_2fa' => $request->filled('force_2fa'),
-        ]);
+        ];
 
         if ($request->filled('captcha')) {
-            $settings = array_merge($settings, [
+            $settings = [
+                ...$settings,
                 'captcha.type' => $request->input('captcha'),
                 'captcha.site_key' => $request->input('site_key'),
                 'captcha.secret_key' => $request->input('secret_key'),
-            ]);
+            ];
         } else {
-            $settings = array_merge($settings, [
+            $settings = [
+                ...$settings,
                 'captcha.type' => null,
                 'captcha.site_key' => null,
                 'captcha.secret_key' => null,
-            ]);
+            ];
         }
 
         $old = Setting::updateSettings($settings);
@@ -287,7 +291,7 @@ class SettingsController extends Controller
         return view('admin.settings.authentification', [
             'conditions' => setting('conditions'),
             'userNameChange' => setting('user.change_name'),
-            'userUploadAvatar' => setting('user.upload_avatar'),
+            'userUploadAvatar' => setting('user.upload_avatar', false),
             'userDelete' => setting('user.delete'),
             'register' => setting('register', true),
             'authApi' => setting('auth_api', false),
@@ -306,17 +310,16 @@ class SettingsController extends Controller
      */
     public function updateAuth(Request $request)
     {
-        $validated = $this->validate($request, [
-            'conditions' => ['nullable', 'string', 'max:150'],
-        ]);
-
-        Setting::updateSettings(array_merge($validated, [
+        Setting::updateSettings([
+            ...$this->validate($request, [
+                'conditions' => ['nullable', 'string', 'max:150'],
+            ]),
             'register' => $request->filled('register'),
             'auth_api' => $request->filled('auth_api'),
             'user.change_name' => $request->filled('user_change_name'),
             'user.upload_avatar' => $request->filled('user_upload_avatar'),
             'user.delete' => $request->filled('user_delete'),
-        ]));
+        ]);
 
         ActionLog::log('settings.updated');
 
@@ -343,19 +346,18 @@ class SettingsController extends Controller
      */
     public function updateMail(Request $request)
     {
-        $validated = $this->validate($request, [
-            'from-address' => ['required', 'string', 'email'],
-            'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
-            'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
-            'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'between:1,65535'],
-            'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
-            'smtp-username' => ['nullable', 'string'],
-            'smtp-password' => ['nullable', 'string'],
-        ]);
-
-        $mailSettings = array_merge($validated, [
+        $mailSettings = [
+            ...$this->validate($request, [
+                'from-address' => ['required', 'string', 'email'],
+                'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
+                'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
+                'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'between:1,65535'],
+                'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
+                'smtp-username' => ['nullable', 'string'],
+                'smtp-password' => ['nullable', 'string'],
+            ]),
             'users_email_verification' => $request->filled('users_email_verification'),
-        ]);
+        ];
 
         if ($mailSettings['mailer'] === null) {
             $mailSettings['mailer'] = 'array';
