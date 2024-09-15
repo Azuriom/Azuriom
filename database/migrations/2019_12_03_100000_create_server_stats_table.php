@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('server_id');
             $table->unsignedInteger('players');
             $table->unsignedInteger('ram')->nullable();
-            $table->unsignedDecimal('cpu')->nullable();
+            $table->decimal('cpu')->nullable();
             $table->text('data')->nullable();
             $table->timestamps();
 

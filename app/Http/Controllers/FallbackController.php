@@ -5,6 +5,8 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Models\Page;
 use Azuriom\Models\Redirect;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FallbackController extends Controller
 {
@@ -31,5 +33,15 @@ class FallbackController extends Controller
         $this->authorize('view', $page);
 
         return view('pages.show', ['page' => $page]);
+    }
+
+    public function storage(string $path)
+    {
+        $disk = Storage::disk('public');
+
+        abort_if(Str::contains($path, ['..', '\\']), 401);
+        abort_if(! $disk->fileExists($path), 404);
+
+        return $disk->response($path);
     }
 }

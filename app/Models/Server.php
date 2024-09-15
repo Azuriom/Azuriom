@@ -150,9 +150,10 @@ class Server extends Model
             $statsData['tps'] = round($tps, 2);
         }
 
-        $this->stats()->create(array_merge([
+        $this->stats()->create([
+            ...Arr::only($data, ['players', 'cpu', 'ram']),
             'data' => array_filter($statsData),
-        ], Arr::only($data, ['players', 'cpu', 'ram'])));
+        ]);
     }
 
     public function getData(?string $key = null, mixed $default = null): mixed

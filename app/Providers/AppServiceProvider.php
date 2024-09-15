@@ -10,6 +10,7 @@ use Azuriom\Notifications\AlertNotificationChannel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -54,5 +55,15 @@ class AppServiceProvider extends ServiceProvider
             'pages' => Page::class,
             'users' => User::class,
         ]);
+
+        Gate::before(function (User $user, string $ability, array $arguments) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+
+            if (empty($arguments)) {
+                return $user->role->hasRawPermission($ability);
+            }
+        });
     }
 }

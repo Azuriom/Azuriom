@@ -20,17 +20,6 @@ use Azuriom\Http\Controllers\Admin\UpdateController;
 use Azuriom\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register admin routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" and "admin" middleware groups. Now create a great admin panel!
-|
-*/
-
 Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
 Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->group(function () {

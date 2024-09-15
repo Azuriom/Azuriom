@@ -1,20 +1,4 @@
 @push('footer-scripts')
-    <script src="{{ asset('vendor/clipboard/clipboard.min.js') }}"></script>
-    <script>
-        const clipboardJs = new ClipboardJS('[data-clipboard-target]');
-
-        clipboardJs.on('success', function (e) {
-            e.clearSelection();
-
-            const oldTitle = e.trigger.dataset['originalTitle'];
-
-            if ($.fn.tooltip) {
-                e.trigger.setAttribute('data-original-title', e.trigger.dataset['copied']);
-                $(e.trigger).tooltip('show');
-                e.trigger.setAttribute('data-original-title', oldTitle === undefined ? '' : oldTitle);
-            }
-        });
-    </script>
     @isset($server)
         <script>
             const azLinkPortInput = document.getElementById('azlinkPortInput');
@@ -159,11 +143,11 @@
 </div>
 
 @if(game()->id() === 'unturned')
-<div v-show="type === 'source-rcon'" class="mb-3">
-    <div class="alert alert-info" role="alert">
-        <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
+    <div v-show="type === 'source-rcon'" class="mb-3">
+        <div class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
+        </div>
     </div>
-</div>
 @endif
 
 <div v-show="type === 'mc-azlink' || type === 'steam-azlink'">
