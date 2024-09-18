@@ -9,6 +9,7 @@ use Azuriom\Support\SettingsRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -297,5 +298,41 @@ if (! function_exists('scheduler_running')) {
         $last = setting('schedule.last');
 
         return $last !== null && Carbon::parse($last)->diffInHours() < 1;
+    }
+}
+
+if (! function_exists('get_available_locales')) {
+    /**
+     * Get locales with their name
+     * ex: [ ['fr' => 'Français'], ['en' => 'English'] ].
+     */
+    function get_available_locales()
+    {
+        return get_available_locales_codes()->mapWithKeys(function (string $locale) {
+            return [$locale => trans('messages.lang', [], $locale)];
+        });
+    }
+}
+
+if (! function_exists('get_available_locales_codes')) {
+    /**
+     * Get availables locales within the ressources/lang folder
+     * ex: ['fr', 'en'].
+     */
+    function get_available_locales_codes()
+    {
+        return collect(File::directories(resource_path('lang')))->map(function (string $path) {
+            return basename($path);
+        });
+    }
+}
+
+if (! function_exists('get_selected_locales_codes')) {
+    /**
+     * Get the locales that admins offer on this website.
+     */
+    function get_selected_locales_codes()
+    {
+        return explode(',', setting('locale', 'en,fr'));
     }
 }

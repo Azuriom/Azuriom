@@ -154,6 +154,10 @@ return [
         'delete_avatar' => 'Supprimer l\'avatar',
 
         'avatar' => 'L\'avatar doit être un carré de minimum :size pixels.',
+        'locale' => [
+            'btn' => 'Ma langue',
+            'success' => 'La langue sélectionné a bien été modifiée.',
+        ],
 
         'delete' => [
             'btn' => 'Supprimer mon compte',

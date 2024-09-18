@@ -46,6 +46,7 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Collection|\Azuriom\Models\Notification[] $unreadNotifications
  * @property \Azuriom\Models\Role $role
  * @property \Azuriom\Models\Ban|null $ban
+ * @property string|null $locale
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

@@ -154,6 +154,10 @@ return [
         'delete_avatar' => 'Delete Avatar',
 
         'avatar' => 'The avatar must be square and have a minimum size of :size pixels.',
+        'locale' => [
+            'btn' => 'My language',
+            'success' => 'The selected language have been edited.',
+        ],
 
         'delete' => [
             'btn' => 'Delete my account',

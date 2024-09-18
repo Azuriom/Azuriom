@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \Azuriom\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Azuriom\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
     ];
 
     /**
@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \Azuriom\Http\Middleware\CheckForMaintenanceSettings::class,
             \Azuriom\Http\Middleware\LogoutIfSuspended::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Azuriom\Http\Middleware\Localization::class,
         ],
 
         'api' => [

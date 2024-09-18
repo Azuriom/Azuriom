@@ -19,7 +19,7 @@
                     </h3>
                 </div>
 
-                <div class="col-lx-10 col-md-9">
+                <div class="col-xl-6 col-md-6">
                     <h2>{{ $user->name }}</h2>
 
                     <ul>
@@ -71,6 +71,22 @@
                             </a>
                         @endif
                     @endif
+                </div>
+                <div class="col-xl-4 col-lg-3 col-12 mt-md-3">
+                    <form action="{{ route('profile.locale') }}" method="POST">
+                        @csrf
+                        <select class="form-select" name="locale" required>
+                            @foreach($locales as $localeCode => $localeName)
+                                <option value="{{ $localeCode }}" @selected($user->locale ? $localeCode == $user->locale : $localeCode == app()->getLocale())>
+                                    {{ $localeName }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-danger my-2">
+                            <i class="bi bi-translate"></i>
+                            {{ trans('messages.profile.locale.btn') }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -42,7 +42,9 @@ class ProfileController extends Controller
         $user = $request->user();
         $discordLink = setting('discord.link_roles', false);
         $emailVerification = setting('mail.users_email_verification', false);
-
+        $locales = [];
+        foreach(get_selected_locales_codes() as $code)
+            $locales[$code] = trans('messages.lang', [], $code);
         return view('profile.index', [
             'user' => $user,
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
@@ -52,6 +54,7 @@ class ProfileController extends Controller
             'canVerifyEmail' => $user->email !== null && ! $user->hasVerifiedEmail() && $emailVerification,
             'discordAccount' => $discordLink ? $user->discordAccount : null,
             'enableDiscordLink' => $discordLink,
+            'locales' => $locales
         ]);
     }
 
@@ -388,5 +391,19 @@ class ProfileController extends Controller
 
         return to_route('profile.index')
             ->with('success', trans('messages.profile.money_transfer.success'));
+    }
+
+    /**
+     * Change user's locale
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function changeLocale(Request $request) {
+        $user = $request->user();
+        $user->locale = $request->input('locale');
+        $user->save();
+
+        return to_route('profile.index')
+            ->with('success', trans('messages.profile.locale.success'));
     }
 }
