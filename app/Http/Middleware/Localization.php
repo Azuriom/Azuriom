@@ -23,9 +23,6 @@ class Localization
                 return $next($request);
             }
         }
-        /*$locales = get_selected_locales_codes();
-        $locale = $request->session()->get('locale', $request->getPreferredLanguage($locales));
-        app()->setLocale($locale);*/
         return $next($request);
     }
 }
