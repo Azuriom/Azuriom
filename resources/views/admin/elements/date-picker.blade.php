@@ -12,7 +12,7 @@
     @endif
     <script>
         flatpickr('.date-picker', {
-            time_24hr: true,
+            time_24hr: {{ Str::endsWith(trans('messages.date.compact'), 'A') ? 'false' : 'true' }},
             enableTime: true,
             enableSeconds: true,
             minuteIncrement: 1,
