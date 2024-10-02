@@ -333,6 +333,6 @@ if (! function_exists('get_selected_locales_codes')) {
      */
     function get_selected_locales_codes()
     {
-        return explode(',', setting('locale', 'en,fr'));
+        return explode(',', setting('locale_available', 'en,fr'));
     }
 }

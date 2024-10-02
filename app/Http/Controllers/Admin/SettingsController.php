@@ -82,7 +82,8 @@ class SettingsController extends Controller
             'icon' => setting('icon'),
             'logo' => setting('logo'),
             'background' => setting('background'),
-            'locales' => $this->getAvailableLocales(),
+            'locales' => get_available_locales(),
+            'locale_available' => get_selected_locales_codes(),
             'timezones' => DateTimeZone::listIdentifiers(),
             'currentTimezone' => config('app.timezone'),
             'copyright' => setting('copyright'),
@@ -101,6 +102,9 @@ class SettingsController extends Controller
      */
     public function update(Request $request)
     {
+        $localeAvailable = $request->input("locale_available");
+        if($localeAvailable != null && $localeAvailable != "" && is_array($localeAvailable)) // check for array
+            $request->request->set("locale_available", implode(",", $localeAvailable));
         $settings = [
             ...$this->validate($request, [
                 'name' => ['required', 'string', 'max:50'],
@@ -109,7 +113,8 @@ class SettingsController extends Controller
                 'timezone' => ['required', 'timezone'],
                 'copyright' => ['nullable', 'string', 'max:150'],
                 'keywords' => ['nullable', 'string', 'max:150'],
-                'locale' => ['required', 'string', Rule::in($this->getAvailableLocaleCodes())],
+                'locale' => ['required', 'string', Rule::in(get_available_locales_codes())],
+                'locale_available' => ['required', 'string'],
                 'icon' => ['nullable', 'exists:images,file'],
                 'logo' => ['nullable', 'exists:images,file'],
                 'background' => ['nullable', 'exists:images,file'],
@@ -434,19 +439,6 @@ class SettingsController extends Controller
 
         return to_route('admin.settings.maintenance')
             ->with('success', trans('admin.settings.updated'));
-    }
-
-    protected function getAvailableLocales()
-    {
-        return $this->getAvailableLocaleCodes()->mapWithKeys(fn (string $file) => [
-            $file => trans('messages.lang', [], $file),
-        ]);
-    }
-
-    protected function getAvailableLocaleCodes()
-    {
-        return collect(File::directories($this->app->langPath()))
-            ->map(fn (string $path) => basename($path));
     }
 
     protected function isHashSupported(string $algo)

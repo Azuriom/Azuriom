@@ -107,6 +107,7 @@ return [
             'logo' => 'Logo',
             'timezone' => 'Timezone',
             'locale' => 'Locale',
+            'locale_available' => 'Langue available',
             'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
             'user_money_transfer' => 'Enable money transfer between users',

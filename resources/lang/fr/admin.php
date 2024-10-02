@@ -107,6 +107,7 @@ return [
             'logo' => 'Logo',
             'timezone' => 'Fuseau horaire',
             'locale' => 'Langue',
+            'locale_available' => 'Langue disponible',
             'money' => 'Nom de la monnaie du site',
             'copyright' => 'Copyright',
             'user_money_transfer' => 'Activer le transfert de d\'argent entre les utilisateurs',
