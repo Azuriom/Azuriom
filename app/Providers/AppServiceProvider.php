@@ -24,15 +24,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Override translator to use our own FileLoader for translating extensions
-        $this->app->singleton('translator', function ($app) {
-            $loader = new ExtensionFileLoader($app['files'], $app['path.lang']);
-            $locale = $app['config']['app.locale'];
+        $loader = new ExtensionFileLoader($this->app['files'], $this->app['path.lang']);
+        $translator = new Translator($loader, $this->app['config']['app.locale']);
+        $translator->setFallback($this->app['config']['app.fallback_locale']);
 
-            $trans = new Translator($loader, $locale);
-            $trans->setFallback($app['config']['app.fallback_locale']);
-
-            return $trans;
-        });
+        $this->app->instance('translator', $translator);
     }
 
     /**

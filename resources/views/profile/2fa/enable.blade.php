@@ -22,7 +22,8 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="codeInput">{{ trans('messages.profile.2fa.code') }}</label>
-                    <input type="text" class="form-control @error('code') is-invalid @enderror " id="codeInput" name="code" placeholder="123 456">
+                    <input type="text" class="form-control @error('code') is-invalid @enderror " id="codeInput" name="code" required
+                           placeholder="123456" autofocus>
 
                     @error('code')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
