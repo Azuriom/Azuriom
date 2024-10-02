@@ -43,8 +43,9 @@ class ProfileController extends Controller
         $discordLink = setting('discord.link_roles', false);
         $emailVerification = setting('mail.users_email_verification', false);
         $locales = [];
-        foreach (get_selected_locales_codes() as $code)
+        foreach (get_selected_locales_codes() as $code) {
             $locales[$code] = trans('messages.lang', [], $code);
+        }
         return view('profile.index', [
             'user' => $user,
             'canChangeName' => ! oauth_login() && setting('user.change_name', false),
