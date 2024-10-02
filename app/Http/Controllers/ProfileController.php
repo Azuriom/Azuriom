@@ -43,7 +43,7 @@ class ProfileController extends Controller
         $discordLink = setting('discord.link_roles', false);
         $emailVerification = setting('mail.users_email_verification', false);
         $locales = [];
-        foreach(get_selected_locales_codes() as $code)
+        foreach (get_selected_locales_codes() as $code)
             $locales[$code] = trans('messages.lang', [], $code);
         return view('profile.index', [
             'user' => $user,
@@ -54,7 +54,7 @@ class ProfileController extends Controller
             'canVerifyEmail' => $user->email !== null && ! $user->hasVerifiedEmail() && $emailVerification,
             'discordAccount' => $discordLink ? $user->discordAccount : null,
             'enableDiscordLink' => $discordLink,
-            'locales' => $locales
+            'locales' => $locales,
         ]);
     }
 
@@ -394,11 +394,12 @@ class ProfileController extends Controller
     }
 
     /**
-     * Change user's locale
+     * Change user's locale.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function changeLocale(Request $request) {
+    public function changeLocale(Request $request)
+    {
         $user = $request->user();
         $user->locale = $request->input('locale');
         $user->save();

@@ -17,7 +17,6 @@ use Illuminate\Hashing\HashManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -103,8 +102,8 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $localeAvailable = $request->input("locale_available");
-        if($localeAvailable != null && $localeAvailable != "" && is_array($localeAvailable)) // check for array
-            $request->request->set("locale_available", implode(",", $localeAvailable));
+        if ($localeAvailable != null && $localeAvailable != '' && is_array($localeAvailable)) // check for array
+            $request->request->set("locale_available", implode(',', $localeAvailable));
         $settings = [
             ...$this->validate($request, [
                 'name' => ['required', 'string', 'max:50'],
