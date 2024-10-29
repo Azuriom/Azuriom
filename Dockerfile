@@ -34,6 +34,9 @@ RUN npm install && \
     npm run production && \
     composer install
 
-RUN chmod -R 755 /var/www/azuriom
+RUN chmod -R 755 /var/www/azuriom/public && \
+    chmod -R 755 /var/www/azuriom/plugins && \
+    chmod -R 755 /var/www/azuriom/resources && \
+    chmod -R 755 /var/www/azuriom/storage
 
 CMD service php8.2-fpm start && nginx -g 'daemon off;'
