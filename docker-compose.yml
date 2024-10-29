@@ -6,6 +6,7 @@ services:
         container_name: azuriom-builder
         volumes:
             - ./:/var/www/azuriom
+        user: www-data
         command: >
             /bin/bash -c "
             cd /var/www/azuriom &&
@@ -24,11 +25,12 @@ services:
             - "443:443"
         volumes:
             - ./:/var/www/azuriom
+        user: www-data
         networks:
             - azuriomnet
         depends_on:
             - db
-            - builder  # зависимость от builder для сборки зависимостей
+            - builder
         command: >
             /bin/bash -c "
             service php8.2-fpm start &&
