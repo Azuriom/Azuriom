@@ -38,6 +38,7 @@ WORKDIR /var/www/azuriom
 
 RUN npm install && \
     npm run production && \
-    composer install
+    composer install && \
+    chmod -R 755 /var/www/azuriom
 
 CMD service php8.2-fpm start && nginx -g 'daemon off;'
