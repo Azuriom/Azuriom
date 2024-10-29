@@ -1,32 +1,55 @@
-services:
-  web:
-    build: .
-    container_name: azuriom-web
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./:/var/www/azuriom
-    networks:
-      - azuriomnet
-    depends_on:
-      - db
+version: "3.8"
 
-  db:
-    image: mariadb:latest
-    container_name: azuriom-db
-    environment:
-      MYSQL_ROOT_PASSWORD: securepassword
-      MYSQL_DATABASE: azuriom
-      MYSQL_USER: azuriom
-      MYSQL_PASSWORD: securepassword
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - azuriomnet
+services:
+    builder:
+        build: .
+        container_name: azuriom-builder
+        volumes:
+            - ./:/var/www/azuriom
+        command: >
+            /bin/bash -c "
+            cd /var/www/azuriom &&
+            npm install &&
+            npm run production &&
+            composer install
+            "
+        networks:
+            - azuriomnet
+
+    web:
+        build: .
+        container_name: azuriom-web
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www/azuriom
+        networks:
+            - azuriomnet
+        depends_on:
+            - db
+            - builder  # зависимость от builder для сборки зависимостей
+        command: >
+            /bin/bash -c "
+            service php8.2-fpm start &&
+            nginx -g 'daemon off;'
+            "
+
+    db:
+        image: mariadb:latest
+        container_name: azuriom-db
+        environment:
+            MYSQL_ROOT_PASSWORD: securepassword
+            MYSQL_DATABASE: azuriom
+            MYSQL_USER: azuriom
+            MYSQL_PASSWORD: securepassword
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - azuriomnet
 
 networks:
-  azuriomnet:
+    azuriomnet:
 
 volumes:
-  db_data:
+    db_data:

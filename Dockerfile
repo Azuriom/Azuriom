@@ -33,6 +33,3 @@ COPY nginx.conf /etc/nginx/sites-available/default
 
 # Указание на рабочую директорию
 WORKDIR /var/www/azuriom
-
-# Запуск сервисов и веб-сервера
-CMD npm install && npm run production && composer install && service php8.2-fpm start && nginx -g 'daemon off;'
