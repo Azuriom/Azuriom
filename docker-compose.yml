@@ -1,45 +1,18 @@
 version: "3.8"
 
 services:
-    builder:
-        build: .
-        container_name: azuriom-builder
-        environment:
-            - UID=${UID}
-            - GID=${GID}
-        volumes:
-            - ./:/var/www/azuriom
-        command: >
-            /bin/bash -c "
-            cd /var/www/azuriom &&
-            npm install &&
-            npm run production &&
-            composer install
-            "
-        networks:
-            - azuriomnet
-
     web:
         build: .
         container_name: azuriom-web
         ports:
             - "80:80"
             - "443:443"
-        environment:
-            - UID=${UID}
-            - GID=${GID}
         volumes:
             - ./:/var/www/azuriom
         networks:
             - azuriomnet
         depends_on:
             - db
-            - builder
-        command: >
-            /bin/bash -c "
-            service php8.2-fpm start &&
-            nginx -g 'daemon off;'
-            "
 
     db:
         image: mariadb:latest
