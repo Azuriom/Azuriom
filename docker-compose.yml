@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    container_name: azuriom-web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/azuriom
+    networks:
+      - azuriomnet
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:latest
+    container_name: azuriom-db
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword
+      MYSQL_DATABASE: azuriom
+      MYSQL_USER: azuriom
+      MYSQL_PASSWORD: securepassword
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - azuriomnet
+
+networks:
+  azuriomnet:
+
+volumes:
+  db_data:
