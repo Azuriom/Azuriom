@@ -25,6 +25,8 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
 
 # Настройка прав доступа и выполнение обновления зависимостей Composer
 RUN mkdir -p /var/www/azuriom && \
+    mkdir -p /var/www/azuriom/node_modules && \
+    mkdir -p /var/www/azuriom/vendor && \
     chown -R www-data:www-data /var/www/azuriom && \
     chmod -R 755 /var/www/azuriom
 
