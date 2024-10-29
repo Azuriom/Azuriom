@@ -34,7 +34,8 @@ RUN npm install && \
     npm run production && \
     composer install
 
-RUN chmod -R 755 /var/www/azuriom/public && \
+RUN chmod 755 /var/www/azuriom && \
+    chmod -R 755 /var/www/azuriom/plugins && \
     chmod -R 755 /var/www/azuriom/plugins && \
     chmod -R 755 /var/www/azuriom/resources && \
     chmod -R 755 /var/www/azuriom/storage
