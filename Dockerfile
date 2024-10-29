@@ -2,9 +2,9 @@ FROM ubuntu:22.04
 EXPOSE 80 443
 
 # Install essential packages and dependencies
-RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt upgrade -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y nginx zip curl lsb-release apt-transport-https ca-certificates software-properties-common
+RUN apt-get update -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nginx zip curl lsb-release apt-transport-https ca-certificates software-properties-common
 
 # Add PHP repository
 RUN add-apt-repository ppa:ondrej/php -y && \
