@@ -4,9 +4,11 @@ services:
     builder:
         build: .
         container_name: azuriom-builder
+        environment:
+            - UID=${UID}
+            - GID=${GID}
         volumes:
             - ./:/var/www/azuriom
-        user: www-data
         command: >
             /bin/bash -c "
             cd /var/www/azuriom &&
@@ -23,9 +25,11 @@ services:
         ports:
             - "80:80"
             - "443:443"
+        environment:
+            - UID=${UID}
+            - GID=${GID}
         volumes:
             - ./:/var/www/azuriom
-        user: www-data
         networks:
             - azuriomnet
         depends_on:
