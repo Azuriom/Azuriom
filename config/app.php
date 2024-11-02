@@ -141,7 +141,6 @@ return [
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         Azuriom\Providers\AppServiceProvider::class,
-        Azuriom\Providers\SettingServiceProvider::class,
         Azuriom\Providers\ViewServiceProvider::class,
         Azuriom\Providers\EventServiceProvider::class,
         Azuriom\Providers\ExtensionServiceProvider::class,

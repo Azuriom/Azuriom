@@ -179,7 +179,7 @@ return [
             'conditions' => 'Conditions to be accepted on registration',
             'conditions_info' => 'Links in Markdown format, for example: <code>I accept the [conditions](/conditions-link) and [privacy policy](/privacy-policy)</code>.',
             'registration' => 'Enable user registration',
-            'registration_info' => 'It can still be possible to register through plugins.',
+            'registration_info' => '<strong>The “Register” button is removed when this option is disabled.</strong> Some plugins may still allow to create new user accounts.',
             'api' => 'Enable Auth API',
             'api_info' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
             'user_change_name' => 'Allow users to change username from their profile',

@@ -28,7 +28,7 @@
                         <label class="form-check-label" for="registerInput">{{ trans('admin.settings.auth.registration') }}</label>
                     </div>
 
-                    <small id="registerInput" class="form-text">{{ trans('admin.settings.auth.registration_info') }}</small>
+                    <small id="registerInput" class="form-text">@lang('admin.settings.auth.registration_info')</small>
                 </div>
 
                 <div class="mb-3">

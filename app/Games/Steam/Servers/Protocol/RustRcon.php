@@ -25,11 +25,10 @@ class RustRcon
      * Send a command to the connected server.
      *
      * @throws \JsonException
-     * @throws \WebSocket\BadOpcodeException
      */
     public function sendCommand(string $command): array
     {
-        $this->client->send(json_encode([
+        $this->client->text(json_encode([
             'Identifier' => -1,
             'Message' => $command,
             'name' => 'AzuriomRcon',
@@ -37,13 +36,13 @@ class RustRcon
 
         $data = $this->client->receive();
 
-        return json_decode($data, true, flags: JSON_THROW_ON_ERROR);
+        return json_decode($data->getContent(), true, flags: JSON_THROW_ON_ERROR);
     }
 
     /**
      * Get the server information.
      *
-     * @throws \WebSocket\BadOpcodeException
+     * @throws \JsonException
      */
     public function getServerInfo(): array
     {

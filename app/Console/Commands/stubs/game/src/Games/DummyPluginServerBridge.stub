@@ -31,7 +31,7 @@ class DummyPluginServerBridge extends ServerBridge
         ];
     }
 
-    public function sendCommands(array $commands, User $user = null, bool $needConnected = false): void
+    public function sendCommands(array $commands, ?User $user = null, bool $needConnected = false): void
     {
         // Any mechanism to send a command to you server :
         // database, socket, HTTP request, RCON protocol etc...

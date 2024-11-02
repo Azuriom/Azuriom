@@ -296,9 +296,22 @@ class LoginController extends Controller
     protected function isMaintenance(?User $user = null): bool
     {
         if (! setting('maintenance.enabled', false)) {
-            return false;
+            return false; // Maintenance is not enabled
         }
 
-        return $user !== null && ! $user->can('maintenance.access');
+        if ($user === null || $user->can('maintenance.access')) {
+            return false; // Invalid user (can attempt a new login), or user with maintenance access
+        }
+
+        $paths = setting('maintenance.paths', []);
+
+        if (empty($paths)) {
+            return true; // Global maintenance, and not allowed to bypass
+        }
+
+        // Check if maintenance is enabled for login route
+        return Arr::first($paths, function (string $path) {
+            return Str::startsWith(trim($path, '/'), 'user/login');
+        }) !== null;
     }
 }

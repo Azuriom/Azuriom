@@ -6,7 +6,8 @@
     <script src="{{ asset('vendor/flatpickr/js/flatpickr.min.js') }}"></script>
     <script>
         flatpickr('.time-picker', {
-            time_24hr: {{ str_ends_with(trans('messages.date.compact'), 'A') ? 'false' : 'true' }},
+            time_24hr: @bool(! str_ends_with(trans('messages.date.compact'), 'A')),
+            wrap: @bool($wrap ?? false),
             enableTime: true,
             noCalendar: true,
             dateFormat: 'H:i',

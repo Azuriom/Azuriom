@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class ServerController extends Controller
 {
@@ -114,7 +115,7 @@ class ServerController extends Controller
             'name' => ['required', 'string', 'max:25', 'unique:users'],
             'email' => ['sometimes', 'nullable', 'max:100', 'unique:users'],
             'game_id' => ['required', 'string', 'max:100', 'unique:users'],
-            'password' => ['required', 'string'],
+            'password' => ['sometimes', 'string'],
             'ip' => ['sometimes', 'nullable'],
         ]);
 
@@ -130,7 +131,7 @@ class ServerController extends Controller
         $user = User::forceCreate([
             ...Arr::except($data, 'ip'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => $request->input('password', Str::random(32)),
             'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),
             'last_login_at' => now(),
