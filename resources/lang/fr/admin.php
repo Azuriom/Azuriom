@@ -90,7 +90,7 @@ return [
         'cloudflare' => 'Si vous utilisez Cloudflare, il est recommandé d\'installer le plugin Cloudflare Support.',
         'recent_users' => 'Utilisateurs récents',
         'active_users' => 'Utilisateurs actifs',
-        'emails' => 'L\'envoi des mails est désactivé. Si un utilisateur oublie son mot de passe il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
+        'emails' => 'L\'envoi des mails est désactivé. Si un utilisateur oublie son mot de passe, il ne pourra pas le réinitialiser. Vous pouvez activer les mails dans les <a href=":url">paramètres des mails</a>.',
     ],
 
     'settings' => [
@@ -180,9 +180,9 @@ return [
             'conditions' => 'Conditions à accepter lors de l\'inscription',
             'conditions_info' => 'Liens au format Markdown, par exemple: <code>J\'accepte les [CGU](/lien-des-cgu) et [CGV](/liens-des-cgv)</code>.',
             'registration' => 'Activer l\'inscription des utilisateurs',
-            'registration_info' => 'Il sera toujours possible de s\'enregistrer par exemple avec des plugins.',
+            'registration_info' => '<strong>Le bouton "Inscription" est retiré lorsque cette option est désactivée.</strong> Certains plugins peuvent quand même permettre de créer de nouveaux comptes utilisateurs.',
             'api' => 'Activer l\'API auth',
-            'api_info' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
+            'api_info' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher, vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
             'user_change_name' => 'Permettre aux utilisateurs de changer leur pseudo depuis le profil.',
             'user_avatar' => 'Permettre aux utilisateurs de mettre leur propre avatar depuis le profil.',
             'user_delete' => 'Permettre aux utilisateurs de supprimer leur compte depuis le profil.',
@@ -281,7 +281,7 @@ return [
             'link1' => '<a href="https://azuriom.com/azlink">Télécharger le plugin AzLink</a> et l\'installer sur votre serveur.',
             'link2' => 'Redémarrer votre serveur.',
             'link3' => 'Exécuter cette commande sur votre serveur: ',
-            'auth' => 'Pour automatiquement créer les comptes sur le site, vous pouvez activer l\'intégration de votre plugin de login (AuthMe, etc.) dans la configuraiton d\'AzLink.',
+            'auth' => 'Pour automatiquement créer les comptes sur le site, vous pouvez activer l\'intégration de votre plugin de login (AuthMe, etc.) dans la configuration d\'AzLink.',
 
             'info' => 'Si vous avez des problèmes avec AzLink en utilisant Cloudflare ou un pare-feu, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
             'command' => 'Vous pouvez lier votre serveur à votre site web avec la commande: ',

@@ -152,9 +152,10 @@ class ActionLog extends Model
 
     public function getActionMessage(): string
     {
-        $data = ['id' => $this->target_id] + ($this->data ?? []);
-
-        return trans($this->getActionFormat()['message'], $data);
+        return trans($this->getActionFormat()['message'], [
+            'id' => $this->target_id,
+            ...$this->data ?? [],
+        ]);
     }
 
     /**

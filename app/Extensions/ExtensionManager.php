@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class ExtensionManager
 {
-    protected const API_VERSIONS = ['1.0.0', '1.1.0'];
+    protected const API_VERSIONS = ['1.0.0', '1.1.0', '1.2.0'];
 
     protected Filesystem $files;
 

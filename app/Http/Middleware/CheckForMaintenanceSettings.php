@@ -14,7 +14,6 @@ class CheckForMaintenanceSettings
      * The routes that should be reachable while maintenance mode is enabled.
      */
     protected array $exceptRoutes = [
-        'maintenance',
         'login',
         'login.*',
         'password.*',

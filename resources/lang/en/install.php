@@ -46,7 +46,7 @@ return [
 
         'locale' => 'Locale',
 
-        'warn' => 'Be careful, once the installation is finished it will not be possible to change this without reinstalling Azuriom entirely!',
+        'warn' => 'Be careful, once the installation is finished it will not be possible to change the game or login method without reinstalling Azuriom entirely!',
 
         'install' => 'Install',
 

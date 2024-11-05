@@ -42,26 +42,27 @@ class ThemeManager extends ExtensionManager
 
     /**
      * Load and enable the given theme.
-     * Currently, this method can only be call once.
      */
     public function loadTheme(string $theme): void
     {
+        $finder = view()->getFinder();
+
         if ($this->currentTheme !== null) {
-            throw new RuntimeException('A theme has been already loaded');
+            $paths = $finder->getPaths();
+            $old = $this->path('views');
+            $finder->setPaths(array_filter($paths, fn (string $path) => $path !== $old));
         }
 
         $this->currentTheme = $theme;
 
-        $viewsPath = $this->path('views');
-
         // Add theme path to view finder
-        view()->getFinder()->prependLocation($viewsPath);
-
-        config([
-            'view.paths' => [$viewsPath, ...config('view.paths', [])],
-        ]);
+        $finder->prependLocation($this->path('views'));
 
         $this->loadConfig($theme);
+
+        if (is_dir($themeLangPath = $this->path('lang'))) {
+            trans()->addNamespace('theme', $themeLangPath);
+        }
     }
 
     public function changeTheme(?string $theme): void
@@ -295,9 +296,7 @@ class ThemeManager extends ExtensionManager
         }
 
         if ($config !== null) {
-            foreach ($config as $key => $value) {
-                config()->set('theme.'.$key, $value);
-            }
+            config()?->set('theme', $config);
         }
     }
 

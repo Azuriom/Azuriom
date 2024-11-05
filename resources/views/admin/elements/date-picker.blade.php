@@ -12,7 +12,8 @@
     @endif
     <script>
         flatpickr('.date-picker', {
-            time_24hr: {{ Str::endsWith(trans('messages.date.compact'), 'A') ? 'false' : 'true' }},
+            time_24hr: @bool(! str_ends_with(trans('messages.date.compact'), 'A')),
+            wrap: @bool($wrap ?? false),
             enableTime: true,
             enableSeconds: true,
             minuteIncrement: 1,

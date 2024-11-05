@@ -480,11 +480,11 @@ class InstallController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password') ?? Str::random(32),
             'password_changed_at' => now(),
+            'role_id' => $roleId,
             'game_id' => $gameId,
         ]);
 
         $user->markEmailAsVerified();
-        $user->forceFill(['role_id' => $roleId])->save();
 
         if ($game !== 'mc-offline') {
             Setting::updateSettings('register', false);
