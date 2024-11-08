@@ -10,8 +10,8 @@ services:
         depends_on:
             - db
         volumes:
-            - azuriom_data:/var/www/azuriom
-            - plugins:/var/www/azuriom/plugins
+            - ./azuriom_data:/var/www/azuriom
+            - ./plugins:/var/www/azuriom/plugins
 
     db:
         image: mariadb:latest
