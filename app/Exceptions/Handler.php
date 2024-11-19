@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
 
             $this->registerErrorViewPaths();
 
-            if (view()->exists($view = "errors::{$e->getStatusCode()}")) {
+            if (view()->exists($view = "errors.{$e->getStatusCode()}")) {
                 return response()->view($view, [
                     'errors' => new ViewErrorBag(),
                     'exception' => $e,

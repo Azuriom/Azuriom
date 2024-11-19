@@ -45,6 +45,7 @@ return [
         'search' => 'Search',
         'send' => 'Send',
         'show' => 'Show',
+        'sort' => 'Sort',
         'update' => 'Update',
         'upload' => 'Upload',
     ],

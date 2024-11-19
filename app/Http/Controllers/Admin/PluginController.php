@@ -91,7 +91,7 @@ class PluginController extends Controller
         $response = to_route('admin.plugins.index')
             ->with('success', trans('admin.plugins.enabled'));
 
-        $this->plugins->refreshRoutesCache();
+        $this->plugins->purgeInternalCache();
 
         ActionLog::log('plugins.enabled');
 
@@ -105,7 +105,7 @@ class PluginController extends Controller
         $response = to_route('admin.plugins.index')
             ->with('success', trans('admin.plugins.disabled'));
 
-        $this->plugins->refreshRoutesCache();
+        $this->plugins->purgeInternalCache();
 
         ActionLog::log('plugins.disabled');
 
@@ -130,7 +130,7 @@ class PluginController extends Controller
         $response = to_route('admin.plugins.index')
             ->with('success', trans('admin.plugins.updated'));
 
-        $this->plugins->refreshRoutesCache();
+        $this->plugins->purgeInternalCache();
 
         return $response;
     }

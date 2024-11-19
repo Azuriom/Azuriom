@@ -2,12 +2,6 @@
 
 @section('content')
     <div id="gameSelect" class="text-center">
-        <div class="text-left">
-            <a href="{{ route('install.database') }}" class="btn btn-secondary rounded-pill mb-3">
-                <i class="bi bi-arrow-left"></i> {{ trans('install.back') }}
-            </a>
-        </div>
-
         <h2 class="mb-3">{{ trans('install.game.title') }}</h2>
 
         <div class="row justify-content-center mb-3">

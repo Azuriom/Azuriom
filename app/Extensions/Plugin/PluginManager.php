@@ -383,9 +383,12 @@ class PluginManager extends ExtensionManager
         return $plugins;
     }
 
-    public function refreshRoutesCache(): void
+    public function purgeInternalCache(): void
     {
-        app(Optimizer::class)->reloadRoutesCache();
+        $optimizer = app(Optimizer::class);
+
+        $optimizer->reloadRoutesCache();
+        $optimizer->clearViewCache();
     }
 
     public function getOnlinePlugins(bool $force = false): Collection

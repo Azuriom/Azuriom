@@ -45,6 +45,7 @@ return [
         'search' => 'Rechercher',
         'send' => 'Envoyer',
         'show' => 'Voir',
+        'sort' => 'Trier',
         'update' => 'Mettre à jour',
         'upload' => 'Uploader',
     ],

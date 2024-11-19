@@ -20,6 +20,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -50,7 +51,7 @@ class InstallController extends Controller
 
     // TODO dynamic games
     protected array $steamGames = [
-        '7dtd', 'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2', 'unturned',
+        '7dtd', 'gmod', 'ark', 'ark-sa', 'rust', 'fivem', 'csgo', 'tf2', 'unturned',
     ];
 
     protected array $games = [
@@ -167,15 +168,17 @@ class InstallController extends Controller
 
         try {
             if ($databaseType === 'sqlite') {
-                $databasePath = database_path('database.sqlite');
-
-                touch($databasePath);
+                touch(database_path('database.sqlite'));
 
                 DB::connection('sqlite')->getPdo(); // Ensure connection
 
                 File::copy(base_path('.env.example'), $envPath);
 
-                EnvEditor::updateEnv(['DB_CONNECTION' => $databaseType]);
+                EnvEditor::updateEnv([
+                    'APP_ENV' => 'production',
+                    'APP_DEBUG' => 'false',
+                    'DB_CONNECTION' => $databaseType,
+                ]);
 
                 return to_route('install.games');
             }
@@ -186,15 +189,13 @@ class InstallController extends Controller
             $user = $request->input('user');
             $password = $request->input('password');
 
-            $key = 'database.connections.test.';
-
-            config([
-                $key.'driver' => $databaseType,
-                $key.'host' => $host,
-                $key.'port' => $port,
-                $key.'database' => $database,
-                $key.'username' => $user,
-                $key.'password' => $password,
+            Config::set('database.connections.test', [
+                'driver' => $databaseType,
+                'host' => $host,
+                'port' => $port,
+                'database' => $database,
+                'username' => $user,
+                'password' => $password,
             ]);
 
             DB::connection('test')->getPdo(); // Ensure connection
@@ -282,10 +283,6 @@ class InstallController extends Controller
 
             if ($game === 'fivem-cfx') {
                 return $this->setupFiveM($request);
-            }
-
-            if ($game === 'ark-sa') {
-                return $this->setupArkSurvivalAscended($request);
             }
 
             return $this->setupAzuriom($request, $game, null, null);
@@ -380,7 +377,7 @@ class InstallController extends Controller
         return $this->setupAzuriom($request, $game, $name, $gameId ?? null);
     }
 
-    protected function setupArkSurvivalAscended(Request $request)
+    protected function setupEpicGame(Request $request, string $game)
     {
         $this->validate($request, [
             'client_id' => 'required',
@@ -398,7 +395,7 @@ class InstallController extends Controller
                     'grant_type' => 'client_credentials',
                 ])->throw();
 
-            return $this->setupAzuriom($request, 'ark-sa', $id, $id, [
+            return $this->setupAzuriom($request, $game, $id, $id, [
                 'EPIC_CLIENT_ID' => $request->input('client_id'),
                 'EPIC_CLIENT_SECRET' => $request->input('client_secret'),
             ]);
