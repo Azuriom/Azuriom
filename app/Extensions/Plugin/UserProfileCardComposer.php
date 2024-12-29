@@ -11,7 +11,7 @@ abstract class UserProfileCardComposer extends AdminDashboardCardComposer
      * - 'view' : The view (Ex: shop::giftcards.index).
      * - 'data' : The data array for view (Ex: compact('user'))
      *
-     * @return array{name: string, view: string}[]
+     * @return array{name: string, view: string, data: mixed}[]
      */
     abstract public function getCards();
 }
