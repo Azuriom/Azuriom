@@ -297,7 +297,7 @@
                             {{ $card['name'] }}
                         </h2>
 
-                        @include($card['view'])
+                        @include($card['view'], $card['data'])
                     </div>
                 </div>
             </div>
