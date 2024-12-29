@@ -9,7 +9,7 @@ abstract class UserProfileCardComposer extends AdminDashboardCardComposer
      * Each card should contain:
      * - 'name' : The title of the card
      * - 'view' : The view (Ex: shop::giftcards.index)
-     * - 'data' : (Optional) The data array for view (Ex: ['info' => $info]).
+     * - 'data' : (Optional) The data array for the view (Ex: ['info' => $info]).
      *
      * @return array{name: string, view: string, data?: array}[]
      */
