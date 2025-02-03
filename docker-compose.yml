@@ -1,34 +1,49 @@
 services:
-    web:
+    app:
         build: .
-        container_name: azuriom-web
-        ports:
-            - "80:80"
-            - "443:443"
+        container_name: azuriom_app
+        working_dir: /var/www/azuriom
+        volumes:
+            - .:/var/www/azuriom
         networks:
-            - azuriomnet
+            - azuriom
+        environment:
+            - DB_CONNECTION=pgsql
+            - DB_HOST=db
+            - DB_PORT=5432
+            - DB_DATABASE=azuriom
+            - DB_USERNAME=azuriom
+            - DB_PASSWORD=password
         depends_on:
             - db
+
+    nginx:
+        image: nginx:latest
+        container_name: azuriom_nginx
+        ports:
+            - "8000:80"
         volumes:
-            - ./azuriom_data:/var/www/azuriom
-            - ./plugins:/var/www/azuriom/plugins
+            - .:/var/www/azuriom
+            - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - azuriom
+        depends_on:
+            - app
 
     db:
-        image: mariadb:latest
-        container_name: azuriom-db
+        image: postgres:latest
+        container_name: azuriom_db
         environment:
-            MYSQL_ROOT_PASSWORD: azuriom
-            MYSQL_DATABASE: azuriom
-            MYSQL_USER: azuriom
-            MYSQL_PASSWORD: azuriom
+            POSTGRES_DB: azuriom
+            POSTGRES_USER: azuriom
+            POSTGRES_PASSWORD: password
         volumes:
-            - db_data:/var/lib/mysql
+            - db_data:/var/lib/postgresql/data
         networks:
-            - azuriomnet
+            - azuriom
 
 networks:
-    azuriomnet:
+    azuriom:
 
 volumes:
-    azuriom_data:
     db_data:
