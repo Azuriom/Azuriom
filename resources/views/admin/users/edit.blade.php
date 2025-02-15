@@ -49,14 +49,16 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @disabled($user->isDeleted())>
+                                @can('admin.users.personal')
+                                    <div class="mb-3">
+                                        <label class="form-label" for="emailInput">{{ trans('auth.email') }}</label>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="emailInput" name="email" value="{{ old('email', $user->email ?? '') }}" @disabled($user->isDeleted())>
 
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                    @enderror
-                                </div>
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                @endcan
                             </div>
 
                             <div class="col-md-3 text-center">
@@ -215,10 +217,12 @@
                         </form>
                     @endif
 
-                    <div class="mb-3">
-                        <label class="form-label" for="addressInput">{{ trans('admin.users.ip') }}</label>
-                        <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
-                    </div>
+                    @can('admin.users.personal-data')
+                        <div class="mb-3">
+                            <label class="form-label" for="addressInput">{{ trans('admin.users.ip') }}</label>
+                            <input type="text" class="form-control" id="addressInput" value="{{ $user->last_login_ip ?? trans('messages.unknown') }}" disabled>
+                        </div>
+                    @endcan
 
                     @if($user->game_id)
                         <div class="mb-3">
@@ -286,46 +290,48 @@
         </div>
     @endif
 
-    @if(! $logs->isEmpty())
-        <div class="card shadow mb-4">
-            <div class="card-header">
-                <h5 class="card-title mb-0">{{ trans('admin.logs.title') }}</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">{{ trans('messages.fields.action') }}</th>
-                            <th scope="col">{{ trans('messages.fields.date') }}</th>
-                            <th scope="col">{{ trans('messages.fields.action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        @foreach($logs as $log)
-                            <tr>
-                                <th scope="row">{{ $log->id }}</th>
-                                <td>
-                                    <i class="text-{{ $log->getActionFormat()['color'] }} bi bi-{{ $log->getActionFormat()['icon'] }}"></i>
-                                    {{ $log->getActionMessage() }}
-                                </td>
-                                <td>{{ format_date_compact($log->created_at) }}</td>
-                                <td>
-                                    <a href="{{ route('admin.logs.show', $log) }}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        </tbody>
-                    </table>
+    @can('admin.logs')
+        @if(! $logs->isEmpty())
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{ trans('admin.logs.title') }}</h5>
                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{{ trans('messages.fields.action') }}</th>
+                                <th scope="col">{{ trans('messages.fields.date') }}</th>
+                                <th scope="col">{{ trans('messages.fields.action') }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                {{ $logs->links() }}
+                            @foreach($logs as $log)
+                                <tr>
+                                    <th scope="row">{{ $log->id }}</th>
+                                    <td>
+                                        <i class="text-{{ $log->getActionFormat()['color'] }} bi bi-{{ $log->getActionFormat()['icon'] }}"></i>
+                                        {{ $log->getActionMessage() }}
+                                    </td>
+                                    <td>{{ format_date_compact($log->created_at) }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.logs.show', $log) }}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{ $logs->links() }}
+                </div>
             </div>
-        </div>
-    @endif
+        @endif
+    @endcan
 
     <div class="row gy-4">
         @foreach($cards ?? [] as $card)

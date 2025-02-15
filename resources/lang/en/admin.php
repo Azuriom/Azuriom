@@ -19,7 +19,7 @@ return [
             'global' => 'Global',
             'security' => 'Security',
             'performances' => 'Performance',
-            'seo' => 'SEO',
+            'home' => 'Home',
             'auth' => 'Authentication',
             'mail' => 'Mail',
             'maintenance' => 'Maintenance',
@@ -123,8 +123,8 @@ return [
                 'title' => 'Captcha',
                 'site_key' => 'Site key',
                 'secret_key' => 'Secret key',
-                'recaptcha' => 'You can get reCAPTCHA keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer"> Google reCAPTCHA website</a>. You need to use reCAPTCHA <strong>v2 invisible</strong> keys.',
-                'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer"> hCaptcha website</a>.',
+                'recaptcha' => 'You can get reCAPTCHA keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA website</a>. You need to use reCAPTCHA <strong>v2 invisible</strong> keys.',
+                'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha website</a>.',
                 'turnstile' => 'You can get Turnstil keys on the <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">Cloudflare dashboard</a>. You must select "Managed" widget.',
             ],
 
@@ -161,7 +161,7 @@ return [
         ],
 
         'seo' => [
-            'title' => 'SEO settings',
+            'title' => 'Home settings',
 
             'html' => 'You can include HTML in the <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> of all pages (e.g. for cookie banner or website analytics) by creating a file named <code>head.blade.php</code> or <code>body.blade.php</code> in the <code>resources/views/custom/</code> folder.',
             'home_message' => 'Home message',
@@ -191,7 +191,7 @@ return [
             'title' => 'Mail settings',
             'from' => 'Email address used to send emails.',
             'mailer' => 'Email type',
-            'info' => 'Fore more information on the email configuration, see our <a href="https://azuriom.com/docs/mails" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'info' => 'For more information on the email configuration, see the <a href="https://azuriom.com/docs/mails" target="_blank" rel="noopener noreferrer">documentation</a>.',
             'disabled' => 'When emails are disabled, users will not be able to reset their password if they forget it.',
             'sendmail' => 'Using Sendmail is not recommended and you should instead use an SMTP server when possible.',
             'smtp' => [
@@ -423,8 +423,10 @@ return [
         'admin-pages' => 'View and manage pages',
         'admin-redirects' => 'View and manage redirections',
         'admin-posts' => 'View and manage posts',
+        'admin-roles' => 'View and manage roles',
         'admin-settings' => 'View and manage settings',
         'admin-users' => 'View and manage users',
+        'admin-users-personal' => 'View and manage personal user information',
         'admin-themes' => 'View and manage themes',
         'admin-plugins' => 'View and manage plugins',
     ],
@@ -618,13 +620,13 @@ return [
         ],
 
         'plugins' => [
-            'enabled' => 'Enabled plugin',
-            'disabled' => 'Disabled plugin',
+            'enabled' => 'Enabled plugin :plugin',
+            'disabled' => 'Disabled plugin :plugin',
         ],
 
         'themes' => [
-            'changed' => 'Changed theme',
-            'configured' => 'Updated theme configuration',
+            'changed' => 'Changed theme to :theme',
+            'configured' => 'Updated theme :theme configuration',
         ],
     ],
 

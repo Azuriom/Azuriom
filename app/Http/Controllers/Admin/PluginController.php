@@ -93,7 +93,7 @@ class PluginController extends Controller
 
         $this->plugins->purgeInternalCache();
 
-        ActionLog::log('plugins.enabled');
+        ActionLog::log('plugins.enabled', data: ['plugin' => $plugin]);
 
         return $response;
     }
@@ -107,7 +107,7 @@ class PluginController extends Controller
 
         $this->plugins->purgeInternalCache();
 
-        ActionLog::log('plugins.disabled');
+        ActionLog::log('plugins.disabled', data: ['plugin' => $plugin]);
 
         return $response;
     }

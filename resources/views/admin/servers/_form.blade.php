@@ -117,7 +117,7 @@
         <div class="mb-3 col-md-8">
             <label class="form-label" for="rconPasswordInput">{{ trans('admin.servers.rcon_password') }}</label>
 
-            <div class="input-group has-validation" v-scope="{ toggle: false }">
+            <div class="input-group @error('rcon-password') has-validation @enderror" v-scope="{ toggle: false }">
                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('rcon-password') is-invalid @enderror" id="rconPasswordInput" name="rcon-password" value="{{ old('rcon-password', ! empty($server->data['rcon-password']) ? decrypt($server->data['rcon-password'], false) : '') }}">
                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
                     <i class="bi" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>

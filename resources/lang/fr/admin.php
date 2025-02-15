@@ -19,7 +19,7 @@ return [
             'global' => 'Général',
             'security' => 'Sécurité',
             'performances' => 'Performances',
-            'seo' => 'SEO',
+            'home' => 'Accueil',
             'auth' => 'Authentification',
             'mail' => 'Mail',
             'maintenance' => 'Maintenance',
@@ -161,7 +161,7 @@ return [
         ],
 
         'seo' => [
-            'title' => 'Paramètres SEO',
+            'title' => 'Paramètres de l\'accueil',
 
             'html' => 'Vous pouvez inclure de l\'HTML dans le <code>&lt;head&gt;</code> ou <code>&lt;body&gt;</code> de toutes les pages (par ex. pour une bannière à cookies) en créant un fichier <code>head.blade.php</code> ou <code>body.blade.php</code> dans le dossier <code>resources/views/custom/</code>.',
             'home_message' => 'Message de la page d\'accueil',
@@ -282,7 +282,7 @@ return [
             'link3' => 'Exécuter cette commande sur votre serveur: ',
             'auth' => 'Pour automatiquement créer les comptes sur le site, vous pouvez activer l\'intégration de votre plugin de login (AuthMe, etc.) dans la configuration d\'AzLink.',
 
-            'info' => 'Si vous avez des problèmes avec AzLink en utilisant Cloudflare ou un pare-feu, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
+            'info' => 'Si vous avez des problèmes avec AzLink en utilisant Cloudflare ou un pare-feu, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/fr/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
             'command' => 'Vous pouvez lier votre serveur à votre site web avec la commande: ',
             'port_command' => 'Si vous utilisez un port AzLink différent que celui par défaut, vous devez le configurer avec la commande: ',
             'ping' => 'Activer les commandes instantanées (nécessite un port ouvert libre sur le serveur)',
@@ -422,9 +422,11 @@ return [
         'admin-navbar' => 'Voir et gérer la navbar',
         'admin-pages' => 'Voir et gérer les pages',
         'admin-redirects' => 'Voir et gérer les redirections',
+        'admin-roles' => 'Voir et gérer les rôles',
         'admin-posts' => 'Voir et gérer les articles',
         'admin-settings' => 'Voir et gérer les paramètres',
         'admin-users' => 'Voir et gérer les utilisateurs',
+        'admin-users-personal' => 'Voir et gérer les informations personnelles des utilisateurs',
         'admin-themes' => 'Voir et gérer les thèmes',
         'admin-plugins' => 'Voir et gérer les plugins',
     ],
@@ -475,7 +477,7 @@ return [
         'title' => 'Images',
         'edit' => 'Édition de l\'image :image',
         'create' => 'Upload une image',
-        'help' => 'Si les images ne s\'affichent pas, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
+        'help' => 'Si les images ne s\'affichent pas, essayez de suivre les étapes indiquées dans la <a href="https://azuriom.com/fr/docs/faq" target="_blank" rel="noopener norefferer">FAQ</a>.',
     ],
 
     'extensions' => [
@@ -618,13 +620,13 @@ return [
         ],
 
         'plugins' => [
-            'enabled' => 'Activation de plugin',
-            'disabled' => 'Désactivation de plugin',
+            'enabled' => 'Activation du plugin :plugin',
+            'disabled' => 'Désactivation du plugin :plugin',
         ],
 
         'themes' => [
-            'changed' => 'Changement de thème',
-            'configured' => 'Configuration du thème',
+            'changed' => 'Changement du thème :theme',
+            'configured' => 'Configuration du thème :theme',
         ],
     ],
 

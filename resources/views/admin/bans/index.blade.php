@@ -23,7 +23,8 @@
                         <tr>
                             <th scope="row">{{ $ban->id }}</th>
                             <td @if($ban->trashed()) class="text-decoration-line-through" @endif>
-                                <a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a></td>
+                                <a href="{{ route('admin.users.edit', $ban->user) }}">{{ $ban->user->name }}</a>
+                            </td>
                             <td>
                                 <a href="{{ route('admin.users.edit', $ban->author) }}">{{ $ban->author->name }}</a>
                             </td>

@@ -8,7 +8,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="row">
-                <div class="col-xl-2 col-md-3 text-center">
+                <div class="col-xl-2 col-md-3 align-self-center text-center">
                     <img src="{{ $user->getAvatar(150) }}" class="rounded mb-3 img-fluid" alt="{{ $user->name }}">
 
                     <h3 class="h5 mb-0">

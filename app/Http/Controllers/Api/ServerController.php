@@ -232,7 +232,7 @@ class ServerController extends Controller
      */
     protected function editMoney(Request $request, User $user, callable $action)
     {
-        $this->validate($request, ['amount' => 'required|numeric|min:0.01']);
+        $this->validate($request, ['amount' => 'required|numeric|min:0']);
 
         $balance = $user->money;
         $action($request->input('amount'));

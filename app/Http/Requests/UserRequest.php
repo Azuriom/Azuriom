@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
                 'required', 'string', 'max:25', new Username(), Rule::unique('users')->ignore($user, 'name'),
             ],
             'email' => [
-                'nullable', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
+                'sometimes', 'nullable', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
             ],
             'password' => [Rule::requiredIf($user === null), 'nullable', Password::default()],
             'money' => ['filled', 'numeric', 'min:0'],

@@ -35,6 +35,7 @@ class UserController extends Controller
         return view('admin.users.index', [
             'users' => $users,
             'search' => $search,
+            'canViewEmail' => $request->user()->can('admin.users.email'),
             'notificationLevels' => Notification::LEVELS,
         ]);
     }
@@ -130,11 +131,17 @@ class UserController extends Controller
         $user->role()->associate($role);
         $user->save();
 
-        if ($user->wasChanged('password')) {
-            event(new PasswordReset($user));
+        $log = ActionLog::log('users.updated', $user);
+
+        if ($log !== null) {
+            $user->createLogEntries($log);
         }
 
-        ActionLog::log('users.updated', $user);
+        if ($user->wasChanged('password')) {
+            event(new PasswordReset($user));
+
+            $log->createEntries(['password' => '**old**'], ['password' => '**new**']);
+        }
 
         return to_route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
@@ -148,7 +155,11 @@ class UserController extends Controller
 
         $user->markEmailAsVerified();
 
-        ActionLog::log('users.updated', $user);
+        ActionLog::log('users.updated', $user)?->createEntries([
+            'email_verified_at' => null,
+        ], [
+            'email_verified_at' => $user->email_verified_at,
+        ]);
 
         return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.email.verify_success'));
@@ -161,7 +172,9 @@ class UserController extends Controller
             'two_factor_recovery_codes' => null,
         ])->save();
 
-        ActionLog::log('users.updated', $user);
+        ActionLog::log('users.updated', $user)?->createEntries([
+            '2fa' => 'enabled',
+        ], ['2fa' => 'disabled']);
 
         return to_route('admin.users.edit', $user)
             ->with('success', trans('admin.users.2fa.disabled'));

@@ -165,7 +165,7 @@ return [
             'success' => 'Votre compte a bien été supprimé!',
         ],
 
-        'email_verification' => 'Votre adresse mail n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
+        'email_verification' => 'Votre adresse email n\'est pas vérifiée, veuillez vérifier que vous n\'ayez pas reçu un lien de vérification.',
         'updated' => 'Votre profil a été mis à jour.',
 
         'info' => [

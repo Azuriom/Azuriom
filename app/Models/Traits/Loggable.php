@@ -20,7 +20,7 @@ trait Loggable
 
                 $log = ActionLog::log($action, $model, $model->getLogData($event));
 
-                if ($log !== null) {
+                if ($log !== null && $event === 'updated') {
                     $model->createLogEntries($log, $event);
                 }
             });
@@ -46,13 +46,9 @@ trait Loggable
         return ! in_array($attribute, $this->getHidden(), true);
     }
 
-    protected function createLogEntries(ActionLog $log, string $event): void
+    public function createLogEntries(ActionLog $log): void
     {
-        if ($event !== 'updated') {
-            return;
-        }
-
-        foreach ($this->getDirty() as $attribute => $value) {
+        foreach ($this->getChanges() as $attribute => $value) {
             $original = $this->getOriginal($attribute);
 
             if ($this->shouldLogAttribute($attribute) && $this->isValidLogType($original) && $this->isValidLogType($value)) {

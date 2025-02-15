@@ -23,14 +23,6 @@ use Illuminate\Validation\Rule;
 class SettingsController extends Controller
 {
     /**
-     * The supported encryption types.
-     */
-    private array $mailEncryptionTypes = [
-        'tls' => 'TLS',
-        'ssl' => 'SSL',
-    ];
-
-    /**
      * The supported mail drivers.
      */
     private array $mailMailers = [
@@ -251,9 +243,9 @@ class SettingsController extends Controller
             ->with('success', trans('messages.status.success'));
     }
 
-    public function seo()
+    public function home()
     {
-        return view('admin.settings.seo', [
+        return view('admin.settings.home', [
             'homeMessage' => setting('home_message'),
             'welcomeAlert' => setting('welcome_alert'),
         ]);
@@ -271,18 +263,18 @@ class SettingsController extends Controller
             'welcome_alert' => ['required_with:enable_welcome_alert', 'nullable', 'string'],
         ]);
 
-        $alert = $request->filled('enable_welcome_alert')
-            ? $request->input('welcome_alert')
-            : null;
-
-        Setting::updateSettings([
+        $settings = [
             'home_message' => $request->input('home_message'),
-            'welcome_alert' => $alert,
-        ]);
+            'welcome_alert' => $request->filled('enable_welcome_alert')
+                ? $request->input('welcome_alert')
+                : null,
+        ];
 
-        ActionLog::log('settings.updated');
+        $old = Setting::updateSettings($settings);
 
-        return to_route('admin.settings.seo')
+        ActionLog::log('settings.updated')?->createEntries($old, $settings);
+
+        return to_route('admin.settings.home')
             ->with('success', trans('admin.settings.updated'));
     }
 
@@ -310,7 +302,7 @@ class SettingsController extends Controller
      */
     public function updateAuth(Request $request)
     {
-        Setting::updateSettings([
+        $settings = [
             ...$this->validate($request, [
                 'conditions' => ['nullable', 'string', 'max:150'],
             ]),
@@ -319,9 +311,11 @@ class SettingsController extends Controller
             'user.change_name' => $request->filled('user_change_name'),
             'user.upload_avatar' => $request->filled('user_upload_avatar'),
             'user.delete' => $request->filled('user_delete'),
-        ]);
+        ];
 
-        ActionLog::log('settings.updated');
+        $old = Setting::updateSettings($settings);
+
+        ActionLog::log('settings.updated')?->createEntries($old, $settings);
 
         return to_route('admin.settings.auth')
             ->with('success', trans('admin.settings.updated'));
@@ -334,7 +328,6 @@ class SettingsController extends Controller
     {
         return view('admin.settings.mail', [
             'mailers' => $this->mailMailers,
-            'encryptionTypes' => $this->mailEncryptionTypes,
             'smtpConfig' => config('mail.mailers.smtp', optional([])),
         ]);
     }
@@ -346,7 +339,7 @@ class SettingsController extends Controller
      */
     public function updateMail(Request $request)
     {
-        $mailSettings = [
+        $settings = [
             ...$this->validate($request, [
                 'from-address' => ['required', 'string', 'email'],
                 'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
@@ -359,20 +352,24 @@ class SettingsController extends Controller
             'users_email_verification' => $request->filled('users_email_verification'),
         ];
 
-        if ($mailSettings['mailer'] === null) {
-            $mailSettings['mailer'] = 'array';
-            $mailSettings['users_email_verification'] = false;
+        if ($settings['mailer'] === null) {
+            $settings['mailer'] = 'array';
+            $settings['users_email_verification'] = false;
         }
 
-        if (Arr::get($mailSettings, 'smtp-password') === null) {
-            unset($mailSettings['smtp-password']);
+        if (Arr::get($settings, 'smtp-password') === null) {
+            unset($settings['smtp-password']);
         }
 
-        foreach ($mailSettings as $key => $value) {
-            Setting::updateSettings('mail.'.str_replace('-', '.', $key), $value);
-        }
+        $settings = Arr::prependKeysWith($settings, 'mail.');
 
-        ActionLog::log('settings.updated');
+        $settings = Arr::mapWithKeys($settings, fn (mixed $value, string $key) => [
+            str_replace('-', '.', $key) => $value,
+        ]);
+
+        $old = Setting::updateSettings($settings);
+
+        ActionLog::log('settings.updated')?->createEntries($old, $settings);
 
         return to_route('admin.settings.mail')
             ->with('success', trans('admin.settings.updated'));

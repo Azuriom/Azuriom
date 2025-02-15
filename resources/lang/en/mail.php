@@ -22,7 +22,7 @@ return [
     'copyright' => '&copy; :year :name. All rights reserved.',
 
     'test' => [
-        'subject' => 'Test mail on :name',
+        'subject' => 'Test email on :name',
         'content' => 'If you can see this email, it means that sending emails from :name is working!',
     ],
 

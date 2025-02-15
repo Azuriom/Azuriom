@@ -35,6 +35,13 @@
         .CodeMirror-cursor {
             border-color: var(--bs-body-color);
         }
+
+        .editor-toolbar .easymde-dropdown, .editor-toolbar button {
+            font-size: 24px;
+            line-height: 1;
+            margin: 0 1px;
+            padding: 0;
+        }
     </style>
 @endpush
 
@@ -61,7 +68,7 @@
             'upload-image': 'bi bi-image',
             'table': 'bi bi-table',
             'horizontal-rule': 'bi bi-dash-lg',
-            'preview': 'bi bi-easel',
+            'preview': 'bi bi-eye',
             'side-by-side': 'bi bi-layout-split',
             'fullscreen': 'bi bi-fullscreen',
             'guide': 'bi bi-question-circle',
@@ -78,6 +85,7 @@
 
             showIcons: ['strikethrough', 'code', '{{ isset($imagesUploadUrl) ? 'upload-image' : 'image' }}', 'table', 'horizontal-rule', 'undo', 'redo'],
             iconClassMap: easyMdeIcons,
+            autoDownloadFontAwesome: false,
 
             @isset($autosaveId)
             autosave: {
@@ -134,5 +142,16 @@
                 importError: '{{ trans('messages.markdown.error') }}',
             },
         });
+
+        // Fix for https://github.com/Ionaru/easy-markdown-editor/pull/501
+        for (const button of easyMde.toolbar) {
+            const icon = easyMdeIcons[button.name];
+            const element = easyMde.gui.toolbar.querySelector('.' + button.name + ' .fa');
+
+            if (icon && element) {
+                element.setAttribute('class', icon);
+                button.className = icon;
+            }
+        }
     </script>
 @endpush

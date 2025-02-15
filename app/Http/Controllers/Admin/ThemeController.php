@@ -175,7 +175,7 @@ class ThemeController extends Controller
 
             $this->themes->updateConfig($theme, $config);
 
-            ActionLog::log('themes.configured');
+            ActionLog::log('themes.configured', data: ['theme' => $theme]);
 
             if ($request->isXmlHttpRequest()) {
                 return response()->json(['message' => 'admin.themes.config_updated']);
@@ -204,7 +204,7 @@ class ThemeController extends Controller
 
         $this->themes->changeTheme($theme);
 
-        ActionLog::log('themes.changed');
+        ActionLog::log('themes.changed', data: ['theme' => $theme ?? 'default']);
 
         return to_route('admin.themes.index')
             ->with('success', trans('admin.themes.updated'));

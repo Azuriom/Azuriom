@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\InteractsWithMoney;
+use Azuriom\Models\Traits\Loggable;
 use Azuriom\Models\Traits\Searchable;
 use Azuriom\Models\Traits\TwoFactorAuthenticatable;
 use Azuriom\Notifications\ResetPassword as ResetPasswordNotification;
@@ -52,9 +53,17 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use HasImage;
     use InteractsWithMoney;
+    use Loggable;
     use Notifiable;
     use Searchable;
     use TwoFactorAuthenticatable;
+
+    /**
+     * The actions to that should be automatically logged.
+     *
+     * @var array<int, string>
+     */
+    protected static array $logEvents = []; // Manually log for users
 
     /**
      * The attributes that are mass assignable.

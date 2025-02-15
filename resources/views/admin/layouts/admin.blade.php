@@ -70,9 +70,9 @@
                                         {{ trans('admin.nav.settings.global') }}
                                     </a>
                                 </li>
-                                <li class="sidebar-item {{ add_active('admin.settings.seo') }}">
-                                    <a class="sidebar-link" href="{{ route('admin.settings.seo') }}">
-                                        {{ trans('admin.nav.settings.seo') }}
+                                <li class="sidebar-item {{ add_active('admin.settings.home') }}">
+                                    <a class="sidebar-link" href="{{ route('admin.settings.home') }}">
+                                        {{ trans('admin.nav.settings.home') }}
                                     </a>
                                 </li>
                                 @if(! oauth_login())

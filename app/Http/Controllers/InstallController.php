@@ -51,7 +51,7 @@ class InstallController extends Controller
 
     // TODO dynamic games
     protected array $steamGames = [
-        '7dtd', 'gmod', 'ark', 'ark-sa', 'rust', 'fivem', 'csgo', 'tf2', 'unturned',
+        '7dtd', 'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2', 'unturned',
     ];
 
     protected array $games = [
@@ -94,10 +94,6 @@ class InstallController extends Controller
         '7dtd' => [
             'name' => '7 Days to Die',
             'logo' => 'assets/img/games/7dtd.svg',
-        ],
-        'ark-sa' => [
-            'name' => 'ARK: Survival Ascended',
-            'logo' => 'assets/img/games/ark-sa.png',
         ],
         'custom' => [
             'name' => 'Custom Game',

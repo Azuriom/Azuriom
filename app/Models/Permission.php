@@ -24,7 +24,9 @@ class Permission extends Model
         'admin.redirects' => 'admin.permissions.admin-redirects',
         'admin.posts' => 'admin.permissions.admin-posts',
         'admin.settings' => 'admin.permissions.admin-settings',
+        'admin.roles' => 'admin.permissions.admin-roles',
         'admin.users' => 'admin.permissions.admin-users',
+        'admin.users.personal' => 'admin.permissions.admin-users-personal',
         'admin.themes' => 'admin.permissions.admin-themes',
         'admin.plugins' => 'admin.permissions.admin-plugins',
     ];

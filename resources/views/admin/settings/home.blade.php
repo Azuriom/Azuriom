@@ -7,7 +7,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="{{ route('admin.settings.seo.update') }}" method="POST">
+            <form action="{{ route('admin.settings.home.update') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">

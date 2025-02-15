@@ -27,7 +27,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ trans('auth.name') }}</th>
-                        <th scope="col">{{ oauth_login() ? game()->trans('id') : trans('auth.email') }}</th>
+                        @if($canViewEmail || oauth_login())
+                            <th scope="col">{{ oauth_login() ? game()->trans('id') : trans('auth.email') }}</th>
+                        @endif
                         <th scope="col">{{ trans('messages.fields.role') }}</th>
                         <th scope="col">{{ trans('admin.users.registered') }}</th>
                         <th scope="col">{{ trans('messages.fields.action') }}</th>
@@ -52,17 +54,19 @@
                             <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
                                 {{ $user->name }}
                             </td>
-                            <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
-                                {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
+                            @if($canViewEmail || oauth_login())
+                                <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
+                                    {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
 
-                                @if($user->hasVerifiedEmail())
-                                    <i class="bi bi-envelope-check text-info" data-bs-toggle="tooltip" title="{{ trans('admin.users.email.verified') }}"></i>
-                                @endif
+                                    @if($user->hasVerifiedEmail())
+                                        <i class="bi bi-envelope-check text-info" data-bs-toggle="tooltip" title="{{ trans('admin.users.email.verified') }}"></i>
+                                    @endif
 
-                                @if($user->hasTwoFactorAuth())
-                                    <i class="bi bi-shield-check text-success" data-bs-toggle="tooltip" title="{{ trans('admin.users.2fa.secured') }}"></i>
-                                @endif
-                            </td>
+                                    @if($user->hasTwoFactorAuth())
+                                        <i class="bi bi-shield-check text-success" data-bs-toggle="tooltip" title="{{ trans('admin.users.2fa.secured') }}"></i>
+                                    @endif
+                                </td>
+                            @endif
                             <td>
                                 <span class="badge" style="{{ $user->role->getBadgeStyle() }}">
                                     @if($user->role->icon) <i class="{{ $user->role->icon }}"></i> @endif

@@ -8,7 +8,7 @@
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)
 [![Chat](https://img.shields.io/discord/625774284823986183?color=5865f2&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
 
-**Azuriom** is a complete open source web solution for game servers. Enjoy dozens of extensions for endless possibilities. Already trusted by over **1,800 servers**, totaling more than two **million users**.
+**Azuriom** is a complete open-source web solution for game servers. Enjoy dozens of extensions for endless possibilities. Already trusted by over **1,800 servers**, totaling more than two **million users**.
 
 > [!NOTE]
 > To install Azuriom, please do NOT clone this repository directly. Instead, download from the [official website](https://azuriom.com/download) or from the [releases page](https://github.com/Azuriom/Azuriom/releases).
