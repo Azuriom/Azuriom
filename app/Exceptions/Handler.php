@@ -34,6 +34,8 @@ class Handler extends ExceptionHandler
      */
     protected function renderHttpException(HttpException $e): Response
     {
+        $this->registerErrorViewPaths();
+
         try {
             // Try to render the error view with the current theme.
             // Should work for most errors, but can fail for errors 500
@@ -42,9 +44,7 @@ class Handler extends ExceptionHandler
             // In this case, the catch will render a simple error page
             // without any database interactions or complex mechanics
 
-            $this->registerErrorViewPaths();
-
-            if (view()->exists($view = "errors.{$e->getStatusCode()}")) {
+            if (view()->exists($view = "errors::{$e->getStatusCode()}")) {
                 return response()->view($view, [
                     'errors' => new ViewErrorBag(),
                     'exception' => $e,

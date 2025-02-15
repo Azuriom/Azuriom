@@ -352,7 +352,7 @@ class SettingsController extends Controller
                 'mailer' => ['nullable', Rule::in(array_keys($this->mailMailers))],
                 'smtp-host' => ['required_if:driver,smtp', 'nullable', 'string'],
                 'smtp-port' => ['required_if:driver,smtp', 'nullable', 'integer', 'between:1,65535'],
-                'smtp-encryption' => ['nullable', Rule::in(array_keys($this->mailEncryptionTypes))],
+                'smtp-scheme' => ['nullable', 'in:smtp,smtps'],
                 'smtp-username' => ['nullable', 'string'],
                 'smtp-password' => ['nullable', 'string'],
             ]),
@@ -382,7 +382,9 @@ class SettingsController extends Controller
     {
         if ($request->user()->email === null) {
             return response()->json([
-                'message' => trans('admin.settings.mail.missing'),
+                'message' => trans('admin.settings.mail.missing', [
+                    'user' => $request->user()->name,
+                ]),
             ], 400);
         }
 

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SteamIdTest extends TestCase
 {
-    public function testConversionFrom64To32(): void
+    public function test_conversion_from64_to32(): void
     {
         $this->assertSame('STEAM_0:0:44051465', SteamID::convertTo32(76561198048368658));
         $this->assertSame('STEAM_0:0:553987157', SteamID::convertTo32(76561199068240042));
@@ -15,7 +15,7 @@ class SteamIdTest extends TestCase
         $this->assertSame('STEAM_0:0:24898512', SteamID::convertTo32(76561198010062752));
     }
 
-    public function testConversionFrom32To64(): void
+    public function test_conversion_from32_to64(): void
     {
         $this->assertSame(76561198048368658, SteamID::convertTo64('STEAM_0:0:44051465'));
         $this->assertSame(76561199068240042, SteamID::convertTo64('STEAM_0:0:553987157'));

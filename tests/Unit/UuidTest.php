@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class UuidTest extends TestCase
 {
-    public function testOfflineModeUuid(): void
+    public function test_offline_mode_uuid(): void
     {
         $game = new MinecraftOfflineGame();
 

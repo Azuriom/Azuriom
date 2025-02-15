@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class CastsTest extends TestCase
 {
-    public function testColorCast(): void
+    public function test_color_cast(): void
     {
         $colors = ['#ff0000', 'ff0000', '#f00', 'f00'];
 

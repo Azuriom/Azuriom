@@ -45,18 +45,25 @@ class ThemeManager extends ExtensionManager
      */
     public function loadTheme(string $theme): void
     {
+        $config = config();
         $finder = view()->getFinder();
 
         if ($this->currentTheme !== null) {
             $paths = $finder->getPaths();
             $old = $this->path('views');
             $finder->setPaths(array_filter($paths, fn (string $path) => $path !== $old));
+
+            $paths = $config->get('view.paths');
+            $paths = array_filter($paths, fn (string $path) => $path !== $old);
+            $config->set('view.paths', array_values($paths));
         }
 
         $this->currentTheme = $theme;
+        $viewPath = $this->path('views');
 
         // Add theme path to view finder
-        $finder->prependLocation($this->path('views'));
+        $finder->prependLocation($viewPath);
+        $config->prepend('view.paths', $viewPath);
 
         $this->loadConfig($theme);
 

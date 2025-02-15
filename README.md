@@ -8,7 +8,12 @@
 [![Latest release](https://img.shields.io/github/v/release/Azuriom/Azuriom?style=flat-square)](http://github.com/Azuriom/Azuriom/releases)
 [![Chat](https://img.shields.io/discord/625774284823986183?color=5865f2&label=Discord&logo=discord&logoColor=fff&style=flat-square)](https://azuriom.com/discord)
 
-**Azuriom** is a complete open-source web solution for game servers. Enjoy dozens of extensions for endless possibilities. Already trusted by over **1,800 servers**, cumulating more than two **millions users**.
+**Azuriom** is a complete open source web solution for game servers. Enjoy dozens of extensions for endless possibilities. Already trusted by over **1,800 servers**, totaling more than two **million users**.
+
+> [!NOTE]
+> To install Azuriom, please do NOT clone this repository directly. Instead, download from the [official website](https://azuriom.com/download) or from the [releases page](https://github.com/Azuriom/Azuriom/releases).
+>
+> If you would like to contribute to Azuriom and install from source, please see the [Contribution Guide](CONTRIBUTING.md).
 
 ![Screenshot](https://azuriom.com/assets/img/home.png)
 
@@ -18,11 +23,10 @@ Azuriom natively supports the following games:
 * [Minecraft](https://www.minecraft.net/)
 * [Garry's Mod](https://gmod.facepunch.com/)
 * [ARK: Survival Evolved](https://playark.com/ark-survival-evolved/)
-* [ARK: Survival Ascended](https://playark.com/)
 * [Rust](https://rust.facepunch.com/)
 * [FiveM](https://fivem.net/)
 * [Unturned](https://smartlydressedgames.com/)
-* [Counter-Strike: Global Offensive](https://blog.counter-strike.net/)
+* [Counter-Strike 2](https://www.counter-strike.net/cs2)
 * [7 Days to Die](https://7daystodie.com/)
 * [Team Fortress 2](https://www.teamfortress.com/)
 

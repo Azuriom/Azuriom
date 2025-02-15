@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class MarkdownTest extends TestCase
 {
-    public function testParseDefault(): void
+    public function test_parse_default(): void
     {
         $markdown = 'This is markdown with **bold** and ~~strikethrough~~ with https://autolink.ltd, no raw html<br>.';
         $expected = "<p>This is markdown with <strong>bold</strong> and <del>strikethrough</del> with <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://autolink.ltd\">https://autolink.ltd</a>, no raw html&lt;br&gt;.</p>\n";
@@ -19,7 +19,7 @@ class MarkdownTest extends TestCase
         $this->assertSame($expected, Markdown::parse($markdown));
     }
 
-    public function testParseRaw(): void
+    public function test_parse_raw(): void
     {
         $markdown = 'This is markdown with **bold** and ~~strikethrough~~ with https://autolink.ltd and raw <b>html</b>.';
         $expected = "<p>This is markdown with <strong>bold</strong> and <del>strikethrough</del> with <a href=\"https://autolink.ltd\">https://autolink.ltd</a> and raw <b>html</b>.</p>\n";
@@ -27,7 +27,7 @@ class MarkdownTest extends TestCase
         $this->assertSame($expected, Markdown::parseRaw($markdown));
     }
 
-    public function testExternalImageExtension(): void
+    public function test_external_image_extension(): void
     {
         $localMarkdown = '![Azuriom](http://127.0.0.1/assets/img/logo.png)';
         $externalMarkdown = '![Azuriom](https://azuriom.com/assets/img/logo.png)';

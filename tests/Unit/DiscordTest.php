@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class DiscordTest extends TestCase
 {
-    public function testDiscordWebhook(): void
+    public function test_discord_webhook(): void
     {
         $date = Carbon::create(2020, 2, 1, 14, 15, 16, 'UTC');
 
@@ -66,7 +66,7 @@ class DiscordTest extends TestCase
         ], $webhook->toArray());
     }
 
-    public function testEmbedColorConversion(): void
+    public function test_embed_color_conversion(): void
     {
         $embed = Embed::create();
 

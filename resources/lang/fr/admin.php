@@ -191,20 +191,20 @@ return [
             'title' => 'Paramètres Mail',
             'from' => 'Adresse Email utilisée pour envoyer les emails.',
             'mailer' => 'Type Mail',
-            'mailer_info' => 'Azuriom supporte le SMTP et Sendmail pour l\'envoi des emails. Vous pouvez trouver plus d\'informations sur l\'envoi des mails dans notre <a href="https://azuriom.com/docs" target="_blank" rel="noopener noreferrer">documentation</a>.',
+            'info' => 'Pour plus d\'information sur l\'envoie des mails, consultez la <a href="https://azuriom.com/docs/mails" target="_blank" rel="noopener noreferrer">documentation</a>.',
             'disabled' => 'Lorsque l\'envoi des emails est désactivé, les utilisateurs ne pourront pas réinitialiser leur mot de passe en cas d\'oubli.',
             'sendmail' => 'Utiliser Sendmail n\'est pas recommandé et il est conseillé d\'utiliser à la place un serveur SMTP lorsque c\'est possible.',
             'smtp' => [
                 'host' => 'Adresse de l\'hôte SMTP',
                 'port' => 'Port de l\'hôte SMTP',
-                'encryption' => 'Protocole de chiffrement',
+                'scheme' => 'Schéma',
                 'username' => 'Utilisateur du serveur SMTP',
                 'password' => 'Mot de passe du serveur SMTP',
             ],
             'verification' => 'Activer la vérification de l\'adresse email des utilisateurs',
             'send' => 'Envoyer un mail de test',
             'sent' => 'Le mail de test a bien été envoyé.',
-            'missing' => 'Aucune adresse email n\'a été renseignée sur votre compte',
+            'missing' => 'Aucune adresse e-mail n\'a été renseignée sur le compte :user.',
         ],
 
         'maintenance' => [

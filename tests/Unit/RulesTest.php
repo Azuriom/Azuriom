@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class RulesTest extends TestCase
 {
-    public function testSlugRule(): void
+    public function test_slug_rule(): void
     {
         $validSlugs = ['hello-world', 'hello', 'world', '-hello-world-', '123456'];
         $invalidSlugs = ['Hello', 'hello_world', 'Hello World', 'hello@world'];

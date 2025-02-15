@@ -11,7 +11,7 @@ class ChartsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDailyChart(): void
+    public function test_daily_chart(): void
     {
         $dates = [
             today()->subMonths(2)->addMinutes(20),
@@ -35,7 +35,7 @@ class ChartsTest extends TestCase
         $this->assertEquals($expected, Charts::countByDays(User::query())->all());
     }
 
-    public function testMonthlyChart(): void
+    public function test_monthly_chart(): void
     {
         $month = today()->startOfMonth()->addHour()->toImmutable();
 

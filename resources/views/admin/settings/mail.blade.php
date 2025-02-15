@@ -25,6 +25,10 @@
 @endpush
 
 @section('content')
+    <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> @lang('admin.settings.mail.info')
+    </div>
+
     <div class="card shadow mb-4">
         <div class="card-body">
 
@@ -45,8 +49,6 @@
                                 </option>
                             @endforeach
                         </select>
-
-                        <small id="mailerInfo" class="form-text">@lang('admin.settings.mail.mailer_info')</small>
                     </div>
 
                     <div class="mb-3 col-md-8">
@@ -80,16 +82,16 @@
                         </div>
 
                         <div class="mb-3 col-md-3">
-                            <label class="form-label" for="smtpEncryptionSelect">{{ trans('admin.settings.mail.smtp.encryption') }}</label>
+                            <label class="form-label" for="smtpSchemeSelect">{{ trans('admin.settings.mail.smtp.scheme') }}</label>
 
-                            <select class="form-select" id="smtpEncryptionSelect" name="smtp-encryption">
-                                <option value="" @selected(config('mail.encryption') === null)>
-                                    {{ trans('messages.none') }}
+                            <select class="form-select" id="smtpSchemeSelect" name="smtp-scheme">
+                                <option value="" @selected($smtpConfig['scheme'] === null)>
+                                    {{ trans('messages.auto') }}
                                 </option>
 
-                                @foreach($encryptionTypes as $encryption => $encryptionName)
-                                    <option value="{{ $encryption }}" @selected($smtpConfig['encryption'] === $encryption)>
-                                        {{ $encryptionName }}
+                                @foreach(['smtp', 'smtps'] as $scheme)
+                                    <option value="{{ $scheme }}" @selected($smtpConfig['scheme'] === $scheme)>
+                                        {{ strtoupper($scheme) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -109,7 +111,7 @@
                         <div class="mb-3 col-md-6">
                             <label class="form-label" for="smtpPasswordInput">{{ trans('admin.settings.mail.smtp.password') }}</label>
 
-                            <div class="input-group has-validation" v-scope="{ toggle: false }">
+                            <div class="input-group @error('smtp-password') has-validation @enderror" v-scope="{ toggle: false }">
                                 <input :type="toggle ? 'text' : 'password'" class="form-control @error('smtp-password') is-invalid @enderror" id="smtpPasswordInput" name="smtp-password" value="{{ old('smtp-password') }}">
                                 <button @click="toggle = !toggle" type="button" class="btn btn-outline-primary">
                                     <i class="bi" :class="toggle ? 'bi-eye' : 'bi-eye-slash'"></i>

@@ -1,4 +1,5 @@
 {
+    "$schema": "https://getcomposer.org/schema.json",
     "name": "azuriom/azuriom",
     "type": "project",
     "description": "Azuriom is an open-source game CMS based on Laravel.",

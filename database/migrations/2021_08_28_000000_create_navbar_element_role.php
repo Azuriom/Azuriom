@@ -17,6 +17,8 @@ return new class extends Migration
 
             $table->foreign('navbar_element_id')->references('id')->on('navbar_elements')->cascadeOnDelete();
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
+
+            $table->unique(['navbar_element_id', 'role_id']);
         });
     }
 

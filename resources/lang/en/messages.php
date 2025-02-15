@@ -220,6 +220,8 @@ return [
         'delete_confirm' => 'Are you sure you want to delete this comment?',
     ],
 
+    'auto' => 'Automatic',
+
     'likes' => 'Likes: :count',
 
     'markdown' => [
