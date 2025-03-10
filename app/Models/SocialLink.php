@@ -26,9 +26,9 @@ class SocialLink extends Model
 
     private const DEFAULT_VALUES = [
         'twitter' => [
-            'title' => 'Twitter',
-            'color' => '#1da1f2',
-            'icon' => 'bi bi-twitter',
+            'title' => 'X (twitter)',
+            'color' => '#14171A',
+            'icon' => 'bi bi-twitter-x',
         ],
         'discord' => [
             'title' => 'Discord',
