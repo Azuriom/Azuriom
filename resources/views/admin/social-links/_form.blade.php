@@ -23,7 +23,7 @@
 
     <div class="mb-3 col-md-6">
         <label class="form-label" for="valueInput">{{ trans('messages.fields.value') }}</label>
-        <input type="url" class="form-control @error('value') is-invalid @enderror" id="valueInput" name="value" value="{{ old('value', $link->value ?? '') }}" required placeholder="https://x.com/Azuriom">
+        <input type="url" class="form-control @error('value') is-invalid @enderror" id="valueInput" name="value" value="{{ old('value', $link->value ?? '') }}" required placeholder="https://www.youtube.com/@Azuriom">
 
         @error('value')
         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

@@ -26,9 +26,9 @@ class SocialLink extends Model
 
     private const DEFAULT_VALUES = [
         'twitter' => [
-            'title' => 'X (twitter)',
-            'color' => '#14171A',
-            'icon' => 'bi bi-twitter-x',
+            'title' => 'Twitter',
+            'color' => '#1da1f2',
+            'icon' => 'bi bi-twitter',
         ],
         'discord' => [
             'title' => 'Discord',
@@ -39,6 +39,11 @@ class SocialLink extends Model
             'title' => 'YouTube',
             'color' => '#ff0000',
             'icon' => 'bi bi-youtube',
+        ],
+        'x-twitter' => [
+            'title' => 'X (Twitter)',
+            'color' => '#898989',
+            'icon' => 'bi bi-twitter-x',
         ],
         'steam' => [
             'title' => 'Steam',
