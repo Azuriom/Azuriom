@@ -57,6 +57,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'reason' => 'user_banned',
                 'message' => 'User banned',
+                'ban_reason' => $user->ban->reason,
             ], 403);
         }
 
@@ -115,6 +116,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'reason' => 'user_banned',
                 'message' => 'User banned',
+                'ban_reason' => $user->ban->reason,
             ], 403);
         }
 
