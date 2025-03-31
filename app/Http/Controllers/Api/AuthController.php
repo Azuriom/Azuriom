@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Api;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Resources\AuthenticatedUser as AuthenticatedUserResource;
 use Azuriom\Models\User;
-use Azuriom\Models\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -54,13 +53,10 @@ class AuthController extends Controller
         $user = Auth::getLastAttempted();
 
         if ($user->isBanned()) {
-            $ban = Ban::where('user_id', $user->id)->whereNull('removed_at')->first();
-            $reason = $ban ? $ban->reason : 'User banned';
-
             return response()->json([
                 'status' => 'error',
                 'reason' => 'user_banned',
-                'message' => $reason,
+                'ban_reason' => $user->ban->reason,
             ], 403);
         }
 
@@ -115,13 +111,10 @@ class AuthController extends Controller
         }
 
         if ($user->isBanned()) {
-            $ban = Ban::where('user_id', $user->id)->whereNull('removed_at')->first();
-            $reason = $ban ? $ban->reason : 'User banned';
-
             return response()->json([
                 'status' => 'error',
                 'reason' => 'user_banned',
-                'message' => $reason,
+                'ban_reason' => $user->ban->reason,
             ], 403);
         }
 
