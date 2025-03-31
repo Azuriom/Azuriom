@@ -56,6 +56,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'reason' => 'user_banned',
+                'message' => 'User banned',
                 'ban_reason' => $user->ban->reason,
             ], 403);
         }
@@ -114,6 +115,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'error',
                 'reason' => 'user_banned',
+                'message' => 'User banned',
                 'ban_reason' => $user->ban->reason,
             ], 403);
         }
