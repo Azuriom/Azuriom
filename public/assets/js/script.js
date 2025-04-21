@@ -167,3 +167,32 @@ document.querySelectorAll('[data-theme-value]').forEach(function (el) {
         axios.post(el.href, { theme: theme })
     })
 });
+
+/*
+ * Show password
+ */
+const inputs = document.querySelectorAll("input[show-password]");
+
+inputs.forEach((input) => {
+    const parent = input.parentElement;
+    if (!parent.classList.contains("position-relative")) {
+        parent.classList.add("position-relative");
+    }
+
+    const toggle = document.createElement("span");
+    toggle.style.cursor = "pointer";
+    toggle.className =
+        "input-show-password position-absolute top-50 end-0 translate-middle-y pe-3";
+    toggle.innerHTML = '<i class="bi bi-eye-slash"></i>';
+
+    toggle.addEventListener("click", () => {
+        const isPwd = input.getAttribute("type") === "password";
+        input.setAttribute("type", isPwd ? "text" : "password");
+        const icon = toggle.querySelector("i");
+        icon.classList.toggle("bi-eye-slash");
+        icon.classList.toggle("bi-eye");
+    });
+
+    parent.appendChild(toggle);
+});
+

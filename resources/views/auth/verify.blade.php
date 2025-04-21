@@ -3,27 +3,34 @@
 @section('title', trans('auth.verify'))
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-9 col-lg-6">
-        <h1>{{ trans('auth.verify') }}</h1>
+<div class="container-fluid d-flex align-items-center justify-content-center py-5">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div class="card border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4 fw-bold text-primary title-no-bg">
+                    {{ trans('auth.verify') }}
+                </h3>
 
-        <div class="card">
-            <div class="card-body">
                 @if(session('resent'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ trans('auth.verification.sent') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
-                 <p>{{ trans('auth.verification.check') }}</p>
-                 <p>{{ trans('auth.verification.request') }}</p>
+                <p class="text-center text-muted mb-4">
+                    {{ trans('auth.verification.check') }}
+                </p>
+                <p class="text-center text-muted mb-4">
+                    {{ trans('auth.verification.request') }}
+                </p>
 
-                 <form method="POST" action="{{ route('verification.resend') }}" class="d-grid">
-                     @csrf
-                     <button type="submit" class="btn btn-primary">
-                         {{ trans('auth.verification.resend') }}
-                     </button>
-                 </form>
+                <form method="POST" action="{{ route('verification.resend') }}" class="d-grid">
+                    @csrf
+                    <button type="submit" class="btn btn-primary btn-lg fw-semibold mt-2">
+                        {{ trans('auth.verification.resend') }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>

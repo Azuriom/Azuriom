@@ -3,28 +3,38 @@
 @section('title', trans('auth.login'))
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-9 col-lg-6">
-        <h1>{{ trans('auth.login') }}</h1>
+<div class="container-fluid d-flex align-items-center justify-content-center py-5">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div class="card border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4 fw-bold text-primary title-no-bg">
+                    {{ trans('auth.login') }}
+                </h3>
 
-        <div class="card">
-            <div class="card-body">
                 <form method="POST" action="{{ route('login.2fa') }}">
                     @csrf
 
-                    <div class="mb-3">
-                        <label class="form-label" for="code">{{ trans('auth.2fa.code') }}</label>
-                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" required autocomplete="one-time-code" autofocus>
-
+                    <div class="form-floating mb-3">
+                        <input
+                            id="code"
+                            type="text"
+                            class="form-control @error('code') is-invalid @enderror"
+                            name="code"
+                            placeholder=""
+                            required
+                            autocomplete="one-time-code"
+                            autofocus
+                        >
+                        <label for="code">{{ trans('auth.2fa.code') }}</label>
                         @error('code')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary btn-lg fw-semibold mt-2">
                             {{ trans('auth.login') }}
                         </button>
                     </div>
