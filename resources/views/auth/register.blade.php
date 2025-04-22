@@ -6,7 +6,7 @@
 <div class="auth container-fluid d-flex align-items-center justify-content-center py-5">
   <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
     <div class="card">
-      <div class="card-body p-4">
+      <div class="card-body">
         <h1 class="text-center mb-4 title-no-bg">{{ trans('auth.register') }}</h1>
 
         <form method="POST" action="{{ route('register') }}" id="captcha-form">
