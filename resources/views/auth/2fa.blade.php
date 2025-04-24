@@ -3,13 +3,13 @@
 @section('title', trans('auth.login'))
 
 @section('content')
-<div class="auth container-fluid d-flex align-items-center justify-content-center py-5">
+<div class="auth row justify-content-center py-5">
     <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
         <div class="card">
             <div class="card-body">
-                <h3 class="text-center mb-4 title-no-bg">
+                <h1 class="text-center mb-4 title-no-bg">
                     {{ trans('auth.login') }}
-                </h3>
+                </h1>
 
                 <form method="POST" action="{{ route('login.2fa') }}">
                     @csrf

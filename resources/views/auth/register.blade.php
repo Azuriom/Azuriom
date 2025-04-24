@@ -3,7 +3,7 @@
 @section('title', trans('auth.register'))
 
 @section('content')
-<div class="auth container-fluid d-flex align-items-center justify-content-center py-5">
+<div class="auth row justify-content-center py-5">
   <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
     <div class="card">
       <div class="card-body">
@@ -83,7 +83,7 @@
           </div>
 
           @if($registerConditions !== null)
-            <div class="mb-4 form-check">
+            <div class="form-check">
               <input
                 class="form-check-input @error('conditions') is-invalid @enderror"
                 type="checkbox"
@@ -93,7 +93,7 @@
                 @checked(old('conditions'))
               >
               <label class="form-check-label" for="conditions">
-                {!! $registerConditions !!}
+                {{ $registerConditions }}
               </label>
               @error('conditions')
                 <div class="invalid-feedback">

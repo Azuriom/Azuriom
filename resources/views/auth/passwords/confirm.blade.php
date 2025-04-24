@@ -3,13 +3,13 @@
 @section('title', trans('auth.passwords.confirm'))
 
 @section('content')
-<div class="auth container-fluid d-flex align-items-center justify-content-center py-5">
+<div class="auth row justify-content-center py-5">
     <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
         <div class="card">
             <div class="card-body">
-                <h3 class="text-center mb-2 title-no-bg">
+                <h1 class="text-center mb-2 title-no-bg">
                     {{ trans('auth.passwords.confirm') }}
-                </h3>
+                </h1>
 
                 <p class="text-center text-muted mb-4">
                     {{ trans('auth.confirmation') }}

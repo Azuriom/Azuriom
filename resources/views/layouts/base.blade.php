@@ -56,31 +56,30 @@
 </head>
 
 <body class="d-flex flex-column bg-body-secondary" @if(dark_theme()) data-bs-theme="dark" @endif>
-<div id="app" class="flex-shrink-0">
-    <header>
-        @include('elements.navbar')
-    </header>
+    <div id="app" class="flex-shrink-0">
+        <header>
+            @include('elements.navbar')
+        </header>
 
-    @yield('app')
-</div>
-
-<footer class="text-center text-bg-dark mt-auto py-4">
-    <div class="copyright">
-        <div class="container">
-            <p class="mb-0">{{ setting('copyright') }} | @lang('messages.copyright')</p>
-
-            @foreach(social_links() as $link)
-                <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"
-                   data-bs-toggle="tooltip"
-                   class="d-inline-block mx-1 p-2 rounded-circle" style="background: {{ $link->color }}">
-                    <i class="{{ $link->icon }} text-white"></i>
-                </a>
-            @endforeach
-        </div>
+        @yield('app')
     </div>
-</footer>
 
-@stack('footer-scripts')
+    <footer class="bg-black text-white py-4 mt-auto">
+        <div class="container text-center">
+            <p class="mb-0">{{ setting('copyright') }} | @lang('messages.copyright')</p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                @foreach(social_links() as $link)
+                    <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"
+                    data-bs-toggle="tooltip"
+                    class="d-flex align-items-center justify-content-center rounded-circle mt-3"
+                    style="width: 40px; height: 40px; background: {{ $link->color }};">
+                        <i class="{{ $link->icon }} text-white"></i>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </footer>
 
+    @stack('footer-scripts')
 </body>
 </html>

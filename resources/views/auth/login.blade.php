@@ -3,7 +3,7 @@
 @section('title', trans('auth.login'))
 
 @section('content')
-<div class="auth container-fluid d-flex align-items-center justify-content-center py-5">
+<div class="auth row justify-content-center py-5">
   <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
     <div class="card">
       <div class="card-body">
