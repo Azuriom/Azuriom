@@ -12,76 +12,72 @@
         <form method="POST" action="{{ route('register') }}" id="captcha-form">
           @csrf
 
-          <div class="form-floating mb-3">
+          <div class="mb-3">
+            <label for="name" class="form-label">{{ trans('auth.name') }}</label>
             <input
               type="text"
               class="form-control @error('name') is-invalid @enderror"
               id="name"
               name="name"
-              placeholder=""
               value="{{ old('name') }}"
               required
               autofocus
             >
-            <label for="name">{{ trans('auth.name') }}</label>
             @error('name')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
             @enderror
           </div>
-
-          <div class="form-floating mb-3">
+          
+          <div class="mb-3">
+            <label for="email" class="form-label">{{ trans('auth.email') }}</label>
             <input
               type="email"
               class="form-control @error('email') is-invalid @enderror"
               id="email"
               name="email"
-              placeholder=""
               value="{{ old('email') }}"
               required
             >
-            <label for="email">{{ trans('auth.email') }}</label>
             @error('email')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
             @enderror
           </div>
-
-          <div class="form-floating mb-3">
+          
+          <div class="mb-3">
+            <label for="password" class="form-label">{{ trans('auth.password') }}</label>
             <input
               type="password"
               class="form-control @error('password') is-invalid @enderror"
               id="password"
               name="password"
-              placeholder=""
               show-password
               required
               autocomplete="new-password"
             >
-            <label for="password">{{ trans('auth.password') }}</label>
             @error('password')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
             @enderror
           </div>
-
-          <div class="form-floating mb-3">
+          
+          <div class="mb-3">
+            <label for="password-confirm" class="form-label">{{ trans('auth.confirm_password') }}</label>
             <input
               type="password"
               class="form-control"
               id="password-confirm"
               name="password_confirmation"
-              placeholder=""
               show-password
               required
               autocomplete="new-password"
             >
-            <label for="password-confirm">{{ trans('auth.confirm_password') }}</label>
           </div>
-
+          
           @if($registerConditions !== null)
             <div class="form-check">
               <input

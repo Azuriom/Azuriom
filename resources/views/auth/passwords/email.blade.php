@@ -21,25 +21,25 @@
                 <form method="POST" action="{{ route('password.email') }}" id="captcha-form">
                     @csrf
 
-                    <div class="form-floating mb-3">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">{{ trans('auth.email') }}</label>
                         <input
-                            id="email"
-                            type="email"
-                            class="form-control @error('email') is-invalid @enderror"
-                            name="email"
-                            value="{{ old('email') }}"
-                            placeholder=""
-                            required
-                            autocomplete="email"
-                            autofocus
+                          id="email"
+                          type="email"
+                          class="form-control @error('email') is-invalid @enderror"
+                          name="email"
+                          value="{{ old('email') }}"
+                          required
+                          autocomplete="email"
+                          autofocus
                         >
-                        <label for="email">{{ trans('auth.email') }}</label>
                         @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
                         @enderror
                     </div>
+                      
 
                     @include('elements.captcha', ['center' => true])
 

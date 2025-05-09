@@ -11,43 +11,43 @@
 
         <form method="POST" action="{{ route('login') }}">
           @csrf
-
-          <div class="form-floating mb-3">
+          
+          <div class="mb-3">
+            <label for="email" class="form-label">{{ trans('auth.email') }}</label>
             <input
               type="email"
               class="form-control @error('email') is-invalid @enderror"
               id="email"
               name="email"
               value="{{ old('email') }}"
-              placeholder=""
               required
               autofocus
             >
-            <label for="email">{{ trans('auth.email') }}</label>
             @error('email')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
             @enderror
           </div>
+          
 
-          <div class="form-floating mb-3">
+          <div class="mb-3">
+            <label for="password" class="form-label">{{ trans('auth.password') }}</label>
             <input
               type="password"
               class="form-control @error('password') is-invalid @enderror"
               id="password"
               name="password"
-              placeholder=""
-              show-password
               required
+              show-password
             >
-            <label for="password">{{ trans('auth.password') }}</label>
             @error('password')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
             @enderror
           </div>
+          
 
           <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="form-check">

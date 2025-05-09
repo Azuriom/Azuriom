@@ -1,52 +1,64 @@
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
     new bootstrap.Tooltip(el);
 });
 
 document.querySelectorAll('[data-confirm="delete"]').forEach(function (el) {
-    el.addEventListener('click', function (ev) {
+    el.addEventListener("click", function (ev) {
         ev.preventDefault();
 
-        const url = el.getAttribute('href');
+        const url = el.getAttribute("href");
 
-        document.getElementById('confirmDeleteForm').setAttribute('action', url);
-        new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
-    })
+        document
+            .getElementById("confirmDeleteForm")
+            .setAttribute("action", url);
+        new bootstrap.Modal(
+            document.getElementById("confirmDeleteModal")
+        ).show();
+    });
 });
 
 window.createAlert = function (color, message, dismiss) {
-    const button = dismiss ? ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' : '';
+    const button = dismiss
+        ? ' <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'
+        : "";
     let icon;
 
     switch (color) {
-        case 'info':
-            icon = 'info-circle';
+        case "info":
+            icon = "info-circle";
             break;
-        case 'success':
-            icon = 'check-circle';
+        case "success":
+            icon = "check-circle";
             break;
-        case 'danger':
-            icon = 'exclamation-circle';
+        case "danger":
+            icon = "exclamation-circle";
             break;
     }
 
-    icon = icon ? '<i class="bi bi-' + icon + '"></i> ' : '';
+    icon = icon ? '<i class="bi bi-' + icon + '"></i> ' : "";
 
-    document.getElementById('status-message').innerHTML
-        = '<div class="alert alert-' + color + ' alert-dismissible fade show" role="alert">' + icon + message + button + '</div>';
-}
+    document.getElementById("status-message").innerHTML =
+        '<div class="alert alert-' +
+        color +
+        ' alert-dismissible fade show" role="alert">' +
+        icon +
+        message +
+        button +
+        "</div>";
+};
 
 /*
  * Logout
  */
-const logoutLink = document.getElementById('logoutLink');
+const logoutLink = document.getElementById("logoutLink");
 
 if (logoutLink) {
-    logoutLink.addEventListener('click', function (e) {
+    logoutLink.addEventListener("click", function (e) {
         e.preventDefault();
 
-        document.getElementById('logout-form').submit();
+        document.getElementById("logout-form").submit();
     });
 }
 
@@ -55,8 +67,8 @@ if (logoutLink) {
  */
 let likeLoading = false;
 
-document.querySelectorAll('[data-like-url]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
+document.querySelectorAll("[data-like-url]").forEach(function (el) {
+    el.addEventListener("click", function (e) {
         e.preventDefault();
 
         if (likeLoading) {
@@ -65,54 +77,57 @@ document.querySelectorAll('[data-like-url]').forEach(function (el) {
 
         likeLoading = true;
 
-        const likeSpinner = el.querySelector('.load-spinner');
-        const likeIcon = el.querySelector('[data-liked=true]');
-        const unlikeIcon = el.querySelector('[data-liked=false]');
+        const likeSpinner = el.querySelector(".load-spinner");
+        const likeIcon = el.querySelector("[data-liked=true]");
+        const unlikeIcon = el.querySelector("[data-liked=false]");
 
         if (likeSpinner) {
-            likeSpinner.classList.remove('d-none');
+            likeSpinner.classList.remove("d-none");
         }
 
-        axios.request({
-            url: el.dataset['likeUrl'],
-            method: el.classList.contains('active') ? 'delete' : 'post'
-        }).then(function (json) {
-            if (json.data.liked === true) {
-                el.classList.add('active');
+        axios
+            .request({
+                url: el.dataset["likeUrl"],
+                method: el.classList.contains("active") ? "delete" : "post",
+            })
+            .then(function (json) {
+                if (json.data.liked === true) {
+                    el.classList.add("active");
 
-                if (likeIcon && unlikeIcon) {
-                    likeIcon.classList.add('d-none');
-                    unlikeIcon.classList.remove('d-none');
+                    if (likeIcon && unlikeIcon) {
+                        likeIcon.classList.add("d-none");
+                        unlikeIcon.classList.remove("d-none");
+                    }
+                } else {
+                    el.classList.remove("active");
+
+                    if (likeIcon && unlikeIcon) {
+                        likeIcon.classList.remove("d-none");
+                        unlikeIcon.classList.add("d-none");
+                    }
                 }
-            } else {
-                el.classList.remove('active');
 
-                if (likeIcon && unlikeIcon) {
-                    likeIcon.classList.remove('d-none');
-                    unlikeIcon.classList.add('d-none');
+                const likesCount = el.querySelector(".likes-count");
+
+                if (likesCount) {
+                    likesCount.innerText = json.data.likes;
                 }
-            }
-
-            const likesCount = el.querySelector('.likes-count');
-
-            if (likesCount) {
-                likesCount.innerText = json.data.likes;
-            }
-        }).finally(function () {
-            likeSpinner.classList.add('d-none');
-            likeLoading = false;
-        });
+            })
+            .finally(function () {
+                likeSpinner.classList.add("d-none");
+                likeLoading = false;
+            });
     });
 });
 
 /*
  * Notifications
  */
-const readNotificationsBtn = document.getElementById('readNotifications');
+const readNotificationsBtn = document.getElementById("readNotifications");
 let readingNotifications = false;
 
 if (readNotificationsBtn) {
-    readNotificationsBtn.addEventListener('click', function (e) {
+    readNotificationsBtn.addEventListener("click", function (e) {
         e.preventDefault();
 
         if (readingNotifications) {
@@ -121,22 +136,26 @@ if (readNotificationsBtn) {
 
         readingNotifications = true;
 
-        const notificationsSpinner = readNotificationsBtn.querySelector('.load-spinner');
+        const notificationsSpinner =
+            readNotificationsBtn.querySelector(".load-spinner");
 
         if (notificationsSpinner) {
-            notificationsSpinner.classList.remove('d-none');
+            notificationsSpinner.classList.remove("d-none");
         }
 
-        notificationsSpinner.classList.remove('d-none');
+        notificationsSpinner.classList.remove("d-none");
 
-        axios.post(readNotificationsBtn.href)
+        axios
+            .post(readNotificationsBtn.href)
             .then(function () {
-                document.getElementById('notificationsCounter').remove();
-                document.getElementById('notifications').remove();
-                document.getElementById('noNotificationsLabel').classList.remove('d-none');
+                document.getElementById("notificationsCounter").remove();
+                document.getElementById("notifications").remove();
+                document
+                    .getElementById("noNotificationsLabel")
+                    .classList.remove("d-none");
             })
             .catch(function () {
-                notificationsSpinner.classList.add('d-none');
+                notificationsSpinner.classList.add("d-none");
 
                 readingNotifications = false;
             });
@@ -146,26 +165,28 @@ if (readNotificationsBtn) {
 /*
  * Theme switcher
  */
-document.querySelectorAll('[data-theme-value]').forEach(function (el) {
-    el.addEventListener('click', function (ev) {
-        ev.preventDefault()
+document.querySelectorAll("[data-theme-value]").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+        ev.preventDefault();
 
-        const theme = el.getAttribute('data-theme-value')
+        const theme = el.getAttribute("data-theme-value");
 
-        document.body.setAttribute('data-bs-theme', theme)
+        document.body.setAttribute("data-bs-theme", theme);
 
-        document.querySelectorAll('[data-theme-value]').forEach(function (child) {
-            const childTheme = child.getAttribute('data-theme-value')
+        document
+            .querySelectorAll("[data-theme-value]")
+            .forEach(function (child) {
+                const childTheme = child.getAttribute("data-theme-value");
 
-            if (childTheme === theme) {
-                child.classList.add('d-none')
-            } else {
-                child.classList.remove('d-none')
-            }
-        })
+                if (childTheme === theme) {
+                    child.classList.add("d-none");
+                } else {
+                    child.classList.remove("d-none");
+                }
+            });
 
-        axios.post(el.href, { theme: theme })
-    })
+        axios.post(el.href, { theme: theme });
+    });
 });
 
 /*
@@ -173,26 +194,65 @@ document.querySelectorAll('[data-theme-value]').forEach(function (el) {
  */
 const inputs = document.querySelectorAll("input[show-password]");
 
-inputs.forEach((input) => {
-    const parent = input.parentElement;
-    if (!parent.classList.contains("position-relative")) {
-        parent.classList.add("position-relative");
-    }
-
+const createToggleButton = (input, wrapper) => {
     const toggle = document.createElement("span");
     toggle.style.cursor = "pointer";
     toggle.className =
         "input-show-password position-absolute top-50 end-0 translate-middle-y pe-3";
     toggle.innerHTML = '<i class="bi bi-eye-slash"></i>';
+    toggle.style.zIndex = 5;
 
     toggle.addEventListener("click", () => {
-        const isPwd = input.getAttribute("type") === "password";
-        input.setAttribute("type", isPwd ? "text" : "password");
+        const isPwd = input.type === "password";
+        input.type = isPwd ? "text" : "password";
         const icon = toggle.querySelector("i");
         icon.classList.toggle("bi-eye-slash");
         icon.classList.toggle("bi-eye");
     });
 
-    parent.appendChild(toggle);
-});
+    input.insertAdjacentElement("afterend", toggle);
 
+    return toggle;
+};
+
+inputs.forEach((input) => {
+    let wrapper = input.closest(".input-group");
+
+    if (!wrapper) {
+        const inputWrapper = document.createElement("div");
+        inputWrapper.style.position = "relative";
+        input.parentNode.insertBefore(inputWrapper, input);
+        inputWrapper.appendChild(input);
+        wrapper = inputWrapper;
+    }
+
+    const toggle = createToggleButton(input, wrapper);
+
+    const updateVisibility = () => {
+        toggle.style.display = input.disabled ? "none" : "";
+    };
+
+    const adjustStyle = () => {
+        const icon = toggle.querySelector("i");
+        if (input.classList.contains("is-invalid")) {
+            toggle.classList.add("pe-5");
+            icon.classList.add("text-danger");
+        } else {
+            toggle.classList.remove("pe-5");
+            icon.classList.remove("text-danger");
+        }
+    };
+
+    updateVisibility();
+    adjustStyle();
+
+    const observer = new MutationObserver(() => {
+        updateVisibility();
+        adjustStyle();
+    });
+
+    observer.observe(input, {
+        attributes: true,
+        attributeFilter: ["disabled", "class"],
+    });
+});

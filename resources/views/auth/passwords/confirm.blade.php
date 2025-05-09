@@ -18,24 +18,24 @@
                 <form method="POST" action="{{ route('password.confirm') }}">
                     @csrf
 
-                    <div class="form-floating mb-3">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{{ trans('auth.password') }}</label>
                         <input
-                            id="password"
-                            type="password"
-                            class="form-control @error('password') is-invalid @enderror"
-                            name="password"
-                            placeholder=""
-                            required
-                            show-password
-                            autocomplete="current-password"
+                          id="password"
+                          type="password"
+                          class="form-control @error('password') is-invalid @enderror"
+                          name="password"
+                          required
+                          show-password
+                          autocomplete="current-password"
                         >
-                        <label for="password">{{ trans('auth.password') }}</label>
                         @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
                         @enderror
                     </div>
+                      
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary mt-2">

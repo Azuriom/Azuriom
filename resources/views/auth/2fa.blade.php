@@ -14,22 +14,21 @@
                 <form method="POST" action="{{ route('login.2fa') }}">
                     @csrf
 
-                    <div class="form-floating mb-3">
+                    <div class="mb-3">
+                        <label for="code" class="form-label">{{ trans('auth.2fa.code') }}</label>
                         <input
-                            id="code"
-                            type="text"
-                            class="form-control @error('code') is-invalid @enderror"
-                            name="code"
-                            placeholder=""
-                            required
-                            autocomplete="one-time-code"
-                            autofocus
+                          id="code"
+                          type="text"
+                          class="form-control @error('code') is-invalid @enderror"
+                          name="code"
+                          required
+                          autocomplete="one-time-code"
+                          autofocus
                         >
-                        <label for="code">{{ trans('auth.2fa.code') }}</label>
                         @error('code')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
                         @enderror
                     </div>
 
