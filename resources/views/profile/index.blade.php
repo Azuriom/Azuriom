@@ -109,7 +109,7 @@
                         </form>
                     @endif
                     
-                    <div class="mb-3">
+                    <div>
                         @if(! oauth_login())
 
                             <p>{!! trans('messages.profile.info.2fa', ['2fa' => '<span class="'.($user->hasTwoFactorAuth()?'text-success':'text-danger').'">'.trans_bool($user->hasTwoFactorAuth()).'</span>']) !!}</p>
@@ -137,8 +137,11 @@
 
                         @if(! oauth_login())
                             @if($canDelete)
-                                <p>
-                                    {{ trans('messages.profile.delete.btn') }}
+                                <p class="mb-1">
+                                    {{ trans('messages.profile.delete.title') }}
+                                </p>
+                                <p class="text-muted">
+                                    {{ trans('messages.profile.delete.info') }}
                                 </p>
                                 <a class="btn btn-outline-danger" href="{{ route('profile.delete.index') }}">
                                     <i class="bi bi-x-lg"></i> {{ trans('messages.profile.delete.btn') }}
@@ -165,49 +168,44 @@
                 <img src="{{ setting('background') ? image_url(setting('background')) : 'https://dummyimage.com/2000x500/000/aaa' }}" class="card-img-top" alt="website background">
             
                 <div class="card-body">
-                    <div class="row mb-2">
+                    <div class="row">
                         <div class="col-3">
                             <form id="avatarForm" action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <label for="avatarInput" style="cursor: pointer;">
-                                    <img src="{{ $user->getAvatar(150) }}" style="margin-top:-50px;" class="rounded img-fluid mb-2" alt="{{ $user->name }}">
+                                    <img src="{{ $user->getAvatar(150) }}" class="rounded img-fluid" alt="{{ $user->name }}">
                                 </label>
                                 <input type="file" name="image" id="avatarInput" accept=".jpg,.jpeg,.png,.gif" class="d-none" onchange="document.getElementById('avatarForm').submit()">
                             </form>
             
                         </div>
             
-                        <div class="col-9">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex flex-column justify-content-center">
-                                    <h2 class="d-flex justify-content-between">{{ $user->name }}</h2>
-                                    <h3 class="h5 mb-0">
-                                        <span style="color:{{ $user->role->color }};">
-                                            @if($user->role->icon)<i class="{{ $user->role->icon }}"></i>@endif {{ $user->role->name }}
-                                        </span>
-                                    </h3>
-                                    
-                                    <ul class="list-unstyled">
-                                    
-                                        @if($user->game_id)<li>{{ game()->trans('id') }}: {{ $user->game_id }}</li>@endif
-                                        @if($discordAccount)<li>{{ trans('messages.profile.info.discord', ['user' => $discordAccount->name]) }}</li>@endif
-                                    </ul>
-                                </div>
-                                <div class="d-flex flex-column align-items-end">
-                                    <p>{{ trans('messages.profile.info.register', ['date' => $user->created_at->format('d/m/Y')]) }}
-                                    </p>
-                                    <div class="d-inline-flex align-items-center badge bg-primary text-white px-3 py-2">
-                                        <i class="bi bi-wallet2 me-2"></i>
-                                        <span>{{ format_money($user->money) }}</span>
-                                    
-                                        @if(setting('users.money_transfer'))
-                                        <button type="button" class="btn btn-sm btn-light text-primary ms-3 d-flex align-items-center" 
-                                            data-bs-toggle="modal" data-bs-target="#transferModal" style="padding: 0.25rem 0.5rem;">
-                                            <i class="bi bi-send"></i>
-                                        </button>
-                                        @endif
-                                    </div>
-                                </div>
+                        <div class="col-9 d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column justify-content-center">
+                                <h2 class="d-flex justify-content-between">{{ $user->name }}</h2>
+                                <h3 class="h5 mb-0">
+                                    <span style="color:{{ $user->role->color }};">
+                                        @if($user->role->icon)<i class="{{ $user->role->icon }}"></i>@endif {{ $user->role->name }}
+                                    </span>
+                                </h3>
+                                
+                                <ul class="list-unstyled mb-0">
+                                    @if($user->game_id)<li>{{ game()->trans('id') }}: {{ $user->game_id }}</li>@endif
+                                    @if($discordAccount)<li>{{ trans('messages.profile.info.discord', ['user' => $discordAccount->name]) }}</li>@endif
+                                </ul>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <button type="button" class="btn btn-primary" 
+                                    @if(setting('users.money_transfer')) data-bs-toggle="modal" data-bs-target="#transferModal" @else disabled @endif>
+                                    <i class="bi bi-wallet2"></i>
+                                    <span class="mx-2">{{ format_money($user->money) }}</span>
+                                
+                                    @if(setting('users.money_transfer'))
+                                        <i class="bi bi-send"></i>
+                                    @endif
+                                </button>
+                                <p class="mb-0 mt-3">{{ trans('messages.profile.info.register', ['date' => $user->created_at->format('d/m/Y')]) }}
+                                </p>
                             </div>
             
                             @if($hasAvatar)
