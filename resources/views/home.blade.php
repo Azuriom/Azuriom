@@ -3,7 +3,7 @@
 @section('title', trans('messages.home'))
 
 @section('app')
-    <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://via.placeholder.com/2000x500' }}') center / cover no-repeat; height: 500px">
+    <div class="home-background d-flex align-items-center justify-content-center flex-column text-white mb-4" style="background: url('{{ setting('background') ? image_url(setting('background')) : 'https://dummyimage.com/2000x500/000/aaa' }}') center / cover no-repeat; height: 500px">
         <h1>{{ trans('messages.welcome', ['name' => site_name()]) }}</h1>
 
         @if($server)

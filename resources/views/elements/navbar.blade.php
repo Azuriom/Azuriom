@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark py-3">
+<nav class="navbar navbar-expand-md navbar-dark bg-black py-3">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
             {{ site_name() }}
