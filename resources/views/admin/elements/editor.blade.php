@@ -12,7 +12,7 @@
             toolbar: 'blocks bold italic underline strikethrough forecolor | link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat code | undo redo',
             relative_urls: false,
             valid_children: "+body[style]",
-            extended_valid_elements: 'i[class]',
+            extended_valid_elements: 'i[class],iframe[src|frameborder|scrolling|class|width|height|name|allow|title]',
             content_css: '{{ (dark_theme() ? 'dark,' : '').asset('vendor/bootstrap-icons/bootstrap-icons.css') }}',
 
             @if(dark_theme())

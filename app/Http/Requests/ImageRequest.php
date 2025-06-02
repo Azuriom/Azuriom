@@ -20,7 +20,7 @@ class ImageRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:50'],
             'slug' => ['required', 'string', 'max:100', new Slug()],
-            'image' => [Rule::requiredIf($image === null), 'nullable', 'image'],
+            'image' => [Rule::requiredIf($image === null), 'nullable', 'image:allow_svg'],
         ];
     }
 }

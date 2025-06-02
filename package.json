@@ -1,4 +1,5 @@
 {
+    "$schema": "https://json.schemastore.org/package.json",
     "private": true,
     "scripts": {
         "dev": "npm run development",

@@ -1,23 +1,26 @@
-FROM php:8.3-fpm
+FROM php:8.3-fpm-alpine
 
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     git \
     curl \
     zip \
     unzip \
     libzip-dev \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql bcmath zip \
-    && rm -rf /var/lib/apt/lists/*
+    postgresql-dev \
+    openssl \
+    && docker-php-ext-install pdo pdo_pgsql bcmath zip
+
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/azuriom
 
-COPY . /var/www/azuriom
+COPY --chown=www-data:www-data . /var/www/azuriom/
 
-COPY .env.example /var/www/azuriom/.env
-
-COPY --chown=www-data:www-data . /var/www/azuriom
+USER www-data
 
 EXPOSE 9000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD ["php-fpm"]

@@ -96,6 +96,7 @@ return [
     ],
 
     'loading' => 'Chargement...',
+    'select' => 'Sélectionner...',
 
     'yes' => 'Oui',
     'no' => 'Non',

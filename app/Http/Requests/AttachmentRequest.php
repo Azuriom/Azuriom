@@ -14,7 +14,7 @@ class AttachmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'image'],
+            'file' => ['required', 'image:allow_svg'],
         ];
     }
 }

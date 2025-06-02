@@ -52,6 +52,7 @@
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
+            <option value="">{{ trans('messages.select') }}</option>
             @foreach($types as $type)
                 <option value="{{ $type }}" @selected($type === old('type', $server->type ?? ''))>
                     {{ trans('admin.servers.type.'.$type) }}

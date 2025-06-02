@@ -132,7 +132,7 @@ class NavbarElement extends Model
             return $value;
         }
 
-        $icon = $this->icon !== null ? '<i class="'.$this->icon.'"></i> ' : '';
+        $icon = $this->icon !== null ? '<i class="'.e($this->icon).'"></i> ' : '';
 
         return new HtmlString($icon.e($value));
     }
