@@ -9,7 +9,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login') }}" id="captcha-form">
                     @csrf
 
                     <div class="mb-3">
@@ -53,6 +53,8 @@
                             @endif
                         </div>
                     </div>
+
+                    @include('elements.captcha', ['center' => true])
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary d-block">
