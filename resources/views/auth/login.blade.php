@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    @include('elements.captcha', ['center' => true])
+                    @includeWhen($captcha, 'elements.captcha', ['center' => true])
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary d-block">

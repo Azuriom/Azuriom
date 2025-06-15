@@ -126,6 +126,7 @@ return [
                 'recaptcha' => 'Vous pouvez obtenir les clés Google reCAPTCHA sur le site de <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA</a>. Vous devez utiliser des clés reCAPTCHA <strong>v2 invisible</strong>.',
                 'hcaptcha' => 'Vous pouvez obtenir les clés hCaptcha sur le site de <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha</a>.',
                 'turnstile' => 'Vous pouvez obtenir les clés Turnstile sur le <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">tableau de bord Cloudflare</a>. Vous devez sélectionner le widget "Géré".',
+                'login' => 'Activer le captcha sur la page de connexion',
             ],
 
             'hash' => 'Algorithme de hachage',
