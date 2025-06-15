@@ -46,6 +46,22 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
 
         $this->middleware('login.socialite')->only(['showLoginForm', 'login']);
+
+        if (setting('captcha.login')) {
+            $this->middleware('captcha')->only('login');
+        }
+    }
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login', [
+            'captcha' => (bool) setting('captcha.login'),
+        ]);
     }
 
     /**
