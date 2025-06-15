@@ -155,6 +155,8 @@ return [
         'change_avatar' => 'Change Avatar',
         'delete_avatar' => 'Delete Avatar',
 
+        'email_limit' => 'You cannot change your email address currently, please try again in few minutes.',
+
         'avatar' => 'The avatar must be square and have a minimum size of :size pixels.',
 
         'delete' => [

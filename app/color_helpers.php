@@ -16,7 +16,7 @@ if (! function_exists('hex2rgb')) {
             throw new InvalidArgumentException('Invalid hex color: '.$hex);
         }
 
-        return array_map(fn ($x) => hexdec($x), str_split($color, 2));
+        return array_map(hexdec(...), str_split($color, 2));
     }
 }
 

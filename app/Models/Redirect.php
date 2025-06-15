@@ -3,6 +3,7 @@
 namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Loggable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,7 +43,8 @@ class Redirect extends Model
     /**
      * Scope a query to only include enabled redirects.
      */
-    public function scopeEnabled(Builder $query): void
+    #[Scope]
+    protected function enabled(Builder $query): void
     {
         $query->where('is_enabled', true);
     }

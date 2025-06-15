@@ -155,6 +155,8 @@ return [
         'change_avatar' => 'Changer d\'avatar',
         'delete_avatar' => 'Supprimer l\'avatar',
 
+        'email_limit' => 'Vous ne pouvez pas changer votre adresse email pour le moment, veuillez réessayer dans quelques minutes.',
+
         'avatar' => 'L\'avatar doit être un carré de minimum :size pixels.',
 
         'delete' => [
