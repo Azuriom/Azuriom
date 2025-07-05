@@ -141,6 +141,16 @@ class AuthController extends Controller
             'last_login_at' => now(),
         ])->save();
 
+        ActionLog::create([
+            'user_id' => $user->id,
+            'action' => 'users.login',
+            'target_id' => null,
+            'data' => [
+                'ip' => $request->ip(),
+                '2fa' => $user->hasTwoFactorAuth() ? 'on' : 'off',
+            ],
+        ]);
+
         return new AuthenticatedUserResource($user);
     }
 
