@@ -31,6 +31,18 @@ class ActionLog extends Model
             'color' => 'info',
             'message' => 'admin.logs.users.login',
         ],
+        'users.login.api.new' => [
+            'global' => false,
+            'icon' => 'box-arrow-in-right',
+            'color' => 'info',
+            'message' => 'admin.logs.users.login_api.new',
+        ],
+        'users.login.api.verify' => [
+            'global' => false,
+            'icon' => 'box-arrow-in-right',
+            'color' => 'info',
+            'message' => 'admin.logs.users.login_api.verify',
+        ],
         'users.2fa.enabled' => [
             'global' => false,
             'icon' => 'shield-check',

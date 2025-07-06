@@ -97,7 +97,7 @@ class AuthController extends Controller
 
         ActionLog::create([
             'user_id' => $user->id,
-            'action' => 'users.login',
+            'action' => 'users.login.api.new',
             'target_id' => null,
             'data' => [
                 'ip' => $request->ip(),
@@ -143,7 +143,7 @@ class AuthController extends Controller
 
         ActionLog::create([
             'user_id' => $user->id,
-            'action' => 'users.login',
+            'action' => 'users.login.api.verify',
             'target_id' => null,
             'data' => [
                 'ip' => $request->ip(),

@@ -606,6 +606,10 @@ return [
             'transfer' => 'Envoi d\'argent de :money à l\'utilisateur #:id',
 
             'login' => 'Nouvelle connexion réussie depuis :ip (A2F: :2fa)',
+            'login_api' => [
+                'new' => 'Nouvelle connexion API réussie depuis :ip (A2F: :2fa)',
+                'verify' => 'Vérification du token de la connexion API réussie depuis :ip (A2F: :2fa)',
+            ],
             '2fa' => [
                 'enabled' => 'Activation de l\'authentification à deux facteurs',
                 'disabled' => 'Désactivation de l\'authentification à deux facteurs',
