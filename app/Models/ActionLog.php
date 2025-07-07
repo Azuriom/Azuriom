@@ -31,17 +31,17 @@ class ActionLog extends Model
             'color' => 'info',
             'message' => 'admin.logs.users.login',
         ],
-        'users.login.api.new' => [
+        'users.auth.api.login' => [
             'global' => false,
-            'icon' => 'box-arrow-in-right',
+            'icon' => 'shield-plus',
             'color' => 'info',
-            'message' => 'admin.logs.users.login_api.new',
+            'message' => 'admin.logs.users.api.login',
         ],
-        'users.login.api.verify' => [
+        'users.auth.api.verified' => [
             'global' => false,
-            'icon' => 'box-arrow-in-right',
+            'icon' => 'shield-check',
             'color' => 'info',
-            'message' => 'admin.logs.users.login_api.verify',
+            'message' => 'admin.logs.users.api.verified',
         ],
         'users.2fa.enabled' => [
             'global' => false,

@@ -97,7 +97,7 @@ class AuthController extends Controller
 
         ActionLog::create([
             'user_id' => $user->id,
-            'action' => 'users.login.api.new',
+            'action' => 'users.auth.api.login',
             'target_id' => null,
             'data' => [
                 'ip' => $request->ip(),
@@ -136,6 +136,7 @@ class AuthController extends Controller
 
             ], 403);
         }
+
         $user->forceFill([
             'last_login_ip' => $request->ip(),
             'last_login_at' => now(),
@@ -143,11 +144,10 @@ class AuthController extends Controller
 
         ActionLog::create([
             'user_id' => $user->id,
-            'action' => 'users.login.api.verify',
+            'action' => 'users.auth.api.verified',
             'target_id' => null,
             'data' => [
                 'ip' => $request->ip(),
-                '2fa' => $user->hasTwoFactorAuth() ? 'on' : 'off',
             ],
         ]);
 

@@ -606,9 +606,9 @@ return [
             'transfer' => 'Send money :money to user #:id',
 
             'login' => 'Successful login from :ip (2FA: :2fa)',
-            'login_api' => [
-                'new' => 'Successful new API login from :ip (2FA: :2fa)',
-                'verify' => 'Successful API token verification from :ip (2FA: :2fa)',
+            'api' => [
+                'login' => 'Successful API login from :ip (2FA: :2fa)',
+                'verified' => 'Successful API token verification from :ip',
             ],
             '2fa' => [
                 'enabled' => 'Enabled two-factor authentication',
