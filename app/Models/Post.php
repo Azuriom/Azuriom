@@ -6,6 +6,7 @@ use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasImage;
 use Azuriom\Models\Traits\HasUser;
 use Azuriom\Models\Traits\Loggable;
+use Azuriom\Models\Traits\Searchable;
 use Azuriom\Support\Discord\DiscordWebhook;
 use Azuriom\Support\Discord\Embed;
 use Exception;
@@ -40,6 +41,7 @@ class Post extends Model
     use HasImage;
     use HasUser;
     use Loggable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +66,15 @@ class Post extends Model
      * The user key associated with this model.
      */
     protected string $userKey = 'author_id';
+
+    /**
+     * The attributes that can be used for search.
+     *
+     * @var array<int, string>
+     */
+    protected array $searchable = [
+        'title', 'description', 'content',
+    ];
 
     /**
      * Get the author of this post.
