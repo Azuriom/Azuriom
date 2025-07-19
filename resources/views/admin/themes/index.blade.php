@@ -16,7 +16,7 @@
                 @else
                     <h3 class="h5 fw-bolder">{{ $current->name }}</h3>
                 @endisset
-                
+
                 <ul>
                     <li>{{ trans('admin.themes.author', ['author' => implode(', ', $current->authors)]) }}</li>
                     <li>{{ trans('admin.themes.version', ['version' => $current->version]) }}</li>
@@ -125,6 +125,8 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
+                            <th scope="col">{{ trans('messages.fields.description') }}</th>
+
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
@@ -147,6 +149,7 @@
                                         <i class="bi bi-heart"></i> {{ $theme['likes'] }}
                                     </span>
                                 </th>
+                                <td>{{ $theme['short_description'] }}</td>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
