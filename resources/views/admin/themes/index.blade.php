@@ -126,7 +126,6 @@
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
                             <th scope="col">{{ trans('messages.fields.description') }}</th>
-
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
