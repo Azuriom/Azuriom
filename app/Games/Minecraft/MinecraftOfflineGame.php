@@ -26,6 +26,7 @@ class MinecraftOfflineGame extends AbstractMinecraftGame
         }
 
         $name = strtolower($user->name);
+        
         return "https://mc-heads.net/avatar/{$name}/{$size}.png";
     }
 
