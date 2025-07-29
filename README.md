@@ -1,3 +1,6 @@
+> [!WARNING]
+> Thuriom is not meant to be a fork ! We are currently working on breaking changes on Azuriom, so a classic PR would be awkward. Please do not submit PRs to rebrand Azuriom to Thuriom on this repo.
+
 <p align="center"><img src="https://azuriom.com/assets/svg/logo-text.svg" width="400" alt="Azuriom"></p>
 
 # Azuriom
