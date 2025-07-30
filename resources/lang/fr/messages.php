@@ -158,6 +158,10 @@ return [
         'email_limit' => 'Vous ne pouvez pas changer votre adresse email pour le moment, veuillez réessayer dans quelques minutes.',
 
         'avatar' => 'L\'avatar doit être un carré de minimum :size pixels.',
+        'locale' => [
+            'btn' => 'Ma langue',
+            'success' => 'La langue sélectionné a bien été modifiée.',
+        ],
 
         'delete' => [
             'btn' => 'Supprimer mon compte',

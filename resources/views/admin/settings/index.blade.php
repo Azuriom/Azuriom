@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="row gx-3">
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-4">
                         <label class="form-label" for="timezoneSelect">{{ trans('admin.settings.index.timezone') }}</label>
                         <select class="form-select @error('timezone') is-invalid @enderror" id="timezoneSelect" name="timezone" required>
                             @foreach($timezones as $timezone)
@@ -143,11 +143,26 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-4">
                         <label class="form-label" for="localeSelect">{{ trans('admin.settings.index.locale') }}</label>
                         <select class="form-select @error('locale') is-invalid @enderror" id="localeSelect" name="locale" required>
                             @foreach($locales as $localeCode => $localeName)
                                 <option value="{{ $localeCode }}" @selected($localeCode === app()->getLocale())>
+                                    {{ $localeName }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        @error('locale')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-4">
+                        <label class="form-label" for="localeSelectAll">{{ trans('admin.settings.index.locale_available') }}</label>
+                        <select class="form-select @error('locale_available') is-invalid @enderror" id="localeSelectAll" name="locale_available[]" required multiple="multiple">
+                            @foreach($locales as $localeCode => $localeName)
+                                <option value="{{ $localeCode }}" @if(in_array($localeCode, $locale_available)) selected @endif>
                                     {{ $localeName }}
                                 </option>
                             @endforeach

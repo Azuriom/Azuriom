@@ -72,6 +72,8 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     });
 
     Route::post('/money/transfer', [ProfileController::class, 'transferMoney'])->name('transfer-money');
+
+    Route::post('/locale', [ProfileController::class, 'changeLocale'])->name('locale');
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {

@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \Azuriom\Http\Middleware\CheckForMaintenanceSettings::class,
             \Azuriom\Http\Middleware\LogoutIfSuspended::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Azuriom\Http\Middleware\Localization::class,
         ],
 
         'api' => [

@@ -44,6 +44,7 @@
                     @lang('admin.update.update', ['last-version' => $lastVersion, 'version' => Azuriom::version()])
                     @lang('admin.update.changelog', ['url' => 'https://github.com/Azuriom/Azuriom/releases'])
                 </p>
+                <h3 class="text-danger">WARN: Please do NOT upgrade with this link else you will lose all translation-per-user feature.</h3>
 
                 @if($isDownloaded)
                     <p>{{ trans('admin.update.install') }}</p>

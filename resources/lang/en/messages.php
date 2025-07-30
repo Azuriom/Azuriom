@@ -158,6 +158,10 @@ return [
         'email_limit' => 'You cannot change your email address currently, please try again in few minutes.',
 
         'avatar' => 'The avatar must be square and have a minimum size of :size pixels.',
+        'locale' => [
+            'btn' => 'My language',
+            'success' => 'The selected language have been edited.',
+        ],
 
         'delete' => [
             'btn' => 'Delete my account',
