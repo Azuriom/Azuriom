@@ -113,8 +113,8 @@ if (! function_exists('setting')) {
 
         $value = $settings->get($name, $default);
 
-        // Process placeholders for string values
-        if (is_string($value)) {
+        // Don't process placeholders in admin panel to preserve them for editing
+        if (is_string($value) && !str_starts_with(request()->path(), 'admin/')) {
             $value = str_replace('{current_year}', date('Y'), $value);
             // Add more placeholders here if needed in the future
             // $value = str_replace('{site_name}', site_name(), $value);
