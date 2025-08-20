@@ -111,7 +111,16 @@ if (! function_exists('setting')) {
             return $settings;
         }
 
-        return $settings->get($name, $default);
+        $value = $settings->get($name, $default);
+
+        // Process placeholders for string values
+        if (is_string($value)) {
+            $value = str_replace('{current_year}', date('Y'), $value);
+            // Add more placeholders here if needed in the future
+            // $value = str_replace('{site_name}', site_name(), $value);
+        }
+
+        return $value;
     }
 }
 

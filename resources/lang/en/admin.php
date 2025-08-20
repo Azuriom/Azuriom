@@ -109,6 +109,7 @@ return [
             'locale' => 'Locale',
             'money' => 'Name of the site\'s currency',
             'copyright' => 'Copyright',
+            'copyright_help' => 'Available placeholder: {current_year} - will be replaced with the current year.',
             'user_money_transfer' => 'Enable money transfer between users',
             'site_key' => 'Site key for azuriom.com',
             'site_key_info' => 'The azuriom.com site key is required to install premium extensions purchased on the market. You can obtain your site key in your <a href="https://market.azuriom.com/profile" target="_blank" rel="noopener norefferer">Azuriom profile</a>.',

@@ -161,13 +161,16 @@
 
                 <div class="row gx-3">
                     <div class="mb-3 col-md-8">
-                        <label class="form-label" for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
-                        <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
-
-                        @error('copyright')
-                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
+                    <label class="form-label" for="copyrightInput">{{ trans('admin.settings.index.copyright') }}</label>
+                    <input type="text" class="form-control @error('copyright') is-invalid @enderror" id="copyrightInput" name="copyright" value="{{ old('copyright', $copyright) }}">
+                    <div class="form-text">
+                        {{ trans('admin.settings.index.copyright_help') }}
                     </div>
+
+                    @error('copyright')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
 
                     <div class="mb-3 col-md-4">
                         <label class="form-label" for="moneyNameInput">{{ trans('admin.settings.index.money') }}</label>
