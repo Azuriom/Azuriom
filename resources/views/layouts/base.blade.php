@@ -67,7 +67,7 @@
 <footer class="text-center text-bg-dark mt-auto py-4">
     <div class="copyright">
         <div class="container">
-            <p>{{ setting('copyright') }} | @lang('messages.copyright')</p>
+            <p>{{ str_replace('{year}', date('Y'), setting('copyright')) }} | @lang('messages.copyright')</p>
 
             @foreach(social_links() as $link)
                 <a href="{{ $link->value }}" title="{{ $link->title }}" target="_blank" rel="noopener noreferrer"

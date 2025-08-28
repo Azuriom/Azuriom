@@ -3,6 +3,7 @@
 namespace Azuriom\Support;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -10,18 +11,18 @@ use RuntimeException;
 
 class Charts
 {
-    public static function count(Builder $query, string $column): Collection
+    public static function count(Builder $query, string|Expression $column): Collection
     {
         return static::aggregate($query, __FUNCTION__, '*', $column);
     }
 
-    public static function sum(Builder $query, string $column, string $group): Collection
+    public static function sum(Builder $query, string|Expression $column, string $group): Collection
     {
         return static::aggregate($query, __FUNCTION__, $column, $group);
     }
 
     public static function aggregate(Builder $query, string $function,
-        string $column, string $group): Collection
+        string|Expression $column, string $group): Collection
     {
         return $query->withoutEagerLoads()
             ->select($group, DB::raw("{$function}({$query->getGrammar()->wrap($column)}) as aggregate"))
@@ -36,14 +37,14 @@ class Charts
         return static::aggregateByDays($query, 'count', '*', $column, $days);
     }
 
-    public static function sumByDays(Builder $query, string $group,
+    public static function sumByDays(Builder $query, string|Expression $group,
         ?string $column = null, int $days = 7): Collection
     {
         return static::aggregateByDays($query, 'sum', $group, $column, $days);
     }
 
     public static function aggregateByDays(Builder $query, string $function,
-        string $group, ?string $column = null, int $days = 7): Collection
+        string|Expression $group, ?string $column = null, int $days = 7): Collection
     {
         $start = today()->subDays($days);
 
@@ -54,7 +55,7 @@ class Charts
     }
 
     public static function rawAggregateByDays(Builder $query, Carbon $start,
-        string $function, string $group, ?string $column): Collection
+        string $function, string|Expression $group, ?string $column): Collection
     {
         $date = $start->clone();
         $dates = collect();
@@ -88,14 +89,14 @@ class Charts
         return static::aggregateByMonths($query, 'count', '*', $column, $months);
     }
 
-    public static function sumByMonths(Builder $query, string $group,
+    public static function sumByMonths(Builder $query, string|Expression $group,
         ?string $column = null, int $months = 12): Collection
     {
         return static::aggregateByMonths($query, 'sum', $group, $column, $months);
     }
 
     public static function aggregateByMonths(Builder $query, string $function,
-        string $group, ?string $column = null, int $months = 12): Collection
+        string|Expression $group, ?string $column = null, int $months = 12): Collection
     {
         $start = now()->startOfMonth()->subMonths($months - 1);
         $result = static::rawAggregateByMonths($query, $start, $function, $group, $column);
@@ -108,7 +109,7 @@ class Charts
     }
 
     public static function rawAggregateByMonths(Builder $query, Carbon $start,
-        string $function, string $group, ?string $column): Collection
+        string $function, string|Expression $group, ?string $column): Collection
     {
         $date = $start->clone();
         $dates = collect();

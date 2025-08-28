@@ -238,6 +238,8 @@ return [
         'error' => 'Une erreur est survenue lors du téléchargement de l\'image #image_name#.',
     ],
 
+    'info' => 'Plus d\'informations',
+
     'discord_roles' => [
         'id' => [
             'name' => 'ID du rôle',

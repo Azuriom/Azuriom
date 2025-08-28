@@ -171,6 +171,7 @@ class LoginController extends Controller
 
         $user->update([
             'name' => $userProfile->getNickname() ?? $userProfile->getName(),
+            'avatar' => $userProfile->getAvatar() ?? $user->avatar,
         ]);
 
         return $this->loginUser($request, $user, true);

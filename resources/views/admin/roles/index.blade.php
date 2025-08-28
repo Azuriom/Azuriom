@@ -106,7 +106,10 @@
 
                 <div class="alert alert-info">
                     <p><i class="bi bi-info-circle"></i> @lang('admin.roles.discord.info', ['url' => route('profile.discord.link')])</p>
-                    <p class="mb-0">@lang('admin.roles.discord.oauth', ['url' => route('profile.discord.callback')])</p>
+                    <p>@lang('admin.roles.discord.oauth', ['url' => route('profile.discord.callback')])</p>
+                    <a href="https://azuriom.com/docs/discord-link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <i class="bi bi-question-circle"></i> @lang('messages.info')
+                    </a>
                 </div>
 
                 <div class="row">

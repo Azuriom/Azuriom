@@ -8,9 +8,9 @@ use RuntimeException;
 
 abstract class ServerBridge
 {
-    protected const TIMEOUT = 1;
+    protected const TIMEOUT = 3;
 
-    protected const COMMANDS_TIMEOUT = 3;
+    protected const COMMANDS_TIMEOUT = 5;
 
     /**
      * The associated server.

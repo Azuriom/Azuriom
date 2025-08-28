@@ -238,6 +238,8 @@ return [
         'error' => 'Something went wrong when uploading the image #image_name#.',
     ],
 
+    'info' => 'More information',
+
     'discord_roles' => [
         'id' => [
             'name' => 'Role ID',

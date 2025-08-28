@@ -88,7 +88,7 @@
     @enderror
 </div>
 
-<div v-show="type === 'dropdown'">
+<div v-if="type === 'dropdown'">
     <small class="form-text text-info mb-3">{{ trans('admin.navbar_elements.dropdown') }}</small>
 </div>
 
