@@ -42,14 +42,14 @@
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
-                            {{ trans('auth.login') }}
+                            <i class="bi bi-box-arrow-in-right"></i> {{ trans('auth.login') }}
                         </a>
                     </li>
 
                     @if(Route::has('register'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">
-                                {{ trans('auth.register') }}
+                                <i class="bi bi-person-plus-fill"></i> {{ trans('auth.register') }}
                             </a>
                         </li>
                     @endif

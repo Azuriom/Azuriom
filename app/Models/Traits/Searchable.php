@@ -37,7 +37,7 @@ trait Searchable
 
                 $models[$model] = [...$models[$model] ?? [], $column];
             } else {
-                $query->orWhere($column, 'like', "%{$search}%");
+                $query->orWhereLike($column, "%{$search}%");
             }
         }
 

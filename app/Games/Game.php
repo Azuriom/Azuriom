@@ -101,4 +101,9 @@ abstract class Game
             ? trans('auth.name')
             : $this->trans('id');
     }
+
+    public function userPrimaryAttribute(): UserAttribute
+    {
+        return $this->userPrimaryAttribute;
+    }
 }
