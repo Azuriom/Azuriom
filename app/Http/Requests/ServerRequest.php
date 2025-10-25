@@ -37,7 +37,7 @@ class ServerRequest extends FormRequest
             'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
-            'join_url' => ['sometimes', 'nullable', 'regex:/^[a-z][a-z0-9+\-.]*:\/\/[^\s]+$/i', 'max:100'],
+            'join_url' => ['sometimes', 'nullable', 'regex:/^[a-z0-9+\-.]+:\/\/[^\s]+$/i', 'max:100'],
             'home_display' => ['filled', 'boolean'],
         ];
     }
