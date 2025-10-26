@@ -125,6 +125,7 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ trans('messages.fields.name') }}</th>
+                            <th scope="col">{{ trans('messages.fields.description') }}</th>
                             <th scope="col">{{ trans('messages.fields.author') }}</th>
                             <th scope="col">{{ trans('messages.fields.version') }}</th>
                             <th scope="col">{{ trans('messages.fields.action') }}</th>
@@ -147,6 +148,7 @@
                                         <i class="bi bi-heart"></i> {{ $theme['likes'] }}
                                     </span>
                                 </th>
+                                <td>{{ $theme['short_description'] }}</td>
                                 <td>{{ $theme['author']['name'] }}</td>
                                 <td>{{ $theme['version'] }}</td>
                                 <td>
