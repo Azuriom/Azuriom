@@ -9,7 +9,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = axios;
 
 if (document.querySelector('[v-scope]')) {
-    createApp({ $delimiters: ['<!--', '-->'] }).mount();
+    createApp({ $delimiters: ['\u0000', '\u0001'] }).mount();
 }
 
 document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
