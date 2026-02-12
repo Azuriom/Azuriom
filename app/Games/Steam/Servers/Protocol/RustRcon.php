@@ -11,6 +11,8 @@ use WebSocket\Client;
  */
 class RustRcon
 {
+    private const TIMEOUT = 2.5;
+
     private Client $client;
 
     /**
@@ -19,6 +21,7 @@ class RustRcon
     public function __construct(string $host, int $port, string $password)
     {
         $this->client = new Client("ws://{$host}:{$port}/{$password}");
+        $this->client->setTimeout(self::TIMEOUT);
     }
 
     /**

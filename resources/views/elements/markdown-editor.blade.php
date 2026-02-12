@@ -36,7 +36,8 @@
             border-color: var(--bs-body-color);
         }
 
-        .editor-toolbar .easymde-dropdown, .editor-toolbar button {
+        .editor-toolbar .easymde-dropdown,
+        .editor-toolbar button {
             font-size: 24px;
             line-height: 1;
             margin: 0 1px;

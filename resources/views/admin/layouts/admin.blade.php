@@ -296,7 +296,7 @@
         <div class="main">
 
             <!-- Topbar -->
-            <nav class="navbar navbar-expand bg-body-secondary navbar-bgw">
+            <nav class="navbar navbar-expand navbar-bg">
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>

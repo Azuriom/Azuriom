@@ -63,5 +63,9 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.2fa.id'));
         });
+
+        RateLimiter::for('oauth', function (Request $request) {
+            return Limit::perMinute(1)->by($request->ip());
+        });
     }
 }

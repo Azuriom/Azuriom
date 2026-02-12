@@ -126,6 +126,7 @@ return [
                 'recaptcha' => 'You can get reCAPTCHA keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA website</a>. You need to use reCAPTCHA <strong>v2 invisible</strong> keys.',
                 'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha website</a>.',
                 'turnstile' => 'You can get Turnstil keys on the <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">Cloudflare dashboard</a>. You must select "Managed" widget.',
+                'login' => 'Enable captcha on login page',
             ],
 
             'hash' => 'Hash algorithm',
@@ -605,6 +606,10 @@ return [
             'transfer' => 'Send money :money to user #:id',
 
             'login' => 'Successful login from :ip (2FA: :2fa)',
+            'api' => [
+                'login' => 'Successful API login from :ip (2FA: :2fa)',
+                'verified' => 'Successful API token verification from :ip',
+            ],
             '2fa' => [
                 'enabled' => 'Enabled two-factor authentication',
                 'disabled' => 'Disabled two-factor authentication',

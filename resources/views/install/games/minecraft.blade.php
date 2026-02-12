@@ -2,43 +2,45 @@
 
 @section('game')
     @if($game !== 'mc-bedrock')
-        <div class="mb-3">
-            <label class="form-label" for="oauth">
-                {{ trans('install.game.minecraft.premium') }}
-            </label>
-
-            <select name="oauth" class="form-select @error('oauth') is-invalid @enderror" id="oauth" data-toggle-select="oauth" required>
-                <option value=""></option>
-                <option value="1" @selected(old('oauth') === '1')>
-                    {{ trans('messages.yes') }}
-                </option>
-                <option value="0" @selected(old('oauth') === '0')>
-                    {{ trans('messages.no') }}
-                </option>
-            </select>
-
-            @error('oauth')
-            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-            @enderror
-
-            <p class="form-text text-danger">
-                <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
-            </p>
-        </div>
-
-        <div data-oauth="1">
-            <h3>{{ trans('install.game.user.title') }}</h3>
-
+        @if($game !== 'hytale')
             <div class="mb-3">
-                <label class="form-label" for="uuid">Minecraft UUID</label>
+                <label class="form-label" for="oauth">
+                    {{ trans('install.game.minecraft.premium') }}
+                </label>
 
-                <input name="uuid" id="uuid" type="text" class="form-control @error('uuid') is-invalid @enderror" value="{{ old('uuid', '') }}">
+                <select name="oauth" class="form-select @error('oauth') is-invalid @enderror" id="oauth" data-toggle-select="oauth" required>
+                    <option value=""></option>
+                    <option value="1" @selected(old('oauth') === '1')>
+                        {{ trans('messages.yes') }}
+                    </option>
+                    <option value="0" @selected(old('oauth') === '0')>
+                        {{ trans('messages.no') }}
+                    </option>
+                </select>
 
-                @error('uuid')
+                @error('oauth')
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
+
+                <p class="form-text text-danger">
+                    <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
+                </p>
             </div>
-        </div>
+
+            <div data-oauth="1">
+                <h3>{{ trans('install.game.user.title') }}</h3>
+
+                <div class="mb-3">
+                    <label class="form-label" for="uuid">Minecraft UUID</label>
+
+                    <input name="uuid" id="uuid" type="text" class="form-control @error('uuid') is-invalid @enderror" value="{{ old('uuid', '') }}">
+
+                    @error('uuid')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+            </div>
+        @endif
 
         <div data-oauth="0">
             <h3>{{ trans('install.game.user.title') }}</h3>

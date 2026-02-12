@@ -46,9 +46,10 @@ class EpicOnlineServiceProvider extends AbstractProvider implements ProviderInte
      */
     protected function getTokenHeaders($code)
     {
-        return array_merge(parent::getTokenHeaders($code), [
+        return [
+            ...parent::getTokenHeaders($code),
             'Authorization' => 'Basic '.base64_encode($this->clientId.':'.$this->clientSecret),
-        ]);
+        ];
     }
 
     protected function getUserByToken($token): array

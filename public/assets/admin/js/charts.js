@@ -60,7 +60,7 @@ function createMultiLineChart(elementId, data, labelNames) {
     const colors = ['#3b7ddd', '#1cbb8c', '#17a2b8', '#fcb92c']
     let count = 0
 
-    if (!Array.isArray(labels) && data.length > 0) {
+    if (!Array.isArray(labelNames) && data.length > 0) {
         labelNames = Object.keys(data[0].data)
     }
 

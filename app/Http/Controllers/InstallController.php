@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers;
 use Azuriom\Extensions\Plugin\PluginManager;
 use Azuriom\Extensions\UpdateManager;
 use Azuriom\Games\FiveMGame;
+use Azuriom\Games\HytaleGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
 use Azuriom\Games\Steam\SteamGame;
@@ -62,6 +63,10 @@ class InstallController extends Controller
         'mc-bedrock' => [
             'name' => 'Minecraft: Bedrock Edition',
             'logo' => 'assets/img/games/minecraft.svg',
+        ],
+        'hytale' => [
+            'name' => 'Hytale (Early Access)',
+            'logo' => 'assets/img/games/hytale.png',
         ],
         'gmod' => [
             'name' => 'Garry\'s mod',
@@ -228,18 +233,10 @@ class InstallController extends Controller
     {
         abort_if(! array_key_exists($game, $this->games), 404);
 
-        if ($game === 'minecraft') {
+        if ($game === 'minecraft' || $game === 'mc-bedrock' || $game === 'hytale') {
             return view('install.games.minecraft', [
                 'game' => $game,
-                'gameName' => 'Minecraft',
-                'locales' => self::getAvailableLocales(),
-            ]);
-        }
-
-        if ($game === 'mc-bedrock') {
-            return view('install.games.minecraft', [
-                'game' => $game,
-                'gameName' => 'Minecraft: Bedrock Edition',
+                'gameName' => Arr::get($this->games, $game.'.name', $game),
                 'locales' => self::getAvailableLocales(),
             ]);
         }
@@ -273,8 +270,8 @@ class InstallController extends Controller
                 return $this->setupSteamGame($request, $game);
             }
 
-            if ($game === 'minecraft' || $game === 'mc-bedrock') {
-                return $this->setupMinecraftGame($request, $game);
+            if ($game === 'minecraft' || $game === 'mc-bedrock' || $game === 'hytale') {
+                return $this->setupMinecraftOrHytale($request, $game);
             }
 
             if ($game === 'fivem-cfx') {
@@ -334,13 +331,13 @@ class InstallController extends Controller
     }
 
     /**
-     * Install Azuriom for Minecraft (with register or Microsoft OAuth).
+     * Install Azuriom for Minecraft (with register or Microsoft OAuth) or Hytale.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function setupMinecraftGame(Request $request, string $game)
+    protected function setupMinecraftOrHytale(Request $request, string $game)
     {
-        if ($game !== 'mc-bedrock') {
+        if ($game !== 'mc-bedrock' && $game !== 'hytale') {
             $game = $request->input('oauth') ? 'mc-online' : 'mc-offline';
         }
 
@@ -367,6 +364,12 @@ class InstallController extends Controller
 
             if ($name === null) {
                 throw ValidationException::withMessages(['xuid' => 'Invalid Xbox XUID.']);
+            }
+        } elseif ($game === 'hytale') {
+            $response = Http::get(HytaleGame::PLAYER_LOOKUP.$request->input('name'));
+
+            if (! $response->successful() || ! ($gameId = $response->json('data.player.id'))) {
+                throw ValidationException::withMessages(['name' => 'You must enter a valid Hytale username.']);
             }
         }
 
@@ -479,7 +482,7 @@ class InstallController extends Controller
 
         $user->markEmailAsVerified();
 
-        if ($game !== 'mc-offline') {
+        if ($game !== 'mc-offline' && $game !== 'hytale') {
             Setting::updateSettings('register', false);
         }
 

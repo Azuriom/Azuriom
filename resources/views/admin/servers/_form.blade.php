@@ -52,6 +52,7 @@
     <div class="mb-3 col-md-6">
         <label class="form-label" for="typeSelect">{{ trans('messages.fields.type') }}</label>
         <select class="form-select @error('type') is-invalid @enderror" id="typeSelect" name="type" required v-model="type">
+            <option value="">{{ trans('messages.select') }}</option>
             @foreach($types as $type)
                 <option value="{{ $type }}" @selected($type === old('type', $server->type ?? ''))>
                     {{ trans('admin.servers.type.'.$type) }}
@@ -85,13 +86,13 @@
     </div>
 </div>
 
- <div v-show="type === 'mc-ping'" class="mb-3">
+ <div v-if="type === 'mc-ping'" class="mb-3">
     <div class="alert alert-warning" role="alert">
         <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.servers.ping_info') }}
     </div>
 </div>
 
-<div v-show="type === 'source-query' || type === 'source-rcon'">
+<div v-if="type === 'source-query' || type === 'source-rcon'">
     <div class="row gx-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="querySourcePortInput">{{ trans('admin.servers.query_port') }}</label>
@@ -106,13 +107,13 @@
     </div>
 </div>
 
-<div v-show="type === 'source-query'" class="mb-3">
+<div v-if="type === 'source-query'" class="mb-3">
     <div class="alert alert-warning" role="alert">
         <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.servers.query_info') }}
     </div>
 </div>
 
-<div v-show="type.includes('rcon')">
+<div v-if="type.includes('rcon')">
     <div class="row gx-3">
         <div class="mb-3 col-md-8">
             <label class="form-label" for="rconPasswordInput">{{ trans('admin.servers.rcon_password') }}</label>
@@ -143,14 +144,14 @@
 </div>
 
 @if(game()->id() === 'unturned')
-    <div v-show="type === 'source-rcon'" class="mb-3">
+    <div v-if="type === 'source-rcon'" class="mb-3">
         <div class="alert alert-info" role="alert">
             <i class="bi bi-info-circle"></i> {{ trans('admin.servers.unturned_info') }}
         </div>
     </div>
 @endif
 
-<div v-show="type === 'mc-azlink' || type === 'steam-azlink'">
+<div v-show="type.includes('azlink')">
     @if(! isset($server) || ! $server->isOnline())
         <div class="alert alert-info">
             <i class="bi bi-info-circle"></i> @lang('admin.servers.azlink.info')

@@ -96,6 +96,7 @@ return [
     ],
 
     'loading' => 'Chargement...',
+    'select' => 'Sélectionner...',
 
     'yes' => 'Oui',
     'no' => 'Non',
@@ -154,6 +155,8 @@ return [
         'change_avatar' => 'Changer d\'avatar',
         'delete_avatar' => 'Supprimer l\'avatar',
 
+        'email_limit' => 'Vous ne pouvez pas changer votre adresse email pour le moment, veuillez réessayer dans quelques minutes.',
+
         'avatar' => 'L\'avatar doit être un carré de minimum :size pixels.',
 
         'delete' => [
@@ -181,6 +184,7 @@ return [
             'disable' => 'Désactiver l\'A2F',
             'manage' => 'Gérer l\'A2F',
             'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme <a href="https://authy.com/" target="_blank" rel="noopener norefferer">Authy</a>, <a href="https://secrets.app/" target="_blank" rel="noopener norefferer">Secrets</a>, ou Google Authenticator.',
+            'backup' => 'Si vous perdez l\'accès à votre application d\'authentification à deux facteurs, le <strong>seul moyen</strong></strong> de récupérer l\'accès à votre compte est d\'utiliser un code de récupération.',
             'secret' => 'Clé secrète: :secret',
             'title' => 'Authentification à deux facteurs',
             'codes' => 'Afficher les codes de récupération',
@@ -234,6 +238,8 @@ return [
         'size' => 'L\'image #image_name# est trop lourde (#image_size#).\nLa taille maximum est #image_max_size#.',
         'error' => 'Une erreur est survenue lors du téléchargement de l\'image #image_name#.',
     ],
+
+    'info' => 'Plus d\'informations',
 
     'discord_roles' => [
         'id' => [

@@ -22,7 +22,9 @@ Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function (
 });
 
 Route::prefix('user')->group(function () {
-    Route::get('/login/callback', [LoginController::class, 'handleProviderCallback'])->name('login.callback');
+    Route::middleware('throttle:oauth')->group(function () {
+        Route::get('/login/callback', [LoginController::class, 'handleProviderCallback'])->name('login.callback');
+    });
 
     Route::prefix('/2fa')->name('login.')->group(function () {
         Route::get('/', [LoginController::class, 'showCodeForm'])->name('2fa');

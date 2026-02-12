@@ -8,7 +8,9 @@ import { createApp } from 'petite-vue'
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = axios;
 
-createApp().mount();
+if (document.querySelector('[v-scope]')) {
+    createApp({ $delimiters: ['\u0000', '\u0001'] }).mount();
+}
 
 document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
     new bootstrap.Tooltip(el)

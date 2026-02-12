@@ -5,6 +5,7 @@ namespace Azuriom\Models;
 use Azuriom\Casts\Color;
 use Azuriom\Models\Traits\Loggable;
 use Azuriom\Models\Traits\Searchable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -155,7 +156,8 @@ class Role extends Model
     /**
      * Scope a query to only include admin roles.
      */
-    public function scopeAdmin(Builder $query): void
+    #[Scope]
+    protected function admin(Builder $query): void
     {
         $query->where('is_admin', true);
     }

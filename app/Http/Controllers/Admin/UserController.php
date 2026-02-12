@@ -28,9 +28,8 @@ class UserController extends Controller
 
         $users = User::with('ban')
             ->whereNull('deleted_at')
-            ->when($search, function (Builder $query, string $search) {
-                $query->scopes(['search' => $search]);
-            })->paginate();
+            ->when($search, fn (Builder $q) => $q->scopes(['search' => $search]))
+            ->paginate();
 
         return view('admin.users.index', [
             'users' => $users,

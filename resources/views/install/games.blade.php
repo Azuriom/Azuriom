@@ -4,6 +4,10 @@
     <div id="gameSelect" class="text-center">
         <h2 class="mb-3">{{ trans('install.game.title') }}</h2>
 
+        <p class="text-danger font-weight-bold mb-0">
+            <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
+        </p>
+
         <div class="row justify-content-center mb-3">
             @foreach ($games as $key => $game)
                 <div class="col-md-3">
@@ -15,9 +19,5 @@
                 </div>
             @endforeach
         </div>
-
-        <p class="text-danger font-weight-bold mb-0">
-            <i class="bi bi-exclamation-triangle"></i> {{ trans('install.game.warn') }}
-        </p>
     </div>
 @endsection

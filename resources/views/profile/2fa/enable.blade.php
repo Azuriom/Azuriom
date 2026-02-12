@@ -30,6 +30,20 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <input class="form-check-input @error('backup') is-invalid @enderror" type="checkbox" name="backup" id="backup" required @checked(old('backup'))>
+
+                    <label class="form-check-label" for="backup">
+                        @lang('messages.profile.2fa.backup')
+                    </label>
+
+                    @error('backup')
+                    <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-shield-check"></i> {{ trans('messages.actions.enable') }}
                 </button>

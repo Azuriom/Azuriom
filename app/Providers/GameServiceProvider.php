@@ -4,6 +4,7 @@ namespace Azuriom\Providers;
 
 use Azuriom\Games\FallbackGame;
 use Azuriom\Games\FiveMGame;
+use Azuriom\Games\HytaleGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
@@ -42,6 +43,7 @@ class GameServiceProvider extends ServiceProvider
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
             'unturned' => SteamGame::forName('unturned', 'Unturned'),
             '7dtd' => SteamGame::forName('7dtd', '7 Days to Die', true),
+            'hytale' => HytaleGame::class,
         ]);
     }
 

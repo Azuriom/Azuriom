@@ -96,6 +96,7 @@ return [
     ],
 
     'loading' => 'Loading...',
+    'select' => 'Select...',
 
     'yes' => 'Yes',
     'no' => 'No',
@@ -154,6 +155,8 @@ return [
         'change_avatar' => 'Change Avatar',
         'delete_avatar' => 'Delete Avatar',
 
+        'email_limit' => 'You cannot change your email address currently, please try again in few minutes.',
+
         'avatar' => 'The avatar must be square and have a minimum size of :size pixels.',
 
         'delete' => [
@@ -181,6 +184,7 @@ return [
             'disable' => 'Disable 2FA',
             'manage' => 'Manage 2FA',
             'info' => 'Scan the QR code above with a two-factor authentication app on your phone like <a href="https://authy.com/" target="_blank" rel="noopener norefferer">Authy</a>, <a href="https://secrets.app/" target="_blank" rel="noopener norefferer">Secrets</a> or Google Authenticator.',
+            'backup' => 'If you lose access to your two-factor authentification code, the recovery codes are the <strong>only way</strong> to regain access to your account.',
             'secret' => 'Secret key: :secret',
             'title' => 'Two-Factor Authentication',
             'codes' => 'Show recovery codes',
@@ -234,6 +238,8 @@ return [
         'size' => 'Image #image_name# is too big (#image_size#).\nMaximum file size is #image_max_size#.',
         'error' => 'Something went wrong when uploading the image #image_name#.',
     ],
+
+    'info' => 'More information',
 
     'discord_roles' => [
         'id' => [

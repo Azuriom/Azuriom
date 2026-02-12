@@ -32,7 +32,7 @@ class MinecraftOnlineGame extends AbstractMinecraftGame
         // Fallback to MHF_Steve if the user don't have an uuid
         $uuid = $user->game_id ?? 'c06f8906-4c8a-4911-9c29-ea1dbd1aab82';
 
-        return "https://crafatar.com/avatars/{$uuid}?size={$size}&overlay&default=MHF_Steve";
+        return "https://mc-heads.net/avatar/{$uuid}/{$size}.png";
     }
 
     public function getUserUniqueId(string $name): ?string

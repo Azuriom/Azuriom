@@ -131,6 +131,11 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id="loginCaptcha" name="login_captcha" @checked($loginCaptcha)>
+                            <label class="form-check-label" for="loginCaptcha">{{ trans('admin.settings.security.captcha.login') }}</label>
+                        </div>
                     </div>
                 </div>
 

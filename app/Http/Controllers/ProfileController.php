@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -66,10 +67,22 @@ class ProfileController extends Controller
             'email_confirm_pass' => oauth_login()
                 ? ['sometimes', 'nullable']
                 : ['required', 'current_password'],
-            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
         ]);
 
         $user = $request->user();
+
+        if (RateLimiter::tooManyAttempts('email:'.$user->id, 5)) {
+            throw ValidationException::withMessages([
+                'email' => trans('messages.profile.email_limit'),
+            ]);
+        }
+
+        RateLimiter::hit('email:'.$user->id, 5 * 60);
+
+        // Only check if email is already used after the rate limit check
+        $this->validate($request, [
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users'],
+        ]);
 
         $user->forceFill([
             'email' => $request->input('email'),

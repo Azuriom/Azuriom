@@ -4,6 +4,7 @@ namespace Azuriom\Models;
 
 use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\Loggable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,7 +60,8 @@ class Page extends Model
     /**
      * Scope a query to only include enabled pages.
      */
-    public function scopeEnabled(Builder $query): void
+    #[Scope]
+    protected function enabled(Builder $query): void
     {
         $query->where('is_enabled', true);
     }

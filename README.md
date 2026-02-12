@@ -42,6 +42,17 @@ Azuriom's documentation is available [on our website](https://azuriom.com/docs).
 
 You can find system requirements and installation guide on our [documentation](https://azuriom.com/docs/installation).
 
+### Docker
+
+For an easy development setup, you can use the provided [Docker](https://www.docker.com/) configuration.
+
+First download the latest [Azuriom release](https://github.com/Azuriom/Azuriom/releases/latest)
+and extract it in a folder.
+Then, start Azuriom with Docker by running the following command:
+```bash
+docker-compose up -d
+```
+
 ## Community
 
 You can ask for support and talk on our [Discord server](https://azuriom.com/discord).

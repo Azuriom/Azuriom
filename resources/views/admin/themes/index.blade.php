@@ -16,7 +16,7 @@
                 @else
                     <h3 class="h5 fw-bolder">{{ $current->name }}</h3>
                 @endisset
-                
+
                 <ul>
                     <li>{{ trans('admin.themes.author', ['author' => implode(', ', $current->authors)]) }}</li>
                     <li>{{ trans('admin.themes.version', ['version' => $current->version]) }}</li>

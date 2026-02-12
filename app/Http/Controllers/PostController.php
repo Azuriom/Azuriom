@@ -4,21 +4,28 @@ namespace Azuriom\Http\Controllers;
 
 use Azuriom\Models\Post;
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('q');
+
         $posts = Post::published()
             ->with('author')
+            ->when($search, fn (Builder $q) => $q->scopes(['search' => $search]))
             ->orderByDesc('is_pinned')
             ->latest('published_at')
             ->get();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', [
+            'posts' => $posts,
+            'search' => $search,
+        ]);
     }
 
     /**

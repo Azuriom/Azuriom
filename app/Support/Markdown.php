@@ -69,4 +69,9 @@ class Markdown
 
         return $converter->convert($text)->getContent();
     }
+
+    public static function escape(string $text): string
+    {
+        return addcslashes($text, '\\`*_[]()');
+    }
 }

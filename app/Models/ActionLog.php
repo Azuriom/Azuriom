@@ -2,6 +2,7 @@
 
 namespace Azuriom\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -29,6 +30,18 @@ class ActionLog extends Model
             'icon' => 'box-arrow-in-right',
             'color' => 'info',
             'message' => 'admin.logs.users.login',
+        ],
+        'users.auth.api.login' => [
+            'global' => false,
+            'icon' => 'shield-plus',
+            'color' => 'info',
+            'message' => 'admin.logs.users.api.login',
+        ],
+        'users.auth.api.verified' => [
+            'global' => false,
+            'icon' => 'shield-check',
+            'color' => 'info',
+            'message' => 'admin.logs.users.api.verified',
         ],
         'users.2fa.enabled' => [
             'global' => false,
@@ -235,7 +248,8 @@ class ActionLog extends Model
     /**
      * Scope a query to only include global logs.
      */
-    public function scopeOnlyGlobal(Builder $query): void
+    #[Scope]
+    protected function onlyGlobal(Builder $query): void
     {
         $nonGlobals = collect(static::$actions)
             ->where('global', '===', false)

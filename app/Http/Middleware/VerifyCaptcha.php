@@ -5,12 +5,12 @@ namespace Azuriom\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use ReCaptcha\ReCaptcha;
-use ReCaptcha\RequestMethod\CurlPost;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyCaptcha
 {
+    private const TIMEOUT = 3;
+
     /**
      * Handle an incoming request.
      *
@@ -25,11 +25,9 @@ class VerifyCaptcha
             return $next($request);
         }
 
-        $success = $captchaType === 'recaptcha'
-            ? $this->verifyReCaptcha($request, $secretKey)
-            : $this->verifyCaptcha($captchaType, $request, $secretKey);
-
-        return $success ? $next($request) : $this->sendFailedResponse($request);
+        return $this->verifyCaptcha($captchaType, $request, $secretKey)
+            ? $next($request)
+            : $this->sendFailedResponse($request);
     }
 
     protected function sendFailedResponse(Request $request): Response
@@ -44,27 +42,33 @@ class VerifyCaptcha
         return redirect()->back()->with('error', trans('messages.captcha'))->withInput();
     }
 
-    protected function verifyReCaptcha(Request $request, string $secretKey): bool
-    {
-        $reCaptcha = new ReCaptcha($secretKey, new CurlPost());
-
-        $response = $reCaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
-
-        return $response->isSuccess();
-    }
-
     protected function verifyCaptcha(string $type, Request $request, string $secretKey): bool
     {
-        $inputName = $type === 'hcaptcha' ? 'h-captcha' : 'cf-turnstile';
-        $host = $type === 'hcaptcha' ? 'hcaptcha.com' : 'challenges.cloudflare.com/turnstile/v0';
+        $inputName = match ($type) {
+            'hcaptcha' => 'h-captcha',
+            'recaptcha' => 'g-recaptcha',
+            'turnstile' => 'cf-turnstile',
+            default => null,
+        };
+        $host = match ($type) {
+            'hcaptcha' => 'hcaptcha.com',
+            'recaptcha' => 'www.google.com/recaptcha/api',
+            'turnstile' => 'challenges.cloudflare.com/turnstile/v0',
+            default => null,
+        };
+
+        if ($host === null || $inputName === null) {
+            return false;
+        }
 
         if (($code = $request->input($inputName.'-response')) === null) {
             return false;
         }
 
-        $response = Http::asForm()->post('https://'.$host.'/siteverify', [
+        $response = Http::asForm()->timeout(self::TIMEOUT)->post('https://'.$host.'/siteverify', [
             'secret' => $secretKey,
             'response' => $code,
+            'remoteip' => $request->ip(),
         ]);
 
         return $response->successful() && $response->json('success');
