@@ -145,3 +145,16 @@ img {
     color: rgba(104, 232, 53, var(--bs-link-opacity, 1)) !important;
     text-decoration-color: rgba(104, 232, 53, var(--bs-link-underline-opacity, 1)) !important;
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}

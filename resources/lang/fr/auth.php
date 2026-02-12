@@ -50,6 +50,8 @@ return [
 
     'remember' => 'Se souvenir de moi',
     'forgot_password' => 'Mot de passe oublié ?',
+    'goto_register' => 'Pas de compte ? Inscrivez-vous ici',
+    'goto_login' => 'Déjà inscrit ? Connectez-vous ici',
 
     'verification' => [
         'sent' => 'Un nouveau lien de vérification a été envoyé à votre adresse email.',

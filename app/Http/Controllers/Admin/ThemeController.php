@@ -84,7 +84,21 @@ class ThemeController extends Controller
                 if ($oldConfig !== null) {
                     $newConfig = $this->themes->readConfig($theme) ?? [];
 
-                    $this->themes->updateConfig($theme, array_merge($newConfig, $oldConfig));
+                    $migratorPath = $this->themes->path('config/migrator.php', $theme);
+                    
+                    if ($migratorPath !== null && $this->files->exists($migratorPath)) {
+                        $migrator = $this->files->getRequire($migratorPath);
+                        
+                        if (is_callable($migrator)) {
+                            $mergedConfig = $migrator($oldConfig, $newConfig);
+                        } else {
+                            $mergedConfig = array_merge($newConfig, $oldConfig);
+                        }
+                    } else {
+                        $mergedConfig = array_merge($newConfig, $oldConfig);
+                    }
+
+                    $this->themes->updateConfig($theme, $mergedConfig);
                 }
 
                 if ($this->themes->isLegacy($theme)) {
@@ -210,12 +224,28 @@ class ThemeController extends Controller
             ->with('success', trans('admin.themes.updated'));
     }
 
-    protected static function appendConfig(array $config, array $replacement)
+    protected static function appendConfig(array $config, array $replacement): array
     {
         foreach ($replacement as $key => $value) {
-            $config[$key] = is_array($value)
-                ? static::appendConfig($config[$key], $value)
-                : $value;
+            if (is_array($value)) {
+                if (isset($value['_empty']) && $value['_empty'] === '1' && count($value) === 1) {
+                    $config[$key] = [];
+                    continue;
+                }
+                
+                $isIndexedArray = empty($value) || array_keys($value) === range(0, count($value) - 1);
+                
+                if ($isIndexedArray) {
+                    $config[$key] = $value;
+                } else {
+                    $existing = $config[$key] ?? [];
+                    $config[$key] = is_array($existing)
+                        ? static::appendConfig($existing, $value)
+                        : $value;
+                }
+            } else {
+                $config[$key] = $value;
+            }
         }
 
         return $config;
