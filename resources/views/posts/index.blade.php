@@ -26,7 +26,10 @@
             <div class="col-md-6">
                 <div class="post-preview card">
                     @if($post->hasImage())
-                        <img src="{{ $post->imageUrl() }}" class="card-img-top" alt="{{ $post->title }}">
+                        @php($srcset = $post->imageSrcset())
+                        <img src="{{ $post->imageUrl() }}"
+                             @if($srcset) srcset="{{ $srcset }}" sizes="(max-width: 768px) 100vw, 50vw" @endif
+                             class="card-img-top" alt="{{ $post->title }}">
                     @endif
                     <div class="card-body">
                         <h3 class="card-title">

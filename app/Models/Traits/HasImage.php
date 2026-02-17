@@ -114,8 +114,92 @@ trait HasImage
         return $this->imageKey ?? 'image';
     }
 
+    /**
+     * Get the image srcset (if available).
+     */
+    public function imageSrcset(): ?string
+    {
+        $image = $this->getAttribute($this->getImageKey());
+
+        if ($image === null) {
+            return null;
+        }
+
+        $sizes = $this->getImageSizes();
+
+        if (empty($sizes)) {
+            return null;
+        }
+
+        $disk = $this->getImageDisk();
+        $srcset = [];
+
+        foreach ($sizes as $size) {
+            $variant = $this->resolveImagePath($this->getImageVariantName($image, $size));
+
+            if ($disk->exists($variant)) {
+                $srcset[] = url($disk->url($variant))." {$size}w";
+            }
+        }
+
+        return empty($srcset) ? null : implode(', ', $srcset);
+    }
+
     protected function resolveImagePath(string $path = ''): string
     {
         return ($this->imagePath ?? Str::snake(Str::pluralStudly(class_basename($this)))).'/'.$path;
     }
-}
+
+    protected function getImageSizes(): array
+    {
+        $sizes = property_exists($this, 'imageSizes') ? (array) $this->imageSizes : [];
+        $sizes = array_filter($sizes, fn ($size) => is_int($size) && $size > 0);
+        $sizes = array_values(array_unique($sizes));
+        sort($sizes);
+
+        return $sizes;
+    }
+
+    protected function getImageVariantName(string $filename, int $size): string
+    {
+        $name = pathinfo($filename, PATHINFO_FILENAME);
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+        return $name.'-'.$size.'w.'.$extension;
+    }
+
+    protected function generateImageVariants(UploadedFile $file, string $filename): void
+    {
+        $sizes = $this->getImageSizes();
+
+        if (empty($sizes)) {
+            return;
+        }
+
+        foreach ($sizes as $size) {
+            // Generate responsive image variants (requires server-side image processing)
+            // This is a placeholder for future implementation with Intervention/image or similar
+            // $image = Image::make($file->getPathname())->resize($size, null, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            // $this->getImageDisk()->put(
+            //     $this->resolveImagePath($this->getImageVariantName($filename, $size)),
+            //     (string) $image->encode()
+            // );
+        }
+    }
+
+    protected function deleteImageVariants(string $filename): void
+    {
+        $sizes = $this->getImageSizes();
+
+        if (empty($sizes)) {
+            return;
+        }
+
+        $disk = $this->getImageDisk();
+
+        foreach ($sizes as $size) {
+            $disk->delete($this->resolveImagePath($this->getImageVariantName($filename, $size)));
+        }
+    }
