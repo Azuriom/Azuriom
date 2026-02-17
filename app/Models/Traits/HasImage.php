@@ -202,7 +202,6 @@ trait HasImage
 
         // Create resized image
         $resized = imagecreatetruecolor($newWidth, $newHeight);
-
         if ($resized === false) {
             imagedestroy($image);
             return;
