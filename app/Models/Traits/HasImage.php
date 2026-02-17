@@ -179,6 +179,7 @@ trait HasImage
         foreach ($sizes as $size) {
             // Generate responsive image variants (requires server-side image processing)
             // This is a placeholder for future implementation with Intervention/image or similar
+            // To implement, use Intervention/Image or similar:
             // $image = Image::make($file->getPathname())->resize($size, null, function ($constraint) {
             //     $constraint->aspectRatio();
             // });
@@ -186,6 +187,8 @@ trait HasImage
             //     $this->resolveImagePath($this->getImageVariantName($filename, $size)),
             //     (string) $image->encode()
             // );
+            // For now, this is reserved for future implementation
+            continue;
         }
     }
 
