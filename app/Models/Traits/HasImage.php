@@ -6,8 +6,8 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\GdDriver;
+use Intervention\Image\ImageManager;
 
 /**
  * Trait to link an image to a model.
@@ -180,11 +180,8 @@ trait HasImage
 
         foreach ($sizes as $size) {
             $image = ImageManager::withDriver(GdDriver::class)->read($file->getPathname());
-            
             $image->scaleDown(width: $size);
-            
             $variantPath = $this->resolveImagePath($this->getImageVariantName($filename, $size));
-            
             $this->getImageDisk()->put($variantPath, (string) $image->encode());
         }
     }
