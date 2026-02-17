@@ -14,6 +14,7 @@
         "funkjedi/composer-include-files": "^1.1",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.0",
         "laravel/framework": "^12.0",
         "laravel/socialite": "^5.4",
         "laravel/tinker": "^2.10.1",
