@@ -6,8 +6,6 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Drivers\GdDriver;
-use Intervention\Image\ImageManager;
 
 /**
  * Trait to link an image to a model.
@@ -179,11 +177,53 @@ trait HasImage
         }
 
         foreach ($sizes as $size) {
-            $image = ImageManager::withDriver(GdDriver::class)->read($file->getPathname());
-            $image->scaleDown(width: $size);
-            $variantPath = $this->resolveImagePath($this->getImageVariantName($filename, $size));
-            $this->getImageDisk()->put($variantPath, (string) $image->encode());
+            $this->generateImageVariant($file->getPathname(), $filename, $size);
         }
+    }
+
+    /**
+     * Generate a single image variant at the specified size.
+     */
+    protected function generateImageVariant(string $filePath, string $filename, int $size): void
+    {
+        $image = imagecreatefromstring(file_get_contents($filePath));
+
+        if ($image === false) {
+            return;
+        }
+
+        $originalWidth = imagesx($image);
+        $originalHeight = imagesy($image);
+
+        // Calculate new dimensions maintaining aspect ratio
+        $ratio = $originalHeight / $originalWidth;
+        $newWidth = $size;
+        $newHeight = (int) ($size * $ratio);
+
+        // Create resized image
+        $resized = imagecreatetruecolor($newWidth, $newHeight);
+
+        if ($resized === false) {
+            imagedestroy($image);
+            return;
+        }
+
+        // Preserve transparency for PNG
+        imagealphablending($resized, false);
+        imagesavealpha($resized, true);
+
+        imagecopyresampled($resized, $image, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+        // Save variant
+        ob_start();
+        imagejpeg($resized, null, 85);
+        $imageContent = ob_get_clean();
+
+        $variantPath = $this->resolveImagePath($this->getImageVariantName($filename, $size));
+        $this->getImageDisk()->put($variantPath, $imageContent);
+
+        imagedestroy($image);
+        imagedestroy($resized);
     }
 
     protected function deleteImageVariants(string $filename): void
