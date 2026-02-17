@@ -203,3 +203,4 @@ trait HasImage
             $disk->delete($this->resolveImagePath($this->getImageVariantName($filename, $size)));
         }
     }
+}
