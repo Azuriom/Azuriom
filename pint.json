@@ -5,6 +5,7 @@
         "resources/themes"
     ],
     "rules": {
+        "fully_qualified_strict_types": false,
         "new_with_parentheses": {
             "anonymous_class": false
         }

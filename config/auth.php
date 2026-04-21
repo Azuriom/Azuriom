@@ -1,5 +1,7 @@
 <?php
 
+use Azuriom\Models\User;
+
 return [
 
     /*
@@ -62,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Azuriom\Models\User::class,
+            'model' => User::class,
         ],
 
         // 'users' => [

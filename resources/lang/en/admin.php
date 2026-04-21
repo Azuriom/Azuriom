@@ -183,6 +183,8 @@ return [
             'registration_info' => '<strong>The “Register” button is removed when this option is disabled.</strong> Some plugins may still allow to create new user accounts.',
             'api' => 'Enable Auth API',
             'api_info' => 'This API allows you to add a custom authentication to your game server. For Minecraft servers using a launcher, you can use <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> for an easy and quick integration.',
+            'auto_register' => 'Automatically save profiles for online in-game players (requires AzLink)',
+            'auto_register_info' => 'Save a profile when a player joins the server without a website account (e.g. for guest purchases or votes).',
             'user_change_name' => 'Allow users to change username from their profile',
             'user_avatar' => 'Allow users to upload their own avatar in their profile',
             'user_delete' => 'Allow users to delete their account from their profile',

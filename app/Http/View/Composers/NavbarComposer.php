@@ -41,14 +41,19 @@ class NavbarComposer
         });
 
         if ($elements instanceof ModelCollection) {
+            $attributes = $elements->map(fn (NavbarElement $element) => [
+                ...$element->getAttributes(),
+                'name' => $element->raw_name,
+            ])->toArray();
+
             // Not in cache yet
-            Cache::put(NavbarElement::CACHE_KEY, $elements->toArray(), now()->addDay());
+            Cache::put(NavbarElement::CACHE_KEY, $attributes, now()->addDay());
 
             return $elements;
         }
 
         return NavbarElement::hydrate($elements)->each(function (NavbarElement $element) {
-            $element->setRelation('roles', Role::hydrate($element->roles));
+            $element->setRelation('roles', Role::hydrate($element->roles->all()));
             $element->setRawAttributes(Arr::except($element->getAttributes(), 'roles'), true);
         });
     }

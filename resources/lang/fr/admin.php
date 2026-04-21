@@ -183,6 +183,8 @@ return [
             'registration_info' => '<strong>Le bouton "Inscription" est retiré lorsque cette option est désactivée.</strong> Certains plugins peuvent quand même permettre de créer de nouveaux comptes utilisateurs.',
             'api' => 'Activer l\'API auth',
             'api_info' => 'Cette API vous permet d\'ajouter une authentification personnalisée à votre serveur de jeu. Pour les serveurs Minecraft utilisant un launcher, vous pouvez utiliser <a href="https://github.com/Azuriom/AzAuth" target="_blank" rel="noopener noreferrer">AzAuth</a> pour une intégration simple et rapide.',
+            'auto_register' => 'Enregistrer automatiquement un profil pour les joueurs en ligne (nécessite AzLink)',
+            'auto_register_info' => 'Enregistre un profil lorsqu\'un joueur rejoint le serveur sans compte sur le site (par ex. pour acheter ou voter sans avoir à créer de compte).',
             'user_change_name' => 'Permettre aux utilisateurs de changer leur pseudo depuis le profil.',
             'user_avatar' => 'Permettre aux utilisateurs de mettre leur propre avatar depuis le profil.',
             'user_delete' => 'Permettre aux utilisateurs de supprimer leur compte depuis le profil.',

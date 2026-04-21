@@ -162,9 +162,9 @@ if (! function_exists('image_url')) {
 if (! function_exists('social_links')) {
     function social_links(): Collection
     {
-        return Cache::remember(SocialLink::CACHE_KEY, now()->addDay(), function () {
-            return SocialLink::orderBy('position')->get();
-        });
+        // return Cache::remember(SocialLink::CACHE_KEY, now()->addDay(), function () {
+        return SocialLink::orderBy('position')->get();
+        // }); TODO Laravel 13
     }
 }
 

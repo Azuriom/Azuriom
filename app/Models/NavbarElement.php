@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
  */
 class NavbarElement extends Model
 {
-    public const CACHE_KEY = 'navbar';
+    public const CACHE_KEY = 'navbar_elements';
 
     /**
      * The navbar elements types.
@@ -128,10 +128,6 @@ class NavbarElement extends Model
 
     public function getNameAttribute($value): HtmlString
     {
-        if ($value instanceof HtmlString) {
-            return $value;
-        }
-
         $icon = $this->icon !== null ? '<i class="'.e($this->icon).'"></i> ' : '';
 
         return new HtmlString($icon.e($value));
