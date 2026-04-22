@@ -29,5 +29,10 @@
         "simplebar": "^5.3.6",
         "sortablejs": "^1.13.0",
         "tinymce": "^8.0.0"
+    },
+    "overrides": {
+        "laravel-mix": {
+            "webpackbar": "^7.0.0"
+        }
     }
 }
