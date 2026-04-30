@@ -65,6 +65,19 @@ class Permission extends Model
         return array_keys(self::$permissions);
     }
 
+    public static function groupedPermissions(): array
+    {
+        $grouped = [];
+
+        foreach (self::$permissions as $permission => $description) {
+            $grouped[explode('.', $permission, 2)[0]][$permission] = $description;
+        }
+
+        ksort($grouped);
+
+        return $grouped;
+    }
+
     public static function registerPermissions(array $permissions): void
     {
         self::$permissions = array_merge(self::$permissions, $permissions);

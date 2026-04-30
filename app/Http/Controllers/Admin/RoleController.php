@@ -94,7 +94,7 @@ class RoleController extends Controller
     public function create()
     {
         return view('admin.roles.create', [
-            'permissions' => Permission::permissionsWithName(),
+            'groupedPermissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -105,7 +105,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->validated());
 
-        $role->syncPermissions($request->input('permissions', []));
+        $role->syncPermissions($this->allowedPermissions($request->input('permissions', [])));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -124,7 +124,7 @@ class RoleController extends Controller
 
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::permissionsWithName(),
+            'groupedPermissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -149,7 +149,7 @@ class RoleController extends Controller
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
-        $role->syncPermissions($request->input('permissions', []));
+        $role->syncPermissions($this->allowedPermissions($request->input('permissions', [])));
 
         $role->update($request->validated());
 
@@ -182,5 +182,13 @@ class RoleController extends Controller
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
+    }
+
+    /**
+     * Filter the given permission names to keep only the registered ones.
+     */
+    private function allowedPermissions(array $permissions): array
+    {
+        return array_values(array_intersect($permissions, Permission::permissions()));
     }
 }

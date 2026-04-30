@@ -399,6 +399,18 @@ return [
         'delete_default' => 'This role cannot be deleted.',
         'delete_own' => 'You cannot delete your role.',
 
+        'permissions_search' => 'Search permissions...',
+        'permissions_select_all' => 'Select all',
+        'permissions_deselect_all' => 'Deselect all',
+        'permissions_select_group' => 'Toggle all in this group',
+        'permissions_no_results' => 'No permission matches your search.',
+
+        'permission_groups' => [
+            'admin' => 'Administration',
+            'comments' => 'Comments',
+            'maintenance' => 'Maintenance',
+        ],
+
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',

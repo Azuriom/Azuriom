@@ -399,6 +399,18 @@ return [
         'delete_default' => 'Ce rôle ne peut pas être supprimé.',
         'delete_own' => 'Vous ne pouvez pas supprimer votre rôle.',
 
+        'permissions_search' => 'Rechercher une permission...',
+        'permissions_select_all' => 'Tout sélectionner',
+        'permissions_deselect_all' => 'Tout désélectionner',
+        'permissions_select_group' => 'Tout (dé)sélectionner dans ce groupe',
+        'permissions_no_results' => 'Aucune permission ne correspond à votre recherche.',
+
+        'permission_groups' => [
+            'admin' => 'Administration',
+            'comments' => 'Commentaires',
+            'maintenance' => 'Maintenance',
+        ],
+
         'discord' => [
             'title' => 'Lier les rôles avec Discord',
             'enable' => 'Activer la liaison des rôles avec Discord',
