@@ -4,6 +4,7 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\RoleRequest;
+use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Azuriom\Models\Setting;
@@ -150,7 +151,11 @@ class RoleController extends Controller
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
-        $role->syncPermissions($this->allowedPermissions($request->input('permissions', [])));
+        $before = $role->rawPermissions()->all();
+        $after = $this->allowedPermissions($request->input('permissions', []));
+
+        $role->syncPermissions($after);
+        $this->logPermissionChange($role, $before, $after, 'edit');
 
         $role->update($request->validated());
 
@@ -202,13 +207,15 @@ class RoleController extends Controller
 
         $source = Role::with('permissions')->findOrFail($validated['source_role']);
 
+        $before = $role->rawPermissions()->all();
         $permissions = $this->allowedPermissions($source->rawPermissions()->all());
 
         if ($request->boolean('merge')) {
-            $permissions = array_values(array_unique(array_merge($role->rawPermissions()->all(), $permissions)));
+            $permissions = array_values(array_unique(array_merge($before, $permissions)));
         }
 
         $role->syncPermissions($permissions);
+        $this->logPermissionChange($role, $before, $permissions, 'copy', $source->name);
 
         return to_route('admin.roles.edit', $role)
             ->with('success', trans('admin.roles.permissions_copied', ['role' => $source->name]));
@@ -231,7 +238,9 @@ class RoleController extends Controller
         $copy->is_admin = false;
         $copy->save();
 
-        $copy->syncPermissions($this->allowedPermissions($role->rawPermissions()->all()));
+        $permissions = $this->allowedPermissions($role->rawPermissions()->all());
+        $copy->syncPermissions($permissions);
+        $this->logPermissionChange($copy, [], $permissions, 'duplicate', $role->name);
 
         return to_route('admin.roles.edit', $copy)
             ->with('success', trans('admin.roles.duplicated', ['role' => $role->name]));
@@ -278,7 +287,11 @@ class RoleController extends Controller
                 continue;
             }
 
-            $role->syncPermissions($this->allowedPermissions($permissions));
+            $before = $role->rawPermissions()->all();
+            $after = $this->allowedPermissions($permissions);
+
+            $role->syncPermissions($after);
+            $this->logPermissionChange($role, $before, $after, 'matrix');
 
             $updated++;
         }
@@ -309,5 +322,46 @@ class RoleController extends Controller
         }
 
         return $name;
+    }
+
+    /**
+     * Record a permission change in the action log.
+     */
+    private function logPermissionChange(Role $role, array $before, array $after, string $source, ?string $sourceRole = null): void
+    {
+        $added = array_values(array_diff($after, $before));
+        $removed = array_values(array_diff($before, $after));
+
+        if ($added === [] && $removed === []) {
+            return;
+        }
+
+        $log = ActionLog::log('roles.permissions-updated', $role, array_filter([
+            'name' => $role->name,
+            'source' => $source,
+            'source_role' => $sourceRole,
+            'added' => count($added),
+            'removed' => count($removed),
+        ], fn ($value) => $value !== null));
+
+        if ($log === null) {
+            return;
+        }
+
+        foreach ($added as $permission) {
+            $log->entries()->create([
+                'attribute' => $permission,
+                'old_value' => 'not granted',
+                'new_value' => 'granted',
+            ]);
+        }
+
+        foreach ($removed as $permission) {
+            $log->entries()->create([
+                'attribute' => $permission,
+                'old_value' => 'granted',
+                'new_value' => 'not granted',
+            ]);
+        }
     }
 }
