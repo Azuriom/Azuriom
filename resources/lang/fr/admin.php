@@ -427,6 +427,15 @@ return [
         'duplicate_name' => 'Copie de :name',
         'duplicated' => 'Le rôle :role a été dupliqué.',
 
+        'matrix_title' => 'Matrice des permissions',
+        'matrix_subtitle' => 'Modifier les permissions de tous les rôles en une seule vue.',
+        'matrix_permission' => 'Permission',
+        'matrix_save' => 'Enregistrer la matrice',
+        'matrix_updated' => ':count rôles ont été mis à jour.',
+        'matrix_expand_all' => 'Tout déplier',
+        'matrix_collapse_all' => 'Tout replier',
+        'matrix_toggle_group' => '(Dé)sélectionner le groupe pour...',
+
         'discord' => [
             'title' => 'Lier les rôles avec Discord',
             'enable' => 'Activer la liaison des rôles avec Discord',

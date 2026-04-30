@@ -238,6 +238,56 @@ class RoleController extends Controller
     }
 
     /**
+     * Display the permissions matrix.
+     */
+    public function matrix()
+    {
+        $roles = Role::with('permissions')->orderByDesc('power')->get();
+
+        $rolePermissions = $roles->mapWithKeys(
+            fn (Role $role) => [$role->id => $role->rawPermissions()->all()],
+        );
+
+        return view('admin.roles.matrix', [
+            'roles' => $roles,
+            'groupedPermissions' => Permission::groupedPermissions(),
+            'rolePermissions' => $rolePermissions,
+        ]);
+    }
+
+    /**
+     * Save the permissions matrix.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateMatrix(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'roles' => ['nullable', 'array'],
+            'roles.*' => ['array'],
+            'roles.*.*' => ['string'],
+        ]);
+
+        $user = $request->user();
+        $updated = 0;
+
+        foreach ($validated['roles'] ?? [] as $roleId => $permissions) {
+            $role = Role::with('permissions')->find($roleId);
+
+            if ($role === null || $user->cannot('update', $role)) {
+                continue;
+            }
+
+            $role->syncPermissions($this->allowedPermissions($permissions));
+
+            $updated++;
+        }
+
+        return to_route('admin.roles.matrix')
+            ->with('success', trans('admin.roles.matrix_updated', ['count' => $updated]));
+    }
+
+    /**
      * Filter the given permission names to keep only the registered ones.
      */
     private function allowedPermissions(array $permissions): array

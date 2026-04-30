@@ -427,6 +427,15 @@ return [
         'duplicate_name' => 'Copy of :name',
         'duplicated' => 'The role :role has been duplicated.',
 
+        'matrix_title' => 'Permissions matrix',
+        'matrix_subtitle' => 'Edit the permissions of every role at once.',
+        'matrix_permission' => 'Permission',
+        'matrix_save' => 'Save matrix',
+        'matrix_updated' => ':count roles have been updated.',
+        'matrix_expand_all' => 'Expand all',
+        'matrix_collapse_all' => 'Collapse all',
+        'matrix_toggle_group' => 'Toggle group for...',
+
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',

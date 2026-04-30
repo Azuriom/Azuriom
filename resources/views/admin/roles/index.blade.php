@@ -87,16 +87,22 @@
                 @endforeach
             </ol>
 
-            @if(Auth::user()->isAdmin())
-                <button type="button" class="btn btn-success" id="save">
-                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
-                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
-                </button>
-            @endif
+            <div class="d-flex align-items-center gap-2">
+                @if(Auth::user()->isAdmin())
+                    <button type="button" class="btn btn-success" id="save">
+                        <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
+                        <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
+                    </button>
+                @endif
 
-            <a class="btn btn-primary" href="{{ route('admin.roles.create') }}">
-                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
-            </a>
+                <a class="btn btn-primary" href="{{ route('admin.roles.create') }}">
+                    <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
+                </a>
+
+                <a class="btn btn-primary ms-auto" href="{{ route('admin.roles.matrix') }}">
+                    <i class="bi bi-grid-3x3"></i> {{ trans('admin.roles.matrix_title') }}
+                </a>
+            </div>
         </div>
     </div>
 

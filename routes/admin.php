@@ -96,11 +96,15 @@ Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])
 Route::resource('users', UserController::class)->except('show')->middleware(['can:admin.users', 'throttle:20,1']);
 Route::post('/users/notify', [UserController::class, 'notify'])->name('users.notify.all')->middleware('can:admin.users');
 Route::post('/users/{user}/notify', [UserController::class, 'notify'])->name('users.notify')->middleware('can:admin.users');
-Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');
-Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power')->middleware('can:admin.roles');
-Route::post('/roles/settings', [RoleController::class, 'updateSettings'])->name('roles.settings')->middleware('can:admin.roles');
-Route::post('/roles/{role}/copy-permissions', [RoleController::class, 'copyPermissions'])->name('roles.copy-permissions')->middleware('can:admin.roles');
-Route::post('/roles/{role}/duplicate', [RoleController::class, 'duplicate'])->name('roles.duplicate')->middleware('can:admin.roles');
+Route::middleware('can:admin.roles')->group(function () {
+    Route::get('/roles/matrix', [RoleController::class, 'matrix'])->name('roles.matrix');
+    Route::post('/roles/matrix', [RoleController::class, 'updateMatrix'])->name('roles.matrix.update');
+    Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power');
+    Route::post('/roles/settings', [RoleController::class, 'updateSettings'])->name('roles.settings');
+    Route::post('/roles/{role}/copy-permissions', [RoleController::class, 'copyPermissions'])->name('roles.copy-permissions');
+    Route::post('/roles/{role}/duplicate', [RoleController::class, 'duplicate'])->name('roles.duplicate');
+    Route::resource('roles', RoleController::class)->except('show');
+});
 
 Route::resource('bans', BanController::class)->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])->middleware('can:admin.users');
