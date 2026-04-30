@@ -411,6 +411,22 @@ return [
             'maintenance' => 'Maintenance',
         ],
 
+        'back' => 'Retour aux rôles',
+
+        'copy_title' => 'Copier les permissions d\'un autre rôle',
+        'copy_info' => 'Remplacer ou fusionner les permissions de ce rôle avec celles d\'un autre rôle.',
+        'copy_from' => 'Rôle source',
+        'copy_select' => 'Choisir un rôle...',
+        'copy_merge' => 'Fusionner avec les permissions existantes',
+        'copy_merge_info' => 'Si décoché, les permissions actuelles sont remplacées.',
+        'copy_submit' => 'Copier les permissions',
+        'copy_confirm' => 'Les permissions de ce rôle vont être modifiées. Continuer ?',
+        'permissions_copied' => 'Permissions copiées depuis :role.',
+
+        'duplicate' => 'Dupliquer',
+        'duplicate_name' => 'Copie de :name',
+        'duplicated' => 'Le rôle :role a été dupliqué.',
+
         'discord' => [
             'title' => 'Lier les rôles avec Discord',
             'enable' => 'Activer la liaison des rôles avec Discord',

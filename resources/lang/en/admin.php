@@ -411,6 +411,22 @@ return [
             'maintenance' => 'Maintenance',
         ],
 
+        'back' => 'Back to roles',
+
+        'copy_title' => 'Copy permissions from another role',
+        'copy_info' => 'Replace or merge this role\'s permissions with the ones of another role.',
+        'copy_from' => 'Source role',
+        'copy_select' => 'Select a role...',
+        'copy_merge' => 'Merge with existing permissions',
+        'copy_merge_info' => 'When unchecked, the current permissions are replaced.',
+        'copy_submit' => 'Copy permissions',
+        'copy_confirm' => 'This will change the permissions of this role. Continue?',
+        'permissions_copied' => 'Permissions copied from :role.',
+
+        'duplicate' => 'Duplicate',
+        'duplicate_name' => 'Copy of :name',
+        'duplicated' => 'The role :role has been duplicated.',
+
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',

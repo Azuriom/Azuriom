@@ -99,6 +99,8 @@ Route::post('/users/{user}/notify', [UserController::class, 'notify'])->name('us
 Route::resource('roles', RoleController::class)->except('show')->middleware('can:admin.roles');
 Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power')->middleware('can:admin.roles');
 Route::post('/roles/settings', [RoleController::class, 'updateSettings'])->name('roles.settings')->middleware('can:admin.roles');
+Route::post('/roles/{role}/copy-permissions', [RoleController::class, 'copyPermissions'])->name('roles.copy-permissions')->middleware('can:admin.roles');
+Route::post('/roles/{role}/duplicate', [RoleController::class, 'duplicate'])->name('roles.duplicate')->middleware('can:admin.roles');
 
 Route::resource('bans', BanController::class)->only('index')->middleware('can:admin.users');
 Route::resource('users.bans', BanController::class)->only(['store', 'destroy'])->middleware('can:admin.users');

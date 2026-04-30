@@ -3,6 +3,12 @@
 @section('title', trans('admin.roles.create'))
 
 @section('content')
+    <div class="mb-3">
+        <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> {{ trans('admin.roles.back') }}
+        </a>
+    </div>
+
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('admin.roles.store') }}" method="POST">

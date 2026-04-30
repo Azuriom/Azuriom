@@ -70,6 +70,10 @@
                                 <span>
                                     @can('update', $role)
                                         <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                        <form action="{{ route('admin.roles.duplicate', $role) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link p-0 m-1 align-baseline" title="{{ trans('admin.roles.duplicate') }}" data-bs-toggle="tooltip"><i class="bi bi-files"></i></button>
+                                        </form>
                                     @endcan
                                     @if(! $role->isDefault())
                                         @can('delete', $role)
