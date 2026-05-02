@@ -29,6 +29,7 @@ return [
         'copy' => 'Copier',
         'create' => 'Créer',
         'delete' => 'Supprimer',
+        'deselect_all' => 'Désélectionner tout',
         'disable' => 'Désactiver',
         'download' => 'Télécharger',
         'duplicate' => 'Dupliquer',
@@ -43,6 +44,7 @@ return [
         'remove' => 'Retirer',
         'save' => 'Sauvegarder',
         'search' => 'Rechercher',
+        'select_all' => 'Selectionner tout',
         'send' => 'Envoyer',
         'show' => 'Voir',
         'sort' => 'Trier',
@@ -105,6 +107,7 @@ return [
     'none' => 'Aucun(e)',
     'copied' => 'Copié',
     'icons' => 'Vous pouvez avoir la liste des icônes disponibles sur <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>.',
+    'empty' => 'Aucun résultat trouvé.',
 
     'home' => 'Accueil',
     'servers' => 'Serveurs',

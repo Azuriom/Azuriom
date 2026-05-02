@@ -46,46 +46,47 @@
 </div>
 
 <div id="permissionsGroup" class="{{ ($role->is_admin ?? false) ? 'collapse' : 'show' }}">
-    <div class="card card-body mb-2" id="rolePermissions">
+    <div class="card card-body mb-3 pb-0" id="rolePermissions">
         <div class="row g-2 mb-3 align-items-center">
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input type="search" class="form-control" id="permissionsSearch" placeholder="{{ trans('admin.roles.permissions_search') }}" autocomplete="off">
+                    <input type="search" class="form-control" id="permissionsSearch" placeholder="{{ trans('messages.actions.search') }}" autocomplete="off">
                 </div>
             </div>
             <div class="col-md-auto d-flex gap-2">
-                <button type="button" class="btn btn-sm btn-secondary" data-permissions-action="select-all">
-                    <i class="bi bi-check-all"></i> {{ trans('admin.roles.permissions_select_all') }}
-                </button>
-                <button type="button" class="btn btn-sm btn-secondary" data-permissions-action="deselect-all">
-                    <i class="bi bi-x-lg"></i> {{ trans('admin.roles.permissions_deselect_all') }}
+                <button type="button" class="btn btn-danger" data-permissions-action="deselect-all">
+                    <i class="bi bi-x-lg"></i> {{ trans('messages.actions.deselect_all') }}
                 </button>
             </div>
         </div>
 
-        @foreach($groupedPermissions as $group => $permissions)
+        @foreach($permissions as $group => $localPermissions)
             <div class="permissions-group mb-3" data-permissions-group="{{ $group }}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <button type="button" class="btn btn-link text-decoration-none p-0 fw-bold permissions-group-toggle" data-bs-toggle="collapse" data-bs-target="#permissionsGroup_{{ $group }}" aria-expanded="true">
-                        <i class="bi bi-chevron-down permissions-group-icon"></i>
-                        {{ trans()->has('admin.roles.permission_groups.'.$group) ? trans('admin.roles.permission_groups.'.$group) : ucfirst($group) }}
-                        <span class="badge bg-secondary ms-1">{{ count($permissions) }}</span>
+                        <button type="button" class="btn btn-link fw-bold link-body-emphasis p-0" data-bs-toggle="collapse" data-bs-target="#permissionsGroup{{ $loop->index }}" aria-expanded="true">
+                        <i class="bi bi-chevron-down"></i>
+                        {{ trans()->has('admin.roles.group.'.$group) ? trans('admin.roles.group.'.$group) : ucfirst($group) }}
+                        <span class="badge bg-secondary ms-1">{{ count($localPermissions) }}</span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-permissions-action="toggle-group" data-group="{{ $group }}" title="{{ trans('admin.roles.permissions_select_group') }}">
+                    <button type="button" class="btn btn-sm btn-secondary" data-permissions-action="toggle-group" data-group="{{ $group }}"
+                            title="{{ trans('messages.actions.select_all') }}" data-bs-toggle="tooltip">
                         <i class="bi bi-check2-square"></i>
                     </button>
                 </div>
 
-                <div class="collapse show" id="permissionsGroup_{{ $group }}">
+                <div class="collapse show" id="permissionsGroup{{ $loop->index }}">
                     <div class="row">
-                        @foreach($permissions as $permission => $permissionDescription)
+                        @foreach($localPermissions as $permission => $permissionDescription)
                             <div class="col-lg-6 permissions-item" data-permission-name="{{ $permission }}" data-permission-label="{{ trans($permissionDescription) }}">
                                 <div class="mb-2 form-check">
-                                    <input type="checkbox" class="form-check-input" id="permission_{{ md5($permission) }}" name="permissions[]" value="{{ $permission }}" @checked(isset($role) && $role->hasRawPermission($permission)) data-role-permission="{{ $permission }}" data-permissions-group="{{ $group }}">
-                                    <label class="form-check-label" for="permission_{{ md5($permission) }}">
-                                        <code class="small">{{ $permission }}</code>
-                                        <span class="d-block text-body-secondary small">{{ trans($permissionDescription) }}</span>
+                                    <input type="checkbox" class="form-check-input" id="permission_{{ $loop->parent->index }}_{{ $loop->index }}"
+                                           name="permissions[]" value="{{ $permission }}" @checked(isset($role) && $role->hasRawPermission($permission))
+                                           data-role-permission="{{ $permission }}" data-permissions-group="{{ $group }}">
+
+                                    <label class="form-check-label" for="permission_{{ $loop->parent->index }}_{{ $loop->index }}">
+                                        <code>{{ $permission }}</code>
+                                        <span class="d-block small">{{ trans($permissionDescription) }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -95,78 +96,92 @@
             </div>
         @endforeach
 
-        <div class="text-body-secondary small d-none" id="permissionsNoResults">
-            <i class="bi bi-info-circle"></i> {{ trans('admin.roles.permissions_no_results') }}
-        </div>
+        <p class="d-none" id="permissionsNoResults">
+            <i class="bi bi-info-circle"></i> {{ trans('messages.empty') }}
+        </p>
     </div>
 </div>
 
 @push('styles')
     <style>
-        #rolePermissions .permissions-group-toggle { color: inherit; }
-        #rolePermissions .permissions-group-toggle[aria-expanded="false"] .permissions-group-icon { transform: rotate(-90deg); }
-        #rolePermissions .permissions-group-icon { transition: transform .15s ease-in-out; }
-        #rolePermissions .permissions-item.d-none + .permissions-item { margin-top: 0; }
+        #rolePermissions .bi::before {
+            transition: transform .15s ease-in-out;
+        }
+
+        #rolePermissions [data-bs-toggle="collapse"][aria-expanded="false"] .bi::before {
+            transform: rotate(-90deg);
+        }
     </style>
 @endpush
 
 @push('footer-scripts')
     <script>
-        const rolePermissionsBox = document.getElementById('rolePermissions');
-        const adminAccessInput = rolePermissionsBox.querySelector('[data-role-permission="admin.access"]');
+        const permissionInputs = Array.from(document.querySelectorAll('[data-role-permission]'));
 
-        rolePermissionsBox.addEventListener('click', function (event) {
-            const action = event.target.closest('[data-permissions-action]');
+        document.querySelector('[data-permissions-action="deselect-all"]')
+            .addEventListener('click', function () {
+                permissionInputs.forEach(function (input) {
+                    input.checked = false;
+                });
+            });
 
-            if (!action) {
-                return;
-            }
+        document.querySelectorAll('[data-permissions-action="toggle-group"]')
+            .forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const groupInputs = permissionInputs.filter(function (input) {
+                        return input.dataset.permissionsGroup === button.dataset.group
+                            && !input.closest('.permissions-item').classList.contains('d-none')
+                    });
 
-            if (action.dataset.permissionsAction === 'select-all') {
-                rolePermissionsBox.querySelectorAll('input[name="permissions[]"]').forEach(function (input) { input.checked = true; });
-            } else if (action.dataset.permissionsAction === 'deselect-all') {
-                rolePermissionsBox.querySelectorAll('input[name="permissions[]"]').forEach(function (input) { input.checked = false; });
-            } else if (action.dataset.permissionsAction === 'toggle-group') {
-                const inputs = rolePermissionsBox.querySelectorAll('input[data-permissions-group="' + action.dataset.group + '"]');
-                const allChecked = Array.from(inputs).every(function (input) { return input.checked; });
-                inputs.forEach(function (input) { input.checked = !allChecked; });
-            }
-        });
+                    const allChecked = groupInputs.every((input) => input.checked);
+
+                    groupInputs.forEach(function (input) {
+                        input.checked = !allChecked;
+                    });
+                });
+            });
 
         document.getElementById('permissionsSearch').addEventListener('input', function () {
             const query = this.value.trim().toLowerCase();
-            let visible = 0;
+            let hasVisible = false;
 
-            rolePermissionsBox.querySelectorAll('.permissions-item').forEach(function (item) {
-                const matches = !query
-                    || item.dataset.permissionName.toLowerCase().includes(query)
-                    || item.dataset.permissionLabel.toLowerCase().includes(query);
+            document.querySelectorAll('.permissions-group').forEach(function (group) {
+                let groupHasVisible = false;
 
-                item.classList.toggle('d-none', !matches);
+                group.querySelectorAll('[data-permission-name]').forEach(function (item) {
+                    const visible = !query ||
+                        item.dataset.permissionName.toLowerCase().includes(query) ||
+                        item.dataset.permissionLabel.toLowerCase().includes(query);
 
-                if (matches) {
-                    visible++;
-                }
+                    item.classList.toggle('d-none', !visible);
+
+                    if (visible) {
+                        groupHasVisible = true;
+                        hasVisible = true;
+                    }
+                });
+
+                group.classList.toggle('d-none', !groupHasVisible);
             });
 
-            rolePermissionsBox.querySelectorAll('.permissions-group').forEach(function (group) {
-                const any = group.querySelectorAll('.permissions-item:not(.d-none)').length > 0;
-                group.classList.toggle('d-none', !any);
-            });
-
-            document.getElementById('permissionsNoResults').classList.toggle('d-none', visible !== 0);
+            document.getElementById('permissionsNoResults').classList.toggle('d-none', hasVisible);
         });
 
+        const adminAccessInput = document.querySelector('[data-role-permission="admin.access"]');
+
         if (adminAccessInput) {
-            rolePermissionsBox.querySelectorAll('[data-role-permission^="admin."]').forEach(function (input) {
-                if (input !== adminAccessInput) {
+            permissionInputs
+                .filter(function (input) {
+                    return input !== adminAccessInput &&
+                        input.dataset.rolePermission.startsWith('admin.');
+                })
+                .forEach(function (input) {
                     input.addEventListener('change', function () {
                         if (input.checked) {
                             adminAccessInput.checked = true;
                         }
                     });
-                }
-            });
+                });
         }
     </script>
 @endpush

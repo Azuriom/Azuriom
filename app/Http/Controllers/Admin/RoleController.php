@@ -4,7 +4,6 @@ namespace Azuriom\Http\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\RoleRequest;
-use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
 use Azuriom\Models\Role;
 use Azuriom\Models\Setting;
@@ -95,7 +94,7 @@ class RoleController extends Controller
     public function create()
     {
         return view('admin.roles.create', [
-            'groupedPermissions' => Permission::groupedPermissions(),
+            'permissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -106,7 +105,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->validated());
 
-        $role->syncPermissions($this->allowedPermissions($request->input('permissions', [])));
+        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -125,8 +124,7 @@ class RoleController extends Controller
 
         return view('admin.roles.edit', [
             'role' => $role,
-            'groupedPermissions' => Permission::groupedPermissions(),
-            'copySources' => Role::whereKeyNot($role->id)->orderByDesc('power')->get(),
+            'permissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -151,13 +149,9 @@ class RoleController extends Controller
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
-        $before = $role->rawPermissions()->all();
-        $after = $this->allowedPermissions($request->input('permissions', []));
-
-        $role->syncPermissions($after);
-        $this->logPermissionChange($role, $before, $after, 'edit');
-
-        $role->update($request->validated());
+        // Manually set updated column to trigger event even if no role attribute was changed
+        $role->setUpdatedAt(now())->update($request->validated());
+        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -191,37 +185,6 @@ class RoleController extends Controller
     }
 
     /**
-     * Copy the permissions of another role into the given role.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function copyPermissions(Request $request, Role $role)
-    {
-        $this->authorize('update', $role);
-
-        $validated = $this->validate($request, [
-            'source_role' => ['required', 'integer', 'exists:roles,id', 'not_in:'.$role->id],
-            'merge' => ['sometimes', 'boolean'],
-        ]);
-
-        $source = Role::with('permissions')->findOrFail($validated['source_role']);
-
-        $before = $role->rawPermissions()->all();
-        $permissions = $this->allowedPermissions($source->rawPermissions()->all());
-
-        if ($request->boolean('merge')) {
-            $permissions = array_values(array_unique(array_merge($before, $permissions)));
-        }
-
-        $role->syncPermissions($permissions);
-        $this->logPermissionChange($role, $before, $permissions, 'copy', $source->name);
-
-        return to_route('admin.roles.edit', $role)
-            ->with('success', trans('admin.roles.permissions_copied', ['role' => $source->name]));
-    }
-
-    /**
      * Duplicate the given role with its permissions.
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -230,80 +193,19 @@ class RoleController extends Controller
     {
         $this->authorize('update', $role);
 
-        $role->loadMissing('permissions');
+        $copy = $role->load('permissions')->replicate();
+        $copy->fill(['name' => $this->uniqueDuplicateName($role)])->save();
 
-        $copy = $role->replicate(['power']);
-        $copy->name = $this->uniqueDuplicateName($role);
-        $copy->power = 0;
-        $copy->is_admin = false;
-        $copy->save();
-
-        $permissions = $this->allowedPermissions($role->rawPermissions()->all());
-        $copy->syncPermissions($permissions);
-        $this->logPermissionChange($copy, [], $permissions, 'duplicate', $role->name);
+        $copy->refresh()->syncPermissions($role->rawPermissions()->all());
 
         return to_route('admin.roles.edit', $copy)
-            ->with('success', trans('admin.roles.duplicated', ['role' => $role->name]));
-    }
-
-    /**
-     * Display the permissions matrix.
-     */
-    public function matrix()
-    {
-        $roles = Role::with('permissions')->orderByDesc('power')->get();
-
-        $rolePermissions = $roles->mapWithKeys(
-            fn (Role $role) => [$role->id => $role->rawPermissions()->all()],
-        );
-
-        return view('admin.roles.matrix', [
-            'roles' => $roles,
-            'groupedPermissions' => Permission::groupedPermissions(),
-            'rolePermissions' => $rolePermissions,
-        ]);
-    }
-
-    /**
-     * Save the permissions matrix.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function updateMatrix(Request $request)
-    {
-        $validated = $this->validate($request, [
-            'roles' => ['nullable', 'array'],
-            'roles.*' => ['array'],
-            'roles.*.*' => ['string'],
-        ]);
-
-        $user = $request->user();
-        $updated = 0;
-
-        foreach ($validated['roles'] ?? [] as $roleId => $permissions) {
-            $role = Role::with('permissions')->find($roleId);
-
-            if ($role === null || $user->cannot('update', $role)) {
-                continue;
-            }
-
-            $before = $role->rawPermissions()->all();
-            $after = $this->allowedPermissions($permissions);
-
-            $role->syncPermissions($after);
-            $this->logPermissionChange($role, $before, $after, 'matrix');
-
-            $updated++;
-        }
-
-        return to_route('admin.roles.matrix')
-            ->with('success', trans('admin.roles.matrix_updated', ['count' => $updated]));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Filter the given permission names to keep only the registered ones.
      */
-    private function allowedPermissions(array $permissions): array
+    private function validPermissions(array $permissions): array
     {
         return array_values(array_intersect($permissions, Permission::permissions()));
     }
@@ -313,55 +215,13 @@ class RoleController extends Controller
      */
     private function uniqueDuplicateName(Role $role): string
     {
-        $base = trans('admin.roles.duplicate_name', ['name' => $role->name]);
-        $name = $base;
-        $i = 2;
+        $name = $role->name;
+        $i = 1;
 
         while (Role::where('name', $name)->exists()) {
-            $name = $base.' ('.$i++.')';
+            $name = $role->name.' ('.$i++.')';
         }
 
         return $name;
-    }
-
-    /**
-     * Record a permission change in the action log.
-     */
-    private function logPermissionChange(Role $role, array $before, array $after, string $source, ?string $sourceRole = null): void
-    {
-        $added = array_values(array_diff($after, $before));
-        $removed = array_values(array_diff($before, $after));
-
-        if ($added === [] && $removed === []) {
-            return;
-        }
-
-        $log = ActionLog::log('roles.permissions-updated', $role, array_filter([
-            'name' => $role->name,
-            'source' => $source,
-            'source_role' => $sourceRole,
-            'added' => count($added),
-            'removed' => count($removed),
-        ], fn ($value) => $value !== null));
-
-        if ($log === null) {
-            return;
-        }
-
-        foreach ($added as $permission) {
-            $log->entries()->create([
-                'attribute' => $permission,
-                'old_value' => 'not granted',
-                'new_value' => 'granted',
-            ]);
-        }
-
-        foreach ($removed as $permission) {
-            $log->entries()->create([
-                'attribute' => $permission,
-                'old_value' => 'granted',
-                'new_value' => 'not granted',
-            ]);
-        }
     }
 }

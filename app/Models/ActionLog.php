@@ -122,13 +122,6 @@ class ActionLog extends Model
             Redirect::class,
             User::class,
         ], 'admin.logs');
-
-        self::registerLogs('roles.permissions-updated', [
-            'icon' => 'shield-check',
-            'color' => 'warning',
-            'message' => 'admin.logs.roles.permissions-updated',
-            'model' => Role::class,
-        ]);
     }
 
     /**

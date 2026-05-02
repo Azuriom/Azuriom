@@ -97,11 +97,8 @@ Route::resource('users', UserController::class)->except('show')->middleware(['ca
 Route::post('/users/notify', [UserController::class, 'notify'])->name('users.notify.all')->middleware('can:admin.users');
 Route::post('/users/{user}/notify', [UserController::class, 'notify'])->name('users.notify')->middleware('can:admin.users');
 Route::middleware('can:admin.roles')->group(function () {
-    Route::get('/roles/matrix', [RoleController::class, 'matrix'])->name('roles.matrix');
-    Route::post('/roles/matrix', [RoleController::class, 'updateMatrix'])->name('roles.matrix.update');
     Route::post('/roles/power', [RoleController::class, 'updatePower'])->name('roles.update-power');
     Route::post('/roles/settings', [RoleController::class, 'updateSettings'])->name('roles.settings');
-    Route::post('/roles/{role}/copy-permissions', [RoleController::class, 'copyPermissions'])->name('roles.copy-permissions');
     Route::post('/roles/{role}/duplicate', [RoleController::class, 'duplicate'])->name('roles.duplicate');
     Route::resource('roles', RoleController::class)->except('show');
 });

@@ -399,42 +399,11 @@ return [
         'delete_default' => 'This role cannot be deleted.',
         'delete_own' => 'You cannot delete your role.',
 
-        'permissions_search' => 'Search permissions...',
-        'permissions_select_all' => 'Select all',
-        'permissions_deselect_all' => 'Deselect all',
-        'permissions_select_group' => 'Toggle all in this group',
-        'permissions_no_results' => 'No permission matches your search.',
-
-        'permission_groups' => [
+        'group' => [
             'admin' => 'Administration',
             'comments' => 'Comments',
             'maintenance' => 'Maintenance',
         ],
-
-        'back' => 'Back to roles',
-
-        'copy_title' => 'Copy permissions from another role',
-        'copy_info' => 'Replace or merge this role\'s permissions with the ones of another role.',
-        'copy_from' => 'Source role',
-        'copy_select' => 'Select a role...',
-        'copy_merge' => 'Merge with existing permissions',
-        'copy_merge_info' => 'When unchecked, the current permissions are replaced.',
-        'copy_submit' => 'Copy permissions',
-        'copy_confirm' => 'This will change the permissions of this role. Continue?',
-        'permissions_copied' => 'Permissions copied from :role.',
-
-        'duplicate' => 'Duplicate',
-        'duplicate_name' => 'Copy of :name',
-        'duplicated' => 'The role :role has been duplicated.',
-
-        'matrix_title' => 'Permissions matrix',
-        'matrix_subtitle' => 'Edit the permissions of every role at once.',
-        'matrix_permission' => 'Permission',
-        'matrix_save' => 'Save matrix',
-        'matrix_updated' => ':count roles have been updated.',
-        'matrix_expand_all' => 'Expand all',
-        'matrix_collapse_all' => 'Collapse all',
-        'matrix_toggle_group' => 'Toggle group for...',
 
         'discord' => [
             'title' => 'Link Discord roles',

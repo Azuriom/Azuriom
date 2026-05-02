@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         }
 
         foreach (Role::all() as $role) {
-            $role->syncPermissions(['comments.create'], false);
+            $role->syncPermissions(['comments.create'], false, false);
         }
     }
 }

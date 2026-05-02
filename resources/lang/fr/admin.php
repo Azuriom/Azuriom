@@ -399,42 +399,11 @@ return [
         'delete_default' => 'Ce rôle ne peut pas être supprimé.',
         'delete_own' => 'Vous ne pouvez pas supprimer votre rôle.',
 
-        'permissions_search' => 'Rechercher une permission...',
-        'permissions_select_all' => 'Tout sélectionner',
-        'permissions_deselect_all' => 'Tout désélectionner',
-        'permissions_select_group' => 'Tout (dé)sélectionner dans ce groupe',
-        'permissions_no_results' => 'Aucune permission ne correspond à votre recherche.',
-
-        'permission_groups' => [
+        'group' => [
             'admin' => 'Administration',
             'comments' => 'Commentaires',
             'maintenance' => 'Maintenance',
         ],
-
-        'back' => 'Retour aux rôles',
-
-        'copy_title' => 'Copier les permissions d\'un autre rôle',
-        'copy_info' => 'Remplacer ou fusionner les permissions de ce rôle avec celles d\'un autre rôle.',
-        'copy_from' => 'Rôle source',
-        'copy_select' => 'Choisir un rôle...',
-        'copy_merge' => 'Fusionner avec les permissions existantes',
-        'copy_merge_info' => 'Si décoché, les permissions actuelles sont remplacées.',
-        'copy_submit' => 'Copier les permissions',
-        'copy_confirm' => 'Les permissions de ce rôle vont être modifiées. Continuer ?',
-        'permissions_copied' => 'Permissions copiées depuis :role.',
-
-        'duplicate' => 'Dupliquer',
-        'duplicate_name' => 'Copie de :name',
-        'duplicated' => 'Le rôle :role a été dupliqué.',
-
-        'matrix_title' => 'Matrice des permissions',
-        'matrix_subtitle' => 'Modifier les permissions de tous les rôles en une seule vue.',
-        'matrix_permission' => 'Permission',
-        'matrix_save' => 'Enregistrer la matrice',
-        'matrix_updated' => ':count rôles ont été mis à jour.',
-        'matrix_expand_all' => 'Tout déplier',
-        'matrix_collapse_all' => 'Tout replier',
-        'matrix_toggle_group' => '(Dé)sélectionner le groupe pour...',
 
         'discord' => [
             'title' => 'Lier les rôles avec Discord',

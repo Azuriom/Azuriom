@@ -72,7 +72,7 @@
                                         <a href="{{ route('admin.roles.edit', $role) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                         <form action="{{ route('admin.roles.duplicate', $role) }}" method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-link p-0 m-1 align-baseline" title="{{ trans('admin.roles.duplicate') }}" data-bs-toggle="tooltip"><i class="bi bi-files"></i></button>
+                                            <button type="submit" class="btn btn-link p-0 mx-1 align-baseline" title="{{ trans('messages.actions.duplicate') }}" data-bs-toggle="tooltip"><i class="bi bi-copy"></i></button>
                                         </form>
                                     @endcan
                                     @if(! $role->isDefault())
@@ -87,22 +87,16 @@
                 @endforeach
             </ol>
 
-            <div class="d-flex align-items-center gap-2">
-                @if(Auth::user()->isAdmin())
-                    <button type="button" class="btn btn-success" id="save">
-                        <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
-                        <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
-                    </button>
-                @endif
+            @if(Auth::user()->isAdmin())
+                <button type="button" class="btn btn-success" id="save">
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
+                    <span class="spinner-border spinner-border-sm btn-spinner" role="status"></span>
+                </button>
+            @endif
 
-                <a class="btn btn-primary" href="{{ route('admin.roles.create') }}">
-                    <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
-                </a>
-
-                <a class="btn btn-primary ms-auto" href="{{ route('admin.roles.matrix') }}">
-                    <i class="bi bi-grid-3x3"></i> {{ trans('admin.roles.matrix_title') }}
-                </a>
-            </div>
+            <a class="btn btn-primary" href="{{ route('admin.roles.create') }}">
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
+            </a>
         </div>
     </div>
 
