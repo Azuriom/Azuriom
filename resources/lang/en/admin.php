@@ -598,14 +598,6 @@ return [
             'created' => 'Created role #:id',
             'updated' => 'Updated role #:id',
             'deleted' => 'Deleted role #:id',
-            'permissions-updated' => 'Updated permissions of role :name (#:id): +:added, -:removed (:source)',
-            'permission_added' => 'Added permissions',
-            'permission_removed' => 'Removed permissions',
-            'permission_source' => 'Source',
-            'permission_source_edit' => 'Edit role',
-            'permission_source_matrix' => 'Permissions matrix',
-            'permission_source_copy' => 'Copied from role :name',
-            'permission_source_duplicate' => 'Duplicated from role :name',
         ],
 
         'servers' => [

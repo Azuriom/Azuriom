@@ -598,14 +598,6 @@ return [
             'created' => 'Création du rôle #:id',
             'updated' => 'Mise à jour du rôle #:id',
             'deleted' => 'Suppression du rôle #:id',
-            'permissions-updated' => 'Permissions du rôle :name (#:id) modifiées : +:added, -:removed (:source)',
-            'permission_added' => 'Permissions ajoutées',
-            'permission_removed' => 'Permissions retirées',
-            'permission_source' => 'Source',
-            'permission_source_edit' => 'Édition du rôle',
-            'permission_source_matrix' => 'Matrice des permissions',
-            'permission_source_copy' => 'Copiée depuis le rôle :name',
-            'permission_source_duplicate' => 'Dupliquée depuis le rôle :name',
         ],
 
         'servers' => [

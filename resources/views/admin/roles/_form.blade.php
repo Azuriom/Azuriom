@@ -66,7 +66,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-2">
                         <button type="button" class="btn btn-link fw-bold link-body-emphasis p-0" data-bs-toggle="collapse" data-bs-target="#permissionsGroup{{ $loop->index }}" aria-expanded="true">
                         <i class="bi bi-chevron-down"></i>
-                        {{ trans()->has('admin.roles.group.'.$group) ? trans('admin.roles.group.'.$group) : ucfirst($group) }}
+                        {{ trans()->has('admin.roles.group.'.$group) ? trans('admin.roles.group.'.$group) : Str::title($group) }}
                         <span class="badge bg-secondary ms-1">{{ count($localPermissions) }}</span>
                     </button>
                     <button type="button" class="btn btn-sm btn-secondary" data-permissions-action="toggle-group" data-group="{{ $group }}"
