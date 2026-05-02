@@ -399,6 +399,12 @@ return [
         'delete_default' => 'Ce rôle ne peut pas être supprimé.',
         'delete_own' => 'Vous ne pouvez pas supprimer votre rôle.',
 
+        'group' => [
+            'admin' => 'Administration',
+            'comments' => 'Commentaires',
+            'maintenance' => 'Maintenance',
+        ],
+
         'discord' => [
             'title' => 'Lier les rôles avec Discord',
             'enable' => 'Activer la liaison des rôles avec Discord',

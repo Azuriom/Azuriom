@@ -399,6 +399,12 @@ return [
         'delete_default' => 'This role cannot be deleted.',
         'delete_own' => 'You cannot delete your role.',
 
+        'group' => [
+            'admin' => 'Administration',
+            'comments' => 'Comments',
+            'maintenance' => 'Maintenance',
+        ],
+
         'discord' => [
             'title' => 'Link Discord roles',
             'enable' => 'Enable Discord roles link',

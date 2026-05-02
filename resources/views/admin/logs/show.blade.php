@@ -12,7 +12,7 @@
 
             <p class="mb-4">
                 <a href="{{ route('admin.users.edit', $log->user) }}">
-                   {{ $log->user->name }}
+                    {{ $log->user->name }}
                 </a> - {{ format_date($log->created_at) }}
             </p>
 
@@ -34,10 +34,22 @@
                             <tr>
                                 <th scope="row">{{ $entry->attribute }}</th>
                                 <td>
-                                    {{ $entry->old_value }}
+                                    @if($entry->old_value === '0')
+                                        <span class="badge bg-danger">{{ trans('messages.no') }}</span>
+                                    @elseif($entry->old_value === '1')
+                                        <span class="badge bg-danger">{{ trans('messages.yes') }}</span>
+                                    @else
+                                        {{ $entry->old_value }}
+                                    @endif
                                 </td>
                                 <td>
-                                    {{ $entry->new_value }}
+                                    @if($entry->new_value === '0')
+                                        <span class="badge bg-danger">{{ trans('messages.no') }}</span>
+                                    @elseif($entry->new_value === '1')
+                                        <span class="badge bg-success">{{ trans('messages.yes') }}</span>
+                                    @else
+                                        {{ $entry->new_value }}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

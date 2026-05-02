@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait Loggable
 {
+    protected ?ActionLog $lastActionLog = null;
+
     protected static function bootLoggable(): void
     {
         $events = static::$logEvents ?? ['created', 'updated', 'deleted'];
@@ -23,6 +25,8 @@ trait Loggable
                 if ($log !== null && $event === 'updated') {
                     $model->createLogEntries($log, $event);
                 }
+
+                $model->lastActionLog = $log;
             });
         }
     }

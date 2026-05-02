@@ -94,7 +94,7 @@ class RoleController extends Controller
     public function create()
     {
         return view('admin.roles.create', [
-            'permissions' => Permission::permissionsWithName(),
+            'permissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -105,7 +105,7 @@ class RoleController extends Controller
     {
         $role = Role::create($request->validated());
 
-        $role->syncPermissions($request->input('permissions', []));
+        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -124,7 +124,7 @@ class RoleController extends Controller
 
         return view('admin.roles.edit', [
             'role' => $role,
-            'permissions' => Permission::permissionsWithName(),
+            'permissions' => Permission::groupedPermissions(),
         ]);
     }
 
@@ -149,9 +149,9 @@ class RoleController extends Controller
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
-        $role->syncPermissions($request->input('permissions', []));
-
-        $role->update($request->validated());
+        // Manually set updated column to trigger event even if no role attribute was changed
+        $role->setUpdatedAt(now())->update($request->validated());
+        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -182,5 +182,46 @@ class RoleController extends Controller
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
+    }
+
+    /**
+     * Duplicate the given role with its permissions.
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function duplicate(Role $role)
+    {
+        $this->authorize('update', $role);
+
+        $copy = $role->load('permissions')->replicate();
+        $copy->fill(['name' => $this->uniqueDuplicateName($role)])->save();
+
+        $copy->refresh()->syncPermissions($role->rawPermissions()->all());
+
+        return to_route('admin.roles.edit', $copy)
+            ->with('success', trans('messages.status.success'));
+    }
+
+    /**
+     * Filter the given permission names to keep only the registered ones.
+     */
+    private function validPermissions(array $permissions): array
+    {
+        return array_values(array_intersect($permissions, Permission::permissions()));
+    }
+
+    /**
+     * Find a unique name for the duplicate of the given role.
+     */
+    private function uniqueDuplicateName(Role $role): string
+    {
+        $name = $role->name;
+        $i = 1;
+
+        while (Role::where('name', $name)->exists()) {
+            $name = $role->name.' ('.$i++.')';
+        }
+
+        return $name;
     }
 }

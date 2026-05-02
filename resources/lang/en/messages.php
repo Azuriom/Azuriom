@@ -29,6 +29,7 @@ return [
         'copy' => 'Copy',
         'create' => 'Create',
         'delete' => 'Delete',
+        'deselect_all' => 'Deselect all',
         'disable' => 'Disable',
         'download' => 'Download',
         'duplicate' => 'Duplicate',
@@ -43,6 +44,7 @@ return [
         'remove' => 'Remove',
         'save' => 'Save',
         'search' => 'Search',
+        'select_all' => 'Select all',
         'send' => 'Send',
         'show' => 'Show',
         'sort' => 'Sort',
@@ -105,6 +107,7 @@ return [
     'none' => 'None',
     'copied' => 'Copied',
     'icons' => 'You can find the list of available icons on <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>.',
+    'empty' => 'No results found.',
 
     'home' => 'Home',
     'servers' => 'Servers',

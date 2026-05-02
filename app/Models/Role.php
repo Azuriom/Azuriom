@@ -98,19 +98,36 @@ class Role extends Model
         return $this->permissions->contains('permission', $permission);
     }
 
-    public function syncPermissions(array $newPermissions, bool $remove = true): void
+    public function syncPermissions(array $newPermissions, bool $remove = true, bool $recordLogs = true): void
     {
         $permissions = $this->rawPermissions();
+        $log = $recordLogs ? $this->lastActionLog : null;
 
         // Create the new permissions
         foreach (array_diff($newPermissions, $permissions->all()) as $permission) {
             $this->permissions()->create(['permission' => $permission]);
+
+            $log?->entries()->create([
+                'attribute' => $permission,
+                'old_value' => false,
+                'new_value' => true,
+            ]);
         }
 
-        if ($remove) {
-            // Delete the removed permissions
-            $removedPermissions = $permissions->diff($newPermissions);
-            $this->permissions()->whereIn('permission', $removedPermissions)->delete();
+        if (! $remove) {
+            return;
+        }
+
+        // Delete the removed permissions
+        $removedPermissions = $permissions->diff($newPermissions);
+        $this->permissions()->whereIn('permission', $removedPermissions)->delete();
+
+        foreach ($removedPermissions as $permission) {
+            $log?->entries()->create([
+                'attribute' => $permission,
+                'old_value' => true,
+                'new_value' => false,
+            ]);
         }
     }
 
