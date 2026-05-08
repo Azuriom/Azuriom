@@ -83,4 +83,4 @@ If you like this project, please consider supporting us on [GitHub sponsors](htt
 
 ## License
 
-Azuriom is licensed under the [GNU General Public License v3.0 or later](LICENSE).
+Azuriom is licensed under the [GNU General Public License v3.0 or later](LICENSE), with an [attribution appendix](LICENSE_APPENDIX).
