@@ -47,7 +47,7 @@ class NavbarComposer
             return $elements;
         }
 
-        return NavbarElement::hydrate($elements)->each(function (NavbarElement $element) {
+        return NavbarElement::hydrate($elements)->loadMissing('roles')->each(function (NavbarElement $element) {
             $element->setRelation('roles', Role::hydrate($element->roles));
             $element->setRawAttributes(Arr::except($element->getAttributes(), 'roles'), true);
         });

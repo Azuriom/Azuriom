@@ -202,11 +202,7 @@
                                     <input type="text" class="form-control" id="forcePassword" value="{{ trans('admin.users.password.forced') }}" disabled>
                                 @else
                                     <div class="input-group mb-3">
-                                        @if($user->password_changed_at->eq($user->created_at))
-                                            <input type="text" class="form-control" id="forcePassword" value="{{ trans('messages.unknown') }}" disabled>
-                                        @else
-                                            <input type="text" class="form-control" id="forcePassword" value="{{ format_date_compact($user->password_changed_at) }}" disabled>
-                                        @endif
+                                        <input type="text" class="form-control" id="forcePassword" value="{{ format_date_compact($user->password_changed_at) }}" disabled>
 
                                         <button class="btn btn-outline-danger" type="submit">
                                             {{ trans('admin.users.password.force') }}

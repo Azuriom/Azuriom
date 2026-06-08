@@ -90,7 +90,7 @@ Route::prefix('update')->name('update.')->middleware('can:admin.update')->group(
 Route::resource('navbar-elements', NavbarController::class)->except('show')->middleware('can:admin.navbar');
 Route::post('/navbar-elements/order', [NavbarController::class, 'updateOrder'])->name('navbar-elements.update-order')->middleware('can:admin.navbar');
 
-Route::resource('social-links', SocialLinkController::class)->except('show');
+Route::resource('social-links', SocialLinkController::class)->except('show')->middleware('can:admin.settings');
 Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
 
 Route::resource('users', UserController::class)->except('show')->middleware(['can:admin.users', 'throttle:20,1']);
@@ -111,14 +111,16 @@ Route::resource('posts', PostController::class)->except('show')->middleware('can
 Route::resource('images', ImageController::class)->except('show')->middleware('can:admin.images');
 Route::resource('redirects', RedirectController::class)->except('show')->middleware('can:admin.redirects');
 
-Route::resource('pages.attachments', PageAttachmentController::class)->only('store');
-Route::resource('posts.attachments', PostAttachmentController::class)->only('store');
-Route::post('pages/attachments/{pendingId}', [PageAttachmentController::class, 'pending'])->name('pages.attachments.pending');
-Route::post('posts/attachments/{pendingId}', [PostAttachmentController::class, 'pending'])->name('posts.attachments.pending');
+Route::resource('pages.attachments', PageAttachmentController::class)->only('store')->middleware('can:admin.pages');
+Route::resource('posts.attachments', PostAttachmentController::class)->only('store')->middleware('can:admin.posts');
+Route::post('pages/attachments/{pendingId}', [PageAttachmentController::class, 'pending'])->name('pages.attachments.pending')->middleware('can:admin.pages');
+Route::post('posts/attachments/{pendingId}', [PostAttachmentController::class, 'pending'])->name('posts.attachments.pending')->middleware('can:admin.posts');
 
-Route::resource('servers', ServerController::class)->except('show');
-Route::post('/servers/{server}/verify/azlink', [ServerController::class, 'verifyAzLink'])->name('servers.verify-azlink');
-Route::post('/servers/default', [ServerController::class, 'changeDefault'])->name('servers.change-default');
+Route::middleware('can:admin.servers')->group(function () {
+    Route::resource('servers', ServerController::class)->except('show');
+    Route::post('/servers/{server}/verify/azlink', [ServerController::class, 'verifyAzLink'])->name('servers.verify-azlink');
+    Route::post('/servers/default', [ServerController::class, 'changeDefault'])->name('servers.change-default');
+});
 
 Route::post('logs/clear', [ActionLogController::class, 'clear'])->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', ActionLogController::class)->only(['index', 'show'])->middleware('can:admin.logs');

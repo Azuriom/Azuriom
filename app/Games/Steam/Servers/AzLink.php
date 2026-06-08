@@ -21,7 +21,7 @@ class AzLink extends ServerBridge
     {
         foreach ($commands as $command) {
             $this->server->commands()->create([
-                'command' => $command,
+                'command' => str_replace('{name}', '{player}', $command),
                 'user_id' => $user->id,
                 'need_online' => $needConnected,
             ]);

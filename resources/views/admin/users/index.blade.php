@@ -56,9 +56,9 @@
                             </td>
                             @if($canViewEmail || oauth_login())
                                 <td @if($user->isDeleted()) class="text-decoration-line-through" @endif>
-                                    {{ oauth_login() ? ($user->game_id ?? trans('messages.unknown')) : $user->email }}
+                                    {{ (oauth_login() ? $user->game_id : $user->email) ?? trans('messages.unknown') }}
 
-                                    @if($user->hasVerifiedEmail())
+                                    @if($user->email !== null && $user->hasVerifiedEmail())
                                         <i class="bi bi-envelope-check text-info" data-bs-toggle="tooltip" title="{{ trans('admin.users.email.verified') }}"></i>
                                     @endif
 

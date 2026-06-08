@@ -39,19 +39,19 @@ class Markdown
             ],
         ];
 
-        $environment = new Environment($config);
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new AutolinkExtension());
-        $environment->addExtension(new DisallowedRawHtmlExtension());
-        $environment->addExtension(new StrikethroughExtension());
-        $environment->addExtension(new ExternalLinkExtension());
-        $environment->addExtension(new ExternalImageExtension());
+        $environment = (new Environment($config))
+            ->addExtension(new CommonMarkCoreExtension())
+            ->addExtension(new AutolinkExtension())
+            ->addExtension(new DisallowedRawHtmlExtension())
+            ->addExtension(new StrikethroughExtension())
+            ->addExtension(new ExternalLinkExtension())
+            ->addExtension(new ExternalImageExtension());
 
         if ($basic) {
             $environment->addEventListener(DocumentParsedEvent::class, new RemoveImageProcessor());
         } else {
-            $environment->addExtension(new TableExtension());
-            $environment->addExtension(new TaskListExtension());
+            $environment->addExtension(new TableExtension())
+                ->addExtension(new TaskListExtension());
         }
 
         $converter = new MarkdownConverter($environment);
@@ -61,9 +61,9 @@ class Markdown
 
     public static function parseRaw(string $text): string
     {
-        $environment = new Environment();
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new GithubFlavoredMarkdownExtension());
+        $environment = (new Environment())
+            ->addExtension(new CommonMarkCoreExtension())
+            ->addExtension(new GithubFlavoredMarkdownExtension());
 
         $converter = new MarkdownConverter($environment);
 

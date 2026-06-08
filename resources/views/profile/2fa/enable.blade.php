@@ -7,7 +7,13 @@
 
     <div class="card">
         <div class="card-body">
-            <p>@lang('messages.profile.2fa.info')</p>
+            <p>
+                @lang('messages.profile.2fa.info', [
+                    'auth1' => '<a href="https://ente.com/auth/" target="_blank" rel="noopener noreferrer">Ente Auth</a>',
+                    'auth2' => '<a href="https://proton.me/authenticator" target="_blank" rel="noopener noreferrer">Proton Authenticator</a>',
+                    'auth3' => '<a href="https://secrets.app/" target="_blank" rel="noopener noreferrer">Secrets</a>',
+                ])
+            </p>
 
             <div class="text-center">
                 {{ $qrCode }}

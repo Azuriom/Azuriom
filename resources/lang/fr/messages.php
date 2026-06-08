@@ -186,7 +186,7 @@ return [
             'enable' => 'Activer l\'A2F',
             'disable' => 'Désactiver l\'A2F',
             'manage' => 'Gérer l\'A2F',
-            'info' => 'Scannez le QR code ci-dessus avec une application d\'authentification à deux facteurs sur votre téléphone comme <a href="https://authy.com/" target="_blank" rel="noopener norefferer">Authy</a>, <a href="https://secrets.app/" target="_blank" rel="noopener norefferer">Secrets</a>, ou Google Authenticator.',
+            'info' => 'Scannez le QR code avec une application d\'authentification à deux facteurs sur votre téléphone comme :auth1, :auth2, ou :auth3.',
             'backup' => 'Si vous perdez l\'accès à votre application d\'authentification à deux facteurs, le <strong>seul moyen</strong></strong> de récupérer l\'accès à votre compte est d\'utiliser un code de récupération.',
             'secret' => 'Clé secrète: :secret',
             'title' => 'Authentification à deux facteurs',

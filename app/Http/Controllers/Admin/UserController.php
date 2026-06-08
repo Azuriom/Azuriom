@@ -70,6 +70,7 @@ class UserController extends Controller
     {
         return view('admin.users.create', [
             'roles' => Role::orderByDesc('power')->get(),
+            'defaultRoleId' => Role::defaultRoleId(),
         ]);
     }
 

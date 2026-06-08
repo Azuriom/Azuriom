@@ -97,4 +97,9 @@ class Ban extends Model
 
         $this->delete();
     }
+
+    public function getLogData(string $event): array
+    {
+        return ['reason' => $this->reason, 'user' => $this->user->id];
+    }
 }
