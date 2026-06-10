@@ -28,6 +28,6 @@
         "sass-loader": "^13.3.2",
         "simplebar": "^5.3.6",
         "sortablejs": "^1.13.0",
-        "tinymce": "^7.0.0"
+        "tinymce": "^7.9.3"
     }
 }
