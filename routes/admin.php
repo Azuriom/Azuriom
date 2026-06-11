@@ -91,7 +91,7 @@ Route::resource('navbar-elements', NavbarController::class)->except('show')->mid
 Route::post('/navbar-elements/order', [NavbarController::class, 'updateOrder'])->name('navbar-elements.update-order')->middleware('can:admin.navbar');
 
 Route::resource('social-links', SocialLinkController::class)->except('show')->middleware('can:admin.settings');
-Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
+Route::post('/social-links/order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order')->middleware('can:admin.settings');
 
 Route::resource('users', UserController::class)->except('show')->middleware(['can:admin.users', 'throttle:20,1']);
 Route::post('/users/notify', [UserController::class, 'notify'])->name('users.notify.all')->middleware('can:admin.users');

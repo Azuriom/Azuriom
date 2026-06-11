@@ -31,7 +31,7 @@ class UserCreateCommand extends Command
      */
     public function handle()
     {
-        $user = User::create([
+        $user = User::forceCreate([
             'role_id' => Role::defaultRoleId(),
             'name' => $this->option('name') ?? $this->ask('The username of the user'),
             'email' => $this->option('email') ?? $this->ask('The Email address of the user'),

@@ -88,7 +88,7 @@ class AuthController extends Controller
             $user->game_id = Str::uuid();
         }
 
-        $user->update(['access_token' => Str::random(128)]);
+        $user->forceFill(['access_token' => Str::random(128)])->save();
 
         $user->forceFill([
             'last_login_ip' => $request->ip(),
