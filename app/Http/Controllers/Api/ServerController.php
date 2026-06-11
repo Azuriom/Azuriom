@@ -229,7 +229,7 @@ class ServerController extends Controller
     public function setMoney(Request $request, User $user)
     {
         return $this->editMoney($request, $user, function (float $amount) use ($user) {
-            $user->update(['money' => $amount]);
+            $user->forceFill(['money' => $amount])->save();
         });
     }
 

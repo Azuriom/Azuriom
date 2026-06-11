@@ -471,7 +471,7 @@ class InstallController extends Controller
         abort_if($name === null, 400, 'Expected valid name for game '.$game);
 
         $roleId = Role::admin()->orderByDesc('power')->value('id');
-        $user = User::create([
+        $user = User::forceCreate([
             'name' => $name,
             'email' => $request->input('email'),
             'password' => $request->input('password') ?? Str::random(32),

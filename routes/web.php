@@ -36,7 +36,7 @@ Route::prefix('users')->name('users.')->middleware('auth')->group(function () {
     Route::get('/search', [UserController::class, 'search'])->name('search');
 });
 
-Route::post('/profile/theme', [ProfileController::class, 'theme'])->name('profile.theme');
+Route::post('/profile/theme', [ProfileController::class, 'theme'])->name('profile.theme'); // client-side only, no middleware
 
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
