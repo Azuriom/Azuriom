@@ -93,7 +93,7 @@ class SocialLink extends Model
     protected function title(): Attribute
     {
         return Attribute::make(
-            get: fn ($val, array $attr) => $this->getProperty('title', $attr),
+            get: fn ($val, array $attr) => $this->getProperty('title'),
             set: fn (?string $value) => $this->withProperty('title', $value),
         );
     }
@@ -104,7 +104,7 @@ class SocialLink extends Model
     protected function color(): Attribute
     {
         return Attribute::make(
-            get: fn ($val, array $attr) => $this->getProperty('color', $attr),
+            get: fn ($val, array $attr) => $this->getProperty('color'),
             set: fn (?string $value) => $this->withProperty('color', $value),
         );
     }
@@ -115,7 +115,7 @@ class SocialLink extends Model
     protected function icon(): Attribute
     {
         return Attribute::make(
-            get: fn ($val, array $attr) => $this->getProperty('icon', $attr),
+            get: fn ($val, array $attr) => $this->getProperty('icon'),
             set: fn (?string $value) => $this->withProperty('icon', $value),
         );
     }

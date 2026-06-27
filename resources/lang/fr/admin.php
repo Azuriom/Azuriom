@@ -566,6 +566,9 @@ return [
     'logs' => [
         'title' => 'Logs',
 
+        'webhook' => 'URL du webhook Discord',
+        'webhook_info' => 'Un webhook Discord sera envoyé sur cette URL lorsqu\'une entrée est créée. Laisser vide pour désactiver.',
+
         'clear' => 'Supprimer les anciens logs (+15 jours)',
         'cleared' => 'Les anciens logs ont été supprimés.',
         'changes' => 'Changements',

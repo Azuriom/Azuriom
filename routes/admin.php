@@ -122,7 +122,8 @@ Route::middleware('can:admin.servers')->group(function () {
     Route::post('/servers/default', [ServerController::class, 'changeDefault'])->name('servers.change-default');
 });
 
-Route::post('logs/clear', [ActionLogController::class, 'clear'])->name('logs.clear')->middleware('can:admin.logs');
+Route::post('/logs/settings', [ActionLogController::class, 'updateSettings'])->name('logs.settings')->middleware('can:admin.logs');
+Route::post('/logs/clear', [ActionLogController::class, 'clear'])->name('logs.clear')->middleware('can:admin.logs');
 Route::resource('logs', ActionLogController::class)->only(['index', 'show'])->middleware('can:admin.logs');
 
 Route::fallback([AdminController::class, 'fallback']);

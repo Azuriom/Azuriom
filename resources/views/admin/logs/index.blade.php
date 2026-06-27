@@ -52,4 +52,30 @@
             </form>
         </div>
     </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{{ trans('admin.nav.settings.settings') }}</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('admin.logs.settings') }}" method="POST">
+                @csrf
+
+                <div class="mb-3">
+                    <label class="form-label" for="webhookInput">{{ trans('admin.logs.webhook') }}</label>
+                    <input type="text" class="form-control @error('webhook_url') is-invalid @enderror" id="webhookInput" name="webhook_url" placeholder="https://discord.com/api/webhooks/.../..." value="{{ old('webhook_url', $webhookUrl) }}" aria-describedby="webhookInfo">
+
+                    @error('webhook_url')
+                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+
+                    <small id="webhookInfo" class="form-text">{{ trans('admin.logs.webhook_info') }}</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
+                </button>
+            </form>
+        </div>
+    </div>
 @endsection

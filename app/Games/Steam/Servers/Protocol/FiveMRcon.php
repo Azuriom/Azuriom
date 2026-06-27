@@ -36,7 +36,7 @@ class FiveMRcon
             throw new RuntimeException("Failed to connect or create a socket: {$errno} ({$errstr})");
         }
 
-        stream_set_timeout($this->socket, $timeout, 0);
+        stream_set_timeout($this->socket, $timeout);
     }
 
     public function sendCommand(string $command): string

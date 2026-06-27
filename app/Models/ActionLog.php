@@ -2,6 +2,8 @@
 
 namespace Azuriom\Models;
 
+use Azuriom\Support\Discord\DiscordWebhook;
+use Azuriom\Support\Discord\Embed;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -174,18 +176,24 @@ class ActionLog extends Model
     /**
      * Create a new log entry for the current logged-in user.
      */
-    public static function log(string $action, ?Model $target = null, array $data = []): ?ActionLog
+    public static function log(string $action, ?Model $target = null, array $data = []): ?self
     {
         if (Auth::guest()) {
             return null;
         }
 
-        return self::create([
+        $log = self::create([
             'user_id' => Auth::id(),
             'action' => $action,
             'target_id' => $target?->getKey(),
             'data' => $data ?: null,
         ]);
+
+        if (($webhookUrl = setting('logs.webhook_url')) !== null) {
+            rescue(fn () => $log->createDiscordWebhook()->send($webhookUrl));
+        }
+
+        return $log;
     }
 
     public static function registerLogModels(array $models, string $transNamespacePrefix): void
@@ -243,6 +251,27 @@ class ActionLog extends Model
                 ]);
             }
         }
+    }
+
+    private function createDiscordWebhook(): DiscordWebhook
+    {
+        $color = match ($this->getActionFormat()['color']) {
+            'primary' => '#3b7ddd',
+            'success' => '#1cbb8c',
+            'danger' => '#dc3545',
+            'warning' => '#fcb92c',
+            'info' => '#17a2b8',
+            default => '#6c757d',
+        };
+
+        $embed = Embed::create()
+            ->title($this->getActionMessage())
+            ->author($this->user->name, null, $this->user->getAvatar())
+            ->color($color)
+            ->url(route('admin.logs.show', $this))
+            ->timestamp($this->created_at);
+
+        return DiscordWebhook::create()->addEmbed($embed);
     }
 
     /**
