@@ -30,6 +30,7 @@ class RoleRequest extends FormRequest
             'icon' => ['nullable', 'string', 'max:50'],
             'color' => ['required', 'hex_color'],
             'is_admin' => ['filled', 'boolean'],
+            'permissions' => ['sometimes', 'array'],
         ];
     }
 }

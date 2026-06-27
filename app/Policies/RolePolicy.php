@@ -15,7 +15,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->role->power > $role->power;
+        return ! $role->is_admin && $user->role->power > $role->power;
     }
 
     /**
@@ -23,6 +23,6 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->role->power > $role->power;
+        return ! $role->is_admin && $user->role->power > $role->power;
     }
 }

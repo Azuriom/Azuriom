@@ -34,7 +34,7 @@ class RoleController extends Controller
      */
     public function updatePower(Request $request)
     {
-        $this->authorize('admin.admin');
+        abort_if(! $request->user()->isAdmin(), 403);
 
         $this->validate($request, [
             'roles' => ['required', 'array'],
@@ -103,9 +103,14 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
+        if ($request->input('is_admin') && ! $request->user()->isAdmin()) {
+            return redirect()->back()
+                ->with('error', trans('admin.roles.add_admin'));
+        }
+
         $role = Role::create($request->validated());
 
-        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
+        $role->syncPermissions($this->validPermissions($request, $role));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -140,18 +145,18 @@ class RoleController extends Controller
         $user = $request->user();
 
         if ($user->isAdmin() && $role->is($user->role) && ! $request->input('is_admin')) {
-            return to_route('admin.roles.index')
+            return redirect()->back()
                 ->with('error', trans('admin.roles.remove_admin'));
         }
 
         if (! $user->isAdmin() && ! $role->is_admin && $request->input('is_admin')) {
-            return to_route('admin.roles.index')
+            return redirect()->back()
                 ->with('error', trans('admin.roles.add_admin'));
         }
 
         // Manually set updated column to trigger event even if no role attribute was changed
         $role->setUpdatedAt(now())->update($request->validated());
-        $role->syncPermissions($this->validPermissions($request->input('permissions', [])));
+        $role->syncPermissions($this->validPermissions($request, $role));
 
         return to_route('admin.roles.index')
             ->with('success', trans('messages.status.success'));
@@ -203,11 +208,23 @@ class RoleController extends Controller
     }
 
     /**
-     * Filter the given permission names to keep only the registered ones.
+     * Filter the given permission names to keep only the one the user can assign.
      */
-    private function validPermissions(array $permissions): array
+    private function validPermissions(Request $request, Role $target): array
     {
-        return array_values(array_intersect($permissions, Permission::permissions()));
+        $user = $request->user();
+        $inputPerms = $request->input('permissions', []);
+        $permissions = array_values(array_intersect($inputPerms, Permission::permissions()));
+
+        if ($user->isAdmin()) {
+            return $permissions;
+        }
+
+        // Keep only existing permissions, or permissions the user already has.
+        return array_filter(
+            $permissions,
+            fn (string $p) => $target->hasRawPermission($p) || $user->hasPermission($p),
+        );
     }
 
     /**

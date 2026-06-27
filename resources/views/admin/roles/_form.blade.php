@@ -38,7 +38,9 @@
 
 <div class="mb-3">
     <div class="form-check form-switch">
-        <input type="checkbox" class="form-check-input" id="adminSwitch" name="is_admin" data-bs-toggle="collapse" data-bs-target="#permissionsGroup" @checked($role->is_admin ?? false) aria-describedby="adminInfo">
+        <input type="checkbox" class="form-check-input" id="adminSwitch" name="is_admin"
+               data-bs-toggle="collapse" data-bs-target="#permissionsGroup" @checked($role->is_admin ?? false)
+               aria-describedby="adminInfo" @disabled(!Auth::user()->isAdmin())>
         <label class="form-check-label" for="adminSwitch">{{ trans('admin.roles.admin') }}</label>
     </div>
 
@@ -61,6 +63,12 @@
             </div>
         </div>
 
+        @if(!Auth::user()->isAdmin())
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> {{ trans('admin.roles.permissions') }}
+            </div>
+        @endif
+
         @foreach($permissions as $group => $localPermissions)
             <div class="permissions-group mb-3" data-permissions-group="{{ $group }}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -82,7 +90,7 @@
                                 <div class="mb-2 form-check">
                                     <input type="checkbox" class="form-check-input" id="permission_{{ $loop->parent->index }}_{{ $loop->index }}"
                                            name="permissions[]" value="{{ $permission }}" @checked(isset($role) && $role->hasRawPermission($permission))
-                                           data-role-permission="{{ $permission }}" data-permissions-group="{{ $group }}">
+                                           @can($permission) data-role-permission="{{ $permission }}" @else disabled @endif data-permissions-group="{{ $group }}">
 
                                     <label class="form-check-label" for="permission_{{ $loop->parent->index }}_{{ $loop->index }}">
                                         <code>{{ $permission }}</code>

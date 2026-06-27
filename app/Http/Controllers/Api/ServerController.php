@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Api;
 use Azuriom\Games\Steam\SteamID;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Resources\ServerCollection;
-use Azuriom\Models\Role;
 use Azuriom\Models\Server;
 use Azuriom\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -132,7 +131,6 @@ class ServerController extends Controller
             ...Arr::except($data, 'ip'),
             'email' => $request->input('email'),
             'password' => $request->input('password', Str::random(32)),
-            'role_id' => Role::defaultRoleId(),
             'last_login_ip' => $request->input('ip'),
             'last_login_at' => now(),
         ]);

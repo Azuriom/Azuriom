@@ -393,6 +393,7 @@ return [
 
         'updated' => 'Les rôles ont été mis à jour.',
         'unauthorized' => 'Ce rôle est plus élevé que votre propre rôle.',
+        'permissions' => 'Vous pouvez uniquement modifier les permissions que votre rôle actuel possède.',
         'add_admin' => 'Vous ne pouvez pas mettre la permission administrateur à un rôle.',
         'remove_admin' => 'Vous ne pouvez pas retirer la permission admin de votre rôle.',
         'no_admin' => 'Il doit y avoir au moins un autre admin pour retirer votre rôle admin.',

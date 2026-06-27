@@ -3,7 +3,6 @@
 namespace Azuriom\Http\Controllers\Auth;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Models\Role;
 use Azuriom\Models\User;
 use Azuriom\Providers\RouteServiceProvider;
 use Azuriom\Rules\GameAuth;
@@ -91,7 +90,6 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role_id' => Role::defaultRoleId(),
             'game_id' => game()->getUserUniqueId($data['name']),
             'last_login_ip' => Request::ip(),
             'last_login_at' => now(),

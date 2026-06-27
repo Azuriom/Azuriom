@@ -22,7 +22,7 @@ Route::prefix('user')->namespace('Azuriom\\Http\\Controllers')->group(function (
 });
 
 Route::prefix('user')->group(function () {
-    Route::middleware('throttle:oauth')->group(function () {
+    Route::middleware('throttle:6,1')->group(function () {
         Route::get('/login/callback', [LoginController::class, 'handleProviderCallback'])->name('login.callback');
     });
 
@@ -71,7 +71,8 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
             ->middleware('signed');
     });
 
-    Route::post('/money/transfer', [ProfileController::class, 'transferMoney'])->name('transfer-money');
+    Route::post('/money/transfer', [ProfileController::class, 'transferMoney'])->name('transfer-money')
+        ->middleware('throttle:6,1');
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {

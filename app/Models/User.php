@@ -129,6 +129,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function booted(): void
     {
         self::creating(function (self $user) {
+            if ($user->role_id === null) {
+                $user->role_id = Role::defaultRoleId();
+            }
+
             if ($user->password_changed_at === null) {
                 $user->password_changed_at = $user->freshTimestamp();
             }
