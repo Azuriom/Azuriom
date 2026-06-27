@@ -18,6 +18,10 @@ if (! function_exists('asset')) {
      */
     function asset(string $path, ?bool $secure = null): string
     {
+        if (str_starts_with($path, 'assets/') || str_starts_with($path, 'build/assets/')) {
+            return app('url')->asset($path, $secure);
+        }
+
         // Ignore if there is already a query string
         $query = str_contains($path, '?') ? '' : '?v'.Azuriom::version();
 

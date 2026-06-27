@@ -1,14 +1,10 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+        "build": "vite build",
+        "dev": "vite"
     },
     "devDependencies": {
         "@adminkit/core": "https://github.com/adminkit/adminkit/tarball/master",
@@ -18,17 +14,20 @@
         "bootstrap": "^5.1.0",
         "bootstrap-icons": "^1.8.1",
         "chart.js": "^4.3.2",
+        "concurrently": "^9.0.1",
         "easymde": "^2.14.0",
         "flatpickr": "^4.6.9",
-        "laravel-mix": "^6.0.6",
+        "laravel-vite-plugin": "^3.1",
         "petite-vue": "^0.4.1",
-        "postcss": "^8.2.6",
-        "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.7",
-        "sass-loader": "^13.3.2",
-        "simplebar": "^5.3.6",
         "sortablejs": "^1.13.0",
         "tinymce": "^7.0.0",
-        "webpack": "~5.105.4"
+        "vite": "^8.0.0",
+        "vite-plugin-static-copy": "^4.1.1"
+    },
+    "allowScripts": {
+        "@parcel/watcher": true,
+        "core-js": true,
+        "fsevents": true
     }
 }

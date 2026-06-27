@@ -31,7 +31,7 @@ and can be used to automatically fix code style issues with this command:
 
 1. Install the front-end dependencies with [NPM](https://www.npmjs.com/):
    ```
-   npm install && npm run dev
+   npm install && npm run build
    ```
 
 1. Generate the secret key:

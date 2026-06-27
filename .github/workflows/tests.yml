@@ -7,6 +7,7 @@ on:
 jobs:
   tests:
     strategy:
+      fail-fast: false
       matrix:
         php-version: [ '8.2', '8.3', '8.4', '8.5' ]
 
@@ -16,23 +17,30 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:9.7
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: azuriom
+          MYSQL_USER: azuriom
+          MYSQL_PASSWORD: azuriom
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+          --health-start-period=20s
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: pdo, sqlite, pdo_sqlite, bcmath, mbstring, curl, libxml, zip, intl, gd
+          extensions: pdo, pdo_mysql, sqlite, pdo_sqlite, bcmath, mbstring, curl, libxml, zip, intl, gd
           tools: composer
 
       - name: Install dependencies
@@ -41,10 +49,13 @@ jobs:
       - name: Run tests
         run: vendor/bin/phpunit
         env:
-          APP_KEY: "base64:dpPUwuuA5ojUpdVwUJcPT13NdOe+RSM/1QXSW/VuJIc="
+          APP_KEY: 'base64:dpPUwuuA5ojUpdVwUJcPT13NdOe+RSM/1QXSW/VuJIc='
           DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
           DB_DATABASE: azuriom
-          DB_USERNAME: root
+          DB_USERNAME: azuriom
+          DB_PASSWORD: azuriom
 
   assets:
     name: Bundle assets
@@ -53,15 +64,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: npm run production
+        run: npm run build

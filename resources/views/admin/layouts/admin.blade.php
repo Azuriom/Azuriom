@@ -14,18 +14,18 @@
     <link rel="shortcut icon" href="{{ favicon() }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('vendor/admin.js') }}" defer></script>
-
-    <!-- Page level scripts -->
+    @vite('resources/js/admin/admin.js')
     @stack('scripts')
 
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Inter:300,400,600,800&display=swap" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('vendor/admin.css') }}" rel="stylesheet">
+    @vite('resources/sass/admin/admin.scss')
     @stack('styles')
+
 </head>
 <body @if(dark_theme()) data-bs-theme="dark" @endif>
     <!-- Page Wrapper -->

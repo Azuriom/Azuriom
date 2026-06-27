@@ -59,7 +59,11 @@
             "@php artisan migrate --force",
             "@php artisan db:seed --force",
             "npm install",
-            "npm run prod"
+            "npm run build"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,logs,vite --kill-others"
         ],
         "test": [
             "@php artisan config:clear --ansi",
