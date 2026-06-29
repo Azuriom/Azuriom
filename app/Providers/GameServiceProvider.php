@@ -8,6 +8,7 @@ use Azuriom\Games\HytaleGame;
 use Azuriom\Games\Minecraft\MinecraftBedrockGame;
 use Azuriom\Games\Minecraft\MinecraftOfflineGame;
 use Azuriom\Games\Minecraft\MinecraftOnlineGame;
+use Azuriom\Games\Steam\DayZGame;
 use Azuriom\Games\Steam\FiveMGame as FiveMGameLegacy;
 use Azuriom\Games\Steam\RustGame;
 use Azuriom\Games\Steam\SteamGame;
@@ -38,6 +39,7 @@ class GameServiceProvider extends ServiceProvider
             'ark' => SteamGame::forName('ark', 'ARK: Survival Evolved'),
             'ark-sa' => SteamGame::forName('ark-sa', 'ARK: Survival Ascended'),
             'rust' => RustGame::class,
+            'dayz' => DayZGame::class,
             'fivem' => FiveMGameLegacy::class,
             'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2', true),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),

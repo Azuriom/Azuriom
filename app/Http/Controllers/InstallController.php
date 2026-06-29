@@ -52,7 +52,7 @@ class InstallController extends Controller
 
     // TODO dynamic games
     protected array $steamGames = [
-        '7dtd', 'gmod', 'ark', 'rust', 'fivem', 'csgo', 'tf2', 'unturned',
+        '7dtd', 'gmod', 'ark', 'rust', 'dayz', 'fivem', 'csgo', 'tf2', 'unturned',
     ];
 
     protected array $games = [
@@ -87,6 +87,10 @@ class InstallController extends Controller
         'rust' => [
             'name' => 'Rust',
             'logo' => 'assets/img/games/rust.svg',
+        ],
+        'dayz' => [
+            'name' => 'DayZ',
+            'logo' => 'assets/img/games/dayz.svg',
         ],
         'fivem' => [
             'name' => 'FiveM',

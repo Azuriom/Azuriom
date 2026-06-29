@@ -3,6 +3,7 @@
 namespace Azuriom\Games\Steam\Servers\Protocol;
 
 use WebSocket\Client;
+use WebSocket\Configuration;
 
 /**
  * A Rust RCON client implementation in PHP.
@@ -11,17 +12,16 @@ use WebSocket\Client;
  */
 class RustRcon
 {
-    private const TIMEOUT = 2.5;
-
     private Client $client;
 
     /**
      * Create a new Rcon client instance.
      */
-    public function __construct(string $host, int $port, string $password)
+    public function __construct(string $host, int $port, string $password, int $timeout = 3)
     {
-        $this->client = new Client("ws://{$host}:{$port}/{$password}");
-        $this->client->setTimeout(self::TIMEOUT);
+        $config = new Configuration(timeout: $timeout);
+
+        $this->client = new Client("ws://{$host}:{$port}/{$password}", $config);
     }
 
     /**

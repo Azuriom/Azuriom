@@ -306,6 +306,7 @@ return [
             'mc-azlink' => 'AzLink',
             'source-query' => 'Source Query',
             'source-rcon' => 'RCON Source',
+            'battleye-rcon' => 'RCON (BattlEye)',
             'steam-azlink' => 'AzLink',
             'bedrock-ping' => 'Ping Bedrock',
             'bedrock-rcon' => 'RCON Bedrock',
