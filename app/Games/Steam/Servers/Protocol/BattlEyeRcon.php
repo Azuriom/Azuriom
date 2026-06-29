@@ -2,17 +2,19 @@
 
 namespace Azuriom\Games\Steam\Servers\Protocol;
 
+use LogicException;
 use RuntimeException;
+use Throwable;
+use UnexpectedValueException;
 
 /**
  * A BattlEye RCON (BERcon) client implementation in PHP.
  *
- * Used by DayZ (and other BattlEye-protected games such as Arma) which,
+ * Used BattlEye-protected games (such as DayZ and Arma) which,
  * unlike Source-based games, expose their console over BattlEye's own
  * UDP protocol instead of Source RCON.
  *
- * Based on the official protocol specification:
- * https://www.battleye.com/downloads/BERConProtocol.txt
+ * @see https://www.battleye.com/downloads/BERConProtocol.txt
  */
 class BattlEyeRcon
 {
@@ -22,6 +24,8 @@ class BattlEyeRcon
 
     private const SERVER_MESSAGE = 0x02;
 
+    private const LOGIN_ATTEMPTS = 3;
+
     /**
      * The UDP socket resource.
      *
@@ -29,7 +33,7 @@ class BattlEyeRcon
      */
     private $socket = null;
 
-    private bool $loggedIn = false;
+    private int $sequence = 0;
 
     /**
      * Create a new BattlEye RCON client instance.
@@ -39,9 +43,7 @@ class BattlEyeRcon
         private readonly int $port,
         private readonly string $password,
         private readonly float $timeout = 3.0,
-    ) {
-        //
-    }
+    ) {}
 
     /**
      * Open the socket and authenticate against the server.
@@ -50,26 +52,39 @@ class BattlEyeRcon
      */
     public function connect(): void
     {
+        $this->disconnect();
+
         $errno = 0;
         $error = '';
 
         $socket = @stream_socket_client(
-            "udp://{$this->host}:{$this->port}", $errno, $error, $this->timeout
+            $this->endpoint(), $errno, $error, $this->timeout
         );
 
         if ($socket === false) {
             throw new RuntimeException("Unable to connect to the BattlEye RCON server: {$error} ({$errno}).");
         }
 
+        if (! stream_set_blocking($socket, true) || ! stream_set_timeout(
+                $socket,
+                (int) $this->timeout,
+                (int) (fmod($this->timeout, 1) * 1_000_000),
+            )) {
+            fclose($socket);
+
+            throw new RuntimeException('Unable to configure the BattlEye RCON socket.');
+        }
+
         $this->socket = $socket;
+        $this->sequence = 0;
 
-        stream_set_timeout(
-            $this->socket,
-            (int) $this->timeout,
-            (int) (fmod($this->timeout, 1) * 1_000_000)
-        );
+        try {
+            $this->login();
+        } catch (Throwable $t) {
+            $this->disconnect();
 
-        $this->login();
+            throw $t;
+        }
     }
 
     /**
@@ -79,14 +94,20 @@ class BattlEyeRcon
      */
     public function command(string $command): string
     {
-        if (! $this->loggedIn) {
+        if (! is_resource($this->socket)) {
             throw new RuntimeException('Not authenticated to the BattlEye RCON server.');
         }
 
-        // A single command is sent at a time, so the sequence byte is always 0x00.
-        $this->send(self::COMMAND, chr(0x00).$command);
+        try {
+            return $this->exchange($command);
+        } catch (Throwable $t) {
+            // A timed-out UDP command may have executed even when its response
+            // was lost. Close the socket so a delayed packet cannot poison a
+            // later command, but never retry a potentially mutating command.
+            $this->disconnect();
 
-        return $this->readCommandResponse();
+            throw $t;
+        }
     }
 
     /**
@@ -99,7 +120,17 @@ class BattlEyeRcon
         }
 
         $this->socket = null;
-        $this->loggedIn = false;
+        $this->sequence = 0;
+    }
+
+    private function exchange(string $command): string
+    {
+        $sequence = $this->sequence;
+        $this->sequence = ($this->sequence + 1) & 0xFF;
+
+        $this->send(self::COMMAND, chr($sequence).$command);
+
+        return $this->readCommandResponse($sequence);
     }
 
     /**
@@ -109,61 +140,165 @@ class BattlEyeRcon
      */
     private function login(): void
     {
-        $this->send(self::LOGIN, $this->password);
+        for ($attempt = 1; $attempt <= self::LOGIN_ATTEMPTS; $attempt++) {
+            $this->send(self::LOGIN, $this->password);
+            while (($response = $this->read()) !== null) {
+                if ($response['type'] === self::SERVER_MESSAGE) {
+                    // Acknowledge server messages so the connection stays healthy.
+                    $this->acknowledgeServerMessage($response['payload']);
 
-        $response = $this->read();
+                    continue;
+                }
 
-        // The login response payload is a single byte: 0x01 success, 0x00 failure.
-        if ($response === null || $response['payload'] === '' || ord($response['payload'][0]) !== 0x01) {
-            throw new RuntimeException('BattlEye RCON authentication failed (wrong password or port).');
+                if ($response['type'] === self::COMMAND) {
+                    // A delayed command response from an earlier session cannot
+                    // authenticate this connection and is safe to discard.
+                    continue;
+                }
+
+                if ($response['type'] !== self::LOGIN) {
+                    throw new UnexpectedValueException(sprintf(
+                        'Unknown BattlEye packet type 0x%02X during authentication.',
+                        $response['type'],
+                    ));
+                }
+
+                // The login response payload is a single byte: 0x01 success, 0x00 failure.
+                if (strlen($response['payload']) !== 1) {
+                    throw new UnexpectedValueException('Malformed BattlEye RCON login response.');
+                }
+
+                if (ord($response['payload'][0]) === 0x01) {
+                    return;
+                }
+
+                throw new RuntimeException('BattlEye RCON authentication failed (wrong password or port).');
+            }
         }
 
-        $this->loggedIn = true;
+        throw new RuntimeException('BattlEye RCON authentication timed out after '.self::LOGIN_ATTEMPTS.' attempts.');
     }
 
     /**
      * Read a command response, reassembling multi-packet responses.
      */
-    private function readCommandResponse(): string
+    private function readCommandResponse(int $sequence): string
     {
-        $packets = [];
-        $expected = 1;
+        $fragmentCount = null;
+        $fragments = [];
 
-        do {
-            $response = $this->read();
-
-            if ($response === null) {
-                break;
-            }
-
+        while (($response = $this->read()) !== null) {
             // Acknowledge server messages so the connection stays healthy.
             if ($response['type'] === self::SERVER_MESSAGE) {
-                $seq = $response['payload'] !== '' ? $response['payload'][0] : chr(0);
-                $this->send(self::SERVER_MESSAGE, $seq);
+                $this->acknowledgeServerMessage($response['payload']);
+
+                continue;
+            }
+
+            if ($response['type'] === self::LOGIN) {
+                $this->handleLateLoginResponse($response['payload']);
 
                 continue;
             }
 
             if ($response['type'] !== self::COMMAND) {
+                throw new UnexpectedValueException(sprintf(
+                    'Unknown BattlEye packet type 0x%02X.',
+                    $response['type'],
+                ));
+            }
+
+            if ($response['payload'] === '') {
+                throw new UnexpectedValueException('Malformed BattlEye RCON command response.');
+            }
+
+            if (ord($response['payload'][0]) !== $sequence) {
                 continue;
             }
 
             // Strip the leading sequence byte.
             $payload = substr($response['payload'], 1);
 
-            // Multi-packet header: 0x00, total packet count, current packet index.
-            if (strlen($payload) >= 3 && $payload[0] === chr(0x00)) {
-                $expected = ord($payload[1]);
-                $packets[ord($payload[2])] = substr($payload, 3);
-            } else {
-                $packets[0] = $payload;
-                $expected = 1;
+            if ($payload === '') {
+                return '';
             }
-        } while (count($packets) < $expected);
 
-        ksort($packets);
+            // Multi-packet header: 0x00, total packet count, current packet index.
+            if ($payload[0] !== chr(0x00)) {
+                if ($fragmentCount !== null) {
+                    throw new UnexpectedValueException('Mixed fragmented and unfragmented BattlEye RCON response.');
+                }
 
-        return implode('', $packets);
+                return $payload;
+            }
+
+            if (strlen($payload) < 3) {
+                throw new UnexpectedValueException('Malformed BattlEye RCON fragment header.');
+            }
+
+            $packetCount = ord($payload[1]);
+            $packetIndex = ord($payload[2]);
+
+            if ($packetCount === 0 || $packetIndex >= $packetCount) {
+                throw new UnexpectedValueException('Invalid BattlEye RCON fragment count or index.');
+            }
+
+            if ($fragmentCount === null) {
+                $fragmentCount = $packetCount;
+            } elseif ($fragmentCount !== $packetCount) {
+                throw new UnexpectedValueException('BattlEye RCON fragment count changed during the response.');
+            }
+
+            $fragment = substr($payload, 3);
+
+            if (array_key_exists($packetIndex, $fragments)) {
+                if ($fragments[$packetIndex] !== $fragment) {
+                    throw new UnexpectedValueException('BattlEye RCON sent conflicting duplicate fragments.');
+                }
+
+                continue;
+            }
+
+            $fragments[$packetIndex] = $fragment;
+
+            if (count($fragments) === $fragmentCount) {
+                ksort($fragments, SORT_NUMERIC);
+
+                return implode('', $fragments);
+            }
+        }
+
+        if ($fragmentCount !== null) {
+            throw new RuntimeException('Timed out after receiving '.count($fragments).' of '.$fragmentCount.' BattlEye RCON response fragments.');
+        }
+
+        throw new RuntimeException('Timed out waiting for a BattlEye RCON command response.');
+    }
+
+    private function handleLateLoginResponse(string $payload): void
+    {
+        if (strlen($payload) !== 1) {
+            throw new UnexpectedValueException('Malformed BattlEye RCON login response.');
+        }
+
+        $status = ord($payload[0]);
+
+        if ($status === 0x00) {
+            throw new RuntimeException('BattlEye RCON login is no longer valid.');
+        }
+
+        if ($status !== 0x01) {
+            throw new UnexpectedValueException('Malformed BattlEye RCON login response.');
+        }
+    }
+
+    private function acknowledgeServerMessage(string $payload): void
+    {
+        if ($payload === '') {
+            throw new UnexpectedValueException('Malformed BattlEye RCON server-message packet.');
+        }
+
+        $this->send(self::SERVER_MESSAGE, $payload[0]);
     }
 
     /**
@@ -173,11 +308,16 @@ class BattlEyeRcon
      */
     private function send(int $type, string $payload): void
     {
+        if (! is_resource($this->socket)) {
+            throw new LogicException('BattlEye RCON is not connected.');
+        }
+
         // Each packet is checksummed over the 0xFF header, the type byte and the payload.
         $body = chr(0xFF).chr($type).$payload;
-        $checksum = pack('V', crc32($body));
+        $datagram = 'BE'.strrev(hash('crc32b', $body, true)).$body;
+        $written = @fwrite($this->socket, $datagram);
 
-        if (@fwrite($this->socket, 'BE'.$checksum.$body) === false) {
+        if ($written === false || $written !== strlen($datagram)) {
             throw new RuntimeException('Unable to write to the BattlEye RCON socket.');
         }
     }
@@ -189,16 +329,56 @@ class BattlEyeRcon
      */
     private function read(): ?array
     {
-        $data = @fread($this->socket, 8192);
+        if (! is_resource($this->socket)) {
+            throw new LogicException('BattlEye RCON is not connected.');
+        }
+
+        $data = @fread($this->socket, 65_535);
+
+        if ($data === false || $data === '') {
+            $metadata = stream_get_meta_data($this->socket);
+
+            if (($metadata['timed_out'] ?? false) === true) {
+                return null;
+            }
+
+            if ($data === false) {
+                throw new RuntimeException('Unable to read from the BattlEye RCON socket.');
+            }
+
+            throw new RuntimeException('BattlEye RCON socket returned an empty datagram.');
+        }
 
         // Header is 'BE' (2) + CRC32 (4) + 0xFF (1) + type (1) = 8 bytes.
-        if ($data === false || strlen($data) < 8) {
-            return null;
+        if (strlen($data) < 8) {
+            throw new UnexpectedValueException('BattlEye RCON datagram is too short.');
+        }
+
+        if (! str_starts_with($data, 'BE') || $data[6] !== chr(0xFF)) {
+            throw new UnexpectedValueException('Invalid BattlEye RCON packet header.');
+        }
+
+        $body = substr($data, 6);
+        $checksum = strrev(hash('crc32b', $body, true));
+
+        if (! hash_equals($checksum, substr($data, 2, 4))) {
+            throw new UnexpectedValueException('BattlEye RCON packet CRC mismatch.');
         }
 
         return [
-            'type' => ord($data[7]),
-            'payload' => substr($data, 8),
+            'type' => ord($body[1]),
+            'payload' => substr($body, 2),
         ];
+    }
+
+    private function endpoint(): string
+    {
+        $host = $this->host;
+
+        if (str_contains($host, ':') && ! str_starts_with($host, '[')) {
+            $host = "[{$host}]";
+        }
+
+        return "udp://{$host}:{$this->port}";
     }
 }

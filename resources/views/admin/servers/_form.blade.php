@@ -92,7 +92,7 @@
     </div>
 </div>
 
-<div v-if="type === 'source-query' || type === 'source-rcon' || type === 'dayz-rcon'">
+<div v-if="type === 'source-query' || type === 'source-rcon' || type === 'battleye-rcon'">
     <div class="row gx-3">
         <div class="mb-3 col-md-4">
             <label class="form-label" for="querySourcePortInput">{{ trans('admin.servers.query_port') }}</label>

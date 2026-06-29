@@ -2,22 +2,22 @@
 
 namespace Azuriom\Games\Steam\Servers;
 
-use Azuriom\Games\Steam\Servers\Protocol\BattlEyeRcon;
+use Azuriom\Games\Steam\Servers\Protocol\BattlEyeRcon as RconClient;
 use Azuriom\Models\User;
 
-class DayZRcon extends Query
+class BattlEyeRcon extends Query
 {
     use SteamBridge;
 
-    private const DEFAULT_RCON_PORT = 2306;
+    private const DEFAULT_RCON_PORT = 2305;
 
     public function verifyLink(): bool
     {
         $rcon = $this->connectBattlEye();
 
         try {
-            // "players" is a harmless command that requires a valid login.
-            $rcon->command('players');
+            // "version" is a harmless command that requires a valid login.
+            $rcon->command('version');
         } finally {
             $rcon->disconnect();
         }
@@ -32,7 +32,7 @@ class DayZRcon extends Query
 
     public function sendCommands(array $commands, User $user, bool $needConnected = false): void
     {
-        $rcon = $this->connectBattlEye();
+        $rcon = $this->connectRcon();
 
         try {
             foreach ($commands as $command) {
@@ -43,18 +43,13 @@ class DayZRcon extends Query
         }
     }
 
-    public function getDefaultPort(): int
-    {
-        return self::DEFAULT_RCON_PORT;
-    }
-
-    protected function connectBattlEye(): BattlEyeRcon
+    protected function connectRcon(): RconClient
     {
         $address = $this->server->address;
         $port = $this->server->data['rcon-port'] ?? ($this->server->port ?? self::DEFAULT_RCON_PORT);
         $password = decrypt($this->server->data['rcon-password'], false);
 
-        $rcon = new BattlEyeRcon($address, (int) $port, $password, self::COMMANDS_TIMEOUT);
+        $rcon = (new RconClient($address, $port, $password, self::COMMANDS_TIMEOUT));
         $rcon->connect();
 
         return $rcon;
