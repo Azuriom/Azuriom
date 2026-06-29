@@ -2,6 +2,7 @@
 
 namespace Azuriom\Games\Steam\Servers\Protocol;
 
+use InvalidArgumentException;
 use LogicException;
 use RuntimeException;
 use Throwable;
@@ -10,7 +11,7 @@ use UnexpectedValueException;
 /**
  * A BattlEye RCON (BERcon) client implementation in PHP.
  *
- * Used BattlEye-protected games (such as DayZ and Arma) which,
+ * Used by BattlEye-protected games (such as DayZ and Arma) which,
  * unlike Source-based games, expose their console over BattlEye's own
  * UDP protocol instead of Source RCON.
  *
@@ -31,7 +32,7 @@ class BattlEyeRcon
      *
      * @var resource|null
      */
-    private $socket = null;
+    private $socket;
 
     private int $sequence = 0;
 
@@ -42,9 +43,15 @@ class BattlEyeRcon
         private readonly string $host,
         private readonly int $port,
         private readonly string $password,
-        private readonly float $timeout = 3,
+        private readonly float|int $timeoutSeconds = 3,
     ) {
-        //
+        if ($port < 1 || $port > 65_535) {
+            throw new InvalidArgumentException('Server port must be between 1 and 65535.');
+        }
+
+        if ($timeoutSeconds <= 0) {
+            throw new InvalidArgumentException('Timeout must be positive.');
+        }
     }
 
     /**
@@ -60,15 +67,15 @@ class BattlEyeRcon
         $error = '';
 
         $socket = @stream_socket_client(
-            $this->endpoint(), $errno, $error, $this->timeout
+            $this->endpoint(), $errno, $error, $this->timeoutSeconds
         );
 
         if ($socket === false) {
             throw new RuntimeException("Unable to connect to the BattlEye RCON server: {$error} ({$errno}).");
         }
 
-        $timeoutSec = (int) $this->timeout;
-        $timeoutMicro = (int) (fmod($this->timeout, 1) * 1_000_000);
+        $timeoutSec = (int) $this->timeoutSeconds;
+        $timeoutMicro = (int) (fmod($this->timeoutSeconds, 1) * 1_000_000);
 
         if (! stream_set_blocking($socket, true) || ! stream_set_timeout($socket, $timeoutSec, $timeoutMicro)) {
             fclose($socket);
@@ -191,11 +198,13 @@ class BattlEyeRcon
         while (($response = $this->read()) !== null) {
             if ($response['type'] === self::SERVER_MESSAGE) {
                 $this->acknowledgeServerMessage($response['payload']);
+
                 continue;
             }
 
             if ($response['type'] === self::LOGIN) {
                 $this->handleLateLoginResponse($response['payload']);
+
                 continue;
             }
 

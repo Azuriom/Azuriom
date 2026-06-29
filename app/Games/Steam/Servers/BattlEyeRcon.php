@@ -49,7 +49,7 @@ class BattlEyeRcon extends Query
         $port = $this->server->data['rcon-port'] ?? ($this->server->port ?? self::DEFAULT_RCON_PORT);
         $password = decrypt($this->server->data['rcon-password'], false);
 
-        $rcon = (new RconClient($address, $port, $password, self::COMMANDS_TIMEOUT));
+        $rcon = new RconClient($address, $port, $password, self::COMMANDS_TIMEOUT);
         $rcon->connect();
 
         return $rcon;

@@ -32,10 +32,7 @@ class RustRcon extends Query
 
     public function verifyLink(): bool
     {
-        $this->sendCommands(['status'], new User([
-            'name' => 'Test',
-            'game_id' => 'O',
-        ]));
+        $this->connectWebRcon()->getServerInfo();
 
         return true;
     }

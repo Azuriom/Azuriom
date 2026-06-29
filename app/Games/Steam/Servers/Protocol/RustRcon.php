@@ -17,7 +17,7 @@ class RustRcon
     /**
      * Create a new Rcon client instance.
      */
-    public function __construct(string $host, int $port, string $password, int $timeout = 3)
+    public function __construct(string $host, int $port, string $password, float|int $timeout = 3)
     {
         $config = new Configuration(timeout: $timeout);
 

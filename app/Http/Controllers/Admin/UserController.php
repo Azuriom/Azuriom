@@ -225,6 +225,7 @@ class UserController extends Controller
      */
     protected function validateRole(User $user, Role $role, ?User $target = null): void
     {
+        // Admin roles can assign any role as they already have all permissions.
         if (($target && $user->role->power < $target->role->power)
             || (! $user->isAdmin() && $user->role->power < $role->power)) {
             throw ValidationException::withMessages([

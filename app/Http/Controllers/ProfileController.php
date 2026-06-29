@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -380,14 +381,20 @@ class ProfileController extends Controller
             ]);
         }
 
-        if ($user->money < $money) {
-            throw ValidationException::withMessages([
-                'money' => trans('messages.profile.money_transfer.balance'),
-            ]);
-        }
+        DB::transaction(function () use ($user, $receiver, $money) {
+            $user = $user->newQuery()
+                ->lockForUpdate()
+                ->findOrFail($user->getKey());
 
-        $user->removeMoney($money);
-        $receiver->addMoney($money);
+            if ($user->money < $money) {
+                throw ValidationException::withMessages([
+                    'money' => trans('messages.profile.money_transfer.balance'),
+                ]);
+            }
+
+            $user->removeMoney($money);
+            $receiver->addMoney($money);
+        });
 
         ActionLog::log('users.transfer', $receiver, ['money' => $money]);
 

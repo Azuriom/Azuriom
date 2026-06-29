@@ -17,7 +17,7 @@ class RustGame extends SteamGame
     {
         return [
             'source-query' => Query::class,
-            // Rust use a WebSocket based Rcon
+            // Rust uses a WebSocket based Rcon
             'rust-rcon' => RustRcon::class,
             'steam-azlink' => AzLink::class,
         ];

@@ -71,8 +71,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
             ->middleware('signed');
     });
 
-    Route::post('/money/transfer', [ProfileController::class, 'transferMoney'])->name('transfer-money')
-        ->middleware('throttle:6,1');
+    Route::post('/money/transfer', [ProfileController::class, 'transferMoney'])->name('transfer-money');
 });
 
 Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {
