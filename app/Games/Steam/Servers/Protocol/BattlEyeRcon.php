@@ -42,8 +42,10 @@ class BattlEyeRcon
         private readonly string $host,
         private readonly int $port,
         private readonly string $password,
-        private readonly float $timeout = 3.0,
-    ) {}
+        private readonly int $timeout = 3,
+    ) {
+        //
+    }
 
     /**
      * Open the socket and authenticate against the server.
@@ -65,11 +67,10 @@ class BattlEyeRcon
             throw new RuntimeException("Unable to connect to the BattlEye RCON server: {$error} ({$errno}).");
         }
 
-        if (! stream_set_blocking($socket, true) || ! stream_set_timeout(
-                $socket,
-                (int) $this->timeout,
-                (int) (fmod($this->timeout, 1) * 1_000_000),
-            )) {
+        $timeoutSec = $this->timeout;
+        $timeoutMicro = (int) (fmod($this->timeout, 1) * 1_000_000);
+
+        if (! stream_set_blocking($socket, true) || ! stream_set_timeout($socket, $timeoutSec, $timeoutMicro)) {
             fclose($socket);
 
             throw new RuntimeException('Unable to configure the BattlEye RCON socket.');
@@ -188,16 +189,13 @@ class BattlEyeRcon
         $fragments = [];
 
         while (($response = $this->read()) !== null) {
-            // Acknowledge server messages so the connection stays healthy.
             if ($response['type'] === self::SERVER_MESSAGE) {
                 $this->acknowledgeServerMessage($response['payload']);
-
                 continue;
             }
 
             if ($response['type'] === self::LOGIN) {
                 $this->handleLateLoginResponse($response['payload']);
-
                 continue;
             }
 
@@ -216,19 +214,9 @@ class BattlEyeRcon
                 continue;
             }
 
-            // Strip the leading sequence byte.
             $payload = substr($response['payload'], 1);
 
-            if ($payload === '') {
-                return '';
-            }
-
-            // Multi-packet header: 0x00, total packet count, current packet index.
-            if ($payload[0] !== chr(0x00)) {
-                if ($fragmentCount !== null) {
-                    throw new UnexpectedValueException('Mixed fragmented and unfragmented BattlEye RCON response.');
-                }
-
+            if ($payload === '' || $payload[0] !== chr(0x00)) {
                 return $payload;
             }
 
@@ -243,20 +231,15 @@ class BattlEyeRcon
                 throw new UnexpectedValueException('Invalid BattlEye RCON fragment count or index.');
             }
 
-            if ($fragmentCount === null) {
-                $fragmentCount = $packetCount;
-            } elseif ($fragmentCount !== $packetCount) {
+            if ($fragmentCount !== null && $fragmentCount !== $packetCount) {
                 throw new UnexpectedValueException('BattlEye RCON fragment count changed during the response.');
             }
 
+            $fragmentCount = $packetCount;
             $fragment = substr($payload, 3);
 
-            if (array_key_exists($packetIndex, $fragments)) {
-                if ($fragments[$packetIndex] !== $fragment) {
-                    throw new UnexpectedValueException('BattlEye RCON sent conflicting duplicate fragments.');
-                }
-
-                continue;
+            if (isset($fragments[$packetIndex]) && $fragments[$packetIndex] !== $fragment) {
+                throw new UnexpectedValueException('BattlEye RCON sent conflicting duplicate fragments.');
             }
 
             $fragments[$packetIndex] = $fragment;
@@ -269,7 +252,11 @@ class BattlEyeRcon
         }
 
         if ($fragmentCount !== null) {
-            throw new RuntimeException('Timed out after receiving '.count($fragments).' of '.$fragmentCount.' BattlEye RCON response fragments.');
+            throw new RuntimeException(sprintf(
+                'Timed out after receiving %d of %d BattlEye RCON response fragments.',
+                count($fragments),
+                $fragmentCount,
+            ));
         }
 
         throw new RuntimeException('Timed out waiting for a BattlEye RCON command response.');
