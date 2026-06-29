@@ -312,6 +312,7 @@ return [
             'fivem-status' => 'Statut FiveM',
             'fivem-rcon' => 'RCON FiveM',
             'rust-rcon' => 'Rust RCON',
+            'dayz-rcon' => 'RCON DayZ (BattlEye)',
             'flyff-server' => 'Serveur Flyff',
         ],
     ],
