@@ -42,7 +42,7 @@ class BattlEyeRcon
         private readonly string $host,
         private readonly int $port,
         private readonly string $password,
-        private readonly int $timeout = 3,
+        private readonly float $timeout = 3,
     ) {
         //
     }
@@ -67,7 +67,7 @@ class BattlEyeRcon
             throw new RuntimeException("Unable to connect to the BattlEye RCON server: {$error} ({$errno}).");
         }
 
-        $timeoutSec = $this->timeout;
+        $timeoutSec = (int) $this->timeout;
         $timeoutMicro = (int) (fmod($this->timeout, 1) * 1_000_000);
 
         if (! stream_set_blocking($socket, true) || ! stream_set_timeout($socket, $timeoutSec, $timeoutMicro)) {
@@ -214,40 +214,10 @@ class BattlEyeRcon
                 continue;
             }
 
-            $payload = substr($response['payload'], 1);
+            $result = $this->accumulateFragment(substr($response['payload'], 1), $fragmentCount, $fragments);
 
-            if ($payload === '' || $payload[0] !== chr(0x00)) {
-                return $payload;
-            }
-
-            if (strlen($payload) < 3) {
-                throw new UnexpectedValueException('Malformed BattlEye RCON fragment header.');
-            }
-
-            $packetCount = ord($payload[1]);
-            $packetIndex = ord($payload[2]);
-
-            if ($packetCount === 0 || $packetIndex >= $packetCount) {
-                throw new UnexpectedValueException('Invalid BattlEye RCON fragment count or index.');
-            }
-
-            if ($fragmentCount !== null && $fragmentCount !== $packetCount) {
-                throw new UnexpectedValueException('BattlEye RCON fragment count changed during the response.');
-            }
-
-            $fragmentCount = $packetCount;
-            $fragment = substr($payload, 3);
-
-            if (isset($fragments[$packetIndex]) && $fragments[$packetIndex] !== $fragment) {
-                throw new UnexpectedValueException('BattlEye RCON sent conflicting duplicate fragments.');
-            }
-
-            $fragments[$packetIndex] = $fragment;
-
-            if (count($fragments) === $fragmentCount) {
-                ksort($fragments, SORT_NUMERIC);
-
-                return implode('', $fragments);
+            if ($result !== null) {
+                return $result;
             }
         }
 
@@ -260,6 +230,49 @@ class BattlEyeRcon
         }
 
         throw new RuntimeException('Timed out waiting for a BattlEye RCON command response.');
+    }
+
+    /**
+     * Process one command payload, accumulating multi-packet fragments.
+     * Returns the complete response when all fragments are received, or null to keep reading.
+     */
+    private function accumulateFragment(string $payload, ?int &$fragmentCount, array &$fragments): ?string
+    {
+        if ($payload === '' || $payload[0] !== chr(0x00)) {
+            return $payload;
+        }
+
+        if (strlen($payload) < 3) {
+            throw new UnexpectedValueException('Malformed BattlEye RCON fragment header.');
+        }
+
+        $packetCount = ord($payload[1]);
+        $packetIndex = ord($payload[2]);
+
+        if ($packetCount === 0 || $packetIndex >= $packetCount) {
+            throw new UnexpectedValueException('Invalid BattlEye RCON fragment count or index.');
+        }
+
+        if ($fragmentCount !== null && $fragmentCount !== $packetCount) {
+            throw new UnexpectedValueException('BattlEye RCON fragment count changed during the response.');
+        }
+
+        $fragmentCount = $packetCount;
+        $fragment = substr($payload, 3);
+
+        if (isset($fragments[$packetIndex]) && $fragments[$packetIndex] !== $fragment) {
+            throw new UnexpectedValueException('BattlEye RCON sent conflicting duplicate fragments.');
+        }
+
+        $fragments[$packetIndex] = $fragment;
+
+        if (count($fragments) === $fragmentCount) {
+            ksort($fragments, SORT_NUMERIC);
+
+            return implode('', $fragments);
+        }
+
+        return null;
     }
 
     private function handleLateLoginResponse(string $payload): void
