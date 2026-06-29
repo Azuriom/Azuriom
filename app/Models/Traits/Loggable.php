@@ -52,8 +52,10 @@ trait Loggable
 
     public function createLogEntries(ActionLog $log): void
     {
+        $previous = $this->getPrevious();
+
         foreach ($this->getChanges() as $attribute => $value) {
-            $original = $this->getOriginal($attribute);
+            $original = $previous[$attribute] ?? null;
 
             if ($this->shouldLogAttribute($attribute) && $this->isValidLogType($original) && $this->isValidLogType($value)) {
                 $log->entries()->create([
