@@ -9,14 +9,6 @@ use Azuriom\Models\Post;
 class PostCommentController extends Controller
 {
     /**
-     * Construct a new PostCommentController instance.
-     */
-    public function __construct()
-    {
-        $this->authorizeResource(Comment::class);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(CommentRequest $request, Post $post)
@@ -33,6 +25,12 @@ class PostCommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
+        $this->authorize('view', $post);
+
+        abort_unless($comment->post_id === $post->id, 404);
+
+        $this->authorize('delete', $comment);
+
         $comment->delete();
 
         return to_route('posts.show', $post);
