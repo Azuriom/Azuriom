@@ -5,6 +5,7 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Setting;
+use Azuriom\Rules\DiscordWebhookUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -32,7 +33,7 @@ class ActionLogController extends Controller
     public function updateSettings(Request $request)
     {
         $validated = $this->validate($request, [
-            'webhook_url' => ['nullable', 'url'],
+            'webhook_url' => ['nullable', new DiscordWebhookUrl()],
         ]);
 
         $old = ['logs.webhook_url' => setting('logs.webhook_url')];
@@ -52,6 +53,8 @@ class ActionLogController extends Controller
      */
     public function show(ActionLog $log)
     {
+        abort_unless($log->isGlobal(), 404);
+
         return view('admin.logs.show', ['log' => $log->load('entries')]);
     }
 

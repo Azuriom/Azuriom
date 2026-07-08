@@ -98,7 +98,7 @@
             @isset($imagesUploadUrl)
             hideIcons: ['image'],
             uploadImage: true,
-            imageAccept: '.jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp',
+            imageAccept: '.jpg,.jpeg,.jpe,.png,.gif,.bmp,.webp',
             imageUploadFunction: function (file, onSuccess, onError) {
                 if (file.size > easyMde.options.imageMaxSize) {
                     onError(easyMde.options.errorMessages.fileTooLarge);

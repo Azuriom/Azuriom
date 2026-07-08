@@ -17,18 +17,36 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $user = $this->route('user');
+        $email = ['sometimes', 'nullable', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email')];
 
         return [
             'name' => [
                 'required', 'string', 'max:25', new Username(), Rule::unique('users')->ignore($user, 'name'),
             ],
-            'email' => [
-                'sometimes', 'nullable', 'email', 'max:50', Rule::unique('users')->ignore($user, 'email'),
-            ],
+            'email' => $email,
             'password' => [Rule::requiredIf($user === null), 'nullable', Password::default()],
             'money' => ['filled', 'numeric', 'min:0'],
             'role' => ['required', 'integer', 'exists:roles,id'],
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     */
+    public function withValidator($validator): void
+    {
+        $user = $this->route('user');
+
+        $validator->after(function ($validator) use ($user) {
+            if (
+                $user !== null
+                && ! $this->user()?->can('admin.users.personal')
+                && $this->request->has('email')
+                && $this->input('email') !== $user?->email
+            ) {
+                $validator->errors()->add('email', trans('validation.prohibited', ['attribute' => 'email']));
+            }
+        });
     }
 
     /**

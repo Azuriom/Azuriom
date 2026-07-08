@@ -12,6 +12,7 @@ use Azuriom\Games\Steam\SteamGame;
 use Azuriom\Models\Role;
 use Azuriom\Models\Setting;
 use Azuriom\Models\User;
+use Azuriom\Rules\SteamProfileUrl;
 use Azuriom\Support\EnvEditor;
 use Exception;
 use Illuminate\Encryption\Encrypter;
@@ -301,11 +302,11 @@ class InstallController extends Controller
     {
         $this->validate($request, [
             'key' => 'required',
-            'url' => 'required',
+            'url' => ['required', new SteamProfileUrl()],
             'locale' => [Rule::in(static::getAvailableLocaleCodes())],
         ]);
 
-        $profile = Http::get($request->input('url').'?xml=1')->body();
+        $profile = Http::get($this->steamProfileXmlUrl($request->input('url')))->body();
 
         if (! Str::contains($profile, '<steamID64>')) {
             throw ValidationException::withMessages(['url' => 'Invalid Steam profile URL.']);
@@ -332,6 +333,14 @@ class InstallController extends Controller
         } catch (HttpClientException) {
             throw ValidationException::withMessages(['key' => 'Invalid Steam API key.']);
         }
+    }
+
+    private function steamProfileXmlUrl(string $url): string
+    {
+        $host = strtolower(rtrim(parse_url($url, PHP_URL_HOST), '.'));
+        $path = rtrim(parse_url($url, PHP_URL_PATH) ?? '', '/');
+
+        return "https://{$host}{$path}?xml=1";
     }
 
     /**

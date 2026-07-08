@@ -314,7 +314,9 @@
                                     </td>
                                     <td>{{ format_date_compact($log->created_at) }}</td>
                                     <td>
-                                        <a href="{{ route('admin.logs.show', $log) }}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                                        @if($log->isGlobal())
+                                            <a href="{{ route('admin.logs.show', $log) }}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

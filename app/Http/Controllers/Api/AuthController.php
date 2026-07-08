@@ -62,6 +62,14 @@ class AuthController extends Controller
             ], 403);
         }
 
+        if ($user->mustChangePassword()) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'password_change_required',
+                'message' => 'Password change required',
+            ], 403);
+        }
+
         if ($user->hasTwoFactorAuth()) {
             $code = $request->input('code');
 

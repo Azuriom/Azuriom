@@ -139,6 +139,8 @@ class UserController extends Controller
         }
 
         if ($user->wasChanged('password')) {
+            $user->forceFill(['access_token' => null])->saveQuietly();
+
             event(new PasswordReset($user));
 
             $log->createEntries(['password' => '**old**'], ['password' => '**new**']);
@@ -148,11 +150,13 @@ class UserController extends Controller
             ->with('success', trans('messages.status.success'));
     }
 
-    public function verifyEmail(User $user)
+    public function verifyEmail(Request $request, User $user)
     {
         if ($user->isDeleted()) {
             return redirect()->back();
         }
+
+        $this->validateUserTarget($request->user(), $user);
 
         $user->markEmailAsVerified();
 
@@ -166,8 +170,10 @@ class UserController extends Controller
             ->with('success', trans('admin.users.email.verify_success'));
     }
 
-    public function disable2fa(User $user)
+    public function disable2fa(Request $request, User $user)
     {
+        $this->validateUserTarget($request->user(), $user);
+
         $user->forceFill([
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
@@ -181,16 +187,23 @@ class UserController extends Controller
             ->with('success', trans('admin.users.2fa.disabled'));
     }
 
-    public function forcePasswordChange(User $user)
+    public function forcePasswordChange(Request $request, User $user)
     {
-        $user->update(['password_changed_at' => null]);
+        $this->validateUserTarget($request->user(), $user);
+
+        $user->forceFill([
+            'password_changed_at' => null,
+            'access_token' => null,
+        ])->save();
 
         return to_route('admin.users.edit', $user)
             ->with('success', trans('messages.status.success'));
     }
 
-    public function unlinkDiscord(User $user)
+    public function unlinkDiscord(Request $request, User $user)
     {
+        $this->validateUserTarget($request->user(), $user);
+
         if ($user->discordAccount !== null) {
             LinkedRoles::clearRole($user->discordAccount);
 
@@ -204,11 +217,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
         if ($user->isDeleted() || $user->isAdmin()) {
             return redirect()->back();
         }
+
+        $this->validateUserTarget($request->user(), $user);
 
         $user->delete();
 
@@ -225,9 +240,10 @@ class UserController extends Controller
      */
     protected function validateRole(User $user, Role $role, ?User $target = null): void
     {
-        // Admin roles can assign any role as they already have all permissions.
-        if (($target && $user->role->power < $target->role->power)
-            || (! $user->isAdmin() && $user->role->power < $role->power)) {
+        if (! $user->isAdmin() && (
+            ($target && $user->role->power <= $target->role->power)
+            || $user->role->power <= $role->power
+        )) {
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.unauthorized'),
             ]);
@@ -240,6 +256,17 @@ class UserController extends Controller
             throw ValidationException::withMessages([
                 'role_id' => trans('admin.roles.no_admin'),
             ]);
+        }
+    }
+
+    protected function validateUserTarget(User $user, User $target): void
+    {
+        if ($target->isDeleted()) {
+            return;
+        }
+
+        if (! $user->isAdmin() && $user->role->power <= $target->role->power) {
+            abort(403);
         }
     }
 }

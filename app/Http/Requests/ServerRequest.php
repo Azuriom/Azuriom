@@ -4,6 +4,7 @@ namespace Azuriom\Http\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\Server;
+use Azuriom\Rules\SafeUrl;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -37,7 +38,7 @@ class ServerRequest extends FormRequest
             'rcon-password' => ['required_if:type,mc-rcon,source-rcon,fivem-rcon', 'nullable', 'string'],
             'query-port' => ['nullable', 'integer', 'between:1,65535'],
             'azlink-port' => ['sometimes', 'nullable', 'integer', 'between:1,65535'],
-            'join_url' => ['sometimes', 'nullable', 'regex:/^[a-z0-9+\-.]+:\/\/[^\s]+$/i', 'max:100'],
+            'join_url' => ['sometimes', 'nullable', 'string', 'max:100', new SafeUrl()],
             'home_display' => ['filled', 'boolean'],
         ];
     }

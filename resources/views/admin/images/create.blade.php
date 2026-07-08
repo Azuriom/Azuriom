@@ -22,7 +22,7 @@
                     <div class="input-group @error('slug') has-validation @enderror">
                         <span class="input-group-text">{{ image_url() }}/</span>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug') }}" required>
-                        <span class="input-group-text">.(jpg|png|gif|svg|webp)</span>
+                        <span class="input-group-text">.(jpg|png|gif|webp)</span>
 
                         @error('slug')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -32,7 +32,7 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="imageInput">{{ trans('messages.fields.image') }}</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.svg,.webp" data-image-preview="filePreview" required>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="imageInput" name="image" accept=".jpg,.jpeg,.jpe,.png,.gif,.bmp,.webp" data-image-preview="filePreview" required>
 
                     @error('image')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

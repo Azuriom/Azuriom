@@ -6,6 +6,7 @@ use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\NavbarElement;
 use Azuriom\Models\Page;
 use Azuriom\Models\Post;
+use Azuriom\Rules\SafeUrl;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -47,7 +48,7 @@ class NavbarElementRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'icon' => ['nullable', 'string', 'max:100'],
             'type' => ['string', Rule::in(NavbarElement::types())],
-            'link' => ['required_if:type,link', 'nullable', 'string', 'max:150'],
+            'link' => ['required_if:type,link', 'nullable', 'string', 'max:150', new SafeUrl(allowRelative: true)],
             'plugin' => ['required_if:type,plugin', 'nullable', Rule::in(plugins()->getRouteDescriptions()->keys())],
             'page' => ['required_if:type,page', 'nullable', Rule::exists(Page::class, 'id')],
             'post' => ['required_if:type,post', 'nullable', Rule::exists(Post::class, 'id')],

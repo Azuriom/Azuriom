@@ -60,8 +60,8 @@ trait Loggable
             if ($this->shouldLogAttribute($attribute) && $this->isValidLogType($original) && $this->isValidLogType($value)) {
                 $log->entries()->create([
                     'attribute' => $attribute,
-                    'old_value' => $original,
-                    'new_value' => $value,
+                    'old_value' => $log->loggableValue($attribute, $original),
+                    'new_value' => $log->loggableValue($attribute, $value),
                 ]);
             }
         }

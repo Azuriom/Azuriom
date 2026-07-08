@@ -10,6 +10,10 @@ use InvalidArgumentException;
 
 class DiscordWebhook implements Arrayable
 {
+    private const CONNECT_TIMEOUT = 3;
+
+    private const TIMEOUT = 5;
+
     protected ?string $content = null;
 
     protected ?string $username = null;
@@ -98,7 +102,10 @@ class DiscordWebhook implements Arrayable
      */
     public function send(string $url, bool $throw = true): Response
     {
-        return Http::post($url, $this->toArray())->throwIf($throw);
+        return Http::connectTimeout(self::CONNECT_TIMEOUT)
+            ->timeout(self::TIMEOUT)
+            ->post($url, $this->toArray())
+            ->throwIf($throw);
     }
 
     /**

@@ -239,6 +239,22 @@ class LoginController extends Controller
         $user = User::findOrFail($request->session()->get('login.2fa.id'));
         $code = $request->input('code');
 
+        if ($user->mustChangePassword()) {
+            throw ValidationException::withMessages([
+                $this->username() => trans('passwords.change'),
+            ]);
+        }
+
+        if ($user->isBanned()) {
+            throw ValidationException::withMessages([
+                $this->username() => trans('auth.suspended'),
+            ]);
+        }
+
+        if ($this->isMaintenance($user)) {
+            return $this->sendMaintenanceResponse($request);
+        }
+
         if (! $user->isValidTwoFactorCode($code)) {
             throw ValidationException::withMessages([
                 'code' => trans('auth.2fa.invalid'),

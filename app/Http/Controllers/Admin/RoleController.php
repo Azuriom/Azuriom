@@ -194,14 +194,14 @@ class RoleController extends Controller
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function duplicate(Role $role)
+    public function duplicate(Request $request, Role $role)
     {
         $this->authorize('update', $role);
 
         $copy = $role->load('permissions')->replicate();
         $copy->fill(['name' => $this->uniqueDuplicateName($role)])->save();
 
-        $copy->refresh()->syncPermissions($role->rawPermissions()->all());
+        $copy->refresh()->syncPermissions($this->duplicablePermissions($request, $role));
 
         return to_route('admin.roles.edit', $copy)
             ->with('success', trans('messages.status.success'));
@@ -225,6 +225,24 @@ class RoleController extends Controller
             $permissions,
             fn (string $p) => $target->hasRawPermission($p) || $user->hasPermission($p),
         );
+    }
+
+    /**
+     * Filter duplicated permissions to the set the current user may create.
+     */
+    private function duplicablePermissions(Request $request, Role $source): array
+    {
+        $permissions = $source->rawPermissions()->all();
+        $user = $request->user();
+
+        if ($user->isAdmin()) {
+            return $permissions;
+        }
+
+        return array_values(array_filter(
+            $permissions,
+            fn (string $permission) => $user->hasPermission($permission),
+        ));
     }
 
     /**

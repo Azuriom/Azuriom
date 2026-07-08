@@ -21,6 +21,8 @@ class PostCommentController extends Controller
      */
     public function store(CommentRequest $request, Post $post)
     {
+        $this->authorize('view', $post);
+
         $post->comments()->create($request->validated());
 
         return to_route('posts.show', $post);

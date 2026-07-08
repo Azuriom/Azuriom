@@ -31,8 +31,8 @@ Route::prefix('settings')->name('settings.')->middleware('can:admin.settings')->
     Route::post('/cache/advanced/clear', [SettingsController::class, 'disableAdvancedCache'])->name('cache.advanced.clear');
 
     Route::get('/performance', [SettingsController::class, 'performance'])->name('performance');
-    Route::get('/storage/link', [SettingsController::class, 'linkStorage'])->name('link-storage');
-    Route::get('/migrate', [SettingsController::class, 'migrate'])->name('migrate');
+    Route::post('/storage/link', [SettingsController::class, 'linkStorage'])->name('link-storage');
+    Route::post('/migrate', [SettingsController::class, 'migrate'])->name('migrate');
 
     Route::get('/home', [SettingsController::class, 'home'])->name('home');
     Route::post('/home/update', [SettingsController::class, 'updateSeo'])->name('home.update');

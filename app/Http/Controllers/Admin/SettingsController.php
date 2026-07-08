@@ -7,6 +7,7 @@ use Azuriom\Models\ActionLog;
 use Azuriom\Models\Image;
 use Azuriom\Models\Setting;
 use Azuriom\Notifications\TestMail;
+use Azuriom\Rules\DiscordWebhookUrl;
 use Azuriom\Support\Files;
 use Azuriom\Support\Optimizer;
 use DateTimeZone;
@@ -107,7 +108,7 @@ class SettingsController extends Controller
                 'background' => ['nullable', 'exists:images,file'],
                 'money' => ['required', 'string', 'max:15'],
                 'site-key' => ['nullable', 'string', 'size:50'],
-                'posts_webhook' => ['nullable', 'url'],
+                'posts_webhook' => ['nullable', new DiscordWebhookUrl()],
             ]),
             'users.money_transfer' => $request->filled('user_money_transfer'),
             'url' => rtrim($request->input('url'), '/'), // Remove trailing end slash

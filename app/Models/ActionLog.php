@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -246,11 +247,42 @@ class ActionLog extends Model
             if ($oldValue !== $newValue) {
                 $this->entries()->create([
                     'attribute' => $attribute,
-                    'old_value' => $oldValue,
-                    'new_value' => $newValue,
+                    'old_value' => $this->loggableValue($attribute, $oldValue),
+                    'new_value' => $this->loggableValue($attribute, $newValue),
                 ]);
             }
         }
+    }
+
+    public function loggableValue(string $attribute, mixed $value): mixed
+    {
+        if ($value === null || ! $this->isSensitiveAttribute($attribute)) {
+            return $value;
+        }
+
+        return '[redacted]';
+    }
+
+    private function isSensitiveAttribute(string $attribute): bool
+    {
+        return Str::contains(Str::lower($attribute), [
+            'access_token',
+            'api_key',
+            'authorization',
+            'client_secret',
+            'password',
+            'private_key',
+            'recovery_codes',
+            'secret',
+            'site-key',
+            'token',
+            'webhook',
+        ]);
+    }
+
+    public function isGlobal(): bool
+    {
+        return $this->getActionFormat()['global'] ?? true;
     }
 
     private function createDiscordWebhook(): DiscordWebhook

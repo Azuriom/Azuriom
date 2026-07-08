@@ -137,8 +137,9 @@ class UpdateManager
             throw new RuntimeException('No file available. If it\'s a paid extension, make sure you purchased it and verify the site key.');
         }
 
+        $file = $this->validatedArchiveName($info['file']);
         $dir = $updatesPath.$tempDir;
-        $path = $dir.$info['file'];
+        $path = $dir.$file;
 
         if (! $this->files->exists($dir)) {
             $this->files->makeDirectory($dir);
@@ -184,7 +185,7 @@ class UpdateManager
 
     public function extract(array $info, string $targetDir, string $tempDir = ''): void
     {
-        $file = storage_path('app/updates/'.$tempDir.$info['file']);
+        $file = storage_path('app/updates/'.$tempDir.$this->validatedArchiveName($info['file']));
 
         if ($this->files->extension($file) !== 'zip') {
             throw new RuntimeException('Invalid file extension');
@@ -200,6 +201,8 @@ class UpdateManager
             throw new RuntimeException('Unable to open zip: '.$status);
         }
 
+        $this->ensureZipCanBeSafelyExtracted($zip);
+
         if (! $zip->extractTo($targetDir)) {
             throw new RuntimeException('Unable to extract zip');
         }
@@ -209,11 +212,60 @@ class UpdateManager
         $this->files->delete($file);
     }
 
+    private function validatedArchiveName(mixed $file): string
+    {
+        if (! is_string($file) || $file === '' || basename($file) !== $file || str_contains($file, '\\')) {
+            throw new RuntimeException('Invalid file name');
+        }
+
+        return $file;
+    }
+
+    private function ensureZipCanBeSafelyExtracted(ZipArchive $zip): void
+    {
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name = $zip->getNameIndex($i);
+
+            if ($name === false || $this->isUnsafeZipPath($name) || $this->isZipSymlink($zip, $i)) {
+                throw new RuntimeException('Invalid file in zip archive');
+            }
+        }
+    }
+
+    private function isUnsafeZipPath(string $path): bool
+    {
+        if ($path === '' || str_starts_with($path, '/') || str_contains($path, '\\')) {
+            return true;
+        }
+
+        foreach (explode('/', $path) as $part) {
+            if ($part === '..') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isZipSymlink(ZipArchive $zip, int $index): bool
+    {
+        $opsys = 0;
+        $attributes = 0;
+
+        if (! $zip->getExternalAttributesIndex($index, $opsys, $attributes)) {
+            return false;
+        }
+
+        $unixOpsys = defined(ZipArchive::class.'::OPSYS_UNIX') ? ZipArchive::OPSYS_UNIX : 3;
+
+        return $opsys === $unixOpsys && (($attributes >> 16) & 0170000) === 0120000;
+    }
+
     private function prepareHttpRequest(): PendingRequest
     {
         $userAgent = 'Azuriom updater (v'.Azuriom::version().' - '.url('/').')';
 
-        $request = Http::withUserAgent($userAgent)->withHeaders([
+        $request = Http::connectTimeout(5)->timeout(30)->withUserAgent($userAgent)->withHeaders([
             'Azuriom-Version' => Azuriom::version(),
             'Azuriom-PHP-Version' => PHP_VERSION,
             'Azuriom-Locale' => app()->getLocale(),

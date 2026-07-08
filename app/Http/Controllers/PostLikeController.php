@@ -12,6 +12,8 @@ class PostLikeController extends Controller
      */
     public function addLike(Request $request, Post $post)
     {
+        $this->authorize('view', $post);
+
         if (! $post->likes()->where('author_id', $request->user()->id)->exists()) {
             $post->likes()->create();
         }
@@ -27,6 +29,8 @@ class PostLikeController extends Controller
      */
     public function removeLike(Request $request, Post $post)
     {
+        $this->authorize('view', $post);
+
         $post->likes()->where('author_id', $request->user()->id)->delete();
 
         return $request->expectsJson() ? response()->json([
