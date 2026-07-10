@@ -44,6 +44,7 @@ class GameServiceProvider extends ServiceProvider
             'csgo' => SteamGame::forName('csgo', 'Counter-Strike 2', true),
             'tf2' => SteamGame::forName('tf2', 'Team Fortress 2'),
             'unturned' => SteamGame::forName('unturned', 'Unturned'),
+            'project-zomboid' => SteamGame::forName('project-zomboid', 'Project Zomboid'),
             '7dtd' => SteamGame::forName('7dtd', '7 Days to Die', true),
             'hytale' => HytaleGame::class,
         ]);

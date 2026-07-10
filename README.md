@@ -30,6 +30,7 @@ Azuriom natively supports the following games:
 * [Counter-Strike 2](https://www.counter-strike.net/cs2)
 * [7 Days to Die](https://7daystodie.com/)
 * [DayZ](https://dayz.com/)
+* [Project Zomboid](https://projectzomboid.com/)
 * [Team Fortress 2](https://www.teamfortress.com/)
 
 You can implement your own game like it was done for [Flyff](https://github.com/AzuriomCommunity/Game-Flyff) or [Dofus 1.29](https://github.com/Javdu10/Game-Dofus129).

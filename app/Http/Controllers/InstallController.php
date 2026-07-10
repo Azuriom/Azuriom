@@ -52,7 +52,7 @@ class InstallController extends Controller
 
     // TODO dynamic games
     protected array $steamGames = [
-        '7dtd', 'gmod', 'ark', 'rust', 'dayz', 'fivem', 'csgo', 'tf2', 'unturned',
+        '7dtd', 'gmod', 'ark', 'rust', 'dayz', 'fivem', 'csgo', 'tf2', 'unturned', 'project-zomboid',
     ];
 
     protected array $games = [
@@ -99,6 +99,10 @@ class InstallController extends Controller
         'unturned' => [
             'name' => 'Unturned',
             'logo' => 'assets/img/games/unturned.svg',
+        ],
+        'project-zomboid' => [
+            'name' => 'Project Zomboid',
+            'logo' => 'assets/img/games/project-zomboid.svg',
         ],
         '7dtd' => [
             'name' => '7 Days to Die',
