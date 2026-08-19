@@ -7,7 +7,7 @@
         "dev": "vite"
     },
     "devDependencies": {
-        "@adminkit/core": "https://github.com/adminkit/adminkit/tarball/main",
+        "@adminkit/core": "https://github.com/adminkit/adminkit/tarball/v3.5.0",
         "@popperjs/core": "^2.11.5",
         "@simonwep/pickr": "^1.8.0",
         "axios": "^1.1.2",
