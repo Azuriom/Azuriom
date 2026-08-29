@@ -26,10 +26,12 @@ class LogsPurgeCommand extends Command
      *
      * @throws \LogicException
      */
-    public function handle()
+    public function handle(): int
     {
         $count = ActionLog::where('created_at', '<', now()->subMonths(6))->delete();
 
         $this->info($count.' logs was deleted.');
+
+        return self::SUCCESS;
     }
 }

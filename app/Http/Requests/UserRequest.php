@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
                 : ['missing'],
             'password' => [Rule::requiredIf($user === null), 'nullable', Password::default()],
             'money' => ['filled', 'numeric', 'min:0'],
-            'role' => ['required', 'integer', 'exists:roles,id'],
+            'role' => ['required', 'exclude', 'integer', 'exists:roles,id'],
         ];
     }
 

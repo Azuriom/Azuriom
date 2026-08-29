@@ -55,7 +55,7 @@ class PluginCreateCommand extends Command
         if ($this->files->exists($path)) {
             $this->error("The plugin '{$path}' already exists!");
 
-            return 1;
+            return self::FAILURE;
         }
 
         $this->files->makeDirectory($path);
@@ -70,7 +70,7 @@ class PluginCreateCommand extends Command
 
         $this->info('Plugin created successfully.');
 
-        return 0;
+        return self::SUCCESS;
     }
 
     protected function copyFiles(string $source, string $path, string $id, string $studlyName, string $namespace): void

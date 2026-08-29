@@ -13,7 +13,6 @@ use Azuriom\Support\Discord\LinkedRoles;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -86,7 +85,7 @@ class UserController extends Controller
         $this->validateRole($request->user(), $role);
 
         User::forceCreate([
-            ...Arr::except($request->validated(), 'role'),
+            ...$request->validated(),
             'role_id' => $role->id,
         ]);
 
@@ -125,7 +124,7 @@ class UserController extends Controller
 
         $this->validateRole($request->user(), $role, $user);
 
-        $user->forceFill(Arr::except($request->validated(), 'role'));
+        $user->forceFill($request->validated());
         $user->role()->associate($role);
         $user->save();
 
@@ -226,8 +225,9 @@ class UserController extends Controller
      */
     protected function validateRole(User $user, Role $role, ?User $target = null): void
     {
-        // Admin roles can assign any role as they already have all permissions.
-        // Other users can only assign roles with lower-or-equal power.
+        // Role power defines the role hierarchy used for permission assignment:
+        // - Admin roles bypass this hierarchy as they already have ALL permissions
+        // - Other users can assign roles up to their own power level (including roles with equal power)
         if ($user->role->power < $role->power && ! $user->isAdmin()) {
             throw ValidationException::withMessages([
                 'role' => trans('admin.roles.unauthorized'),
@@ -253,7 +253,9 @@ class UserController extends Controller
     {
         abort_if($target->isDeleted(), 404);
 
-        // Admin roles can manage any role regardless of their power.
+        // Role power defines the hierarchy used when managing users:
+        // - Admin roles bypass this hierarchy as they already have ALL permissions
+        // - Other users can manage roles up to their own power level (including roles with equal power)
         if ($user->role->power < $target->role->power && ! $user->isAdmin()) {
             throw ValidationException::withMessages([
                 'role' => trans('admin.users.unauthorized'),

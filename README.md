@@ -77,7 +77,7 @@ You can contribute to translating Azuriom on our [Crowdin](https://translate.azu
 If you discover any security related issues within Azuriom, please send an e-mail to [security@azuriom.com](mailto:security@azuriom.com) instead of using the issue tracker. All security vulnerabilities will be promptly addressed.
 
 > [!NOTE]
-> JavaScript injections from the admin dashboard are not classified as XSS vulnerabilities. Of course, XSS found in user-facing areas of the site, as well as all other vulnerabilities throughout the entire application, will be recognized and addressed accordingly.
+> Features in the admin area that allow users with the relevant administrative permissions to configure HTML, JavaScript, or other active content are considered administrative content management features. Reports demonstrating script execution through these features are not considered vulnerabilities unless they show that a user without the required permission can inject such content or that the permission allows crossing an additional privilege boundary.
 
 ## Support us
 

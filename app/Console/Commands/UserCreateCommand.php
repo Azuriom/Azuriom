@@ -29,7 +29,7 @@ class UserCreateCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $user = User::forceCreate([
             'name' => $this->option('name') ?? $this->ask('The username of the user'),
@@ -48,5 +48,7 @@ class UserCreateCommand extends Command
         $user->markEmailAsVerified();
 
         $this->info('User created successfully.');
+
+        return self::SUCCESS;
     }
 }

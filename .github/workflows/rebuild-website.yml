@@ -1,0 +1,17 @@
+name: Rebuild website
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  rebuild:
+    name: Rebuild website
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Netlify build
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: curl -f -X POST -d '{}' "$NETLIFY_BUILD_HOOK"

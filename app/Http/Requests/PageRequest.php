@@ -47,6 +47,7 @@ class PageRequest extends FormRequest
             'slug' => ['required', 'string', 'max:100', new Slug(true), Rule::unique('pages')->ignore($page, 'slug')],
             'content' => ['required', 'string'],
             'is_enabled' => ['filled', 'boolean'],
+            'roles' => ['sometimes', 'exclude', 'array'],
             'roles.*' => ['required', 'integer', 'exists:roles,id'],
         ];
     }

@@ -164,7 +164,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the form to enable two-factor authentification.
+     * Show the form to enable two-factor authentication.
      *
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
      */
@@ -202,7 +202,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Enable two-factor authentification for this user.
+     * Enable two-factor authentication for this user.
      *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \PragmaRX\Google2FA\Exceptions\Google2FAException
@@ -235,7 +235,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Disable two-factor authentification for this user.
+     * Disable two-factor authentication for this user.
      */
     public function disable2fa(Request $request)
     {

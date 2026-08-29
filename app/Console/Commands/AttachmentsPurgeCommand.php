@@ -27,7 +27,7 @@ class AttachmentsPurgeCommand extends Command
      *
      * @throws \LogicException
      */
-    public function handle()
+    public function handle(): int
     {
         $time = now()->subDay();
 
@@ -52,5 +52,7 @@ class AttachmentsPurgeCommand extends Command
         }
 
         $this->info("{$count} attachments and {$pendingCount} pending attachments was deleted.");
+
+        return self::SUCCESS;
     }
 }

@@ -187,7 +187,7 @@ return [
             'disable' => 'Disable 2FA',
             'manage' => 'Manage 2FA',
             'info' => 'Scan the QR code with a two-factor authentication app on your phone like :auth1, :auth2 or :auth3.',
-            'backup' => 'If you lose access to your two-factor authentification code, the recovery codes are the <strong>only way</strong> to regain access to your account.',
+            'backup' => 'If you lose access to your two-factor authentication code, the recovery codes are the <strong>only way</strong> to regain access to your account.',
             'secret' => 'Secret key: :secret',
             'title' => 'Two-Factor Authentication',
             'codes' => 'Show recovery codes',

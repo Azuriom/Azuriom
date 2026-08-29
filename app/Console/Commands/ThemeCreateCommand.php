@@ -52,7 +52,7 @@ class ThemeCreateCommand extends Command
         if ($this->files->exists($path)) {
             $this->error('The theme '.$path.' already exists!');
 
-            return 1;
+            return self::FAILURE;
         }
 
         $this->files->makeDirectory($path);
@@ -68,7 +68,7 @@ class ThemeCreateCommand extends Command
 
         $this->info('Theme created successfully.');
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function createThemeJson(string $path, string $id, string $name): void

@@ -29,22 +29,24 @@ trait Searchable
 
     protected function runSearch(Builder $query, string $search, array $columns): void
     {
-        $models = [];
+        $relations = [];
 
         foreach ($columns as $column) {
-            if (Str::contains($column, '.')) {
-                [$model, $column] = explode('.', $column);
-
-                $models[$model] = [...$models[$model] ?? [], $column];
-            } else {
+            if (! Str::contains($column, '.')) {
                 $query->orWhereLike($column, "%{$search}%");
+
+                continue;
             }
+
+            // Split on the first dot only, so nested paths such as `user.resources.name`
+            // are forwarded intact to the related model's own search scope
+            [$relation, $relationColumn] = explode('.', $column, 2);
+
+            $relations[$relation][] = $relationColumn;
         }
 
-        foreach ($models as $model => $column) {
-            $query->orWhereRelation($model, function (Builder $query) use ($column, $search) {
-                $query->search($search, $column);
-            });
+        foreach ($relations as $relation => $relColumns) {
+            $query->orWhereRelation($relation, fn (Builder $q) => $q->search($search, $relColumns));
         }
 
         if (is_numeric($search) || $this->getKeyType() !== 'int') {

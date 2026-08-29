@@ -288,7 +288,7 @@ class SettingsController extends Controller
 
     public function auth(Request $request)
     {
-        return view('admin.settings.authentification', [
+        return view('admin.settings.authentication', [
             'conditions' => setting('conditions'),
             'userNameChange' => setting('user.change_name'),
             'userUploadAvatar' => setting('user.upload_avatar', false),

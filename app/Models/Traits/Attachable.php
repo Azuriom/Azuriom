@@ -37,6 +37,10 @@ trait Attachable
         });
 
         static::deleted(function (self $model) {
+            if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
+                return;
+            }
+
             $attachments = $model->attachments()->withTrashed()->get();
 
             foreach ($attachments as $attachment) {

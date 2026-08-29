@@ -31,11 +31,11 @@ class PluginDisableCommand extends Command
         if (! $plugins->disable($id)) {
             $this->error('Unable to disable plugin with id '.$id);
 
-            return 1;
+            return self::FAILURE;
         }
 
         $this->info('Plugin "'.$id.'" disabled.');
 
-        return 0;
+        return self::SUCCESS;
     }
 }

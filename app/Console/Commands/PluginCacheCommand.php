@@ -24,10 +24,12 @@ class PluginCacheCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PluginManager $plugins)
+    public function handle(PluginManager $plugins): int
     {
         $plugins->cachePlugins();
 
         $this->info('Cached plugins files generated successfully.');
+
+        return self::SUCCESS;
     }
 }

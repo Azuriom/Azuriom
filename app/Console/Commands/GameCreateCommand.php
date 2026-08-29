@@ -66,6 +66,6 @@ class GameCreateCommand extends PluginCreateCommand
 
         EnvEditor::updateEnv(['AZURIOM_GAME' => $id]);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

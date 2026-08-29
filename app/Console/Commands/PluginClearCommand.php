@@ -25,12 +25,14 @@ class PluginClearCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(Filesystem $files, PluginManager $plugins)
+    public function handle(Filesystem $files, PluginManager $plugins): int
     {
         if ($files->exists($plugins->getCachedPluginsPath())) {
             $files->delete($plugins->getCachedPluginsPath());
         }
 
         $this->info('Cached plugins files removed.');
+
+        return self::SUCCESS;
     }
 }

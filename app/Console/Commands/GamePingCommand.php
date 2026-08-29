@@ -25,7 +25,7 @@ class GamePingCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         Setting::updateSettings('schedule.last', now()->toISOString());
 
@@ -37,6 +37,8 @@ class GamePingCommand extends Command
             $server->updateData($data, now()->minute % 15 === 0);
         }
 
-        $this->info($servers->count().' server(s) were successfully pinged.');
+        $this->info($servers->count().' server(s) were pinged successfully.');
+
+        return self::SUCCESS;
     }
 }

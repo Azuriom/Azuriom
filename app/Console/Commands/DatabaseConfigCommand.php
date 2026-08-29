@@ -48,7 +48,7 @@ class DatabaseConfigCommand extends Command
         if (! array_key_exists($driver, $drivers)) {
             $this->error('Invalid database driver: '.$driver);
 
-            return 1;
+            return self::INVALID;
         }
 
         $defaultPort = ($driver === 'pgsql') ? 5432 : 3306;
@@ -66,6 +66,6 @@ class DatabaseConfigCommand extends Command
 
         $this->info('Database config successfully updated.');
 
-        return 0;
+        return self::SUCCESS;
     }
 }

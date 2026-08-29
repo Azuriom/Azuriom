@@ -5,7 +5,6 @@ namespace Azuriom\Http\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Http\Requests\PostRequest;
 use Azuriom\Models\Post;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -35,7 +34,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = Post::create(Arr::except($request->validated(), 'image'));
+        $post = Post::create($request->validated());
 
         if ($request->hasFile('image')) {
             $post->storeImage($request->file('image'), true);
@@ -68,7 +67,7 @@ class PostController extends Controller
             $post->storeImage($request->file('image'));
         }
 
-        $post->update(Arr::except($request->validated(), 'image'));
+        $post->update($request->validated());
 
         return to_route('admin.posts.index')
             ->with('success', trans('messages.status.success'));

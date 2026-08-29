@@ -37,12 +37,12 @@ class PluginDownloadCommand extends Command
             $this->error('There is no plugin with id "'.$extensionId
                 .'", it is already downloaded or does not support this installation.');
 
-            return 1;
+            return self::FAILURE;
         }
 
         $plugins->install($plugin['id'], $this->argument('version'));
         $this->info('Plugin '.$extensionId.' downloaded.');
 
-        return 0;
+        return self::SUCCESS;
     }
 }

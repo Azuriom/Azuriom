@@ -17,7 +17,7 @@ trait TwoFactorAuthenticatable
 
         if (in_array($code, $codes, true)) {
             $this->forceFill([
-                'two_factor_recovery_codes' => array_diff($codes, [$code]),
+                'two_factor_recovery_codes' => array_values(array_diff($codes, [$code])),
             ])->save();
         }
     }
@@ -52,7 +52,7 @@ trait TwoFactorAuthenticatable
     }
 
     /**
-     * Generate two-factor authentification backup codes.
+     * Generate two-factor authentication backup codes.
      *
      * @return string[]
      */

@@ -115,7 +115,7 @@ class ServerController extends Controller
             'email' => ['sometimes', 'nullable', 'max:100', 'unique:users'],
             'game_id' => ['required', 'string', 'max:100', 'unique:users'],
             'password' => ['sometimes', 'string'],
-            'ip' => ['sometimes', 'nullable'],
+            'ip' => ['sometimes', 'exclude', 'nullable'],
         ]);
 
         $name = $request->input('name');
@@ -128,7 +128,7 @@ class ServerController extends Controller
         }
 
         $user = User::forceCreate([
-            ...Arr::except($data, 'ip'),
+            ...$data,
             'email' => $request->input('email'),
             'password' => $request->input('password', Str::random(32)),
             'last_login_ip' => $request->input('ip'),
