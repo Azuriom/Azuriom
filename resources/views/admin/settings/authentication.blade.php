@@ -116,10 +116,17 @@
                                 <small class="form-text" v-if="type === 'turnstile'">
                                     @lang('admin.settings.security.captcha.turnstile')
                                 </small>
+
+                                <small class="form-text" v-if="type === 'ddos_guard'">
+                                    @lang('admin.settings.security.captcha.ddos_guard')
+                                </small>
                             </div>
 
                             <div class="mb-3 col-md-6 mb-0">
-                                <label class="form-label" for="secretKeyInput">{{ trans('admin.settings.security.captcha.secret_key') }}</label>
+                                <label class="form-label" for="secretKeyInput">
+                                    <span v-if="type === 'ddos_guard'">{{ trans('admin.settings.security.captcha.private_key') }}</span>
+                                    <span v-else>{{ trans('admin.settings.security.captcha.secret_key') }}</span>
+                                </label>
                                 <input type="text" class="form-control @error('secret_key') is-invalid @enderror" id="secretKeyInput" name="secret_key" value="{{ old('secret_key', setting('captcha.secret_key', '')) }}">
 
                                 @error('secret_key')

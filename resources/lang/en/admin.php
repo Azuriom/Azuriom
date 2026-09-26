@@ -123,9 +123,11 @@ return [
                 'title' => 'Captcha',
                 'site_key' => 'Site key',
                 'secret_key' => 'Secret key',
+                'private_key' => 'Private key',
                 'recaptcha' => 'You can get reCAPTCHA keys on the <a href="https://www.google.com/recaptcha/" target="_blank" rel="noopener noreferrer">Google reCAPTCHA website</a>. You need to use reCAPTCHA <strong>v2 invisible</strong> keys.',
                 'hcaptcha' => 'You can get hCaptcha keys on the <a href="https://www.hcaptcha.com/" target="_blank" rel="noopener noreferrer">hCaptcha website</a>.',
                 'turnstile' => 'You can get Turnstil keys on the <a href="https://dash.cloudflare.com/?to=/:account/turnstile" target="_blank" rel="noopener noreferrer">Cloudflare dashboard</a>. You must select "Managed" widget.',
+                'ddos_guard' => 'You can get the Site key and Private key by activating dCAPTCHA in the <a href="https://my.ddos-guard.net/" target="_blank" rel="noopener noreferrer">DDoS-Guard dashboard</a>. Add your website domain to the CAPTCHA key.',
                 'login' => 'Enable captcha on login page',
             ],
 
