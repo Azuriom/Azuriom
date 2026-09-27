@@ -43,6 +43,7 @@ class SettingsController extends Controller
         'hcaptcha' => 'hCaptcha',
         'turnstile' => 'Cloudflare Turnstile',
         'recaptcha' => 'Google reCAPTCHA',
+        'ddos_guard' => 'DDoS-Guard dCAPTCHA',
     ];
 
     /**
