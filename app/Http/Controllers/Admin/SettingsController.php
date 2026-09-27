@@ -40,10 +40,10 @@ class SettingsController extends Controller
     ];
 
     private array $captchaProviders = [
-        'ddos_guard' => 'DDoS-Guard dCAPTCHA',
         'hcaptcha' => 'hCaptcha',
         'turnstile' => 'Cloudflare Turnstile',
         'recaptcha' => 'Google reCAPTCHA',
+        'ddos_guard' => 'DDoS-Guard dCAPTCHA',
     ];
 
     /**

@@ -10,13 +10,7 @@
     @endpush
 @endif
 
-@if(setting('captcha.type') === 'ddos_guard')
-    @push('scripts')
-        <script src="https://captcha.ddos-guard.net/static/api.js" defer></script>
-    @endpush
-
-    <div class="ddg-captcha-container mb-2 @if($center ?? false) text-center @endif" data-sitekey="{{ setting('captcha.site_key') }}"></div>
-@elseif(setting('captcha.type') === 'recaptcha')
+@if(setting('captcha.type') === 'recaptcha')
     @push('scripts')
         <script src="https://www.recaptcha.net/recaptcha/api.js?hl={{ app()->getLocale() }}" async defer></script>
     @endpush
@@ -71,4 +65,10 @@
     @endpush
 
     <div class="cf-turnstile mb-2 @if($center ?? false) text-center @endif" data-sitekey="{{ setting('captcha.site_key') }}" data-theme="{{ ($dark ?? false) ? 'dark' : 'light' }}"></div>
+@elseif(setting('captcha.type') === 'ddos_guard')
+    @push('scripts')
+        <script src="https://captcha.ddos-guard.net/static/api.js" defer></script>
+    @endpush
+
+    <div class="ddg-captcha-container mb-2 @if($center ?? false) text-center @endif" data-sitekey="{{ setting('captcha.site_key') }}"></div>
 @endif
