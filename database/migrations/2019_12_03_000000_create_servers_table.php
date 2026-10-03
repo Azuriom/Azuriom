@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('address', 45);
-            $table->unsignedSmallInteger('port')->nullable();
+            $table->unsignedInteger('port')->nullable();
             $table->string('type');
             $table->string('token')->nullable();
             $table->text('data')->nullable();
