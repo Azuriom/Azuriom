@@ -77,6 +77,13 @@ class Post extends Model
     ];
 
     /**
+     * The image sizes (in pixels) used for responsive images.
+     *
+     * @var int[]
+     */
+    protected array $imageSizes = [480, 768, 1200];
+
+    /**
      * Get the author of this post.
      */
     public function author()

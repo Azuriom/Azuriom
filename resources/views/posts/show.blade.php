@@ -20,7 +20,10 @@
     <h1>{{ $post->title }}</h1>
 
     @if($post->hasImage())
-        <img class="img-fluid rounded mb-3" src="{{ $post->imageUrl() }}" alt="{{ $post->title }}">
+        @php($srcset = $post->imageSrcset())
+        <img class="img-fluid rounded mb-3" src="{{ $post->imageUrl() }}"
+             @if($srcset) srcset="{{ $srcset }}" sizes="100vw" @endif
+             alt="{{ $post->title }}">
     @endif
 
     <div class="card mb-4">
